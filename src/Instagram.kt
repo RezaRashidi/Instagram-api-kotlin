@@ -18,7 +18,7 @@ class Instagram : ExperimentsInterface  {
      *
      * @var string
      */
-    public var : String username
+    public var  String: username
 
     /**
      * Currently active Instagram password.
