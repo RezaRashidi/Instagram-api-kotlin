@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Param.
@@ -11,15 +11,15 @@ use InstagramAPI\AutoPropertyMapper;
  * @method mixed getValue()
  * @method bool isName()
  * @method bool isValue()
- * @method $this setName(mixed $value)
- * @method $this setValue(mixed $value)
- * @method $this unsetName()
- * @method $this unsetValue()
+ * @method this setName(mixed $value)
+ * @method this setValue(mixed $value)
+ * @method this unsetName()
+ * @method this unsetValue()
  */
-class Param extends AutoPropertyMapper
+class Param : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'name'  => '',
         'value' => '',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * SuggestedUsers.
@@ -31,34 +31,34 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isType()
  * @method bool isUpsellFbPos()
  * @method bool isViewAllText()
- * @method $this setAutoDvance(mixed $value)
- * @method $this setId(string $value)
- * @method $this setLandingSiteTitle(mixed $value)
- * @method $this setLandingSiteType(mixed $value)
- * @method $this setNetegoType(mixed $value)
- * @method $this setSuggestionCards(SuggestionCard[] $value)
- * @method $this setSuggestions(Suggestion[] $value)
- * @method $this setTitle(mixed $value)
- * @method $this setTrackingToken(string $value)
- * @method $this setType(mixed $value)
- * @method $this setUpsellFbPos(mixed $value)
- * @method $this setViewAllText(mixed $value)
- * @method $this unsetAutoDvance()
- * @method $this unsetId()
- * @method $this unsetLandingSiteTitle()
- * @method $this unsetLandingSiteType()
- * @method $this unsetNetegoType()
- * @method $this unsetSuggestionCards()
- * @method $this unsetSuggestions()
- * @method $this unsetTitle()
- * @method $this unsetTrackingToken()
- * @method $this unsetType()
- * @method $this unsetUpsellFbPos()
- * @method $this unsetViewAllText()
+ * @method this setAutoDvance(mixed $value)
+ * @method this setId(string $value)
+ * @method this setLandingSiteTitle(mixed $value)
+ * @method this setLandingSiteType(mixed $value)
+ * @method this setNetegoType(mixed $value)
+ * @method this setSuggestionCards(SuggestionCard[] $value)
+ * @method this setSuggestions(Suggestion[] $value)
+ * @method this setTitle(mixed $value)
+ * @method this setTrackingToken(string $value)
+ * @method this setType(mixed $value)
+ * @method this setUpsellFbPos(mixed $value)
+ * @method this setViewAllText(mixed $value)
+ * @method this unsetAutoDvance()
+ * @method this unsetId()
+ * @method this unsetLandingSiteTitle()
+ * @method this unsetLandingSiteType()
+ * @method this unsetNetegoType()
+ * @method this unsetSuggestionCards()
+ * @method this unsetSuggestions()
+ * @method this unsetTitle()
+ * @method this unsetTrackingToken()
+ * @method this unsetType()
+ * @method this unsetUpsellFbPos()
+ * @method this unsetViewAllText()
  */
-class SuggestedUsers extends AutoPropertyMapper
+class SuggestedUsers : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'id'                 => 'string',
         'view_all_text'      => '',
         'title'              => '',
@@ -71,5 +71,5 @@ class SuggestedUsers extends AutoPropertyMapper
         'suggestions'        => 'Suggestion[]',
         'suggestion_cards'   => 'SuggestionCard[]',
         'netego_type'        => '',
-    ];
+    ]
 }

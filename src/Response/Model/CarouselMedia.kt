@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * CarouselMedia.
@@ -71,77 +71,77 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isVideoDuration()
  * @method bool isVideoSubtitlesUri()
  * @method bool isVideoVersions()
- * @method $this setAdAction(string $value)
- * @method $this setAdLinkType(int $value)
- * @method $this setAdMetadata(AdMetadata[] $value)
- * @method $this setAndroidLinks(AndroidLinks[] $value)
- * @method $this setCarouselParentId(string $value)
- * @method $this setDominantColor(string $value)
- * @method $this setDynamicItemId(string $value)
- * @method $this setFbUserTags(Usertag $value)
- * @method $this setForceOverlay(bool $value)
- * @method $this setHasAudio(bool $value)
- * @method $this setHeadline(Headline $value)
- * @method $this setHideNuxText(bool $value)
- * @method $this setId(string $value)
- * @method $this setImageVersions2(Image_Versions2 $value)
- * @method $this setIsDashEligible(int $value)
- * @method $this setLink(string $value)
- * @method $this setLinkHintText(string $value)
- * @method $this setLinkText(string $value)
- * @method $this setMediaType(int $value)
- * @method $this setNumberOfQualities(int $value)
- * @method $this setOriginalHeight(int $value)
- * @method $this setOriginalWidth(int $value)
- * @method $this setOverlaySubtitle(string $value)
- * @method $this setOverlayText(string $value)
- * @method $this setOverlayTitle(string $value)
- * @method $this setPk(string $value)
- * @method $this setPreview(string $value)
- * @method $this setUsertags(Usertag $value)
- * @method $this setVideoDashManifest(string $value)
- * @method $this setVideoDuration(float $value)
- * @method $this setVideoSubtitlesUri(string $value)
- * @method $this setVideoVersions(VideoVersions[] $value)
- * @method $this unsetAdAction()
- * @method $this unsetAdLinkType()
- * @method $this unsetAdMetadata()
- * @method $this unsetAndroidLinks()
- * @method $this unsetCarouselParentId()
- * @method $this unsetDominantColor()
- * @method $this unsetDynamicItemId()
- * @method $this unsetFbUserTags()
- * @method $this unsetForceOverlay()
- * @method $this unsetHasAudio()
- * @method $this unsetHeadline()
- * @method $this unsetHideNuxText()
- * @method $this unsetId()
- * @method $this unsetImageVersions2()
- * @method $this unsetIsDashEligible()
- * @method $this unsetLink()
- * @method $this unsetLinkHintText()
- * @method $this unsetLinkText()
- * @method $this unsetMediaType()
- * @method $this unsetNumberOfQualities()
- * @method $this unsetOriginalHeight()
- * @method $this unsetOriginalWidth()
- * @method $this unsetOverlaySubtitle()
- * @method $this unsetOverlayText()
- * @method $this unsetOverlayTitle()
- * @method $this unsetPk()
- * @method $this unsetPreview()
- * @method $this unsetUsertags()
- * @method $this unsetVideoDashManifest()
- * @method $this unsetVideoDuration()
- * @method $this unsetVideoSubtitlesUri()
- * @method $this unsetVideoVersions()
+ * @method this setAdAction(string $value)
+ * @method this setAdLinkType(int $value)
+ * @method this setAdMetadata(AdMetadata[] $value)
+ * @method this setAndroidLinks(AndroidLinks[] $value)
+ * @method this setCarouselParentId(string $value)
+ * @method this setDominantColor(string $value)
+ * @method this setDynamicItemId(string $value)
+ * @method this setFbUserTags(Usertag $value)
+ * @method this setForceOverlay(bool $value)
+ * @method this setHasAudio(bool $value)
+ * @method this setHeadline(Headline $value)
+ * @method this setHideNuxText(bool $value)
+ * @method this setId(string $value)
+ * @method this setImageVersions2(Image_Versions2 $value)
+ * @method this setIsDashEligible(int $value)
+ * @method this setLink(string $value)
+ * @method this setLinkHintText(string $value)
+ * @method this setLinkText(string $value)
+ * @method this setMediaType(int $value)
+ * @method this setNumberOfQualities(int $value)
+ * @method this setOriginalHeight(int $value)
+ * @method this setOriginalWidth(int $value)
+ * @method this setOverlaySubtitle(string $value)
+ * @method this setOverlayText(string $value)
+ * @method this setOverlayTitle(string $value)
+ * @method this setPk(string $value)
+ * @method this setPreview(string $value)
+ * @method this setUsertags(Usertag $value)
+ * @method this setVideoDashManifest(string $value)
+ * @method this setVideoDuration(float $value)
+ * @method this setVideoSubtitlesUri(string $value)
+ * @method this setVideoVersions(VideoVersions[] $value)
+ * @method this unsetAdAction()
+ * @method this unsetAdLinkType()
+ * @method this unsetAdMetadata()
+ * @method this unsetAndroidLinks()
+ * @method this unsetCarouselParentId()
+ * @method this unsetDominantColor()
+ * @method this unsetDynamicItemId()
+ * @method this unsetFbUserTags()
+ * @method this unsetForceOverlay()
+ * @method this unsetHasAudio()
+ * @method this unsetHeadline()
+ * @method this unsetHideNuxText()
+ * @method this unsetId()
+ * @method this unsetImageVersions2()
+ * @method this unsetIsDashEligible()
+ * @method this unsetLink()
+ * @method this unsetLinkHintText()
+ * @method this unsetLinkText()
+ * @method this unsetMediaType()
+ * @method this unsetNumberOfQualities()
+ * @method this unsetOriginalHeight()
+ * @method this unsetOriginalWidth()
+ * @method this unsetOverlaySubtitle()
+ * @method this unsetOverlayText()
+ * @method this unsetOverlayTitle()
+ * @method this unsetPk()
+ * @method this unsetPreview()
+ * @method this unsetUsertags()
+ * @method this unsetVideoDashManifest()
+ * @method this unsetVideoDuration()
+ * @method this unsetVideoSubtitlesUri()
+ * @method this unsetVideoVersions()
  */
-class CarouselMedia extends AutoPropertyMapper
+class CarouselMedia : AutoPropertyMapper
 {
-    const PHOTO = 1;
-    const VIDEO = 2;
+    val PHOTO = 1
+    val VIDEO = 2
 
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'pk'                  => 'string',
         'id'                  => 'string',
         'carousel_parent_id'  => 'string',
@@ -182,5 +182,5 @@ class CarouselMedia extends AutoPropertyMapper
          * HTML color string such as "#812A2A".
          */
         'dominant_color'      => 'string',
-    ];
+    ]
 }

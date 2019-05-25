@@ -1,46 +1,46 @@
-<?php
 
-namespace InstagramAPI\Push\Payload;
 
-use Fbns\Client\Json;
+package InstagramAPI.Push.Payload
+
+import Fbns.Client.Json
 
 class BadgeCount
 {
     /**
      * @var string
      */
-    protected $_json;
+    protected $_json
 
     /**
      * @var int
      */
-    protected $_direct;
+    protected $_direct
     /**
      * @var int
      */
-    protected $_ds;
+    protected $_ds
     /**
      * @var int
      */
-    protected $_activities;
+    protected $_activities
 
     /**
      * @param string $json
      */
-    protected function _parseJson(
+    protected fun _parseJson(
         $json)
     {
-        $data = Json::decode($json);
-        $this->_json = $json;
+        $data = Json::decode($json)
+        this._json = $json
 
-        if (isset($data->di)) {
-            $this->_direct = (int) $data->di;
+        if (isset($data.di)) {
+            this._direct = (int) $data.di
         }
-        if (isset($data->ds)) {
-            $this->_ds = (int) $data->ds;
+        if (isset($data.ds)) {
+            this._ds = (int) $data.ds
         }
-        if (isset($data->ac)) {
-            $this->_activities = (int) $data->ac;
+        if (isset($data.ac)) {
+            this._activities = (int) $data.ac
         }
     }
 
@@ -49,41 +49,41 @@ class BadgeCount
      *
      * @param string $json
      */
-    public function __construct(
+    public fun __construct(
         $json)
     {
-        $this->_parseJson($json);
+        this._parseJson($json)
     }
 
     /**
      * @return string
      */
-    public function __toString()
+    public fun __toString()
     {
-        return $this->_json;
+        return this._json
     }
 
     /**
      * @return int
      */
-    public function getDirect()
+    public fun getDirect()
     {
-        return $this->_direct;
+        return this._direct
     }
 
     /**
      * @return int
      */
-    public function getDs()
+    public fun getDs()
     {
-        return $this->_ds;
+        return this._ds
     }
 
     /**
      * @return int
      */
-    public function getActivities()
+    public fun getActivities()
     {
-        return $this->_activities;
+        return this._activities
     }
 }

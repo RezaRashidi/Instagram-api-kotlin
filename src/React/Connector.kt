@@ -1,34 +1,34 @@
-<?php
 
-namespace InstagramAPI\React;
 
-use Clue\React\HttpProxy\ProxyConnector as HttpConnectProxy;
-use Clue\React\Socks\Client as SocksProxy;
-use GuzzleHttp\Psr7\Uri;
-use InstagramAPI\Instagram;
-use React\EventLoop\LoopInterface;
-use React\Promise\PromiseInterface;
-use React\Promise\RejectedPromise;
-use React\Socket\Connector as SocketConnector;
-use React\Socket\ConnectorInterface;
-use React\Socket\SecureConnector;
+package InstagramAPI.React
 
-class Connector implements ConnectorInterface
+import Clue.React.HttpProxy.ProxyConnector as HttpConnectProxy
+import Clue.React.Socks.Client as SocksProxy
+import GuzzleHttp.Psr7.Uri
+import InstagramAPI.Instagram
+import React.EventLoop.LoopInterface
+import React.Promise.PromiseInterface
+import React.Promise.RejectedPromise
+import React.Socket.Connector as SocketConnector
+import React.Socket.ConnectorInterface
+import React.Socket.SecureConnector
+
+class Connector : ConnectorInterface
 {
     /**
      * @var Instagram
      */
-    protected $_instagram;
+    protected $_instagram
 
     /**
      * @var LoopInterface
      */
-    protected $_loop;
+    protected $_loop
 
     /**
      * @var ConnectorInterface[]
      */
-    protected $_connectors;
+    protected $_connectors
 
     /**
      * Constructor.
@@ -36,38 +36,38 @@ class Connector implements ConnectorInterface
      * @param Instagram     $instagram
      * @param LoopInterface $loop
      */
-    public function __construct(
+    public fun __construct(
         Instagram $instagram,
         LoopInterface $loop)
     {
-        $this->_instagram = $instagram;
-        $this->_loop = $loop;
+        this._instagram = $instagram
+        this._loop = $loop
 
-        $this->_connectors = [];
+        this._connectors = []
     }
 
     /** {@inheritdoc} */
-    public function connect(
+    public fun connect(
         $uri)
     {
-        $uriObj = new Uri($uri);
-        $host = $this->_instagram->client->zeroRating()->rewrite($uriObj->getHost());
-        $uriObj = $uriObj->withHost($host);
-        if (!isset($this->_connectors[$host])) {
+        $uriObj = Uri($uri)
+        $host = this._instagram.client.zeroRating().rewrite($uriObj.getHost())
+        $uriObj = $uriObj.withHost($host)
+        if (!isset(this._connectors[$host])) {
             try {
-                $this->_connectors[$host] = $this->_getSecureConnector(
-                    $this->_getSecureContext($this->_instagram->getVerifySSL()),
-                    $this->_getProxyForHost($host, $this->_instagram->getProxy())
-                );
-            } catch (\Exception $e) {
-                return new RejectedPromise($e);
+                this._connectors[$host] = this._getSecureConnector(
+                    this._getSecureContext(this._instagram.getVerifySSL()),
+                    this._getProxyForHost($host, this._instagram.getProxy())
+                )
+            } catch (.Exception $e) {
+                return RejectedPromise($e)
             }
         }
-        $niceUri = ltrim((string) $uriObj, '/');
+        $niceUri = ltrim((string) $uriObj, '/')
         /** @var PromiseInterface $promise */
-        $promise = $this->_connectors[$host]->connect($niceUri);
+        $promise = this._connectors[$host].connect($niceUri)
 
-        return $promise;
+        return $promise
     }
 
     /**
@@ -76,27 +76,27 @@ class Connector implements ConnectorInterface
      * @param array       $secureContext
      * @param string|null $proxyAddress
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      *
      * @return ConnectorInterface
      */
-    protected function _getSecureConnector(
+    protected fun _getSecureConnector(
         array $secureContext = [],
         $proxyAddress = null)
     {
-        $connector = new SocketConnector($this->_loop, [
+        $connector = SocketConnector(this._loop, [
             'tcp'     => true,
             'tls'     => false,
             'unix'    => false,
             'dns'     => true,
             'timeout' => true,
-        ]);
+        ])
 
         if ($proxyAddress !== null) {
-            $connector = $this->_wrapConnectorIntoProxy($connector, $proxyAddress, $secureContext);
+            $connector = this._wrapConnectorIntoProxy($connector, $proxyAddress, $secureContext)
         }
 
-        return new SecureConnector($connector, $this->_loop, $secureContext);
+        return SecureConnector($connector, this._loop, $secureContext)
     }
 
     /**
@@ -105,37 +105,37 @@ class Connector implements ConnectorInterface
      * @param string $host        Host.
      * @param mixed  $proxyConfig Proxy config.
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      *
      * @return string|null
      *
      * @see http://docs.guzzlephp.org/en/stable/request-options.html#proxy
      */
-    protected function _getProxyForHost(
+    protected fun _getProxyForHost(
         $host,
         $proxyConfig = null)
     {
         // Empty config => no proxy.
         if (empty($proxyConfig)) {
-            return;
+            return
         }
 
         // Plain string => return it.
         if (!is_array($proxyConfig)) {
-            return $proxyConfig;
+            return $proxyConfig
         }
 
         // HTTP proxies do not have CONNECT method.
         if (!isset($proxyConfig['https'])) {
-            throw new \InvalidArgumentException('No proxy with CONNECT method found.');
+            throw .InvalidArgumentException('No proxy with CONNECT method found.')
         }
 
         // Check exceptions.
-        if (isset($proxyConfig['no']) && \GuzzleHttp\is_host_in_noproxy($host, $proxyConfig['no'])) {
-            return;
+        if (isset($proxyConfig['no']) && .GuzzleHttp.is_host_in_noproxy($host, $proxyConfig['no'])) {
+            return
         }
 
-        return $proxyConfig['https'];
+        return $proxyConfig['https']
     }
 
     /**
@@ -143,41 +143,41 @@ class Connector implements ConnectorInterface
      *
      * @param mixed $config
      *
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
+     * @throws .InvalidArgumentException
+     * @throws .RuntimeException
      *
      * @return array
      *
      * @see http://docs.guzzlephp.org/en/stable/request-options.html#verify
      */
-    protected function _getSecureContext(
+    protected fun _getSecureContext(
         $config)
     {
-        $context = [];
+        $context = []
         if ($config === true) {
             // PHP 5.6 or greater will find the system cert by default. When
-            // < 5.6, use the Guzzle bundled cacert.
+            // < 5.6, import the Guzzle bundled cacert.
             if (PHP_VERSION_ID < 50600) {
-                $context['cafile'] = \GuzzleHttp\default_ca_bundle();
+                $context['cafile'] = .GuzzleHttp.default_ca_bundle()
             }
         } elseif (is_string($config)) {
-            $context['cafile'] = $config;
+            $context['cafile'] = $config
             if (!is_file($config)) {
-                throw new \RuntimeException(sprintf('SSL CA bundle not found: "%s".', $config));
+                throw .RuntimeException(sprintf('SSL CA bundle not found: "%s".', $config))
             }
         } elseif ($config === false) {
-            $context['verify_peer'] = false;
-            $context['verify_peer_name'] = false;
+            $context['verify_peer'] = false
+            $context['verify_peer_name'] = false
 
-            return $context;
+            return $context
         } else {
-            throw new \InvalidArgumentException('Invalid verify request option.');
+            throw .InvalidArgumentException('Invalid verify request option.')
         }
-        $context['verify_peer'] = true;
-        $context['verify_peer_name'] = true;
-        $context['allow_self_signed'] = false;
+        $context['verify_peer'] = true
+        $context['verify_peer_name'] = true
+        $context['allow_self_signed'] = false
 
-        return $context;
+        return $context
     }
 
     /**
@@ -187,37 +187,37 @@ class Connector implements ConnectorInterface
      * @param string             $proxyAddress
      * @param array              $secureContext
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      *
      * @return ConnectorInterface
      */
-    protected function _wrapConnectorIntoProxy(
+    protected fun _wrapConnectorIntoProxy(
         ConnectorInterface $connector,
         $proxyAddress,
         array $secureContext = [])
     {
         if (strpos($proxyAddress, '://') === false) {
-            $scheme = 'http';
+            $scheme = 'http'
         } else {
-            $scheme = parse_url($proxyAddress, PHP_URL_SCHEME);
+            $scheme = parse_url($proxyAddress, PHP_URL_SCHEME)
         }
         switch ($scheme) {
             case 'socks':
             case 'socks4':
             case 'socks4a':
             case 'socks5':
-                $connector = new SocksProxy($proxyAddress, $connector);
-                break;
+                $connector = SocksProxy($proxyAddress, $connector)
+                break
             case 'http':
-                $connector = new HttpConnectProxy($proxyAddress, $connector);
-                break;
+                $connector = HttpConnectProxy($proxyAddress, $connector)
+                break
             case 'https':
-                $connector = new HttpConnectProxy($proxyAddress, new SecureConnector($connector, $this->_loop, $secureContext));
-                break;
+                $connector = HttpConnectProxy($proxyAddress, SecureConnector($connector, this._loop, $secureContext))
+                break
             default:
-                throw new \InvalidArgumentException(sprintf('Unsupported proxy scheme: "%s".', $scheme));
+                throw .InvalidArgumentException(sprintf('Unsupported proxy scheme: "%s".', $scheme))
         }
 
-        return $connector;
+        return $connector
     }
 }

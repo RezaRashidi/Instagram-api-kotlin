@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * CatalogData.
@@ -11,15 +11,15 @@ use InstagramAPI\AutoPropertyMapper;
  * @method PageInfo getPageInfo()
  * @method bool isEdges()
  * @method bool isPageInfo()
- * @method $this setEdges(CatalogEdge[] $value)
- * @method $this setPageInfo(PageInfo $value)
- * @method $this unsetEdges()
- * @method $this unsetPageInfo()
+ * @method this setEdges(CatalogEdge[] $value)
+ * @method this setPageInfo(PageInfo $value)
+ * @method this unsetEdges()
+ * @method this unsetPageInfo()
  */
-class CatalogData extends AutoPropertyMapper
+class CatalogData : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'page_info'          => 'PageInfo',
         'edges'              => 'CatalogEdge[]',
-    ];
+    ]
 }

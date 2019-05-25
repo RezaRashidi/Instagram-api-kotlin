@@ -1,12 +1,12 @@
-<?php
 
-namespace InstagramAPI\Realtime\Command\Direct;
 
-use InstagramAPI\Realtime\Command\DirectCommand;
+package InstagramAPI.Realtime.Command.Direct
 
-abstract class SendItem extends DirectCommand
+import InstagramAPI.Realtime.Command.DirectCommand
+
+abstract class SendItem : DirectCommand
 {
-    const ACTION = 'send_item';
+    val ACTION = 'send_item'
 
     /**
      * Constructor.
@@ -15,26 +15,26 @@ abstract class SendItem extends DirectCommand
      * @param string $itemType
      * @param array  $options
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public function __construct(
+    public fun __construct(
         $threadId,
         $itemType,
         array $options = [])
     {
-        parent::__construct(self::ACTION, $threadId, $options);
+        parent::__construct(self::ACTION, $threadId, $options)
 
         // Handle action.
-        if (!in_array($itemType, $this->_getSupportedItemTypes(), true)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a supported item type.', $itemType));
+        if (!in_array($itemType, this._getSupportedItemTypes(), true)) {
+            throw .InvalidArgumentException(sprintf('"%s" is not a supported item type.', $itemType))
         }
-        $this->_data['item_type'] = $itemType;
+        this._data['item_type'] = $itemType
     }
 
     /** {@inheritdoc} */
-    protected function _isClientContextRequired()
+    protected fun _isClientContextRequired()
     {
-        return true;
+        return true
     }
 
     /**
@@ -42,7 +42,7 @@ abstract class SendItem extends DirectCommand
      *
      * @return array
      */
-    protected function _getSupportedItemTypes()
+    protected fun _getSupportedItemTypes()
     {
         return [
             SendText::TYPE,
@@ -53,6 +53,6 @@ abstract class SendItem extends DirectCommand
             SendProfile::TYPE,
             SendLocation::TYPE,
             SendHashtag::TYPE,
-        ];
+        ]
     }
 }

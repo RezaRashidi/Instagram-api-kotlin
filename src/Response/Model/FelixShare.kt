@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * FelixShare.
@@ -11,15 +11,15 @@ use InstagramAPI\AutoPropertyMapper;
  * @method Item[] getVideo()
  * @method bool isText()
  * @method bool isVideo()
- * @method $this setText(string $value)
- * @method $this setVideo(Item[] $value)
- * @method $this unsetText()
- * @method $this unsetVideo()
+ * @method this setText(string $value)
+ * @method this setVideo(Item[] $value)
+ * @method this unsetText()
+ * @method this unsetVideo()
  */
-class FelixShare extends AutoPropertyMapper
+class FelixShare : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'video' => 'Item[]',
         'text'  => 'string',
-    ];
+    ]
 }

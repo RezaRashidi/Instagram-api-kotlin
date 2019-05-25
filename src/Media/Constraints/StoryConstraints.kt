@@ -1,13 +1,13 @@
-<?php
 
-namespace InstagramAPI\Media\Constraints;
 
-use InstagramAPI\Media\ConstraintsInterface;
+package InstagramAPI.Media.Constraints
+
+import InstagramAPI.Media.ConstraintsInterface
 
 /**
  * Instagram's story media constraints.
  */
-class StoryConstraints implements ConstraintsInterface
+class StoryConstraints : ConstraintsInterface
 {
     /**
      * Lowest allowed story aspect ratio.
@@ -29,7 +29,7 @@ class StoryConstraints implements ConstraintsInterface
      *
      * @see https://github.com/mgp25/Instagram-API/issues/1420#issuecomment-318146010
      */
-    const MIN_RATIO = 0.56;
+    val MIN_RATIO = 0.56
 
     /**
      * Highest allowed story aspect ratio.
@@ -38,7 +38,7 @@ class StoryConstraints implements ConstraintsInterface
      *
      * @var float
      */
-    const MAX_RATIO = 0.67;
+    val MAX_RATIO = 0.67
 
     /**
      * The recommended story aspect ratio.
@@ -54,12 +54,12 @@ class StoryConstraints implements ConstraintsInterface
      *
      * Therefore, this will be the final target aspect ratio used EVERY time
      * that media destined for a story feed is outside of the allowed range!
-     * That's because it doesn't make sense to let people target non-9:16 final
+     * That's becaimport it doesn't make sense to let people target non-9:16 final
      * story aspect ratios, since only 9:16 stories look good on most devices!
      *
      * @var float
      */
-    const RECOMMENDED_RATIO = 0.5625;
+    val RECOMMENDED_RATIO = 0.5625
 
     /**
      * The deviation for the recommended aspect ratio.
@@ -71,67 +71,67 @@ class StoryConstraints implements ConstraintsInterface
      *
      * @var float
      */
-    const RECOMMENDED_RATIO_DEVIATION = 0.0025;
+    val RECOMMENDED_RATIO_DEVIATION = 0.0025
 
     /**
      * Minimum allowed video duration.
      *
      * @var float
      */
-    const MIN_DURATION = 1.0;
+    val MIN_DURATION = 1.0
 
     /**
      * Maximum allowed video duration.
      *
      * @var float
      */
-    const MAX_DURATION = 15.0;
+    val MAX_DURATION = 15.0
 
     /** {@inheritdoc} */
-    public function getTitle()
+    public fun getTitle()
     {
-        return 'story';
+        return 'story'
     }
 
     /** {@inheritdoc} */
-    public function getMinAspectRatio()
+    public fun getMinAspectRatio()
     {
-        return self::MIN_RATIO;
+        return self::MIN_RATIO
     }
 
     /** {@inheritdoc} */
-    public function getMaxAspectRatio()
+    public fun getMaxAspectRatio()
     {
-        return self::MAX_RATIO;
+        return self::MAX_RATIO
     }
 
     /** {@inheritdoc} */
-    public function getRecommendedRatio()
+    public fun getRecommendedRatio()
     {
-        return self::RECOMMENDED_RATIO;
+        return self::RECOMMENDED_RATIO
     }
 
     /** {@inheritdoc} */
-    public function getRecommendedRatioDeviation()
+    public fun getRecommendedRatioDeviation()
     {
-        return self::RECOMMENDED_RATIO_DEVIATION;
+        return self::RECOMMENDED_RATIO_DEVIATION
     }
 
     /** {@inheritdoc} */
-    public function useRecommendedRatioByDefault()
+    public fun useRecommendedRatioByDefault()
     {
-        return true;
+        return true
     }
 
     /** {@inheritdoc} */
-    public function getMinDuration()
+    public fun getMinDuration()
     {
-        return self::MIN_DURATION;
+        return self::MIN_DURATION
     }
 
     /** {@inheritdoc} */
-    public function getMaxDuration()
+    public fun getMaxDuration()
     {
-        return self::MAX_DURATION;
+        return self::MAX_DURATION
     }
 }

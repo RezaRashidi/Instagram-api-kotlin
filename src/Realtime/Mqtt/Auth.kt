@@ -1,74 +1,74 @@
-<?php
 
-namespace InstagramAPI\Realtime\Mqtt;
 
-use Fbns\Client\AuthInterface;
-use InstagramAPI\Instagram;
+package InstagramAPI.Realtime.Mqtt
 
-class Auth implements AuthInterface
+import Fbns.Client.AuthInterface
+import InstagramAPI.Instagram
+
+class Auth : AuthInterface
 {
-    const AUTH_TYPE = 'cookie_auth';
+    val AUTH_TYPE = 'cookie_auth'
 
     /**
      * @var Instagram
      */
-    protected $_instagram;
+    protected $_instagram
 
     /**
      * Constructor.
      *
      * @param Instagram $instagram
      */
-    public function __construct(
+    public fun __construct(
         Instagram $instagram)
     {
-        $this->_instagram = $instagram;
+        this._instagram = $instagram
     }
 
     /** {@inheritdoc} */
-    public function getClientId()
+    public fun getClientId()
     {
-        return substr($this->getDeviceId(), 0, 20);
+        return substr(this.getDeviceId(), 0, 20)
     }
 
     /** {@inheritdoc} */
-    public function getClientType()
+    public fun getClientType()
     {
-        return self::AUTH_TYPE;
+        return self::AUTH_TYPE
     }
 
     /** {@inheritdoc} */
-    public function getUserId()
+    public fun getUserId()
     {
-        return $this->_instagram->account_id;
+        return this._instagram.account_id
     }
 
     /** {@inheritdoc} */
-    public function getPassword()
+    public fun getPassword()
     {
-        $cookie = $this->_instagram->client->getCookie('sessionid', 'i.instagram.com');
+        $cookie = this._instagram.client.getCookie('sessionid', 'i.instagram.com')
         if ($cookie !== null) {
-            return sprintf('%s=%s', $cookie->getName(), $cookie->getValue());
+            return sprintf('%s=%s', $cookie.getName(), $cookie.getValue())
         }
 
-        throw new \RuntimeException('No session cookie was found.');
+        throw .RuntimeException('No session cookie was found.')
     }
 
     /** {@inheritdoc} */
-    public function getDeviceId()
+    public fun getDeviceId()
     {
-        return $this->_instagram->uuid;
+        return this._instagram.uuid
     }
 
     /** {@inheritdoc} */
-    public function getDeviceSecret()
+    public fun getDeviceSecret()
     {
-        return '';
+        return ''
     }
 
     /** {@inheritdoc} */
-    public function __toString()
+    public fun __toString()
     {
-        return '';
+        return ''
     }
 }

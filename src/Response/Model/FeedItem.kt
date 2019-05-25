@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * FeedItem.
@@ -19,27 +19,27 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isMediaOrAd()
  * @method bool isStoriesNetego()
  * @method bool isSuggestedUsers()
- * @method $this setAd4ad(Ad4ad $value)
- * @method $this setAdLinkType(int $value)
- * @method $this setEndOfFeedDemarcator(mixed $value)
- * @method $this setMediaOrAd(Item $value)
- * @method $this setStoriesNetego(StoriesNetego $value)
- * @method $this setSuggestedUsers(SuggestedUsers $value)
- * @method $this unsetAd4ad()
- * @method $this unsetAdLinkType()
- * @method $this unsetEndOfFeedDemarcator()
- * @method $this unsetMediaOrAd()
- * @method $this unsetStoriesNetego()
- * @method $this unsetSuggestedUsers()
+ * @method this setAd4ad(Ad4ad $value)
+ * @method this setAdLinkType(int $value)
+ * @method this setEndOfFeedDemarcator(mixed $value)
+ * @method this setMediaOrAd(Item $value)
+ * @method this setStoriesNetego(StoriesNetego $value)
+ * @method this setSuggestedUsers(SuggestedUsers $value)
+ * @method this unsetAd4ad()
+ * @method this unsetAdLinkType()
+ * @method this unsetEndOfFeedDemarcator()
+ * @method this unsetMediaOrAd()
+ * @method this unsetStoriesNetego()
+ * @method this unsetSuggestedUsers()
  */
-class FeedItem extends AutoPropertyMapper
+class FeedItem : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'media_or_ad'            => 'Item',
         'stories_netego'         => 'StoriesNetego',
         'ad4ad'                  => 'Ad4ad',
         'suggested_users'        => 'SuggestedUsers',
         'end_of_feed_demarcator' => '',
         'ad_link_type'           => 'int',
-    ];
+    ]
 }

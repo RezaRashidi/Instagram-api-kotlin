@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoryCountdowns.
@@ -25,28 +25,28 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isX()
  * @method bool isY()
  * @method bool isZ()
- * @method $this setCountdownSticker(CountdownSticker $value)
- * @method $this setHeight(float $value)
- * @method $this setIsHidden(int $value)
- * @method $this setIsPinned(int $value)
- * @method $this setRotation(float $value)
- * @method $this setWidth(float $value)
- * @method $this setX(float $value)
- * @method $this setY(float $value)
- * @method $this setZ(float $value)
- * @method $this unsetCountdownSticker()
- * @method $this unsetHeight()
- * @method $this unsetIsHidden()
- * @method $this unsetIsPinned()
- * @method $this unsetRotation()
- * @method $this unsetWidth()
- * @method $this unsetX()
- * @method $this unsetY()
- * @method $this unsetZ()
+ * @method this setCountdownSticker(CountdownSticker $value)
+ * @method this setHeight(float $value)
+ * @method this setIsHidden(int $value)
+ * @method this setIsPinned(int $value)
+ * @method this setRotation(float $value)
+ * @method this setWidth(float $value)
+ * @method this setX(float $value)
+ * @method this setY(float $value)
+ * @method this setZ(float $value)
+ * @method this unsetCountdownSticker()
+ * @method this unsetHeight()
+ * @method this unsetIsHidden()
+ * @method this unsetIsPinned()
+ * @method this unsetRotation()
+ * @method this unsetWidth()
+ * @method this unsetX()
+ * @method this unsetY()
+ * @method this unsetZ()
  */
-class StoryCountdowns extends AutoPropertyMapper
+class StoryCountdowns : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'x'                 => 'float',
         'y'                 => 'float',
         'z'                 => 'float',
@@ -56,5 +56,5 @@ class StoryCountdowns extends AutoPropertyMapper
         'is_pinned'         => 'int',
         'is_hidden'         => 'int',
         'countdown_sticker' => 'CountdownSticker',
-    ];
+    ]
 }

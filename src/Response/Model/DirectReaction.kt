@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectReaction.
@@ -21,24 +21,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isReactionType()
  * @method bool isSenderId()
  * @method bool isTimestamp()
- * @method $this setClientContext(string $value)
- * @method $this setItemId(string $value)
- * @method $this setNodeType(string $value)
- * @method $this setReactionStatus(string $value)
- * @method $this setReactionType(string $value)
- * @method $this setSenderId(string $value)
- * @method $this setTimestamp(string $value)
- * @method $this unsetClientContext()
- * @method $this unsetItemId()
- * @method $this unsetNodeType()
- * @method $this unsetReactionStatus()
- * @method $this unsetReactionType()
- * @method $this unsetSenderId()
- * @method $this unsetTimestamp()
+ * @method this setClientContext(string $value)
+ * @method this setItemId(string $value)
+ * @method this setNodeType(string $value)
+ * @method this setReactionStatus(string $value)
+ * @method this setReactionType(string $value)
+ * @method this setSenderId(string $value)
+ * @method this setTimestamp(string $value)
+ * @method this unsetClientContext()
+ * @method this unsetItemId()
+ * @method this unsetNodeType()
+ * @method this unsetReactionStatus()
+ * @method this unsetReactionType()
+ * @method this unsetSenderId()
+ * @method this unsetTimestamp()
  */
-class DirectReaction extends AutoPropertyMapper
+class DirectReaction : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'reaction_type'   => 'string',
         'timestamp'       => 'string',
         'sender_id'       => 'string',
@@ -46,5 +46,5 @@ class DirectReaction extends AutoPropertyMapper
         'reaction_status' => 'string',
         'node_type'       => 'string',
         'item_id'         => 'string',
-    ];
+    ]
 }

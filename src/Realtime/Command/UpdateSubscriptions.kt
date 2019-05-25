@@ -1,21 +1,21 @@
-<?php
 
-namespace InstagramAPI\Realtime\Command;
 
-use InstagramAPI\Realtime\CommandInterface;
-use InstagramAPI\Realtime\Mqtt\QosLevel;
-use InstagramAPI\Utils;
+package InstagramAPI.Realtime.Command
 
-class UpdateSubscriptions implements CommandInterface
+import InstagramAPI.Realtime.CommandInterface
+import InstagramAPI.Realtime.Mqtt.QosLevel
+import InstagramAPI.Utils
+
+class UpdateSubscriptions : CommandInterface
 {
     /** @var string */
-    private $_topic;
+    private $_topic
 
     /** @var array */
-    private $_subscribe;
+    private $_subscribe
 
     /** @var array */
-    private $_unsubscribe;
+    private $_unsubscribe
 
     /**
      * Constructor.
@@ -24,26 +24,26 @@ class UpdateSubscriptions implements CommandInterface
      * @param array  $subscribe
      * @param array  $unsubscribe
      */
-    public function __construct(
+    public fun __construct(
         $topic,
         array $subscribe,
         array $unsubscribe)
     {
-        $this->_topic = $topic;
-        $this->_subscribe = $subscribe;
-        $this->_unsubscribe = $unsubscribe;
+        this._topic = $topic
+        this._subscribe = $subscribe
+        this._unsubscribe = $unsubscribe
     }
 
     /** {@inheritdoc} */
-    public function getTopic()
+    public fun getTopic()
     {
-        return $this->_topic;
+        return this._topic
     }
 
     /** {@inheritdoc} */
-    public function getQosLevel()
+    public fun getQosLevel()
     {
-        return QosLevel::ACKNOWLEDGED_DELIVERY;
+        return QosLevel::ACKNOWLEDGED_DELIVERY
     }
 
     /**
@@ -53,41 +53,41 @@ class UpdateSubscriptions implements CommandInterface
      *
      * @return array
      */
-    private function _prepareSubscriptions(
+    private fun _prepareSubscriptions(
         array $subscriptions)
     {
-        $result = [];
+        $result = []
         foreach ($subscriptions as $subscription) {
-            $result[] = (string) $subscription;
+            $result[] = (string) $subscription
         }
-        usort($result, function ($a, $b) {
-            $hashA = Utils::hashCode($a);
-            $hashB = Utils::hashCode($b);
+        usort($result, fun ($a, $b) {
+            $hashA = Utils::hashCode($a)
+            $hashB = Utils::hashCode($b)
 
             if ($hashA > $hashB) {
-                return 1;
+                return 1
             }
             if ($hashA < $hashB) {
-                return -1;
+                return -1
             }
 
-            return 0;
-        });
+            return 0
+        })
 
-        return $result;
+        return $result
     }
 
     /** {@inheritdoc} */
-    public function jsonSerialize()
+    public fun jsonSerialize()
     {
-        $result = [];
-        if (count($this->_subscribe)) {
-            $result['sub'] = $this->_prepareSubscriptions($this->_subscribe);
+        $result = []
+        if (count(this._subscribe)) {
+            $result['sub'] = this._prepareSubscriptions(this._subscribe)
         }
-        if (count($this->_unsubscribe)) {
-            $result['unsub'] = $this->_prepareSubscriptions($this->_unsubscribe);
+        if (count(this._unsubscribe)) {
+            $result['unsub'] = this._prepareSubscriptions(this._unsubscribe)
         }
 
-        return $result;
+        return $result
     }
 }

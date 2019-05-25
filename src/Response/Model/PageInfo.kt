@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * PageInfo.
@@ -13,18 +13,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isEndCursor()
  * @method bool isHasNextPage()
  * @method bool isHasPreviousPage()
- * @method $this setEndCursor(string $value)
- * @method $this setHasNextPage(bool $value)
- * @method $this setHasPreviousPage(bool $value)
- * @method $this unsetEndCursor()
- * @method $this unsetHasNextPage()
- * @method $this unsetHasPreviousPage()
+ * @method this setEndCursor(string $value)
+ * @method this setHasNextPage(bool $value)
+ * @method this setHasPreviousPage(bool $value)
+ * @method this unsetEndCursor()
+ * @method this unsetHasNextPage()
+ * @method this unsetHasPreviousPage()
  */
-class PageInfo extends AutoPropertyMapper
+class PageInfo : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'end_cursor'        => 'string',
         'has_next_page'     => 'bool',
         'has_previous_page' => 'bool',
-    ];
+    ]
 }

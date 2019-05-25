@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * MediaInsights.
@@ -21,24 +21,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isLikeCount()
  * @method bool isReachCount()
  * @method bool isSaveCount()
- * @method $this setAvgEngagementCount(int $value)
- * @method $this setCommentCount(int $value)
- * @method $this setEngagementCount(int $value)
- * @method $this setImpressionCount(int $value)
- * @method $this setLikeCount(int $value)
- * @method $this setReachCount(int $value)
- * @method $this setSaveCount(int $value)
- * @method $this unsetAvgEngagementCount()
- * @method $this unsetCommentCount()
- * @method $this unsetEngagementCount()
- * @method $this unsetImpressionCount()
- * @method $this unsetLikeCount()
- * @method $this unsetReachCount()
- * @method $this unsetSaveCount()
+ * @method this setAvgEngagementCount(int $value)
+ * @method this setCommentCount(int $value)
+ * @method this setEngagementCount(int $value)
+ * @method this setImpressionCount(int $value)
+ * @method this setLikeCount(int $value)
+ * @method this setReachCount(int $value)
+ * @method this setSaveCount(int $value)
+ * @method this unsetAvgEngagementCount()
+ * @method this unsetCommentCount()
+ * @method this unsetEngagementCount()
+ * @method this unsetImpressionCount()
+ * @method this unsetLikeCount()
+ * @method this unsetReachCount()
+ * @method this unsetSaveCount()
  */
-class MediaInsights extends AutoPropertyMapper
+class MediaInsights : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'reach_count'          => 'int',
         'impression_count'     => 'int',
         'engagement_count'     => 'int',
@@ -46,5 +46,5 @@ class MediaInsights extends AutoPropertyMapper
         'comment_count'        => 'int',
         'save_count'           => 'int',
         'like_count'           => 'int',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Tab.
@@ -11,15 +11,15 @@ use InstagramAPI\AutoPropertyMapper;
  * @method string getType()
  * @method bool isTitle()
  * @method bool isType()
- * @method $this setTitle(string $value)
- * @method $this setType(string $value)
- * @method $this unsetTitle()
- * @method $this unsetType()
+ * @method this setTitle(string $value)
+ * @method this setType(string $value)
+ * @method this unsetTitle()
+ * @method this unsetType()
  */
-class Tab extends AutoPropertyMapper
+class Tab : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'type'  => 'string',
         'title' => 'string',
-    ];
+    ]
 }

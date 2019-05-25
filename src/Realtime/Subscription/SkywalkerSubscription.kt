@@ -1,35 +1,35 @@
-<?php
 
-namespace InstagramAPI\Realtime\Subscription;
 
-use InstagramAPI\Realtime\Mqtt;
-use InstagramAPI\Realtime\SubscriptionInterface;
+package InstagramAPI.Realtime.Subscription
 
-abstract class SkywalkerSubscription implements SubscriptionInterface
+import InstagramAPI.Realtime.Mqtt
+import InstagramAPI.Realtime.SubscriptionInterface
+
+abstract class SkywalkerSubscription : SubscriptionInterface
 {
     /** @var string */
-    protected $_accountId;
+    protected $_accountId
 
     /**
      * Constructor.
      *
      * @param string $accountId
      */
-    public function __construct(
+    public fun __construct(
         $accountId)
     {
-        $this->_accountId = $accountId;
+        this._accountId = $accountId
     }
 
     /** {@inheritdoc} */
-    public function getTopic()
+    public fun getTopic()
     {
-        return Mqtt\Topics::PUBSUB;
+        return Mqtt.Topics::PUBSUB
     }
 
     /** {@inheritdoc} */
-    abstract public function getId();
+    abstract public fun getId()
 
     /** {@inheritdoc} */
-    abstract public function __toString();
+    abstract public fun __toString()
 }

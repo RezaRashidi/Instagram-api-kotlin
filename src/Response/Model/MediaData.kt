@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * MediaData.
@@ -17,20 +17,20 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isOriginalHeight()
  * @method bool isOriginalWidth()
  * @method bool isVideoVersions()
- * @method $this setImageVersions2(Image_Versions2 $value)
- * @method $this setMediaType(int $value)
- * @method $this setOriginalHeight(int $value)
- * @method $this setOriginalWidth(int $value)
- * @method $this setVideoVersions(VideoVersions[] $value)
- * @method $this unsetImageVersions2()
- * @method $this unsetMediaType()
- * @method $this unsetOriginalHeight()
- * @method $this unsetOriginalWidth()
- * @method $this unsetVideoVersions()
+ * @method this setImageVersions2(Image_Versions2 $value)
+ * @method this setMediaType(int $value)
+ * @method this setOriginalHeight(int $value)
+ * @method this setOriginalWidth(int $value)
+ * @method this setVideoVersions(VideoVersions[] $value)
+ * @method this unsetImageVersions2()
+ * @method this unsetMediaType()
+ * @method this unsetOriginalHeight()
+ * @method this unsetOriginalWidth()
+ * @method this unsetVideoVersions()
  */
-class MediaData extends AutoPropertyMapper
+class MediaData : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'image_versions2' => 'Image_Versions2',
         'original_width'  => 'int',
         'original_height' => 'int',
@@ -39,5 +39,5 @@ class MediaData extends AutoPropertyMapper
          */
         'media_type'      => 'int',
         'video_versions'  => 'VideoVersions[]',
-    ];
+    ]
 }

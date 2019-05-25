@@ -1,83 +1,83 @@
-<?php
 
-namespace InstagramAPI\Media\Constraints;
+
+package InstagramAPI.Media.Constraints
 
 /**
  * Instagram's Tv media constraints.
  */
-class TvConstraints extends StoryConstraints
+class TvConstraints : StoryConstraints
 {
     /**
      * Lowest allowed aspect ratio.
      *
      * It is controlled by ig_android_igtv_aspect_ratio_limits/min_aspect_ratio experiment.
      *
-     * // TODO Use the experiment.
+     * // TODO import the experiment.
      *
      * @var float
      */
-    const MIN_RATIO = 0.5;
+    val MIN_RATIO = 0.5
 
     /**
      * Highest allowed aspect ratio.
      *
      * It is controlled by ig_android_igtv_aspect_ratio_limits/max_aspect_ratio experiment.
      *
-     * // TODO Use the experiment.
+     * // TODO import the experiment.
      *
      * @var float
      */
-    const MAX_RATIO = 0.8;
+    val MAX_RATIO = 0.8
 
     /**
      * Minimum allowed video duration.
      *
      * It is controlled by ig_android_felix_video_upload_length/minimum_duration experiment.
      *
-     * // TODO Use the experiment.
+     * // TODO import the experiment.
      *
      * @var float
      */
-    const MIN_DURATION = 15.0;
+    val MIN_DURATION = 15.0
 
     /**
      * Maximum allowed video duration.
      *
      * It is controlled by ig_android_felix_video_upload_length/maximum_duration experiment.
      *
-     * // TODO Use the experiment.
+     * // TODO import the experiment.
      *
      * @var float
      */
-    const MAX_DURATION = 600.0;
+    val MAX_DURATION = 600.0
 
     /** {@inheritdoc} */
-    public function getTitle()
+    public fun getTitle()
     {
-        return 'TV';
+        return 'TV'
     }
 
     /** {@inheritdoc} */
-    public function getMinAspectRatio()
+    public fun getMinAspectRatio()
     {
-        return self::MIN_RATIO;
+        return self::MIN_RATIO
     }
 
     /** {@inheritdoc} */
-    public function getMaxAspectRatio()
+    public fun getMaxAspectRatio()
     {
-        return self::MAX_RATIO;
+        return self::MAX_RATIO
     }
 
     /** {@inheritdoc} */
-    public function getMinDuration()
+    public fun getMinDuration()
     {
-        return self::MIN_DURATION;
+        return self::MIN_DURATION
     }
 
     /** {@inheritdoc} */
-    public function getMaxDuration()
+    public fun getMaxDuration()
     {
-        return self::MAX_DURATION;
+        return self::MAX_DURATION
     }
 }

@@ -1,7 +1,7 @@
-<?php
 
-namespace InstagramAPI\Exception;
 
-class InvalidSmsCodeException extends RequestException
+package InstagramAPI.Exception
+
+class InvalidSmsCodeException : RequestException
 {
 }

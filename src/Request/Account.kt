@@ -1,32 +1,32 @@
-<?php
 
-namespace InstagramAPI\Request;
 
-use InstagramAPI\Exception\InternalException;
-use InstagramAPI\Exception\SettingsException;
-use InstagramAPI\Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Exception.InternalException
+import InstagramAPI.Exception.SettingsException
+import InstagramAPI.Response
 
 /**
- * Account-related functions, such as profile editing and security.
+ * Account-related funs, such as profile editing and security.
  */
-class Account extends RequestCollection
+class Account : RequestCollection
 {
     /**
      * Get details about the currently logged in account.
      *
      * Also try People::getSelfInfo() instead, for some different information.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return .InstagramAPI.Response.UserInfoResponse
      *
      * @see People::getSelfInfo()
      */
-    public function getCurrentUser()
+    public fun getCurrentUser()
     {
-        return $this->ig->request('accounts/current_user/')
-            ->addParam('edit', true)
-            ->getResponse(new Response\UserInfoResponse());
+        return this.ig.request('accounts/current_user/')
+            .addParam('edit', true)
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -39,57 +39,57 @@ class Account extends RequestCollection
      * account is private).
      *
      * WARNING: Remember to also call `editProfile()` *after* using this
-     * function, so that you act like the real app!
+     * fun, so that you act like the real app!
      *
-     * @param string $biography Biography text. Use "" for nothing.
+     * @param string $biography Biography text. import "" for nothing.
      *
-     * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InvalidArgumentException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return .InstagramAPI.Response.UserInfoResponse
      *
-     * @see Account::editProfile() should be called after this function!
+     * @see Account::editProfile() should be called after this fun!
      */
-    public function setBiography(
+    public fun setBiography(
         $biography)
     {
         if (!is_string($biography) || strlen($biography) > 150) {
-            throw new \InvalidArgumentException('Please provide a 0 to 150 character string as biography.');
+            throw .InvalidArgumentException('Please provide a 0 to 150 character string as biography.')
         }
 
-        return $this->ig->request('accounts/set_biography/')
-            ->addPost('raw_text', $biography)
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('device_id', $this->ig->device_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\UserInfoResponse());
+        return this.ig.request('accounts/set_biography/')
+            .addPost('raw_text', $biography)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('device_id', this.ig.device_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
      * Edit your profile.
      *
-     * Warning: You must provide ALL parameters to this function. The values
+     * Warning: You must provide ALL parameters to this fun. The values
      * which you provide will overwrite all current values on your profile.
-     * You can use getCurrentUser() to see your current values first.
+     * You can import getCurrentUser() to see your current values first.
      *
-     * @param string      $url         Website URL. Use "" for nothing.
-     * @param string      $phone       Phone number. Use "" for nothing.
-     * @param string      $name        Full name. Use "" for nothing.
-     * @param string      $biography   Biography text. Use "" for nothing.
+     * @param string      $url         Website URL. import "" for nothing.
+     * @param string      $phone       Phone number. import "" for nothing.
+     * @param string      $name        Full name. import "" for nothing.
+     * @param string      $biography   Biography text. import "" for nothing.
      * @param string      $email       Email. Required!
      * @param int         $gender      Gender (1 = male, 2 = female, 3 = unknown). Required!
-     * @param string|null $newUsername (optional) Rename your account to a new username,
+     * @param string|null $newUsername (optional) Rename your account to a username,
      *                                 which you've already verified with checkUsername().
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return .InstagramAPI.Response.UserInfoResponse
      *
      * @see Account::getCurrentUser() to get your current account details.
-     * @see Account::checkUsername() to verify your new username first.
+     * @see Account::checkUsername() to verify your username first.
      */
-    public function editProfile(
+    public fun editProfile(
         $url,
         $phone,
         $name,
@@ -99,35 +99,35 @@ class Account extends RequestCollection
         $newUsername = null)
     {
         // We must mark the profile for editing before doing the main request.
-        $userResponse = $this->ig->request('accounts/current_user/')
-            ->addParam('edit', true)
-            ->getResponse(new Response\UserInfoResponse());
+        $userResponse = this.ig.request('accounts/current_user/')
+            .addParam('edit', true)
+            .getResponse(Response.UserInfoResponse())
 
         // Get the current user's name from the response.
-        $currentUser = $userResponse->getUser();
-        if (!$currentUser || !is_string($currentUser->getUsername())) {
-            throw new InternalException('Unable to find current account username while preparing profile edit.');
+        $currentUser = $userResponse.getUser()
+        if (!$currentUser || !is_string($currentUser.getUsername())) {
+            throw InternalException('Unable to find current account username while preparing profile edit.')
         }
-        $oldUsername = $currentUser->getUsername();
+        $oldUsername = $currentUser.getUsername()
 
         // Determine the desired username value.
         $username = is_string($newUsername) && strlen($newUsername) > 0
                   ? $newUsername
-                  : $oldUsername; // Keep current name.
+                  : $oldUsername // Keep current name.
 
-        return $this->ig->request('accounts/edit_profile/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('external_url', $url)
-            ->addPost('phone_number', $phone)
-            ->addPost('username', $username)
-            ->addPost('first_name', $name)
-            ->addPost('biography', $biography)
-            ->addPost('email', $email)
-            ->addPost('gender', $gender)
-            ->addPost('device_id', $this->ig->device_id)
-            ->getResponse(new Response\UserInfoResponse());
+        return this.ig.request('accounts/edit_profile/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('external_url', $url)
+            .addPost('phone_number', $phone)
+            .addPost('username', $username)
+            .addPost('first_name', $name)
+            .addPost('biography', $biography)
+            .addPost('email', $email)
+            .addPost('gender', $gender)
+            .addPost('device_id', this.ig.device_id)
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -135,68 +135,68 @@ class Account extends RequestCollection
      *
      * @param string $photoFilename The photo filename.
      *
-     * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InvalidArgumentException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return .InstagramAPI.Response.UserInfoResponse
      */
-    public function changeProfilePicture(
+    public fun changeProfilePicture(
         $photoFilename)
     {
-        return $this->ig->request('accounts/change_profile_picture/')
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addFile('profile_pic', $photoFilename, 'profile_pic')
-            ->getResponse(new Response\UserInfoResponse());
+        return this.ig.request('accounts/change_profile_picture/')
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addFile('profile_pic', $photoFilename, 'profile_pic')
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
      * Remove your account's profile picture.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return .InstagramAPI.Response.UserInfoResponse
      */
-    public function removeProfilePicture()
+    public fun removeProfilePicture()
     {
-        return $this->ig->request('accounts/remove_profile_picture/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\UserInfoResponse());
+        return this.ig.request('accounts/remove_profile_picture/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
      * Sets your account to public.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return .InstagramAPI.Response.UserInfoResponse
      */
-    public function setPublic()
+    public fun setPublic()
     {
-        return $this->ig->request('accounts/set_public/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\UserInfoResponse());
+        return this.ig.request('accounts/set_public/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
      * Sets your account to private.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return .InstagramAPI.Response.UserInfoResponse
      */
-    public function setPrivate()
+    public fun setPrivate()
     {
-        return $this->ig->request('accounts/set_private/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\UserInfoResponse());
+        return this.ig.request('accounts/set_private/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -205,32 +205,32 @@ class Account extends RequestCollection
      * In order to switch your account to Business profile you MUST
      * call Account::setBusinessInfo().
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\SwitchBusinessProfileResponse
+     * @return .InstagramAPI.Response.SwitchBusinessProfileResponse
      *
      * @see Account::setBusinessInfo() sets required data to become a business profile.
      */
-    public function switchToBusinessProfile()
+    public fun switchToBusinessProfile()
     {
-        return $this->ig->request('business_conversion/get_business_convert_social_context/')
-            ->getResponse(new Response\SwitchBusinessProfileResponse());
+        return this.ig.request('business_conversion/get_business_convert_social_context/')
+            .getResponse(Response.SwitchBusinessProfileResponse())
     }
 
     /**
      * Switches your account to personal profile.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\SwitchPersonalProfileResponse
+     * @return .InstagramAPI.Response.SwitchPersonalProfileResponse
      */
-    public function switchToPersonalProfile()
+    public fun switchToPersonalProfile()
     {
-        return $this->ig->request('accounts/convert_to_personal/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\SwitchPersonalProfileResponse());
+        return this.ig.request('accounts/convert_to_personal/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.SwitchPersonalProfileResponse())
     }
 
     /**
@@ -240,66 +240,66 @@ class Account extends RequestCollection
      * @param string $email       Email.
      * @param string $categoryId  TODO: Info.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\CreateBusinessInfoResponse
+     * @return .InstagramAPI.Response.CreateBusinessInfoResponse
      */
-    public function setBusinessInfo(
+    public fun setBusinessInfo(
         $phoneNumber,
         $email,
         $categoryId)
     {
-        return $this->ig->request('accounts/create_business_info/')
-            ->addPost('set_public', 'true')
-            ->addPost('entry_point', 'setting')
-            ->addPost('public_phone_contact', json_encode([
+        return this.ig.request('accounts/create_business_info/')
+            .addPost('set_public', 'true')
+            .addPost('entry_point', 'setting')
+            .addPost('public_phone_contact', json_encode([
                 'public_phone_number'       => $phoneNumber,
                 'business_contact_method'   => 'CALL',
             ]))
-            ->addPost('public_email', $email)
-            ->addPost('category_id', $categoryId)
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\CreateBusinessInfoResponse());
+            .addPost('public_email', $email)
+            .addPost('category_id', $categoryId)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.CreateBusinessInfoResponse())
     }
 
     /**
      * Check if an Instagram username is available (not already registered).
      *
-     * Use this before trying to rename your Instagram account,
-     * to be sure that the new username is available.
+     * import this before trying to rename your Instagram account,
+     * to be sure that the username is available.
      *
      * @param string $username Instagram username to check.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\CheckUsernameResponse
+     * @return .InstagramAPI.Response.CheckUsernameResponse
      *
      * @see Account::editProfile() to rename your account.
      */
-    public function checkUsername(
+    public fun checkUsername(
         $username)
     {
-        return $this->ig->request('users/check_username/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('username', $username)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('_uid', $this->ig->account_id)
-            ->getResponse(new Response\CheckUsernameResponse());
+        return this.ig.request('users/check_username/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('username', $username)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('_uid', this.ig.account_id)
+            .getResponse(Response.CheckUsernameResponse())
     }
 
     /**
      * Get account spam filter status.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\CommentFilterResponse
+     * @return .InstagramAPI.Response.CommentFilterResponse
      */
-    public function getCommentFilter()
+    public fun getCommentFilter()
     {
-        return $this->ig->request('accounts/get_comment_filter/')
-            ->getResponse(new Response\CommentFilterResponse());
+        return this.ig.request('accounts/get_comment_filter/')
+            .getResponse(Response.CommentFilterResponse())
     }
 
     /**
@@ -307,45 +307,45 @@ class Account extends RequestCollection
      *
      * @param int $config_value Whether spam filter is on (0 or 1).
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\CommentFilterSetResponse
+     * @return .InstagramAPI.Response.CommentFilterSetResponse
      */
-    public function setCommentFilter(
+    public fun setCommentFilter(
         $config_value)
     {
-        return $this->ig->request('accounts/set_comment_filter/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('config_value', $config_value)
-            ->getResponse(new Response\CommentFilterSetResponse());
+        return this.ig.request('accounts/set_comment_filter/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('config_value', $config_value)
+            .getResponse(Response.CommentFilterSetResponse())
     }
 
     /**
      * Get whether the comment category filter is disabled.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\CommentCategoryFilterResponse
+     * @return .InstagramAPI.Response.CommentCategoryFilterResponse
      */
-    public function getCommentCategoryFilterDisabled()
+    public fun getCommentCategoryFilterDisabled()
     {
-        return $this->ig->request('accounts/get_comment_category_filter_disabled/')
-            ->getResponse(new Response\CommentCategoryFilterResponse());
+        return this.ig.request('accounts/get_comment_category_filter_disabled/')
+            .getResponse(Response.CommentCategoryFilterResponse())
     }
 
     /**
      * Get account spam filter keywords.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\CommentFilterKeywordsResponse
+     * @return .InstagramAPI.Response.CommentFilterKeywordsResponse
      */
-    public function getCommentFilterKeywords()
+    public fun getCommentFilterKeywords()
     {
-        return $this->ig->request('accounts/get_comment_filter_keywords/')
-            ->getResponse(new Response\CommentFilterKeywordsResponse());
+        return this.ig.request('accounts/get_comment_filter_keywords/')
+            .getResponse(Response.CommentFilterKeywordsResponse())
     }
 
     /**
@@ -353,43 +353,43 @@ class Account extends RequestCollection
      *
      * @param string $keywords List of blocked words, separated by comma.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\CommentFilterSetResponse
+     * @return .InstagramAPI.Response.CommentFilterSetResponse
      */
-    public function setCommentFilterKeywords(
+    public fun setCommentFilterKeywords(
         $keywords)
     {
-        return $this->ig->request('accounts/set_comment_filter_keywords/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('keywords', $keywords)
-            ->getResponse(new Response\CommentFilterSetResponse());
+        return this.ig.request('accounts/set_comment_filter_keywords/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('keywords', $keywords)
+            .getResponse(Response.CommentFilterSetResponse())
     }
 
     /**
      * Change your account's password.
      *
      * @param string $oldPassword Old password.
-     * @param string $newPassword New password.
+     * @param string $newPassword password.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\ChangePasswordResponse
+     * @return .InstagramAPI.Response.ChangePasswordResponse
      */
-    public function changePassword(
+    public fun changePassword(
         $oldPassword,
         $newPassword)
     {
-        return $this->ig->request('accounts/change_password/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('old_password', $oldPassword)
-            ->addPost('new_password1', $newPassword)
-            ->addPost('new_password2', $newPassword)
-            ->getResponse(new Response\ChangePasswordResponse());
+        return this.ig.request('accounts/change_password/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('old_password', $oldPassword)
+            .addPost('new_password1', $newPassword)
+            .addPost('new_password2', $newPassword)
+            .getResponse(Response.ChangePasswordResponse())
     }
 
     /**
@@ -400,19 +400,19 @@ class Account extends RequestCollection
      *          CODES LET YOU REGAIN CONTROL OF YOUR ACCOUNT IF YOU LOSE THE
      *          PHONE NUMBER! WITHOUT THE CODES, YOU RISK LOSING YOUR ACCOUNT!
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\AccountSecurityInfoResponse
+     * @return .InstagramAPI.Response.AccountSecurityInfoResponse
      *
      * @see Account::enableTwoFactorSMS()
      */
-    public function getSecurityInfo()
+    public fun getSecurityInfo()
     {
-        return $this->ig->request('accounts/account_security_info/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\AccountSecurityInfoResponse());
+        return this.ig.request('accounts/account_security_info/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.AccountSecurityInfoResponse())
     }
 
     /**
@@ -423,24 +423,24 @@ class Account extends RequestCollection
      *
      * @param string $phoneNumber Phone number with country code. Format: +34123456789.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\SendTwoFactorEnableSMSResponse
+     * @return .InstagramAPI.Response.SendTwoFactorEnableSMSResponse
      *
      * @see Account::enableTwoFactorSMS()
      */
-    public function sendTwoFactorEnableSMS(
+    public fun sendTwoFactorEnableSMS(
         $phoneNumber)
     {
-        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber);
+        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber)
 
-        return $this->ig->request('accounts/send_two_factor_enable_sms/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('device_id', $this->ig->device_id)
-            ->addPost('phone_number', $cleanNumber)
-            ->getResponse(new Response\SendTwoFactorEnableSMSResponse());
+        return this.ig.request('accounts/send_two_factor_enable_sms/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('device_id', this.ig.device_id)
+            .addPost('phone_number', $cleanNumber)
+            .getResponse(Response.SendTwoFactorEnableSMSResponse())
     }
 
     /**
@@ -454,45 +454,45 @@ class Account extends RequestCollection
      * @param string $phoneNumber      Phone number with country code. Format: +34123456789.
      * @param string $verificationCode The code sent to your phone via `Account::sendTwoFactorEnableSMS()`.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\AccountSecurityInfoResponse
+     * @return .InstagramAPI.Response.AccountSecurityInfoResponse
      *
      * @see Account::sendTwoFactorEnableSMS()
      * @see Account::getSecurityInfo()
      */
-    public function enableTwoFactorSMS(
+    public fun enableTwoFactorSMS(
         $phoneNumber,
         $verificationCode)
     {
-        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber);
+        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber)
 
-        $this->ig->request('accounts/enable_sms_two_factor/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('device_id', $this->ig->device_id)
-            ->addPost('phone_number', $cleanNumber)
-            ->addPost('verification_code', $verificationCode)
-            ->getResponse(new Response\EnableTwoFactorSMSResponse());
+        this.ig.request('accounts/enable_sms_two_factor/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('device_id', this.ig.device_id)
+            .addPost('phone_number', $cleanNumber)
+            .addPost('verification_code', $verificationCode)
+            .getResponse(Response.EnableTwoFactorSMSResponse())
 
-        return $this->getSecurityInfo();
+        return this.getSecurityInfo()
     }
 
     /**
      * Disable Two Factor authentication.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\DisableTwoFactorSMSResponse
+     * @return .InstagramAPI.Response.DisableTwoFactorSMSResponse
      */
-    public function disableTwoFactorSMS()
+    public fun disableTwoFactorSMS()
     {
-        return $this->ig->request('accounts/disable_sms_two_factor/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\DisableTwoFactorSMSResponse());
+        return this.ig.request('accounts/disable_sms_two_factor/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.DisableTwoFactorSMSResponse())
     }
 
     /**
@@ -500,11 +500,11 @@ class Account extends RequestCollection
      *
      * @param bool $disabled
      */
-    protected function _savePresenceStatus(
+    protected fun _savePresenceStatus(
         $disabled)
     {
         try {
-            $this->ig->settings->set('presence_disabled', $disabled ? '1' : '0');
+            this.ig.settings.set('presence_disabled', $disabled ? '1' : '0')
         } catch (SettingsException $e) {
             // Ignore storage errors.
         }
@@ -513,20 +513,20 @@ class Account extends RequestCollection
     /**
      * Get presence status.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\PresenceStatusResponse
+     * @return .InstagramAPI.Response.PresenceStatusResponse
      */
-    public function getPresenceStatus()
+    public fun getPresenceStatus()
     {
-        /** @var Response\PresenceStatusResponse $result */
-        $result = $this->ig->request('accounts/get_presence_disabled/')
-            ->setSignedGet(true)
-            ->getResponse(new Response\PresenceStatusResponse());
+        /** @var Response.PresenceStatusResponse $result */
+        $result = this.ig.request('accounts/get_presence_disabled/')
+            .setSignedGet(true)
+            .getResponse(Response.PresenceStatusResponse())
 
-        $this->_savePresenceStatus($result->getDisabled());
+        this._savePresenceStatus($result.getDisabled())
 
-        return $result;
+        return $result
     }
 
     /**
@@ -535,23 +535,23 @@ class Account extends RequestCollection
      * Allow accounts you follow and anyone you message to see when you were
      * last active on Instagram apps.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return .InstagramAPI.Response.GenericResponse
      */
-    public function enablePresence()
+    public fun enablePresence()
     {
-        /** @var Response\GenericResponse $result */
-        $result = $this->ig->request('accounts/set_presence_disabled/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('disabled', '0')
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\GenericResponse());
+        /** @var Response.GenericResponse $result */
+        $result = this.ig.request('accounts/set_presence_disabled/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('disabled', '0')
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.GenericResponse())
 
-        $this->_savePresenceStatus(false);
+        this._savePresenceStatus(false)
 
-        return $result;
+        return $result
     }
 
     /**
@@ -559,40 +559,40 @@ class Account extends RequestCollection
      *
      * You won't be able to see the activity status of other accounts.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return .InstagramAPI.Response.GenericResponse
      */
-    public function disablePresence()
+    public fun disablePresence()
     {
-        /** @var Response\GenericResponse $result */
-        $result = $this->ig->request('accounts/set_presence_disabled/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('disabled', '1')
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\GenericResponse());
+        /** @var Response.GenericResponse $result */
+        $result = this.ig.request('accounts/set_presence_disabled/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('disabled', '1')
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.GenericResponse())
 
-        $this->_savePresenceStatus(true);
+        this._savePresenceStatus(true)
 
-        return $result;
+        return $result
     }
 
     /**
      * Tell Instagram to send you a message to verify your email address.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\SendConfirmEmailResponse
+     * @return .InstagramAPI.Response.SendConfirmEmailResponse
      */
-    public function sendConfirmEmail()
+    public fun sendConfirmEmail()
     {
-        return $this->ig->request('accounts/send_confirm_email/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('send_source', 'edit_profile')
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\SendConfirmEmailResponse());
+        return this.ig.request('accounts/send_confirm_email/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('send_source', 'edit_profile')
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.SendConfirmEmailResponse())
     }
 
     /**
@@ -600,21 +600,21 @@ class Account extends RequestCollection
      *
      * @param string $phoneNumber Phone number with country code. Format: +34123456789.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\SendSMSCodeResponse
+     * @return .InstagramAPI.Response.SendSMSCodeResponse
      */
-    public function sendSMSCode(
+    public fun sendSMSCode(
         $phoneNumber)
     {
-        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber);
+        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber)
 
-        return $this->ig->request('accounts/send_sms_code/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('phone_number', $cleanNumber)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\SendSMSCodeResponse());
+        return this.ig.request('accounts/send_sms_code/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('phone_number', $cleanNumber)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.SendSMSCodeResponse())
     }
 
     /**
@@ -623,25 +623,25 @@ class Account extends RequestCollection
      * @param string $phoneNumber      Phone number with country code. Format: +34123456789.
      * @param string $verificationCode The code sent to your phone via `Account::sendSMSCode()`.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\VerifySMSCodeResponse
+     * @return .InstagramAPI.Response.VerifySMSCodeResponse
      *
      * @see Account::sendSMSCode()
      */
-    public function verifySMSCode(
+    public fun verifySMSCode(
         $phoneNumber,
         $verificationCode)
     {
-        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber);
+        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber)
 
-        return $this->ig->request('accounts/verify_sms_code/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('phone_number', $cleanNumber)
-            ->addPost('verification_code', $verificationCode)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\VerifySMSCodeResponse());
+        return this.ig.request('accounts/verify_sms_code/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('phone_number', $cleanNumber)
+            .addPost('verification_code', $verificationCode)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.VerifySMSCodeResponse())
     }
 
     /**
@@ -649,55 +649,55 @@ class Account extends RequestCollection
      *
      * @param string $usage Either "prefill" or "auto_confirmation".
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return .InstagramAPI.Response.GenericResponse
      */
-    public function setContactPointPrefill(
+    public fun setContactPointPrefill(
         $usage)
     {
-        return $this->ig->request('accounts/contact_point_prefill/')
-            ->setNeedsAuth(false)
-            ->addPost('phone_id', $this->ig->phone_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('usage', $usage)
-            ->getResponse(new Response\GenericResponse());
+        return this.ig.request('accounts/contact_point_prefill/')
+            .setNeedsAuth(false)
+            .addPost('phone_id', this.ig.phone_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('usage', $usage)
+            .getResponse(Response.GenericResponse())
     }
 
     /**
      * Get account badge notifications for the "Switch account" menu.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\BadgeNotificationsResponse
+     * @return .InstagramAPI.Response.BadgeNotificationsResponse
      */
-    public function getBadgeNotifications()
+    public fun getBadgeNotifications()
     {
-        return $this->ig->request('notifications/badge/')
-            ->setSignedPost(false)
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('users_ids', $this->ig->account_id)
-            ->addPost('phone_id', $this->ig->phone_id)
-            ->getResponse(new Response\BadgeNotificationsResponse());
+        return this.ig.request('notifications/badge/')
+            .setSignedPost(false)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('users_ids', this.ig.account_id)
+            .addPost('phone_id', this.ig.phone_id)
+            .getResponse(Response.BadgeNotificationsResponse())
     }
 
     /**
      * TODO.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return .InstagramAPI.Response.GenericResponse
      */
-    public function getProcessContactPointSignals()
+    public fun getProcessContactPointSignals()
     {
-        return $this->ig->request('accounts/process_contact_point_signals/')
-            ->addPost('google_tokens', '[]')
-            ->addPost('phone_id', $this->ig->phone_id)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('device_id', $this->ig->device_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\GenericResponse());
+        return this.ig.request('accounts/process_contact_point_signals/')
+            .addPost('google_tokens', '[]')
+            .addPost('phone_id', this.ig.phone_id)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('device_id', this.ig.device_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.GenericResponse())
     }
 }

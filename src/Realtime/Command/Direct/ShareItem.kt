@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Realtime\Command\Direct;
 
-abstract class ShareItem extends SendItem
+package InstagramAPI.Realtime.Command.Direct
+
+abstract class ShareItem : SendItem
 {
     /**
      * Constructor.
@@ -11,20 +11,20 @@ abstract class ShareItem extends SendItem
      * @param string $itemType
      * @param array  $options
      */
-    public function __construct(
+    public fun __construct(
         $threadId,
         $itemType,
         array $options = [])
     {
-        parent::__construct($threadId, $itemType, $options);
+        parent::__construct($threadId, $itemType, $options)
 
         if (isset($options['text'])) {
             if (!is_string($options['text'])) {
-                throw new \InvalidArgumentException('The text must be a string.');
+                throw .InvalidArgumentException('The text must be a string.')
             }
-            $this->_data['text'] = $options['text'];
+            this._data['text'] = $options['text']
         } else {
-            $this->_data['text'] = '';
+            this._data['text'] = ''
         }
     }
 }

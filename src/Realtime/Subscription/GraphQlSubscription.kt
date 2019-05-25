@@ -1,19 +1,19 @@
-<?php
 
-namespace InstagramAPI\Realtime\Subscription;
 
-use InstagramAPI\Realtime\Mqtt;
-use InstagramAPI\Realtime\SubscriptionInterface;
+package InstagramAPI.Realtime.Subscription
 
-abstract class GraphQlSubscription implements SubscriptionInterface
+import InstagramAPI.Realtime.Mqtt
+import InstagramAPI.Realtime.SubscriptionInterface
+
+abstract class GraphQlSubscription : SubscriptionInterface
 {
-    const TEMPLATE = '1/graphqlsubscriptions/%s/%s';
+    val TEMPLATE = '1/graphqlsubscriptions/%s/%s'
 
     /** @var string */
-    protected $_queryId;
+    protected $_queryId
 
     /** @var mixed */
-    protected $_inputData;
+    protected $_inputData
 
     /**
      * Constructor.
@@ -21,26 +21,26 @@ abstract class GraphQlSubscription implements SubscriptionInterface
      * @param string $queryId
      * @param mixed  $inputData
      */
-    public function __construct(
+    public fun __construct(
         $queryId,
         $inputData)
     {
-        $this->_queryId = $queryId;
-        $this->_inputData = $inputData;
+        this._queryId = $queryId
+        this._inputData = $inputData
     }
 
     /** {@inheritdoc} */
-    public function getTopic()
+    public fun getTopic()
     {
-        return Mqtt\Topics::REALTIME_SUB;
+        return Mqtt.Topics::REALTIME_SUB
     }
 
     /** {@inheritdoc} */
-    abstract public function getId();
+    abstract public fun getId()
 
     /** {@inheritdoc} */
-    public function __toString()
+    public fun __toString()
     {
-        return sprintf(self::TEMPLATE, $this->_queryId, json_encode(['input_data' => $this->_inputData]));
+        return sprintf(self::TEMPLATE, this._queryId, json_encode(['input_data' => this._inputData]))
     }
 }

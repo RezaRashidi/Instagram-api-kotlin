@@ -1,9 +1,9 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
-use InstagramAPI\Response\PropertyCollection;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
+import InstagramAPI.Response.PropertyCollection
 
 /**
  * StoryHashtag.
@@ -30,36 +30,36 @@ use InstagramAPI\Response\PropertyCollection;
  * @method bool isX()
  * @method bool isY()
  * @method bool isZ()
- * @method $this setAttribution(string $value)
- * @method $this setCustomTitle(string $value)
- * @method $this setHashtag(Hashtag $value)
- * @method $this setHeight(float $value)
- * @method $this setIsHidden(int $value)
- * @method $this setIsPinned(int $value)
- * @method $this setRotation(float $value)
- * @method $this setWidth(float $value)
- * @method $this setX(float $value)
- * @method $this setY(float $value)
- * @method $this setZ(float $value)
- * @method $this unsetAttribution()
- * @method $this unsetCustomTitle()
- * @method $this unsetHashtag()
- * @method $this unsetHeight()
- * @method $this unsetIsHidden()
- * @method $this unsetIsPinned()
- * @method $this unsetRotation()
- * @method $this unsetWidth()
- * @method $this unsetX()
- * @method $this unsetY()
- * @method $this unsetZ()
+ * @method this setAttribution(string $value)
+ * @method this setCustomTitle(string $value)
+ * @method this setHashtag(Hashtag $value)
+ * @method this setHeight(float $value)
+ * @method this setIsHidden(int $value)
+ * @method this setIsPinned(int $value)
+ * @method this setRotation(float $value)
+ * @method this setWidth(float $value)
+ * @method this setX(float $value)
+ * @method this setY(float $value)
+ * @method this setZ(float $value)
+ * @method this unsetAttribution()
+ * @method this unsetCustomTitle()
+ * @method this unsetHashtag()
+ * @method this unsetHeight()
+ * @method this unsetIsHidden()
+ * @method this unsetIsPinned()
+ * @method this unsetRotation()
+ * @method this unsetWidth()
+ * @method this unsetX()
+ * @method this unsetY()
+ * @method this unsetZ()
  */
-class StoryHashtag extends AutoPropertyMapper
+class StoryHashtag : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
-        PropertyCollection\Sticker::class,
+    val JSON_PROPERTY_MAP = [
+        PropertyCollection.Sticker::class,
         'hashtag'       => 'Hashtag',
         'attribution'   => 'string',
         'custom_title'  => 'string',
         'is_hidden'     => 'int',
-    ];
+    ]
 }

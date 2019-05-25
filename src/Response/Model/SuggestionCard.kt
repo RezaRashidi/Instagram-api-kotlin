@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * SuggestionCard.
@@ -13,18 +13,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isUpsellCiCard()
  * @method bool isUpsellFbcCard()
  * @method bool isUserCard()
- * @method $this setUpsellCiCard(mixed $value)
- * @method $this setUpsellFbcCard(mixed $value)
- * @method $this setUserCard(UserCard $value)
- * @method $this unsetUpsellCiCard()
- * @method $this unsetUpsellFbcCard()
- * @method $this unsetUserCard()
+ * @method this setUpsellCiCard(mixed $value)
+ * @method this setUpsellFbcCard(mixed $value)
+ * @method this setUserCard(UserCard $value)
+ * @method this unsetUpsellCiCard()
+ * @method this unsetUpsellFbcCard()
+ * @method this unsetUserCard()
  */
-class SuggestionCard extends AutoPropertyMapper
+class SuggestionCard : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'user_card'            => 'UserCard',
         'upsell_ci_card'       => '',
         'upsell_fbc_card'      => '',
-    ];
+    ]
 }

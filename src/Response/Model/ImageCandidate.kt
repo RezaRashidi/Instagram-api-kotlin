@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ImageCandidate.
@@ -13,18 +13,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isHeight()
  * @method bool isUrl()
  * @method bool isWidth()
- * @method $this setHeight(int $value)
- * @method $this setUrl(string $value)
- * @method $this setWidth(int $value)
- * @method $this unsetHeight()
- * @method $this unsetUrl()
- * @method $this unsetWidth()
+ * @method this setHeight(int $value)
+ * @method this setUrl(string $value)
+ * @method this setWidth(int $value)
+ * @method this unsetHeight()
+ * @method this unsetUrl()
+ * @method this unsetWidth()
  */
-class ImageCandidate extends AutoPropertyMapper
+class ImageCandidate : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'url'    => 'string',
         'width'  => 'int',
         'height' => 'int',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoryTvChannel.
@@ -23,26 +23,26 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isTitle()
  * @method bool isType()
  * @method bool isUserDict()
- * @method $this setId(string $value)
- * @method $this setItems(Item[] $value)
- * @method $this setMaxId(string $value)
- * @method $this setMoreAvailable(bool $value)
- * @method $this setSeenState(mixed $value)
- * @method $this setTitle(string $value)
- * @method $this setType(string $value)
- * @method $this setUserDict(User $value)
- * @method $this unsetId()
- * @method $this unsetItems()
- * @method $this unsetMaxId()
- * @method $this unsetMoreAvailable()
- * @method $this unsetSeenState()
- * @method $this unsetTitle()
- * @method $this unsetType()
- * @method $this unsetUserDict()
+ * @method this setId(string $value)
+ * @method this setItems(Item[] $value)
+ * @method this setMaxId(string $value)
+ * @method this setMoreAvailable(bool $value)
+ * @method this setSeenState(mixed $value)
+ * @method this setTitle(string $value)
+ * @method this setType(string $value)
+ * @method this setUserDict(User $value)
+ * @method this unsetId()
+ * @method this unsetItems()
+ * @method this unsetMaxId()
+ * @method this unsetMoreAvailable()
+ * @method this unsetSeenState()
+ * @method this unsetTitle()
+ * @method this unsetType()
+ * @method this unsetUserDict()
  */
-class StoryTvChannel extends AutoPropertyMapper
+class StoryTvChannel : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'id'             => 'string',
         'items'          => 'Item[]',
         'title'          => 'string',
@@ -51,5 +51,5 @@ class StoryTvChannel extends AutoPropertyMapper
         'more_available' => 'bool',
         'seen_state'     => 'mixed',
         'user_dict'      => 'User',
-    ];
+    ]
 }

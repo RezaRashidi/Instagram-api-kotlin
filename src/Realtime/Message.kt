@@ -1,18 +1,18 @@
-<?php
 
-namespace InstagramAPI\Realtime;
+
+package InstagramAPI.Realtime
 
 class Message
 {
     /**
      * @var string
      */
-    private $_module;
+    private $_module
 
     /**
      * @var mixed
      */
-    private $_data;
+    private $_data
 
     /**
      * Message constructor.
@@ -20,27 +20,27 @@ class Message
      * @param string $module
      * @param mixed  $payload
      */
-    public function __construct(
+    public fun __construct(
         $module,
         $payload)
     {
-        $this->_module = $module;
-        $this->_data = $payload;
+        this._module = $module
+        this._data = $payload
     }
 
     /**
      * @return string
      */
-    public function getModule()
+    public fun getModule()
     {
-        return $this->_module;
+        return this._module
     }
 
     /**
      * @return mixed
      */
-    public function getData()
+    public fun getData()
     {
-        return $this->_data;
+        return this._data
     }
 }

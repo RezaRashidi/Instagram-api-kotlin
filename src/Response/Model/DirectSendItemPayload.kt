@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectSendItemPayload.
@@ -23,26 +23,26 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isParticipantIds()
  * @method bool isThreadId()
  * @method bool isTimestamp()
- * @method $this setCanonical(bool $value)
- * @method $this setClientContext(string $value)
- * @method $this setClientRequestId(string $value)
- * @method $this setItemId(string $value)
- * @method $this setMessage(string $value)
- * @method $this setParticipantIds(string[] $value)
- * @method $this setThreadId(string $value)
- * @method $this setTimestamp(string $value)
- * @method $this unsetCanonical()
- * @method $this unsetClientContext()
- * @method $this unsetClientRequestId()
- * @method $this unsetItemId()
- * @method $this unsetMessage()
- * @method $this unsetParticipantIds()
- * @method $this unsetThreadId()
- * @method $this unsetTimestamp()
+ * @method this setCanonical(bool $value)
+ * @method this setClientContext(string $value)
+ * @method this setClientRequestId(string $value)
+ * @method this setItemId(string $value)
+ * @method this setMessage(string $value)
+ * @method this setParticipantIds(string[] $value)
+ * @method this setThreadId(string $value)
+ * @method this setTimestamp(string $value)
+ * @method this unsetCanonical()
+ * @method this unsetClientContext()
+ * @method this unsetClientRequestId()
+ * @method this unsetItemId()
+ * @method this unsetMessage()
+ * @method this unsetParticipantIds()
+ * @method this unsetThreadId()
+ * @method this unsetTimestamp()
  */
-class DirectSendItemPayload extends AutoPropertyMapper
+class DirectSendItemPayload : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'client_request_id' => 'string',
         'client_context'    => 'string',
         'message'           => 'string',
@@ -51,5 +51,5 @@ class DirectSendItemPayload extends AutoPropertyMapper
         'thread_id'         => 'string',
         'canonical'         => 'bool',
         'participant_ids'   => 'string[]',
-    ];
+    ]
 }

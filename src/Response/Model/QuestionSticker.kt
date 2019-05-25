@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * QuestionSticker.
@@ -21,24 +21,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isQuestionType()
  * @method bool isTextColor()
  * @method bool isViewerCanInteract()
- * @method $this setBackgroundColor(string $value)
- * @method $this setProfilePicUrl(string $value)
- * @method $this setQuestion(string $value)
- * @method $this setQuestionId(string $value)
- * @method $this setQuestionType(string $value)
- * @method $this setTextColor(string $value)
- * @method $this setViewerCanInteract(bool $value)
- * @method $this unsetBackgroundColor()
- * @method $this unsetProfilePicUrl()
- * @method $this unsetQuestion()
- * @method $this unsetQuestionId()
- * @method $this unsetQuestionType()
- * @method $this unsetTextColor()
- * @method $this unsetViewerCanInteract()
+ * @method this setBackgroundColor(string $value)
+ * @method this setProfilePicUrl(string $value)
+ * @method this setQuestion(string $value)
+ * @method this setQuestionId(string $value)
+ * @method this setQuestionType(string $value)
+ * @method this setTextColor(string $value)
+ * @method this setViewerCanInteract(bool $value)
+ * @method this unsetBackgroundColor()
+ * @method this unsetProfilePicUrl()
+ * @method this unsetQuestion()
+ * @method this unsetQuestionId()
+ * @method this unsetQuestionType()
+ * @method this unsetTextColor()
+ * @method this unsetViewerCanInteract()
  */
-class QuestionSticker extends AutoPropertyMapper
+class QuestionSticker : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'question_id'         => 'string',
         'question'            => 'string',
         /*
@@ -52,5 +52,5 @@ class QuestionSticker extends AutoPropertyMapper
         'viewer_can_interact' => 'bool',
         'profile_pic_url'     => 'string',
         'question_type'       => 'string',
-    ];
+    ]
 }

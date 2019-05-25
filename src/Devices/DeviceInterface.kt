@@ -1,6 +1,6 @@
-<?php
 
-namespace InstagramAPI\Devices;
+
+package InstagramAPI.Devices
 
 interface DeviceInterface
 {
@@ -9,14 +9,14 @@ interface DeviceInterface
      *
      * @return string
      */
-    public function getDeviceString();
+    public fun getDeviceString()
 
     /**
      * Get the HTTP user-agent string.
      *
      * @return string
      */
-    public function getUserAgent();
+    public fun getUserAgent()
 
     /**
      * Get the Facebook user-agent string.
@@ -25,69 +25,69 @@ interface DeviceInterface
      *
      * @return string
      */
-    public function getFbUserAgent(
-        $appName);
+    public fun getFbUserAgent(
+        $appName)
 
     /**
      * Get the Android SDK/API version.
      *
      * @return string
      */
-    public function getAndroidVersion();
+    public fun getAndroidVersion()
 
     /**
      * Get the Android release version.
      *
      * @return string
      */
-    public function getAndroidRelease();
+    public fun getAndroidRelease()
 
     /**
      * Get the display DPI (with "dpi" suffix).
      *
      * @return string
      */
-    public function getDPI();
+    public fun getDPI()
 
     /**
      * Get the display resolution (width x height).
      *
      * @return string
      */
-    public function getResolution();
+    public fun getResolution()
 
     /**
      * Get the manufacturer.
      *
      * @return string
      */
-    public function getManufacturer();
+    public fun getManufacturer()
 
     /**
      * Get the brand (optional).
      *
      * @return string|null
      */
-    public function getBrand();
+    public fun getBrand()
 
     /**
      * Get the hardware model.
      *
      * @return string
      */
-    public function getModel();
+    public fun getModel()
 
     /**
      * Get the hardware device code.
      *
      * @return string
      */
-    public function getDevice();
+    public fun getDevice()
 
     /**
      * Get the hardware CPU code.
      *
      * @return string
      */
-    public function getCPU();
+    public fun getCPU()
 }

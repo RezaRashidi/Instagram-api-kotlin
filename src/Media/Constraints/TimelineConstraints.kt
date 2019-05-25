@@ -1,13 +1,13 @@
-<?php
 
-namespace InstagramAPI\Media\Constraints;
 
-use InstagramAPI\Media\ConstraintsInterface;
+package InstagramAPI.Media.Constraints
+
+import InstagramAPI.Media.ConstraintsInterface
 
 /**
  * Instagram's timeline general media constraints.
  */
-class TimelineConstraints implements ConstraintsInterface
+class TimelineConstraints : ConstraintsInterface
 {
     /**
      * Lowest allowed general media aspect ratio (4:5, meaning portrait).
@@ -18,7 +18,7 @@ class TimelineConstraints implements ConstraintsInterface
      *
      * @see https://help.instagram.com/1469029763400082
      */
-    const MIN_RATIO = 0.8;
+    val MIN_RATIO = 0.8
 
     /**
      * Highest allowed general media aspect ratio (1.91:1, meaning landscape).
@@ -27,7 +27,7 @@ class TimelineConstraints implements ConstraintsInterface
      *
      * @var float
      */
-    const MAX_RATIO = 1.91;
+    val MAX_RATIO = 1.91
 
     /**
      * The recommended aspect ratio for timeline media.
@@ -36,7 +36,7 @@ class TimelineConstraints implements ConstraintsInterface
      *
      * @var float
      */
-    const RECOMMENDED_RATIO = 1.0;
+    val RECOMMENDED_RATIO = 1.0
 
     /**
      * The deviation for the recommended aspect ratio.
@@ -45,7 +45,7 @@ class TimelineConstraints implements ConstraintsInterface
      *
      * @var float
      */
-    const RECOMMENDED_RATIO_DEVIATION = 0.0;
+    val RECOMMENDED_RATIO_DEVIATION = 0.0
 
     /**
      * Minimum allowed video duration.
@@ -54,7 +54,7 @@ class TimelineConstraints implements ConstraintsInterface
      *
      * @see https://help.instagram.com/270963803047681
      */
-    const MIN_DURATION = 3.0;
+    val MIN_DURATION = 3.0
 
     /**
      * Maximum allowed video duration.
@@ -63,53 +63,53 @@ class TimelineConstraints implements ConstraintsInterface
      *
      * @see https://help.instagram.com/270963803047681
      */
-    const MAX_DURATION = 60.0;
+    val MAX_DURATION = 60.0
 
     /** {@inheritdoc} */
-    public function getTitle()
+    public fun getTitle()
     {
-        return 'timeline';
+        return 'timeline'
     }
 
     /** {@inheritdoc} */
-    public function getMinAspectRatio()
+    public fun getMinAspectRatio()
     {
-        return self::MIN_RATIO;
+        return self::MIN_RATIO
     }
 
     /** {@inheritdoc} */
-    public function getMaxAspectRatio()
+    public fun getMaxAspectRatio()
     {
-        return self::MAX_RATIO;
+        return self::MAX_RATIO
     }
 
     /** {@inheritdoc} */
-    public function getRecommendedRatio()
+    public fun getRecommendedRatio()
     {
-        return self::RECOMMENDED_RATIO;
+        return self::RECOMMENDED_RATIO
     }
 
     /** {@inheritdoc} */
-    public function getRecommendedRatioDeviation()
+    public fun getRecommendedRatioDeviation()
     {
-        return self::RECOMMENDED_RATIO_DEVIATION;
+        return self::RECOMMENDED_RATIO_DEVIATION
     }
 
     /** {@inheritdoc} */
-    public function useRecommendedRatioByDefault()
+    public fun useRecommendedRatioByDefault()
     {
-        return false;
+        return false
     }
 
     /** {@inheritdoc} */
-    public function getMinDuration()
+    public fun getMinDuration()
     {
-        return self::MIN_DURATION;
+        return self::MIN_DURATION
     }
 
     /** {@inheritdoc} */
-    public function getMaxDuration()
+    public fun getMaxDuration()
     {
-        return self::MAX_DURATION;
+        return self::MAX_DURATION
     }
 }

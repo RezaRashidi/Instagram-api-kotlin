@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Headline.
@@ -29,32 +29,32 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isType()
  * @method bool isUser()
  * @method bool isUserId()
- * @method $this setBitFlags(int $value)
- * @method $this setContentType(mixed $value)
- * @method $this setCreatedAt(string $value)
- * @method $this setCreatedAtUtc(string $value)
- * @method $this setMediaId(string $value)
- * @method $this setPk(string $value)
- * @method $this setStatus(mixed $value)
- * @method $this setText(string $value)
- * @method $this setType(mixed $value)
- * @method $this setUser(User $value)
- * @method $this setUserId(string $value)
- * @method $this unsetBitFlags()
- * @method $this unsetContentType()
- * @method $this unsetCreatedAt()
- * @method $this unsetCreatedAtUtc()
- * @method $this unsetMediaId()
- * @method $this unsetPk()
- * @method $this unsetStatus()
- * @method $this unsetText()
- * @method $this unsetType()
- * @method $this unsetUser()
- * @method $this unsetUserId()
+ * @method this setBitFlags(int $value)
+ * @method this setContentType(mixed $value)
+ * @method this setCreatedAt(string $value)
+ * @method this setCreatedAtUtc(string $value)
+ * @method this setMediaId(string $value)
+ * @method this setPk(string $value)
+ * @method this setStatus(mixed $value)
+ * @method this setText(string $value)
+ * @method this setType(mixed $value)
+ * @method this setUser(User $value)
+ * @method this setUserId(string $value)
+ * @method this unsetBitFlags()
+ * @method this unsetContentType()
+ * @method this unsetCreatedAt()
+ * @method this unsetCreatedAtUtc()
+ * @method this unsetMediaId()
+ * @method this unsetPk()
+ * @method this unsetStatus()
+ * @method this unsetText()
+ * @method this unsetType()
+ * @method this unsetUser()
+ * @method this unsetUserId()
  */
-class Headline extends AutoPropertyMapper
+class Headline : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'content_type'   => '',
         'user'           => 'User',
         'user_id'        => 'string',
@@ -66,5 +66,5 @@ class Headline extends AutoPropertyMapper
         'media_id'       => 'string',
         'bit_flags'      => 'int',
         'status'         => '',
-    ];
+    ]
 }

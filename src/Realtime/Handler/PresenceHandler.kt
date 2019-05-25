@@ -1,25 +1,25 @@
-<?php
 
-namespace InstagramAPI\Realtime\Handler;
 
-use InstagramAPI\Realtime\HandlerInterface;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\Subscription\GraphQl\AppPresenceSubscription;
-use InstagramAPI\Response\Model\UserPresence;
+package InstagramAPI.Realtime.Handler
 
-class PresenceHandler extends AbstractHandler implements HandlerInterface
+import InstagramAPI.Realtime.HandlerInterface
+import InstagramAPI.Realtime.Message
+import InstagramAPI.Realtime.Subscription.GraphQl.AppPresenceSubscription
+import InstagramAPI.Response.Model.UserPresence
+
+class PresenceHandler : AbstractHandler : HandlerInterface
 {
-    const MODULE = AppPresenceSubscription::ID;
+    val MODULE = AppPresenceSubscription::ID
 
     /** {@inheritdoc} */
-    public function handleMessage(
+    public fun handleMessage(
         Message $message)
     {
-        $data = $message->getData();
+        $data = $message.getData()
         if (!isset($data['presence_event']) || !is_array($data['presence_event'])) {
-            throw new HandlerException('Invalid presence (event data is missing).');
+            throw HandlerException('Invalid presence (event data is missing).')
         }
-        $presence = new UserPresence($data['presence_event']);
-        $this->_target->emit('presence', [$presence]);
+        $presence = UserPresence($data['presence_event'])
+        this._target.emit('presence', [$presence])
     }
 }

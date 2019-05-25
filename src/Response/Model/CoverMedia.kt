@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * CoverMedia.
@@ -25,28 +25,28 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isMediaType()
  * @method bool isOriginalHeight()
  * @method bool isOriginalWidth()
- * @method $this setCropRect(int[] $value)
- * @method $this setCroppedImageVersion(ImageCandidate $value)
- * @method $this setFullImageVersion(ImageCandidate $value)
- * @method $this setId(string $value)
- * @method $this setImageVersions2(Image_Versions2 $value)
- * @method $this setMediaId(string $value)
- * @method $this setMediaType(int $value)
- * @method $this setOriginalHeight(int $value)
- * @method $this setOriginalWidth(int $value)
- * @method $this unsetCropRect()
- * @method $this unsetCroppedImageVersion()
- * @method $this unsetFullImageVersion()
- * @method $this unsetId()
- * @method $this unsetImageVersions2()
- * @method $this unsetMediaId()
- * @method $this unsetMediaType()
- * @method $this unsetOriginalHeight()
- * @method $this unsetOriginalWidth()
+ * @method this setCropRect(int[] $value)
+ * @method this setCroppedImageVersion(ImageCandidate $value)
+ * @method this setFullImageVersion(ImageCandidate $value)
+ * @method this setId(string $value)
+ * @method this setImageVersions2(Image_Versions2 $value)
+ * @method this setMediaId(string $value)
+ * @method this setMediaType(int $value)
+ * @method this setOriginalHeight(int $value)
+ * @method this setOriginalWidth(int $value)
+ * @method this unsetCropRect()
+ * @method this unsetCroppedImageVersion()
+ * @method this unsetFullImageVersion()
+ * @method this unsetId()
+ * @method this unsetImageVersions2()
+ * @method this unsetMediaId()
+ * @method this unsetMediaType()
+ * @method this unsetOriginalHeight()
+ * @method this unsetOriginalWidth()
  */
-class CoverMedia extends AutoPropertyMapper
+class CoverMedia : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'id'              => 'string',
         'media_id'        => 'string',
         /*
@@ -59,5 +59,5 @@ class CoverMedia extends AutoPropertyMapper
         'cropped_image_version' => 'ImageCandidate',
         'crop_rect'             => 'int[]',
         'full_image_version'    => 'ImageCandidate',
-    ];
+    ]
 }

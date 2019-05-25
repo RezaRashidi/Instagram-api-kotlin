@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * CommentTranslations.
@@ -11,15 +11,15 @@ use InstagramAPI\AutoPropertyMapper;
  * @method mixed getTranslation()
  * @method bool isId()
  * @method bool isTranslation()
- * @method $this setId(string $value)
- * @method $this setTranslation(mixed $value)
- * @method $this unsetId()
- * @method $this unsetTranslation()
+ * @method this setId(string $value)
+ * @method this setTranslation(mixed $value)
+ * @method this unsetId()
+ * @method this unsetTranslation()
  */
-class CommentTranslations extends AutoPropertyMapper
+class CommentTranslations : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'id'          => 'string',
         'translation' => '',
-    ];
+    ]
 }

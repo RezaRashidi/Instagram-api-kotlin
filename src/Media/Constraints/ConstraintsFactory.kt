@@ -1,9 +1,9 @@
-<?php
 
-namespace InstagramAPI\Media\Constraints;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Media\ConstraintsInterface;
+package InstagramAPI.Media.Constraints
+
+import InstagramAPI.Constants
+import InstagramAPI.Media.ConstraintsInterface
 
 class ConstraintsFactory
 {
@@ -16,30 +16,30 @@ class ConstraintsFactory
      *
      * @see Constants
      */
-    public static function createFor(
+    public static fun createFor(
         $targetFeed)
     {
         switch ($targetFeed) {
             case Constants::FEED_STORY:
-                $result = new StoryConstraints();
-                break;
+                $result = StoryConstraints()
+                break
             case Constants::FEED_DIRECT:
-                $result = new DirectConstraints();
-                break;
+                $result = DirectConstraints()
+                break
             case Constants::FEED_DIRECT_STORY:
-                $result = new DirectStoryConstraints();
-                break;
+                $result = DirectStoryConstraints()
+                break
             case Constants::FEED_TV:
-                $result = new TvConstraints();
-                break;
+                $result = TvConstraints()
+                break
             case Constants::FEED_TIMELINE_ALBUM:
-                $result = new AlbumConstraints();
-                break;
+                $result = AlbumConstraints()
+                break
             case Constants::FEED_TIMELINE:
             default:
-                $result = new TimelineConstraints();
+                $result = TimelineConstraints()
         }
 
-        return $result;
+        return $result
     }
 }

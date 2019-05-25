@@ -1,20 +1,20 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * QueryResponse.
  *
  * @method ShadowInstagramUser getShadowInstagramUser()
  * @method bool isShadowInstagramUser()
- * @method $this setShadowInstagramUser(ShadowInstagramUser $value)
- * @method $this unsetShadowInstagramUser()
+ * @method this setShadowInstagramUser(ShadowInstagramUser $value)
+ * @method this unsetShadowInstagramUser()
  */
-class QueryResponse extends AutoPropertyMapper
+class QueryResponse : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'shadow_instagram_user' => 'ShadowInstagramUser',
-    ];
+    ]
 }

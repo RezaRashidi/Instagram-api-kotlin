@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * TraySuggestions.
@@ -17,24 +17,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isSuggestionType()
  * @method bool isTray()
  * @method bool isTrayTitle()
- * @method $this setBannerSubtitle(string $value)
- * @method $this setBannerTitle(string $value)
- * @method $this setSuggestionType(string $value)
- * @method $this setTray(StoryTray[] $value)
- * @method $this setTrayTitle(string $value)
- * @method $this unsetBannerSubtitle()
- * @method $this unsetBannerTitle()
- * @method $this unsetSuggestionType()
- * @method $this unsetTray()
- * @method $this unsetTrayTitle()
+ * @method this setBannerSubtitle(string $value)
+ * @method this setBannerTitle(string $value)
+ * @method this setSuggestionType(string $value)
+ * @method this setTray(StoryTray[] $value)
+ * @method this setTrayTitle(string $value)
+ * @method this unsetBannerSubtitle()
+ * @method this unsetBannerTitle()
+ * @method this unsetSuggestionType()
+ * @method this unsetTray()
+ * @method this unsetTrayTitle()
  */
-class TraySuggestions extends AutoPropertyMapper
+class TraySuggestions : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'tray'            => 'StoryTray[]',
         'tray_title'      => 'string',
         'banner_title'    => 'string',
         'banner_subtitle' => 'string',
         'suggestion_type' => 'string',
-    ];
+    ]
 }

@@ -1,9 +1,9 @@
-<?php
 
-namespace InstagramAPI\Realtime\Mqtt;
+
+package InstagramAPI.Realtime.Mqtt
 
 class QosLevel
 {
-    const FIRE_AND_FORGET = 0;
-    const ACKNOWLEDGED_DELIVERY = 1;
+    val FIRE_AND_FORGET = 0
+    val ACKNOWLEDGED_DELIVERY = 1
 }

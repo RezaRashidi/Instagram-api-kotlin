@@ -3,4 +3,10 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+<<<<<<< HEAD
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="Kotlin SDK" project-jdk-type="KotlinSDK">
+    <output url="file://$PROJECT_DIR$/Out" />
+  </component>
+>>>>>>> 32e956311a0d057613e9364c4ec21ea7e311f228
 </project>

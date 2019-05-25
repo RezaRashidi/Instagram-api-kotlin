@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Suggested.
@@ -17,24 +17,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isPlace()
  * @method bool isPosition()
  * @method bool isUser()
- * @method $this setClientTime(mixed $value)
- * @method $this setHashtag(Hashtag $value)
- * @method $this setPlace(LocationItem $value)
- * @method $this setPosition(int $value)
- * @method $this setUser(User $value)
- * @method $this unsetClientTime()
- * @method $this unsetHashtag()
- * @method $this unsetPlace()
- * @method $this unsetPosition()
- * @method $this unsetUser()
+ * @method this setClientTime(mixed $value)
+ * @method this setHashtag(Hashtag $value)
+ * @method this setPlace(LocationItem $value)
+ * @method this setPosition(int $value)
+ * @method this setUser(User $value)
+ * @method this unsetClientTime()
+ * @method this unsetHashtag()
+ * @method this unsetPlace()
+ * @method this unsetPosition()
+ * @method this unsetUser()
  */
-class Suggested extends AutoPropertyMapper
+class Suggested : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'position'     => 'int',
         'hashtag'      => 'Hashtag',
         'user'         => 'User',
         'place'        => 'LocationItem',
         'client_time'  => '',
-    ];
+    ]
 }

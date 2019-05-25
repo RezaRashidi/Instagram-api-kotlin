@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Args.
@@ -55,58 +55,58 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isText()
  * @method bool isTimestamp()
  * @method bool isTuuid()
- * @method $this setActionUrl(string $value)
- * @method $this setActions(string[] $value)
- * @method $this setClicked(bool $value)
- * @method $this setCommentId(string $value)
- * @method $this setCommentIds(string[] $value)
- * @method $this setCommentNotifType(string $value)
- * @method $this setDestination(string $value)
- * @method $this setIconUrl(string $value)
- * @method $this setInlineFollow(InlineFollow $value)
- * @method $this setLatestReelMedia(string $value)
- * @method $this setLinks(Link[] $value)
- * @method $this setMedia(Media[] $value)
- * @method $this setMediaDestination(string $value)
- * @method $this setProfileId(string $value)
- * @method $this setProfileImage(string $value)
- * @method $this setProfileImageDestination(mixed $value)
- * @method $this setProfileName(string $value)
- * @method $this setRequestCount(mixed $value)
- * @method $this setRichText(string $value)
- * @method $this setSecondProfileId(string $value)
- * @method $this setSecondProfileImage(mixed $value)
- * @method $this setText(string $value)
- * @method $this setTimestamp(string $value)
- * @method $this setTuuid(string $value)
- * @method $this unsetActionUrl()
- * @method $this unsetActions()
- * @method $this unsetClicked()
- * @method $this unsetCommentId()
- * @method $this unsetCommentIds()
- * @method $this unsetCommentNotifType()
- * @method $this unsetDestination()
- * @method $this unsetIconUrl()
- * @method $this unsetInlineFollow()
- * @method $this unsetLatestReelMedia()
- * @method $this unsetLinks()
- * @method $this unsetMedia()
- * @method $this unsetMediaDestination()
- * @method $this unsetProfileId()
- * @method $this unsetProfileImage()
- * @method $this unsetProfileImageDestination()
- * @method $this unsetProfileName()
- * @method $this unsetRequestCount()
- * @method $this unsetRichText()
- * @method $this unsetSecondProfileId()
- * @method $this unsetSecondProfileImage()
- * @method $this unsetText()
- * @method $this unsetTimestamp()
- * @method $this unsetTuuid()
+ * @method this setActionUrl(string $value)
+ * @method this setActions(string[] $value)
+ * @method this setClicked(bool $value)
+ * @method this setCommentId(string $value)
+ * @method this setCommentIds(string[] $value)
+ * @method this setCommentNotifType(string $value)
+ * @method this setDestination(string $value)
+ * @method this setIconUrl(string $value)
+ * @method this setInlineFollow(InlineFollow $value)
+ * @method this setLatestReelMedia(string $value)
+ * @method this setLinks(Link[] $value)
+ * @method this setMedia(Media[] $value)
+ * @method this setMediaDestination(string $value)
+ * @method this setProfileId(string $value)
+ * @method this setProfileImage(string $value)
+ * @method this setProfileImageDestination(mixed $value)
+ * @method this setProfileName(string $value)
+ * @method this setRequestCount(mixed $value)
+ * @method this setRichText(string $value)
+ * @method this setSecondProfileId(string $value)
+ * @method this setSecondProfileImage(mixed $value)
+ * @method this setText(string $value)
+ * @method this setTimestamp(string $value)
+ * @method this setTuuid(string $value)
+ * @method this unsetActionUrl()
+ * @method this unsetActions()
+ * @method this unsetClicked()
+ * @method this unsetCommentId()
+ * @method this unsetCommentIds()
+ * @method this unsetCommentNotifType()
+ * @method this unsetDestination()
+ * @method this unsetIconUrl()
+ * @method this unsetInlineFollow()
+ * @method this unsetLatestReelMedia()
+ * @method this unsetLinks()
+ * @method this unsetMedia()
+ * @method this unsetMediaDestination()
+ * @method this unsetProfileId()
+ * @method this unsetProfileImage()
+ * @method this unsetProfileImageDestination()
+ * @method this unsetProfileName()
+ * @method this unsetRequestCount()
+ * @method this unsetRichText()
+ * @method this unsetSecondProfileId()
+ * @method this unsetSecondProfileImage()
+ * @method this unsetText()
+ * @method this unsetTimestamp()
+ * @method this unsetTuuid()
  */
-class Args extends AutoPropertyMapper
+class Args : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'media_destination'         => 'string',
         'text'                      => 'string',
         'icon_url'                  => 'string',
@@ -131,5 +131,5 @@ class Args extends AutoPropertyMapper
         'second_profile_id'         => 'string',
         'second_profile_image'      => '',
         'profile_image_destination' => '',
-    ];
+    ]
 }

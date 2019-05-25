@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Location.
@@ -57,60 +57,60 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isTimeGranularity()
  * @method bool isTimezone()
  * @method bool isType()
- * @method $this setAddress(string $value)
- * @method $this setCity(string $value)
- * @method $this setCountry(int $value)
- * @method $this setCreatedAt(string $value)
- * @method $this setEndTime(mixed $value)
- * @method $this setEventCategory(int $value)
- * @method $this setExternalId(string $value)
- * @method $this setExternalIdSource(string $value)
- * @method $this setExternalSource(string $value)
- * @method $this setFacebookEventsId(string $value)
- * @method $this setFacebookPlacesId(string $value)
- * @method $this setLat(float $value)
- * @method $this setLng(float $value)
- * @method $this setLocationDict(Location $value)
- * @method $this setName(string $value)
- * @method $this setPk(string $value)
- * @method $this setPlaceFbid(string $value)
- * @method $this setPlaceName(string $value)
- * @method $this setProfilePicUrl(string $value)
- * @method $this setProfilePicUsername(string $value)
- * @method $this setShortName(string $value)
- * @method $this setStartTime(mixed $value)
- * @method $this setTimeGranularity(mixed $value)
- * @method $this setTimezone(mixed $value)
- * @method $this setType(mixed $value)
- * @method $this unsetAddress()
- * @method $this unsetCity()
- * @method $this unsetCountry()
- * @method $this unsetCreatedAt()
- * @method $this unsetEndTime()
- * @method $this unsetEventCategory()
- * @method $this unsetExternalId()
- * @method $this unsetExternalIdSource()
- * @method $this unsetExternalSource()
- * @method $this unsetFacebookEventsId()
- * @method $this unsetFacebookPlacesId()
- * @method $this unsetLat()
- * @method $this unsetLng()
- * @method $this unsetLocationDict()
- * @method $this unsetName()
- * @method $this unsetPk()
- * @method $this unsetPlaceFbid()
- * @method $this unsetPlaceName()
- * @method $this unsetProfilePicUrl()
- * @method $this unsetProfilePicUsername()
- * @method $this unsetShortName()
- * @method $this unsetStartTime()
- * @method $this unsetTimeGranularity()
- * @method $this unsetTimezone()
- * @method $this unsetType()
+ * @method this setAddress(string $value)
+ * @method this setCity(string $value)
+ * @method this setCountry(int $value)
+ * @method this setCreatedAt(string $value)
+ * @method this setEndTime(mixed $value)
+ * @method this setEventCategory(int $value)
+ * @method this setExternalId(string $value)
+ * @method this setExternalIdSource(string $value)
+ * @method this setExternalSource(string $value)
+ * @method this setFacebookEventsId(string $value)
+ * @method this setFacebookPlacesId(string $value)
+ * @method this setLat(float $value)
+ * @method this setLng(float $value)
+ * @method this setLocationDict(Location $value)
+ * @method this setName(string $value)
+ * @method this setPk(string $value)
+ * @method this setPlaceFbid(string $value)
+ * @method this setPlaceName(string $value)
+ * @method this setProfilePicUrl(string $value)
+ * @method this setProfilePicUsername(string $value)
+ * @method this setShortName(string $value)
+ * @method this setStartTime(mixed $value)
+ * @method this setTimeGranularity(mixed $value)
+ * @method this setTimezone(mixed $value)
+ * @method this setType(mixed $value)
+ * @method this unsetAddress()
+ * @method this unsetCity()
+ * @method this unsetCountry()
+ * @method this unsetCreatedAt()
+ * @method this unsetEndTime()
+ * @method this unsetEventCategory()
+ * @method this unsetExternalId()
+ * @method this unsetExternalIdSource()
+ * @method this unsetExternalSource()
+ * @method this unsetFacebookEventsId()
+ * @method this unsetFacebookPlacesId()
+ * @method this unsetLat()
+ * @method this unsetLng()
+ * @method this unsetLocationDict()
+ * @method this unsetName()
+ * @method this unsetPk()
+ * @method this unsetPlaceFbid()
+ * @method this unsetPlaceName()
+ * @method this unsetProfilePicUrl()
+ * @method this unsetProfilePicUsername()
+ * @method this unsetShortName()
+ * @method this unsetStartTime()
+ * @method this unsetTimeGranularity()
+ * @method this unsetTimezone()
+ * @method this unsetType()
  */
-class Location extends AutoPropertyMapper
+class Location : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'name'                 => 'string',
         'external_id_source'   => 'string',
         'external_source'      => 'string',
@@ -153,5 +153,5 @@ class Location extends AutoPropertyMapper
          * Human-readable name of the facebook place for the location.
          */
         'place_name'           => 'string',
-    ];
+    ]
 }

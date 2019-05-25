@@ -1,24 +1,24 @@
-<?php
 
-namespace InstagramAPI\Realtime\Handler;
 
-use InstagramAPI\Realtime\HandlerInterface;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\Payload\ZeroProvisionEvent;
+package InstagramAPI.Realtime.Handler
 
-class ZeroProvisionHandler extends AbstractHandler implements HandlerInterface
+import InstagramAPI.Realtime.HandlerInterface
+import InstagramAPI.Realtime.Message
+import InstagramAPI.Realtime.Payload.ZeroProvisionEvent
+
+class ZeroProvisionHandler : AbstractHandler : HandlerInterface
 {
-    const MODULE = 'zero_provision';
+    val MODULE = 'zero_provision'
 
     /** {@inheritdoc} */
-    public function handleMessage(
+    public fun handleMessage(
         Message $message)
     {
-        $data = $message->getData();
+        $data = $message.getData()
         if (!isset($data['zero_product_provisioning_event']) || !is_array($data['zero_product_provisioning_event'])) {
-            throw new HandlerException('Invalid zero provision (event data is missing).');
+            throw HandlerException('Invalid zero provision (event data is missing).')
         }
-        $provision = new ZeroProvisionEvent($data['zero_product_provisioning_event']);
-        $this->_target->emit('zero-provision', [$provision]);
+        $provision = ZeroProvisionEvent($data['zero_product_provisioning_event'])
+        this._target.emit('zero-provision', [$provision])
     }
 }

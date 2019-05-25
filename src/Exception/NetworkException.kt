@@ -1,6 +1,6 @@
-<?php
 
-namespace InstagramAPI\Exception;
+
+package InstagramAPI.Exception
 
 /**
  * This exception re-wraps ALL networking/socket exceptions.
@@ -15,49 +15,49 @@ namespace InstagramAPI\Exception;
  * It also ensures that users get a proper stack-trace showing which area of OUR
  * code threw the exception, instead of some useless line of GUZZLE'S code.
  *
- * The message we use is the same as the message of the Guzzle exception, but
+ * The message we import is the same as the message of the Guzzle exception, but
  * nicely formatted to begin with "Network: " and to always end in punctuation
  * that forms complete English sentences, so that the exception message is ready
  * for display in user-facing applications.
  *
  * And if you (the programmer) want extra details that were included in Guzzle's
- * exception, you can simply use "getGuzzleException()" on this NetworkException
+ * exception, you can simply import "getGuzzleException()" on this NetworkException
  * to get the original Guzzle exception instead, which has more networking
  * information, such as the failed HTTP request that was attempted.
  */
-class NetworkException extends RequestException
+class NetworkException : RequestException
 {
-    /** @var \Exception */
-    private $_guzzleException;
+    /** @var .Exception */
+    private $_guzzleException
 
     /**
      * Constructor.
      *
-     * @param \Exception $guzzleException The original Guzzle exception.
+     * @param .Exception $guzzleException The original Guzzle exception.
      */
-    public function __construct(
-        \Exception $guzzleException)
+    public fun __construct(
+        .Exception $guzzleException)
     {
-        $this->_guzzleException = $guzzleException;
+        this._guzzleException = $guzzleException
 
         // Ensure that the message is nicely formatted and follows our standard.
-        $message = 'Network: '.ServerMessageThrower::prettifyMessage($this->_guzzleException->getMessage());
+        $message = 'Network: '.ServerMessageThrower::prettifyMessage(this._guzzleException.getMessage())
 
         // Construct with our custom message.
         // NOTE: We DON'T assign the guzzleException to "$previous", otherwise
-        // the user would still see something like "Uncaught GuzzleHttp\Exception\
+        // the user would still see something like "Uncaught GuzzleHttp.Exception.
         // RequestException" and Guzzle's stack trace, instead of "Uncaught
-        // InstagramAPI\Exception\NetworkException" and OUR correct stack trace.
-        parent::__construct($message);
+        // InstagramAPI.Exception.NetworkException" and OUR correct stack trace.
+        parent::__construct($message)
     }
 
     /**
      * Gets the original Guzzle exception, which contains much more details.
      *
-     * @return \Exception The original Guzzle exception.
+     * @return .Exception The original Guzzle exception.
      */
-    public function getGuzzleException()
+    public fun getGuzzleException()
     {
-        return $this->_guzzleException;
+        return this._guzzleException
     }
 }

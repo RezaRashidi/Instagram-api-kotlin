@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * FaceModels.
@@ -13,18 +13,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isFaceAlignModel()
  * @method bool isFaceDetectModel()
  * @method bool isPdmMultires()
- * @method $this setFaceAlignModel(mixed $value)
- * @method $this setFaceDetectModel(mixed $value)
- * @method $this setPdmMultires(mixed $value)
- * @method $this unsetFaceAlignModel()
- * @method $this unsetFaceDetectModel()
- * @method $this unsetPdmMultires()
+ * @method this setFaceAlignModel(mixed $value)
+ * @method this setFaceDetectModel(mixed $value)
+ * @method this setPdmMultires(mixed $value)
+ * @method this unsetFaceAlignModel()
+ * @method this unsetFaceDetectModel()
+ * @method this unsetPdmMultires()
  */
-class FaceModels extends AutoPropertyMapper
+class FaceModels : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'face_align_model'  => '',
         'face_detect_model' => '',
         'pdm_multires'      => '',
-    ];
+    ]
 }

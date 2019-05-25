@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * MediaShare.
@@ -11,15 +11,15 @@ use InstagramAPI\AutoPropertyMapper;
  * @method string getText()
  * @method bool isMedia()
  * @method bool isText()
- * @method $this setMedia(Item $value)
- * @method $this setText(string $value)
- * @method $this unsetMedia()
- * @method $this unsetText()
+ * @method this setMedia(Item $value)
+ * @method this setText(string $value)
+ * @method this unsetMedia()
+ * @method this unsetText()
  */
-class MediaShare extends AutoPropertyMapper
+class MediaShare : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'media' => 'Item',
         'text'  => 'string',
-    ];
+    ]
 }

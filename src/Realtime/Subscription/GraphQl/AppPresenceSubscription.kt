@@ -1,30 +1,30 @@
-<?php
 
-namespace InstagramAPI\Realtime\Subscription\GraphQl;
 
-use InstagramAPI\Realtime\Subscription\GraphQlSubscription;
+package InstagramAPI.Realtime.Subscription.GraphQl
 
-class AppPresenceSubscription extends GraphQlSubscription
+import InstagramAPI.Realtime.Subscription.GraphQlSubscription
+
+class AppPresenceSubscription : GraphQlSubscription
 {
-    const ID = 'presence_subscribe';
-    const QUERY = '17846944882223835';
+    val ID = 'presence_subscribe'
+    val QUERY = '17846944882223835'
 
     /**
      * Constructor.
      *
      * @param string $subscriptionId
      */
-    public function __construct(
+    public fun __construct(
         $subscriptionId)
     {
         parent::__construct(self::QUERY, [
             'client_subscription_id' => $subscriptionId,
-        ]);
+        ])
     }
 
     /** {@inheritdoc} */
-    public function getId()
+    public fun getId()
     {
-        return self::ID;
+        return self::ID
     }
 }

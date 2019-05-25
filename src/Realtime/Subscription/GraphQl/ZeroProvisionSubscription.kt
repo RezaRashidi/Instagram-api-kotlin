@@ -1,32 +1,32 @@
-<?php
 
-namespace InstagramAPI\Realtime\Subscription\GraphQl;
 
-use InstagramAPI\Realtime\Subscription\GraphQlSubscription;
-use InstagramAPI\Signatures;
+package InstagramAPI.Realtime.Subscription.GraphQl
 
-class ZeroProvisionSubscription extends GraphQlSubscription
+import InstagramAPI.Realtime.Subscription.GraphQlSubscription
+import InstagramAPI.Signatures
+
+class ZeroProvisionSubscription : GraphQlSubscription
 {
-    const QUERY = '17913953740109069';
-    const ID = 'zero_provision';
+    val QUERY = '17913953740109069'
+    val ID = 'zero_provision'
 
     /**
      * Constructor.
      *
      * @param string $deviceId
      */
-    public function __construct(
+    public fun __construct(
         $deviceId)
     {
         parent::__construct(self::QUERY, [
             'client_subscription_id' => Signatures::generateUUID(),
             'device_id'              => $deviceId,
-        ]);
+        ])
     }
 
     /** {@inheritdoc} */
-    public function getId()
+    public fun getId()
     {
-        return self::ID;
+        return self::ID
     }
 }

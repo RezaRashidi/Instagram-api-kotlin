@@ -1,20 +1,20 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * BusinessFeed.
  *
  * @method SummaryPromotions get_UnitsgGaCa()
  * @method bool is_UnitsgGaCa()
- * @method $this set_UnitsgGaCa(SummaryPromotions $value)
- * @method $this unset_UnitsgGaCa()
+ * @method this set_UnitsgGaCa(SummaryPromotions $value)
+ * @method this unset_UnitsgGaCa()
  */
-class BusinessFeed extends AutoPropertyMapper
+class BusinessFeed : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         '_unitsgGaCa' => 'SummaryPromotions',
-    ];
+    ]
 }

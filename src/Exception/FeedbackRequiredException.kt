@@ -1,7 +1,7 @@
-<?php
 
-namespace InstagramAPI\Exception;
 
-class FeedbackRequiredException extends RequestException
+package InstagramAPI.Exception
+
+class FeedbackRequiredException : RequestException
 {
 }

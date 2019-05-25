@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ActionLog.
@@ -11,15 +11,15 @@ use InstagramAPI\AutoPropertyMapper;
  * @method mixed getDescription()
  * @method bool isBold()
  * @method bool isDescription()
- * @method $this setBold(Bold[] $value)
- * @method $this setDescription(mixed $value)
- * @method $this unsetBold()
- * @method $this unsetDescription()
+ * @method this setBold(Bold[] $value)
+ * @method this setDescription(mixed $value)
+ * @method this unsetBold()
+ * @method this unsetDescription()
  */
-class ActionLog extends AutoPropertyMapper
+class ActionLog : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'bold'        => 'Bold[]',
         'description' => '',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Comment.
@@ -59,67 +59,67 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isType()
  * @method bool isUser()
  * @method bool isUserId()
- * @method $this setBitFlags(int $value)
- * @method $this setChildCommentCount(int $value)
- * @method $this setCommentLikeCount(int $value)
- * @method $this setContentType(string $value)
- * @method $this setCreatedAt(string $value)
- * @method $this setCreatedAtUtc(string $value)
- * @method $this setDidReportAsSpam(bool $value)
- * @method $this setHasLikedComment(bool $value)
- * @method $this setHasMoreHeadChildComments(bool $value)
- * @method $this setHasMoreTailChildComments(bool $value)
- * @method $this setHasTranslation(bool $value)
- * @method $this setInlineComposerDisplayCondition(string $value)
- * @method $this setMediaId(string $value)
- * @method $this setNextMaxChildCursor(string $value)
- * @method $this setNextMinChildCursor(string $value)
- * @method $this setNumHeadChildComments(int $value)
- * @method $this setNumTailChildComments(int $value)
- * @method $this setOtherPreviewUsers(User[] $value)
- * @method $this setParentCommentId(string $value)
- * @method $this setPk(string $value)
- * @method $this setPreviewChildComments(Comment[] $value)
- * @method $this setStatus(string $value)
- * @method $this setText(string $value)
- * @method $this setType(int $value)
- * @method $this setUser(User $value)
- * @method $this setUserId(string $value)
- * @method $this unsetBitFlags()
- * @method $this unsetChildCommentCount()
- * @method $this unsetCommentLikeCount()
- * @method $this unsetContentType()
- * @method $this unsetCreatedAt()
- * @method $this unsetCreatedAtUtc()
- * @method $this unsetDidReportAsSpam()
- * @method $this unsetHasLikedComment()
- * @method $this unsetHasMoreHeadChildComments()
- * @method $this unsetHasMoreTailChildComments()
- * @method $this unsetHasTranslation()
- * @method $this unsetInlineComposerDisplayCondition()
- * @method $this unsetMediaId()
- * @method $this unsetNextMaxChildCursor()
- * @method $this unsetNextMinChildCursor()
- * @method $this unsetNumHeadChildComments()
- * @method $this unsetNumTailChildComments()
- * @method $this unsetOtherPreviewUsers()
- * @method $this unsetParentCommentId()
- * @method $this unsetPk()
- * @method $this unsetPreviewChildComments()
- * @method $this unsetStatus()
- * @method $this unsetText()
- * @method $this unsetType()
- * @method $this unsetUser()
- * @method $this unsetUserId()
+ * @method this setBitFlags(int $value)
+ * @method this setChildCommentCount(int $value)
+ * @method this setCommentLikeCount(int $value)
+ * @method this setContentType(string $value)
+ * @method this setCreatedAt(string $value)
+ * @method this setCreatedAtUtc(string $value)
+ * @method this setDidReportAsSpam(bool $value)
+ * @method this setHasLikedComment(bool $value)
+ * @method this setHasMoreHeadChildComments(bool $value)
+ * @method this setHasMoreTailChildComments(bool $value)
+ * @method this setHasTranslation(bool $value)
+ * @method this setInlineComposerDisplayCondition(string $value)
+ * @method this setMediaId(string $value)
+ * @method this setNextMaxChildCursor(string $value)
+ * @method this setNextMinChildCursor(string $value)
+ * @method this setNumHeadChildComments(int $value)
+ * @method this setNumTailChildComments(int $value)
+ * @method this setOtherPreviewUsers(User[] $value)
+ * @method this setParentCommentId(string $value)
+ * @method this setPk(string $value)
+ * @method this setPreviewChildComments(Comment[] $value)
+ * @method this setStatus(string $value)
+ * @method this setText(string $value)
+ * @method this setType(int $value)
+ * @method this setUser(User $value)
+ * @method this setUserId(string $value)
+ * @method this unsetBitFlags()
+ * @method this unsetChildCommentCount()
+ * @method this unsetCommentLikeCount()
+ * @method this unsetContentType()
+ * @method this unsetCreatedAt()
+ * @method this unsetCreatedAtUtc()
+ * @method this unsetDidReportAsSpam()
+ * @method this unsetHasLikedComment()
+ * @method this unsetHasMoreHeadChildComments()
+ * @method this unsetHasMoreTailChildComments()
+ * @method this unsetHasTranslation()
+ * @method this unsetInlineComposerDisplayCondition()
+ * @method this unsetMediaId()
+ * @method this unsetNextMaxChildCursor()
+ * @method this unsetNextMinChildCursor()
+ * @method this unsetNumHeadChildComments()
+ * @method this unsetNumTailChildComments()
+ * @method this unsetOtherPreviewUsers()
+ * @method this unsetParentCommentId()
+ * @method this unsetPk()
+ * @method this unsetPreviewChildComments()
+ * @method this unsetStatus()
+ * @method this unsetText()
+ * @method this unsetType()
+ * @method this unsetUser()
+ * @method this unsetUserId()
  */
-class Comment extends AutoPropertyMapper
+class Comment : AutoPropertyMapper
 {
     /** @var int Top-level comment. */
-    const PARENT = 0;
+    val PARENT = 0
     /** @var int Threaded reply to another comment. */
-    const CHILD = 2;
+    val CHILD = 2
 
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'status'                            => 'string',
         'user_id'                           => 'string',
         /*
@@ -128,7 +128,7 @@ class Comment extends AutoPropertyMapper
          */
         'created_at'                        => 'string',
         /*
-         * WARNING: DO NOT USE THIS VALUE! It is NOT a real UTC timestamp.
+         * WARNING: DO NOT import THIS VALUE! It is NOT a real UTC timestamp.
          * Instagram has messed up their values of "created_at" vs "created_at_utc".
          * In `getComments()`, both have identical values. In `getCommentReplies()`,
          * both are identical too. But in the `getComments()` "reply previews",
@@ -172,7 +172,7 @@ class Comment extends AutoPropertyMapper
         'other_preview_users'               => 'User[]',
         'inline_composer_display_condition' => 'string',
         /*
-         * When "has_more_tail_child_comments" is true, you can use the value
+         * When "has_more_tail_child_comments" is true, you can import the value
          * in "next_max_child_cursor" as "max_id" parameter to load up to
          * "num_tail_child_comments" older child-comments.
          */
@@ -180,12 +180,12 @@ class Comment extends AutoPropertyMapper
         'next_max_child_cursor'             => 'string',
         'num_tail_child_comments'           => 'int',
         /*
-         * When "has_more_head_child_comments" is true, you can use the value
+         * When "has_more_head_child_comments" is true, you can import the value
          * in "next_min_child_cursor" as "min_id" parameter to load up to
          * "num_head_child_comments" newer child-comments.
          */
         'has_more_head_child_comments'      => 'bool',
         'next_min_child_cursor'             => 'string',
         'num_head_child_comments'           => 'int',
-    ];
+    ]
 }

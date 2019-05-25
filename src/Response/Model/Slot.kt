@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Slot.
@@ -11,15 +11,15 @@ use InstagramAPI\AutoPropertyMapper;
  * @method int getSlot()
  * @method bool isCooldown()
  * @method bool isSlot()
- * @method $this setCooldown(int $value)
- * @method $this setSlot(int $value)
- * @method $this unsetCooldown()
- * @method $this unsetSlot()
+ * @method this setCooldown(int $value)
+ * @method this setSlot(int $value)
+ * @method this unsetCooldown()
+ * @method this unsetSlot()
  */
-class Slot extends AutoPropertyMapper
+class Slot : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'slot'                 => 'int',
         'cooldown'             => 'int',
-    ];
+    ]
 }

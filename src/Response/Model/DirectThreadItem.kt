@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectThreadItem.
@@ -65,87 +65,87 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isTimestamp()
  * @method bool isUserId()
  * @method bool isVideoCallEvent()
- * @method $this setActionLog(ActionLog $value)
- * @method $this setAnimatedMedia(AnimatedMedia $value)
- * @method $this setClientContext(string $value)
- * @method $this setDirectMediaShare(MediaShare $value)
- * @method $this setExpiringMediaActionSummary(DirectExpiringSummary $value)
- * @method $this setFelixShare(FelixShare $value)
- * @method $this setHideInThread(mixed $value)
- * @method $this setItemId(string $value)
- * @method $this setItemType(mixed $value)
- * @method $this setLike(mixed $value)
- * @method $this setLink(DirectLink $value)
- * @method $this setLiveVideoShare(LiveVideoShare $value)
- * @method $this setLiveViewerInvite(LiveViewerInvite $value)
- * @method $this setLocation(Location $value)
- * @method $this setMedia(DirectThreadItemMedia $value)
- * @method $this setMediaShare(Item $value)
- * @method $this setPlaceholder(Placeholder $value)
- * @method $this setPreviewMedias(Item[] $value)
- * @method $this setProductShare(ProductShare $value)
- * @method $this setProfile(User $value)
- * @method $this setRavenMedia(Item $value)
- * @method $this setReactions(DirectReactions $value)
- * @method $this setReelShare(ReelShare $value)
- * @method $this setSeenUserIds(string[] $value)
- * @method $this setStoryShare(StoryShare $value)
- * @method $this setText(string $value)
- * @method $this setTimestamp(mixed $value)
- * @method $this setUserId(string $value)
- * @method $this setVideoCallEvent(VideoCallEvent $value)
- * @method $this unsetActionLog()
- * @method $this unsetAnimatedMedia()
- * @method $this unsetClientContext()
- * @method $this unsetDirectMediaShare()
- * @method $this unsetExpiringMediaActionSummary()
- * @method $this unsetFelixShare()
- * @method $this unsetHideInThread()
- * @method $this unsetItemId()
- * @method $this unsetItemType()
- * @method $this unsetLike()
- * @method $this unsetLink()
- * @method $this unsetLiveVideoShare()
- * @method $this unsetLiveViewerInvite()
- * @method $this unsetLocation()
- * @method $this unsetMedia()
- * @method $this unsetMediaShare()
- * @method $this unsetPlaceholder()
- * @method $this unsetPreviewMedias()
- * @method $this unsetProductShare()
- * @method $this unsetProfile()
- * @method $this unsetRavenMedia()
- * @method $this unsetReactions()
- * @method $this unsetReelShare()
- * @method $this unsetSeenUserIds()
- * @method $this unsetStoryShare()
- * @method $this unsetText()
- * @method $this unsetTimestamp()
- * @method $this unsetUserId()
- * @method $this unsetVideoCallEvent()
+ * @method this setActionLog(ActionLog $value)
+ * @method this setAnimatedMedia(AnimatedMedia $value)
+ * @method this setClientContext(string $value)
+ * @method this setDirectMediaShare(MediaShare $value)
+ * @method this setExpiringMediaActionSummary(DirectExpiringSummary $value)
+ * @method this setFelixShare(FelixShare $value)
+ * @method this setHideInThread(mixed $value)
+ * @method this setItemId(string $value)
+ * @method this setItemType(mixed $value)
+ * @method this setLike(mixed $value)
+ * @method this setLink(DirectLink $value)
+ * @method this setLiveVideoShare(LiveVideoShare $value)
+ * @method this setLiveViewerInvite(LiveViewerInvite $value)
+ * @method this setLocation(Location $value)
+ * @method this setMedia(DirectThreadItemMedia $value)
+ * @method this setMediaShare(Item $value)
+ * @method this setPlaceholder(Placeholder $value)
+ * @method this setPreviewMedias(Item[] $value)
+ * @method this setProductShare(ProductShare $value)
+ * @method this setProfile(User $value)
+ * @method this setRavenMedia(Item $value)
+ * @method this setReactions(DirectReactions $value)
+ * @method this setReelShare(ReelShare $value)
+ * @method this setSeenUserIds(string[] $value)
+ * @method this setStoryShare(StoryShare $value)
+ * @method this setText(string $value)
+ * @method this setTimestamp(mixed $value)
+ * @method this setUserId(string $value)
+ * @method this setVideoCallEvent(VideoCallEvent $value)
+ * @method this unsetActionLog()
+ * @method this unsetAnimatedMedia()
+ * @method this unsetClientContext()
+ * @method this unsetDirectMediaShare()
+ * @method this unsetExpiringMediaActionSummary()
+ * @method this unsetFelixShare()
+ * @method this unsetHideInThread()
+ * @method this unsetItemId()
+ * @method this unsetItemType()
+ * @method this unsetLike()
+ * @method this unsetLink()
+ * @method this unsetLiveVideoShare()
+ * @method this unsetLiveViewerInvite()
+ * @method this unsetLocation()
+ * @method this unsetMedia()
+ * @method this unsetMediaShare()
+ * @method this unsetPlaceholder()
+ * @method this unsetPreviewMedias()
+ * @method this unsetProductShare()
+ * @method this unsetProfile()
+ * @method this unsetRavenMedia()
+ * @method this unsetReactions()
+ * @method this unsetReelShare()
+ * @method this unsetSeenUserIds()
+ * @method this unsetStoryShare()
+ * @method this unsetText()
+ * @method this unsetTimestamp()
+ * @method this unsetUserId()
+ * @method this unsetVideoCallEvent()
  */
-class DirectThreadItem extends AutoPropertyMapper
+class DirectThreadItem : AutoPropertyMapper
 {
-    const PLACEHOLDER = 'placeholder';
-    const TEXT = 'text';
-    const HASHTAG = 'hashtag';
-    const LOCATION = 'location';
-    const PROFILE = 'profile';
-    const MEDIA = 'media';
-    const MEDIA_SHARE = 'media_share';
-    const EXPIRING_MEDIA = 'raven_media';
-    const LIKE = 'like';
-    const ACTION_LOG = 'action_log';
-    const REACTION = 'reaction';
-    const REEL_SHARE = 'reel_share';
-    const STORY_SHARE = 'story_share';
-    const LINK = 'link';
-    const LIVE_VIDEO_SHARE = 'live_video_share';
-    const LIVE_VIEWER_INVITE = 'live_viewer_invite';
-    const PRODUCT_SHARE = 'product_share';
-    const VIDEO_CALL_EVENT = 'video_call_event';
+    val PLACEHOLDER = 'placeholder'
+    val TEXT = 'text'
+    val HASHTAG = 'hashtag'
+    val LOCATION = 'location'
+    val PROFILE = 'profile'
+    val MEDIA = 'media'
+    val MEDIA_SHARE = 'media_share'
+    val EXPIRING_MEDIA = 'raven_media'
+    val LIKE = 'like'
+    val ACTION_LOG = 'action_log'
+    val REACTION = 'reaction'
+    val REEL_SHARE = 'reel_share'
+    val STORY_SHARE = 'story_share'
+    val LINK = 'link'
+    val LIVE_VIDEO_SHARE = 'live_video_share'
+    val LIVE_VIEWER_INVITE = 'live_viewer_invite'
+    val PRODUCT_SHARE = 'product_share'
+    val VIDEO_CALL_EVENT = 'video_call_event'
 
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'item_id'                       => 'string',
         'item_type'                     => '',
         'text'                          => 'string',
@@ -175,5 +175,5 @@ class DirectThreadItem extends AutoPropertyMapper
         'product_share'                 => 'ProductShare',
         'animated_media'                => 'AnimatedMedia',
         'felix_share'                   => 'FelixShare',
-    ];
+    ]
 }

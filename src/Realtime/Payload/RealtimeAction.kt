@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Realtime\Payload;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Realtime.Payload
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * RealtimeAction.
@@ -11,19 +11,19 @@ use InstagramAPI\AutoPropertyMapper;
  * @method string getStatus()
  * @method bool isAction()
  * @method bool isStatus()
- * @method $this setAction(string $value)
- * @method $this setStatus(string $value)
- * @method $this unsetAction()
- * @method $this unsetStatus()
+ * @method this setAction(string $value)
+ * @method this setStatus(string $value)
+ * @method this unsetAction()
+ * @method this unsetStatus()
  */
-abstract class RealtimeAction extends AutoPropertyMapper
+abstract class RealtimeAction : AutoPropertyMapper
 {
-    const ACK = 'item_ack';
-    const UNSEEN_COUNT = 'inbox_unseen_count';
-    const UNKNOWN = 'unknown';
+    val ACK = 'item_ack'
+    val UNSEEN_COUNT = 'inbox_unseen_count'
+    val UNKNOWN = 'unknown'
 
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'status' => 'string',
         'action' => 'string',
-    ];
+    ]
 }

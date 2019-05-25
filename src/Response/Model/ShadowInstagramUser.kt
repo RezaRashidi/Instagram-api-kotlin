@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ShadowInstagramUser.
@@ -21,24 +21,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isInstagramUserId()
  * @method bool isProfilePicture()
  * @method bool isUsername()
- * @method $this setBusinessManager(BusinessManager $value)
- * @method $this setError(mixed $value)
- * @method $this setFollowersCount(int $value)
- * @method $this setId(string $value)
- * @method $this setInstagramUserId(string $value)
- * @method $this setProfilePicture(Image $value)
- * @method $this setUsername(string $value)
- * @method $this unsetBusinessManager()
- * @method $this unsetError()
- * @method $this unsetFollowersCount()
- * @method $this unsetId()
- * @method $this unsetInstagramUserId()
- * @method $this unsetProfilePicture()
- * @method $this unsetUsername()
+ * @method this setBusinessManager(BusinessManager $value)
+ * @method this setError(mixed $value)
+ * @method this setFollowersCount(int $value)
+ * @method this setId(string $value)
+ * @method this setInstagramUserId(string $value)
+ * @method this setProfilePicture(Image $value)
+ * @method this setUsername(string $value)
+ * @method this unsetBusinessManager()
+ * @method this unsetError()
+ * @method this unsetFollowersCount()
+ * @method this unsetId()
+ * @method this unsetInstagramUserId()
+ * @method this unsetProfilePicture()
+ * @method this unsetUsername()
  */
-class ShadowInstagramUser extends AutoPropertyMapper
+class ShadowInstagramUser : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'id'                => 'string',
         'instagram_user_id' => 'string',
         'followers_count'   => 'int',
@@ -46,5 +46,5 @@ class ShadowInstagramUser extends AutoPropertyMapper
         'profile_picture'   => 'Image',
         'business_manager'  => 'BusinessManager',
         'error'             => '',
-    ];
+    ]
 }

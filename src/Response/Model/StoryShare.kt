@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoryShare.
@@ -17,24 +17,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isMessage()
  * @method bool isText()
  * @method bool isTitle()
- * @method $this setIsLinked(bool $value)
- * @method $this setMedia(Item $value)
- * @method $this setMessage(string $value)
- * @method $this setText(string $value)
- * @method $this setTitle(string $value)
- * @method $this unsetIsLinked()
- * @method $this unsetMedia()
- * @method $this unsetMessage()
- * @method $this unsetText()
- * @method $this unsetTitle()
+ * @method this setIsLinked(bool $value)
+ * @method this setMedia(Item $value)
+ * @method this setMessage(string $value)
+ * @method this setText(string $value)
+ * @method this setTitle(string $value)
+ * @method this unsetIsLinked()
+ * @method this unsetMedia()
+ * @method this unsetMessage()
+ * @method this unsetText()
+ * @method this unsetTitle()
  */
-class StoryShare extends AutoPropertyMapper
+class StoryShare : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'media'                            => 'Item',
         'text'                             => 'string',
         'title'                            => 'string',
         'message'                          => 'string',
         'is_linked'                        => 'bool',
-    ];
+    ]
 }

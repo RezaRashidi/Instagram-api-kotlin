@@ -1,20 +1,20 @@
-<?php
 
-namespace InstagramAPI\Realtime;
 
-interface CommandInterface extends \JsonSerializable
+package InstagramAPI.Realtime
+
+interface CommandInterface : .JsonSerializable
 {
     /**
      * Get the target topic.
      *
      * @return string
      */
-    public function getTopic();
+    public fun getTopic()
 
     /**
      * Get the MQTT QoS level.
      *
      * @return int
      */
-    public function getQosLevel();
+    public fun getQosLevel()
 }

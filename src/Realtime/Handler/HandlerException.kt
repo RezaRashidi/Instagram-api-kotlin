@@ -1,7 +1,7 @@
-<?php
 
-namespace InstagramAPI\Realtime\Handler;
 
-class HandlerException extends \DomainException
+package InstagramAPI.Realtime.Handler
+
+class HandlerException : .DomainException
 {
 }

@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Creative.
@@ -23,26 +23,26 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isSecondaryAction()
  * @method bool isSocialContext()
  * @method bool isTitle()
- * @method $this setContent(Text $value)
- * @method $this setDismissAction(mixed $value)
- * @method $this setFooter(Text $value)
- * @method $this setImage(Image $value)
- * @method $this setPrimaryAction(Action $value)
- * @method $this setSecondaryAction(Action $value)
- * @method $this setSocialContext(Text $value)
- * @method $this setTitle(Text $value)
- * @method $this unsetContent()
- * @method $this unsetDismissAction()
- * @method $this unsetFooter()
- * @method $this unsetImage()
- * @method $this unsetPrimaryAction()
- * @method $this unsetSecondaryAction()
- * @method $this unsetSocialContext()
- * @method $this unsetTitle()
+ * @method this setContent(Text $value)
+ * @method this setDismissAction(mixed $value)
+ * @method this setFooter(Text $value)
+ * @method this setImage(Image $value)
+ * @method this setPrimaryAction(Action $value)
+ * @method this setSecondaryAction(Action $value)
+ * @method this setSocialContext(Text $value)
+ * @method this setTitle(Text $value)
+ * @method this unsetContent()
+ * @method this unsetDismissAction()
+ * @method this unsetFooter()
+ * @method this unsetImage()
+ * @method this unsetPrimaryAction()
+ * @method this unsetSecondaryAction()
+ * @method this unsetSocialContext()
+ * @method this unsetTitle()
  */
-class Creative extends AutoPropertyMapper
+class Creative : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'title'            => 'Text',
         'content'          => 'Text',
         'footer'           => 'Text',
@@ -52,5 +52,5 @@ class Creative extends AutoPropertyMapper
         'secondary_action' => 'Action',
         'dismiss_action'   => '',
         'image'            => 'Image',
-    ];
+    ]
 }

@@ -1,7 +1,7 @@
-<?php
 
-namespace InstagramAPI\Exception;
 
-class InvalidUserException extends RequestException
+package InstagramAPI.Exception
+
+class InvalidUserException : RequestException
 {
 }

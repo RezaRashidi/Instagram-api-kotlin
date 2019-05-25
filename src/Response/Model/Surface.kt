@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Surface.
@@ -15,18 +15,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isRankToken()
  * @method bool isScores()
  * @method bool isTtlSecs()
- * @method $this setName(string $value)
- * @method $this setRankToken(string $value)
- * @method $this setScores(mixed $value)
- * @method $this setTtlSecs(int $value)
- * @method $this unsetName()
- * @method $this unsetRankToken()
- * @method $this unsetScores()
- * @method $this unsetTtlSecs()
+ * @method this setName(string $value)
+ * @method this setRankToken(string $value)
+ * @method this setScores(mixed $value)
+ * @method this setTtlSecs(int $value)
+ * @method this unsetName()
+ * @method this unsetRankToken()
+ * @method this unsetScores()
+ * @method this unsetTtlSecs()
  */
-class Surface extends AutoPropertyMapper
+class Surface : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         /*
          * Scores is an array of int/float numbers keyed by user id.
          * It determines how important each user is for sorting purposes.
@@ -35,5 +35,5 @@ class Surface extends AutoPropertyMapper
         'rank_token'     => 'string',
         'ttl_secs'       => 'int',
         'name'           => 'string',
-    ];
+    ]
 }

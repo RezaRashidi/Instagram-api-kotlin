@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * PermanentItem.
@@ -35,38 +35,38 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isText()
  * @method bool isTimestamp()
  * @method bool isUserId()
- * @method $this setClientContext(string $value)
- * @method $this setItemId(string $value)
- * @method $this setItemType(string $value)
- * @method $this setLike(mixed $value)
- * @method $this setLink(Link $value)
- * @method $this setLiveVideoShare(LiveVideoShare $value)
- * @method $this setLocation(Location $value)
- * @method $this setMedia(MediaData $value)
- * @method $this setMediaShare(Item $value)
- * @method $this setProfile(User $value)
- * @method $this setReelShare(ReelShare $value)
- * @method $this setText(string $value)
- * @method $this setTimestamp(string $value)
- * @method $this setUserId(string $value)
- * @method $this unsetClientContext()
- * @method $this unsetItemId()
- * @method $this unsetItemType()
- * @method $this unsetLike()
- * @method $this unsetLink()
- * @method $this unsetLiveVideoShare()
- * @method $this unsetLocation()
- * @method $this unsetMedia()
- * @method $this unsetMediaShare()
- * @method $this unsetProfile()
- * @method $this unsetReelShare()
- * @method $this unsetText()
- * @method $this unsetTimestamp()
- * @method $this unsetUserId()
+ * @method this setClientContext(string $value)
+ * @method this setItemId(string $value)
+ * @method this setItemType(string $value)
+ * @method this setLike(mixed $value)
+ * @method this setLink(Link $value)
+ * @method this setLiveVideoShare(LiveVideoShare $value)
+ * @method this setLocation(Location $value)
+ * @method this setMedia(MediaData $value)
+ * @method this setMediaShare(Item $value)
+ * @method this setProfile(User $value)
+ * @method this setReelShare(ReelShare $value)
+ * @method this setText(string $value)
+ * @method this setTimestamp(string $value)
+ * @method this setUserId(string $value)
+ * @method this unsetClientContext()
+ * @method this unsetItemId()
+ * @method this unsetItemType()
+ * @method this unsetLike()
+ * @method this unsetLink()
+ * @method this unsetLiveVideoShare()
+ * @method this unsetLocation()
+ * @method this unsetMedia()
+ * @method this unsetMediaShare()
+ * @method this unsetProfile()
+ * @method this unsetReelShare()
+ * @method this unsetText()
+ * @method this unsetTimestamp()
+ * @method this unsetUserId()
  */
-class PermanentItem extends AutoPropertyMapper
+class PermanentItem : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'item_id'          => 'string',
         'user_id'          => 'string',
         'timestamp'        => 'string',
@@ -81,5 +81,5 @@ class PermanentItem extends AutoPropertyMapper
         'reel_share'       => 'ReelShare',
         'client_context'   => 'string',
         'live_video_share' => 'LiveVideoShare',
-    ];
+    ]
 }

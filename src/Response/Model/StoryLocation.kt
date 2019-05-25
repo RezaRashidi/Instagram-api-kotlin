@@ -1,9 +1,9 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
-use InstagramAPI\Response\PropertyCollection;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
+import InstagramAPI.Response.PropertyCollection
 
 /**
  * StoryLocation.
@@ -28,33 +28,33 @@ use InstagramAPI\Response\PropertyCollection;
  * @method bool isX()
  * @method bool isY()
  * @method bool isZ()
- * @method $this setAttribution(string $value)
- * @method $this setHeight(float $value)
- * @method $this setIsHidden(int $value)
- * @method $this setIsPinned(int $value)
- * @method $this setLocation(Location $value)
- * @method $this setRotation(float $value)
- * @method $this setWidth(float $value)
- * @method $this setX(float $value)
- * @method $this setY(float $value)
- * @method $this setZ(float $value)
- * @method $this unsetAttribution()
- * @method $this unsetHeight()
- * @method $this unsetIsHidden()
- * @method $this unsetIsPinned()
- * @method $this unsetLocation()
- * @method $this unsetRotation()
- * @method $this unsetWidth()
- * @method $this unsetX()
- * @method $this unsetY()
- * @method $this unsetZ()
+ * @method this setAttribution(string $value)
+ * @method this setHeight(float $value)
+ * @method this setIsHidden(int $value)
+ * @method this setIsPinned(int $value)
+ * @method this setLocation(Location $value)
+ * @method this setRotation(float $value)
+ * @method this setWidth(float $value)
+ * @method this setX(float $value)
+ * @method this setY(float $value)
+ * @method this setZ(float $value)
+ * @method this unsetAttribution()
+ * @method this unsetHeight()
+ * @method this unsetIsHidden()
+ * @method this unsetIsPinned()
+ * @method this unsetLocation()
+ * @method this unsetRotation()
+ * @method this unsetWidth()
+ * @method this unsetX()
+ * @method this unsetY()
+ * @method this unsetZ()
  */
-class StoryLocation extends AutoPropertyMapper
+class StoryLocation : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
-        PropertyCollection\Sticker::class,
+    val JSON_PROPERTY_MAP = [
+        PropertyCollection.Sticker::class,
         'location'    => 'Location',
         'attribution' => 'string',
         'is_hidden'   => 'int',
-    ];
+    ]
 }

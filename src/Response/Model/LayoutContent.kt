@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * LayoutContent.
@@ -19,27 +19,27 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isRelated()
  * @method bool isRelatedStyle()
  * @method bool isTabsInfo()
- * @method $this setExploreItemInfo(ExploreItemInfo $value)
- * @method $this setFeedType(string $value)
- * @method $this setMedias(SectionMedia[] $value)
- * @method $this setRelated(Tag[] $value)
- * @method $this setRelatedStyle(string $value)
- * @method $this setTabsInfo(TabsInfo $value)
- * @method $this unsetExploreItemInfo()
- * @method $this unsetFeedType()
- * @method $this unsetMedias()
- * @method $this unsetRelated()
- * @method $this unsetRelatedStyle()
- * @method $this unsetTabsInfo()
+ * @method this setExploreItemInfo(ExploreItemInfo $value)
+ * @method this setFeedType(string $value)
+ * @method this setMedias(SectionMedia[] $value)
+ * @method this setRelated(Tag[] $value)
+ * @method this setRelatedStyle(string $value)
+ * @method this setTabsInfo(TabsInfo $value)
+ * @method this unsetExploreItemInfo()
+ * @method this unsetFeedType()
+ * @method this unsetMedias()
+ * @method this unsetRelated()
+ * @method this unsetRelatedStyle()
+ * @method this unsetTabsInfo()
  */
-class LayoutContent extends AutoPropertyMapper
+class LayoutContent : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'related_style'     => 'string',
         'related'           => 'Tag[]',
         'medias'            => 'SectionMedia[]',
         'feed_type'         => 'string',
         'explore_item_info' => 'ExploreItemInfo',
         'tabs_info'         => 'TabsInfo',
-    ];
+    ]
 }

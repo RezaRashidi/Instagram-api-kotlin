@@ -1,20 +1,20 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Text.
  *
  * @method string getText()
  * @method bool isText()
- * @method $this setText(string $value)
- * @method $this unsetText()
+ * @method this setText(string $value)
+ * @method this unsetText()
  */
-class Text extends AutoPropertyMapper
+class Text : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'text' => 'string',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Settings;
 
-use InstagramAPI\Exception\SettingsException;
+package InstagramAPI.Settings
+
+import InstagramAPI.Exception.SettingsException
 
 /**
  * Effortlessly instantiates a StorageHandler with the desired Storage backend.
@@ -19,13 +19,13 @@ class Factory
      *
      * @param array $storageConfig Configuration for the desired
      *                             user settings storage backend.
-     * @param array $callbacks     Optional StorageHandler callback functions.
+     * @param array $callbacks     Optional StorageHandler callback funs.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws .InstagramAPI.Exception.SettingsException
      *
-     * @return \InstagramAPI\Settings\StorageHandler
+     * @return .InstagramAPI.Settings.StorageHandler
      */
-    public static function createHandler(
+    public static fun createHandler(
         array $storageConfig,
         array $callbacks = [])
     {
@@ -33,12 +33,12 @@ class Factory
         if (!isset($storageConfig['storage'])) {
             $cmdOptions = self::getCmdOptions([
                 'settings_storage::',
-            ]);
-            $storage = self::getUserConfig('storage', $storageConfig, $cmdOptions);
+            ])
+            $storage = self::getUserConfig('storage', $storageConfig, $cmdOptions)
             if ($storage === null) {
-                $storage = 'file';
+                $storage = 'file'
             }
-            $storageConfig = ['storage' => $storage];
+            $storageConfig = ['storage' => $storage]
         }
 
         // Determine the user's final storage configuration.
@@ -47,18 +47,18 @@ class Factory
             // Look for allowed command-line values related to this backend.
             $cmdOptions = self::getCmdOptions([
                 'settings_basefolder::',
-            ]);
+            ])
 
             // These settings are optional:
-            $baseFolder = self::getUserConfig('basefolder', $storageConfig, $cmdOptions);
+            $baseFolder = self::getUserConfig('basefolder', $storageConfig, $cmdOptions)
 
             // Generate the final storage location configuration.
             $locationConfig = [
                 'basefolder' => $baseFolder,
-            ];
+            ]
 
-            $storageInstance = new Storage\File();
-            break;
+            $storageInstance = Storage.File()
+            break
         case 'mysql':
             // Look for allowed command-line values related to this backend.
             $cmdOptions = self::getCmdOptions([
@@ -67,92 +67,92 @@ class Factory
                 'settings_dbhost::',
                 'settings_dbname::',
                 'settings_dbtablename::',
-            ]);
+            ])
 
             // These settings are optional, and can be provided regardless of
             // connection method:
             $locationConfig = [
                 'dbtablename' => self::getUserConfig('dbtablename', $storageConfig, $cmdOptions),
-            ];
+            ]
 
-            // These settings are required, but you only have to use one method:
+            // These settings are required, but you only have to import one method:
             if (isset($storageConfig['pdo'])) {
                 // If "pdo" is set in the factory config, assume the user wants
-                // to re-use an existing PDO connection. In that case we ignore
-                // the username/password/host/name parameters and use their PDO.
+                // to re-import an existing PDO connection. In that case we ignore
+                // the username/password/host/name parameters and import their PDO.
                 // NOTE: Beware that we WILL change attributes on the PDO
                 // connection to suit our needs! Primarily turning all error
                 // reporting into exceptions, and setting the charset to UTF-8.
-                // If you want to re-use a PDO connection, you MUST accept the
+                // If you want to re-import a PDO connection, you MUST accept the
                 // fact that WE NEED exceptions and UTF-8 in our PDO! If that is
-                // not acceptable to you then DO NOT re-use your own PDO object!
-                $locationConfig['pdo'] = $storageConfig['pdo'];
+                // not acceptable to you then DO NOT re-import your own PDO object!
+                $locationConfig['pdo'] = $storageConfig['pdo']
             } else {
-                // Make a new connection. Optional settings for it:
-                $locationConfig['dbusername'] = self::getUserConfig('dbusername', $storageConfig, $cmdOptions);
-                $locationConfig['dbpassword'] = self::getUserConfig('dbpassword', $storageConfig, $cmdOptions);
-                $locationConfig['dbhost'] = self::getUserConfig('dbhost', $storageConfig, $cmdOptions);
-                $locationConfig['dbname'] = self::getUserConfig('dbname', $storageConfig, $cmdOptions);
+                // Make a connection. Optional settings for it:
+                $locationConfig['dbusername'] = self::getUserConfig('dbusername', $storageConfig, $cmdOptions)
+                $locationConfig['dbpassword'] = self::getUserConfig('dbpassword', $storageConfig, $cmdOptions)
+                $locationConfig['dbhost'] = self::getUserConfig('dbhost', $storageConfig, $cmdOptions)
+                $locationConfig['dbname'] = self::getUserConfig('dbname', $storageConfig, $cmdOptions)
             }
 
-            $storageInstance = new Storage\MySQL();
-            break;
+            $storageInstance = Storage.MySQL()
+            break
         case 'sqlite':
             // Look for allowed command-line values related to this backend.
             $cmdOptions = self::getCmdOptions([
                 'settings_dbfilename::',
                 'settings_dbtablename::',
-            ]);
+            ])
 
             // These settings are optional, and can be provided regardless of
             // connection method:
             $locationConfig = [
                 'dbtablename' => self::getUserConfig('dbtablename', $storageConfig, $cmdOptions),
-            ];
+            ]
 
-            // These settings are required, but you only have to use one method:
+            // These settings are required, but you only have to import one method:
             if (isset($storageConfig['pdo'])) {
                 // If "pdo" is set in the factory config, assume the user wants
-                // to re-use an existing PDO connection. In that case we ignore
-                // the SQLite filename/connection parameters and use their PDO.
+                // to re-import an existing PDO connection. In that case we ignore
+                // the SQLite filename/connection parameters and import their PDO.
                 // NOTE: Beware that we WILL change attributes on the PDO
                 // connection to suit our needs! Primarily turning all error
                 // reporting into exceptions, and setting the charset to UTF-8.
-                // If you want to re-use a PDO connection, you MUST accept the
+                // If you want to re-import a PDO connection, you MUST accept the
                 // fact that WE NEED exceptions and UTF-8 in our PDO! If that is
-                // not acceptable to you then DO NOT re-use your own PDO object!
-                $locationConfig['pdo'] = $storageConfig['pdo'];
+                // not acceptable to you then DO NOT re-import your own PDO object!
+                $locationConfig['pdo'] = $storageConfig['pdo']
             } else {
-                // Make a new connection. Optional settings for it:
-                $locationConfig['dbfilename'] = self::getUserConfig('dbfilename', $storageConfig, $cmdOptions);
+                // Make a connection. Optional settings for it:
+                $locationConfig['dbfilename'] = self::getUserConfig('dbfilename', $storageConfig, $cmdOptions)
             }
 
-            $storageInstance = new Storage\SQLite();
-            break;
+            $storageInstance = Storage.SQLite()
+            break
         case 'memcached':
             // The memcached storage can only be configured via the factory
             // configuration array (not via command line or environment vars).
 
-            // These settings are required, but you only have to use one method:
+            // These settings are required, but you only have to import one method:
             if (isset($storageConfig['memcached'])) {
-                // Re-use the user's own Memcached object.
+                // Re-import the user's own Memcached object.
                 $locationConfig = [
                     'memcached' => $storageConfig['memcached'],
-                ];
+                ]
             } else {
-                // Make a new connection. Optional settings for it:
+                // Make a connection. Optional settings for it:
                 $locationConfig = [
-                    // This ID will be passed to the \Memcached() constructor.
+                    // This ID will be passed to the .Memcached() constructor.
                     // NOTE: Memcached's "persistent ID" feature makes Memcached
                     // keep the settings even after you disconnect.
                     'persistent_id' => (isset($storageConfig['persistent_id'])
                                         ? $storageConfig['persistent_id']
                                         : null),
-                    // Array which will be passed to \Memcached::setOptions().
+                    // Array which will be passed to .Memcached::setOptions().
                     'memcached_options' => (isset($storageConfig['memcached_options'])
                                             ? $storageConfig['memcached_options']
                                             : null),
-                    // Array which will be passed to \Memcached::addServers().
+                    // Array which will be passed to .Memcached::addServers().
                     // NOTE: Can contain one or multiple servers.
                     'servers' => (isset($storageConfig['servers'])
                                   ? $storageConfig['servers']
@@ -161,46 +161,46 @@ class Factory
                     // authentication with all of the Memcached servers.
                     // NOTE: PHP's Memcached API doesn't support individual
                     // authentication credentials per-server, so these values
-                    // apply to all of your servers if you use this feature!
+                    // apply to all of your servers if you import this feature!
                     'sasl_username' => (isset($storageConfig['sasl_username'])
                                         ? $storageConfig['sasl_username']
                                         : null),
                     'sasl_password' => (isset($storageConfig['sasl_password'])
                                         ? $storageConfig['sasl_password']
                                         : null),
-                ];
+                ]
             }
 
-            $storageInstance = new Storage\Memcached();
-            break;
+            $storageInstance = Storage.Memcached()
+            break
         case 'custom':
             // Custom storage classes can only be configured via the main array.
             // When using a custom class, you must provide a StorageInterface:
             if (!isset($storageConfig['class'])
                 || !$storageConfig['class'] instanceof StorageInterface) {
-                throw new SettingsException('Invalid custom storage class.');
+                throw SettingsException('Invalid custom storage class.')
             }
 
             // Create a clean storage location configuration array.
-            $locationConfig = $storageConfig;
-            unset($locationConfig['storage']);
-            unset($locationConfig['class']);
+            $locationConfig = $storageConfig
+            unset($locationConfig['storage'])
+            unset($locationConfig['class'])
 
-            $storageInstance = $storageConfig['class'];
-            break;
+            $storageInstance = $storageConfig['class']
+            break
         default:
-            throw new SettingsException(sprintf(
+            throw SettingsException(sprintf(
                 'Unknown settings storage type "%s".',
                 $storageConfig['storage']
-            ));
+            ))
         }
 
         // Create the storage handler and connect to the storage location.
-        return new StorageHandler(
+        return StorageHandler(
             $storageInstance,
             $locationConfig,
             $callbacks
-        );
+        )
     }
 
     /**
@@ -210,15 +210,15 @@ class Factory
      *
      * @return array
      */
-    public static function getCmdOptions(
+    public static fun getCmdOptions(
         array $longOpts)
     {
-        $cmdOptions = getopt('', $longOpts);
+        $cmdOptions = getopt('', $longOpts)
         if (!is_array($cmdOptions)) {
-            $cmdOptions = [];
+            $cmdOptions = []
         }
 
-        return $cmdOptions;
+        return $cmdOptions
     }
 
     /**
@@ -230,7 +230,7 @@ class Factory
      *
      * @return string|null The value if found, otherwise NULL.
      */
-    public static function getUserConfig(
+    public static fun getUserConfig(
         $settingName,
         array $storageConfig,
         array $cmdOptions)
@@ -238,25 +238,25 @@ class Factory
         // Command line options have the highest precedence.
         // NOTE: Settings provided via cmd must have a "settings_" prefix.
         if (array_key_exists("settings_{$settingName}", $cmdOptions)) {
-            return $cmdOptions["settings_{$settingName}"];
+            return $cmdOptions["settings_{$settingName}"]
         }
 
         // Environment variables have the second highest precedence.
         // NOTE: Settings provided via env must be UPPERCASED and have
         // a "SETTINGS_" prefix, for example "SETTINGS_STORAGE".
-        $envValue = getenv('SETTINGS_'.strtoupper($settingName));
+        $envValue = getenv('SETTINGS_'.strtoupper($settingName))
         if ($envValue !== false) {
-            return $envValue;
+            return $envValue
         }
 
         // Our factory config array has the lowest precedence, so that you can
         // easily override it via the other methods when testing other storage
         // backends or different connection parameters.
         if (array_key_exists($settingName, $storageConfig)) {
-            return $storageConfig[$settingName];
+            return $storageConfig[$settingName]
         }
 
         // Couldn't find any user-provided value. Automatically returns null.
-        // NOTE: Damn you StyleCI for not allowing "return null;" for clarity.
+        // NOTE: Damn you StyleCI for not allowing "return null" for clarity.
     }
 }

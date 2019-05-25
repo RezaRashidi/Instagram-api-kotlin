@@ -1,75 +1,75 @@
-<?php
 
-namespace InstagramAPI\Push\Fbns;
 
-use Fbns\Client\Auth\DeviceAuth;
-use Fbns\Client\AuthInterface;
-use InstagramAPI\Instagram;
+package InstagramAPI.Push.Fbns
 
-class Auth implements AuthInterface
+import Fbns.Client.Auth.DeviceAuth
+import Fbns.Client.AuthInterface
+import InstagramAPI.Instagram
+
+class Auth : AuthInterface
 {
     /**
      * @var Instagram
      */
-    protected $_instagram;
+    protected $_instagram
 
     /**
      * @var DeviceAuth
      */
-    protected $_deviceAuth;
+    protected $_deviceAuth
 
     /**
      * Auth constructor.
      *
      * @param Instagram $instagram
      */
-    public function __construct(
+    public fun __construct(
         Instagram $instagram)
     {
-        $this->_instagram = $instagram;
-        $this->_deviceAuth = $this->_instagram->settings->getFbnsAuth();
+        this._instagram = $instagram
+        this._deviceAuth = this._instagram.settings.getFbnsAuth()
     }
 
     /** {@inheritdoc} */
-    public function getClientId()
+    public fun getClientId()
     {
-        return $this->_deviceAuth->getClientId();
+        return this._deviceAuth.getClientId()
     }
 
     /** {@inheritdoc} */
-    public function getClientType()
+    public fun getClientType()
     {
-        return $this->_deviceAuth->getClientType();
+        return this._deviceAuth.getClientType()
     }
 
     /** {@inheritdoc} */
-    public function getUserId()
+    public fun getUserId()
     {
-        return $this->_deviceAuth->getUserId();
+        return this._deviceAuth.getUserId()
     }
 
     /** {@inheritdoc} */
-    public function getPassword()
+    public fun getPassword()
     {
-        return $this->_deviceAuth->getPassword();
+        return this._deviceAuth.getPassword()
     }
 
     /** {@inheritdoc} */
-    public function getDeviceId()
+    public fun getDeviceId()
     {
-        return $this->_deviceAuth->getDeviceId();
+        return this._deviceAuth.getDeviceId()
     }
 
     /** {@inheritdoc} */
-    public function getDeviceSecret()
+    public fun getDeviceSecret()
     {
-        return $this->_deviceAuth->getDeviceSecret();
+        return this._deviceAuth.getDeviceSecret()
     }
 
     /** {@inheritdoc} */
-    public function __toString()
+    public fun __toString()
     {
-        return $this->_deviceAuth->__toString();
+        return this._deviceAuth.__toString()
     }
 
     /**
@@ -77,13 +77,13 @@ class Auth implements AuthInterface
      *
      * @param string $auth
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public function update(
+    public fun update(
         $auth)
     {
         /* @var DeviceAuth $auth */
-        $this->_deviceAuth->read($auth);
-        $this->_instagram->settings->setFbnsAuth($this->_deviceAuth);
+        this._deviceAuth.read($auth)
+        this._instagram.settings.setFbnsAuth(this._deviceAuth)
     }
 }

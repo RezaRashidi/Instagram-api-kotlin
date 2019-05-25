@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\PropertyCollection;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.PropertyCollection
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Sticker.
@@ -24,24 +24,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isX()
  * @method bool isY()
  * @method bool isZ()
- * @method $this setHeight(float $value)
- * @method $this setIsPinned(int $value)
- * @method $this setRotation(float $value)
- * @method $this setWidth(float $value)
- * @method $this setX(float $value)
- * @method $this setY(float $value)
- * @method $this setZ(float $value)
- * @method $this unsetHeight()
- * @method $this unsetIsPinned()
- * @method $this unsetRotation()
- * @method $this unsetWidth()
- * @method $this unsetX()
- * @method $this unsetY()
- * @method $this unsetZ()
+ * @method this setHeight(float $value)
+ * @method this setIsPinned(int $value)
+ * @method this setRotation(float $value)
+ * @method this setWidth(float $value)
+ * @method this setX(float $value)
+ * @method this setY(float $value)
+ * @method this setZ(float $value)
+ * @method this unsetHeight()
+ * @method this unsetIsPinned()
+ * @method this unsetRotation()
+ * @method this unsetWidth()
+ * @method this unsetX()
+ * @method this unsetY()
+ * @method this unsetZ()
  */
-class Sticker extends AutoPropertyMapper
+class Sticker : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'x'         => 'float',
         'y'         => 'float',
         'z'         => 'float', // Unused by IG for now. So far it's always int(0).
@@ -49,5 +49,5 @@ class Sticker extends AutoPropertyMapper
         'height'    => 'float',
         'rotation'  => 'float',
         'is_pinned' => 'int',
-    ];
+    ]
 }

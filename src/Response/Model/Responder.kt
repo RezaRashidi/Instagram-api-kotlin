@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Responder.
@@ -17,24 +17,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isResponse()
  * @method bool isTs()
  * @method bool isUser()
- * @method $this setHasSharedResponse(bool $value)
- * @method $this setId(string $value)
- * @method $this setResponse(string $value)
- * @method $this setTs(int $value)
- * @method $this setUser(User $value)
- * @method $this unsetHasSharedResponse()
- * @method $this unsetId()
- * @method $this unsetResponse()
- * @method $this unsetTs()
- * @method $this unsetUser()
+ * @method this setHasSharedResponse(bool $value)
+ * @method this setId(string $value)
+ * @method this setResponse(string $value)
+ * @method this setTs(int $value)
+ * @method this setUser(User $value)
+ * @method this unsetHasSharedResponse()
+ * @method this unsetId()
+ * @method this unsetResponse()
+ * @method this unsetTs()
+ * @method this unsetUser()
  */
-class Responder extends AutoPropertyMapper
+class Responder : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'response'            => 'string',
         'has_shared_response' => 'bool',
         'id'                  => 'string',
         'user'                => 'User',
         'ts'                  => 'int',
-    ];
+    ]
 }

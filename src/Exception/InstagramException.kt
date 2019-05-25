@@ -1,31 +1,31 @@
-<?php
 
-namespace InstagramAPI\Exception;
 
-use InstagramAPI\Response;
+package InstagramAPI.Exception
+
+import InstagramAPI.Response
 
 /**
  * The core exception that ALL other library exceptions derive from.
  *
  * If you catch this exception, you KNOW it came from our Instagram-API library.
  */
-class InstagramException extends \RuntimeException
+class InstagramException : .RuntimeException
 {
     /**
      * The full response that triggered the exception, if available.
      *
      * @var Response|null
      */
-    private $_response = null;
+    private $_response = null
 
     /**
      * Check whether the exception has a full server response.
      *
      * @return bool TRUE if a full response is available, otherwise FALSE.
      */
-    public function hasResponse()
+    public fun hasResponse()
     {
-        return $this->_response !== null ? true : false;
+        return this._response !== null ? true : false
     }
 
     /**
@@ -35,9 +35,9 @@ class InstagramException extends \RuntimeException
      *
      * @see InstagramException::hasResponse()
      */
-    public function getResponse()
+    public fun getResponse()
     {
-        return $this->_response;
+        return this._response
     }
 
     /**
@@ -45,9 +45,9 @@ class InstagramException extends \RuntimeException
      *
      * @param Response|null $response The response value.
      */
-    public function setResponse(
+    public fun setResponse(
         Response $response = null)
     {
-        $this->_response = $response;
+        this._response = $response
     }
 }

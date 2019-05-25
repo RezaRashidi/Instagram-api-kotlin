@@ -1,7 +1,7 @@
-<?php
 
-namespace InstagramAPI\Exception;
 
-class IncorrectPasswordException extends RequestException
+package InstagramAPI.Exception
+
+class IncorrectPasswordException : RequestException
 {
 }

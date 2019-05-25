@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Token.
@@ -27,30 +27,30 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isTokenHash()
  * @method bool isTtl()
  * @method bool isZeroCmsFetchIntervalSeconds()
- * @method $this setCarrierId(int $value)
- * @method $this setCarrierName(string $value)
- * @method $this setDeadline(string $value)
- * @method $this setEnabledWalletDefsKeys(mixed $value)
- * @method $this setFeatures(mixed $value)
- * @method $this setRequestTime(string $value)
- * @method $this setRewriteRules(RewriteRule[] $value)
- * @method $this setTokenHash(string $value)
- * @method $this setTtl(int $value)
- * @method $this setZeroCmsFetchIntervalSeconds(int $value)
- * @method $this unsetCarrierId()
- * @method $this unsetCarrierName()
- * @method $this unsetDeadline()
- * @method $this unsetEnabledWalletDefsKeys()
- * @method $this unsetFeatures()
- * @method $this unsetRequestTime()
- * @method $this unsetRewriteRules()
- * @method $this unsetTokenHash()
- * @method $this unsetTtl()
- * @method $this unsetZeroCmsFetchIntervalSeconds()
+ * @method this setCarrierId(int $value)
+ * @method this setCarrierName(string $value)
+ * @method this setDeadline(string $value)
+ * @method this setEnabledWalletDefsKeys(mixed $value)
+ * @method this setFeatures(mixed $value)
+ * @method this setRequestTime(string $value)
+ * @method this setRewriteRules(RewriteRule[] $value)
+ * @method this setTokenHash(string $value)
+ * @method this setTtl(int $value)
+ * @method this setZeroCmsFetchIntervalSeconds(int $value)
+ * @method this unsetCarrierId()
+ * @method this unsetCarrierName()
+ * @method this unsetDeadline()
+ * @method this unsetEnabledWalletDefsKeys()
+ * @method this unsetFeatures()
+ * @method this unsetRequestTime()
+ * @method this unsetRewriteRules()
+ * @method this unsetTokenHash()
+ * @method this unsetTtl()
+ * @method this unsetZeroCmsFetchIntervalSeconds()
  */
-class Token extends AutoPropertyMapper
+class Token : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'carrier_name'                    => 'string',
         'carrier_id'                      => 'int',
         'ttl'                             => 'int',
@@ -61,22 +61,22 @@ class Token extends AutoPropertyMapper
         'enabled_wallet_defs_keys'        => '',
         'deadline'                        => 'string',
         'zero_cms_fetch_interval_seconds' => 'int',
-    ];
+    ]
 
-    const DEFAULT_TTL = 3600;
+    val DEFAULT_TTL = 3600
 
     /**
      * Get token expiration timestamp.
      *
      * @return int
      */
-    public function expiresAt()
+    public fun expiresAt()
     {
-        $ttl = (int) $this->getTtl();
+        $ttl = (int) this.getTtl()
         if ($ttl === 0) {
-            $ttl = self::DEFAULT_TTL;
+            $ttl = self::DEFAULT_TTL
         }
 
-        return time() + $ttl;
+        return time() + $ttl
     }
 }

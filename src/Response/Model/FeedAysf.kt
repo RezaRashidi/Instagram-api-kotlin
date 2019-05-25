@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * FeedAysf.
@@ -31,34 +31,34 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isTitle()
  * @method bool isUuid()
  * @method bool isViewAllText()
- * @method $this setActivator(mixed $value)
- * @method $this setDisplayNewUnit(mixed $value)
- * @method $this setFeedPosition(mixed $value)
- * @method $this setFetchUserDetails(mixed $value)
- * @method $this setIsDismissable(mixed $value)
- * @method $this setLandingSiteTitle(mixed $value)
- * @method $this setLandingSiteType(mixed $value)
- * @method $this setShouldRefill(mixed $value)
- * @method $this setSuggestions(Suggestion[] $value)
- * @method $this setTitle(mixed $value)
- * @method $this setUuid(string $value)
- * @method $this setViewAllText(mixed $value)
- * @method $this unsetActivator()
- * @method $this unsetDisplayNewUnit()
- * @method $this unsetFeedPosition()
- * @method $this unsetFetchUserDetails()
- * @method $this unsetIsDismissable()
- * @method $this unsetLandingSiteTitle()
- * @method $this unsetLandingSiteType()
- * @method $this unsetShouldRefill()
- * @method $this unsetSuggestions()
- * @method $this unsetTitle()
- * @method $this unsetUuid()
- * @method $this unsetViewAllText()
+ * @method this setActivator(mixed $value)
+ * @method this setDisplayNewUnit(mixed $value)
+ * @method this setFeedPosition(mixed $value)
+ * @method this setFetchUserDetails(mixed $value)
+ * @method this setIsDismissable(mixed $value)
+ * @method this setLandingSiteTitle(mixed $value)
+ * @method this setLandingSiteType(mixed $value)
+ * @method this setShouldRefill(mixed $value)
+ * @method this setSuggestions(Suggestion[] $value)
+ * @method this setTitle(mixed $value)
+ * @method this setUuid(string $value)
+ * @method this setViewAllText(mixed $value)
+ * @method this unsetActivator()
+ * @method this unsetDisplayNewUnit()
+ * @method this unsetFeedPosition()
+ * @method this unsetFetchUserDetails()
+ * @method this unsetIsDismissable()
+ * @method this unsetLandingSiteTitle()
+ * @method this unsetLandingSiteType()
+ * @method this unsetShouldRefill()
+ * @method this unsetSuggestions()
+ * @method this unsetTitle()
+ * @method this unsetUuid()
+ * @method this unsetViewAllText()
  */
-class FeedAysf extends AutoPropertyMapper
+class FeedAysf : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'landing_site_type'  => '',
         'uuid'               => 'string',
         'view_all_text'      => '',
@@ -71,5 +71,5 @@ class FeedAysf extends AutoPropertyMapper
         'fetch_user_details' => '',
         'title'              => '',
         'activator'          => '',
-    ];
+    ]
 }

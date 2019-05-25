@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * CloseFriends.
@@ -15,21 +15,21 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isPageSize()
  * @method bool isSections()
  * @method bool isUsers()
- * @method $this setBigList(mixed $value)
- * @method $this setPageSize(mixed $value)
- * @method $this setSections(mixed $value)
- * @method $this setUsers(User[] $value)
- * @method $this unsetBigList()
- * @method $this unsetPageSize()
- * @method $this unsetSections()
- * @method $this unsetUsers()
+ * @method this setBigList(mixed $value)
+ * @method this setPageSize(mixed $value)
+ * @method this setSections(mixed $value)
+ * @method this setUsers(User[] $value)
+ * @method this unsetBigList()
+ * @method this unsetPageSize()
+ * @method this unsetSections()
+ * @method this unsetUsers()
  */
-class CloseFriends extends AutoPropertyMapper
+class CloseFriends : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'sections'  => '',
         'users'     => 'User[]',
         'big_list'  => '',
         'page_size' => '',
-    ];
+    ]
 }

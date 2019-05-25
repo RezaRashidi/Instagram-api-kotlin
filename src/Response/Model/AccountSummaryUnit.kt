@@ -1,20 +1,20 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * AccountSummaryUnit.
  *
  * @method int getPostsCount()
  * @method bool isPostsCount()
- * @method $this setPostsCount(int $value)
- * @method $this unsetPostsCount()
+ * @method this setPostsCount(int $value)
+ * @method this unsetPostsCount()
  */
-class AccountSummaryUnit extends AutoPropertyMapper
+class AccountSummaryUnit : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'posts_count'          => 'int',
-    ];
+    ]
 }

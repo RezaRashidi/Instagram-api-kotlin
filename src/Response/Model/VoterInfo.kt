@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * VoterInfo.
@@ -15,21 +15,21 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isMoreAvailable()
  * @method bool isPollId()
  * @method bool isVoters()
- * @method $this setMaxId(string $value)
- * @method $this setMoreAvailable(bool $value)
- * @method $this setPollId(string $value)
- * @method $this setVoters(Voter[] $value)
- * @method $this unsetMaxId()
- * @method $this unsetMoreAvailable()
- * @method $this unsetPollId()
- * @method $this unsetVoters()
+ * @method this setMaxId(string $value)
+ * @method this setMoreAvailable(bool $value)
+ * @method this setPollId(string $value)
+ * @method this setVoters(Voter[] $value)
+ * @method this unsetMaxId()
+ * @method this unsetMoreAvailable()
+ * @method this unsetPollId()
+ * @method this unsetVoters()
  */
-class VoterInfo extends AutoPropertyMapper
+class VoterInfo : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'poll_id'           => 'string',
         'voters'            => 'Voter[]',
         'max_id'            => 'string',
         'more_available'    => 'bool',
-    ];
+    ]
 }

@@ -1,34 +1,34 @@
-<?php
 
-namespace InstagramAPI\Realtime\Parser;
 
-use InstagramAPI\Client;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\ParserInterface;
+package InstagramAPI.Realtime.Parser
 
-class IrisParser implements ParserInterface
+import InstagramAPI.Client
+import InstagramAPI.Realtime.Message
+import InstagramAPI.Realtime.ParserInterface
+
+class IrisParser : ParserInterface
 {
-    const MODULE = 'direct';
+    val MODULE = 'direct'
 
     /**
      * {@inheritdoc}
      *
-     * @throws \RuntimeException
+     * @throws .RuntimeException
      */
-    public function parseMessage(
+    public fun parseMessage(
         $topic,
         $payload)
     {
-        $messages = Client::api_body_decode($payload);
+        $messages = Client::api_body_decode($payload)
         if (!is_array($messages)) {
-            throw new \RuntimeException('Invalid Iris payload.');
+            throw .RuntimeException('Invalid Iris payload.')
         }
 
-        $result = [];
+        $result = []
         foreach ($messages as $message) {
-            $result[] = new Message(self::MODULE, $message);
+            $result[] = Message(self::MODULE, $message)
         }
 
-        return $result;
+        return $result
     }
 }

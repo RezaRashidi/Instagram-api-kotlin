@@ -1,28 +1,28 @@
-<?php
 
-namespace InstagramAPI\Request;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Constants
+import InstagramAPI.Response
 
 /**
- * Functions related to Instagram TV.
+ * funs related to Instagram TV.
  */
-class TV extends RequestCollection
+class TV : RequestCollection
 {
     /**
      * Get Instagram TV guide.
      *
      * It provides a catalogue of popular and suggested channels.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\TVGuideResponse
+     * @return .InstagramAPI.Response.TVGuideResponse
      */
-    public function getTvGuide()
+    public fun getTvGuide()
     {
-        return $this->ig->request('igtv/tv_guide/')
-            ->getResponse(new Response\TVGuideResponse());
+        return this.ig.request('igtv/tv_guide/')
+            .getResponse(Response.TVGuideResponse())
     }
 
     /**
@@ -34,31 +34,31 @@ class TV extends RequestCollection
      * @param string      $id    ID used to filter channels.
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InvalidArgumentException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\TVChannelsResponse
+     * @return .InstagramAPI.Response.TVChannelsResponse
      */
-    public function getChannel(
+    public fun getChannel(
         $id = 'for_you',
         $maxId = null)
     {
         if (!in_array($id, ['for_you', 'chrono_following', 'popular', 'continue_watching'])
-        && !preg_match('/^user_[1-9]\d*$/', $id)) {
-            throw new \InvalidArgumentException('Invalid ID type.');
+        && !preg_match('/^user_[1-9].d*$/', $id)) {
+            throw .InvalidArgumentException('Invalid ID type.')
         }
 
-        $request = $this->ig->request('igtv/channel/')
-            ->addPost('id', $id)
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken());
+        $request = this.ig.request('igtv/channel/')
+            .addPost('id', $id)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
 
         if ($maxId !== null) {
-            $request->addPost('max_id', $maxId);
+            $request.addPost('max_id', $maxId)
         }
 
-        return $request->getResponse(new Response\TVChannelsResponse());
+        return $request.getResponse(Response.TVChannelsResponse())
     }
 
     /**
@@ -67,20 +67,20 @@ class TV extends RequestCollection
      * @param string $videoFilename    The video filename.
      * @param array  $externalMetadata (optional) User-provided metadata key-value pairs.
      *
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException If the video upload fails.
+     * @throws .InvalidArgumentException
+     * @throws .RuntimeException
+     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return .InstagramAPI.Response.ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      */
-    public function uploadVideo(
+    public fun uploadVideo(
         $videoFilename,
         array $externalMetadata = [])
     {
-        return $this->ig->internal->uploadSingleVideo(Constants::FEED_TV, $videoFilename, null, $externalMetadata);
+        return this.ig.internal.uploadSingleVideo(Constants::FEED_TV, $videoFilename, null, $externalMetadata)
     }
 
     /**
@@ -88,22 +88,22 @@ class TV extends RequestCollection
      *
      * @param string $query The username or channel you are looking for.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\TVSearchResponse
+     * @return .InstagramAPI.Response.TVSearchResponse
      */
-    public function search(
+    public fun search(
         $query = '')
     {
         if ($query !== '') {
-            $endpoint = 'igtv/search/';
+            $endpoint = 'igtv/search/'
         } else {
-            $endpoint = 'igtv/suggested_searches/';
+            $endpoint = 'igtv/suggested_searches/'
         }
 
-        return $this->ig->request($endpoint)
-            ->addParam('query', $query)
-            ->getResponse(new Response\TVSearchResponse());
+        return this.ig.request($endpoint)
+            .addParam('query', $query)
+            .getResponse(Response.TVSearchResponse())
     }
 
     /**
@@ -113,18 +113,18 @@ class TV extends RequestCollection
      * @param int    $viewProgress    Video view progress in seconds.
      * @param mixed  $gridImpressions TODO No info yet.
      *
-     * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InvalidArgumentException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return .InstagramAPI.Response.GenericResponse
      */
-    public function writeSeenState(
+    public fun writeSeenState(
         $impression,
         $viewProgress = 0,
         $gridImpressions = [])
     {
         if (!ctype_digit($viewProgress) && (!is_int($viewProgress) || $viewProgress < 0)) {
-            throw new \InvalidArgumentException('View progress must be a positive integer.');
+            throw .InvalidArgumentException('View progress must be a positive integer.')
         }
 
         $seenState = json_encode([
@@ -134,13 +134,13 @@ class TV extends RequestCollection
                 ],
             ],
             'grid_impressions'  => $gridImpressions,
-        ]);
+        ])
 
-        return $this->ig->request('igtv/write_seen_state/')
-            ->addPost('seen_state', $seenState)
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\GenericResponse());
+        return this.ig.request('igtv/write_seen_state/')
+            .addPost('seen_state', $seenState)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(Response.GenericResponse())
     }
 }

@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Button.
@@ -21,24 +21,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isText()
  * @method bool isTextColor()
  * @method bool isUrl()
- * @method $this setAction(mixed $value)
- * @method $this setActionInfo(mixed $value)
- * @method $this setBackgroundColor(mixed $value)
- * @method $this setBorderColor(mixed $value)
- * @method $this setText(string $value)
- * @method $this setTextColor(mixed $value)
- * @method $this setUrl(string $value)
- * @method $this unsetAction()
- * @method $this unsetActionInfo()
- * @method $this unsetBackgroundColor()
- * @method $this unsetBorderColor()
- * @method $this unsetText()
- * @method $this unsetTextColor()
- * @method $this unsetUrl()
+ * @method this setAction(mixed $value)
+ * @method this setActionInfo(mixed $value)
+ * @method this setBackgroundColor(mixed $value)
+ * @method this setBorderColor(mixed $value)
+ * @method this setText(string $value)
+ * @method this setTextColor(mixed $value)
+ * @method this setUrl(string $value)
+ * @method this unsetAction()
+ * @method this unsetActionInfo()
+ * @method this unsetBackgroundColor()
+ * @method this unsetBorderColor()
+ * @method this unsetText()
+ * @method this unsetTextColor()
+ * @method this unsetUrl()
  */
-class Button extends AutoPropertyMapper
+class Button : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'text'             => 'string',
         'url'              => 'string',
         'action'           => '',
@@ -46,5 +46,5 @@ class Button extends AutoPropertyMapper
         'border_color'     => '',
         'text_color'       => '',
         'action_info'      => '',
-    ];
+    ]
 }

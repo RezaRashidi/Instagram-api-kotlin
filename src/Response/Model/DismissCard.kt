@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DismissCard.
@@ -21,24 +21,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isImageUrl()
  * @method bool isMessage()
  * @method bool isTitle()
- * @method $this setButtonText(mixed $value)
- * @method $this setCameraTarget(mixed $value)
- * @method $this setCardId(mixed $value)
- * @method $this setFaceFilterId(mixed $value)
- * @method $this setImageUrl(string $value)
- * @method $this setMessage(mixed $value)
- * @method $this setTitle(mixed $value)
- * @method $this unsetButtonText()
- * @method $this unsetCameraTarget()
- * @method $this unsetCardId()
- * @method $this unsetFaceFilterId()
- * @method $this unsetImageUrl()
- * @method $this unsetMessage()
- * @method $this unsetTitle()
+ * @method this setButtonText(mixed $value)
+ * @method this setCameraTarget(mixed $value)
+ * @method this setCardId(mixed $value)
+ * @method this setFaceFilterId(mixed $value)
+ * @method this setImageUrl(string $value)
+ * @method this setMessage(mixed $value)
+ * @method this setTitle(mixed $value)
+ * @method this unsetButtonText()
+ * @method this unsetCameraTarget()
+ * @method this unsetCardId()
+ * @method this unsetFaceFilterId()
+ * @method this unsetImageUrl()
+ * @method this unsetMessage()
+ * @method this unsetTitle()
  */
-class DismissCard extends AutoPropertyMapper
+class DismissCard : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'card_id'        => '',
         'image_url'      => 'string',
         'title'          => '',
@@ -46,5 +46,5 @@ class DismissCard extends AutoPropertyMapper
         'button_text'    => '',
         'camera_target'  => '',
         'face_filter_id' => '',
-    ];
+    ]
 }

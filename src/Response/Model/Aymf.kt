@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Aymf.
@@ -11,15 +11,15 @@ use InstagramAPI\AutoPropertyMapper;
  * @method mixed getMoreAvailable()
  * @method bool isItems()
  * @method bool isMoreAvailable()
- * @method $this setItems(AymfItem[] $value)
- * @method $this setMoreAvailable(mixed $value)
- * @method $this unsetItems()
- * @method $this unsetMoreAvailable()
+ * @method this setItems(AymfItem[] $value)
+ * @method this setMoreAvailable(mixed $value)
+ * @method this unsetItems()
+ * @method this unsetMoreAvailable()
  */
-class Aymf extends AutoPropertyMapper
+class Aymf : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'items'          => 'AymfItem[]',
         'more_available' => '',
-    ];
+    ]
 }

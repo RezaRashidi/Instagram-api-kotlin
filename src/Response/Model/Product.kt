@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Product.
@@ -33,40 +33,40 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isProductImages()
  * @method bool isReviewStatus()
  * @method bool isThumbnailImage()
- * @method $this setCheckoutStyle(string $value)
- * @method $this setCurrentPrice(string $value)
- * @method $this setDescription(string $value)
- * @method $this setExternalUrl(string $value)
- * @method $this setFullPrice(string $value)
- * @method $this setHasViewerSaved(bool $value)
- * @method $this setMainImage(ProductImage $value)
- * @method $this setName(string $value)
- * @method $this setPrice(string $value)
- * @method $this setProductId(string $value)
- * @method $this setProductImages(ProductImage[] $value)
- * @method $this setReviewStatus(string $value)
- * @method $this setThumbnailImage(ProductImage $value)
- * @method $this unsetCheckoutStyle()
- * @method $this unsetCurrentPrice()
- * @method $this unsetDescription()
- * @method $this unsetExternalUrl()
- * @method $this unsetFullPrice()
- * @method $this unsetHasViewerSaved()
- * @method $this unsetMainImage()
- * @method $this unsetName()
- * @method $this unsetPrice()
- * @method $this unsetProductId()
- * @method $this unsetProductImages()
- * @method $this unsetReviewStatus()
- * @method $this unsetThumbnailImage()
+ * @method this setCheckoutStyle(string $value)
+ * @method this setCurrentPrice(string $value)
+ * @method this setDescription(string $value)
+ * @method this setExternalUrl(string $value)
+ * @method this setFullPrice(string $value)
+ * @method this setHasViewerSaved(bool $value)
+ * @method this setMainImage(ProductImage $value)
+ * @method this setName(string $value)
+ * @method this setPrice(string $value)
+ * @method this setProductId(string $value)
+ * @method this setProductImages(ProductImage[] $value)
+ * @method this setReviewStatus(string $value)
+ * @method this setThumbnailImage(ProductImage $value)
+ * @method this unsetCheckoutStyle()
+ * @method this unsetCurrentPrice()
+ * @method this unsetDescription()
+ * @method this unsetExternalUrl()
+ * @method this unsetFullPrice()
+ * @method this unsetHasViewerSaved()
+ * @method this unsetMainImage()
+ * @method this unsetName()
+ * @method this unsetPrice()
+ * @method this unsetProductId()
+ * @method this unsetProductImages()
+ * @method this unsetReviewStatus()
+ * @method this unsetThumbnailImage()
  */
-class Product extends AutoPropertyMapper
+class Product : AutoPropertyMapper
 {
-    const APPROVED = 'approved';
-    const PENDING = 'pending';
-    const REJECTED = 'rejected';
+    val APPROVED = 'approved'
+    val PENDING = 'pending'
+    val REJECTED = 'rejected'
 
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'name'             => 'string',
         'price'            => 'string',
         'current_price'    => 'string',
@@ -80,5 +80,5 @@ class Product extends AutoPropertyMapper
         'external_url'     => 'string',
         'checkout_style'   => 'string',
         'review_status'    => 'string',
-    ];
+    ]
 }

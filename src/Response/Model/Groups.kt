@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Groups.
@@ -11,15 +11,15 @@ use InstagramAPI\AutoPropertyMapper;
  * @method mixed getType()
  * @method bool isItems()
  * @method bool isType()
- * @method $this setItems(Item[] $value)
- * @method $this setType(mixed $value)
- * @method $this unsetItems()
- * @method $this unsetType()
+ * @method this setItems(Item[] $value)
+ * @method this setType(mixed $value)
+ * @method this unsetItems()
+ * @method this unsetType()
  */
-class Groups extends AutoPropertyMapper
+class Groups : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'type'  => '',
         'items' => 'Item[]',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * SharedFollower.
@@ -27,30 +27,30 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isProfilePicUrl()
  * @method bool isReelAutoArchive()
  * @method bool isUsername()
- * @method $this setFullName(string $value)
- * @method $this setHasAnonymousProfilePicture(bool $value)
- * @method $this setIsPrivate(bool $value)
- * @method $this setIsVerified(bool $value)
- * @method $this setOverlapScore(string $value)
- * @method $this setPk(string $value)
- * @method $this setProfilePicId(string $value)
- * @method $this setProfilePicUrl(string $value)
- * @method $this setReelAutoArchive(string $value)
- * @method $this setUsername(string $value)
- * @method $this unsetFullName()
- * @method $this unsetHasAnonymousProfilePicture()
- * @method $this unsetIsPrivate()
- * @method $this unsetIsVerified()
- * @method $this unsetOverlapScore()
- * @method $this unsetPk()
- * @method $this unsetProfilePicId()
- * @method $this unsetProfilePicUrl()
- * @method $this unsetReelAutoArchive()
- * @method $this unsetUsername()
+ * @method this setFullName(string $value)
+ * @method this setHasAnonymousProfilePicture(bool $value)
+ * @method this setIsPrivate(bool $value)
+ * @method this setIsVerified(bool $value)
+ * @method this setOverlapScore(string $value)
+ * @method this setPk(string $value)
+ * @method this setProfilePicId(string $value)
+ * @method this setProfilePicUrl(string $value)
+ * @method this setReelAutoArchive(string $value)
+ * @method this setUsername(string $value)
+ * @method this unsetFullName()
+ * @method this unsetHasAnonymousProfilePicture()
+ * @method this unsetIsPrivate()
+ * @method this unsetIsVerified()
+ * @method this unsetOverlapScore()
+ * @method this unsetPk()
+ * @method this unsetProfilePicId()
+ * @method this unsetProfilePicUrl()
+ * @method this unsetReelAutoArchive()
+ * @method this unsetUsername()
  */
-class SharedFollower extends AutoPropertyMapper
+class SharedFollower : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'pk'                            => 'string',
         'username'                      => 'string',
         'full_name'                     => 'string',
@@ -61,5 +61,5 @@ class SharedFollower extends AutoPropertyMapper
         'has_anonymous_profile_picture' => 'bool',
         'reel_auto_archive'             => 'string',
         'overlap_score'                 => 'string',
-    ];
+    ]
 }

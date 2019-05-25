@@ -1,7 +1,7 @@
-<?php
 
-namespace InstagramAPI\Exception;
 
-class ForcedPasswordResetException extends RequestException
+package InstagramAPI.Exception
+
+class ForcedPasswordResetException : RequestException
 {
 }

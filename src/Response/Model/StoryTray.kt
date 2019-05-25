@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoryTray.
@@ -57,60 +57,60 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isTitle()
  * @method bool isUniqueIntegerReelId()
  * @method bool isUser()
- * @method $this setCanReply(mixed $value)
- * @method $this setCanReshare(mixed $value)
- * @method $this setCoverMedia(CoverMedia $value)
- * @method $this setDismissCard(DismissCard $value)
- * @method $this setExpiringAt(mixed $value)
- * @method $this setHasBestiesMedia(bool $value)
- * @method $this setId(string $value)
- * @method $this setIsNux(mixed $value)
- * @method $this setItems(Item[] $value)
- * @method $this setLatestReelMedia(string $value)
- * @method $this setLocation(Location $value)
- * @method $this setMediaCount(int $value)
- * @method $this setMuted(mixed $value)
- * @method $this setNuxId(string $value)
- * @method $this setOwner(Owner $value)
- * @method $this setPrefetchCount(int $value)
- * @method $this setRankedPosition(string $value)
- * @method $this setReelType(string $value)
- * @method $this setSeen(string $value)
- * @method $this setSeenRankedPosition(string $value)
- * @method $this setShowNuxTooltip(mixed $value)
- * @method $this setSourceToken(mixed $value)
- * @method $this setTitle(string $value)
- * @method $this setUniqueIntegerReelId(string $value)
- * @method $this setUser(User $value)
- * @method $this unsetCanReply()
- * @method $this unsetCanReshare()
- * @method $this unsetCoverMedia()
- * @method $this unsetDismissCard()
- * @method $this unsetExpiringAt()
- * @method $this unsetHasBestiesMedia()
- * @method $this unsetId()
- * @method $this unsetIsNux()
- * @method $this unsetItems()
- * @method $this unsetLatestReelMedia()
- * @method $this unsetLocation()
- * @method $this unsetMediaCount()
- * @method $this unsetMuted()
- * @method $this unsetNuxId()
- * @method $this unsetOwner()
- * @method $this unsetPrefetchCount()
- * @method $this unsetRankedPosition()
- * @method $this unsetReelType()
- * @method $this unsetSeen()
- * @method $this unsetSeenRankedPosition()
- * @method $this unsetShowNuxTooltip()
- * @method $this unsetSourceToken()
- * @method $this unsetTitle()
- * @method $this unsetUniqueIntegerReelId()
- * @method $this unsetUser()
+ * @method this setCanReply(mixed $value)
+ * @method this setCanReshare(mixed $value)
+ * @method this setCoverMedia(CoverMedia $value)
+ * @method this setDismissCard(DismissCard $value)
+ * @method this setExpiringAt(mixed $value)
+ * @method this setHasBestiesMedia(bool $value)
+ * @method this setId(string $value)
+ * @method this setIsNux(mixed $value)
+ * @method this setItems(Item[] $value)
+ * @method this setLatestReelMedia(string $value)
+ * @method this setLocation(Location $value)
+ * @method this setMediaCount(int $value)
+ * @method this setMuted(mixed $value)
+ * @method this setNuxId(string $value)
+ * @method this setOwner(Owner $value)
+ * @method this setPrefetchCount(int $value)
+ * @method this setRankedPosition(string $value)
+ * @method this setReelType(string $value)
+ * @method this setSeen(string $value)
+ * @method this setSeenRankedPosition(string $value)
+ * @method this setShowNuxTooltip(mixed $value)
+ * @method this setSourceToken(mixed $value)
+ * @method this setTitle(string $value)
+ * @method this setUniqueIntegerReelId(string $value)
+ * @method this setUser(User $value)
+ * @method this unsetCanReply()
+ * @method this unsetCanReshare()
+ * @method this unsetCoverMedia()
+ * @method this unsetDismissCard()
+ * @method this unsetExpiringAt()
+ * @method this unsetHasBestiesMedia()
+ * @method this unsetId()
+ * @method this unsetIsNux()
+ * @method this unsetItems()
+ * @method this unsetLatestReelMedia()
+ * @method this unsetLocation()
+ * @method this unsetMediaCount()
+ * @method this unsetMuted()
+ * @method this unsetNuxId()
+ * @method this unsetOwner()
+ * @method this unsetPrefetchCount()
+ * @method this unsetRankedPosition()
+ * @method this unsetReelType()
+ * @method this unsetSeen()
+ * @method this unsetSeenRankedPosition()
+ * @method this unsetShowNuxTooltip()
+ * @method this unsetSourceToken()
+ * @method this unsetTitle()
+ * @method this unsetUniqueIntegerReelId()
+ * @method this unsetUser()
  */
-class StoryTray extends AutoPropertyMapper
+class StoryTray : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'id'                   => 'string',
         'items'                => 'Item[]',
         'user'                 => 'User',
@@ -143,5 +143,5 @@ class StoryTray extends AutoPropertyMapper
         'cover_media'            => 'CoverMedia',
         'title'                  => 'string',
         'media_count'            => 'int',
-    ];
+    ]
 }

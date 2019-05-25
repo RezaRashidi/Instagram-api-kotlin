@@ -1,9 +1,9 @@
-<?php
 
-namespace InstagramAPI\Response\Model\UnpredictableKeys;
 
-use InstagramAPI\AutoPropertyMapper;
-use LazyJsonMapper\Exception\LazyJsonMapperException;
+package InstagramAPI.Response.Model.UnpredictableKeys
+
+import InstagramAPI.AutoPropertyMapper
+import LazyJsonMapper.Exception.LazyJsonMapperException
 
 /**
  * This class defines a core "untyped" container of unpredictable data-keys.
@@ -12,27 +12,27 @@ use LazyJsonMapper\Exception\LazyJsonMapperException;
  * Such as objects whose values are keyed by things like user IDs, for example:
  * `{"9323":{"name":"foo"}}`
  *
- * The `getData()` function retrieves all key-value pairs, converted to the
+ * The `getData()` fun retrieves all key-value pairs, converted to the
  * optional `$_type` (if one is set via a subclass). And `setData()` writes
- * the new data back into the core LazyJsonMapper container. Most people will
- * not need to use the setter. It's just provided as an extra feature.
+ * the data back into the core LazyJsonMapper container. Most people will
+ * not need to import the setter. It's just provided as an extra feature.
  *
  * @author SteveJobzniak (https://github.com/SteveJobzniak)
  */
-class CoreUnpredictableContainer extends AutoPropertyMapper
+class CoreUnpredictableContainer : AutoPropertyMapper
 {
     // Let's disable direct access to this container via anything other than
-    // the functions that WE define ourselves! That way, people cannot use
-    // virtual properties/functions to manipulate the core data storage.
-    const ALLOW_VIRTUAL_PROPERTIES = false;
-    const ALLOW_VIRTUAL_FUNCTIONS = false;
+    // the funs that WE define ourselves! That way, people cannot use
+    // virtual properties/funs to manipulate the core data storage.
+    val ALLOW_VIRTUAL_PROPERTIES = false
+    val ALLOW_VIRTUAL_funS = false
 
     /**
      * Data cache to avoid constant processing every time the getter is used.
      *
      * @var array
      */
-    protected $_cache;
+    protected $_cache
 
     /**
      * What type to convert all sub-objects/values into.
@@ -41,7 +41,7 @@ class CoreUnpredictableContainer extends AutoPropertyMapper
      *
      * @var string
      */
-    protected $_type;
+    protected $_type
 
     /**
      * Get the data array of this unpredictable container.
@@ -50,46 +50,46 @@ class CoreUnpredictableContainer extends AutoPropertyMapper
      *
      * @return array
      */
-    public function getData()
+    public fun getData()
     {
-        if ($this->_cache === null) {
-            $this->_cache = $this->asArray(); // Throws.
+        if (this._cache === null) {
+            this._cache = this.asArray() // Throws.
         }
 
-        if ($this->_type !== null) {
-            foreach ($this->_cache as &$value) {
+        if (this._type !== null) {
+            foreach (this._cache as &$value) {
                 if (is_array($value)) {
-                    $value = new $this->_type($value); // Throws.
+                    $value = this._type($value) // Throws.
                 }
             }
         }
 
-        return $this->_cache;
+        return this._cache
     }
 
     /**
      * Set the data array of this unpredictable container.
      *
-     * @param array $value The new data array.
+     * @param array $value The data array.
      *
      * @throws LazyJsonMapperException
      *
-     * @return $this
+     * @return this
      */
-    public function setData(
+    public fun setData(
         array $value)
     {
-        $this->_cache = $value;
+        this._cache = $value
 
-        $newObjectData = [];
-        foreach ($this->_cache as $k => $v) {
+        $newObjectData = []
+        foreach (this._cache as $k => $v) {
             $newObjectData[$k] = is_object($v) && $v instanceof LazyJsonMapper
-                               ? $v->asArray() // Throws.
-                               : $v; // Is already a valid value.
+                               ? $v.asArray() // Throws.
+                               : $v // Is already a valid value.
         }
 
-        $this->assignObjectData($newObjectData); // Throws.
+        this.assignObjectData($newObjectData) // Throws.
 
-        return $this;
+        return this
     }
 }

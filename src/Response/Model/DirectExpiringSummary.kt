@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectExpiringSummary.
@@ -13,18 +13,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isCount()
  * @method bool isTimestamp()
  * @method bool isType()
- * @method $this setCount(int $value)
- * @method $this setTimestamp(string $value)
- * @method $this setType(string $value)
- * @method $this unsetCount()
- * @method $this unsetTimestamp()
- * @method $this unsetType()
+ * @method this setCount(int $value)
+ * @method this setTimestamp(string $value)
+ * @method this setType(string $value)
+ * @method this unsetCount()
+ * @method this unsetTimestamp()
+ * @method this unsetType()
  */
-class DirectExpiringSummary extends AutoPropertyMapper
+class DirectExpiringSummary : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'type'      => 'string',
         'timestamp' => 'string',
         'count'     => 'int',
-    ];
+    ]
 }

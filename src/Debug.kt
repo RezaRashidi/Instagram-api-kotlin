@@ -1,67 +1,67 @@
-<?php
 
-namespace InstagramAPI;
+
+package InstagramAPI
 
 class Debug
 {
-    public static function printRequest(
+    public static fun printRequest(
         $method,
         $endpoint)
     {
         if (PHP_SAPI === 'cli') {
-            $method = Utils::colouredString("{$method}:  ", 'light_blue');
+            $method = Utils::colouredString("{$method}:  ", 'light_blue')
         } else {
-            $method = $method.':  ';
+            $method = $method.':  '
         }
-        echo $method.$endpoint."\n";
+        echo $method.$endpoint.".n"
     }
 
-    public static function printUpload(
+    public static fun printUpload(
         $uploadBytes)
     {
         if (PHP_SAPI === 'cli') {
-            $dat = Utils::colouredString('→ '.$uploadBytes, 'yellow');
+            $dat = Utils::colouredString('→ '.$uploadBytes, 'yellow')
         } else {
-            $dat = '→ '.$uploadBytes;
+            $dat = '→ '.$uploadBytes
         }
-        echo $dat."\n";
+        echo $dat.".n"
     }
 
-    public static function printHttpCode(
+    public static fun printHttpCode(
         $httpCode,
         $bytes)
     {
         if (PHP_SAPI === 'cli') {
-            echo Utils::colouredString("← {$httpCode} \t {$bytes}", 'green')."\n";
+            echo Utils::colouredString("← {$httpCode} .t {$bytes}", 'green').".n"
         } else {
-            echo "← {$httpCode} \t {$bytes}\n";
+            echo "← {$httpCode} .t {$bytes}.n"
         }
     }
 
-    public static function printResponse(
+    public static fun printResponse(
         $response,
         $truncated = false)
     {
         if (PHP_SAPI === 'cli') {
-            $res = Utils::colouredString('RESPONSE: ', 'cyan');
+            $res = Utils::colouredString('RESPONSE: ', 'cyan')
         } else {
-            $res = 'RESPONSE: ';
+            $res = 'RESPONSE: '
         }
         if ($truncated && strlen($response) > 1000) {
-            $response = substr($response, 0, 1000).'...';
+            $response = substr($response, 0, 1000).'...'
         }
-        echo $res.$response."\n\n";
+        echo $res.$response.".n.n"
     }
 
-    public static function printPostData(
+    public static fun printPostData(
         $post)
     {
-        $gzip = mb_strpos($post, "\x1f"."\x8b"."\x08", 0, 'US-ASCII') === 0;
+        $gzip = mb_strpos($post, ".x1f".".x8b".".x08", 0, 'US-ASCII') === 0
         if (PHP_SAPI === 'cli') {
-            $dat = Utils::colouredString(($gzip ? 'DECODED ' : '').'DATA: ', 'yellow');
+            $dat = Utils::colouredString(($gzip ? 'DECODED ' : '').'DATA: ', 'yellow')
         } else {
-            $dat = 'DATA: ';
+            $dat = 'DATA: '
         }
-        echo $dat.urldecode(($gzip ? zlib_decode($post) : $post))."\n";
+        echo $dat.urldecode(($gzip ? zlib_decode($post) : $post)).".n"
     }
 }

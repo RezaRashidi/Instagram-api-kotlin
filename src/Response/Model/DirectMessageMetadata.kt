@@ -1,8 +1,8 @@
-<?php
 
-namespace InstagramAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectMessageMetadata.
@@ -15,21 +15,21 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isParticipantIds()
  * @method bool isThreadId()
  * @method bool isTimestamp()
- * @method $this setItemId(string $value)
- * @method $this setParticipantIds(string[] $value)
- * @method $this setThreadId(string $value)
- * @method $this setTimestamp(string $value)
- * @method $this unsetItemId()
- * @method $this unsetParticipantIds()
- * @method $this unsetThreadId()
- * @method $this unsetTimestamp()
+ * @method this setItemId(string $value)
+ * @method this setParticipantIds(string[] $value)
+ * @method this setThreadId(string $value)
+ * @method this setTimestamp(string $value)
+ * @method this unsetItemId()
+ * @method this unsetParticipantIds()
+ * @method this unsetThreadId()
+ * @method this unsetTimestamp()
  */
-class DirectMessageMetadata extends AutoPropertyMapper
+class DirectMessageMetadata : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'thread_id'       => 'string',
         'item_id'         => 'string',
         'timestamp'       => 'string',
         'participant_ids' => 'string[]',
-    ];
+    ]
 }
