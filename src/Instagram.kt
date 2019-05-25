@@ -13,7 +13,7 @@ class Instagram : ExperimentsInterface
      *
      * @var int
      */
-    val:Int EXPERIMENTS_REFRESH = 7200
+    public val EXPERIMENTS_REFRESH:Int = 7200
 
     /**
      * Currently active Instagram username.
