@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * BlockedListResponse.
@@ -38,5 +38,5 @@ class BlockedListResponse : Response
         'blocked_list' => 'Model.User[]',
         'next_max_id'  => 'string',
         'page_size'    => '',
-    ];
+    ]
 }

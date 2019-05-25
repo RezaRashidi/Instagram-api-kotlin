@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ReportExploreMediaResponse.
@@ -28,5 +28,5 @@ class ReportExploreMediaResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'explore_report_status' => '',
-    ];
+    ]
 }

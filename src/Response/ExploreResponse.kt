@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ExploreResponse.
@@ -58,5 +58,5 @@ class ExploreResponse : Response
         'next_max_id'            => 'string',
         'max_id'                 => 'string',
         'rank_token'             => 'string',
-    ];
+    ]
 }

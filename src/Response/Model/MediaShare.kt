@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * MediaShare.
@@ -21,5 +21,5 @@ class MediaShare : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'media' => 'Item',
         'text'  => 'string',
-    ];
+    ]
 }

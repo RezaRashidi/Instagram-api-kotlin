@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Media.Constraints;
 
-import InstagramAPI.Media.ConstraintsInterface;
+package InstagramAPI.Media.Constraints
+
+import InstagramAPI.Media.ConstraintsInterface
 
 /**
  * Instagram's story media constraints.
@@ -29,7 +29,7 @@ class StoryConstraints : ConstraintsInterface
      *
      * @see https://github.com/mgp25/Instagram-API/issues/1420#issuecomment-318146010
      */
-    val MIN_RATIO = 0.56;
+    val MIN_RATIO = 0.56
 
     /**
      * Highest allowed story aspect ratio.
@@ -38,7 +38,7 @@ class StoryConstraints : ConstraintsInterface
      *
      * @var float
      */
-    val MAX_RATIO = 0.67;
+    val MAX_RATIO = 0.67
 
     /**
      * The recommended story aspect ratio.
@@ -59,7 +59,7 @@ class StoryConstraints : ConstraintsInterface
      *
      * @var float
      */
-    val RECOMMENDED_RATIO = 0.5625;
+    val RECOMMENDED_RATIO = 0.5625
 
     /**
      * The deviation for the recommended aspect ratio.
@@ -71,67 +71,67 @@ class StoryConstraints : ConstraintsInterface
      *
      * @var float
      */
-    val RECOMMENDED_RATIO_DEVIATION = 0.0025;
+    val RECOMMENDED_RATIO_DEVIATION = 0.0025
 
     /**
      * Minimum allowed video duration.
      *
      * @var float
      */
-    val MIN_DURATION = 1.0;
+    val MIN_DURATION = 1.0
 
     /**
      * Maximum allowed video duration.
      *
      * @var float
      */
-    val MAX_DURATION = 15.0;
+    val MAX_DURATION = 15.0
 
     /** {@inheritdoc} */
     public fun getTitle()
     {
-        return 'story';
+        return 'story'
     }
 
     /** {@inheritdoc} */
     public fun getMinAspectRatio()
     {
-        return self::MIN_RATIO;
+        return self::MIN_RATIO
     }
 
     /** {@inheritdoc} */
     public fun getMaxAspectRatio()
     {
-        return self::MAX_RATIO;
+        return self::MAX_RATIO
     }
 
     /** {@inheritdoc} */
     public fun getRecommendedRatio()
     {
-        return self::RECOMMENDED_RATIO;
+        return self::RECOMMENDED_RATIO
     }
 
     /** {@inheritdoc} */
     public fun getRecommendedRatioDeviation()
     {
-        return self::RECOMMENDED_RATIO_DEVIATION;
+        return self::RECOMMENDED_RATIO_DEVIATION
     }
 
     /** {@inheritdoc} */
     public fun useRecommendedRatioByDefault()
     {
-        return true;
+        return true
     }
 
     /** {@inheritdoc} */
     public fun getMinDuration()
     {
-        return self::MIN_DURATION;
+        return self::MIN_DURATION
     }
 
     /** {@inheritdoc} */
     public fun getMaxDuration()
     {
-        return self::MAX_DURATION;
+        return self::MAX_DURATION
     }
 }

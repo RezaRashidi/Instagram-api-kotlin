@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Media.Constraints;
+
+package InstagramAPI.Media.Constraints
 
 /**
  * Instagram's timeline album media constraints.

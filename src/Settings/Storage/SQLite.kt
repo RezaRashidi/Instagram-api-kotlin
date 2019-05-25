@@ -1,11 +1,11 @@
-<?php
 
-package InstagramAPI.Settings.Storage;
 
-import InstagramAPI.Constants;
-import InstagramAPI.Settings.Storage.Components.PDOStorage;
-import InstagramAPI.Utils;
-import PDO;
+package InstagramAPI.Settings.Storage
+
+import InstagramAPI.Constants
+import InstagramAPI.Settings.Storage.Components.PDOStorage
+import InstagramAPI.Utils
+import PDO
 
 /**
  * Persistent storage backend which uses a SQLite database file.
@@ -24,11 +24,11 @@ class SQLite : PDOStorage
     public fun __construct()
     {
         // Configure the name of this backend.
-        parent::__construct('SQLite');
+        parent::__construct('SQLite')
     }
 
     /**
-     * Create a new PDO connection to the database.
+     * Create a PDO connection to the database.
      *
      * {@inheritdoc}
      */
@@ -39,18 +39,18 @@ class SQLite : PDOStorage
         $sqliteFile = ((isset($locationConfig['dbfilename'])
                         && !empty($locationConfig['dbfilename']))
                        ? $locationConfig['dbfilename']
-                       : Constants::SRC_DIR.'/../sessions/instagram.db');
+                       : Constants::SRC_DIR.'/../sessions/instagram.db')
 
         // Ensure that the whole directory path to the database exists.
-        $sqliteDir = dirname($sqliteFile); // Can be "." in case of CWD.
+        $sqliteDir = dirname($sqliteFile) // Can be "." in case of CWD.
         if (!Utils::createFolder($sqliteDir)) {
-            throw new .RuntimeException(sprintf(
+            throw .RuntimeException(sprintf(
                 'The "%s" folder is not writable.',
                 $sqliteDir
-            ));
+            ))
         }
 
-        return new PDO("sqlite:{$sqliteFile}");
+        return PDO("sqlite:{$sqliteFile}")
     }
 
     /**
@@ -63,7 +63,7 @@ class SQLite : PDOStorage
         // NOTE: SQLite can only set encoding when the database is 1st created,
         // so this only does something if we're the ones creating the db file!
         // Afterwards, SQLite always keeps the encoding used at db creation.
-        this._pdo.query('PRAGMA encoding = "UTF-8"').closeCursor();
+        this._pdo.query('PRAGMA encoding = "UTF-8"').closeCursor()
     }
 
     /**
@@ -74,12 +74,12 @@ class SQLite : PDOStorage
     protected fun _autoCreateTable()
     {
         // Abort if we already have the necessary table.
-        $sth = this._pdo.prepare('SELECT count(*) FROM sqlite_master WHERE (type = "table") AND (name = :tableName)');
-        $sth.execute([':tableName' => this._dbTableName]);
-        $result = $sth.fetchColumn();
-        $sth.closeCursor();
+        $sth = this._pdo.prepare('SELECT count(*) FROM sqlite_master WHERE (type = "table") AND (name = :tableName)')
+        $sth.execute([':tableName' => this._dbTableName])
+        $result = $sth.fetchColumn()
+        $sth.closeCursor()
         if ($result > 0) {
-            return;
+            return
         }
 
         // Create the database table. Throws in case of failure.
@@ -92,7 +92,7 @@ class SQLite : PDOStorage
             settings BLOB,
             cookies BLOB,
             last_modified DATETIME DEFAULT CURRENT_TIMESTAMP
-        );');
+        )')
 
         // Set up a trigger to automatically update the modification timestamp.
         // NOTE: The WHEN claimport is important to avoid infinite recursive loops,
@@ -108,8 +108,8 @@ class SQLite : PDOStorage
             FOR EACH ROW
             WHEN NEW.last_modified = OLD.last_modified -- Avoids infinite loop.
             BEGIN
-                UPDATE `'.this._dbTableName.'` SET last_modified=CURRENT_TIMESTAMP WHERE (id=OLD.id);
-            END;'
-        );
+                UPDATE `'.this._dbTableName.'` SET last_modified=CURRENT_TIMESTAMP WHERE (id=OLD.id)
+            END'
+        )
     }
 }

@@ -1,60 +1,60 @@
-<?php
 
-package InstagramAPI.Push;
 
-import Evenement.EventEmitterInterface;
-import Evenement.EventEmitterTrait;
-import Fbns.Client.AuthInterface;
-import Fbns.Client.Connection;
-import Fbns.Client.Lite;
-import Fbns.Client.Message.Push as PushMessage;
-import Fbns.Client.Message.Register;
-import InstagramAPI.Constants;
-import InstagramAPI.Devices.DeviceInterface;
-import InstagramAPI.React.PersistentInterface;
-import InstagramAPI.React.PersistentTrait;
-import Psr.Log.LoggerInterface;
-import React.EventLoop.LoopInterface;
-import React.Socket.ConnectorInterface;
+package InstagramAPI.Push
+
+import Evenement.EventEmitterInterface
+import Evenement.EventEmitterTrait
+import Fbns.Client.AuthInterface
+import Fbns.Client.Connection
+import Fbns.Client.Lite
+import Fbns.Client.Message.Push as PushMessage
+import Fbns.Client.Message.Register
+import InstagramAPI.Constants
+import InstagramAPI.Devices.DeviceInterface
+import InstagramAPI.React.PersistentInterface
+import InstagramAPI.React.PersistentTrait
+import Psr.Log.LoggerInterface
+import React.EventLoop.LoopInterface
+import React.Socket.ConnectorInterface
 
 /**
  * The following events are emitted:
- *  - token - New PUSH token has been received.
- *  - push - New PUSH notification has been received.
+ *  - token - PUSH token has been received.
+ *  - push - PUSH notification has been received.
  */
 class Fbns : PersistentInterface, EventEmitterInterface
 {
-    import PersistentTrait;
-    import EventEmitterTrait;
+    import PersistentTrait
+    import EventEmitterTrait
 
-    val CONNECTION_TIMEOUT = 5;
+    val CONNECTION_TIMEOUT = 5
 
-    val DEFAULT_HOST = 'mqtt-mini.facebook.com';
-    val DEFAULT_PORT = 443;
+    val DEFAULT_HOST = 'mqtt-mini.facebook.com'
+    val DEFAULT_PORT = 443
 
     /** @var EventEmitterInterface */
-    protected $_target;
+    protected $_target
 
     /** @var ConnectorInterface */
-    protected $_connector;
+    protected $_connector
 
     /** @var AuthInterface */
-    protected $_auth;
+    protected $_auth
 
     /** @var DeviceInterface */
-    protected $_device;
+    protected $_device
 
     /** @var LoopInterface */
-    protected $_loop;
+    protected $_loop
 
     /** @var Lite */
-    protected $_client;
+    protected $_client
 
     /** @var LoggerInterface */
-    protected $_logger;
+    protected $_logger
 
     /** @var bool */
-    protected $_isActive;
+    protected $_isActive
 
     /**
      * Fbns constructor.
@@ -74,67 +74,67 @@ class Fbns : PersistentInterface, EventEmitterInterface
         LoopInterface $loop,
         LoggerInterface $logger)
     {
-        this._target = $target;
-        this._connector = $connector;
-        this._auth = $auth;
-        this._device = $device;
-        this._loop = $loop;
-        this._logger = $logger;
+        this._target = $target
+        this._connector = $connector
+        this._auth = $auth
+        this._device = $device
+        this._loop = $loop
+        this._logger = $logger
 
-        this._client = this._getClient();
+        this._client = this._getClient()
     }
 
     /**
-     * Create a new FBNS client instance.
+     * Create a FBNS client instance.
      *
      * @return Lite
      */
     protected fun _getClient()
     {
-        $client = new Lite(this._loop, this._connector, this._logger);
+        $client = Lite(this._loop, this._connector, this._logger)
 
         // Bind events.
         $client
             .on('connect', fun (Lite.ConnectResponsePacket $responsePacket) {
                 // Update auth credentials.
-                $authJson = $responsePacket.getAuth();
+                $authJson = $responsePacket.getAuth()
                 if (strlen($authJson)) {
-                    this._logger.info('Received a non-empty auth.', [$authJson]);
-                    this.emit('fbns_auth', [$authJson]);
+                    this._logger.info('Received a non-empty auth.', [$authJson])
+                    this.emit('fbns_auth', [$authJson])
                 }
 
                 // Register an application.
-                this._client.register(Constants::PACKAGE_NAME, Constants::FACEBOOK_ANALYTICS_APPLICATION_ID);
+                this._client.register(Constants::PACKAGE_NAME, Constants::FACEBOOK_ANALYTICS_APPLICATION_ID)
             })
             .on('disconnect', fun () {
                 // Try to reconnect.
                 if (!this._reconnectInterval) {
-                    this._connect();
+                    this._connect()
                 }
             })
             .on('register', fun (Register $message) {
                 if (!empty($message.getError())) {
-                    this._target.emit('error', [new .RuntimeException($message.getError())]);
+                    this._target.emit('error', [.RuntimeException($message.getError())])
 
-                    return;
+                    return
                 }
-                this._logger.info('Received a non-empty token.', [$message.getToken()]);
-                this.emit('fbns_token', [$message.getToken()]);
+                this._logger.info('Received a non-empty token.', [$message.getToken()])
+                this.emit('fbns_token', [$message.getToken()])
             })
             .on('push', fun (PushMessage $message) {
-                $payload = $message.getPayload();
+                $payload = $message.getPayload()
 
                 try {
-                    $notification = new Notification($payload);
+                    $notification = Notification($payload)
                 } catch (.Exception $e) {
-                    this._logger.error(sprintf('Failed to decode push: %s', $e.getMessage()), [$payload]);
+                    this._logger.error(sprintf('Failed to decode push: %s', $e.getMessage()), [$payload])
 
-                    return;
+                    return
                 }
-                this.emit('push', [$notification]);
-            });
+                this.emit('push', [$notification])
+            })
 
-        return $client;
+        return $client
     }
 
     /**
@@ -143,13 +143,13 @@ class Fbns : PersistentInterface, EventEmitterInterface
     protected fun _connect()
     {
         this._setReconnectTimer(fun () {
-            $connection = new Connection(
+            $connection = Connection(
                 this._auth,
                 this._device.getFbUserAgent(Constants::FBNS_APPLICATION_NAME)
-            );
+            )
 
-            return this._client.connect(self::DEFAULT_HOST, self::DEFAULT_PORT, $connection, self::CONNECTION_TIMEOUT);
-        });
+            return this._client.connect(self::DEFAULT_HOST, self::DEFAULT_PORT, $connection, self::CONNECTION_TIMEOUT)
+        })
     }
 
     /**
@@ -157,10 +157,10 @@ class Fbns : PersistentInterface, EventEmitterInterface
      */
     public fun start()
     {
-        this._logger.info('Starting FBNS client...');
-        this._isActive = true;
-        this._reconnectInterval = 0;
-        this._connect();
+        this._logger.info('Starting FBNS client...')
+        this._isActive = true
+        this._reconnectInterval = 0
+        this._connect()
     }
 
     /**
@@ -168,27 +168,27 @@ class Fbns : PersistentInterface, EventEmitterInterface
      */
     public fun stop()
     {
-        this._logger.info('Stopping FBNS client...');
-        this._isActive = false;
-        this._cancelReconnectTimer();
-        this._client.disconnect();
+        this._logger.info('Stopping FBNS client...')
+        this._isActive = false
+        this._cancelReconnectTimer()
+        this._client.disconnect()
     }
 
     /** {@inheritdoc} */
     public fun isActive()
     {
-        return this._isActive;
+        return this._isActive
     }
 
     /** {@inheritdoc} */
     public fun getLogger()
     {
-        return this._logger;
+        return this._logger
     }
 
     /** {@inheritdoc} */
     public fun getLoop()
     {
-        return this._loop;
+        return this._loop
     }
 }

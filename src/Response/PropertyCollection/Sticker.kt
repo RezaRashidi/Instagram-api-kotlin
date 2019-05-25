@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.PropertyCollection;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.PropertyCollection
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Sticker.
@@ -49,5 +49,5 @@ class Sticker : AutoPropertyMapper
         'height'    => 'float',
         'rotation'  => 'float',
         'is_pinned' => 'int',
-    ];
+    ]
 }

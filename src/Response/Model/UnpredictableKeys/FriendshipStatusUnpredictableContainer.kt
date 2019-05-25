@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Response.Model.UnpredictableKeys;
+
+package InstagramAPI.Response.Model.UnpredictableKeys
 
 /**
  * Container for unpredictable data-keys with FriendshipStatus object values.
@@ -9,5 +9,5 @@ package InstagramAPI.Response.Model.UnpredictableKeys;
  */
 class FriendshipStatusUnpredictableContainer : CoreUnpredictableContainer
 {
-    protected $_type = '.InstagramAPI.Response.Model.FriendshipStatus';
+    protected $_type = '.InstagramAPI.Response.Model.FriendshipStatus'
 }

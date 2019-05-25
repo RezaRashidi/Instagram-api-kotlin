@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * CloseFriends.
@@ -31,5 +31,5 @@ class CloseFriends : AutoPropertyMapper
         'users'     => 'User[]',
         'big_list'  => '',
         'page_size' => '',
-    ];
+    ]
 }

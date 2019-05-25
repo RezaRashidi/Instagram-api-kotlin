@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * FriendshipStatus.
@@ -61,5 +61,5 @@ class FriendshipStatus : AutoPropertyMapper
         'blocking'         => 'bool',
         'muting'           => 'bool',
         'is_bestie'        => 'bool',
-    ];
+    ]
 }

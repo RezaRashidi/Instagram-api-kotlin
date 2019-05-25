@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * MediaCommentsResponse.
@@ -83,5 +83,5 @@ class MediaCommentsResponse : Response
         'has_more_headload_comments' => 'bool',
         'media_header_display'       => 'string',
         'threading_enabled'          => 'bool',
-    ];
+    ]
 }

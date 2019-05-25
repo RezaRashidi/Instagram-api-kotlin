@@ -1,9 +1,9 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Constants;
-import InstagramAPI.Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Constants
+import InstagramAPI.Response
 
 /**
  * funs related to Instagram's "creative assets", such as stickers.
@@ -30,25 +30,25 @@ class Creative : RequestCollection
         array $location = null)
     {
         if ($stickerType != 'static_stickers') {
-            throw new .InvalidArgumentException('You must provide a valid sticker type.');
+            throw .InvalidArgumentException('You must provide a valid sticker type.')
         }
         if ($location !== null && (!isset($location['lat'])
                                     || !isset($location['lng'])
                                     || !isset($location['horizontalAccuracy']))) {
-            throw new .InvalidArgumentException('Your location array must contain keys for "lat", "lng" and "horizontalAccuracy".');
+            throw .InvalidArgumentException('Your location array must contain keys for "lat", "lng" and "horizontalAccuracy".')
         }
 
         $request = this.ig.request('creatives/assets/')
-            .addPost('type', $stickerType);
+            .addPost('type', $stickerType)
 
         if ($location !== null) {
             $request
                 .addPost('lat', $location['lat'])
                 .addPost('lng', $location['lng'])
-                .addPost('horizontalAccuracy', $location['horizontalAccuracy']);
+                .addPost('horizontalAccuracy', $location['horizontalAccuracy'])
         }
 
-        return $request.getResponse(new Response.StickerAssetsResponse());
+        return $request.getResponse(Response.StickerAssetsResponse())
     }
 
     /**
@@ -68,7 +68,7 @@ class Creative : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('aml_facetracker_model_version', 12)
-            .getResponse(new Response.FaceModelsResponse());
+            .getResponse(Response.FaceModelsResponse())
     }
 
     /**
@@ -92,15 +92,15 @@ class Creative : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES));
+            .addPost('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
 
         if ($location !== null) {
             $request
                 .addPost('lat', $location['lat'])
                 .addPost('lng', $location['lng'])
-                .addPost('horizontalAccuracy', $location['horizontalAccuracy']);
+                .addPost('horizontalAccuracy', $location['horizontalAccuracy'])
         }
 
-        return $request.getResponse(new Response.FaceEffectsResponse());
+        return $request.getResponse(Response.FaceEffectsResponse())
     }
 }

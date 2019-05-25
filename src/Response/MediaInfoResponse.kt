@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * MediaInfoResponse.
@@ -43,5 +43,5 @@ class MediaInfoResponse : Response
         'num_results'            => 'int',
         'more_available'         => '',
         'items'                  => 'Model.Item[]',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ShadowInstagramUser.
@@ -46,5 +46,5 @@ class ShadowInstagramUser : AutoPropertyMapper
         'profile_picture'   => 'Image',
         'business_manager'  => 'BusinessManager',
         'error'             => '',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * GraphData.
@@ -41,5 +41,5 @@ class GraphData : AutoPropertyMapper
         'error'         => '',
         'catalog_items' => 'CatalogData',
         'me'            => 'MeGraphData',
-    ];
+    ]
 }

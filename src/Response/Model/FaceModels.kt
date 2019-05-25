@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * FaceModels.
@@ -26,5 +26,5 @@ class FaceModels : AutoPropertyMapper
         'face_align_model'  => '',
         'face_detect_model' => '',
         'pdm_multires'      => '',
-    ];
+    ]
 }

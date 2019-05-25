@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * IOSLinks.
@@ -21,5 +21,5 @@ class IOSLinks : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'linkType'    => 'int',
         'canvasDocId' => 'string',
-    ];
+    ]
 }

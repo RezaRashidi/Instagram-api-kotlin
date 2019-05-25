@@ -1,16 +1,16 @@
-<?php
 
-package InstagramAPI.Realtime.Command;
 
-import InstagramAPI.Realtime.CommandInterface;
-import InstagramAPI.Realtime.Mqtt;
+package InstagramAPI.Realtime.Command
+
+import InstagramAPI.Realtime.CommandInterface
+import InstagramAPI.Realtime.Mqtt
 
 class IrisSubscribe : CommandInterface
 {
-    val INVALID_SEQUENCE_ID = -1;
+    val INVALID_SEQUENCE_ID = -1
 
     /** @var int */
-    private $_sequenceId;
+    private $_sequenceId
 
     /**
      * Constructor.
@@ -23,21 +23,21 @@ class IrisSubscribe : CommandInterface
         $sequenceId)
     {
         if ($sequenceId === self::INVALID_SEQUENCE_ID) {
-            throw new .InvalidArgumentException('Invalid Iris sequence identifier.');
+            throw .InvalidArgumentException('Invalid Iris sequence identifier.')
         }
-        this._sequenceId = $sequenceId;
+        this._sequenceId = $sequenceId
     }
 
     /** {@inheritdoc} */
     public fun getTopic()
     {
-        return Mqtt.Topics::IRIS_SUB;
+        return Mqtt.Topics::IRIS_SUB
     }
 
     /** {@inheritdoc} */
     public fun getQosLevel()
     {
-        return Mqtt.QosLevel::ACKNOWLEDGED_DELIVERY;
+        return Mqtt.QosLevel::ACKNOWLEDGED_DELIVERY
     }
 
     /** {@inheritdoc} */
@@ -45,6 +45,6 @@ class IrisSubscribe : CommandInterface
     {
         return [
             'seq_id' => this._sequenceId,
-        ];
+        ]
     }
 }

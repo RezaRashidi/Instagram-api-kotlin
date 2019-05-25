@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * BootstrapUsersResponse.
@@ -33,5 +33,5 @@ class BootstrapUsersResponse : Response
     val JSON_PROPERTY_MAP = [
         'surfaces' => 'Model.Surface[]',
         'users'    => 'Model.User[]',
-    ];
+    ]
 }

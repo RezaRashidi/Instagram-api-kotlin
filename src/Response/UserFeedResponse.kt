@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * UserFeedResponse.
@@ -53,5 +53,5 @@ class UserFeedResponse : Response
         'next_max_id'            => 'string',
         'max_id'                 => 'string',
         'auto_load_more_enabled' => 'bool',
-    ];
+    ]
 }

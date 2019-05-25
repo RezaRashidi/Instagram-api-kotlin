@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * TagsStoryResponse.
@@ -28,5 +28,5 @@ class TagsStoryResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'story'       => 'Model.Reel',
-    ];
+    ]
 }

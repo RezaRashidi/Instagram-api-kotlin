@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * AdMetadata.
@@ -21,5 +21,5 @@ class AdMetadata : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'value' => '',
         'type'  => '',
-    ];
+    ]
 }

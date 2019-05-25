@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * FeedItem.
@@ -41,5 +41,5 @@ class FeedItem : AutoPropertyMapper
         'suggested_users'        => 'SuggestedUsers',
         'end_of_feed_demarcator' => '',
         'ad_link_type'           => 'int',
-    ];
+    ]
 }

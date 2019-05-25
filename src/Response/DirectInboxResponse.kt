@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DirectInboxResponse.
@@ -53,5 +53,5 @@ class DirectInboxResponse : Response
         'inbox'                  => 'Model.DirectInbox',
         'megaphone'              => 'Model.Megaphone',
         'snapshot_at_ms'         => 'string',
-    ];
+    ]
 }

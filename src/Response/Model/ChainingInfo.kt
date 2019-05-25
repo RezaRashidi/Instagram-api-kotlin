@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ChainingInfo.
@@ -16,5 +16,5 @@ class ChainingInfo : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         'sources' => 'string',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoryShare.
@@ -36,5 +36,5 @@ class StoryShare : AutoPropertyMapper
         'title'                            => 'string',
         'message'                          => 'string',
         'is_linked'                        => 'bool',
-    ];
+    ]
 }

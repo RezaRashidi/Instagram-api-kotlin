@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Media.Constraints;
+
+package InstagramAPI.Media.Constraints
 
 /**
  * Instagram's direct messaging story media constraints.
@@ -10,18 +10,18 @@ class DirectStoryConstraints : StoryConstraints
     /** {@inheritdoc} */
     public fun getTitle()
     {
-        return 'direct story';
+        return 'direct story'
     }
 
     /** {@inheritdoc} */
     public fun getMinDuration()
     {
-        return DirectConstraints::MIN_DURATION;
+        return DirectConstraints::MIN_DURATION
     }
 
     /** {@inheritdoc} */
     public fun getMaxDuration()
     {
-        return DirectConstraints::MAX_DURATION;
+        return DirectConstraints::MAX_DURATION
     }
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Section.
@@ -31,5 +31,5 @@ class Section : AutoPropertyMapper
         'layout_content'    => 'LayoutContent',
         'feed_type'         => 'string',
         'explore_item_info' => 'ExploreItemInfo',
-    ];
+    ]
 }

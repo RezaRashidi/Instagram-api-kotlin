@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Realtime.Payload;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Realtime.Payload
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * IrisSubscribeAck.
@@ -31,5 +31,5 @@ class IrisSubscribeAck : AutoPropertyMapper
         'succeeded'     => 'bool',
         'error_type'    => 'int',
         'error_message' => 'string',
-    ];
+    ]
 }

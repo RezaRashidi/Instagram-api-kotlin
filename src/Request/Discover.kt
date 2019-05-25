@@ -1,10 +1,10 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Constants;
-import InstagramAPI.Exception.RequestHeadersTooLargeException;
-import InstagramAPI.Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Constants
+import InstagramAPI.Exception.RequestHeadersTooLargeException
+import InstagramAPI.Response
 
 /**
  * General content discovery funs which don't fit into any better groups.
@@ -15,7 +15,7 @@ class Discover : RequestCollection
      * Get Explore tab feed.
      *
      * @param string|null $maxId      Next "maximum ID", used for pagination.
-     * @param bool        $isPrefetch Whether this is the first fetch; we'll ignore maxId if TRUE.
+     * @param bool        $isPrefetch Whether this is the first fetch we'll ignore maxId if TRUE.
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -30,17 +30,17 @@ class Discover : RequestCollection
             .addParam('is_from_promote', false)
             .addParam('timezone_offset', date('Z'))
             .addParam('session_id', this.ig.session_id)
-            .addParam('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES));
+            .addParam('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
 
         if (!$isPrefetch) {
             if ($maxId === null) {
-                $maxId = 0;
+                $maxId = 0
             }
-            $request.addParam('max_id', $maxId);
-            $request.addParam('module', 'explore_popular');
+            $request.addParam('max_id', $maxId)
+            $request.addParam('module', 'explore_popular')
         }
 
-        return $request.getResponse(new Response.ExploreResponse());
+        return $request.getResponse(Response.ExploreResponse())
     }
 
     /**
@@ -61,7 +61,7 @@ class Discover : RequestCollection
             .addParam('explore_source_token', $exploreSourceToken)
             .addParam('m_pk', this.ig.account_id)
             .addParam('a_pk', $userId)
-            .getResponse(new Response.ReportExploreMediaResponse());
+            .getResponse(Response.ReportExploreMediaResponse())
     }
 
     /**
@@ -95,7 +95,7 @@ class Discover : RequestCollection
     {
         // Do basic query validation.
         if (!is_string($query) || $query === '') {
-            throw new .InvalidArgumentException('Query must be a non-empty string.');
+            throw .InvalidArgumentException('Query must be a non-empty string.')
         }
         $request = this._paginateWithMultiExclusion(
             this.ig.request('fbsearch/topsearch_flat/')
@@ -104,28 +104,28 @@ class Discover : RequestCollection
                 .addParam('timezone_offset', date('Z')),
             $excludeList,
             $rankToken
-        );
+        )
 
         if ($latitude !== null && $longitude !== null) {
             $request
                 .addParam('lat', $latitude)
-                .addParam('lng', $longitude);
+                .addParam('lng', $longitude)
         }
 
         try {
             /** @var Response.FBSearchResponse $result */
-            $result = $request.getResponse(new Response.FBSearchResponse());
+            $result = $request.getResponse(Response.FBSearchResponse())
         } catch (RequestHeadersTooLargeException $e) {
-            $result = new Response.FBSearchResponse([
+            $result = Response.FBSearchResponse([
                 'has_more'   => false,
                 'hashtags'   => [],
                 'users'      => [],
                 'places'     => [],
                 'rank_token' => $rankToken,
-            ]);
+            ])
         }
 
-        return $result;
+        return $result
     }
 
     /**
@@ -143,12 +143,12 @@ class Discover : RequestCollection
         $type)
     {
         if (!in_array($type, ['blended', 'users', 'hashtags', 'places'], true)) {
-            throw new .InvalidArgumentException(sprintf('Unknown search type: %s.', $type));
+            throw .InvalidArgumentException(sprintf('Unknown search type: %s.', $type))
         }
 
         return this.ig.request('fbsearch/suggested_searches/')
             .addParam('type', $type)
-            .getResponse(new Response.SuggestedSearchesResponse());
+            .getResponse(Response.SuggestedSearchesResponse())
     }
 
     /**
@@ -163,7 +163,7 @@ class Discover : RequestCollection
     public fun getRecentSearches()
     {
         return this.ig.request('fbsearch/recent_searches/')
-            .getResponse(new Response.RecentSearchesResponse());
+            .getResponse(Response.RecentSearchesResponse())
     }
 
     /**
@@ -179,6 +179,6 @@ class Discover : RequestCollection
             .setSignedPost(false)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 }

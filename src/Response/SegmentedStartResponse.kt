@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * SegmentedStartResponse.
@@ -28,7 +28,7 @@ class SegmentedStartResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'stream_id' => 'string',
-    ];
+    ]
 
     /**
      * Checks if the response was successful.
@@ -37,16 +37,16 @@ class SegmentedStartResponse : Response
      */
     public fun isOk()
     {
-        $streamId = this._getProperty('stream_id');
+        $streamId = this._getProperty('stream_id')
         if ($streamId !== null && $streamId !== '') {
-            return true;
+            return true
         } else {
             // Set a nice message for exceptions.
             if (this.getMessage() === null) {
-                this.setMessage('Stream ID for segmented uploader is missing or invalid.');
+                this.setMessage('Stream ID for segmented uploader is missing or invalid.')
             }
 
-            return false;
+            return false
         }
     }
 }

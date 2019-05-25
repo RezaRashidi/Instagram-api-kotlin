@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FaceEffectsResponse.
@@ -38,5 +38,5 @@ class FaceEffectsResponse : Response
         'sdk_version'    => '',
         'effects'        => 'Model.Effect[]',
         'loading_effect' => 'Model.Effect',
-    ];
+    ]
 }

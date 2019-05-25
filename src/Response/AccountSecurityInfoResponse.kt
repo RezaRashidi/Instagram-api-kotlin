@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * AccountSecurityInfoResponse.
@@ -53,5 +53,5 @@ class AccountSecurityInfoResponse : Response
         'phone_number'          => 'string',
         'is_two_factor_enabled' => '',
         'national_number'       => 'string', // Really int, but may be >32bit.
-    ];
+    ]
 }

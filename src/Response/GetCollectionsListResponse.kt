@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * GetCollectionsListResponse.
@@ -43,5 +43,5 @@ class GetCollectionsListResponse : Response
         'more_available'         => 'bool',
         'auto_load_more_enabled' => 'bool',
         'next_max_id'            => 'string',
-    ];
+    ]
 }

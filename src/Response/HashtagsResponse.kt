@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * HashtagsResponse.
@@ -28,5 +28,5 @@ class HashtagsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'tags' => 'Model.Hashtag[]',
-    ];
+    ]
 }

@@ -1,11 +1,11 @@
-<?php
 
-package InstagramAPI.Media.Video;
 
-import InstagramAPI.Media.ConstraintsInterface;
-import InstagramAPI.Media.MediaDetails;
-import InstagramAPI.Utils;
-import Winbox.Args;
+package InstagramAPI.Media.Video
+
+import InstagramAPI.Media.ConstraintsInterface
+import InstagramAPI.Media.MediaDetails
+import InstagramAPI.Utils
+import Winbox.Args
 
 class VideoDetails : MediaDetails
 {
@@ -18,7 +18,7 @@ class VideoDetails : MediaDetails
      *
      * @var int
      */
-    val MIN_WIDTH = 480;
+    val MIN_WIDTH = 480
 
     /**
      * Maximum allowed video width.
@@ -29,29 +29,29 @@ class VideoDetails : MediaDetails
      *
      * @var int
      */
-    val MAX_WIDTH = 720;
+    val MAX_WIDTH = 720
 
     /** @var float */
-    private $_duration;
+    private $_duration
 
     /** @var string */
-    private $_videoCodec;
+    private $_videoCodec
 
     /** @var string|null */
-    private $_audioCodec;
+    private $_audioCodec
 
     /** @var string */
-    private $_container;
+    private $_container
 
     /** @var int */
-    private $_rotation;
+    private $_rotation
 
     /**
      * @return float
      */
     public fun getDuration()
     {
-        return this._duration;
+        return this._duration
     }
 
     /**
@@ -60,7 +60,7 @@ class VideoDetails : MediaDetails
     public fun getDurationInMsec()
     {
         // NOTE: ceil() is to round up and get rid of any MS decimals.
-        return (int) ceil(this.getDuration() * 1000);
+        return (int) ceil(this.getDuration() * 1000)
     }
 
     /**
@@ -68,7 +68,7 @@ class VideoDetails : MediaDetails
      */
     public fun getVideoCodec()
     {
-        return this._videoCodec;
+        return this._videoCodec
     }
 
     /**
@@ -76,7 +76,7 @@ class VideoDetails : MediaDetails
      */
     public fun getAudioCodec()
     {
-        return this._audioCodec;
+        return this._audioCodec
     }
 
     /**
@@ -84,37 +84,37 @@ class VideoDetails : MediaDetails
      */
     public fun getContainer()
     {
-        return this._container;
+        return this._container
     }
 
     /** {@inheritdoc} */
     public fun hasSwappedAxes()
     {
-        return this._rotation % 180;
+        return this._rotation % 180
     }
 
     /** {@inheritdoc} */
     public fun isHorizontallyFlipped()
     {
-        return this._rotation === 90 || this._rotation === 180;
+        return this._rotation === 90 || this._rotation === 180
     }
 
     /** {@inheritdoc} */
     public fun isVerticallyFlipped()
     {
-        return this._rotation === 180 || this._rotation === 270;
+        return this._rotation === 180 || this._rotation === 270
     }
 
     /** {@inheritdoc} */
     public fun getMinAllowedWidth()
     {
-        return self::MIN_WIDTH;
+        return self::MIN_WIDTH
     }
 
     /** {@inheritdoc} */
     public fun getMaxAllowedWidth()
     {
-        return self::MAX_WIDTH;
+        return self::MAX_WIDTH
     }
 
     /**
@@ -130,22 +130,22 @@ class VideoDetails : MediaDetails
     {
         // Check if input file exists.
         if (empty($filename) || !is_file($filename)) {
-            throw new .InvalidArgumentException(sprintf('The video file "%s" does not exist on disk.', $filename));
+            throw .InvalidArgumentException(sprintf('The video file "%s" does not exist on disk.', $filename))
         }
 
         // Determine video file size and throw when the file is empty.
-        $filesize = filesize($filename);
+        $filesize = filesize($filename)
         if ($filesize < 1) {
-            throw new .InvalidArgumentException(sprintf(
+            throw .InvalidArgumentException(sprintf(
                 'The video "%s" is empty.',
                 $filename
-            ));
+            ))
         }
 
         // The user must have FFprobe.
-        $ffprobe = Utils::checkFFPROBE();
+        $ffprobe = Utils::checkFFPROBE()
         if ($ffprobe === false) {
-            throw new .RuntimeException('You must have FFprobe to analyze video details. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via ".InstagramAPI.Utils::$ffprobeBin = .'/home/exampleuser/ffmpeg/bin/ffprobe.';" at the start of your script.');
+            throw .RuntimeException('You must have FFprobe to analyze video details. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via ".InstagramAPI.Utils::$ffprobeBin = .'/home/exampleuser/ffmpeg/bin/ffprobe.'" at the start of your script.')
         }
 
         // Load with FFPROBE. Shows details as JSON and exits.
@@ -153,56 +153,56 @@ class VideoDetails : MediaDetails
             '%s -v quiet -print_format json -show_format -show_streams %s',
             Args::escape($ffprobe),
             Args::escape($filename)
-        );
-        $jsonInfo = @shell_exec($command);
+        )
+        $jsonInfo = @shell_exec($command)
 
         // Check for processing errors.
         if ($jsonInfo === null) {
-            throw new .RuntimeException(sprintf('FFprobe failed to analyze your video file "%s".', $filename));
+            throw .RuntimeException(sprintf('FFprobe failed to analyze your video file "%s".', $filename))
         }
 
         // Attempt to decode the JSON.
-        $probeResult = @json_decode($jsonInfo, true);
+        $probeResult = @json_decode($jsonInfo, true)
         if ($probeResult === null) {
-            throw new .RuntimeException(sprintf('FFprobe gave us invalid JSON for "%s".', $filename));
+            throw .RuntimeException(sprintf('FFprobe gave us invalid JSON for "%s".', $filename))
         }
 
         if (!isset($probeResult['streams']) || !is_array($probeResult['streams'])) {
-            throw new .RuntimeException(sprintf('FFprobe failed to detect any stream. Is "%s" a valid media file?', $filename));
+            throw .RuntimeException(sprintf('FFprobe failed to detect any stream. Is "%s" a valid media file?', $filename))
         }
 
         // Now analyze all streams to find the first video stream.
-        $width = null;
-        $height = null;
+        $width = null
+        $height = null
         foreach ($probeResult['streams'] as $streamIdx => $streamInfo) {
             if (!isset($streamInfo['codec_type'])) {
-                continue;
+                continue
             }
             switch ($streamInfo['codec_type']) {
                 case 'video':
                     // TODO Mark media as invalid if more than one video stream found (?)
-                    $foundVideoStream = true;
-                    this._videoCodec = (string) $streamInfo['codec_name']; // string
-                    $width = (int) $streamInfo['width'];
-                    $height = (int) $streamInfo['height'];
+                    $foundVideoStream = true
+                    this._videoCodec = (string) $streamInfo['codec_name'] // string
+                    $width = (int) $streamInfo['width']
+                    $height = (int) $streamInfo['height']
                     if (isset($streamInfo['duration'])) {
                         // NOTE: Duration is a float such as "230.138000".
-                        this._duration = (float) $streamInfo['duration'];
+                        this._duration = (float) $streamInfo['duration']
                     }
 
                     // Read rotation angle from tags.
-                    this._rotation = 0;
+                    this._rotation = 0
                     if (isset($streamInfo['tags']) && is_array($streamInfo['tags'])) {
-                        $tags = array_change_key_case($streamInfo['tags'], CASE_LOWER);
+                        $tags = array_change_key_case($streamInfo['tags'], CASE_LOWER)
                         if (isset($tags['rotate'])) {
-                            this._rotation = this._normalizeRotation((int) $tags['rotate']);
+                            this._rotation = this._normalizeRotation((int) $tags['rotate'])
                         }
                     }
-                    break;
+                    break
                 case 'audio':
                     // TODO Mark media as invalid if more than one audio stream found (?)
-                    this._audioCodec = (string) $streamInfo['codec_name']; // string
-                    break;
+                    this._audioCodec = (string) $streamInfo['codec_name'] // string
+                    break
                 default:
                     // TODO Mark media as invalid if unknown stream found (?)
             }
@@ -210,61 +210,61 @@ class VideoDetails : MediaDetails
 
         // Sometimes there is no duration in stream info, so we should check the format.
         if (this._duration === null && isset($probeResult['format']['duration'])) {
-            this._duration = (float) $probeResult['format']['duration'];
+            this._duration = (float) $probeResult['format']['duration']
         }
 
         if (isset($probeResult['format']['format_name'])) {
-            this._container = (string) $probeResult['format']['format_name'];
+            this._container = (string) $probeResult['format']['format_name']
         }
 
         // Make sure we have detected the video duration.
         if (this._duration === null) {
-            throw new .RuntimeException(sprintf('FFprobe failed to detect video duration. Is "%s" a valid video file?', $filename));
+            throw .RuntimeException(sprintf('FFprobe failed to detect video duration. Is "%s" a valid video file?', $filename))
         }
 
-        parent::__construct($filename, $filesize, $width, $height);
+        parent::__construct($filename, $filesize, $width, $height)
     }
 
     /** {@inheritdoc} */
     public fun validate(
         ConstraintsInterface $constraints)
     {
-        parent::validate($constraints);
+        parent::validate($constraints)
 
         // WARNING TO CONTRIBUTORS: $mediaFilename is for ERROR DISPLAY to
         // users. Do NOT import it to read from the hard disk!
-        $mediaFilename = this.getBasename();
+        $mediaFilename = this.getBasename()
 
         // Make sure we have found at least one video stream.
         if (this._videoCodec === null) {
-            throw new .InvalidArgumentException(sprintf(
+            throw .InvalidArgumentException(sprintf(
                 'Instagram requires video with at least one video stream. Your file "%s" doesn.'t have any.',
                 $mediaFilename
-            ));
+            ))
         }
 
         // Check the video stream. We should have at least one.
         if (this._videoCodec !== 'h264') {
-            throw new .InvalidArgumentException(sprintf(
+            throw .InvalidArgumentException(sprintf(
                 'Instagram only accepts videos encoded with the H.264 video codec. Your file "%s" has "%s".',
                 $mediaFilename, this._videoCodec
-            ));
+            ))
         }
 
         // Check the audio stream (if available).
         if (this._audioCodec !== null && this._audioCodec !== 'aac') {
-            throw new .InvalidArgumentException(sprintf(
+            throw .InvalidArgumentException(sprintf(
                 'Instagram only accepts videos encoded with the AAC audio codec. Your file "%s" has "%s".',
                 $mediaFilename, this._audioCodec
-            ));
+            ))
         }
 
         // Check the container format.
         if (strpos(this._container, 'mp4') === false) {
-            throw new .InvalidArgumentException(sprintf(
+            throw .InvalidArgumentException(sprintf(
                 'Instagram only accepts videos packed into MP4 containers. Your file "%s" has "%s".',
                 $mediaFilename, this._container
-            ));
+            ))
         }
 
         // Validate video resolution. Instagram allows between 480px-720px width.
@@ -274,25 +274,25 @@ class VideoDetails : MediaDetails
         // resolutions. It's controlled by the "ig_android_universe_video_production"
         // experiment variable, which currently enforces width of min:480, max:720.
         // If users want to upload bigger videos, they MUST resize locally first!
-        $width = this.getWidth();
+        $width = this.getWidth()
         if ($width < self::MIN_WIDTH || $width > self::MAX_WIDTH) {
-            throw new .InvalidArgumentException(sprintf(
+            throw .InvalidArgumentException(sprintf(
                 'Instagram only accepts videos that are between %d and %d pixels wide. Your file "%s" is %d pixels wide.',
                 self::MIN_WIDTH, self::MAX_WIDTH, $mediaFilename, $width
-            ));
+            ))
         }
 
         // Validate video length.
         // NOTE: Instagram has no disk size limit, but this length validation
         // also ensures we can only upload small files exactly as intended.
-        $duration = this.getDuration();
-        $minDuration = $constraints.getMinDuration();
-        $maxDuration = $constraints.getMaxDuration();
+        $duration = this.getDuration()
+        $minDuration = $constraints.getMinDuration()
+        $maxDuration = $constraints.getMaxDuration()
         if ($duration < $minDuration || $duration > $maxDuration) {
-            throw new .InvalidArgumentException(sprintf(
+            throw .InvalidArgumentException(sprintf(
                 'Instagram only accepts %s videos that are between %.3f and %.3f seconds long. Your video "%s" is %.3f seconds long.',
                 $constraints.getTitle(), $minDuration, $maxDuration, $mediaFilename, $duration
-            ));
+            ))
         }
     }
 
@@ -305,16 +305,16 @@ class VideoDetails : MediaDetails
         $rotation)
     {
         // The angle must be in 0..359 degrees range.
-        $result = $rotation % 360;
+        $result = $rotation % 360
         // Negative angle can be normalized by adding it to 360:
         // 360 + (-90) = 270.
         if ($result < 0) {
-            $result = 360 + $result;
+            $result = 360 + $result
         }
         // The final angle must be one of 0, 90, 180 or 270 degrees.
         // So we are rounding it to the closest one.
-        $result = round($result / 90) * 90;
+        $result = round($result / 90) * 90
 
-        return (int) $result;
+        return (int) $result
     }
 }

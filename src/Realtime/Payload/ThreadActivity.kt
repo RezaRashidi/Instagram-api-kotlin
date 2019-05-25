@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Realtime.Payload;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Realtime.Payload
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ThreadActivity.
@@ -31,5 +31,5 @@ class ThreadActivity : AutoPropertyMapper
         'sender_id'       => 'string',
         'activity_status' => '',
         'ttl'             => '',
-    ];
+    ]
 }

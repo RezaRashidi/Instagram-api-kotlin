@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * UserReelMediaFeedResponse.
@@ -92,5 +92,5 @@ class UserReelMediaFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         Model.Reel::class, // Import property map.
-    ];
+    ]
 }

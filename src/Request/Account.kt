@@ -1,10 +1,10 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Exception.InternalException;
-import InstagramAPI.Exception.SettingsException;
-import InstagramAPI.Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Exception.InternalException
+import InstagramAPI.Exception.SettingsException
+import InstagramAPI.Response
 
 /**
  * Account-related funs, such as profile editing and security.
@@ -26,7 +26,7 @@ class Account : RequestCollection
     {
         return this.ig.request('accounts/current_user/')
             .addParam('edit', true)
-            .getResponse(new Response.UserInfoResponse());
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -54,7 +54,7 @@ class Account : RequestCollection
         $biography)
     {
         if (!is_string($biography) || strlen($biography) > 150) {
-            throw new .InvalidArgumentException('Please provide a 0 to 150 character string as biography.');
+            throw .InvalidArgumentException('Please provide a 0 to 150 character string as biography.')
         }
 
         return this.ig.request('accounts/set_biography/')
@@ -63,7 +63,7 @@ class Account : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('device_id', this.ig.device_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.UserInfoResponse());
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -79,7 +79,7 @@ class Account : RequestCollection
      * @param string      $biography   Biography text. import "" for nothing.
      * @param string      $email       Email. Required!
      * @param int         $gender      Gender (1 = male, 2 = female, 3 = unknown). Required!
-     * @param string|null $newUsername (optional) Rename your account to a new username,
+     * @param string|null $newUsername (optional) Rename your account to a username,
      *                                 which you've already verified with checkUsername().
      *
      * @throws .InstagramAPI.Exception.InstagramException
@@ -87,7 +87,7 @@ class Account : RequestCollection
      * @return .InstagramAPI.Response.UserInfoResponse
      *
      * @see Account::getCurrentUser() to get your current account details.
-     * @see Account::checkUsername() to verify your new username first.
+     * @see Account::checkUsername() to verify your username first.
      */
     public fun editProfile(
         $url,
@@ -101,19 +101,19 @@ class Account : RequestCollection
         // We must mark the profile for editing before doing the main request.
         $userResponse = this.ig.request('accounts/current_user/')
             .addParam('edit', true)
-            .getResponse(new Response.UserInfoResponse());
+            .getResponse(Response.UserInfoResponse())
 
         // Get the current user's name from the response.
-        $currentUser = $userResponse.getUser();
+        $currentUser = $userResponse.getUser()
         if (!$currentUser || !is_string($currentUser.getUsername())) {
-            throw new InternalException('Unable to find current account username while preparing profile edit.');
+            throw InternalException('Unable to find current account username while preparing profile edit.')
         }
-        $oldUsername = $currentUser.getUsername();
+        $oldUsername = $currentUser.getUsername()
 
         // Determine the desired username value.
         $username = is_string($newUsername) && strlen($newUsername) > 0
                   ? $newUsername
-                  : $oldUsername; // Keep current name.
+                  : $oldUsername // Keep current name.
 
         return this.ig.request('accounts/edit_profile/')
             .addPost('_uuid', this.ig.uuid)
@@ -127,7 +127,7 @@ class Account : RequestCollection
             .addPost('email', $email)
             .addPost('gender', $gender)
             .addPost('device_id', this.ig.device_id)
-            .getResponse(new Response.UserInfoResponse());
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -148,7 +148,7 @@ class Account : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addFile('profile_pic', $photoFilename, 'profile_pic')
-            .getResponse(new Response.UserInfoResponse());
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -164,7 +164,7 @@ class Account : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.UserInfoResponse());
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -180,7 +180,7 @@ class Account : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.UserInfoResponse());
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -196,7 +196,7 @@ class Account : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.UserInfoResponse());
+            .getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -214,7 +214,7 @@ class Account : RequestCollection
     public fun switchToBusinessProfile()
     {
         return this.ig.request('business_conversion/get_business_convert_social_context/')
-            .getResponse(new Response.SwitchBusinessProfileResponse());
+            .getResponse(Response.SwitchBusinessProfileResponse())
     }
 
     /**
@@ -230,7 +230,7 @@ class Account : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.SwitchPersonalProfileResponse());
+            .getResponse(Response.SwitchPersonalProfileResponse())
     }
 
     /**
@@ -261,14 +261,14 @@ class Account : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.CreateBusinessInfoResponse());
+            .getResponse(Response.CreateBusinessInfoResponse())
     }
 
     /**
      * Check if an Instagram username is available (not already registered).
      *
      * import this before trying to rename your Instagram account,
-     * to be sure that the new username is available.
+     * to be sure that the username is available.
      *
      * @param string $username Instagram username to check.
      *
@@ -286,7 +286,7 @@ class Account : RequestCollection
             .addPost('username', $username)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('_uid', this.ig.account_id)
-            .getResponse(new Response.CheckUsernameResponse());
+            .getResponse(Response.CheckUsernameResponse())
     }
 
     /**
@@ -299,7 +299,7 @@ class Account : RequestCollection
     public fun getCommentFilter()
     {
         return this.ig.request('accounts/get_comment_filter/')
-            .getResponse(new Response.CommentFilterResponse());
+            .getResponse(Response.CommentFilterResponse())
     }
 
     /**
@@ -319,7 +319,7 @@ class Account : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('config_value', $config_value)
-            .getResponse(new Response.CommentFilterSetResponse());
+            .getResponse(Response.CommentFilterSetResponse())
     }
 
     /**
@@ -332,7 +332,7 @@ class Account : RequestCollection
     public fun getCommentCategoryFilterDisabled()
     {
         return this.ig.request('accounts/get_comment_category_filter_disabled/')
-            .getResponse(new Response.CommentCategoryFilterResponse());
+            .getResponse(Response.CommentCategoryFilterResponse())
     }
 
     /**
@@ -345,7 +345,7 @@ class Account : RequestCollection
     public fun getCommentFilterKeywords()
     {
         return this.ig.request('accounts/get_comment_filter_keywords/')
-            .getResponse(new Response.CommentFilterKeywordsResponse());
+            .getResponse(Response.CommentFilterKeywordsResponse())
     }
 
     /**
@@ -365,14 +365,14 @@ class Account : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('keywords', $keywords)
-            .getResponse(new Response.CommentFilterSetResponse());
+            .getResponse(Response.CommentFilterSetResponse())
     }
 
     /**
      * Change your account's password.
      *
      * @param string $oldPassword Old password.
-     * @param string $newPassword New password.
+     * @param string $newPassword password.
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -389,7 +389,7 @@ class Account : RequestCollection
             .addPost('old_password', $oldPassword)
             .addPost('new_password1', $newPassword)
             .addPost('new_password2', $newPassword)
-            .getResponse(new Response.ChangePasswordResponse());
+            .getResponse(Response.ChangePasswordResponse())
     }
 
     /**
@@ -412,7 +412,7 @@ class Account : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.AccountSecurityInfoResponse());
+            .getResponse(Response.AccountSecurityInfoResponse())
     }
 
     /**
@@ -432,7 +432,7 @@ class Account : RequestCollection
     public fun sendTwoFactorEnableSMS(
         $phoneNumber)
     {
-        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber);
+        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber)
 
         return this.ig.request('accounts/send_two_factor_enable_sms/')
             .addPost('_uuid', this.ig.uuid)
@@ -440,7 +440,7 @@ class Account : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('device_id', this.ig.device_id)
             .addPost('phone_number', $cleanNumber)
-            .getResponse(new Response.SendTwoFactorEnableSMSResponse());
+            .getResponse(Response.SendTwoFactorEnableSMSResponse())
     }
 
     /**
@@ -465,7 +465,7 @@ class Account : RequestCollection
         $phoneNumber,
         $verificationCode)
     {
-        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber);
+        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber)
 
         this.ig.request('accounts/enable_sms_two_factor/')
             .addPost('_uuid', this.ig.uuid)
@@ -474,9 +474,9 @@ class Account : RequestCollection
             .addPost('device_id', this.ig.device_id)
             .addPost('phone_number', $cleanNumber)
             .addPost('verification_code', $verificationCode)
-            .getResponse(new Response.EnableTwoFactorSMSResponse());
+            .getResponse(Response.EnableTwoFactorSMSResponse())
 
-        return this.getSecurityInfo();
+        return this.getSecurityInfo()
     }
 
     /**
@@ -492,7 +492,7 @@ class Account : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.DisableTwoFactorSMSResponse());
+            .getResponse(Response.DisableTwoFactorSMSResponse())
     }
 
     /**
@@ -504,7 +504,7 @@ class Account : RequestCollection
         $disabled)
     {
         try {
-            this.ig.settings.set('presence_disabled', $disabled ? '1' : '0');
+            this.ig.settings.set('presence_disabled', $disabled ? '1' : '0')
         } catch (SettingsException $e) {
             // Ignore storage errors.
         }
@@ -522,11 +522,11 @@ class Account : RequestCollection
         /** @var Response.PresenceStatusResponse $result */
         $result = this.ig.request('accounts/get_presence_disabled/')
             .setSignedGet(true)
-            .getResponse(new Response.PresenceStatusResponse());
+            .getResponse(Response.PresenceStatusResponse())
 
-        this._savePresenceStatus($result.getDisabled());
+        this._savePresenceStatus($result.getDisabled())
 
-        return $result;
+        return $result
     }
 
     /**
@@ -547,11 +547,11 @@ class Account : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('disabled', '0')
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
 
-        this._savePresenceStatus(false);
+        this._savePresenceStatus(false)
 
-        return $result;
+        return $result
     }
 
     /**
@@ -571,11 +571,11 @@ class Account : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('disabled', '1')
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
 
-        this._savePresenceStatus(true);
+        this._savePresenceStatus(true)
 
-        return $result;
+        return $result
     }
 
     /**
@@ -592,7 +592,7 @@ class Account : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('send_source', 'edit_profile')
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.SendConfirmEmailResponse());
+            .getResponse(Response.SendConfirmEmailResponse())
     }
 
     /**
@@ -607,14 +607,14 @@ class Account : RequestCollection
     public fun sendSMSCode(
         $phoneNumber)
     {
-        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber);
+        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber)
 
         return this.ig.request('accounts/send_sms_code/')
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('phone_number', $cleanNumber)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.SendSMSCodeResponse());
+            .getResponse(Response.SendSMSCodeResponse())
     }
 
     /**
@@ -633,7 +633,7 @@ class Account : RequestCollection
         $phoneNumber,
         $verificationCode)
     {
-        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber);
+        $cleanNumber = '+'.preg_replace('/[^0-9]/', '', $phoneNumber)
 
         return this.ig.request('accounts/verify_sms_code/')
             .addPost('_uuid', this.ig.uuid)
@@ -641,7 +641,7 @@ class Account : RequestCollection
             .addPost('phone_number', $cleanNumber)
             .addPost('verification_code', $verificationCode)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.VerifySMSCodeResponse());
+            .getResponse(Response.VerifySMSCodeResponse())
     }
 
     /**
@@ -661,7 +661,7 @@ class Account : RequestCollection
             .addPost('phone_id', this.ig.phone_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('usage', $usage)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -679,7 +679,7 @@ class Account : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('users_ids', this.ig.account_id)
             .addPost('phone_id', this.ig.phone_id)
-            .getResponse(new Response.BadgeNotificationsResponse());
+            .getResponse(Response.BadgeNotificationsResponse())
     }
 
     /**
@@ -698,6 +698,6 @@ class Account : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('device_id', this.ig.device_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * TopLiveStatusResponse.
@@ -28,5 +28,5 @@ class TopLiveStatusResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'broadcast_status_items' => 'Model.BroadcastStatusItem[]',
-    ];
+    ]
 }

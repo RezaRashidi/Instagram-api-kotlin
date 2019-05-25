@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ReelSettingsResponse.
@@ -33,5 +33,5 @@ class ReelSettingsResponse : Response
     val JSON_PROPERTY_MAP = [
         'message_prefs' => '',
         'blocked_reels' => 'Model.BlockedReels',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * TVChannel.
@@ -51,5 +51,5 @@ class TVChannel : AutoPropertyMapper
         'max_id'            => 'string',
         'seen_state'        => '',
         'user_dict'         => 'User',
-    ];
+    ]
 }

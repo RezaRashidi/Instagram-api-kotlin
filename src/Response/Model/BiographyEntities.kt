@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * BiographyEntities.
@@ -26,5 +26,5 @@ class BiographyEntities : AutoPropertyMapper
         'entities'   => '',
         'raw_text'   => 'string',
         'nux_type'   => 'string',
-    ];
+    ]
 }

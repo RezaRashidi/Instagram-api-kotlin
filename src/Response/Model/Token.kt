@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Token.
@@ -61,9 +61,9 @@ class Token : AutoPropertyMapper
         'enabled_wallet_defs_keys'        => '',
         'deadline'                        => 'string',
         'zero_cms_fetch_interval_seconds' => 'int',
-    ];
+    ]
 
-    val DEFAULT_TTL = 3600;
+    val DEFAULT_TTL = 3600
 
     /**
      * Get token expiration timestamp.
@@ -72,11 +72,11 @@ class Token : AutoPropertyMapper
      */
     public fun expiresAt()
     {
-        $ttl = (int) this.getTtl();
+        $ttl = (int) this.getTtl()
         if ($ttl === 0) {
-            $ttl = self::DEFAULT_TTL;
+            $ttl = self::DEFAULT_TTL
         }
 
-        return time() + $ttl;
+        return time() + $ttl
     }
 }

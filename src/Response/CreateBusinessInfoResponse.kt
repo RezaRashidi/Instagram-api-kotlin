@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * CreateBusinessInfoResponse.
@@ -28,5 +28,5 @@ class CreateBusinessInfoResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'users' => 'Model.User[]',
-    ];
+    ]
 }

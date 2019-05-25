@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Collection.
@@ -26,5 +26,5 @@ class Collection : AutoPropertyMapper
         'collection_id'   => 'string',
         'collection_name' => 'string',
         'cover_media'     => 'Item',
-    ];
+    ]
 }

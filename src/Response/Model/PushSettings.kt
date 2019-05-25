@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * PushSettings.
@@ -41,5 +41,5 @@ class PushSettings : AutoPropertyMapper
         'example'  => '',
         'options'  => '',
         'checked'  => '',
-    ];
+    ]
 }

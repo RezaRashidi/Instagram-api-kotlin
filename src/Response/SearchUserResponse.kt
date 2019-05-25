@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * SearchUserResponse.
@@ -43,5 +43,5 @@ class SearchUserResponse : Response
         'num_results' => 'int',
         'users'       => 'Model.User[]',
         'rank_token'  => 'string',
-    ];
+    ]
 }

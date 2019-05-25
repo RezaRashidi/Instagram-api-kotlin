@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ContextualFilters.
@@ -26,5 +26,5 @@ class ContextualFilters : AutoPropertyMapper
         'clause_type' => 'string',
         'filters'     => '',
         'clauses'     => '',
-    ];
+    ]
 }

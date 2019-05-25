@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * SharedFollower.
@@ -61,5 +61,5 @@ class SharedFollower : AutoPropertyMapper
         'has_anonymous_profile_picture' => 'bool',
         'reel_auto_archive'             => 'string',
         'overlap_score'                 => 'string',
-    ];
+    ]
 }

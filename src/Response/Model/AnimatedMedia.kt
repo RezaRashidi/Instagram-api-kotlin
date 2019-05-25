@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * AnimatedMedia.
@@ -21,5 +21,5 @@ class AnimatedMedia : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'id'       => 'string',
         'images'   => 'AnimatedMediaImage',
-    ];
+    ]
 }

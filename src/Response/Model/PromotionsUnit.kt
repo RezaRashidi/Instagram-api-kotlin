@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * PromotionsUnit.
@@ -16,5 +16,5 @@ class PromotionsUnit : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         '_summary_promotions2ubm1F' => 'SummaryPromotions',
-    ];
+    ]
 }

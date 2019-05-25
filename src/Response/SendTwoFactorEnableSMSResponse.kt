@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * SendTwoFactorEnableSMSResponse.
@@ -33,5 +33,5 @@ class SendTwoFactorEnableSMSResponse : Response
     val JSON_PROPERTY_MAP = [
         'phone_verification_settings' => 'Model.PhoneVerificationSettings',
         'obfuscated_phone_number'     => '',
-    ];
+    ]
 }

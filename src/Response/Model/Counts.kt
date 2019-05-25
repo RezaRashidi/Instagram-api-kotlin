@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Counts.
@@ -51,5 +51,5 @@ class Counts : AutoPropertyMapper
         'likes'                 => '',
         'comment_likes'         => '',
         'campaign_notification' => '',
-    ];
+    ]
 }

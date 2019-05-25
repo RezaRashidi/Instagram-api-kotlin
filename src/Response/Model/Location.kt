@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Location.
@@ -153,5 +153,5 @@ class Location : AutoPropertyMapper
          * Human-readable name of the facebook place for the location.
          */
         'place_name'           => 'string',
-    ];
+    ]
 }

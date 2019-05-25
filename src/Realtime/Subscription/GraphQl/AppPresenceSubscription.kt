@@ -1,13 +1,13 @@
-<?php
 
-package InstagramAPI.Realtime.Subscription.GraphQl;
 
-import InstagramAPI.Realtime.Subscription.GraphQlSubscription;
+package InstagramAPI.Realtime.Subscription.GraphQl
+
+import InstagramAPI.Realtime.Subscription.GraphQlSubscription
 
 class AppPresenceSubscription : GraphQlSubscription
 {
-    val ID = 'presence_subscribe';
-    val QUERY = '17846944882223835';
+    val ID = 'presence_subscribe'
+    val QUERY = '17846944882223835'
 
     /**
      * Constructor.
@@ -19,12 +19,12 @@ class AppPresenceSubscription : GraphQlSubscription
     {
         parent::__construct(self::QUERY, [
             'client_subscription_id' => $subscriptionId,
-        ]);
+        ])
     }
 
     /** {@inheritdoc} */
     public fun getId()
     {
-        return self::ID;
+        return self::ID
     }
 }

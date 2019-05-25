@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Button.
@@ -46,5 +46,5 @@ class Button : AutoPropertyMapper
         'border_color'     => '',
         'text_color'       => '',
         'action_info'      => '',
-    ];
+    ]
 }

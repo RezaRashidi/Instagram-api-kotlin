@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * SearchTagResponse.
@@ -38,5 +38,5 @@ class SearchTagResponse : Response
         'has_more'   => 'bool',
         'results'    => 'Model.Tag[]',
         'rank_token' => 'string',
-    ];
+    ]
 }

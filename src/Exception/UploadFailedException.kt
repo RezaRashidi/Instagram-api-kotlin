@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Exception;
+
+package InstagramAPI.Exception
 
 /**
  * Used when we know for a fact that our uploads failed.

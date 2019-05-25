@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DirectCreateGroupThreadResponse.
@@ -108,5 +108,5 @@ class DirectCreateGroupThreadResponse : Response
         'has_newer'        => 'bool',
         'last_seen_at'     => '',
         'is_pin'           => '',
-    ];
+    ]
 }

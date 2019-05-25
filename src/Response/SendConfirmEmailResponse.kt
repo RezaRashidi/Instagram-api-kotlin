@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * SendConfirmEmailResponse.
@@ -38,5 +38,5 @@ class SendConfirmEmailResponse : Response
         'title'          => '',
         'is_email_legit' => '',
         'body'           => '',
-    ];
+    ]
 }

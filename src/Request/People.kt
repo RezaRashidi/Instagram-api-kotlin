@@ -1,11 +1,11 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Exception.RequestHeadersTooLargeException;
-import InstagramAPI.Exception.ThrottledException;
-import InstagramAPI.Response;
-import InstagramAPI.Utils;
+package InstagramAPI.Request
+
+import InstagramAPI.Exception.RequestHeadersTooLargeException
+import InstagramAPI.Exception.ThrottledException
+import InstagramAPI.Response
+import InstagramAPI.Utils
 
 /**
  * funs related to finding, exploring and managing relations with people.
@@ -42,12 +42,12 @@ class People : RequestCollection
         $userId,
         $module = null)
     {
-        $request = this.ig.request("users/{$userId}/info/");
+        $request = this.ig.request("users/{$userId}/info/")
         if ($module !== null) {
-            $request.addParam('from_module', $module);
+            $request.addParam('from_module', $module)
         }
 
-        return $request.getResponse(new Response.UserInfoResponse());
+        return $request.getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -68,12 +68,12 @@ class People : RequestCollection
         $username,
         $module = null)
     {
-        $request = this.ig.request("users/{$username}/usernameinfo/");
+        $request = this.ig.request("users/{$username}/usernameinfo/")
         if ($module !== null) {
-            $request.addParam('from_module', $module);
+            $request.addParam('from_module', $module)
         }
 
-        return $request.getResponse(new Response.UserInfoResponse());
+        return $request.getResponse(Response.UserInfoResponse())
     }
 
     /**
@@ -93,7 +93,7 @@ class People : RequestCollection
     public fun getUserIdForName(
         $username)
     {
-        return this.getInfoByName($username).getUser().getPk();
+        return this.getInfoByName($username).getUser().getPk()
     }
 
     /**
@@ -109,7 +109,7 @@ class People : RequestCollection
      */
     public fun getSelfInfo()
     {
-        return this.getInfoById(this.ig.account_id);
+        return this.getInfoById(this.ig.account_id)
     }
 
     /**
@@ -126,7 +126,7 @@ class People : RequestCollection
     public fun getRecentActivityInbox()
     {
         return this.ig.request('news/inbox/')
-            .getResponse(new Response.ActivityNewsResponse());
+            .getResponse(Response.ActivityNewsResponse())
     }
 
     /**
@@ -144,12 +144,12 @@ class People : RequestCollection
     public fun getFollowingRecentActivity(
         $maxId = null)
     {
-        $activity = this.ig.request('news/');
+        $activity = this.ig.request('news/')
         if ($maxId !== null) {
-            $activity.addParam('max_id', $maxId);
+            $activity.addParam('max_id', $maxId)
         }
 
-        return $activity.getResponse(new Response.FollowingRecentActivityResponse());
+        return $activity.getResponse(Response.FollowingRecentActivityResponse())
     }
 
     /**
@@ -170,16 +170,16 @@ class People : RequestCollection
             'coefficient_rank_recipient_user_suggestion',
             'coefficient_ios_section_test_bootstrap_ranking',
             'autocomplete_user_list',
-        ];
+        ]
 
         try {
             $request = this.ig.request('scores/bootstrap/users/')
-                .addParam('surfaces', json_encode($surfaces));
+                .addParam('surfaces', json_encode($surfaces))
 
-            return $request.getResponse(new Response.BootstrapUsersResponse());
+            return $request.getResponse(Response.BootstrapUsersResponse())
         } catch (ThrottledException $e) {
             // Throttling is so common that we'll simply return NULL in that case.
-            return null;
+            return null
         }
     }
 
@@ -195,7 +195,7 @@ class People : RequestCollection
     public fun getFriendship(
         $userId)
     {
-        return this.ig.request("friendships/show/{$userId}/").getResponse(new Response.FriendshipsShowResponse());
+        return this.ig.request("friendships/show/{$userId}/").getResponse(Response.FriendshipsShowResponse())
     }
 
     /**
@@ -211,7 +211,7 @@ class People : RequestCollection
         $userList)
     {
         if (is_array($userList)) {
-            $userList = implode(',', $userList);
+            $userList = implode(',', $userList)
         }
 
         return this.ig.request('friendships/show_many/')
@@ -219,7 +219,7 @@ class People : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('user_ids', $userList)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.FriendshipsShowManyResponse());
+            .getResponse(Response.FriendshipsShowManyResponse())
     }
 
     /**
@@ -231,9 +231,9 @@ class People : RequestCollection
      */
     public fun getPendingFriendships()
     {
-        $request = this.ig.request('friendships/pending/');
+        $request = this.ig.request('friendships/pending/')
 
-        return $request.getResponse(new Response.FollowerAndFollowingResponse());
+        return $request.getResponse(Response.FollowerAndFollowingResponse())
     }
 
     /**
@@ -254,13 +254,13 @@ class People : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_id', $userId)
             .addPost('radio_type', 'wifi-none')
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
      * Reject a friendship request.
      *
-     * Note that the user can simply send you a new request again, after your
+     * Note that the user can simply send you a request again, after your
      * rejection. If they're harassing you, import People::block() instead.
      *
      * @param string $userId Numerical UserPK ID.
@@ -278,7 +278,7 @@ class People : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_id', $userId)
             .addPost('radio_type', 'wifi-none')
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -299,7 +299,7 @@ class People : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_id', $userId)
             .addPost('radio_type', 'wifi-none')
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -319,7 +319,7 @@ class People : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_id', $userId)
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -344,18 +344,18 @@ class People : RequestCollection
         $searchQuery = null,
         $maxId = null)
     {
-        Utils::throwIfInvalidRankToken($rankToken);
+        Utils::throwIfInvalidRankToken($rankToken)
         $request = this.ig.request("friendships/{$userId}/following/")
             .addParam('includes_hashtags', true)
-            .addParam('rank_token', $rankToken);
+            .addParam('rank_token', $rankToken)
         if ($searchQuery !== null) {
-            $request.addParam('query', $searchQuery);
+            $request.addParam('query', $searchQuery)
         }
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.FollowerAndFollowingResponse());
+        return $request.getResponse(Response.FollowerAndFollowingResponse())
     }
 
     /**
@@ -380,17 +380,17 @@ class People : RequestCollection
         $searchQuery = null,
         $maxId = null)
     {
-        Utils::throwIfInvalidRankToken($rankToken);
+        Utils::throwIfInvalidRankToken($rankToken)
         $request = this.ig.request("friendships/{$userId}/followers/")
-            .addParam('rank_token', $rankToken);
+            .addParam('rank_token', $rankToken)
         if ($searchQuery !== null) {
-            $request.addParam('query', $searchQuery);
+            $request.addParam('query', $searchQuery)
         }
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.FollowerAndFollowingResponse());
+        return $request.getResponse(Response.FollowerAndFollowingResponse())
     }
 
     /**
@@ -412,7 +412,7 @@ class People : RequestCollection
         $searchQuery = null,
         $maxId = null)
     {
-        return this.getFollowing(this.ig.account_id, $rankToken, $searchQuery, $maxId);
+        return this.getFollowing(this.ig.account_id, $rankToken, $searchQuery, $maxId)
     }
 
     /**
@@ -434,7 +434,7 @@ class People : RequestCollection
         $searchQuery = null,
         $maxId = null)
     {
-        return this.getFollowers(this.ig.account_id, $rankToken, $searchQuery, $maxId);
+        return this.getFollowers(this.ig.account_id, $rankToken, $searchQuery, $maxId)
     }
 
     /**
@@ -463,7 +463,7 @@ class People : RequestCollection
     {
         // Do basic query validation.
         if (!is_string($query) || $query === '') {
-            throw new .InvalidArgumentException('Query must be a non-empty string.');
+            throw .InvalidArgumentException('Query must be a non-empty string.')
         }
 
         $request = this._paginateWithExclusion(
@@ -472,21 +472,21 @@ class People : RequestCollection
                 .addParam('timezone_offset', date('Z')),
             $excludeList,
             $rankToken
-        );
+        )
 
         try {
             /** @var Response.SearchUserResponse $result */
-            $result = $request.getResponse(new Response.SearchUserResponse());
+            $result = $request.getResponse(Response.SearchUserResponse())
         } catch (RequestHeadersTooLargeException $e) {
-            $result = new Response.SearchUserResponse([
+            $result = Response.SearchUserResponse([
                 'has_more'    => false,
                 'num_results' => 0,
                 'users'       => [],
                 'rank_token'  => $rankToken,
-            ]);
+            ])
         }
 
-        return $result;
+        return $result
     }
 
     /**
@@ -502,7 +502,7 @@ class People : RequestCollection
         $userId)
     {
         return this.ig.request("users/{$userId}/account_details/")
-            .getResponse(new Response.AccountDetailsResponse());
+            .getResponse(Response.AccountDetailsResponse())
     }
 
     /**
@@ -518,7 +518,7 @@ class People : RequestCollection
         $userId)
     {
         return this.ig.request("users/{$userId}/former_usernames/")
-            .getResponse(new Response.FormerUsernamesResponse());
+            .getResponse(Response.FormerUsernamesResponse())
     }
 
     /**
@@ -534,7 +534,7 @@ class People : RequestCollection
         $userId)
     {
         return this.ig.request("users/{$userId}/shared_follower_accounts/")
-            .getResponse(new Response.SharedFollowersResponse());
+            .getResponse(Response.SharedFollowersResponse())
     }
 
     /**
@@ -551,7 +551,7 @@ class People : RequestCollection
         $targetUserId,
         $maxId = null)
     {
-        return this._getActiveAds($targetUserId, '35', $maxId);
+        return this._getActiveAds($targetUserId, '35', $maxId)
     }
 
     /**
@@ -568,7 +568,7 @@ class People : RequestCollection
         $targetUserId,
         $maxId = null)
     {
-        return this._getActiveAds($targetUserId, '49', $maxId);
+        return this._getActiveAds($targetUserId, '49', $maxId)
     }
 
     /**
@@ -593,21 +593,21 @@ class People : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('_uuid', this.ig.uuid)
             .addPost('target_user_id', $targetUserId)
-            .addPost('page_type', $pageType);
+            .addPost('page_type', $pageType)
         if ($maxId !== null) {
-            $request.addPost('next_max_id', $maxId);
+            $request.addPost('next_max_id', $maxId)
         }
-        $request.addPost('ig_user_id', this.ig.account_id);
+        $request.addPost('ig_user_id', this.ig.account_id)
 
         switch ($pageType) {
             case '35':
-                return $request.getResponse(new Response.ActiveFeedAdsResponse());
-                break;
+                return $request.getResponse(Response.ActiveFeedAdsResponse())
+                break
             case '49':
-                return $request.getResponse(new Response.ActiveReelAdsResponse());
-                break;
+                return $request.getResponse(Response.ActiveReelAdsResponse())
+                break
             default:
-                throw new .InvalidArgumentException('Invalid page type.');
+                throw .InvalidArgumentException('Invalid page type.')
         }
     }
 
@@ -640,7 +640,7 @@ class People : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('device_id', this.ig.device_id)
             .addPost('_uuid', this.ig.uuid)
-            .getResponse(new Response.LinkAddressBookResponse());
+            .getResponse(Response.LinkAddressBookResponse())
     }
 
     /**
@@ -656,11 +656,11 @@ class People : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.UnlinkAddressBookResponse());
+            .getResponse(Response.UnlinkAddressBookResponse())
     }
 
     /**
-     * Discover new people via Facebook's algorithm.
+     * Discover people via Facebook's algorithm.
      *
      * This matches you with other people using multiple algorithms such as
      * "friends of friends", "location", "people using similar hashtags", etc.
@@ -680,13 +680,13 @@ class People : RequestCollection
             .addPost('module', 'discover_people')
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('paginate', true);
+            .addPost('paginate', true)
 
         if ($maxId !== null) {
-            $request.addPost('max_id', $maxId);
+            $request.addPost('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.DiscoverPeopleResponse());
+        return $request.getResponse(Response.DiscoverPeopleResponse())
     }
 
     /**
@@ -703,7 +703,7 @@ class People : RequestCollection
     {
         return this.ig.request('discover/chaining/')
             .addParam('target_id', $userId)
-            .getResponse(new Response.SuggestedUsersResponse());
+            .getResponse(Response.SuggestedUsersResponse())
     }
 
     /**
@@ -723,7 +723,7 @@ class People : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('module', 'discover_people')
-            .getResponse(new Response.SuggestedUsersBadgeResponse());
+            .getResponse(Response.SuggestedUsersBadgeResponse())
     }
 
     /**
@@ -747,7 +747,7 @@ class People : RequestCollection
      * TODO: Do more research about this fun and document it properly.
      *
      * @param string $userId    Numerical UserPK ID.
-     * @param string $algorithm Which algorithm to hide the suggestion from;
+     * @param string $algorithm Which algorithm to hide the suggestion from
      *                          must match that user's "algorithm" value in
      *                          funs like People::discoverPeople().
      *
@@ -764,7 +764,7 @@ class People : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addParam('target_id', $userId)
             .addParam('algorithm', $algorithm)
-            .getResponse(new Response.SuggestedUsersResponse());
+            .getResponse(Response.SuggestedUsersResponse())
     }
 
     /**
@@ -786,7 +786,7 @@ class People : RequestCollection
             .addPost('user_id', $userId)
             .addPost('radio_type', 'wifi-none')
             .addPost('device_id', this.ig.device_id)
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -807,7 +807,7 @@ class People : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_id', $userId)
             .addPost('radio_type', 'wifi-none')
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -833,7 +833,7 @@ class People : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_id', $userId)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -853,7 +853,7 @@ class People : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_id', $userId)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -873,7 +873,7 @@ class People : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_id', $userId)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -893,7 +893,7 @@ class People : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_id', $userId)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -918,7 +918,7 @@ class People : RequestCollection
             .addPost('user_id', $userId)
             .addPost('source_name', $sourceName)
             .addPost('is_spam', true)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -938,7 +938,7 @@ class People : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_id', $userId)
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -959,7 +959,7 @@ class People : RequestCollection
         $userId,
         $option)
     {
-        return this._muteOrUnmuteUserMedia($userId, $option, 'friendships/mute_posts_or_story_from_follow/');
+        return this._muteOrUnmuteUserMedia($userId, $option, 'friendships/mute_posts_or_story_from_follow/')
     }
 
     /**
@@ -978,7 +978,7 @@ class People : RequestCollection
         $userId,
         $option)
     {
-        return this._muteOrUnmuteUserMedia($userId, $option, 'friendships/unmute_posts_or_story_from_follow/');
+        return this._muteOrUnmuteUserMedia($userId, $option, 'friendships/unmute_posts_or_story_from_follow/')
     }
 
     /**
@@ -1005,24 +1005,24 @@ class People : RequestCollection
         $request = this.ig.request($endpoint)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken());
+            .addPost('_csrftoken', this.ig.client.getToken())
 
         switch ($option) {
             case 'story':
-                $request.addPost('target_reel_author_id', $userId);
-                break;
+                $request.addPost('target_reel_author_id', $userId)
+                break
             case 'post':
-                $request.addPost('target_posts_author_id', $userId);
-                break;
+                $request.addPost('target_posts_author_id', $userId)
+                break
             case 'all':
-                $request.addPost('target_reel_author_id', $userId);
-                $request.addPost('target_posts_author_id', $userId);
-                break;
+                $request.addPost('target_reel_author_id', $userId)
+                $request.addPost('target_posts_author_id', $userId)
+                break
             default:
-                throw new .InvalidArgumentException(sprintf('"%s" is not a valid muting option.', $option));
+                throw .InvalidArgumentException(sprintf('"%s" is not a valid muting option.', $option))
         }
 
-        return $request.getResponse(new Response.FriendshipResponse());
+        return $request.getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -1042,7 +1042,7 @@ class People : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_id', $userId)
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -1057,12 +1057,12 @@ class People : RequestCollection
     public fun getBlockedList(
         $maxId = null)
     {
-        $request = this.ig.request('users/blocked_list/');
+        $request = this.ig.request('users/blocked_list/')
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.BlockedListResponse());
+        return $request.getResponse(Response.BlockedListResponse())
     }
 
     /**
@@ -1084,7 +1084,7 @@ class People : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('source', 'profile')
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -1106,7 +1106,7 @@ class People : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('source', 'profile')
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -1122,7 +1122,7 @@ class People : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.BlockedReelsResponse());
+            .getResponse(Response.BlockedReelsResponse())
     }
 
     /**
@@ -1147,7 +1147,7 @@ class People : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -1170,7 +1170,7 @@ class People : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.FriendshipResponse());
+            .getResponse(Response.FriendshipResponse())
     }
 
     /**
@@ -1183,7 +1183,7 @@ class People : RequestCollection
     public fun getCloseFriends()
     {
         return this.ig.request('friendships/besties/')
-            .getResponse(new Response.CloseFriendsResponse());
+            .getResponse(Response.CloseFriendsResponse())
     }
 
     /**
@@ -1196,7 +1196,7 @@ class People : RequestCollection
     public fun getSuggestedCloseFriends()
     {
         return this.ig.request('friendships/bestie_suggestions/')
-            .getResponse(new Response.CloseFriendsResponse());
+            .getResponse(Response.CloseFriendsResponse())
     }
 
     /**
@@ -1228,6 +1228,6 @@ class People : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('remove', $remove)
             .addPost('add', $add)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 }

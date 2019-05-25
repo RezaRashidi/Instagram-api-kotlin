@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * StoryCountdownsResponse.
@@ -28,5 +28,5 @@ class StoryCountdownsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'countdowns' => 'Model.CountdownSticker[]',
-    ];
+    ]
 }

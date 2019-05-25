@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * UserCard.
@@ -76,5 +76,5 @@ class UserCard : AutoPropertyMapper
         'is_new_suggestion' => 'bool',
         'uuid'              => 'string',
         'followed_by'       => 'bool',
-    ];
+    ]
 }

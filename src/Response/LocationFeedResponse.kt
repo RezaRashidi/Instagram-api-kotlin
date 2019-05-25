@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * LocationFeedResponse.
@@ -48,5 +48,5 @@ class LocationFeedResponse : Response
         'more_available'         => 'bool',
         'next_media_ids'         => 'int[]',
         'next_max_id'            => 'string',
-    ];
+    ]
 }

@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Realtime;
+
+package InstagramAPI.Realtime
 
 interface CommandInterface : .JsonSerializable
 {
@@ -9,12 +9,12 @@ interface CommandInterface : .JsonSerializable
      *
      * @return string
      */
-    public fun getTopic();
+    public fun getTopic()
 
     /**
      * Get the MQTT QoS level.
      *
      * @return int
      */
-    public fun getQosLevel();
+    public fun getQosLevel()
 }

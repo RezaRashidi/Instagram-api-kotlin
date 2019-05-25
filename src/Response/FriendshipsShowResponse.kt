@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FriendshipsShowResponse.
@@ -64,5 +64,5 @@ class FriendshipsShowResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         Model.FriendshipStatus::class, // Import property map.
-    ];
+    ]
 }

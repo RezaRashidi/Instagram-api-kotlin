@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ActivityNewsResponse.
@@ -73,5 +73,5 @@ class ActivityNewsResponse : Response
         'continuation_token'     => '',
         'ads_manager'            => '',
         'aymf'                   => 'Model.Aymf',
-    ];
+    ]
 }

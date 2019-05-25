@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * CloseFriendsResponse.
@@ -45,5 +45,5 @@ class CloseFriendsResponse : Response
     val JSON_PROPERTY_MAP = [
         Model.CloseFriends::class, // Import property map.
         'next_max_id' => 'string',
-    ];
+    ]
 }

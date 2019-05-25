@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectReaction.
@@ -46,5 +46,5 @@ class DirectReaction : AutoPropertyMapper
         'reaction_status' => 'string',
         'node_type'       => 'string',
         'item_id'         => 'string',
-    ];
+    ]
 }

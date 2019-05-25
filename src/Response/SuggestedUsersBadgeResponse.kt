@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * SuggestedUsersBadgeResponse.
@@ -33,5 +33,5 @@ class SuggestedUsersBadgeResponse : Response
     val JSON_PROPERTY_MAP = [
         'should_badge'       => '',
         'new_suggestion_ids' => 'string[]',
-    ];
+    ]
 }

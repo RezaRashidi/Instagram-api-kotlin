@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DirectVisualThreadResponse.
@@ -156,5 +156,5 @@ class DirectVisualThreadResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         Model.DirectThread::class, // Import property map.
-    ];
+    ]
 }

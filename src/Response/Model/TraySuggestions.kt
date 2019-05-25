@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * TraySuggestions.
@@ -36,5 +36,5 @@ class TraySuggestions : AutoPropertyMapper
         'banner_title'    => 'string',
         'banner_subtitle' => 'string',
         'suggestion_type' => 'string',
-    ];
+    ]
 }

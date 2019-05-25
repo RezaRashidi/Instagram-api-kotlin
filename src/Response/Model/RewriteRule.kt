@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * RewriteRule.
@@ -21,5 +21,5 @@ class RewriteRule : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'matcher'    => 'string',
         'replacer'   => 'string',
-    ];
+    ]
 }

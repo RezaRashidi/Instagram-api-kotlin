@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * TokenResultResponse.
@@ -28,5 +28,5 @@ class TokenResultResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'token' => 'Model.Token',
-    ];
+    ]
 }

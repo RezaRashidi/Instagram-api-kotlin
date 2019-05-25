@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ReelsTrayFeedResponse.
@@ -68,5 +68,5 @@ class ReelsTrayFeedResponse : Response
         'stories_viewer_gestures_nux_eligible' => 'bool',
         'has_new_nux_story'                    => 'bool',
         'suggestions'                          => 'Model.TraySuggestions[]',
-    ];
+    ]
 }

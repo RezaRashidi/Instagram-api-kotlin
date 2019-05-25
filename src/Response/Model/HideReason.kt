@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * HideReason.
@@ -27,5 +27,5 @@ class HideReason : AutoPropertyMapper
          * A computer string such as "NOT_RELEVANT" or "KEEP_SEEING_THIS".
          */
         'reason' => 'string',
-    ];
+    ]
 }

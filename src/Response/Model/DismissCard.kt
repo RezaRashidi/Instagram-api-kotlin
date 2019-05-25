@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DismissCard.
@@ -46,5 +46,5 @@ class DismissCard : AutoPropertyMapper
         'button_text'    => '',
         'camera_target'  => '',
         'face_filter_id' => '',
-    ];
+    ]
 }

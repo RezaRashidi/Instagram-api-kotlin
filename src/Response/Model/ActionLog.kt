@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ActionLog.
@@ -21,5 +21,5 @@ class ActionLog : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'bold'        => 'Bold[]',
         'description' => '',
-    ];
+    ]
 }

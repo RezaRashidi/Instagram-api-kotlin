@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * PostLiveItem.
@@ -61,5 +61,5 @@ class PostLiveItem : AutoPropertyMapper
         'seen_ranked_position'   => '',
         'muted'                  => '',
         'can_reshare'            => '',
-    ];
+    ]
 }

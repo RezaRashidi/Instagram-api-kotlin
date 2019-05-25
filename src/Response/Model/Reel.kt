@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Reel.
@@ -103,5 +103,5 @@ class Reel : AutoPropertyMapper
         'location'             => 'Location',
         'prefetch_count'       => 'int',
         'broadcast'            => 'Broadcast',
-    ];
+    ]
 }

@@ -1,10 +1,10 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Instagram;
-import InstagramAPI.Request;
-import InstagramAPI.Utils;
+package InstagramAPI.Request
+
+import InstagramAPI.Instagram
+import InstagramAPI.Request
+import InstagramAPI.Utils
 
 /**
  * Base class for grouping multiple related request funs.
@@ -12,7 +12,7 @@ import InstagramAPI.Utils;
 class RequestCollection
 {
     /** @var Instagram The parent class instance we belong to. */
-    public $ig;
+    public $ig
 
     /**
      * Constructor.
@@ -22,7 +22,7 @@ class RequestCollection
     public fun __construct(
         $parent)
     {
-        this.ig = $parent;
+        this.ig = $parent
     }
 
     /**
@@ -46,18 +46,18 @@ class RequestCollection
         $limit = 30)
     {
         if (!count($excludeList)) {
-            return $request.addParam('count', (string) $limit);
+            return $request.addParam('count', (string) $limit)
         }
 
         if ($rankToken === null) {
-            throw new .InvalidArgumentException('You must supply the rank token for the pagination.');
+            throw .InvalidArgumentException('You must supply the rank token for the pagination.')
         }
-        Utils::throwIfInvalidRankToken($rankToken);
+        Utils::throwIfInvalidRankToken($rankToken)
 
         return $request
             .addParam('count', (string) $limit)
             .addParam('exclude_list', '['.implode(', ', $excludeList).']')
-            .addParam('rank_token', $rankToken);
+            .addParam('rank_token', $rankToken)
     }
 
     /**
@@ -81,24 +81,24 @@ class RequestCollection
         $limit = 30)
     {
         if (!count($excludeList)) {
-            return $request.addParam('count', (string) $limit);
+            return $request.addParam('count', (string) $limit)
         }
 
         if ($rankToken === null) {
-            throw new .InvalidArgumentException('You must supply the rank token for the pagination.');
+            throw .InvalidArgumentException('You must supply the rank token for the pagination.')
         }
-        Utils::throwIfInvalidRankToken($rankToken);
+        Utils::throwIfInvalidRankToken($rankToken)
 
-        $exclude = [];
-        $totalCount = 0;
+        $exclude = []
+        $totalCount = 0
         foreach ($excludeList as $group => $ids) {
-            $totalCount += count($ids);
-            $exclude[] = "."{$group}.":[".implode(', ', $ids).']';
+            $totalCount += count($ids)
+            $exclude[] = "."{$group}.":[".implode(', ', $ids).']'
         }
 
         return $request
             .addParam('count', (string) $limit)
             .addParam('exclude_list', '{'.implode(',', $exclude).'}')
-            .addParam('rank_token', $rankToken);
+            .addParam('rank_token', $rankToken)
     }
 }

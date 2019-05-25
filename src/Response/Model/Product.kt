@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Product.
@@ -62,9 +62,9 @@ import InstagramAPI.AutoPropertyMapper;
  */
 class Product : AutoPropertyMapper
 {
-    val APPROVED = 'approved';
-    val PENDING = 'pending';
-    val REJECTED = 'rejected';
+    val APPROVED = 'approved'
+    val PENDING = 'pending'
+    val REJECTED = 'rejected'
 
     val JSON_PROPERTY_MAP = [
         'name'             => 'string',
@@ -80,5 +80,5 @@ class Product : AutoPropertyMapper
         'external_url'     => 'string',
         'checkout_style'   => 'string',
         'review_status'    => 'string',
-    ];
+    ]
 }

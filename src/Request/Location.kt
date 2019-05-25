@@ -1,11 +1,11 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Exception.RequestHeadersTooLargeException;
-import InstagramAPI.Response;
-import InstagramAPI.Signatures;
-import InstagramAPI.Utils;
+package InstagramAPI.Request
+
+import InstagramAPI.Exception.RequestHeadersTooLargeException
+import InstagramAPI.Response
+import InstagramAPI.Signatures
+import InstagramAPI.Utils
 
 /**
  * funs related to finding and exploring locations.
@@ -36,15 +36,15 @@ class Location : RequestCollection
         $locations = this.ig.request('location_search/')
             .addParam('rank_token', this.ig.account_id.'_'.Signatures::generateUUID())
             .addParam('latitude', $latitude)
-            .addParam('longitude', $longitude);
+            .addParam('longitude', $longitude)
 
         if ($query === null) {
-            $locations.addParam('timestamp', time());
+            $locations.addParam('timestamp', time())
         } else {
-            $locations.addParam('search_query', $query);
+            $locations.addParam('search_query', $query)
         }
 
-        return $locations.getResponse(new Response.LocationResponse());
+        return $locations.getResponse(Response.LocationResponse())
     }
 
     /**
@@ -74,7 +74,7 @@ class Location : RequestCollection
     {
         // Do basic query validation. Do NOT import throwIfInvalidHashtag here.
         if (!is_string($query) || $query === null) {
-            throw new .InvalidArgumentException('Query must be a non-empty string.');
+            throw .InvalidArgumentException('Query must be a non-empty string.')
         }
         $location = this._paginateWithExclusion(
             this.ig.request('fbsearch/places/')
@@ -82,20 +82,20 @@ class Location : RequestCollection
                 .addParam('query', $query),
             $excludeList,
             $rankToken
-        );
+        )
 
         try {
             /** @var Response.FBLocationResponse $result */
-            $result = $location.getResponse(new Response.FBLocationResponse());
+            $result = $location.getResponse(Response.FBLocationResponse())
         } catch (RequestHeadersTooLargeException $e) {
-            $result = new Response.FBLocationResponse([
+            $result = Response.FBLocationResponse([
                 'has_more'   => false,
                 'items'      => [],
                 'rank_token' => $rankToken,
-            ]);
+            ])
         }
 
-        return $result;
+        return $result
     }
 
     /**
@@ -135,24 +135,24 @@ class Location : RequestCollection
             $excludeList,
             $rankToken,
             50
-        );
+        )
 
         if ($query !== null) {
-            $location.addParam('query', $query);
+            $location.addParam('query', $query)
         }
 
         try {
             /** @var Response.FBLocationResponse() $result */
-            $result = $location.getResponse(new Response.FBLocationResponse());
+            $result = $location.getResponse(Response.FBLocationResponse())
         } catch (RequestHeadersTooLargeException $e) {
-            $result = new Response.FBLocationResponse([
+            $result = Response.FBLocationResponse([
                 'has_more'   => false,
                 'items'      => [],
                 'rank_token' => $rankToken,
-            ]);
+            ])
         }
 
-        return $result;
+        return $result
     }
 
     /**
@@ -174,7 +174,7 @@ class Location : RequestCollection
         return this.ig.request("locations/{$locationId}/related/")
             .addParam('visited', json_encode(['id' => $locationId, 'type' => 'location']))
             .addParam('related_types', json_encode(['location']))
-            .getResponse(new Response.RelatedLocationResponse());
+            .getResponse(Response.RelatedLocationResponse())
     }
 
     /**
@@ -209,9 +209,9 @@ class Location : RequestCollection
         $nextPage = null,
         $maxId = null)
     {
-        Utils::throwIfInvalidRankToken($rankToken);
+        Utils::throwIfInvalidRankToken($rankToken)
         if ($tab !== 'ranked' && $tab !== 'recent') {
-            throw new .InvalidArgumentException('The provided section tab is invalid.');
+            throw .InvalidArgumentException('The provided section tab is invalid.')
         }
 
         $locationFeed = this.ig.request("locations/{$locationId}/sections/")
@@ -220,24 +220,24 @@ class Location : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('session_id', this.ig.session_id)
-            .addPost('tab', $tab);
+            .addPost('tab', $tab)
 
         if ($nextMediaIds !== null) {
             if (!is_array($nextMediaIds) || !array_filter($nextMediaIds, 'is_int')) {
-                throw new .InvalidArgumentException('Next media IDs must be an Int[].');
+                throw .InvalidArgumentException('Next media IDs must be an Int[].')
             }
-            $locationFeed.addPost('next_media_ids', json_encode($nextMediaIds));
+            $locationFeed.addPost('next_media_ids', json_encode($nextMediaIds))
         }
 
         if ($nextPage !== null) {
-            $locationFeed.addPost('page', $nextPage);
+            $locationFeed.addPost('page', $nextPage)
         }
 
         if ($maxId !== null) {
-            $locationFeed.addPost('max_id', $maxId);
+            $locationFeed.addPost('max_id', $maxId)
         }
 
-        return $locationFeed.getResponse(new Response.LocationFeedResponse());
+        return $locationFeed.getResponse(Response.LocationFeedResponse())
     }
 
     /**
@@ -255,7 +255,7 @@ class Location : RequestCollection
         $locationId)
     {
         return this.ig.request("locations/{$locationId}/story/")
-            .getResponse(new Response.LocationStoryResponse());
+            .getResponse(Response.LocationStoryResponse())
     }
 
     /**
@@ -299,31 +299,31 @@ class Location : RequestCollection
         // Extract the Location Story-Tray ID from the user's location response.
         // NOTE: This can NEVER fail if the user has properly given us the exact
         // same location response that they got the story items from!
-        $sourceId = '';
+        $sourceId = ''
         if ($locationFeed.getStory() instanceof Response.Model.StoryTray) {
-            $sourceId = $locationFeed.getStory().getId();
+            $sourceId = $locationFeed.getStory().getId()
         }
         if (!strlen($sourceId)) {
-            throw new .InvalidArgumentException('Your provided LocationStoryResponse is invalid and does not contain any Location Story-Tray ID.');
+            throw .InvalidArgumentException('Your provided LocationStoryResponse is invalid and does not contain any Location Story-Tray ID.')
         }
 
         // Ensure they only gave us valid items for this location response.
         // NOTE: We validate since people cannot be trusted to import their brain.
-        $validIds = [];
+        $validIds = []
         foreach ($locationFeed.getStory().getItems() as $item) {
-            $validIds[$item.getId()] = true;
+            $validIds[$item.getId()] = true
         }
         foreach ($items as $item) {
             // NOTE: We only check Items here. Other data is rejected by Internal.
             if ($item instanceof Response.Model.Item && !isset($validIds[$item.getId()])) {
-                throw new .InvalidArgumentException(sprintf(
+                throw .InvalidArgumentException(sprintf(
                     'The item with ID "%s" does not belong to this LocationStoryResponse.',
                     $item.getId()
-                ));
+                ))
             }
         }
 
         // Mark the story items as seen, with the location as source ID.
-        return this.ig.internal.markStoryMediaSeen($items, $sourceId);
+        return this.ig.internal.markStoryMediaSeen($items, $sourceId)
     }
 }

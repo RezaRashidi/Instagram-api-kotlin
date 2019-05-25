@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * GenericMegaphone.
@@ -81,5 +81,5 @@ class GenericMegaphone : AutoPropertyMapper
         'title_color'       => '',
         'message_color'     => '',
         'uuid'              => 'string',
-    ];
+    ]
 }

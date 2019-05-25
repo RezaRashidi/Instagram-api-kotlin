@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectInbox.
@@ -41,5 +41,5 @@ class DirectInbox : AutoPropertyMapper
         'blended_inbox_enabled' => 'bool',
         'oldest_cursor'         => '',
         'threads'               => 'DirectThread[]',
-    ];
+    ]
 }

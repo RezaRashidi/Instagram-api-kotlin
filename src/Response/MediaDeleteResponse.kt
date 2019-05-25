@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * MediaDeleteResponse.
@@ -28,5 +28,5 @@ class MediaDeleteResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'did_delete' => '',
-    ];
+    ]
 }

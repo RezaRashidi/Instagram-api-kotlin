@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Explore.
@@ -26,5 +26,5 @@ class Explore : AutoPropertyMapper
         'explanation'  => '',
         'actor_id'     => 'string',
         'source_token' => '',
-    ];
+    ]
 }

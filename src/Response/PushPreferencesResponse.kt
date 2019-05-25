@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * PushPreferencesResponse.
@@ -113,5 +113,5 @@ class PushPreferencesResponse : Response
         'ads'                                   => '',
         'view_count'                            => '',
         'report_updated'                        => '',
-    ];
+    ]
 }

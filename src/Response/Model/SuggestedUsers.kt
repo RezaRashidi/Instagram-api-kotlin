@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * SuggestedUsers.
@@ -71,5 +71,5 @@ class SuggestedUsers : AutoPropertyMapper
         'suggestions'        => 'Suggestion[]',
         'suggestion_cards'   => 'SuggestionCard[]',
         'netego_type'        => '',
-    ];
+    ]
 }

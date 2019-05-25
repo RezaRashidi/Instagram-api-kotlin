@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * PresencesResponse.
@@ -28,5 +28,5 @@ class PresencesResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'user_presence' => 'Model.UnpredictableKeys.PresenceUnpredictableContainer',
-    ];
+    ]
 }

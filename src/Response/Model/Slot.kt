@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Slot.
@@ -21,5 +21,5 @@ class Slot : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'slot'                 => 'int',
         'cooldown'             => 'int',
-    ];
+    ]
 }

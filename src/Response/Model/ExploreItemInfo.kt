@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ExploreItemInfo.
@@ -36,5 +36,5 @@ class ExploreItemInfo : AutoPropertyMapper
         'aspect_ratio'      => 'int',
         'autoplay'          => 'bool',
         'destination_view'  => 'string',
-    ];
+    ]
 }

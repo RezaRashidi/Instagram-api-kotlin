@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FormerUsernamesResponse.
@@ -28,5 +28,5 @@ class FormerUsernamesResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'former_usernames' => 'Model.FormerUsername[]',
-    ];
+    ]
 }

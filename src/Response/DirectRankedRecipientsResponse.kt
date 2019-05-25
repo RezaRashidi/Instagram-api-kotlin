@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DirectRankedRecipientsResponse.
@@ -48,5 +48,5 @@ class DirectRankedRecipientsResponse : Response
         'filtered'          => '',
         'request_id'        => 'string',
         'rank_token'        => 'string',
-    ];
+    ]
 }

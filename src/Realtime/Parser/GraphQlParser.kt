@@ -1,29 +1,29 @@
-<?php
 
-package InstagramAPI.Realtime.Parser;
 
-import Fbns.Client.Thrift.Compact;
-import Fbns.Client.Thrift.Reader;
-import InstagramAPI.Client;
-import InstagramAPI.Realtime.Message;
-import InstagramAPI.Realtime.ParserInterface;
-import InstagramAPI.Realtime.Subscription.GraphQl.AppPresenceSubscription;
-import InstagramAPI.Realtime.Subscription.GraphQl.ZeroProvisionSubscription;
+package InstagramAPI.Realtime.Parser
+
+import Fbns.Client.Thrift.Compact
+import Fbns.Client.Thrift.Reader
+import InstagramAPI.Client
+import InstagramAPI.Realtime.Message
+import InstagramAPI.Realtime.ParserInterface
+import InstagramAPI.Realtime.Subscription.GraphQl.AppPresenceSubscription
+import InstagramAPI.Realtime.Subscription.GraphQl.ZeroProvisionSubscription
 
 class GraphQlParser : ParserInterface
 {
-    val FIELD_TOPIC = 1;
-    val FIELD_PAYLOAD = 2;
+    val FIELD_TOPIC = 1
+    val FIELD_PAYLOAD = 2
 
-    val TOPIC_DIRECT = 'direct';
+    val TOPIC_DIRECT = 'direct'
 
-    val MODULE_DIRECT = 'direct';
+    val MODULE_DIRECT = 'direct'
 
     val TOPIC_TO_MODULE_ENUM = [
         self::TOPIC_DIRECT               => self::MODULE_DIRECT,
         AppPresenceSubscription::QUERY   => AppPresenceSubscription::ID,
         ZeroProvisionSubscription::QUERY => ZeroProvisionSubscription::ID,
-    ];
+    ]
 
     /**
      * {@inheritdoc}
@@ -35,18 +35,18 @@ class GraphQlParser : ParserInterface
         $topic,
         $payload)
     {
-        $msgTopic = $msgPayload = null;
-        new Reader($payload, fun ($context, $field, $value, $type) import (&$msgTopic, &$msgPayload) {
+        $msgTopic = $msgPayload = null
+        Reader($payload, fun ($context, $field, $value, $type) import (&$msgTopic, &$msgPayload) {
             if ($type === Compact::TYPE_BINARY) {
                 if ($field === self::FIELD_TOPIC) {
-                    $msgTopic = $value;
+                    $msgTopic = $value
                 } elseif ($field === self::FIELD_PAYLOAD) {
-                    $msgPayload = $value;
+                    $msgPayload = $value
                 }
             }
-        });
+        })
 
-        return [this._createMessage($msgTopic, $msgPayload)];
+        return [this._createMessage($msgTopic, $msgPayload)]
     }
 
     /**
@@ -65,18 +65,18 @@ class GraphQlParser : ParserInterface
         $payload)
     {
         if ($topic === null || $payload === null) {
-            throw new .RuntimeException('Incomplete GraphQL message.');
+            throw .RuntimeException('Incomplete GraphQL message.')
         }
 
         if (!array_key_exists($topic, self::TOPIC_TO_MODULE_ENUM)) {
-            throw new .DomainException(sprintf('Unknown GraphQL topic "%s".', $topic));
+            throw .DomainException(sprintf('Unknown GraphQL topic "%s".', $topic))
         }
 
-        $data = Client::api_body_decode($payload);
+        $data = Client::api_body_decode($payload)
         if (!is_array($data)) {
-            throw new .RuntimeException('Invalid GraphQL payload.');
+            throw .RuntimeException('Invalid GraphQL payload.')
         }
 
-        return new Message(self::TOPIC_TO_MODULE_ENUM[$topic], $data);
+        return Message(self::TOPIC_TO_MODULE_ENUM[$topic], $data)
     }
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Placeholder.
@@ -26,5 +26,5 @@ class Placeholder : AutoPropertyMapper
         'is_linked' => 'bool',
         'title'     => 'string',
         'message'   => 'string',
-    ];
+    ]
 }

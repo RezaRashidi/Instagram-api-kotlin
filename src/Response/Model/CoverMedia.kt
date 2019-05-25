@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * CoverMedia.
@@ -59,5 +59,5 @@ class CoverMedia : AutoPropertyMapper
         'cropped_image_version' => 'ImageCandidate',
         'crop_rect'             => 'int[]',
         'full_image_version'    => 'ImageCandidate',
-    ];
+    ]
 }

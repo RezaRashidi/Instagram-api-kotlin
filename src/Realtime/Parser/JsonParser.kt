@@ -1,15 +1,15 @@
-<?php
 
-package InstagramAPI.Realtime.Parser;
 
-import InstagramAPI.Client;
-import InstagramAPI.Realtime.Message;
-import InstagramAPI.Realtime.ParserInterface;
+package InstagramAPI.Realtime.Parser
+
+import InstagramAPI.Client
+import InstagramAPI.Realtime.Message
+import InstagramAPI.Realtime.ParserInterface
 
 class JsonParser : ParserInterface
 {
     /** @var string */
-    protected $_module;
+    protected $_module
 
     /**
      * Constructor.
@@ -19,7 +19,7 @@ class JsonParser : ParserInterface
     public fun __construct(
         $module)
     {
-        this._module = $module;
+        this._module = $module
     }
 
     /**
@@ -31,11 +31,11 @@ class JsonParser : ParserInterface
         $topic,
         $payload)
     {
-        $data = Client::api_body_decode($payload);
+        $data = Client::api_body_decode($payload)
         if (!is_array($data)) {
-            throw new .RuntimeException('Invalid JSON payload.');
+            throw .RuntimeException('Invalid JSON payload.')
         }
 
-        return [new Message(this._module, $data)];
+        return [Message(this._module, $data)]
     }
 }

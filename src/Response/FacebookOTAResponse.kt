@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FacebookOTAResponse.
@@ -33,5 +33,5 @@ class FacebookOTAResponse : Response
     val JSON_PROPERTY_MAP = [
         'bundles'    => '',
         'request_id' => 'string',
-    ];
+    ]
 }

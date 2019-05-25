@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * TwoFactorInfo.
@@ -31,5 +31,5 @@ class TwoFactorInfo : AutoPropertyMapper
         'two_factor_identifier'       => 'string',
         'phone_verification_settings' => 'PhoneVerificationSettings',
         'obfuscated_phone_number'     => '',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * CheckEmailResponse.
@@ -48,5 +48,5 @@ class CheckEmailResponse : Response
         'confirmed'            => '',
         'username_suggestions' => 'string[]',
         'error_type'           => '',
-    ];
+    ]
 }

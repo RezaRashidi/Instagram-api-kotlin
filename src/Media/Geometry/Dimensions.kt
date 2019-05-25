@@ -1,17 +1,17 @@
-<?php
 
-package InstagramAPI.Media.Geometry;
+
+package InstagramAPI.Media.Geometry
 
 class Dimensions
 {
     /** @var int */
-    protected $_width;
+    protected $_width
 
     /** @var int */
-    protected $_height;
+    protected $_height
 
     /** @var float */
-    protected $_aspectRatio;
+    protected $_aspectRatio
 
     /**
      * Constructor.
@@ -23,10 +23,10 @@ class Dimensions
         $width,
         $height)
     {
-        this._width = (int) $width;
-        this._height = (int) $height;
+        this._width = (int) $width
+        this._height = (int) $height
         // NOTE: MUST `float`-cast to FORCE float even when dividing EQUAL ints.
-        this._aspectRatio = (float) (this._width / this._height);
+        this._aspectRatio = (float) (this._width / this._height)
     }
 
     /**
@@ -36,7 +36,7 @@ class Dimensions
      */
     public fun getWidth()
     {
-        return this._width;
+        return this._width
     }
 
     /**
@@ -46,7 +46,7 @@ class Dimensions
      */
     public fun getHeight()
     {
-        return this._height;
+        return this._height
     }
 
     /**
@@ -56,17 +56,17 @@ class Dimensions
      */
     public fun getAspectRatio()
     {
-        return this._aspectRatio;
+        return this._aspectRatio
     }
 
     /**
-     * Create a new object with swapped axes.
+     * Create a object with swapped axes.
      *
      * @return self
      */
     public fun withSwappedAxes()
     {
-        return new self(this._height, this._width);
+        return self(this._height, this._width)
     }
 
     /**
@@ -84,15 +84,15 @@ class Dimensions
         $roundingFunc = 'round')
     {
         if (!is_float($newScale) && !is_int($newScale)) {
-            throw new .InvalidArgumentException('The new scale must be a float or integer.');
+            throw .InvalidArgumentException('The scale must be a float or integer.')
         }
         if ($roundingFunc !== 'round' && $roundingFunc !== 'floor' && $roundingFunc !== 'ceil') {
-            throw new .InvalidArgumentException(sprintf('Invalid rounding fun "%s".', $roundingFunc));
+            throw .InvalidArgumentException(sprintf('Invalid rounding fun "%s".', $roundingFunc))
         }
 
-        $newWidth = (int) $roundingFunc($newScale * this._width);
-        $newHeight = (int) $roundingFunc($newScale * this._height);
+        $newWidth = (int) $roundingFunc($newScale * this._width)
+        $newHeight = (int) $roundingFunc($newScale * this._height)
 
-        return new self($newWidth, $newHeight);
+        return self($newWidth, $newHeight)
     }
 }

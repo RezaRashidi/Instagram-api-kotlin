@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * FormerUsername.
@@ -21,5 +21,5 @@ class FormerUsername : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'former_username'  => 'string',
         'change_timestamp' => 'string',
-    ];
+    ]
 }

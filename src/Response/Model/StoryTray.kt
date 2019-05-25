@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoryTray.
@@ -143,5 +143,5 @@ class StoryTray : AutoPropertyMapper
         'cover_media'            => 'CoverMedia',
         'title'                  => 'string',
         'media_count'            => 'int',
-    ];
+    ]
 }

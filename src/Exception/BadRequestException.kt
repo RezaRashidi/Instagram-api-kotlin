@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Exception;
+
+package InstagramAPI.Exception
 
 /**
  * Used for endpoint calls that fail with HTTP code "400 Bad Request", but only

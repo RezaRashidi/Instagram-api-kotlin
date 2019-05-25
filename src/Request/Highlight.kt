@@ -1,9 +1,9 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Constants;
-import InstagramAPI.Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Constants
+import InstagramAPI.Response
 
 /**
  * funs related to creating and managing highlights of your media.
@@ -34,7 +34,7 @@ class Highlight : RequestCollection
             .addParam('battery_level', '100')
             .addParam('is_charging', '1')
             .addParam('will_sound_on', '1')
-            .getResponse(new Response.HighlightFeedResponse());
+            .getResponse(Response.HighlightFeedResponse())
     }
 
     /**
@@ -53,7 +53,7 @@ class Highlight : RequestCollection
      */
     public fun getSelfUserFeed()
     {
-        return this.getUserFeed(this.ig.account_id);
+        return this.getUserFeed(this.ig.account_id)
     }
 
     /**
@@ -76,20 +76,20 @@ class Highlight : RequestCollection
         $module = 'self_profile')
     {
         if (empty($mediaIds)) {
-            throw new .InvalidArgumentException('You must provide at least one media ID.');
+            throw .InvalidArgumentException('You must provide at least one media ID.')
         }
         if ($coverMediaId === null) {
-            $coverMediaId = reset($mediaIds);
+            $coverMediaId = reset($mediaIds)
         }
         if ($title === null || $title === '') {
-            $title = 'Highlights';
+            $title = 'Highlights'
         } elseif (mb_strlen($title, 'utf8') > 16) {
-            throw new .InvalidArgumentException('Title must be between 1 and 16 characters.');
+            throw .InvalidArgumentException('Title must be between 1 and 16 characters.')
         }
 
         $cover = [
             'media_id'  => $coverMediaId,
-        ];
+        ]
 
         return this.ig.request('highlights/create_reel/')
             .addPost('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
@@ -101,7 +101,7 @@ class Highlight : RequestCollection
             .addPost('cover', json_encode($cover))
             .addPost('title', $title)
             .addPost('media_ids', json_encode(array_values($mediaIds)))
-            .getResponse(new Response.CreateHighlightResponse());
+            .getResponse(Response.CreateHighlightResponse())
     }
 
     /**
@@ -122,22 +122,22 @@ class Highlight : RequestCollection
         $module = 'self_profile')
     {
         if (!isset($params['cover_media_id'])) {
-            throw new .InvalidArgumentException('You must provide one media ID for the cover.');
+            throw .InvalidArgumentException('You must provide one media ID for the cover.')
         }
         if (!isset($params['title'])) {
-            $params['title'] = 'Highlights';
+            $params['title'] = 'Highlights'
         } elseif (mb_strlen($params['title'], 'utf8') > 16) {
-            throw new .InvalidArgumentException('Title length must be between 1 and 16 characters.');
+            throw .InvalidArgumentException('Title length must be between 1 and 16 characters.')
         }
         if (!isset($params['add_media']) || !is_array($params['add_media'])) {
-            $params['add_media'] = [];
+            $params['add_media'] = []
         }
         if (!isset($params['remove_media']) || !is_array($params['remove_media'])) {
-            $params['remove_media'] = [];
+            $params['remove_media'] = []
         }
         $cover = [
             'media_id'  => $params['cover_media_id'],
-        ];
+        ]
 
         return this.ig.request("highlights/{$highlightReelId}/edit_reel/")
             .addPost('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
@@ -149,7 +149,7 @@ class Highlight : RequestCollection
             .addPost('cover', json_encode($cover))
             .addPost('added_media_ids', json_encode(array_values($params['add_media'])))
             .addPost('removed_media_ids', json_encode(array_values($params['remove_media'])))
-            .getResponse(new Response.HighlightFeedResponse());
+            .getResponse(Response.HighlightFeedResponse())
     }
 
     /**
@@ -168,6 +168,6 @@ class Highlight : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FollowingRecentActivityResponse.
@@ -43,5 +43,5 @@ class FollowingRecentActivityResponse : Response
         'next_max_id'            => 'string',
         'auto_load_more_enabled' => '',
         'megaphone'              => '',
-    ];
+    ]
 }

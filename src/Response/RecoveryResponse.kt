@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * RecoveryResponse.
@@ -38,5 +38,5 @@ class RecoveryResponse : Response
         'phone_number_valid' => 'bool',
         'title'              => 'string',
         'body'               => 'string',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * StartLiveResponse.
@@ -28,5 +28,5 @@ class StartLiveResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'media_id' => 'string',
-    ];
+    ]
 }

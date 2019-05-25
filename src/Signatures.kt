@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI;
+
+package InstagramAPI
 
 class Signatures
 {
@@ -14,7 +14,7 @@ class Signatures
     public static fun generateSignature(
         $data)
     {
-        return hash_hmac('sha256', $data, Constants::IG_SIG_KEY);
+        return hash_hmac('sha256', $data, Constants::IG_SIG_KEY)
     }
 
     /**
@@ -27,7 +27,7 @@ class Signatures
     public static fun generateSignatureForPost(
         $data)
     {
-        return 'ig_sig_key_version='.Constants::SIG_KEY_VERSION.'&signed_body='.self::generateSignature($data).'.'.urlencode($data);
+        return 'ig_sig_key_version='.Constants::SIG_KEY_VERSION.'&signed_body='.self::generateSignature($data).'.'.urlencode($data)
     }
 
     /**
@@ -42,36 +42,36 @@ class Signatures
         array $data,
         array $exclude = [])
     {
-        $result = [];
+        $result = []
         // Exclude some params from signed body.
         foreach ($exclude as $key) {
             if (isset($data[$key])) {
-                $result[$key] = $data[$key];
-                unset($data[$key]);
+                $result[$key] = $data[$key]
+                unset($data[$key])
             }
         }
         // Typecast all scalar values to string.
         foreach ($data as &$value) {
             if (is_scalar($value)) {
-                $value = (string) $value;
+                $value = (string) $value
             }
         }
-        unset($value); // Clear reference.
+        unset($value) // Clear reference.
         // Reorder and convert data to JSON string.
-        $data = json_encode((object) Utils::reorderByHashCode($data));
+        $data = json_encode((object) Utils::reorderByHashCode($data))
         // Sign data.
-        $result['ig_sig_key_version'] = Constants::SIG_KEY_VERSION;
-        $result['signed_body'] = self::generateSignature($data).'.'.$data;
+        $result['ig_sig_key_version'] = Constants::SIG_KEY_VERSION
+        $result['signed_body'] = self::generateSignature($data).'.'.$data
         // Return value must be reordered.
-        return Utils::reorderByHashCode($result);
+        return Utils::reorderByHashCode($result)
     }
 
     public static fun generateDeviceId()
     {
         // This has 10 million possible hash subdivisions per clock second.
-        $megaRandomHash = md5(number_format(microtime(true), 7, '', ''));
+        $megaRandomHash = md5(number_format(microtime(true), 7, '', ''))
 
-        return 'android-'.substr($megaRandomHash, 16);
+        return 'android-'.substr($megaRandomHash, 16)
     }
 
     /**
@@ -85,10 +85,10 @@ class Signatures
         $uuid)
     {
         if (!is_string($uuid)) {
-            return false;
+            return false
         }
 
-        return (bool) preg_match('#^[a-f.d]{8}-(?:[a-f.d]{4}-){3}[a-f.d]{12}$#D', $uuid);
+        return (bool) preg_match('#^[a-f.d]{8}-(?:[a-f.d]{4}-){3}[a-f.d]{12}$#D', $uuid)
     }
 
     public static fun generateUUID(
@@ -104,8 +104,8 @@ class Signatures
             mt_rand(0, 0xffff),
             mt_rand(0, 0xffff),
             mt_rand(0, 0xffff)
-        );
+        )
 
-        return $keepDashes ? $uuid : str_replace('-', '', $uuid);
+        return $keepDashes ? $uuid : str_replace('-', '', $uuid)
     }
 }

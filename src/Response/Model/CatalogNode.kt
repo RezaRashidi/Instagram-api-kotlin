@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * CatalogNode.
@@ -46,5 +46,5 @@ class CatalogNode : AutoPropertyMapper
         'description'                   => 'string',
         'main_image_with_safe_fallback' => '',
         'retailer_id'                   => 'string',
-    ];
+    ]
 }

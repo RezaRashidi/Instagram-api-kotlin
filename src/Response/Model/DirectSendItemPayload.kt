@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectSendItemPayload.
@@ -51,5 +51,5 @@ class DirectSendItemPayload : AutoPropertyMapper
         'thread_id'         => 'string',
         'canonical'         => 'bool',
         'participant_ids'   => 'string[]',
-    ];
+    ]
 }

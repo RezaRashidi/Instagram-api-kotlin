@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * EnableDisableLiveCommentsResponse.
@@ -28,5 +28,5 @@ class EnableDisableLiveCommentsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'comment_muted' => 'int',
-    ];
+    ]
 }

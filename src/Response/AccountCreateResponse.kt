@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * AccountCreateResponse.
@@ -33,5 +33,5 @@ class AccountCreateResponse : Response
     val JSON_PROPERTY_MAP = [
         'account_created' => '',
         'created_user'    => 'Model.User',
-    ];
+    ]
 }

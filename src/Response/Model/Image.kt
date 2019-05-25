@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Image.
@@ -26,5 +26,5 @@ class Image : AutoPropertyMapper
         'uri'    => 'string',
         'width'  => 'int',
         'height' => 'int',
-    ];
+    ]
 }

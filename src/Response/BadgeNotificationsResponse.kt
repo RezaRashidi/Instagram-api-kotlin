@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * BadgeNotificationsResponse.
@@ -27,11 +27,11 @@ import InstagramAPI.Response;
 class BadgeNotificationsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        // Only exists if you have notifications; contains data keyed by userId:
+        // Only exists if you have notifications contains data keyed by userId:
         // TODO: Currently defined as a Core container, which means that all of
         // the data sub-values will be arrays (no type-conversion of the values
         // will happen). We should define this as a specific type (like
         // UserUnpredictableContainer) when we know exactly what the data is.
         'badge_payload' => 'Model.UnpredictableKeys.CoreUnpredictableContainer',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * LiveViewerInvite.
@@ -31,5 +31,5 @@ class LiveViewerInvite : AutoPropertyMapper
         'broadcast' => 'Broadcast',
         'title'     => 'string',
         'message'   => 'string',
-    ];
+    ]
 }

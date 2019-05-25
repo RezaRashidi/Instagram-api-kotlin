@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Settings;
 
-import InstagramAPI.Exception.SettingsException;
+package InstagramAPI.Settings
+
+import InstagramAPI.Exception.SettingsException
 
 /**
  * Effortlessly instantiates a StorageHandler with the desired Storage backend.
@@ -33,12 +33,12 @@ class Factory
         if (!isset($storageConfig['storage'])) {
             $cmdOptions = self::getCmdOptions([
                 'settings_storage::',
-            ]);
-            $storage = self::getUserConfig('storage', $storageConfig, $cmdOptions);
+            ])
+            $storage = self::getUserConfig('storage', $storageConfig, $cmdOptions)
             if ($storage === null) {
-                $storage = 'file';
+                $storage = 'file'
             }
-            $storageConfig = ['storage' => $storage];
+            $storageConfig = ['storage' => $storage]
         }
 
         // Determine the user's final storage configuration.
@@ -47,18 +47,18 @@ class Factory
             // Look for allowed command-line values related to this backend.
             $cmdOptions = self::getCmdOptions([
                 'settings_basefolder::',
-            ]);
+            ])
 
             // These settings are optional:
-            $baseFolder = self::getUserConfig('basefolder', $storageConfig, $cmdOptions);
+            $baseFolder = self::getUserConfig('basefolder', $storageConfig, $cmdOptions)
 
             // Generate the final storage location configuration.
             $locationConfig = [
                 'basefolder' => $baseFolder,
-            ];
+            ]
 
-            $storageInstance = new Storage.File();
-            break;
+            $storageInstance = Storage.File()
+            break
         case 'mysql':
             // Look for allowed command-line values related to this backend.
             $cmdOptions = self::getCmdOptions([
@@ -67,13 +67,13 @@ class Factory
                 'settings_dbhost::',
                 'settings_dbname::',
                 'settings_dbtablename::',
-            ]);
+            ])
 
             // These settings are optional, and can be provided regardless of
             // connection method:
             $locationConfig = [
                 'dbtablename' => self::getUserConfig('dbtablename', $storageConfig, $cmdOptions),
-            ];
+            ]
 
             // These settings are required, but you only have to import one method:
             if (isset($storageConfig['pdo'])) {
@@ -86,29 +86,29 @@ class Factory
                 // If you want to re-import a PDO connection, you MUST accept the
                 // fact that WE NEED exceptions and UTF-8 in our PDO! If that is
                 // not acceptable to you then DO NOT re-import your own PDO object!
-                $locationConfig['pdo'] = $storageConfig['pdo'];
+                $locationConfig['pdo'] = $storageConfig['pdo']
             } else {
-                // Make a new connection. Optional settings for it:
-                $locationConfig['dbusername'] = self::getUserConfig('dbusername', $storageConfig, $cmdOptions);
-                $locationConfig['dbpassword'] = self::getUserConfig('dbpassword', $storageConfig, $cmdOptions);
-                $locationConfig['dbhost'] = self::getUserConfig('dbhost', $storageConfig, $cmdOptions);
-                $locationConfig['dbname'] = self::getUserConfig('dbname', $storageConfig, $cmdOptions);
+                // Make a connection. Optional settings for it:
+                $locationConfig['dbusername'] = self::getUserConfig('dbusername', $storageConfig, $cmdOptions)
+                $locationConfig['dbpassword'] = self::getUserConfig('dbpassword', $storageConfig, $cmdOptions)
+                $locationConfig['dbhost'] = self::getUserConfig('dbhost', $storageConfig, $cmdOptions)
+                $locationConfig['dbname'] = self::getUserConfig('dbname', $storageConfig, $cmdOptions)
             }
 
-            $storageInstance = new Storage.MySQL();
-            break;
+            $storageInstance = Storage.MySQL()
+            break
         case 'sqlite':
             // Look for allowed command-line values related to this backend.
             $cmdOptions = self::getCmdOptions([
                 'settings_dbfilename::',
                 'settings_dbtablename::',
-            ]);
+            ])
 
             // These settings are optional, and can be provided regardless of
             // connection method:
             $locationConfig = [
                 'dbtablename' => self::getUserConfig('dbtablename', $storageConfig, $cmdOptions),
-            ];
+            ]
 
             // These settings are required, but you only have to import one method:
             if (isset($storageConfig['pdo'])) {
@@ -121,14 +121,14 @@ class Factory
                 // If you want to re-import a PDO connection, you MUST accept the
                 // fact that WE NEED exceptions and UTF-8 in our PDO! If that is
                 // not acceptable to you then DO NOT re-import your own PDO object!
-                $locationConfig['pdo'] = $storageConfig['pdo'];
+                $locationConfig['pdo'] = $storageConfig['pdo']
             } else {
-                // Make a new connection. Optional settings for it:
-                $locationConfig['dbfilename'] = self::getUserConfig('dbfilename', $storageConfig, $cmdOptions);
+                // Make a connection. Optional settings for it:
+                $locationConfig['dbfilename'] = self::getUserConfig('dbfilename', $storageConfig, $cmdOptions)
             }
 
-            $storageInstance = new Storage.SQLite();
-            break;
+            $storageInstance = Storage.SQLite()
+            break
         case 'memcached':
             // The memcached storage can only be configured via the factory
             // configuration array (not via command line or environment vars).
@@ -138,9 +138,9 @@ class Factory
                 // Re-import the user's own Memcached object.
                 $locationConfig = [
                     'memcached' => $storageConfig['memcached'],
-                ];
+                ]
             } else {
-                // Make a new connection. Optional settings for it:
+                // Make a connection. Optional settings for it:
                 $locationConfig = [
                     // This ID will be passed to the .Memcached() constructor.
                     // NOTE: Memcached's "persistent ID" feature makes Memcached
@@ -168,39 +168,39 @@ class Factory
                     'sasl_password' => (isset($storageConfig['sasl_password'])
                                         ? $storageConfig['sasl_password']
                                         : null),
-                ];
+                ]
             }
 
-            $storageInstance = new Storage.Memcached();
-            break;
+            $storageInstance = Storage.Memcached()
+            break
         case 'custom':
             // Custom storage classes can only be configured via the main array.
             // When using a custom class, you must provide a StorageInterface:
             if (!isset($storageConfig['class'])
                 || !$storageConfig['class'] instanceof StorageInterface) {
-                throw new SettingsException('Invalid custom storage class.');
+                throw SettingsException('Invalid custom storage class.')
             }
 
             // Create a clean storage location configuration array.
-            $locationConfig = $storageConfig;
-            unset($locationConfig['storage']);
-            unset($locationConfig['class']);
+            $locationConfig = $storageConfig
+            unset($locationConfig['storage'])
+            unset($locationConfig['class'])
 
-            $storageInstance = $storageConfig['class'];
-            break;
+            $storageInstance = $storageConfig['class']
+            break
         default:
-            throw new SettingsException(sprintf(
+            throw SettingsException(sprintf(
                 'Unknown settings storage type "%s".',
                 $storageConfig['storage']
-            ));
+            ))
         }
 
         // Create the storage handler and connect to the storage location.
-        return new StorageHandler(
+        return StorageHandler(
             $storageInstance,
             $locationConfig,
             $callbacks
-        );
+        )
     }
 
     /**
@@ -213,12 +213,12 @@ class Factory
     public static fun getCmdOptions(
         array $longOpts)
     {
-        $cmdOptions = getopt('', $longOpts);
+        $cmdOptions = getopt('', $longOpts)
         if (!is_array($cmdOptions)) {
-            $cmdOptions = [];
+            $cmdOptions = []
         }
 
-        return $cmdOptions;
+        return $cmdOptions
     }
 
     /**
@@ -238,25 +238,25 @@ class Factory
         // Command line options have the highest precedence.
         // NOTE: Settings provided via cmd must have a "settings_" prefix.
         if (array_key_exists("settings_{$settingName}", $cmdOptions)) {
-            return $cmdOptions["settings_{$settingName}"];
+            return $cmdOptions["settings_{$settingName}"]
         }
 
         // Environment variables have the second highest precedence.
         // NOTE: Settings provided via env must be UPPERCASED and have
         // a "SETTINGS_" prefix, for example "SETTINGS_STORAGE".
-        $envValue = getenv('SETTINGS_'.strtoupper($settingName));
+        $envValue = getenv('SETTINGS_'.strtoupper($settingName))
         if ($envValue !== false) {
-            return $envValue;
+            return $envValue
         }
 
         // Our factory config array has the lowest precedence, so that you can
         // easily override it via the other methods when testing other storage
         // backends or different connection parameters.
         if (array_key_exists($settingName, $storageConfig)) {
-            return $storageConfig[$settingName];
+            return $storageConfig[$settingName]
         }
 
         // Couldn't find any user-provided value. Automatically returns null.
-        // NOTE: Damn you StyleCI for not allowing "return null;" for clarity.
+        // NOTE: Damn you StyleCI for not allowing "return null" for clarity.
     }
 }

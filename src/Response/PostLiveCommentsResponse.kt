@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * PostLiveCommentsResponse.
@@ -48,5 +48,5 @@ class PostLiveCommentsResponse : Response
         'next_fetch_offset' => '',
         'comments'          => 'Model.LiveComment[]',
         'pinned_comments'   => 'Model.LiveComment[]',
-    ];
+    ]
 }

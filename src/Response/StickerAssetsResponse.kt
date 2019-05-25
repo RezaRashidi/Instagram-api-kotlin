@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * StickerAssetsResponse.
@@ -33,5 +33,5 @@ class StickerAssetsResponse : Response
     val JSON_PROPERTY_MAP = [
         'version'         => '',
         'static_stickers' => 'Model.StaticStickers[]',
-    ];
+    ]
 }

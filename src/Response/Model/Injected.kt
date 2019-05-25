@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Injected.
@@ -106,5 +106,5 @@ class Injected : AutoPropertyMapper
         'hide_flow_type'               => 'int',
         'cookies'                      => 'string[]',
         'lead_gen_form_id'             => 'string',
-    ];
+    ]
 }

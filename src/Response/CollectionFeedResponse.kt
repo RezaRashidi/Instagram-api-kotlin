@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * CollectionFeedResponse.
@@ -63,5 +63,5 @@ class CollectionFeedResponse : Response
         'auto_load_more_enabled' => 'bool',
         'next_max_id'            => 'string',
         'has_related_media'      => 'bool',
-    ];
+    ]
 }

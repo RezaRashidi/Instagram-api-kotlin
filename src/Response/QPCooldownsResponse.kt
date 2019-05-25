@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * QPCooldownsResponse.
@@ -43,5 +43,5 @@ class QPCooldownsResponse : Response
         'default'   => 'int',
         'surfaces'  => 'Model.QPSurface[]',
         'slots'     => 'Model.Slot[]',
-    ];
+    ]
 }

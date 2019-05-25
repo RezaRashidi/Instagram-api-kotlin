@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * UnpinCommentBroadcastResponse.
@@ -28,5 +28,5 @@ class UnpinCommentBroadcastResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'comment_id' => 'string',
-    ];
+    ]
 }

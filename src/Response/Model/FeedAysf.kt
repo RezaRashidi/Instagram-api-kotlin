@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * FeedAysf.
@@ -71,5 +71,5 @@ class FeedAysf : AutoPropertyMapper
         'fetch_user_details' => '',
         'title'              => '',
         'activator'          => '',
-    ];
+    ]
 }

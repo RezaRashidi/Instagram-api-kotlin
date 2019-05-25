@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * PopularFeedResponse.
@@ -53,5 +53,5 @@ class PopularFeedResponse : Response
         'items'                  => 'Model.Item[]',
         'num_results'            => 'int',
         'max_id'                 => 'string',
-    ];
+    ]
 }

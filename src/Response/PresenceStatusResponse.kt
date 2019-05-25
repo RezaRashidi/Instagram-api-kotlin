@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * PresenceStatusResponse.
@@ -33,5 +33,5 @@ class PresenceStatusResponse : Response
     val JSON_PROPERTY_MAP = [
         'disabled'                 => 'bool',
         'thread_presence_disabled' => 'bool',
-    ];
+    ]
 }

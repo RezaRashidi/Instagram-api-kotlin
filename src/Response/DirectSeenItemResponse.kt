@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DirectSeenItemResponse.
@@ -33,5 +33,5 @@ class DirectSeenItemResponse : Response
     val JSON_PROPERTY_MAP = [
         'action'  => '',
         'payload' => 'Model.DirectSeenItemPayload', // The number of unseen items.
-    ];
+    ]
 }

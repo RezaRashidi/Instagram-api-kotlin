@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Stories.
@@ -31,5 +31,5 @@ class Stories : AutoPropertyMapper
         'tray'        => 'StoryTray[]',
         'id'          => 'string',
         'top_live'    => 'TopLive',
-    ];
+    ]
 }

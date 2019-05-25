@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * BlockedReelsResponse.
@@ -41,5 +41,5 @@ class BlockedReelsResponse : Response
     val JSON_PROPERTY_MAP = [
         Model.BlockedReels::class, // Import property map.
         'next_max_id' => 'string',
-    ];
+    ]
 }

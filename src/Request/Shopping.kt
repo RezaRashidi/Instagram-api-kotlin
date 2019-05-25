@@ -1,9 +1,9 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Constants;
-import InstagramAPI.Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Constants
+import InstagramAPI.Response
 
 /**
  * funs related to Shopping and catalogs.
@@ -33,7 +33,7 @@ class Shopping : RequestCollection
             .addParam('merchant_id', $merchantId)
             .addParam('device_width', $deviceWidth)
             .addParam('hero_carousel_enabled', false)
-            .getResponse(new Response.OnTagProductResponse());
+            .getResponse(Response.OnTagProductResponse())
     }
 
     /**
@@ -54,7 +54,7 @@ class Shopping : RequestCollection
             .addUnsignedPost('fb_api_caller_class', 'RelayModern')
             .addUnsignedPost('variables', ['sources' => null])
             .addUnsignedPost('doc_id', '1742970149122229')
-            .getResponse(new Response.GraphqlResponse());
+            .getResponse(Response.GraphqlResponse())
     }
 
     /**
@@ -75,12 +75,12 @@ class Shopping : RequestCollection
     {
         if ($offset !== null) {
             if ($offset % 20 !== 0) {
-                throw new .InvalidArgumentException('Offset must be multiple of 20.');
+                throw .InvalidArgumentException('Offset must be multiple of 20.')
             }
             $offset = [
                 'offset' => $offset,
                 'tier'   => 'products.elasticsearch.thrift.atn',
-            ];
+            ]
         }
 
         $queryParams = [
@@ -89,7 +89,7 @@ class Shopping : RequestCollection
             '96',
             '20',
             json_encode($offset),
-        ];
+        ]
 
         return this.ig.request('wwwgraphql/ig/query/')
             .addUnsignedPost('doc_id', '1747750168640998')
@@ -98,7 +98,7 @@ class Shopping : RequestCollection
             .addUnsignedPost('strip_nulls', true)
             .addUnsignedPost('strip_defaults', true)
             .addUnsignedPost('query_params', json_encode($queryParams, JSON_FORCE_OBJECT))
-            .getResponse(new Response.GraphqlResponse());
+            .getResponse(Response.GraphqlResponse())
     }
 
     /**
@@ -118,6 +118,6 @@ class Shopping : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.OnBoardCatalogResponse());
+            .getResponse(Response.OnBoardCatalogResponse())
     }
 }

@@ -1,11 +1,11 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Constants;
-import InstagramAPI.Request.Metadata.Internal as InternalMetadata;
-import InstagramAPI.Response;
-import InstagramAPI.Utils;
+package InstagramAPI.Request
+
+import InstagramAPI.Constants
+import InstagramAPI.Request.Metadata.Internal as InternalMetadata
+import InstagramAPI.Response
+import InstagramAPI.Utils
 
 /**
  * funs for managing your story and interacting with other stories.
@@ -32,7 +32,7 @@ class Story : RequestCollection
         $photoFilename,
         array $externalMetadata = [])
     {
-        return this.ig.internal.uploadSinglePhoto(Constants::FEED_STORY, $photoFilename, null, $externalMetadata);
+        return this.ig.internal.uploadSinglePhoto(Constants::FEED_STORY, $photoFilename, null, $externalMetadata)
     }
 
     /**
@@ -54,10 +54,10 @@ class Story : RequestCollection
         $photoFilename,
         array $externalMetadata = [])
     {
-        $internalMetadata = new InternalMetadata(Utils::generateUploadId(true));
-        $internalMetadata.setBestieMedia(true);
+        $internalMetadata = InternalMetadata(Utils::generateUploadId(true))
+        $internalMetadata.setBestieMedia(true)
 
-        return this.ig.internal.uploadSinglePhoto(Constants::FEED_STORY, $photoFilename, $internalMetadata, $externalMetadata);
+        return this.ig.internal.uploadSinglePhoto(Constants::FEED_STORY, $photoFilename, $internalMetadata, $externalMetadata)
     }
 
     /**
@@ -79,7 +79,7 @@ class Story : RequestCollection
         $videoFilename,
         array $externalMetadata = [])
     {
-        return this.ig.internal.uploadSingleVideo(Constants::FEED_STORY, $videoFilename, null, $externalMetadata);
+        return this.ig.internal.uploadSingleVideo(Constants::FEED_STORY, $videoFilename, null, $externalMetadata)
     }
 
     /**
@@ -102,10 +102,10 @@ class Story : RequestCollection
         $videoFilename,
         array $externalMetadata = [])
     {
-        $internalMetadata = new InternalMetadata();
-        $internalMetadata.setBestieMedia(true);
+        $internalMetadata = InternalMetadata()
+        $internalMetadata.setBestieMedia(true)
 
-        return this.ig.internal.uploadSingleVideo(Constants::FEED_STORY, $videoFilename, $internalMetadata, $externalMetadata);
+        return this.ig.internal.uploadSingleVideo(Constants::FEED_STORY, $videoFilename, $internalMetadata, $externalMetadata)
     }
 
     /**
@@ -129,7 +129,7 @@ class Story : RequestCollection
             .addPost('reason', 'pull_to_refresh')
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('_uuid', this.ig.uuid)
-            .getResponse(new Response.ReelsTrayFeedResponse());
+            .getResponse(Response.ReelsTrayFeedResponse())
     }
 
     /**
@@ -151,7 +151,7 @@ class Story : RequestCollection
         $userId)
     {
         return this.ig.request("feed/user/{$userId}/reel_media/")
-            .getResponse(new Response.UserReelMediaFeedResponse());
+            .getResponse(Response.UserReelMediaFeedResponse())
     }
 
     /**
@@ -178,7 +178,7 @@ class Story : RequestCollection
     {
         return this.ig.request("feed/user/{$userId}/story/")
             .addParam('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
-            .getResponse(new Response.UserStoryFeedResponse());
+            .getResponse(Response.UserStoryFeedResponse())
     }
 
     /**
@@ -205,13 +205,13 @@ class Story : RequestCollection
         $source = 'feed_timeline')
     {
         if (!is_array($feedList)) {
-            $feedList = [$feedList];
+            $feedList = [$feedList]
         }
 
         foreach ($feedList as &$value) {
-            $value = (string) $value;
+            $value = (string) $value
         }
-        unset($value); // Clear reference.
+        unset($value) // Clear reference.
 
         return this.ig.request('feed/reels_media/')
             .addPost('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
@@ -220,7 +220,7 @@ class Story : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_ids', $feedList) // Must be string[] array.
             .addPost('source', $source)
-            .getResponse(new Response.ReelsMediaResponse());
+            .getResponse(Response.ReelsMediaResponse())
     }
 
     /**
@@ -237,7 +237,7 @@ class Story : RequestCollection
             .addParam('is_in_archive_home', true)
             .addParam('include_cover', 0)
             .addParam('timezone_offset', date('Z'))
-            .getResponse(new Response.ArchivedStoriesFeedResponse());
+            .getResponse(Response.ArchivedStoriesFeedResponse())
     }
 
     /**
@@ -258,12 +258,12 @@ class Story : RequestCollection
         $maxId = null)
     {
         $request = this.ig.request("media/{$storyPk}/list_reel_media_viewer/")
-            .addParam('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES));
+            .addParam('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.ReelMediaViewerResponse());
+        return $request.getResponse(Response.ReelMediaViewerResponse())
     }
 
     /**
@@ -286,7 +286,7 @@ class Story : RequestCollection
         $votingOption)
     {
         if (($votingOption !== 0) && ($votingOption !== 1)) {
-            throw new .InvalidArgumentException('You must provide a valid value for voting option.');
+            throw .InvalidArgumentException('You must provide a valid value for voting option.')
         }
 
         return this.ig.request("media/{$storyId}/{$pollId}/story_poll_vote/")
@@ -295,7 +295,7 @@ class Story : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('radio_type', 'wifi-none')
             .addPost('vote', $votingOption)
-            .getResponse(new Response.ReelMediaViewerResponse());
+            .getResponse(Response.ReelMediaViewerResponse())
     }
 
     /**
@@ -319,7 +319,7 @@ class Story : RequestCollection
         $votingOption)
     {
         if ($votingOption < 0 || $votingOption > 1) {
-            throw new .InvalidArgumentException('You must provide a valid value from 0 to 1 for voting option.');
+            throw .InvalidArgumentException('You must provide a valid value from 0 to 1 for voting option.')
         }
 
         return this.ig.request("media/{$storyId}/{$sliderId}/story_slider_vote/")
@@ -328,7 +328,7 @@ class Story : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('radio_type', 'wifi-none')
             .addPost('vote', $votingOption)
-            .getResponse(new Response.ReelMediaViewerResponse());
+            .getResponse(Response.ReelMediaViewerResponse())
     }
 
     /**
@@ -354,17 +354,17 @@ class Story : RequestCollection
         $maxId = null)
     {
         if (($votingOption !== 0) && ($votingOption !== 1)) {
-            throw new .InvalidArgumentException('You must provide a valid value for voting option.');
+            throw .InvalidArgumentException('You must provide a valid value for voting option.')
         }
 
         $request = this.ig.request("media/{$storyId}/{$pollId}/story_poll_voters/")
-            .addParam('vote', $votingOption);
+            .addParam('vote', $votingOption)
 
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.StoryPollVotersResponse());
+        return $request.getResponse(Response.StoryPollVotersResponse())
     }
 
     /**
@@ -389,7 +389,7 @@ class Story : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('type', 'text')
             .addPost('_uuid', this.ig.uuid)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -408,13 +408,13 @@ class Story : RequestCollection
          $questionId,
          $maxId = null)
     {
-        $request = this.ig.request("media/{$storyId}/{$questionId}/story_question_responses/");
+        $request = this.ig.request("media/{$storyId}/{$questionId}/story_question_responses/")
 
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.StoryAnswersResponse());
+        return $request.getResponse(Response.StoryAnswersResponse())
     }
 
     /**
@@ -427,7 +427,7 @@ class Story : RequestCollection
     public fun getStoryCountdowns()
     {
         return this.ig.request('media/story_countdowns/')
-            .getResponse(new Response.StoryCountdownsResponse());
+            .getResponse(Response.StoryCountdownsResponse())
     }
 
     /**
@@ -446,7 +446,7 @@ class Story : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('_uid', this.ig.account_id)
             .addPost('_uuid', this.ig.uuid)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -465,7 +465,7 @@ class Story : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('_uid', this.ig.account_id)
             .addPost('_uuid', this.ig.uuid)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -501,7 +501,7 @@ class Story : RequestCollection
         array $items)
     {
         // NOTE: NULL = import each item's owner ID as the "source ID".
-        return this.ig.internal.markStoryMediaSeen($items, null);
+        return this.ig.internal.markStoryMediaSeen($items, null)
     }
 
     /**
@@ -518,7 +518,7 @@ class Story : RequestCollection
     public fun getReelSettings()
     {
         return this.ig.request('users/reel_settings/')
-            .getResponse(new Response.ReelSettingsResponse());
+            .getResponse(Response.ReelSettingsResponse())
     }
 
     /**
@@ -543,29 +543,29 @@ class Story : RequestCollection
         $autoArchive = null)
     {
         if (!in_array($messagePrefs, ['anyone', 'following', 'off'])) {
-            throw new .InvalidArgumentException('You must provide a valid message preference value.');
+            throw .InvalidArgumentException('You must provide a valid message preference value.')
         }
 
         $request = this.ig.request('users/set_reel_settings/')
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('message_prefs', $messagePrefs);
+            .addPost('message_prefs', $messagePrefs)
 
         if ($allowStoryReshare !== null) {
             if (!is_bool($allowStoryReshare)) {
-                throw new .InvalidArgumentException('You must provide a valid value for allowing story reshare.');
+                throw .InvalidArgumentException('You must provide a valid value for allowing story reshare.')
             }
-            $request.addPost('allow_story_reshare', $allowStoryReshare);
+            $request.addPost('allow_story_reshare', $allowStoryReshare)
         }
 
         if ($autoArchive !== null) {
             if (!in_array($autoArchive, ['on', 'off'])) {
-                throw new .InvalidArgumentException('You must provide a valid value for auto archive.');
+                throw .InvalidArgumentException('You must provide a valid value for auto archive.')
             }
-            $request.addPost('reel_auto_archive', $autoArchive);
+            $request.addPost('reel_auto_archive', $autoArchive)
         }
 
-        return $request.getResponse(new Response.ReelSettingsResponse());
+        return $request.getResponse(Response.ReelSettingsResponse())
     }
 }

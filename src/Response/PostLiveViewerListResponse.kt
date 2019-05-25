@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * PostLiveViewerListResponse.
@@ -38,5 +38,5 @@ class PostLiveViewerListResponse : Response
         'users'              => 'Model.User[]',
         'next_max_id'        => '',
         'total_viewer_count' => 'int',
-    ];
+    ]
 }

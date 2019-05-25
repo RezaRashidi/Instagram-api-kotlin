@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * UsertagsResponse.
@@ -63,5 +63,5 @@ class UsertagsResponse : Response
         'total_count'            => '',
         'requires_review'        => '',
         'new_photos'             => '',
-    ];
+    ]
 }

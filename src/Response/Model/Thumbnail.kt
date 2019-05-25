@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Thumbnail.
@@ -61,5 +61,5 @@ class Thumbnail : AutoPropertyMapper
         'sprite_width'              => 'int',
         'sprite_height'             => 'int',
         'rendered_width'            => 'int',
-    ];
+    ]
 }

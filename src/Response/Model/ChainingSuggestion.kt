@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Response.Model;
+
+package InstagramAPI.Response.Model
 
 /**
  * ChainingSuggestion.
@@ -499,5 +499,5 @@ class ChainingSuggestion : User
     val JSON_PROPERTY_MAP = [
        'chaining_info'                    => 'ChainingInfo',
        'profile_chaining_secondary_label' => '',
-   ];
+   ]
 }

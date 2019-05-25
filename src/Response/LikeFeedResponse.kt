@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * LikeFeedResponse.
@@ -58,5 +58,5 @@ class LikeFeedResponse : Response
         'last_counted_at'        => '',
         'num_results'            => 'int',
         'next_max_id'            => 'string',
-    ];
+    ]
 }

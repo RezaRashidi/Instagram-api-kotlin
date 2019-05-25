@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectThreadItem.
@@ -126,24 +126,24 @@ import InstagramAPI.AutoPropertyMapper;
  */
 class DirectThreadItem : AutoPropertyMapper
 {
-    val PLACEHOLDER = 'placeholder';
-    val TEXT = 'text';
-    val HASHTAG = 'hashtag';
-    val LOCATION = 'location';
-    val PROFILE = 'profile';
-    val MEDIA = 'media';
-    val MEDIA_SHARE = 'media_share';
-    val EXPIRING_MEDIA = 'raven_media';
-    val LIKE = 'like';
-    val ACTION_LOG = 'action_log';
-    val REACTION = 'reaction';
-    val REEL_SHARE = 'reel_share';
-    val STORY_SHARE = 'story_share';
-    val LINK = 'link';
-    val LIVE_VIDEO_SHARE = 'live_video_share';
-    val LIVE_VIEWER_INVITE = 'live_viewer_invite';
-    val PRODUCT_SHARE = 'product_share';
-    val VIDEO_CALL_EVENT = 'video_call_event';
+    val PLACEHOLDER = 'placeholder'
+    val TEXT = 'text'
+    val HASHTAG = 'hashtag'
+    val LOCATION = 'location'
+    val PROFILE = 'profile'
+    val MEDIA = 'media'
+    val MEDIA_SHARE = 'media_share'
+    val EXPIRING_MEDIA = 'raven_media'
+    val LIKE = 'like'
+    val ACTION_LOG = 'action_log'
+    val REACTION = 'reaction'
+    val REEL_SHARE = 'reel_share'
+    val STORY_SHARE = 'story_share'
+    val LINK = 'link'
+    val LIVE_VIDEO_SHARE = 'live_video_share'
+    val LIVE_VIEWER_INVITE = 'live_viewer_invite'
+    val PRODUCT_SHARE = 'product_share'
+    val VIDEO_CALL_EVENT = 'video_call_event'
 
     val JSON_PROPERTY_MAP = [
         'item_id'                       => 'string',
@@ -175,5 +175,5 @@ class DirectThreadItem : AutoPropertyMapper
         'product_share'                 => 'ProductShare',
         'animated_media'                => 'AnimatedMedia',
         'felix_share'                   => 'FelixShare',
-    ];
+    ]
 }

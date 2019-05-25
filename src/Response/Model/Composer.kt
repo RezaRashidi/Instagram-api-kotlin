@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Composer.
@@ -16,5 +16,5 @@ class Composer : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         'nux_finished'   => 'bool',
-    ];
+    ]
 }

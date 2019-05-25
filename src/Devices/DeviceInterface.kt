@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Devices;
+
+package InstagramAPI.Devices
 
 interface DeviceInterface
 {
@@ -9,14 +9,14 @@ interface DeviceInterface
      *
      * @return string
      */
-    public fun getDeviceString();
+    public fun getDeviceString()
 
     /**
      * Get the HTTP user-agent string.
      *
      * @return string
      */
-    public fun getUserAgent();
+    public fun getUserAgent()
 
     /**
      * Get the Facebook user-agent string.
@@ -26,68 +26,68 @@ interface DeviceInterface
      * @return string
      */
     public fun getFbUserAgent(
-        $appName);
+        $appName)
 
     /**
      * Get the Android SDK/API version.
      *
      * @return string
      */
-    public fun getAndroidVersion();
+    public fun getAndroidVersion()
 
     /**
      * Get the Android release version.
      *
      * @return string
      */
-    public fun getAndroidRelease();
+    public fun getAndroidRelease()
 
     /**
      * Get the display DPI (with "dpi" suffix).
      *
      * @return string
      */
-    public fun getDPI();
+    public fun getDPI()
 
     /**
      * Get the display resolution (width x height).
      *
      * @return string
      */
-    public fun getResolution();
+    public fun getResolution()
 
     /**
      * Get the manufacturer.
      *
      * @return string
      */
-    public fun getManufacturer();
+    public fun getManufacturer()
 
     /**
      * Get the brand (optional).
      *
      * @return string|null
      */
-    public fun getBrand();
+    public fun getBrand()
 
     /**
      * Get the hardware model.
      *
      * @return string
      */
-    public fun getModel();
+    public fun getModel()
 
     /**
      * Get the hardware device code.
      *
      * @return string
      */
-    public fun getDevice();
+    public fun getDevice()
 
     /**
      * Get the hardware CPU code.
      *
      * @return string
      */
-    public fun getCPU();
+    public fun getCPU()
 }

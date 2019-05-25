@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * UsersLookupResponse.
@@ -73,5 +73,5 @@ class UsersLookupResponse : Response
         'email'           => 'string',
         'phone_number'    => 'string',
         'corrected_input' => 'string',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * BusinessEdge.
@@ -21,5 +21,5 @@ class BusinessEdge : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'node'   => 'BusinessNode',
         'cursor' => '',
-    ];
+    ]
 }

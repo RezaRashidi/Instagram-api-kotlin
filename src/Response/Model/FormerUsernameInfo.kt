@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * FormerUsernameInfo.
@@ -16,5 +16,5 @@ class FormerUsernameInfo : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         'has_former_usernames' => 'bool',
-    ];
+    ]
 }

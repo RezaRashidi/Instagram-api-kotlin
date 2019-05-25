@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Creative.
@@ -52,5 +52,5 @@ class Creative : AutoPropertyMapper
         'secondary_action' => 'Action',
         'dismiss_action'   => '',
         'image'            => 'Image',
-    ];
+    ]
 }

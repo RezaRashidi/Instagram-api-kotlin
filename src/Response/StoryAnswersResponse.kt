@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * StoryAnswersResponse.
@@ -28,5 +28,5 @@ class StoryAnswersResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'responder_info' => 'Model.StoryQuestionResponderInfos',
-    ];
+    ]
 }

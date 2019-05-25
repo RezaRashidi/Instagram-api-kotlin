@@ -1,20 +1,20 @@
-<?php
 
-package InstagramAPI;
 
-import GuzzleHttp.Client as GuzzleClient;
-import GuzzleHttp.Cookie.CookieJar;
-import GuzzleHttp.Cookie.SetCookie;
-import GuzzleHttp.HandlerStack;
-import InstagramAPI.Exception.InstagramException;
-import InstagramAPI.Exception.LoginRequiredException;
-import InstagramAPI.Exception.ServerMessageThrower;
-import InstagramAPI.Middleware.FakeCookies;
-import InstagramAPI.Middleware.ZeroRating;
-import LazyJsonMapper.Exception.LazyJsonMapperException;
-import Psr.Http.Message.RequestInterface as HttpRequestInterface;
-import Psr.Http.Message.ResponseInterface as HttpResponseInterface;
-import fun GuzzleHttp.Psr7.modify_request;
+package InstagramAPI
+
+import GuzzleHttp.Client as GuzzleClient
+import GuzzleHttp.Cookie.CookieJar
+import GuzzleHttp.Cookie.SetCookie
+import GuzzleHttp.HandlerStack
+import InstagramAPI.Exception.InstagramException
+import InstagramAPI.Exception.LoginRequiredException
+import InstagramAPI.Exception.ServerMessageThrower
+import InstagramAPI.Middleware.FakeCookies
+import InstagramAPI.Middleware.ZeroRating
+import LazyJsonMapper.Exception.LazyJsonMapperException
+import Psr.Http.Message.RequestInterface as HttpRequestInterface
+import Psr.Http.Message.ResponseInterface as HttpResponseInterface
+import fun GuzzleHttp.Psr7.modify_request
 
 /**
  * This class handles core API network communication.
@@ -35,21 +35,21 @@ class Client
      *
      * @var int
      */
-    val COOKIE_AUTOSAVE_INTERVAL = 45;
+    val COOKIE_AUTOSAVE_INTERVAL = 45
 
     /**
      * The Instagram class instance we belong to.
      *
      * @var .InstagramAPI.Instagram
      */
-    protected $_parent;
+    protected $_parent
 
     /**
      * What user agent to identify our client as.
      *
      * @var string
      */
-    protected $_userAgent;
+    protected $_userAgent
 
     /**
      * The SSL certificate verification behavior of requests.
@@ -58,7 +58,7 @@ class Client
      *
      * @var bool|string
      */
-    protected $_verifySSL;
+    protected $_verifySSL
 
     /**
      * Proxy to import for all requests. Optional.
@@ -67,7 +67,7 @@ class Client
      *
      * @var string|array|null
      */
-    protected $_proxy;
+    protected $_proxy
 
     /**
      * Network interface override to use.
@@ -79,27 +79,27 @@ class Client
      *
      * @var string|null
      */
-    protected $_outputInterface;
+    protected $_outputInterface
 
     /**
      * @var .GuzzleHttp.Client
      */
-    private $_guzzleClient;
+    private $_guzzleClient
 
     /**
      * @var .InstagramAPI.Middleware.FakeCookies
      */
-    private $_fakeCookies;
+    private $_fakeCookies
 
     /**
      * @var .InstagramAPI.Middleware.ZeroRating
      */
-    private $_zeroRating;
+    private $_zeroRating
 
     /**
      * @var .GuzzleHttp.Cookie.CookieJar
      */
-    private $_cookieJar;
+    private $_cookieJar
 
     /**
      * The timestamp of when we last saved our cookie jar to disk.
@@ -109,14 +109,14 @@ class Client
      *
      * @var int
      */
-    private $_cookieJarLastSaved;
+    private $_cookieJarLastSaved
 
     /**
      * The flag to force cURL to reopen a fresh connection.
      *
      * @var bool
      */
-    private $_resetConnection;
+    private $_resetConnection
 
     /**
      * Constructor.
@@ -126,26 +126,26 @@ class Client
     public fun __construct(
         $parent)
     {
-        this._parent = $parent;
+        this._parent = $parent
 
         // Defaults.
-        this._verifySSL = true;
-        this._proxy = null;
+        this._verifySSL = true
+        this._proxy = null
 
         // Create a default handler stack with Guzzle's auto-selected "best
         // possible transfer handler for the user's system", and with all of
         // Guzzle's default middleware (cookie jar support, etc).
-        $stack = HandlerStack::create();
+        $stack = HandlerStack::create()
 
         // Create our cookies middleware and add it to the stack.
-        this._fakeCookies = new FakeCookies();
-        $stack.push(this._fakeCookies, 'fake_cookies');
+        this._fakeCookies = FakeCookies()
+        $stack.push(this._fakeCookies, 'fake_cookies')
 
-        this._zeroRating = new ZeroRating();
-        $stack.push(this._zeroRating, 'zero_rewrite');
+        this._zeroRating = ZeroRating()
+        $stack.push(this._zeroRating, 'zero_rewrite')
 
         // Default request options (immutable after client creation).
-        this._guzzleClient = new GuzzleClient([
+        this._guzzleClient = GuzzleClient([
             'handler'         => $stack, // Our middleware is now injected.
             'allow_redirects' => [
                 'max' => 8, // Allow up to eight redirects (that's plenty).
@@ -157,9 +157,9 @@ class Client
             // thus ensuring that it only triggers exceptions on socket errors!
             // We'll instead MANUALLY be throwing on certain other HTTP codes.
             'http_errors'     => false,
-        ]);
+        ])
 
-        this._resetConnection = false;
+        this._resetConnection = false
     }
 
     /**
@@ -174,9 +174,9 @@ class Client
     public fun updateFromCurrentSettings(
         $resetCookieJar = false)
     {
-        // Update our internal client state from the new user's settings.
-        this._userAgent = this._parent.device.getUserAgent();
-        this.loadCookieJar($resetCookieJar);
+        // Update our internal client state from the user's settings.
+        this._userAgent = this._parent.device.getUserAgent()
+        this.loadCookieJar($resetCookieJar)
 
         // Verify that the jar contains a non-expired csrftoken for the API
         // domain. Instagram gives us a 1-year csrftoken whenever we log in.
@@ -184,11 +184,11 @@ class Client
         // these checks succeed, the cookie may still not be valid. It's just a
         // preliminary check to detect definitely-invalid session cookies!
         if (this.getToken() === null) {
-            this._parent.isMaybeLoggedIn = false;
+            this._parent.isMaybeLoggedIn = false
         }
 
         // Load rewrite rules (if any).
-        this.zeroRating().update(this._parent.settings.getRewriteRules());
+        this.zeroRating().update(this._parent.settings.getRewriteRules())
     }
 
     /**
@@ -202,28 +202,28 @@ class Client
         $resetCookieJar = false)
     {
         // Mark any previous cookie jar for garbage collection.
-        this._cookieJar = null;
+        this._cookieJar = null
 
         // Delete all current cookies from the storage if this is a reset.
         if ($resetCookieJar) {
-            this._parent.settings.setCookies('');
+            this._parent.settings.setCookies('')
         }
 
         // Get all cookies for the currently active user.
-        $cookieData = this._parent.settings.getCookies();
+        $cookieData = this._parent.settings.getCookies()
 
         // Attempt to restore the cookies, otherwise create a new, empty jar.
-        $restoredCookies = is_string($cookieData) ? @json_decode($cookieData, true) : null;
+        $restoredCookies = is_string($cookieData) ? @json_decode($cookieData, true) : null
         if (!is_array($restoredCookies)) {
-            $restoredCookies = [];
+            $restoredCookies = []
         }
 
         // Memory-based cookie jar which must be manually saved later.
-        this._cookieJar = new CookieJar(false, $restoredCookies);
+        this._cookieJar = CookieJar(false, $restoredCookies)
 
         // Reset the "last saved" timestamp to the current time to prevent
         // auto-saving the cookies again immediately after this jar is loaded.
-        this._cookieJarLastSaved = time();
+        this._cookieJarLastSaved = time()
     }
 
     /**
@@ -238,12 +238,12 @@ class Client
      */
     public fun getToken()
     {
-        $cookie = this.getCookie('csrftoken', 'i.instagram.com');
+        $cookie = this.getCookie('csrftoken', 'i.instagram.com')
         if ($cookie === null || $cookie.getValue() === '') {
-            return null;
+            return null
         }
 
-        return $cookie.getValue();
+        return $cookie.getValue()
     }
 
     /**
@@ -260,7 +260,7 @@ class Client
         $domain = null,
         $path = null)
     {
-        $foundCookie = null;
+        $foundCookie = null
         if (this._cookieJar instanceof CookieJar) {
             /** @var SetCookie $cookie */
             foreach (this._cookieJar.getIterator() as $cookie) {
@@ -275,12 +275,12 @@ class Client
                     // `.instagram.com` and we want the *most recent* cookie.
                     // Guzzle's `CookieJar::setCookie()` always places the most
                     // recently added/modified cookies at the *end* of array.
-                    $foundCookie = $cookie;
+                    $foundCookie = $cookie
                 }
             }
         }
 
-        return $foundCookie;
+        return $foundCookie
     }
 
     /**
@@ -295,16 +295,16 @@ class Client
     public fun getCookieJarAsJSON()
     {
         if (!this._cookieJar instanceof CookieJar) {
-            return '[]';
+            return '[]'
         }
 
         // Gets ALL cookies from the jar, even temporary session-based cookies.
-        $cookies = this._cookieJar.toArray();
+        $cookies = this._cookieJar.toArray()
 
         // Throws if data can't be encoded as JSON (will never happen).
-        $jsonStr = .GuzzleHttp.json_encode($cookies);
+        $jsonStr = .GuzzleHttp.json_encode($cookies)
 
-        return $jsonStr;
+        return $jsonStr
     }
 
     /**
@@ -323,11 +323,11 @@ class Client
     public fun saveCookieJar()
     {
         // Tell the settings storage to persist the latest cookies.
-        $newCookies = this.getCookieJarAsJSON();
-        this._parent.settings.setCookies($newCookies);
+        $newCookies = this.getCookieJarAsJSON()
+        this._parent.settings.setCookies($newCookies)
 
         // Reset the "last saved" timestamp to the current time.
-        this._cookieJarLastSaved = time();
+        this._cookieJarLastSaved = time()
     }
 
     /**
@@ -343,7 +343,7 @@ class Client
     public fun setVerifySSL(
         $state)
     {
-        this._verifySSL = $state;
+        this._verifySSL = $state
     }
 
     /**
@@ -353,7 +353,7 @@ class Client
      */
     public fun getVerifySSL()
     {
-        return this._verifySSL;
+        return this._verifySSL
     }
 
     /**
@@ -367,8 +367,8 @@ class Client
     public fun setProxy(
         $value)
     {
-        this._proxy = $value;
-        this._resetConnection = true;
+        this._proxy = $value
+        this._resetConnection = true
     }
 
     /**
@@ -378,7 +378,7 @@ class Client
      */
     public fun getProxy()
     {
-        return this._proxy;
+        return this._proxy
     }
 
     /**
@@ -395,8 +395,8 @@ class Client
     public fun setOutputInterface(
         $value)
     {
-        this._outputInterface = $value;
-        this._resetConnection = true;
+        this._outputInterface = $value
+        this._resetConnection = true
     }
 
     /**
@@ -406,7 +406,7 @@ class Client
      */
     public fun getOutputInterface()
     {
-        return this._outputInterface;
+        return this._outputInterface
     }
 
     /**
@@ -429,32 +429,32 @@ class Client
         HttpResponseInterface $response,
         $responseBody)
     {
-        Debug::printRequest($method, $url);
+        Debug::printRequest($method, $url)
 
         // Display the data body that was uploaded, if provided for debugging.
         // NOTE: Only provide this from funs that submit meaningful BODY data!
         if (is_string($uploadedBody)) {
-            Debug::printPostData($uploadedBody);
+            Debug::printPostData($uploadedBody)
         }
 
         // Display the number of bytes uploaded in the data body, if provided for debugging.
         // NOTE: Only provide this from funs that actually upload files!
         if ($uploadedBytes !== null) {
-            Debug::printUpload(Utils::formatBytes($uploadedBytes));
+            Debug::printUpload(Utils::formatBytes($uploadedBytes))
         }
 
         // Display the number of bytes received from the response, and status code.
         if ($response.hasHeader('x-encoded-content-length')) {
-            $bytes = Utils::formatBytes((int) $response.getHeaderLine('x-encoded-content-length'));
+            $bytes = Utils::formatBytes((int) $response.getHeaderLine('x-encoded-content-length'))
         } elseif ($response.hasHeader('Content-Length')) {
-            $bytes = Utils::formatBytes((int) $response.getHeaderLine('Content-Length'));
+            $bytes = Utils::formatBytes((int) $response.getHeaderLine('Content-Length'))
         } else {
-            $bytes = 0;
+            $bytes = 0
         }
-        Debug::printHttpCode($response.getStatusCode(), $bytes);
+        Debug::printHttpCode($response.getStatusCode(), $bytes)
 
         // Display the actual API response body.
-        Debug::printResponse($responseBody, this._parent.truncatedDebug);
+        Debug::printResponse($responseBody, this._parent.truncatedDebug)
     }
 
     /**
@@ -477,50 +477,50 @@ class Client
     {
         // Attempt to decode the raw JSON to an array.
         // Important: Special JSON decoder which handles 64-bit numbers!
-        $jsonArray = this.api_body_decode($rawResponse, true);
+        $jsonArray = this.api_body_decode($rawResponse, true)
 
         // If the server response is not an array, it means that JSON decoding
         // failed or some other bad thing happened. So analyze the HTTP status
         // code (if available) to see what really happened.
         if (!is_array($jsonArray)) {
-            $httpStatusCode = $httpResponse !== null ? $httpResponse.getStatusCode() : null;
+            $httpStatusCode = $httpResponse !== null ? $httpResponse.getStatusCode() : null
             switch ($httpStatusCode) {
                 case 400:
-                    throw new .InstagramAPI.Exception.BadRequestException('Invalid request options.');
+                    throw .InstagramAPI.Exception.BadRequestException('Invalid request options.')
                 case 404:
-                    throw new .InstagramAPI.Exception.NotFoundException('Requested resource does not exist.');
+                    throw .InstagramAPI.Exception.NotFoundException('Requested resource does not exist.')
                 default:
-                    throw new .InstagramAPI.Exception.EmptyResponseException('No response from server. Either a connection or configuration error.');
+                    throw .InstagramAPI.Exception.EmptyResponseException('No response from server. Either a connection or configuration error.')
             }
         }
 
         // Perform mapping of all response properties.
         try {
-            // Assign the new object data. Only throws if custom _init() fails.
+            // Assign the object data. Only throws if custom _init() fails.
             // NOTE: False = assign data without automatic analysis.
-            $responseObject.assignObjectData($jsonArray, false); // Throws.
+            $responseObject.assignObjectData($jsonArray, false) // Throws.
 
             // import API developer debugging? We'll throw if class lacks property
             // definitions, or if they can't be mapped as defined in the class
             // property map. But we'll ignore missing properties in our custom
-            // UnpredictableKeys containers, since those ALWAYS lack keys. ;-)
+            // UnpredictableKeys containers, since those ALWAYS lack keys. -)
             if (this._parent.apiDeveloperDebug) {
                 // Perform manual analysis (so that we can intercept its analysis result).
-                $analysis = $responseObject.exportClassAnalysis(); // Never throws.
+                $analysis = $responseObject.exportClassAnalysis() // Never throws.
 
                 // Remove all "missing_definitions" errors for UnpredictableKeys containers.
                 // NOTE: We will keep any "bad_definitions" errors for them.
                 foreach ($analysis.missing_definitions as $className => $x) {
                     if (strpos($className, '..Response..Model..UnpredictableKeys..') !== false) {
-                        unset($analysis.missing_definitions[$className]);
+                        unset($analysis.missing_definitions[$className])
                     }
                 }
 
                 // If any problems remain after that, throw with all combined summaries.
                 if ($analysis.hasProblems()) {
-                    throw new LazyJsonMapperException(
+                    throw LazyJsonMapperException(
                         $analysis.generateNiceSummariesAsString()
-                    );
+                    )
                 }
             }
         } catch (LazyJsonMapperException $e) {
@@ -533,17 +533,17 @@ class Client
                 // otherwise they would appear as empty `[]` arrays in output.
                 // NOTE: Large >32-bit numbers will be transformed into strings,
                 // which helps us see which numeric values need "string" type.
-                $jsonObject = this.api_body_decode($rawResponse, false);
+                $jsonObject = this.api_body_decode($rawResponse, false)
                 if (is_object($jsonObject)) {
                     $prettyJson = @json_encode(
                         $jsonObject,
                         JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-                    );
+                    )
                     if ($prettyJson !== false) {
                         Debug::printResponse(
                             'Human-Readable Response:'.PHP_EOL.$prettyJson,
                             false // Not truncated.
-                        );
+                        )
                     }
                 }
             } catch (.Exception $e) {
@@ -554,11 +554,11 @@ class Client
             // enabled and finds a problem. Either way, we should re-wrap the
             // exception to our native type instead. The message gives enough
             // details and we don't need to know the exact Lazy sub-exception.
-            throw new InstagramException($e.getMessage());
+            throw InstagramException($e.getMessage())
         }
 
         // Save the HTTP response object as the "getHttpResponse()" value.
-        $responseObject.setHttpResponse($httpResponse);
+        $responseObject.setHttpResponse($httpResponse)
 
         // Throw an exception if the API response was unsuccessful.
         // NOTE: It will contain the full server response object too, which
@@ -566,9 +566,9 @@ class Client
         // exception itself.
         if (!$responseObject.isOk()) {
             if ($responseObject instanceof .InstagramAPI.Response.DirectSendItemResponse && $responseObject.getPayload() !== null) {
-                $message = $responseObject.getPayload().getMessage();
+                $message = $responseObject.getPayload().getMessage()
             } else {
-                $message = $responseObject.getMessage();
+                $message = $responseObject.getMessage()
             }
 
             try {
@@ -577,16 +577,16 @@ class Client
                     $message,
                     $responseObject,
                     $httpResponse
-                );
+                )
             } catch (LoginRequiredException $e) {
                 // Instagram told us that our session is invalid (that we are
                 // not logged in). Update our cached "logged in?" state. This
                 // ensures that users with various retry-algorithms won't hammer
                 // their server. When this flag is false, ALL further attempts
                 // at AUTHENTICATED requests will be aborted by our library.
-                this._parent.isMaybeLoggedIn = false;
+                this._parent.isMaybeLoggedIn = false
 
-                throw $e; // Re-throw.
+                throw $e // Re-throw.
             }
         }
     }
@@ -609,30 +609,30 @@ class Client
             'cookies' => (this._cookieJar instanceof CookieJar ? this._cookieJar : false),
             'verify'  => this._verifySSL,
             'proxy'   => (this._proxy !== null ? this._proxy : null),
-        ];
+        ]
 
         // Critical options always overwrite identical keys in regular opts.
         // This ensures that we can't screw up the proxy/verify/cookies.
-        $finalOptions = array_merge($guzzleOptions, $criticalOptions);
+        $finalOptions = array_merge($guzzleOptions, $criticalOptions)
 
         // Now merge any specific Guzzle cURL-backend overrides. We must do this
         // separately since it's in an associative array and we can't just
         // overwrite that whole array in case the caller had curl options.
         if (!array_key_exists('curl', $finalOptions)) {
-            $finalOptions['curl'] = [];
+            $finalOptions['curl'] = []
         }
 
         // Add their network interface override if they want it.
         // This option MUST be non-empty if set, otherwise it breaks cURL.
         if (is_string(this._outputInterface) && this._outputInterface !== '') {
-            $finalOptions['curl'][CURLOPT_INTERFACE] = this._outputInterface;
+            $finalOptions['curl'][CURLOPT_INTERFACE] = this._outputInterface
         }
         if (this._resetConnection) {
-            $finalOptions['curl'][CURLOPT_FRESH_CONNECT] = true;
-            this._resetConnection = false;
+            $finalOptions['curl'][CURLOPT_FRESH_CONNECT] = true
+            this._resetConnection = false
         }
 
-        return $finalOptions;
+        return $finalOptions
     }
 
     /**
@@ -664,25 +664,25 @@ class Client
         array $guzzleOptions = [])
     {
         // Add critically important options for authenticating the request.
-        $guzzleOptions = this._buildGuzzleOptions($guzzleOptions);
+        $guzzleOptions = this._buildGuzzleOptions($guzzleOptions)
 
         // Attempt the request. Will throw in case of socket errors!
         try {
-            $response = this._guzzleClient.send($request, $guzzleOptions);
+            $response = this._guzzleClient.send($request, $guzzleOptions)
         } catch (.Exception $e) {
             // Re-wrap Guzzle's exception using our own NetworkException.
-            throw new .InstagramAPI.Exception.NetworkException($e);
+            throw .InstagramAPI.Exception.NetworkException($e)
         }
 
         // Detect very serious HTTP status codes in the response.
-        $httpCode = $response.getStatusCode();
+        $httpCode = $response.getStatusCode()
         switch ($httpCode) {
         case 429: // "429 Too Many Requests"
-            throw new .InstagramAPI.Exception.ThrottledException('Throttled by Instagram becaimport of too many API requests.');
-            break;
+            throw .InstagramAPI.Exception.ThrottledException('Throttled by Instagram becaimport of too many API requests.')
+            break
         case 431: // "431 Request Header Fields Too Large"
-            throw new .InstagramAPI.Exception.RequestHeadersTooLargeException('The request start-line and/or headers are too large to process.');
-            break;
+            throw .InstagramAPI.Exception.RequestHeadersTooLargeException('The request start-line and/or headers are too large to process.')
+            break
         // WARNING: Do NOT detect 404 and other higher-level HTTP errors here,
         // since we catch those later during steps like mapServerResponse()
         // and autoThrow. This is a warning to future contributors!
@@ -691,12 +691,12 @@ class Client
         // We'll periodically auto-save our cookies at certain intervals. This
         // complements the "onCloseUser" and "login()/logout()" force-saving.
         if ((time() - this._cookieJarLastSaved) > self::COOKIE_AUTOSAVE_INTERVAL) {
-            this.saveCookieJar();
+            this.saveCookieJar()
         }
 
         // The response may still have serious but "valid response" errors, such
         // as "400 Bad Request". But it's up to the CALLER to handle those!
-        return $response;
+        return $response
     }
 
     /**
@@ -734,26 +734,26 @@ class Client
         array $libraryOptions = [])
     {
         // Perform the API request and retrieve the raw HTTP response body.
-        $guzzleResponse = this._guzzleRequest($request, $guzzleOptions);
+        $guzzleResponse = this._guzzleRequest($request, $guzzleOptions)
 
         // Debugging (must be shown before possible decoding error).
         if (this._parent.debug && (!isset($libraryOptions['noDebug']) || !$libraryOptions['noDebug'])) {
             // Determine whether we should display the contents of the UPLOADED body.
             if (isset($libraryOptions['debugUploadedBody']) && $libraryOptions['debugUploadedBody']) {
-                $uploadedBody = (string) $request.getBody();
+                $uploadedBody = (string) $request.getBody()
                 if (!strlen($uploadedBody)) {
-                    $uploadedBody = null;
+                    $uploadedBody = null
                 }
             } else {
-                $uploadedBody = null; // Don't display.
+                $uploadedBody = null // Don't display.
             }
 
             // Determine whether we should display the size of the UPLOADED body.
             if (isset($libraryOptions['debugUploadedBytes']) && $libraryOptions['debugUploadedBytes']) {
                 // Calculate the uploaded bytes by looking at request's body size, if it exists.
-                $uploadedBytes = $request.getBody().getSize();
+                $uploadedBytes = $request.getBody().getSize()
             } else {
-                $uploadedBytes = null; // Don't display.
+                $uploadedBytes = null // Don't display.
             }
 
             this._printDebug(
@@ -762,10 +762,10 @@ class Client
                 $uploadedBody,
                 $uploadedBytes,
                 $guzzleResponse,
-                (string) $guzzleResponse.getBody());
+                (string) $guzzleResponse.getBody())
         }
 
-        return $guzzleResponse;
+        return $guzzleResponse
     }
 
     /**
@@ -794,19 +794,19 @@ class Client
                 'Accept-Encoding'  => Constants::ACCEPT_ENCODING,
                 'Accept-Language'  => Constants::ACCEPT_LANGUAGE,
             ],
-        ]);
+        ])
 
         // Check the Content-Type header for debugging.
-        $contentType = $request.getHeader('Content-Type');
-        $isFormData = count($contentType) && reset($contentType) === Constants::CONTENT_TYPE;
+        $contentType = $request.getHeader('Content-Type')
+        $isFormData = count($contentType) && reset($contentType) === Constants::CONTENT_TYPE
 
         // Perform the API request.
         $response = this._apiRequest($request, $guzzleOptions, [
             'debugUploadedBody'  => $isFormData,
             'debugUploadedBytes' => !$isFormData,
-        ]);
+        ])
 
-        return $response;
+        return $response
     }
 
     /**
@@ -826,7 +826,7 @@ class Client
         $json,
         $assoc = true)
     {
-        return @json_decode($json, $assoc, 512, JSON_BIGINT_AS_STRING);
+        return @json_decode($json, $assoc, 512, JSON_BIGINT_AS_STRING)
     }
 
     /**
@@ -836,7 +836,7 @@ class Client
      */
     public fun fakeCookies()
     {
-        return this._fakeCookies;
+        return this._fakeCookies
     }
 
     /**
@@ -846,6 +846,6 @@ class Client
      */
     public fun zeroRating()
     {
-        return this._zeroRating;
+        return this._zeroRating
     }
 }

@@ -1,12 +1,12 @@
-<?php
 
-package InstagramAPI.Realtime.Command.Direct;
 
-import InstagramAPI.Realtime.Command.DirectCommand;
+package InstagramAPI.Realtime.Command.Direct
+
+import InstagramAPI.Realtime.Command.DirectCommand
 
 final class IndicateActivity : DirectCommand
 {
-    val ACTION = 'indicate_activity';
+    val ACTION = 'indicate_activity'
 
     /**
      * Constructor.
@@ -22,14 +22,14 @@ final class IndicateActivity : DirectCommand
         $status,
         array $options = [])
     {
-        parent::__construct(self::ACTION, $threadId, $options);
+        parent::__construct(self::ACTION, $threadId, $options)
 
-        this._data['activity_status'] = $status ? '1' : '0';
+        this._data['activity_status'] = $status ? '1' : '0'
     }
 
     /** {@inheritdoc} */
     protected fun _isClientContextRequired()
     {
-        return true;
+        return true
     }
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Experiment.
@@ -41,5 +41,5 @@ class Experiment : AutoPropertyMapper
         'params'            => 'Param[]',
         'logging_id'        => 'string',
         'expired'           => 'bool',
-    ];
+    ]
 }

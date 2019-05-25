@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * TimeRange.
@@ -21,5 +21,5 @@ class TimeRange : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'start' => 'string',
         'end'   => 'string',
-    ];
+    ]
 }

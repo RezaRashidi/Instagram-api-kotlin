@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * UploadVideoResponse.
@@ -38,5 +38,5 @@ class UploadVideoResponse : Response
         'upload_id'          => 'string',
         'configure_delay_ms' => 'float',
         'result'             => '',
-    ];
+    ]
 }

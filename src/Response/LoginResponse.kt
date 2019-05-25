@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * LoginResponse.
@@ -153,5 +153,5 @@ class LoginResponse : Response
         'lock'                          => '',
         'help_url'                      => 'string',
         'challenge'                     => 'Model.Challenge',
-    ];
+    ]
 }

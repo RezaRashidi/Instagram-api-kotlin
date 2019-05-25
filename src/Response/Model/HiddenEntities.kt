@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * HiddenEntities.
@@ -30,5 +30,5 @@ class HiddenEntities : AutoPropertyMapper
         'user'    => '',
         'hashtag' => '',
         'place'   => '',
-    ];
+    ]
 }

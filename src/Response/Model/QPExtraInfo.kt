@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * QPExtraInfo.
@@ -21,5 +21,5 @@ class QPExtraInfo : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'surface'                 => 'int',
         'extra_info'              => 'string',
-    ];
+    ]
 }

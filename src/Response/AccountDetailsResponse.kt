@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * AccountDetailsResponse.
@@ -48,5 +48,5 @@ class AccountDetailsResponse : Response
         'primary_country_info'          => 'Model.PrimaryCountryInfo',
         'shared_follower_accounts_info' => 'Model.SharedFollowerAccountsInfo',
         'ads_info'                      => 'Model.AdsInfo',
-    ];
+    ]
 }

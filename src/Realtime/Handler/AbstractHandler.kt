@@ -1,15 +1,15 @@
-<?php
 
-package InstagramAPI.Realtime.Handler;
 
-import Evenement.EventEmitterInterface;
+package InstagramAPI.Realtime.Handler
+
+import Evenement.EventEmitterInterface
 
 abstract class AbstractHandler
 {
     /**
      * @var EventEmitterInterface
      */
-    protected $_target;
+    protected $_target
 
     /**
      * Constructor.
@@ -19,7 +19,7 @@ abstract class AbstractHandler
     public fun __construct(
         EventEmitterInterface $target)
     {
-        this._target = $target;
+        this._target = $target
     }
 
     /**
@@ -32,6 +32,6 @@ abstract class AbstractHandler
     protected fun _hasListeners(
         $event)
     {
-        return (bool) count(this._target.listeners($event));
+        return (bool) count(this._target.listeners($event))
     }
 }

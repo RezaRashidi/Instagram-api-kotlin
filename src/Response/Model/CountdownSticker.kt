@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * CountdownSticker.
@@ -86,5 +86,5 @@ class CountdownSticker : AutoPropertyMapper
         'is_owner'               => 'bool',
         'attribution'            => '',
         'viewer_is_following'    => 'bool',
-    ];
+    ]
 }

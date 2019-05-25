@@ -1,4 +1,4 @@
-<?php
+
 
 /*
  * This file is part of net-mqtt.
@@ -8,24 +8,24 @@
  * This source file is subject to the MIT license.
  */
 
-package InstagramAPI.Realtime.Mqtt;
+package InstagramAPI.Realtime.Mqtt
 
-import BinSoul.Net.Mqtt.Exception.UnknownPacketTypeException;
-import BinSoul.Net.Mqtt.Packet;
-import BinSoul.Net.Mqtt.Packet.ConnectRequestPacket;
-import BinSoul.Net.Mqtt.Packet.ConnectResponsePacket;
-import BinSoul.Net.Mqtt.Packet.DisconnectRequestPacket;
-import BinSoul.Net.Mqtt.Packet.PingRequestPacket;
-import BinSoul.Net.Mqtt.Packet.PingResponsePacket;
-import BinSoul.Net.Mqtt.Packet.PublishCompletePacket;
-import BinSoul.Net.Mqtt.Packet.PublishReceivedPacket;
-import BinSoul.Net.Mqtt.Packet.PublishReleasePacket;
-import BinSoul.Net.Mqtt.Packet.PublishRequestPacket;
-import BinSoul.Net.Mqtt.Packet.SubscribeRequestPacket;
-import BinSoul.Net.Mqtt.Packet.SubscribeResponsePacket;
-import BinSoul.Net.Mqtt.Packet.UnsubscribeRequestPacket;
-import BinSoul.Net.Mqtt.Packet.UnsubscribeResponsePacket;
-import Fbns.Client.Common.PublishAckPacket;
+import BinSoul.Net.Mqtt.Exception.UnknownPacketTypeException
+import BinSoul.Net.Mqtt.Packet
+import BinSoul.Net.Mqtt.Packet.ConnectRequestPacket
+import BinSoul.Net.Mqtt.Packet.ConnectResponsePacket
+import BinSoul.Net.Mqtt.Packet.DisconnectRequestPacket
+import BinSoul.Net.Mqtt.Packet.PingRequestPacket
+import BinSoul.Net.Mqtt.Packet.PingResponsePacket
+import BinSoul.Net.Mqtt.Packet.PublishCompletePacket
+import BinSoul.Net.Mqtt.Packet.PublishReceivedPacket
+import BinSoul.Net.Mqtt.Packet.PublishReleasePacket
+import BinSoul.Net.Mqtt.Packet.PublishRequestPacket
+import BinSoul.Net.Mqtt.Packet.SubscribeRequestPacket
+import BinSoul.Net.Mqtt.Packet.SubscribeResponsePacket
+import BinSoul.Net.Mqtt.Packet.UnsubscribeRequestPacket
+import BinSoul.Net.Mqtt.Packet.UnsubscribeResponsePacket
+import Fbns.Client.Common.PublishAckPacket
 
 /**
  * Builds instances of the {@see Packet} interface.
@@ -52,7 +52,7 @@ class PacketFactory
         Packet::TYPE_PINGREQ     => PingRequestPacket::class,
         Packet::TYPE_PINGRESP    => PingResponsePacket::class,
         Packet::TYPE_DISCONNECT  => DisconnectRequestPacket::class,
-    ];
+    ]
 
     /**
      * Builds a packet object for the given type.
@@ -67,11 +67,11 @@ class PacketFactory
         $type)
     {
         if (!isset(self::$_mapping[$type])) {
-            throw new UnknownPacketTypeException(sprintf('Unknown packet type %d.', $type));
+            throw UnknownPacketTypeException(sprintf('Unknown packet type %d.', $type))
         }
 
-        $class = self::$_mapping[$type];
+        $class = self::$_mapping[$type]
 
-        return new $class();
+        return $class()
     }
 }

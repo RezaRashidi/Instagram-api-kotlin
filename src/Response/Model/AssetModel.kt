@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * AssetModel.
@@ -21,5 +21,5 @@ class AssetModel : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'asset_url' => 'string',
         'id'        => 'string',
-    ];
+    ]
 }

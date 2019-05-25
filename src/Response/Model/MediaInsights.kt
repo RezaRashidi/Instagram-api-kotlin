@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * MediaInsights.
@@ -46,5 +46,5 @@ class MediaInsights : AutoPropertyMapper
         'comment_count'        => 'int',
         'save_count'           => 'int',
         'like_count'           => 'int',
-    ];
+    ]
 }

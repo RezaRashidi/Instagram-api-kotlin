@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * TimelineFeedResponse.
@@ -89,5 +89,5 @@ class TimelineFeedResponse : Response
         'feed_pill_text'                 => 'string',
         'client_gap_enforcer_matrix'     => '',
         'client_session_id'              => 'string',
-    ];
+    ]
 }

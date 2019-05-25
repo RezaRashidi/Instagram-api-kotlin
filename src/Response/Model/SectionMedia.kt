@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * SectionMedia.
@@ -16,5 +16,5 @@ class SectionMedia : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         'media'  => 'Item',
-    ];
+    ]
 }

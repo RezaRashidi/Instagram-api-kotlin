@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * LiveVideoShare.
@@ -26,5 +26,5 @@ class LiveVideoShare : AutoPropertyMapper
         'text'                => 'string',
         'broadcast'           => 'Broadcast',
         'video_offset'        => 'int',
-    ];
+    ]
 }

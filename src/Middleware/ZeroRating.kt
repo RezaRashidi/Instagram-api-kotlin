@@ -1,9 +1,9 @@
-<?php
 
-package InstagramAPI.Middleware;
 
-import GuzzleHttp.Psr7.Uri;
-import Psr.Http.Message.RequestInterface;
+package InstagramAPI.Middleware
+
+import GuzzleHttp.Psr7.Uri
+import Psr.Http.Message.RequestInterface
 
 /**
  * Zero rating rewrite middleware.
@@ -17,21 +17,21 @@ class ZeroRating
      */
     val DEFAULT_REWRITE = [
         '^(https?:././)(i)(..instagram..com/.*)$' => '$1b.$2$3',
-    ];
+    ]
 
     /**
      * Rewrite rules.
      *
      * @var array
      */
-    private $_rules;
+    private $_rules
 
     /**
      * Constructor.
      */
     public fun __construct()
     {
-        this.reset();
+        this.reset()
     }
 
     /**
@@ -39,7 +39,7 @@ class ZeroRating
      */
     public fun reset()
     {
-        this.update(self::DEFAULT_REWRITE);
+        this.update(self::DEFAULT_REWRITE)
     }
 
     /**
@@ -50,16 +50,16 @@ class ZeroRating
     public fun update(
         array $rules = [])
     {
-        this._rules = [];
+        this._rules = []
         foreach ($rules as $from => $to) {
-            $regex = "#{$from}#";
-            $test = @preg_match($regex, '');
+            $regex = "#{$from}#"
+            $test = @preg_match($regex, '')
             if ($test === false) {
-                continue;
+                continue
             }
             this._rules[$regex] = strtr($to, [
                 '..' => '.',
-            ]);
+            ])
         }
     }
 
@@ -81,17 +81,17 @@ class ZeroRating
             array $options
         ) import ($handler) {
             if (empty(this._rules)) {
-                return $handler($request, $options);
+                return $handler($request, $options)
             }
 
-            $oldUri = (string) $request.getUri();
-            $uri = this.rewrite($oldUri);
+            $oldUri = (string) $request.getUri()
+            $uri = this.rewrite($oldUri)
             if ($uri !== $oldUri) {
-                $request = $request.withUri(new Uri($uri));
+                $request = $request.withUri(Uri($uri))
             }
 
-            return $handler($request, $options);
-        };
+            return $handler($request, $options)
+        }
     }
 
     /**
@@ -105,16 +105,16 @@ class ZeroRating
         $uri)
     {
         foreach (this._rules as $from => $to) {
-            $result = @preg_replace($from, $to, $uri);
+            $result = @preg_replace($from, $to, $uri)
             if (!is_string($result)) {
-                continue;
+                continue
             }
             // We must break at the first succeeded replace.
             if ($result !== $uri) {
-                return $result;
+                return $result
             }
         }
 
-        return $uri;
+        return $uri
     }
 }

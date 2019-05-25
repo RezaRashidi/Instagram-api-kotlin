@@ -1,10 +1,10 @@
-<?php
 
-package InstagramAPI.Realtime.Command.Direct;
+
+package InstagramAPI.Realtime.Command.Direct
 
 final class SendLike : SendItem
 {
-    val TYPE = 'like';
+    val TYPE = 'like'
 
     /**
      * Constructor.
@@ -18,6 +18,6 @@ final class SendLike : SendItem
         $threadId,
         array $options = [])
     {
-        parent::__construct($threadId, self::TYPE, $options);
+        parent::__construct($threadId, self::TYPE, $options)
     }
 }

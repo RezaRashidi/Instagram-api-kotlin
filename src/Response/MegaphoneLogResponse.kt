@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * MegaphoneLogResponse.
@@ -28,5 +28,5 @@ class MegaphoneLogResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'success' => '',
-    ];
+    ]
 }

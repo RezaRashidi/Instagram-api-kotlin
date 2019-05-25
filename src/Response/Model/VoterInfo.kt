@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * VoterInfo.
@@ -31,5 +31,5 @@ class VoterInfo : AutoPropertyMapper
         'voters'            => 'Voter[]',
         'max_id'            => 'string',
         'more_available'    => 'bool',
-    ];
+    ]
 }

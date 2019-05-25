@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Suggested.
@@ -36,5 +36,5 @@ class Suggested : AutoPropertyMapper
         'user'         => 'User',
         'place'        => 'LocationItem',
         'client_time'  => '',
-    ];
+    ]
 }

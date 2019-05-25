@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Voter.
@@ -21,5 +21,5 @@ class Voter : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'user'  => 'User',
         'vote'  => 'int',
-    ];
+    ]
 }

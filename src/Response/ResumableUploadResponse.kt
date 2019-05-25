@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ResumableUploadResponse.
@@ -33,5 +33,5 @@ class ResumableUploadResponse : Response
     val JSON_PROPERTY_MAP = [
         'xsharing_nonces' => '',
         'upload_id'       => 'int',
-    ];
+    ]
 }

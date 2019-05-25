@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ProductShare.
@@ -26,5 +26,5 @@ class ProductShare : AutoPropertyMapper
         'media'   => 'Item',
         'text'    => 'string',
         'product' => 'Product',
-    ];
+    ]
 }

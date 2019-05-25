@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Action.
@@ -31,5 +31,5 @@ class Action : AutoPropertyMapper
         'url'               => 'string',
         'limit'             => 'int',
         'dismiss_promotion' => 'bool',
-    ];
+    ]
 }

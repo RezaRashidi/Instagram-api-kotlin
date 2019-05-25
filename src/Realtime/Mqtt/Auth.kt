@@ -1,18 +1,18 @@
-<?php
 
-package InstagramAPI.Realtime.Mqtt;
 
-import Fbns.Client.AuthInterface;
-import InstagramAPI.Instagram;
+package InstagramAPI.Realtime.Mqtt
+
+import Fbns.Client.AuthInterface
+import InstagramAPI.Instagram
 
 class Auth : AuthInterface
 {
-    val AUTH_TYPE = 'cookie_auth';
+    val AUTH_TYPE = 'cookie_auth'
 
     /**
      * @var Instagram
      */
-    protected $_instagram;
+    protected $_instagram
 
     /**
      * Constructor.
@@ -22,53 +22,53 @@ class Auth : AuthInterface
     public fun __construct(
         Instagram $instagram)
     {
-        this._instagram = $instagram;
+        this._instagram = $instagram
     }
 
     /** {@inheritdoc} */
     public fun getClientId()
     {
-        return substr(this.getDeviceId(), 0, 20);
+        return substr(this.getDeviceId(), 0, 20)
     }
 
     /** {@inheritdoc} */
     public fun getClientType()
     {
-        return self::AUTH_TYPE;
+        return self::AUTH_TYPE
     }
 
     /** {@inheritdoc} */
     public fun getUserId()
     {
-        return this._instagram.account_id;
+        return this._instagram.account_id
     }
 
     /** {@inheritdoc} */
     public fun getPassword()
     {
-        $cookie = this._instagram.client.getCookie('sessionid', 'i.instagram.com');
+        $cookie = this._instagram.client.getCookie('sessionid', 'i.instagram.com')
         if ($cookie !== null) {
-            return sprintf('%s=%s', $cookie.getName(), $cookie.getValue());
+            return sprintf('%s=%s', $cookie.getName(), $cookie.getValue())
         }
 
-        throw new .RuntimeException('No session cookie was found.');
+        throw .RuntimeException('No session cookie was found.')
     }
 
     /** {@inheritdoc} */
     public fun getDeviceId()
     {
-        return this._instagram.uuid;
+        return this._instagram.uuid
     }
 
     /** {@inheritdoc} */
     public fun getDeviceSecret()
     {
-        return '';
+        return ''
     }
 
     /** {@inheritdoc} */
     public fun __toString()
     {
-        return '';
+        return ''
     }
 }

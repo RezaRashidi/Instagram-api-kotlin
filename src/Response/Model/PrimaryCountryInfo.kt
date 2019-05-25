@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * PrimaryCountryInfo.
@@ -26,5 +26,5 @@ class PrimaryCountryInfo : AutoPropertyMapper
         'is_visible'              => 'bool',
         'has_country'             => 'bool',
         'country_name'            => 'string',
-    ];
+    ]
 }

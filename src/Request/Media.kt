@@ -1,11 +1,11 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Request;
-import InstagramAPI.Response;
-import InstagramAPI.Signatures;
-import InstagramAPI.Utils;
+package InstagramAPI.Request
+
+import InstagramAPI.Request
+import InstagramAPI.Response
+import InstagramAPI.Signatures
+import InstagramAPI.Utils
 
 /**
  * funs for interacting with media items from yourself and others.
@@ -27,7 +27,7 @@ class Media : RequestCollection
         $mediaId)
     {
         return this.ig.request("media/{$mediaId}/info/")
-            .getResponse(new Response.MediaInfoResponse());
+            .getResponse(Response.MediaInfoResponse())
     }
 
     /**
@@ -46,7 +46,7 @@ class Media : RequestCollection
         $mediaId,
         $mediaType = 'PHOTO')
     {
-        $mediaType = Utils::checkMediaType($mediaType);
+        $mediaType = Utils::checkMediaType($mediaType)
 
         return this.ig.request("media/{$mediaId}/delete/")
             .addParam('media_type', $mediaType)
@@ -55,7 +55,7 @@ class Media : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('_uid', this.ig.account_id)
             .addPost('_uuid', this.ig.uuid)
-            .getResponse(new Response.MediaDeleteResponse());
+            .getResponse(Response.MediaDeleteResponse())
     }
 
     /**
@@ -65,7 +65,7 @@ class Media : RequestCollection
      * @param string     $captionText Caption to import for the media.
      * @param array|null $metadata    (optional) Associative array of optional metadata to edit:
      *                                "usertags" - special array with user tagging instructions,
-     *                                if you want to modify the user tags;
+     *                                if you want to modify the user tags
      *                                "location" - a Location model object to set the media location,
      *                                or boolean FALSE to remove any location from the media.
      * @param string|int $mediaType   The type of the media item you are editing. One of: "PHOTO", "VIDEO"
@@ -85,27 +85,27 @@ class Media : RequestCollection
         array $metadata = null,
         $mediaType = 'PHOTO')
     {
-        $mediaType = Utils::checkMediaType($mediaType);
+        $mediaType = Utils::checkMediaType($mediaType)
 
         $request = this.ig.request("media/{$mediaId}/edit_media/")
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('caption_text', $captionText);
+            .addPost('caption_text', $captionText)
 
         if (isset($metadata['usertags'])) {
-            Utils::throwIfInvalidUsertags($metadata['usertags']);
-            $request.addPost('usertags', json_encode($metadata['usertags']));
+            Utils::throwIfInvalidUsertags($metadata['usertags'])
+            $request.addPost('usertags', json_encode($metadata['usertags']))
         }
 
         if (isset($metadata['location'])) {
             if ($metadata['location'] === false) {
                 // The user wants to remove the current location from the media.
-                $request.addPost('location', '{}');
+                $request.addPost('location', '{}')
             } else {
                 // The user wants to add/change the location of the media.
                 if (!$metadata['location'] instanceof Response.Model.Location) {
-                    throw new .InvalidArgumentException('The "location" metadata value must be an instance of .InstagramAPI.Response.Model.Location.');
+                    throw .InvalidArgumentException('The "location" metadata value must be an instance of .InstagramAPI.Response.Model.Location.')
                 }
 
                 $request
@@ -114,21 +114,21 @@ class Media : RequestCollection
                     .addPost('posting_latitude', $metadata['location'].getLat())
                     .addPost('posting_longitude', $metadata['location'].getLng())
                     .addPost('media_latitude', $metadata['location'].getLat())
-                    .addPost('media_longitude', $metadata['location'].getLng());
+                    .addPost('media_longitude', $metadata['location'].getLng())
 
                 if ($mediaType === 'CAROUSEL') { // Albums need special handling.
                     $request
                         .addPost('exif_latitude', 0.0)
-                        .addPost('exif_longitude', 0.0);
+                        .addPost('exif_longitude', 0.0)
                 } else { // All other types of media import "av_" instead of "exif_".
                     $request
                         .addPost('av_latitude', 0.0)
-                        .addPost('av_longitude', 0.0);
+                        .addPost('av_longitude', 0.0)
                 }
             }
         }
 
-        return $request.getResponse(new Response.EditMediaResponse());
+        return $request.getResponse(Response.EditMediaResponse())
     }
 
     /**
@@ -157,11 +157,11 @@ class Media : RequestCollection
             .addPost('media_id', $mediaId)
             .addPost('radio_type', 'wifi-none')
             .addPost('module_name', $module)
-            .addPost('device_id', this.ig.device_id);
+            .addPost('device_id', this.ig.device_id)
 
-        this._parseLikeParameters('like', $request, $module, $extraData);
+        this._parseLikeParameters('like', $request, $module, $extraData)
 
-        return $request.getResponse(new Response.GenericResponse());
+        return $request.getResponse(Response.GenericResponse())
     }
 
     /**
@@ -189,11 +189,11 @@ class Media : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('media_id', $mediaId)
             .addPost('radio_type', 'wifi-none')
-            .addPost('module_name', $module);
+            .addPost('module_name', $module)
 
-        this._parseLikeParameters('unlike', $request, $module, $extraData);
+        this._parseLikeParameters('unlike', $request, $module, $extraData)
 
-        return $request.getResponse(new Response.GenericResponse());
+        return $request.getResponse(Response.GenericResponse())
     }
 
     /**
@@ -208,12 +208,12 @@ class Media : RequestCollection
     public fun getLikedFeed(
         $maxId = null)
     {
-        $request = this.ig.request('feed/liked/');
+        $request = this.ig.request('feed/liked/')
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.LikeFeedResponse());
+        return $request.getResponse(Response.LikeFeedResponse())
     }
 
     /**
@@ -228,7 +228,7 @@ class Media : RequestCollection
     public fun getLikers(
         $mediaId)
     {
-        return this.ig.request("media/{$mediaId}/likers/").getResponse(new Response.MediaLikersResponse());
+        return this.ig.request("media/{$mediaId}/likers/").getResponse(Response.MediaLikersResponse())
     }
 
     /**
@@ -256,7 +256,7 @@ class Media : RequestCollection
     public fun getLikersChrono(
         $mediaId)
     {
-        return this.ig.request("media/{$mediaId}/likers_chrono/").getResponse(new Response.MediaLikersResponse());
+        return this.ig.request("media/{$mediaId}/likers_chrono/").getResponse(Response.MediaLikersResponse())
     }
 
     /**
@@ -275,7 +275,7 @@ class Media : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
             .setSignedPost(false)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -294,7 +294,7 @@ class Media : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
             .setSignedPost(false)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -302,7 +302,7 @@ class Media : RequestCollection
      *
      * @param string $mediaId        The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string $commentText    Your comment text.
-     * @param string $replyCommentId (optional) The comment ID you are replying to, if this is a reply (ie "17895795823020906");
+     * @param string $replyCommentId (optional) The comment ID you are replying to, if this is a reply (ie "17895795823020906")
      *                               when replying, your $commentText MUST contain an @-mention at the start (ie "@theirusername Hello!").
      * @param string $module         (optional) From which app module (page) you're performing this action.
      *
@@ -326,16 +326,16 @@ class Media : RequestCollection
             .addPost('comment_text', $commentText)
             .addPost('containermodule', $module)
             .addPost('radio_type', 'wifi-none')
-            .addPost('device_id', this.ig.device_id);
+            .addPost('device_id', this.ig.device_id)
 
         if ($replyCommentId !== null) {
             if ($commentText[0] !== '@') {
-                throw new .InvalidArgumentException('When replying to a comment, your text must begin with an @-mention to their username.');
+                throw .InvalidArgumentException('When replying to a comment, your text must begin with an @-mention to their username.')
             }
-            $request.addPost('replied_to_comment_id', $replyCommentId);
+            $request.addPost('replied_to_comment_id', $replyCommentId)
         }
 
-        return $request.getResponse(new Response.CommentResponse());
+        return $request.getResponse(Response.CommentResponse())
     }
 
     /**
@@ -355,8 +355,8 @@ class Media : RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param array  $options An associative array of optional parameters, including:
-     *                        "max_id" - next "maximum ID" (get older comments, before this ID), used for backwards pagination;
-     *                        "min_id" - next "minimum ID" (get newer comments, after this ID), used for forwards pagination;
+     *                        "max_id" - next "maximum ID" (get older comments, before this ID), used for backwards pagination
+     *                        "min_id" - next "minimum ID" (get newer comments, after this ID), used for forwards pagination
      *                        "target_comment_id" - used by comment Push notifications to retrieve the page with the specific comment.
      *
      * @throws .InvalidArgumentException
@@ -369,17 +369,17 @@ class Media : RequestCollection
         array $options = [])
     {
         $request = this.ig.request("media/{$mediaId}/comments/")
-            .addParam('can_support_threading', true);
+            .addParam('can_support_threading', true)
 
         // Pagination.
         if (isset($options['min_id']) && isset($options['max_id'])) {
-            throw new .InvalidArgumentException('You can import either "min_id" or "max_id", but not both at the same time.');
+            throw .InvalidArgumentException('You can import either "min_id" or "max_id", but not both at the same time.')
         }
         if (isset($options['min_id'])) {
-            $request.addParam('min_id', $options['min_id']);
+            $request.addParam('min_id', $options['min_id'])
         }
         if (isset($options['max_id'])) {
-            $request.addParam('max_id', $options['max_id']);
+            $request.addParam('max_id', $options['max_id'])
         }
 
         // Request specific comment (does NOT work together with pagination!).
@@ -387,12 +387,12 @@ class Media : RequestCollection
         // server will reject the request completely and give nothing back!
         if (isset($options['target_comment_id'])) {
             if (isset($options['min_id']) || isset($options['max_id'])) {
-                throw new .InvalidArgumentException('You cannot import the "target_comment_id" parameter together with the "min_id" or "max_id" parameters.');
+                throw .InvalidArgumentException('You cannot import the "target_comment_id" parameter together with the "min_id" or "max_id" parameters.')
             }
-            $request.addParam('target_comment_id', $options['target_comment_id']);
+            $request.addParam('target_comment_id', $options['target_comment_id'])
         }
 
-        return $request.getResponse(new Response.MediaCommentsResponse());
+        return $request.getResponse(Response.MediaCommentsResponse())
     }
 
     /**
@@ -410,7 +410,7 @@ class Media : RequestCollection
      * @param string $mediaId   The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string $commentId The parent comment's ID.
      * @param array  $options   An associative array of optional parameters, including:
-     *                          "max_id" - next "maximum ID" (get older comments, before this ID), used for backwards pagination;
+     *                          "max_id" - next "maximum ID" (get older comments, before this ID), used for backwards pagination
      *                          "min_id" - next "minimum ID" (get newer comments, after this ID), used for forwards pagination.
      *
      * @throws .InvalidArgumentException
@@ -423,19 +423,19 @@ class Media : RequestCollection
         $commentId,
         array $options = [])
     {
-        $request = this.ig.request("media/{$mediaId}/comments/{$commentId}/inline_child_comments/");
+        $request = this.ig.request("media/{$mediaId}/comments/{$commentId}/inline_child_comments/")
 
         if (isset($options['min_id'], $options['max_id'])) {
-            throw new .InvalidArgumentException('You can import either "min_id" or "max_id", but not both at the same time.');
+            throw .InvalidArgumentException('You can import either "min_id" or "max_id", but not both at the same time.')
         }
 
         if (isset($options['max_id'])) {
-            $request.addParam('max_id', $options['max_id']);
+            $request.addParam('max_id', $options['max_id'])
         } elseif (isset($options['min_id'])) {
-            $request.addParam('min_id', $options['min_id']);
+            $request.addParam('min_id', $options['min_id'])
         }
 
-        return $request.getResponse(new Response.MediaCommentRepliesResponse());
+        return $request.getResponse(Response.MediaCommentRepliesResponse())
     }
 
     /**
@@ -456,7 +456,7 @@ class Media : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.DeleteCommentResponse());
+            .getResponse(Response.DeleteCommentResponse())
     }
 
     /**
@@ -474,7 +474,7 @@ class Media : RequestCollection
         $commentIds)
     {
         if (is_array($commentIds)) {
-            $commentIds = implode(',', $commentIds);
+            $commentIds = implode(',', $commentIds)
         }
 
         return this.ig.request("media/{$mediaId}/comment/bulk_delete/")
@@ -482,7 +482,7 @@ class Media : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('comment_ids_to_delete', $commentIds)
-            .getResponse(new Response.DeleteCommentResponse());
+            .getResponse(Response.DeleteCommentResponse())
     }
 
     /**
@@ -501,7 +501,7 @@ class Media : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.CommentLikeUnlikeResponse());
+            .getResponse(Response.CommentLikeUnlikeResponse())
     }
 
     /**
@@ -520,7 +520,7 @@ class Media : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.CommentLikeUnlikeResponse());
+            .getResponse(Response.CommentLikeUnlikeResponse())
     }
 
     /**
@@ -535,7 +535,7 @@ class Media : RequestCollection
     public fun getCommentLikers(
         $commentId)
     {
-        return this.ig.request("media/{$commentId}/comment_likers/").getResponse(new Response.CommentLikersResponse());
+        return this.ig.request("media/{$commentId}/comment_likers/").getResponse(Response.CommentLikersResponse())
     }
 
     /**
@@ -553,11 +553,11 @@ class Media : RequestCollection
         $commentIds)
     {
         if (is_array($commentIds)) {
-            $commentIds = implode(',', $commentIds);
+            $commentIds = implode(',', $commentIds)
         }
 
         return this.ig.request("language/bulk_translate/?comment_ids={$commentIds}")
-            .getResponse(new Response.TranslateResponse());
+            .getResponse(Response.TranslateResponse())
     }
 
     /**
@@ -580,7 +580,7 @@ class Media : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('url', $url)
-            .getResponse(new Response.ValidateURLResponse());
+            .getResponse(Response.ValidateURLResponse())
     }
 
     /**
@@ -599,7 +599,7 @@ class Media : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.SaveAndUnsaveMedia());
+            .getResponse(Response.SaveAndUnsaveMedia())
     }
 
     /**
@@ -618,7 +618,7 @@ class Media : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.SaveAndUnsaveMedia());
+            .getResponse(Response.SaveAndUnsaveMedia())
     }
 
     /**
@@ -633,12 +633,12 @@ class Media : RequestCollection
     public fun getSavedFeed(
         $maxId = null)
     {
-        $request = this.ig.request('feed/saved/');
+        $request = this.ig.request('feed/saved/')
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.SavedFeedResponse());
+        return $request.getResponse(Response.SavedFeedResponse())
     }
 
     /**
@@ -651,7 +651,7 @@ class Media : RequestCollection
     public fun getBlockedMedia()
     {
         return this.ig.request('media/blocked/')
-            .getResponse(new Response.BlockedMediaResponse());
+            .getResponse(Response.BlockedMediaResponse())
     }
 
     /**
@@ -675,7 +675,7 @@ class Media : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -699,7 +699,7 @@ class Media : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -716,7 +716,7 @@ class Media : RequestCollection
     {
         return this.ig.request("media/{$mediaId}/permalink/")
             .addParam('share_to_app', 'copy_link')
-            .getResponse(new Response.PermalinkResponse());
+            .getResponse(Response.PermalinkResponse())
     }
 
     /**
@@ -738,9 +738,9 @@ class Media : RequestCollection
         // Is this a "double-tap to like"? Note that Instagram doesn't have
         // "double-tap to unlike". So this can only be "1" if it's a "like".
         if ($type === 'like' && isset($extraData['double_tap']) && $extraData['double_tap']) {
-            $request.addUnsignedPost('d', 1);
+            $request.addUnsignedPost('d', 1)
         } else {
-            $request.addUnsignedPost('d', 0); // Must always be 0 for "unlike".
+            $request.addUnsignedPost('d', 0) // Must always be 0 for "unlike".
         }
 
         // Now parse the necessary parameters for the selected module.
@@ -748,11 +748,11 @@ class Media : RequestCollection
         case 'feed_contextual_post': // "Explore" tab.
             if (isset($extraData['explore_source_token'])) {
                 // The explore media `Item::getExploreSourceToken()` value.
-                $request.addPost('explore_source_token', $extraData['explore_source_token']);
+                $request.addPost('explore_source_token', $extraData['explore_source_token'])
             } else {
-                throw new .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module));
+                throw .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module))
             }
-            break;
+            break
         case 'profile': // LIST VIEW (when posts are shown vertically by the app
                         // one at a time (as in the Timeline tab)): Any media on
                         // a user profile (their timeline) in list view mode.
@@ -765,28 +765,28 @@ class Media : RequestCollection
             if (isset($extraData['username']) && isset($extraData['user_id'])) {
                 // Username and id of the media's owner (the profile owner).
                 $request.addPost('username', $extraData['username'])
-                    .addPost('user_id', $extraData['user_id']);
+                    .addPost('user_id', $extraData['user_id'])
             } else {
-                throw new .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module));
+                throw .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module))
             }
-            break;
+            break
         case 'feed_contextual_hashtag': // "Hashtag" search result.
             if (isset($extraData['hashtag'])) {
                 // The hashtag where the app found this media.
-                Utils::throwIfInvalidHashtag($extraData['hashtag']);
-                $request.addPost('hashtag', $extraData['hashtag']);
+                Utils::throwIfInvalidHashtag($extraData['hashtag'])
+                $request.addPost('hashtag', $extraData['hashtag'])
             } else {
-                throw new .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module));
+                throw .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module))
             }
-            break;
+            break
         case 'feed_contextual_location': // "Location" search result.
             if (isset($extraData['location_id'])) {
                 // The location ID of this media.
-                $request.addPost('location_id', $extraData['location_id']);
+                $request.addPost('location_id', $extraData['location_id'])
             } else {
-                throw new .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module));
+                throw .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module))
             }
-            break;
+            break
         case 'feed_timeline': // "Timeline" tab (the global Home-feed with all
                               // kinds of mixed news).
         case 'newsfeed': // "Followings Activity" feed tab. Used when
@@ -801,9 +801,9 @@ class Media : RequestCollection
                                                             // multi-activity
                                                             // "xyz liked 5
                                                             // posts" entry.
-            break;
+            break
         default:
-            throw new .InvalidArgumentException(sprintf('Invalid module name. %s does not correspond to any of the valid module names.', $module));
+            throw .InvalidArgumentException(sprintf('Invalid module name. %s does not correspond to any of the valid module names.', $module))
         }
     }
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * BroadcastQuestionsResponse.
@@ -28,5 +28,5 @@ class BroadcastQuestionsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'questions'          => 'Model.BroadcastQuestion[]',
-    ];
+    ]
 }

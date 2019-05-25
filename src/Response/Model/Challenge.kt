@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Challenge.
@@ -41,5 +41,5 @@ class Challenge : AutoPropertyMapper
         'lock'                => '',
         'logout'              => '',
         'native_flow'         => '',
-    ];
+    ]
 }

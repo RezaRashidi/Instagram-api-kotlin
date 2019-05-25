@@ -1,10 +1,10 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Response;
-import InstagramAPI.Signatures;
-import InstagramAPI.Utils;
+package InstagramAPI.Request
+
+import InstagramAPI.Response
+import InstagramAPI.Signatures
+import InstagramAPI.Utils
 
 /**
  * funs for exploring and interacting with live broadcasts.
@@ -20,13 +20,13 @@ class Live : RequestCollection
      */
     public fun getSuggestedBroadcasts()
     {
-        $endpoint = 'live/get_suggested_broadcasts/';
+        $endpoint = 'live/get_suggested_broadcasts/'
         if (this.ig.isExperimentEnabled('ig_android_live_suggested_live_expansion', 'is_enabled')) {
-            $endpoint = 'live/get_suggested_live_and_post_live/';
+            $endpoint = 'live/get_suggested_live_and_post_live/'
         }
 
         return this.ig.request($endpoint)
-            .getResponse(new Response.SuggestedBroadcastsResponse());
+            .getResponse(Response.SuggestedBroadcastsResponse())
     }
 
     /**
@@ -42,7 +42,7 @@ class Live : RequestCollection
         $broadcastId)
     {
         return this.ig.request("live/{$broadcastId}/info/")
-            .getResponse(new Response.BroadcastInfoResponse());
+            .getResponse(Response.BroadcastInfoResponse())
     }
 
     /**
@@ -60,7 +60,7 @@ class Live : RequestCollection
         $broadcastId)
     {
         return this.ig.request("live/{$broadcastId}/get_viewer_list/")
-            .getResponse(new Response.ViewerListResponse());
+            .getResponse(Response.ViewerListResponse())
     }
 
     /**
@@ -76,7 +76,7 @@ class Live : RequestCollection
         $broadcastId)
     {
         return this.ig.request("live/{$broadcastId}/get_final_viewer_list/")
-            .getResponse(new Response.FinalViewerListResponse());
+            .getResponse(Response.FinalViewerListResponse())
     }
 
     /**
@@ -93,12 +93,12 @@ class Live : RequestCollection
         $broadcastId,
         $maxId = null)
     {
-        $request = this.ig.request("live/{$broadcastId}/get_post_live_viewers_list/");
+        $request = this.ig.request("live/{$broadcastId}/get_post_live_viewers_list/")
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.PostLiveViewerListResponse());
+        return $request.getResponse(Response.PostLiveViewerListResponse())
     }
 
     /**
@@ -118,7 +118,7 @@ class Live : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('offset_to_video_start', 0)
-            .getResponse(new Response.BroadcastHeartbeatAndViewerCountResponse());
+            .getResponse(Response.BroadcastHeartbeatAndViewerCountResponse())
     }
 
     /**
@@ -147,9 +147,9 @@ class Live : RequestCollection
                 .addParam('last_total_count', $lastTotalCount)
                 .addParam('last_seen_ts', $lastSeenTs)
                 .addParam('last_fetch_ts', $lastFetchTs)
-                .getResponse(new Response.BroadcastJoinRequestCountResponse());
+                .getResponse(Response.BroadcastJoinRequestCountResponse())
         } catch (.InstagramAPI.Exception.EmptyResponseException $e) {
-            return null;
+            return null
         }
     }
 
@@ -171,7 +171,7 @@ class Live : RequestCollection
             .setSignedPost(false)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -192,7 +192,7 @@ class Live : RequestCollection
             .setSignedPost(false)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -216,7 +216,7 @@ class Live : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('text', $questionText)
             .addPost('_uuid', this.ig.uuid)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -229,7 +229,7 @@ class Live : RequestCollection
     public fun getQuestions()
     {
         return this.ig.request('live/get_questions/')
-            .getResponse(new Response.BroadcastQuestionsResponse());
+            .getResponse(Response.BroadcastQuestionsResponse())
     }
 
     /**
@@ -246,11 +246,11 @@ class Live : RequestCollection
     {
         return this.ig.request("live/{$broadcastId}/questions/")
             .addParam('sources', 'story_and_live')
-            .getResponse(new Response.BroadcastQuestionsResponse());
+            .getResponse(Response.BroadcastQuestionsResponse())
     }
 
     /**
-     * Acknowledges (waves at) a new user after they join.
+     * Acknowledges (waves at) a user after they join.
      *
      * Note: This can only be done once to a user, per stream. Additionally, the user must have joined the stream.
      *
@@ -270,7 +270,7 @@ class Live : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('_uid', this.ig.account_id)
             .addPost('_uuid', this.ig.uuid)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -293,7 +293,7 @@ class Live : RequestCollection
             .addPost('comment_text', $commentText)
             .addPost('live_or_vod', 1)
             .addPost('offset_to_video_start', 0)
-            .getResponse(new Response.CommentBroadcastResponse());
+            .getResponse(Response.CommentBroadcastResponse())
     }
 
     /**
@@ -316,7 +316,7 @@ class Live : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.PinCommentBroadcastResponse());
+            .getResponse(Response.PinCommentBroadcastResponse())
     }
 
     /**
@@ -339,7 +339,7 @@ class Live : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.UnpinCommentBroadcastResponse());
+            .getResponse(Response.UnpinCommentBroadcastResponse())
     }
 
     /**
@@ -361,7 +361,7 @@ class Live : RequestCollection
         return this.ig.request("live/{$broadcastId}/get_comment/")
             .addParam('last_comment_ts', $lastCommentTs)
             .addParam('num_comments_requested', $commentsRequested)
-            .getResponse(new Response.BroadcastCommentsResponse());
+            .getResponse(Response.BroadcastCommentsResponse())
     }
 
     /**
@@ -383,7 +383,7 @@ class Live : RequestCollection
         return this.ig.request("live/{$broadcastId}/get_post_live_comments/")
             .addParam('starting_offset', $startingOffset)
             .addParam('encoding_tag', $encodingTag)
-            .getResponse(new Response.PostLiveCommentsResponse());
+            .getResponse(Response.PostLiveCommentsResponse())
     }
 
     /**
@@ -402,7 +402,7 @@ class Live : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.EnableDisableLiveCommentsResponse());
+            .getResponse(Response.EnableDisableLiveCommentsResponse())
     }
 
     /**
@@ -421,7 +421,7 @@ class Live : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.EnableDisableLiveCommentsResponse());
+            .getResponse(Response.EnableDisableLiveCommentsResponse())
     }
 
     /**
@@ -440,7 +440,7 @@ class Live : RequestCollection
         $likeCount = 1)
     {
         if ($likeCount < 1 || $likeCount > 6) {
-            throw new .InvalidArgumentException('Like count must be a number from 1 to 6.');
+            throw .InvalidArgumentException('Like count must be a number from 1 to 6.')
         }
 
         return this.ig.request("live/{$broadcastId}/like/")
@@ -448,7 +448,7 @@ class Live : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('user_like_count', $likeCount)
-            .getResponse(new Response.BroadcastLikeResponse());
+            .getResponse(Response.BroadcastLikeResponse())
     }
 
     /**
@@ -467,7 +467,7 @@ class Live : RequestCollection
     {
         return this.ig.request("live/{$broadcastId}/get_like_count/")
             .addParam('like_ts', $likeTs)
-            .getResponse(new Response.BroadcastLikeCountResponse());
+            .getResponse(Response.BroadcastLikeCountResponse())
     }
 
     /**
@@ -489,7 +489,7 @@ class Live : RequestCollection
         return this.ig.request("live/{$broadcastId}/get_post_live_likes/")
             .addParam('starting_offset', $startingOffset)
             .addParam('encoding_tag', $encodingTag)
-            .getResponse(new Response.PostLiveLikesResponse());
+            .getResponse(Response.PostLiveLikesResponse())
     }
 
     /**
@@ -521,7 +521,7 @@ class Live : RequestCollection
             .addPost('broadcast_message', '')
             .addPost('broadcast_type', 'RTMP_SWAP_ENABLED')
             .addPost('internal_only', 0)
-            .getResponse(new Response.CreateLiveResponse());
+            .getResponse(Response.CreateLiveResponse())
     }
 
     /**
@@ -555,7 +555,7 @@ class Live : RequestCollection
             .setSignedPost(false)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.StartLiveResponse());
+            .getResponse(Response.StartLiveResponse())
 
         if (this.ig.isExperimentEnabled('ig_android_live_qa_broadcaster_v1_universe', 'is_enabled')) {
             this.ig.request("live/{$broadcastId}/question_status/")
@@ -563,10 +563,10 @@ class Live : RequestCollection
                 .addPost('_csrftoken', this.ig.client.getToken())
                 .addPost('_uuid', this.ig.uuid)
                 .addPost('allow_question_submission', true)
-                .getResponse(new Response.GenericResponse());
+                .getResponse(Response.GenericResponse())
         }
 
-        return $response;
+        return $response
     }
 
     /**
@@ -588,7 +588,7 @@ class Live : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('_uid', this.ig.account_id)
             .addPost('_uuid', this.ig.uuid)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -616,7 +616,7 @@ class Live : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('end_after_copyright_warning', $copyrightWarning)
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -637,7 +637,7 @@ class Live : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 
     /**
@@ -656,6 +656,6 @@ class Live : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 }

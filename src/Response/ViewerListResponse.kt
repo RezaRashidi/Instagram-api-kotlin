@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ViewerListResponse.
@@ -28,5 +28,5 @@ class ViewerListResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'users' => 'Model.User[]',
-    ];
+    ]
 }

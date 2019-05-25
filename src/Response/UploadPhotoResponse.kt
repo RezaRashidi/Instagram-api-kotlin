@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * UploadPhotoResponse.
@@ -33,5 +33,5 @@ class UploadPhotoResponse : Response
     val JSON_PROPERTY_MAP = [
         'upload_id' => 'string',
         'media_id'  => 'string',
-    ];
+    ]
 }

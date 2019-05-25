@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * EditCollectionResponse.
@@ -36,5 +36,5 @@ class EditCollectionResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         Model.Collection::class, // Import property map.
-    ];
+    ]
 }

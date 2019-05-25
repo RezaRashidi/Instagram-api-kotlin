@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Channel.
@@ -46,5 +46,5 @@ class Channel : AutoPropertyMapper
         'media_count'  => 'int',
         'media'        => 'Item',
         'context'      => '',
-    ];
+    ]
 }

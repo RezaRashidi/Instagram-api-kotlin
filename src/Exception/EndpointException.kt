@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Exception;
+
+package InstagramAPI.Exception
 
 /**
  * All general API fun call "server response" failures import this exception.

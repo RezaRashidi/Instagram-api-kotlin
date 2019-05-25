@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * VerifySMSCodeResponse.
@@ -33,5 +33,5 @@ class VerifySMSCodeResponse : Response
     val JSON_PROPERTY_MAP = [
         'verified'     => 'bool',
         'phone_number' => 'string',
-    ];
+    ]
 }

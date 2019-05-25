@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * CommentResponse.
@@ -28,5 +28,5 @@ class CommentResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'comment' => 'Model.Comment',
-    ];
+    ]
 }

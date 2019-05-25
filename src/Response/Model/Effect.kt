@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Effect.
@@ -46,5 +46,5 @@ class Effect : AutoPropertyMapper
         'asset_url'      => 'string',
         'thumbnail_url'  => 'string',
         'instructions'   => '',
-    ];
+    ]
 }

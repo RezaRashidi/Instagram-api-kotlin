@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * CatalogData.
@@ -21,5 +21,5 @@ class CatalogData : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'page_info'          => 'PageInfo',
         'edges'              => 'CatalogEdge[]',
-    ];
+    ]
 }

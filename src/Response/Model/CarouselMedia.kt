@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * CarouselMedia.
@@ -138,8 +138,8 @@ import InstagramAPI.AutoPropertyMapper;
  */
 class CarouselMedia : AutoPropertyMapper
 {
-    val PHOTO = 1;
-    val VIDEO = 2;
+    val PHOTO = 1
+    val VIDEO = 2
 
     val JSON_PROPERTY_MAP = [
         'pk'                  => 'string',
@@ -182,5 +182,5 @@ class CarouselMedia : AutoPropertyMapper
          * HTML color string such as "#812A2A".
          */
         'dominant_color'      => 'string',
-    ];
+    ]
 }

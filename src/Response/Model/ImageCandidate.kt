@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ImageCandidate.
@@ -26,5 +26,5 @@ class ImageCandidate : AutoPropertyMapper
         'url'    => 'string',
         'width'  => 'int',
         'height' => 'int',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * BlockedMediaResponse.
@@ -28,5 +28,5 @@ class BlockedMediaResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'media_ids' => '',
-    ];
+    ]
 }

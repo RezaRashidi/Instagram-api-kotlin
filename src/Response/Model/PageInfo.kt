@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * PageInfo.
@@ -26,5 +26,5 @@ class PageInfo : AutoPropertyMapper
         'end_cursor'        => 'string',
         'has_next_page'     => 'bool',
         'has_previous_page' => 'bool',
-    ];
+    ]
 }

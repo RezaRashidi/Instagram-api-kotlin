@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoriesNetego.
@@ -26,5 +26,5 @@ class StoriesNetego : AutoPropertyMapper
         'tracking_token'    => 'string',
         'hide_unit_if_seen' => 'string',
         'id'                => 'string',
-    ];
+    ]
 }

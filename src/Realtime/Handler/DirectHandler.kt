@@ -1,49 +1,49 @@
-<?php
 
-package InstagramAPI.Realtime.Handler;
 
-import InstagramAPI.Client as HttpClient;
-import InstagramAPI.Realtime.HandlerInterface;
-import InstagramAPI.Realtime.Message;
-import InstagramAPI.Realtime.Payload.Action.AckAction;
-import InstagramAPI.Realtime.Payload.Event.PatchEvent;
-import InstagramAPI.Realtime.Payload.Event.PatchEventOp;
-import InstagramAPI.Realtime.Payload.RealtimeAction;
-import InstagramAPI.Realtime.Payload.RealtimeEvent;
-import InstagramAPI.Realtime.Payload.StoryScreenshot;
-import InstagramAPI.Realtime.Payload.ThreadAction;
-import InstagramAPI.Realtime.Payload.ThreadActivity;
-import InstagramAPI.Response.Model.ActionBadge;
-import InstagramAPI.Response.Model.DirectInbox;
-import InstagramAPI.Response.Model.DirectSeenItemPayload;
-import InstagramAPI.Response.Model.DirectThread;
-import InstagramAPI.Response.Model.DirectThreadItem;
-import InstagramAPI.Response.Model.DirectThreadLastSeenAt;
+package InstagramAPI.Realtime.Handler
+
+import InstagramAPI.Client as HttpClient
+import InstagramAPI.Realtime.HandlerInterface
+import InstagramAPI.Realtime.Message
+import InstagramAPI.Realtime.Payload.Action.AckAction
+import InstagramAPI.Realtime.Payload.Event.PatchEvent
+import InstagramAPI.Realtime.Payload.Event.PatchEventOp
+import InstagramAPI.Realtime.Payload.RealtimeAction
+import InstagramAPI.Realtime.Payload.RealtimeEvent
+import InstagramAPI.Realtime.Payload.StoryScreenshot
+import InstagramAPI.Realtime.Payload.ThreadAction
+import InstagramAPI.Realtime.Payload.ThreadActivity
+import InstagramAPI.Response.Model.ActionBadge
+import InstagramAPI.Response.Model.DirectInbox
+import InstagramAPI.Response.Model.DirectSeenItemPayload
+import InstagramAPI.Response.Model.DirectThread
+import InstagramAPI.Response.Model.DirectThreadItem
+import InstagramAPI.Response.Model.DirectThreadLastSeenAt
 
 class DirectHandler : AbstractHandler : HandlerInterface
 {
-    val MODULE = 'direct';
+    val MODULE = 'direct'
 
-    val THREAD_REGEXP = '#^/direct_v2/inbox/threads/(?<thread_id>[^/]+)$#D';
-    val ITEM_REGEXP = '#^/direct_v2/threads/(?<thread_id>[^/]+)/items/(?<item_id>[^/]+)$#D';
-    val ACTIVITY_REGEXP = '#^/direct_v2/threads/(?<thread_id>[^/]+)/activity_indicator_id/(?<context>[^/]+)$#D';
-    val STORY_REGEXP = '#^/direct_v2/visual_threads/(?<thread_id>[^/]+)/items/(?<item_id>[^/]+)$#D';
-    val SEEN_REGEXP = '#^/direct_v2/threads/(?<thread_id>[^/]+)/participants/(?<user_id>[^/]+)/has_seen$#D';
-    val SCREENSHOT_REGEXP = '#^/direct_v2/visual_thread/(?<thread_id>[^/]+)/screenshot$#D';
-    val BADGE_REGEXP = '#^/direct_v2/visual_action_badge/(?<thread_id>[^/]+)$#D';
+    val THREAD_REGEXP = '#^/direct_v2/inbox/threads/(?<thread_id>[^/]+)$#D'
+    val ITEM_REGEXP = '#^/direct_v2/threads/(?<thread_id>[^/]+)/items/(?<item_id>[^/]+)$#D'
+    val ACTIVITY_REGEXP = '#^/direct_v2/threads/(?<thread_id>[^/]+)/activity_indicator_id/(?<context>[^/]+)$#D'
+    val STORY_REGEXP = '#^/direct_v2/visual_threads/(?<thread_id>[^/]+)/items/(?<item_id>[^/]+)$#D'
+    val SEEN_REGEXP = '#^/direct_v2/threads/(?<thread_id>[^/]+)/participants/(?<user_id>[^/]+)/has_seen$#D'
+    val SCREENSHOT_REGEXP = '#^/direct_v2/visual_thread/(?<thread_id>[^/]+)/screenshot$#D'
+    val BADGE_REGEXP = '#^/direct_v2/visual_action_badge/(?<thread_id>[^/]+)$#D'
 
     /** {@inheritdoc} */
     public fun handleMessage(
         Message $message)
     {
-        $data = $message.getData();
+        $data = $message.getData()
 
         if (isset($data['event'])) {
-            this._processEvent($data);
+            this._processEvent($data)
         } elseif (isset($data['action'])) {
-            this._processAction($data);
+            this._processAction($data)
         } else {
-            throw new HandlerException('Invalid message (both event and action are missing).');
+            throw HandlerException('Invalid message (both event and action are missing).')
         }
     }
 
@@ -58,12 +58,12 @@ class DirectHandler : AbstractHandler : HandlerInterface
         array $message)
     {
         if ($message['event'] === RealtimeEvent::PATCH) {
-            $event = new PatchEvent($message);
+            $event = PatchEvent($message)
             foreach ($event.getData() as $op) {
-                this._handlePatchOp($op);
+                this._handlePatchOp($op)
             }
         } else {
-            throw new HandlerException(sprintf('Unknown event type "%s".', $message['event']));
+            throw HandlerException(sprintf('Unknown event type "%s".', $message['event']))
         }
     }
 
@@ -78,9 +78,9 @@ class DirectHandler : AbstractHandler : HandlerInterface
         array $message)
     {
         if ($message['action'] === RealtimeAction::ACK) {
-            this._target.emit('client-context-ack', [new AckAction($message)]);
+            this._target.emit('client-context-ack', [AckAction($message)])
         } else {
-            throw new HandlerException(sprintf('Unknown action type "%s".', $message['action']));
+            throw HandlerException(sprintf('Unknown action type "%s".', $message['action']))
         }
     }
 
@@ -96,19 +96,19 @@ class DirectHandler : AbstractHandler : HandlerInterface
     {
         switch ($op.getOp()) {
             case PatchEventOp::ADD:
-                this._handleAdd($op);
-                break;
+                this._handleAdd($op)
+                break
             case PatchEventOp::REPLACE:
-                this._handleReplace($op);
-                break;
+                this._handleReplace($op)
+                break
             case PatchEventOp::REMOVE:
-                this._handleRemove($op);
-                break;
+                this._handleRemove($op)
+                break
             case PatchEventOp::NOTIFY:
-                this._handleNotify($op);
-                break;
+                this._handleNotify($op)
+                break
             default:
-                throw new HandlerException(sprintf('Unknown patch op "%s".', $op.getOp()));
+                throw HandlerException(sprintf('Unknown patch op "%s".', $op.getOp()))
         }
     }
 
@@ -122,19 +122,19 @@ class DirectHandler : AbstractHandler : HandlerInterface
     protected fun _handleAdd(
         PatchEventOp $op)
     {
-        $path = $op.getPath();
+        $path = $op.getPath()
         if (this._pathStartsWith($path, '/direct_v2/threads')) {
             if (strpos($path, 'activity_indicator_id') === false) {
-                this._upsertThreadItem($op, true);
+                this._upsertThreadItem($op, true)
             } else {
-                this._updateThreadActivity($op);
+                this._updateThreadActivity($op)
             }
         } elseif (this._pathStartsWith($path, '/direct_v2/inbox/threads')) {
-            this._upsertThread($op, true);
+            this._upsertThread($op, true)
         } elseif (this._pathStartsWith($path, '/direct_v2/visual_threads')) {
-            this._updateDirectStory($op);
+            this._updateDirectStory($op)
         } else {
-            throw new HandlerException(sprintf('Unsupported ADD path "%s".', $path));
+            throw HandlerException(sprintf('Unsupported ADD path "%s".', $path))
         }
     }
 
@@ -148,31 +148,31 @@ class DirectHandler : AbstractHandler : HandlerInterface
     protected fun _handleReplace(
        PatchEventOp $op)
     {
-        $path = $op.getPath();
+        $path = $op.getPath()
         if (this._pathStartsWith($path, '/direct_v2/threads')) {
             if (this._pathEndsWith($path, 'has_seen')) {
-                this._updateSeen($op);
+                this._updateSeen($op)
             } else {
-                this._upsertThreadItem($op, false);
+                this._upsertThreadItem($op, false)
             }
         } elseif (this._pathStartsWith($path, '/direct_v2/inbox/threads')) {
-            this._upsertThread($op, false);
+            this._upsertThread($op, false)
         } elseif (this._pathEndsWith($path, 'unseen_count')) {
             if (this._pathStartsWith($path, '/direct_v2/inbox')) {
-                this._updateUnseenCount('inbox', $op);
+                this._updateUnseenCount('inbox', $op)
             } else {
-                this._updateUnseenCount('visual_inbox', $op);
+                this._updateUnseenCount('visual_inbox', $op)
             }
         } elseif (this._pathStartsWith($path, '/direct_v2/visual_action_badge')) {
-            this._directStoryAction($op);
+            this._directStoryAction($op)
         } elseif (this._pathStartsWith($path, '/direct_v2/visual_thread')) {
             if (this._pathEndsWith($path, 'screenshot')) {
-                this._notifyDirectStoryScreenshot($op);
+                this._notifyDirectStoryScreenshot($op)
             } else {
-                this._createDirectStory($op);
+                this._createDirectStory($op)
             }
         } else {
-            throw new HandlerException(sprintf('Unsupported REPLACE path "%s".', $path));
+            throw HandlerException(sprintf('Unsupported REPLACE path "%s".', $path))
         }
     }
 
@@ -186,11 +186,11 @@ class DirectHandler : AbstractHandler : HandlerInterface
     protected fun _handleRemove(
         PatchEventOp $op)
     {
-        $path = $op.getPath();
+        $path = $op.getPath()
         if (this._pathStartsWith($path, '/direct_v2')) {
-            this._removeThreadItem($op);
+            this._removeThreadItem($op)
         } else {
-            throw new HandlerException(sprintf('Unsupported REMOVE path "%s".', $path));
+            throw HandlerException(sprintf('Unsupported REMOVE path "%s".', $path))
         }
     }
 
@@ -204,11 +204,11 @@ class DirectHandler : AbstractHandler : HandlerInterface
     protected fun _handleNotify(
         PatchEventOp $op)
     {
-        $path = $op.getPath();
+        $path = $op.getPath()
         if (this._pathStartsWith($path, '/direct_v2/threads')) {
-            this._notifyThread($op);
+            this._notifyThread($op)
         } else {
-            throw new HandlerException(sprintf('Unsupported NOTIFY path "%s".', $path));
+            throw HandlerException(sprintf('Unsupported NOTIFY path "%s".', $path))
         }
     }
 
@@ -224,21 +224,21 @@ class DirectHandler : AbstractHandler : HandlerInterface
         PatchEventOp $op,
         $insert)
     {
-        $event = $insert ? 'thread-created' : 'thread-updated';
+        $event = $insert ? 'thread-created' : 'thread-updated'
         if (!this._hasListeners($event)) {
-            return;
+            return
         }
 
         if (!preg_match(self::THREAD_REGEXP, $op.getPath(), $matches)) {
-            throw new HandlerException(sprintf('Path "%s" does not match thread regexp.', $op.getPath()));
+            throw HandlerException(sprintf('Path "%s" does not match thread regexp.', $op.getPath()))
         }
 
-        $json = HttpClient::api_body_decode($op.getValue());
+        $json = HttpClient::api_body_decode($op.getValue())
         if (!is_array($json)) {
-            throw new HandlerException(sprintf('Failed to decode thread JSON: %s.', json_last_error_msg()));
+            throw HandlerException(sprintf('Failed to decode thread JSON: %s.', json_last_error_msg()))
         }
 
-        this._target.emit($event, [$matches['thread_id'], new DirectThread($json)]);
+        this._target.emit($event, [$matches['thread_id'], DirectThread($json)])
     }
 
     /**
@@ -253,21 +253,21 @@ class DirectHandler : AbstractHandler : HandlerInterface
         PatchEventOp $op,
         $insert)
     {
-        $event = $insert ? 'thread-item-created' : 'thread-item-updated';
+        $event = $insert ? 'thread-item-created' : 'thread-item-updated'
         if (!this._hasListeners($event)) {
-            return;
+            return
         }
 
         if (!preg_match(self::ITEM_REGEXP, $op.getPath(), $matches)) {
-            throw new HandlerException(sprintf('Path "%s" does not match thread item regexp.', $op.getPath()));
+            throw HandlerException(sprintf('Path "%s" does not match thread item regexp.', $op.getPath()))
         }
 
-        $json = HttpClient::api_body_decode($op.getValue());
+        $json = HttpClient::api_body_decode($op.getValue())
         if (!is_array($json)) {
-            throw new HandlerException(sprintf('Failed to decode thread item JSON: %s.', json_last_error_msg()));
+            throw HandlerException(sprintf('Failed to decode thread item JSON: %s.', json_last_error_msg()))
         }
 
-        this._target.emit($event, [$matches['thread_id'], $matches['item_id'], new DirectThreadItem($json)]);
+        this._target.emit($event, [$matches['thread_id'], $matches['item_id'], DirectThreadItem($json)])
     }
 
     /**
@@ -281,19 +281,19 @@ class DirectHandler : AbstractHandler : HandlerInterface
         PatchEventOp $op)
     {
         if (!this._hasListeners('thread-activity')) {
-            return;
+            return
         }
 
         if (!preg_match(self::ACTIVITY_REGEXP, $op.getPath(), $matches)) {
-            throw new HandlerException(sprintf('Path "%s" does not match thread activity regexp.', $op.getPath()));
+            throw HandlerException(sprintf('Path "%s" does not match thread activity regexp.', $op.getPath()))
         }
 
-        $json = HttpClient::api_body_decode($op.getValue());
+        $json = HttpClient::api_body_decode($op.getValue())
         if (!is_array($json)) {
-            throw new HandlerException(sprintf('Failed to decode thread activity JSON: %s.', json_last_error_msg()));
+            throw HandlerException(sprintf('Failed to decode thread activity JSON: %s.', json_last_error_msg()))
         }
 
-        this._target.emit('thread-activity', [$matches['thread_id'], new ThreadActivity($json)]);
+        this._target.emit('thread-activity', [$matches['thread_id'], ThreadActivity($json)])
     }
 
     /**
@@ -307,22 +307,22 @@ class DirectHandler : AbstractHandler : HandlerInterface
         PatchEventOp $op)
     {
         if (!this._hasListeners('direct-story-updated')) {
-            return;
+            return
         }
 
         if (!preg_match(self::STORY_REGEXP, $op.getPath(), $matches)) {
-            throw new HandlerException(sprintf('Path "%s" does not match story item regexp.', $op.getPath()));
+            throw HandlerException(sprintf('Path "%s" does not match story item regexp.', $op.getPath()))
         }
 
-        $json = HttpClient::api_body_decode($op.getValue());
+        $json = HttpClient::api_body_decode($op.getValue())
         if (!is_array($json)) {
-            throw new HandlerException(sprintf('Failed to decode story item JSON: %s.', json_last_error_msg()));
+            throw HandlerException(sprintf('Failed to decode story item JSON: %s.', json_last_error_msg()))
         }
 
         this._target.emit(
             'direct-story-updated',
-            [$matches['thread_id'], $matches['item_id'], new DirectThreadItem($json)]
-        );
+            [$matches['thread_id'], $matches['item_id'], DirectThreadItem($json)]
+        )
     }
 
     /**
@@ -336,14 +336,14 @@ class DirectHandler : AbstractHandler : HandlerInterface
         PatchEventOp $op)
     {
         if (!this._hasListeners('unseen-count-update')) {
-            return;
+            return
         }
 
-        $payload = new DirectSeenItemPayload([
+        $payload = DirectSeenItemPayload([
             'count'     => (int) $op.getValue(),
             'timestamp' => $op.getTs(),
-        ]);
-        this._target.emit('unseen-count-update', [$inbox, $payload]);
+        ])
+        this._target.emit('unseen-count-update', [$inbox, $payload])
     }
 
     /**
@@ -357,21 +357,21 @@ class DirectHandler : AbstractHandler : HandlerInterface
         PatchEventOp $op)
     {
         if (!this._hasListeners('thread-seen')) {
-            return;
+            return
         }
 
         if (!preg_match(self::SEEN_REGEXP, $op.getPath(), $matches)) {
-            throw new HandlerException(sprintf('Path "%s" does not match thread seen regexp.', $op.getPath()));
+            throw HandlerException(sprintf('Path "%s" does not match thread seen regexp.', $op.getPath()))
         }
-        $json = HttpClient::api_body_decode($op.getValue());
+        $json = HttpClient::api_body_decode($op.getValue())
         if (!is_array($json)) {
-            throw new HandlerException(sprintf('Failed to decode thread seen JSON: %s.', json_last_error_msg()));
+            throw HandlerException(sprintf('Failed to decode thread seen JSON: %s.', json_last_error_msg()))
         }
 
         this._target.emit(
             'thread-seen',
-            [$matches['thread_id'], $matches['user_id'], new DirectThreadLastSeenAt($json)]
-        );
+            [$matches['thread_id'], $matches['user_id'], DirectThreadLastSeenAt($json)]
+        )
     }
 
     /**
@@ -385,19 +385,19 @@ class DirectHandler : AbstractHandler : HandlerInterface
         PatchEventOp $op)
     {
         if (!this._hasListeners('direct-story-screenshot')) {
-            return;
+            return
         }
 
         if (!preg_match(self::SCREENSHOT_REGEXP, $op.getPath(), $matches)) {
-            throw new HandlerException(sprintf('Path "%s" does not match thread screenshot regexp.', $op.getPath()));
+            throw HandlerException(sprintf('Path "%s" does not match thread screenshot regexp.', $op.getPath()))
         }
 
-        $json = HttpClient::api_body_decode($op.getValue());
+        $json = HttpClient::api_body_decode($op.getValue())
         if (!is_array($json)) {
-            throw new HandlerException(sprintf('Failed to decode thread JSON: %s.', json_last_error_msg()));
+            throw HandlerException(sprintf('Failed to decode thread JSON: %s.', json_last_error_msg()))
         }
 
-        this._target.emit('direct-story-screenshot', [$matches['thread_id'], new StoryScreenshot($json)]);
+        this._target.emit('direct-story-screenshot', [$matches['thread_id'], StoryScreenshot($json)])
     }
 
     /**
@@ -411,24 +411,24 @@ class DirectHandler : AbstractHandler : HandlerInterface
         PatchEventOp $op)
     {
         if (!this._hasListeners('direct-story-created')) {
-            return;
+            return
         }
 
         if ($op.getPath() !== '/direct_v2/visual_thread/create') {
-            throw new HandlerException(sprintf('Path "%s" does not match story create path.', $op.getPath()));
+            throw HandlerException(sprintf('Path "%s" does not match story create path.', $op.getPath()))
         }
 
-        $json = HttpClient::api_body_decode($op.getValue());
+        $json = HttpClient::api_body_decode($op.getValue())
         if (!is_array($json)) {
-            throw new HandlerException(sprintf('Failed to decode inbox JSON: %s.', json_last_error_msg()));
+            throw HandlerException(sprintf('Failed to decode inbox JSON: %s.', json_last_error_msg()))
         }
 
-        $inbox = new DirectInbox($json);
-        $allThreads = $inbox.getThreads();
+        $inbox = DirectInbox($json)
+        $allThreads = $inbox.getThreads()
         if ($allThreads === null || !count($allThreads)) {
-            return;
+            return
         }
-        this._target.emit('direct-story-created', [reset($allThreads)]);
+        this._target.emit('direct-story-created', [reset($allThreads)])
     }
 
     /**
@@ -442,22 +442,22 @@ class DirectHandler : AbstractHandler : HandlerInterface
         PatchEventOp $op)
     {
         if (!this._hasListeners('direct-story-action')) {
-            return;
+            return
         }
 
         if (!preg_match(self::BADGE_REGEXP, $op.getPath(), $matches)) {
-            throw new HandlerException(sprintf('Path "%s" does not match story action regexp.', $op.getPath()));
+            throw HandlerException(sprintf('Path "%s" does not match story action regexp.', $op.getPath()))
         }
 
-        $json = HttpClient::api_body_decode($op.getValue());
+        $json = HttpClient::api_body_decode($op.getValue())
         if (!is_array($json)) {
-            throw new HandlerException(sprintf('Failed to decode story action JSON: %s.', json_last_error_msg()));
+            throw HandlerException(sprintf('Failed to decode story action JSON: %s.', json_last_error_msg()))
         }
 
         this._target.emit(
             'direct-story-action',
-            [$matches['thread_id'], new ActionBadge($json)]
-        );
+            [$matches['thread_id'], ActionBadge($json)]
+        )
     }
 
     /**
@@ -471,14 +471,14 @@ class DirectHandler : AbstractHandler : HandlerInterface
         PatchEventOp $op)
     {
         if (!this._hasListeners('thread-item-removed')) {
-            return;
+            return
         }
 
         if (!preg_match(self::ITEM_REGEXP, $op.getPath(), $matches)) {
-            throw new HandlerException(sprintf('Path "%s" does not match thread item regexp.', $op.getPath()));
+            throw HandlerException(sprintf('Path "%s" does not match thread item regexp.', $op.getPath()))
         }
 
-        this._target.emit('thread-item-removed', [$matches['thread_id'], $matches['item_id']]);
+        this._target.emit('thread-item-removed', [$matches['thread_id'], $matches['item_id']])
     }
 
     /**
@@ -492,21 +492,21 @@ class DirectHandler : AbstractHandler : HandlerInterface
         PatchEventOp $op)
     {
         if (!this._hasListeners('thread-notify')) {
-            return;
+            return
         }
 
         if (!preg_match(self::ITEM_REGEXP, $op.getPath(), $matches)) {
-            throw new HandlerException(sprintf('Path "%s" does not match thread item regexp.', $op.getPath()));
+            throw HandlerException(sprintf('Path "%s" does not match thread item regexp.', $op.getPath()))
         }
-        $json = HttpClient::api_body_decode($op.getValue());
+        $json = HttpClient::api_body_decode($op.getValue())
         if (!is_array($json)) {
-            throw new HandlerException(sprintf('Failed to decode thread item notify JSON: %s.', json_last_error_msg()));
+            throw HandlerException(sprintf('Failed to decode thread item notify JSON: %s.', json_last_error_msg()))
         }
 
         this._target.emit(
             'thread-notify',
-            [$matches['thread_id'], $matches['item_id'], new ThreadAction($json)]
-        );
+            [$matches['thread_id'], $matches['item_id'], ThreadAction($json)]
+        )
     }
 
     /**
@@ -521,7 +521,7 @@ class DirectHandler : AbstractHandler : HandlerInterface
         $path,
         $string)
     {
-        return strncmp($path, $string, strlen($string)) === 0;
+        return strncmp($path, $string, strlen($string)) === 0
     }
 
     /**
@@ -536,8 +536,8 @@ class DirectHandler : AbstractHandler : HandlerInterface
         $path,
         $string)
     {
-        $length = strlen($string);
+        $length = strlen($string)
 
-        return substr_compare($path, $string, strlen($path) - $length, $length) === 0;
+        return substr_compare($path, $string, strlen($path) - $length, $length) === 0
     }
 }

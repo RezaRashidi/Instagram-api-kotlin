@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DirectPendingInboxResponse.
@@ -38,5 +38,5 @@ class DirectPendingInboxResponse : Response
         'seq_id'                 => 'string',
         'pending_requests_total' => '',
         'inbox'                  => 'Model.DirectInbox',
-    ];
+    ]
 }

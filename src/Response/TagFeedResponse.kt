@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * TagFeedResponse.
@@ -73,5 +73,5 @@ class TagFeedResponse : Response
         'next_max_id'            => 'string',
         'next_media_ids'         => '',
         'next_page'              => 'int',
-    ];
+    ]
 }

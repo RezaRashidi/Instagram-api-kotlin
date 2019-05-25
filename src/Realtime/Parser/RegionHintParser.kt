@@ -1,16 +1,16 @@
-<?php
 
-package InstagramAPI.Realtime.Parser;
 
-import Fbns.Client.Thrift.Compact;
-import Fbns.Client.Thrift.Reader;
-import InstagramAPI.Realtime.Handler.RegionHintHandler;
-import InstagramAPI.Realtime.Message;
-import InstagramAPI.Realtime.ParserInterface;
+package InstagramAPI.Realtime.Parser
+
+import Fbns.Client.Thrift.Compact
+import Fbns.Client.Thrift.Reader
+import InstagramAPI.Realtime.Handler.RegionHintHandler
+import InstagramAPI.Realtime.Message
+import InstagramAPI.Realtime.ParserInterface
 
 class RegionHintParser : ParserInterface
 {
-    val FIELD_TOPIC = 1;
+    val FIELD_TOPIC = 1
 
     /**
      * {@inheritdoc}
@@ -22,14 +22,14 @@ class RegionHintParser : ParserInterface
         $topic,
         $payload)
     {
-        $region = null;
-        new Reader($payload, fun ($context, $field, $value, $type) import (&$region) {
+        $region = null
+        Reader($payload, fun ($context, $field, $value, $type) import (&$region) {
             if ($type === Compact::TYPE_BINARY && $field === self::FIELD_TOPIC) {
-                $region = $value;
+                $region = $value
             }
-        });
+        })
 
-        return [this._createMessage($region)];
+        return [this._createMessage($region)]
     }
 
     /**
@@ -46,9 +46,9 @@ class RegionHintParser : ParserInterface
         $region)
     {
         if ($region === null) {
-            throw new .RuntimeException('Incomplete region hint message.');
+            throw .RuntimeException('Incomplete region hint message.')
         }
 
-        return new Message(RegionHintHandler::MODULE, $region);
+        return Message(RegionHintHandler::MODULE, $region)
     }
 }

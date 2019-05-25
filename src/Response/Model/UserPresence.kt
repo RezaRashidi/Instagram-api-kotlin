@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * UserPresence.
@@ -31,5 +31,5 @@ class UserPresence : AutoPropertyMapper
         'last_activity_at_ms' => 'string',
         'is_active'           => 'bool',
         'in_threads'          => 'string[]',
-    ];
+    ]
 }

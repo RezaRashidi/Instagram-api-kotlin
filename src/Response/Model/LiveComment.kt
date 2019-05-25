@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * LiveComment.
@@ -26,5 +26,5 @@ class LiveComment : AutoPropertyMapper
         'comment' => 'Comment',
         'offset'  => '',
         'event'   => '',
-    ];
+    ]
 }

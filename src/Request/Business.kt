@@ -1,9 +1,9 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Constants;
-import InstagramAPI.Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Constants
+import InstagramAPI.Response
 
 /**
  * Business-account related funs.
@@ -25,13 +25,13 @@ class Business : RequestCollection
         $day = null)
     {
         if (empty($day)) {
-            $day = date('d');
+            $day = date('d')
         }
 
         return this.ig.request('insights/account_organic_insights/')
             .addParam('show_promotions_in_landing_page', 'true')
             .addParam('first', $day)
-            .getResponse(new Response.InsightsResponse());
+            .getResponse(Response.InsightsResponse())
     }
 
     /**
@@ -48,7 +48,7 @@ class Business : RequestCollection
     {
         return this.ig.request("insights/media_organic_insights/{$mediaId}/")
             .addParam('ig_sig_key_version', Constants::SIG_KEY_VERSION)
-            .getResponse(new Response.MediaInsightsResponse());
+            .getResponse(Response.MediaInsightsResponse())
     }
 
     /**
@@ -80,6 +80,6 @@ class Business : RequestCollection
                 ]),
             ]))
             .addPost('doc_id', '1926322010754880')
-            .getResponse(new Response.GraphqlResponse());
+            .getResponse(Response.GraphqlResponse())
     }
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * TagRelatedResponse.
@@ -28,5 +28,5 @@ class TagRelatedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'related' => 'Model.Related[]',
-    ];
+    ]
 }

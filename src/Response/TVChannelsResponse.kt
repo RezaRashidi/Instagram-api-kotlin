@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * TVChannelsResponse.
@@ -63,5 +63,5 @@ class TVChannelsResponse : Response
         'max_id'            => 'string',
         'seen_state'        => '',
         'user_dict'         => 'Model.User',
-    ];
+    ]
 }

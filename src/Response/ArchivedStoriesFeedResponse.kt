@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ArchivedStoriesFeedResponse.
@@ -43,5 +43,5 @@ class ArchivedStoriesFeedResponse : Response
         'num_results'            => 'int',
         'more_available'         => 'bool',
         'max_id'                 => 'string',
-    ];
+    ]
 }

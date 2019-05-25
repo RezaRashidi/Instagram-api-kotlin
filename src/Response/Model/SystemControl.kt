@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * SystemControl.
@@ -26,5 +26,5 @@ class SystemControl : AutoPropertyMapper
         'upload_max_bytes'                     => 'int',
         'upload_time_period_sec'               => 'int',
         'upload_bytes_per_update'              => 'int',
-    ];
+    ]
 }

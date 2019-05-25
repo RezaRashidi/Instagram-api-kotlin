@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ReelsMediaResponse.
@@ -33,5 +33,5 @@ class ReelsMediaResponse : Response
     val JSON_PROPERTY_MAP = [
         'reels_media' => 'Model.Reel[]',
         'reels'       => 'Model.UnpredictableKeys.ReelUnpredictableContainer',
-    ];
+    ]
 }

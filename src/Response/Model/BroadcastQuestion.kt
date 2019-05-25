@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * BroadcastQuestion.
@@ -41,5 +41,5 @@ class BroadcastQuestion : AutoPropertyMapper
         'user'               => 'User',
         'story_sticker_text' => 'string',
         'timestamp'          => 'string',
-    ];
+    ]
 }

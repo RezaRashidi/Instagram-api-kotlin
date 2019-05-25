@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * SuggestedBroadcastsResponse.
@@ -28,5 +28,5 @@ class SuggestedBroadcastsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'broadcasts' => 'Model.Broadcast[]',
-    ];
+    ]
 }

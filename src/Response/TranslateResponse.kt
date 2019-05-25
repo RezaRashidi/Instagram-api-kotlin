@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * TranslateResponse.
@@ -28,5 +28,5 @@ class TranslateResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'comment_translations' => 'Model.CommentTranslations[]',
-    ];
+    ]
 }

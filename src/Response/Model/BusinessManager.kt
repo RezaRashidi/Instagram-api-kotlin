@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * BusinessManager.
@@ -46,5 +46,5 @@ class BusinessManager : AutoPropertyMapper
         'stories_unit'          => 'BusinessNode',
         'promotions_unit'       => 'PromotionsUnit',
         'feed'                  => 'BusinessFeed',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectRankedRecipient.
@@ -21,5 +21,5 @@ class DirectRankedRecipient : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'thread' => 'DirectThread',
         'user'   => 'User',
-    ];
+    ]
 }

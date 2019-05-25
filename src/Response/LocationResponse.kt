@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * LocationResponse.
@@ -33,5 +33,5 @@ class LocationResponse : Response
     val JSON_PROPERTY_MAP = [
         'venues'     => 'Model.Location[]',
         'request_id' => 'string',
-    ];
+    ]
 }

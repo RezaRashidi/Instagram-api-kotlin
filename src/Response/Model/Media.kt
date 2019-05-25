@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Media.
@@ -36,5 +36,5 @@ class Media : AutoPropertyMapper
         'user'                             => 'User',
         'expiring_at'                      => '',
         'comment_threading_enabled'        => 'bool',
-    ];
+    ]
 }

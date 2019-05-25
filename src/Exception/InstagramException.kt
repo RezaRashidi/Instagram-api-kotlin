@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Exception;
 
-import InstagramAPI.Response;
+package InstagramAPI.Exception
+
+import InstagramAPI.Response
 
 /**
  * The core exception that ALL other library exceptions derive from.
@@ -16,7 +16,7 @@ class InstagramException : .RuntimeException
      *
      * @var Response|null
      */
-    private $_response = null;
+    private $_response = null
 
     /**
      * Check whether the exception has a full server response.
@@ -25,7 +25,7 @@ class InstagramException : .RuntimeException
      */
     public fun hasResponse()
     {
-        return this._response !== null ? true : false;
+        return this._response !== null ? true : false
     }
 
     /**
@@ -37,7 +37,7 @@ class InstagramException : .RuntimeException
      */
     public fun getResponse()
     {
-        return this._response;
+        return this._response
     }
 
     /**
@@ -48,6 +48,6 @@ class InstagramException : .RuntimeException
     public fun setResponse(
         Response $response = null)
     {
-        this._response = $response;
+        this._response = $response
     }
 }

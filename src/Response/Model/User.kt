@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * User.
@@ -617,5 +617,5 @@ class User : AutoPropertyMapper
         'school'                              => '',
         'is_bestie'                           => 'bool',
         'live_subscription_status'            => 'string',
-    ];
+    ]
 }

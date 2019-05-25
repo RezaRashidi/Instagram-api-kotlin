@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * LinkAddressBookResponse.
@@ -28,5 +28,5 @@ class LinkAddressBookResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'items' => 'Model.Suggestion[]',
-    ];
+    ]
 }

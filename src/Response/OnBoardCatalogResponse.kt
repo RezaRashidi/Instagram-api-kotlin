@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * OnBoardCatalogResponse.
@@ -38,5 +38,5 @@ class OnBoardCatalogResponse : Response
         'shopping_onboarding_state'         => 'string',
         'current_catalog_id'                => 'string',
         'is_business_targeted_for_shopping' => 'bool',
-    ];
+    ]
 }

@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Media.Constraints;
+
+package InstagramAPI.Media.Constraints
 
 /**
  * Instagram's Tv media constraints.
@@ -16,7 +16,7 @@ class TvConstraints : StoryConstraints
      *
      * @var float
      */
-    val MIN_RATIO = 0.5;
+    val MIN_RATIO = 0.5
 
     /**
      * Highest allowed aspect ratio.
@@ -27,7 +27,7 @@ class TvConstraints : StoryConstraints
      *
      * @var float
      */
-    val MAX_RATIO = 0.8;
+    val MAX_RATIO = 0.8
 
     /**
      * Minimum allowed video duration.
@@ -38,7 +38,7 @@ class TvConstraints : StoryConstraints
      *
      * @var float
      */
-    val MIN_DURATION = 15.0;
+    val MIN_DURATION = 15.0
 
     /**
      * Maximum allowed video duration.
@@ -49,35 +49,35 @@ class TvConstraints : StoryConstraints
      *
      * @var float
      */
-    val MAX_DURATION = 600.0;
+    val MAX_DURATION = 600.0
 
     /** {@inheritdoc} */
     public fun getTitle()
     {
-        return 'TV';
+        return 'TV'
     }
 
     /** {@inheritdoc} */
     public fun getMinAspectRatio()
     {
-        return self::MIN_RATIO;
+        return self::MIN_RATIO
     }
 
     /** {@inheritdoc} */
     public fun getMaxAspectRatio()
     {
-        return self::MAX_RATIO;
+        return self::MAX_RATIO
     }
 
     /** {@inheritdoc} */
     public fun getMinDuration()
     {
-        return self::MIN_DURATION;
+        return self::MIN_DURATION
     }
 
     /** {@inheritdoc} */
     public fun getMaxDuration()
     {
-        return self::MAX_DURATION;
+        return self::MAX_DURATION
     }
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * BusinessNode.
@@ -186,5 +186,5 @@ class BusinessNode : AutoPropertyMapper
         'followers_top_cities_graph'         => '',
         'summary_promotions'                 => '',
         'top_posts'                          => '',
-    ];
+    ]
 }

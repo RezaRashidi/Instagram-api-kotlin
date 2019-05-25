@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * CheckUsernameResponse.
@@ -43,5 +43,5 @@ class CheckUsernameResponse : Response
         'available'  => '',
         'error'      => '',
         'error_type' => '',
-    ];
+    ]
 }

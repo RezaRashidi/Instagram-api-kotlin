@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Headline.
@@ -66,5 +66,5 @@ class Headline : AutoPropertyMapper
         'media_id'       => 'string',
         'bit_flags'      => 'int',
         'status'         => '',
-    ];
+    ]
 }

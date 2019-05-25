@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectThread.
@@ -176,5 +176,5 @@ class DirectThread : AutoPropertyMapper
         'unseen_count'                  => '',
         'action_badge'                  => 'ActionBadge',
         'last_activity_at_secs'         => '',
-    ];
+    ]
 }

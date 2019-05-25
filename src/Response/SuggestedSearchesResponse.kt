@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * SuggestedSearchesResponse.
@@ -33,5 +33,5 @@ class SuggestedSearchesResponse : Response
     val JSON_PROPERTY_MAP = [
         'suggested'  => 'Model.Suggested[]',
         'rank_token' => 'string',
-    ];
+    ]
 }

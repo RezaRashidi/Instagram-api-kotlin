@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DirectThreadResponse.
@@ -28,5 +28,5 @@ class DirectThreadResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'thread' => 'Model.DirectThread',
-    ];
+    ]
 }

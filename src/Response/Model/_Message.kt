@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * _Message.
@@ -21,5 +21,5 @@ class _Message : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'key'  => '',
         'time' => '',
-    ];
+    ]
 }

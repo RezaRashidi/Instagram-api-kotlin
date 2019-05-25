@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * TopLive.
@@ -21,5 +21,5 @@ class TopLive : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'broadcast_owners' => 'User[]',
         'ranked_position'  => '',
-    ];
+    ]
 }

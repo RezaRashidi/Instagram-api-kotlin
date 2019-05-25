@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * AndroidLinks.
@@ -61,5 +61,5 @@ class AndroidLinks : AutoPropertyMapper
         'igUserId'          => 'string',
         'leadGenFormId'     => 'string',
         'canvasDocId'       => 'string',
-    ];
+    ]
 }

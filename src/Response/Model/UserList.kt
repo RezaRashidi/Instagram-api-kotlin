@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * UserList.
@@ -21,5 +21,5 @@ class UserList : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'position' => 'int',
         'user'     => 'User',
-    ];
+    ]
 }

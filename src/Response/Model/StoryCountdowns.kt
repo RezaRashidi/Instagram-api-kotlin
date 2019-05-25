@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoryCountdowns.
@@ -56,5 +56,5 @@ class StoryCountdowns : AutoPropertyMapper
         'is_pinned'         => 'int',
         'is_hidden'         => 'int',
         'countdown_sticker' => 'CountdownSticker',
-    ];
+    ]
 }

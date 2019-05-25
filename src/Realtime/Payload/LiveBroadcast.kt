@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Realtime.Payload;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Realtime.Payload
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * LiveBroadcast.
@@ -36,5 +36,5 @@ class LiveBroadcast : AutoPropertyMapper
         'is_periodic'          => '',
         'broadcast_message'    => 'string',
         'display_notification' => '',
-    ];
+    ]
 }

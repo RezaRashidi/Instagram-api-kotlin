@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * HighlightFeedResponse.
@@ -53,5 +53,5 @@ class HighlightFeedResponse : Response
         'show_empty_state'       => 'bool',
         'tray'                   => 'Model.StoryTray[]',
         'tv_channel'             => 'Model.StoryTvChannel',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * PermanentItem.
@@ -81,5 +81,5 @@ class PermanentItem : AutoPropertyMapper
         'reel_share'       => 'ReelShare',
         'client_context'   => 'string',
         'live_video_share' => 'LiveVideoShare',
-    ];
+    ]
 }

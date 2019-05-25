@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * QPNode.
@@ -46,5 +46,5 @@ class QPNode : AutoPropertyMapper
         'contextual_filters' => 'ContextualFilters',
         'template'           => 'Template',
         'creatives'          => 'Creative[]',
-    ];
+    ]
 }

@@ -1,49 +1,49 @@
-<?php
 
-package InstagramAPI.React;
 
-import Psr.Log.LoggerInterface;
-import React.EventLoop.LoopInterface;
+package InstagramAPI.React
+
+import Psr.Log.LoggerInterface
+import React.EventLoop.LoopInterface
 
 interface PersistentInterface
 {
     /** @var int Minimum reconnection interval (in sec) */
-    val MIN_RECONNECT_INTERVAL = 1;
+    val MIN_RECONNECT_INTERVAL = 1
     /** @var int Maximum reconnection interval (in sec) */
-    val MAX_RECONNECT_INTERVAL = 300; // 5 minutes
+    val MAX_RECONNECT_INTERVAL = 300 // 5 minutes
 
     /**
      * Returns a minimum allowed reconnection interval.
      *
      * @return int
      */
-    public fun getMinReconnectInterval();
+    public fun getMinReconnectInterval()
 
     /**
      * Returns a minimum allowed reconnection interval.
      *
      * @return int
      */
-    public fun getMaxReconnectInterval();
+    public fun getMaxReconnectInterval()
 
     /**
      * Returns whether persistence should be maintained.
      *
      * @return bool
      */
-    public fun isActive();
+    public fun isActive()
 
     /**
      * Returns the logger instance.
      *
      * @return LoggerInterface
      */
-    public fun getLogger();
+    public fun getLogger()
 
     /**
      * Returns the loop instance.
      *
      * @return LoopInterface
      */
-    public fun getLoop();
+    public fun getLoop()
 }

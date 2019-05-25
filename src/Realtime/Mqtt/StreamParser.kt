@@ -1,4 +1,4 @@
-<?php
+
 
 /*
  * This file is part of net-mqtt.
@@ -8,14 +8,14 @@
  * This source file is subject to the MIT license.
  */
 
-package InstagramAPI.Realtime.Mqtt;
+package InstagramAPI.Realtime.Mqtt
 
-import BinSoul.Net.Mqtt.Exception.EndOfStreamException;
-import BinSoul.Net.Mqtt.Exception.MalformedPacketException;
-import BinSoul.Net.Mqtt.Exception.UnknownPacketTypeException;
-import BinSoul.Net.Mqtt.Packet;
-import BinSoul.Net.Mqtt.PacketStream;
-import BinSoul.Net.Mqtt.StreamParser as BaseStreamParser;
+import BinSoul.Net.Mqtt.Exception.EndOfStreamException
+import BinSoul.Net.Mqtt.Exception.MalformedPacketException
+import BinSoul.Net.Mqtt.Exception.UnknownPacketTypeException
+import BinSoul.Net.Mqtt.Packet
+import BinSoul.Net.Mqtt.PacketStream
+import BinSoul.Net.Mqtt.StreamParser as BaseStreamParser
 
 /**
  * Provides methods to parse a stream of bytes into packets.
@@ -23,20 +23,20 @@ import BinSoul.Net.Mqtt.StreamParser as BaseStreamParser;
 class StreamParser : BaseStreamParser
 {
     /** @var PacketStream */
-    private $_buffer;
+    private $_buffer
     /** @var PacketFactory */
-    private $_factory;
+    private $_factory
     /** @var callable */
-    private $_errorCallback;
+    private $_errorCallback
 
     /**
      * Constructs an instance of this class.
      */
     public fun __construct()
     {
-        parent::__construct();
-        this._buffer = new PacketStream();
-        this._factory = new PacketFactory();
+        parent::__construct()
+        this._buffer = PacketStream()
+        this._factory = PacketFactory()
     }
 
     /**
@@ -47,7 +47,7 @@ class StreamParser : BaseStreamParser
     public fun onError(
         $callback)
     {
-        this._errorCallback = $callback;
+        this._errorCallback = $callback
     }
 
     /**
@@ -60,35 +60,35 @@ class StreamParser : BaseStreamParser
     public fun push(
         $data)
     {
-        this._buffer.write($data);
+        this._buffer.write($data)
 
-        $result = [];
+        $result = []
         while (this._buffer.getRemainingBytes() > 0) {
-            $type = this._buffer.readByte() >> 4;
+            $type = this._buffer.readByte() >> 4
 
             try {
-                $packet = this._factory.build($type);
+                $packet = this._factory.build($type)
             } catch (UnknownPacketTypeException $e) {
-                this._handleError($e);
-                continue;
+                this._handleError($e)
+                continue
             }
 
-            this._buffer.seek(-1);
-            $position = this._buffer.getPosition();
+            this._buffer.seek(-1)
+            $position = this._buffer.getPosition()
 
             try {
-                $packet.read(this._buffer);
-                $result[] = $packet;
-                this._buffer.cut();
+                $packet.read(this._buffer)
+                $result[] = $packet
+                this._buffer.cut()
             } catch (EndOfStreamException $e) {
-                this._buffer.setPosition($position);
-                break;
+                this._buffer.setPosition($position)
+                break
             } catch (MalformedPacketException $e) {
-                this._handleError($e);
+                this._handleError($e)
             }
         }
 
-        return $result;
+        return $result
     }
 
     /**
@@ -100,8 +100,8 @@ class StreamParser : BaseStreamParser
         $exception)
     {
         if (this._errorCallback !== null) {
-            $callback = this._errorCallback;
-            $callback($exception);
+            $callback = this._errorCallback
+            $callback($exception)
         }
     }
 }

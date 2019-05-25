@@ -1,32 +1,32 @@
-<?php
 
-package InstagramAPI;
 
-import Evenement.EventEmitterInterface;
-import Evenement.EventEmitterTrait;
-import InstagramAPI.React.Connector;
-import InstagramAPI.Realtime.Command.Direct as DirectCommand;
-import InstagramAPI.Realtime.Command.IrisSubscribe;
-import InstagramAPI.Realtime.Mqtt.Auth;
-import InstagramAPI.Realtime.Payload.ZeroProvisionEvent;
-import Psr.Log.LoggerInterface;
-import Psr.Log.NullLogger;
-import React.EventLoop.LoopInterface;
+package InstagramAPI
+
+import Evenement.EventEmitterInterface
+import Evenement.EventEmitterTrait
+import InstagramAPI.React.Connector
+import InstagramAPI.Realtime.Command.Direct as DirectCommand
+import InstagramAPI.Realtime.Command.IrisSubscribe
+import InstagramAPI.Realtime.Mqtt.Auth
+import InstagramAPI.Realtime.Payload.ZeroProvisionEvent
+import Psr.Log.LoggerInterface
+import Psr.Log.NullLogger
+import React.EventLoop.LoopInterface
 
 /**
  * The following events are emitted:
- *  - live-started - New live broadcast has been started.
+ *  - live-started - live broadcast has been started.
  *  - live-stopped - An existing live broadcast has been stopped.
- *  - direct-story-created - New direct story has been created.
- *  - direct-story-updated - New item has been created in direct story.
+ *  - direct-story-created - direct story has been created.
+ *  - direct-story-updated - item has been created in direct story.
  *  - direct-story-screenshot - Someone has taken a screenshot of your direct story.
  *  - direct-story-action - Direct story badge has been updated with some action.
- *  - thread-created - New thread has been created.
+ *  - thread-created - thread has been created.
  *  - thread-updated - An existing thread has been updated.
  *  - thread-notify - Someone has created ActionLog item in thread.
  *  - thread-seen - Someone has updated their last seen position.
  *  - thread-activity - Someone has created an activity (like start/stop typing) in thread.
- *  - thread-item-created - New item has been created in thread.
+ *  - thread-item-created - item has been created in thread.
  *  - thread-item-updated - An existing item has been updated in thread.
  *  - thread-item-removed - An existing item has been removed from thread.
  *  - client-context-ack - Acknowledgment for client_context has been received.
@@ -38,19 +38,19 @@ import React.EventLoop.LoopInterface;
  */
 class Realtime : EventEmitterInterface
 {
-    import EventEmitterTrait;
+    import EventEmitterTrait
 
     /** @var Instagram */
-    protected $_instagram;
+    protected $_instagram
 
     /** @var LoopInterface */
-    protected $_loop;
+    protected $_loop
 
     /** @var LoggerInterface */
-    protected $_logger;
+    protected $_logger
 
     /** @var Realtime.Mqtt */
-    protected $_client;
+    protected $_client
 
     /**
      * Constructor.
@@ -67,37 +67,37 @@ class Realtime : EventEmitterInterface
         LoggerInterface $logger = null)
     {
         if (PHP_SAPI !== 'cli') {
-            throw new .RuntimeException('The Realtime client can only run from the command line.');
+            throw .RuntimeException('The Realtime client can only run from the command line.')
         }
 
-        this._instagram = $instagram;
-        this._loop = $loop;
-        this._logger = $logger;
+        this._instagram = $instagram
+        this._loop = $loop
+        this._logger = $logger
         if (this._logger === null) {
-            this._logger = new NullLogger();
+            this._logger = NullLogger()
         }
 
-        this._client = this._buildMqttClient();
+        this._client = this._buildMqttClient()
         this.on('region-hint', fun ($region) {
-            this._instagram.settings.set('datacenter', $region);
-            this._client.setAdditionalOption('datacenter', $region);
-        });
+            this._instagram.settings.set('datacenter', $region)
+            this._client.setAdditionalOption('datacenter', $region)
+        })
         this.on('zero-provision', fun (ZeroProvisionEvent $event) {
             if ($event.getZeroProvisionedTime() === null) {
-                return;
+                return
             }
             if ($event.getProductName() !== 'select') {
-                return;
+                return
             }
             // TODO check whether we already have a fresh token.
 
-            this._instagram.client.zeroRating().reset();
-            this._instagram.internal.fetchZeroRatingToken('mqtt_token_push');
-        });
+            this._instagram.client.zeroRating().reset()
+            this._instagram.internal.fetchZeroRatingToken('mqtt_token_push')
+        })
     }
 
     /**
-     * Build a new MQTT client.
+     * Build a MQTT client.
      *
      * @return Realtime.Mqtt
      */
@@ -106,18 +106,18 @@ class Realtime : EventEmitterInterface
         $additionalOptions = [
             'datacenter'       => this._instagram.settings.get('datacenter'),
             'disable_presence' => (bool) this._instagram.settings.get('presence_disabled'),
-        ];
+        ]
 
-        return new Realtime.Mqtt(
+        return Realtime.Mqtt(
             this,
-            new Connector(this._instagram, this._loop),
-            new Auth(this._instagram),
+            Connector(this._instagram, this._loop),
+            Auth(this._instagram),
             this._instagram.device,
             this._instagram,
             this._loop,
             this._logger,
             $additionalOptions
-        );
+        )
     }
 
     /**
@@ -125,7 +125,7 @@ class Realtime : EventEmitterInterface
      */
     public fun start()
     {
-        this._client.start();
+        this._client.start()
     }
 
     /**
@@ -133,7 +133,7 @@ class Realtime : EventEmitterInterface
      */
     public fun stop()
     {
-        this._client.stop();
+        this._client.stop()
     }
 
     /**
@@ -149,14 +149,14 @@ class Realtime : EventEmitterInterface
         $threadItemId)
     {
         try {
-            this._client.sendCommand(new DirectCommand.MarkSeen($threadId, $threadItemId));
+            this._client.sendCommand(DirectCommand.MarkSeen($threadId, $threadItemId))
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
 
-            return false;
+            return false
         }
 
-        return true;
+        return true
     }
 
     /**
@@ -172,14 +172,14 @@ class Realtime : EventEmitterInterface
         $activityFlag)
     {
         try {
-            $command = new DirectCommand.IndicateActivity($threadId, $activityFlag);
-            this._client.sendCommand($command);
+            $command = DirectCommand.IndicateActivity($threadId, $activityFlag)
+            this._client.sendCommand($command)
 
-            return $command.getClientContext();
+            return $command.getClientContext()
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
 
-            return false;
+            return false
         }
     }
 
@@ -189,7 +189,7 @@ class Realtime : EventEmitterInterface
      * @param string $threadId Thread ID.
      * @param string $message  Text message.
      * @param array  $options  An associative array of optional parameters, including:
-     *                         "client_context" - predefined UUID used to prevent double-posting;
+     *                         "client_context" - predefined UUID used to prevent double-posting
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
@@ -199,14 +199,14 @@ class Realtime : EventEmitterInterface
         array $options = [])
     {
         try {
-            $command = new DirectCommand.SendText($threadId, $message, $options);
-            this._client.sendCommand($command);
+            $command = DirectCommand.SendText($threadId, $message, $options)
+            this._client.sendCommand($command)
 
-            return $command.getClientContext();
+            return $command.getClientContext()
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
 
-            return false;
+            return false
         }
     }
 
@@ -215,7 +215,7 @@ class Realtime : EventEmitterInterface
      *
      * @param string $threadId Thread ID.
      * @param array  $options  An associative array of optional parameters, including:
-     *                         "client_context" - predefined UUID used to prevent double-posting;
+     *                         "client_context" - predefined UUID used to prevent double-posting
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
@@ -224,14 +224,14 @@ class Realtime : EventEmitterInterface
         array $options = [])
     {
         try {
-            $command = new DirectCommand.SendLike($threadId, $options);
-            this._client.sendCommand($command);
+            $command = DirectCommand.SendLike($threadId, $options)
+            this._client.sendCommand($command)
 
-            return $command.getClientContext();
+            return $command.getClientContext()
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
 
-            return false;
+            return false
         }
     }
 
@@ -241,7 +241,7 @@ class Realtime : EventEmitterInterface
      * @param string $threadId Thread ID.
      * @param string $mediaId  The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param array  $options  An associative array of additional parameters, including:
-     *                         "client_context" (optional) - predefined UUID used to prevent double-posting;
+     *                         "client_context" (optional) - predefined UUID used to prevent double-posting
      *                         "text" (optional) - text message.
      *
      * @return bool|string Client context or false if sending is unavailable.
@@ -252,18 +252,18 @@ class Realtime : EventEmitterInterface
         array $options = [])
     {
         if (!this._isRtcReshareEnabled()) {
-            return false;
+            return false
         }
 
         try {
-            $command = new DirectCommand.SendPost($threadId, $mediaId, $options);
-            this._client.sendCommand($command);
+            $command = DirectCommand.SendPost($threadId, $mediaId, $options)
+            this._client.sendCommand($command)
 
-            return $command.getClientContext();
+            return $command.getClientContext()
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
 
-            return false;
+            return false
         }
     }
 
@@ -273,7 +273,7 @@ class Realtime : EventEmitterInterface
      * @param string $threadId Thread ID.
      * @param string $storyId  The story ID in Instagram's internal format (ie "3482384834_43294").
      * @param array  $options  An associative array of additional parameters, including:
-     *                         "client_context" (optional) - predefined UUID used to prevent double-posting;
+     *                         "client_context" (optional) - predefined UUID used to prevent double-posting
      *                         "text" (optional) - text message.
      *
      * @return bool|string Client context or false if sending is unavailable.
@@ -284,18 +284,18 @@ class Realtime : EventEmitterInterface
         array $options = [])
     {
         if (!this._isRtcReshareEnabled()) {
-            return false;
+            return false
         }
 
         try {
-            $command = new DirectCommand.SendStory($threadId, $storyId, $options);
-            this._client.sendCommand($command);
+            $command = DirectCommand.SendStory($threadId, $storyId, $options)
+            this._client.sendCommand($command)
 
-            return $command.getClientContext();
+            return $command.getClientContext()
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
 
-            return false;
+            return false
         }
     }
 
@@ -305,7 +305,7 @@ class Realtime : EventEmitterInterface
      * @param string $threadId Thread ID.
      * @param string $userId   Numerical UserPK ID.
      * @param array  $options  An associative array of additional parameters, including:
-     *                         "client_context" (optional) - predefined UUID used to prevent double-posting;
+     *                         "client_context" (optional) - predefined UUID used to prevent double-posting
      *                         "text" (optional) - text message.
      *
      * @return bool|string Client context or false if sending is unavailable.
@@ -316,18 +316,18 @@ class Realtime : EventEmitterInterface
         array $options = [])
     {
         if (!this._isRtcReshareEnabled()) {
-            return false;
+            return false
         }
 
         try {
-            $command = new DirectCommand.SendProfile($threadId, $userId, $options);
-            this._client.sendCommand($command);
+            $command = DirectCommand.SendProfile($threadId, $userId, $options)
+            this._client.sendCommand($command)
 
-            return $command.getClientContext();
+            return $command.getClientContext()
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
 
-            return false;
+            return false
         }
     }
 
@@ -340,7 +340,7 @@ class Realtime : EventEmitterInterface
      * @param string $threadId   Thread ID.
      * @param string $locationId Instagram's internal ID for the location.
      * @param array  $options    An associative array of additional parameters, including:
-     *                           "client_context" (optional) - predefined UUID used to prevent double-posting;
+     *                           "client_context" (optional) - predefined UUID used to prevent double-posting
      *                           "text" (optional) - text message.
      *
      * @return bool|string Client context or false if sending is unavailable.
@@ -351,18 +351,18 @@ class Realtime : EventEmitterInterface
         array $options = [])
     {
         if (!this._isRtcReshareEnabled()) {
-            return false;
+            return false
         }
 
         try {
-            $command = new DirectCommand.SendLocation($threadId, $locationId, $options);
-            this._client.sendCommand($command);
+            $command = DirectCommand.SendLocation($threadId, $locationId, $options)
+            this._client.sendCommand($command)
 
-            return $command.getClientContext();
+            return $command.getClientContext()
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
 
-            return false;
+            return false
         }
     }
 
@@ -372,7 +372,7 @@ class Realtime : EventEmitterInterface
      * @param string $threadId Thread ID.
      * @param string $hashtag  Hashtag to share.
      * @param array  $options  An associative array of additional parameters, including:
-     *                         "client_context" (optional) - predefined UUID used to prevent double-posting;
+     *                         "client_context" (optional) - predefined UUID used to prevent double-posting
      *                         "text" (optional) - text message.
      *
      * @return bool|string Client context or false if sending is unavailable.
@@ -383,18 +383,18 @@ class Realtime : EventEmitterInterface
         array $options = [])
     {
         if (!this._isRtcReshareEnabled()) {
-            return false;
+            return false
         }
 
         try {
-            $command = new DirectCommand.SendHashtag($threadId, $hashtag, $options);
-            this._client.sendCommand($command);
+            $command = DirectCommand.SendHashtag($threadId, $hashtag, $options)
+            this._client.sendCommand($command)
 
-            return $command.getClientContext();
+            return $command.getClientContext()
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
 
-            return false;
+            return false
         }
     }
 
@@ -405,7 +405,7 @@ class Realtime : EventEmitterInterface
      * @param string $threadItemId Thread ID.
      * @param string $reactionType One of: "like".
      * @param array  $options      An associative array of optional parameters, including:
-     *                             "client_context" - predefined UUID used to prevent double-posting;
+     *                             "client_context" - predefined UUID used to prevent double-posting
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
@@ -416,20 +416,20 @@ class Realtime : EventEmitterInterface
         array $options = [])
     {
         try {
-            $command = new DirectCommand.SendReaction(
+            $command = DirectCommand.SendReaction(
                 $threadId,
                 $threadItemId,
                 $reactionType,
                 DirectCommand.SendReaction::STATUS_CREATED,
                 $options
-            );
-            this._client.sendCommand($command);
+            )
+            this._client.sendCommand($command)
 
-            return $command.getClientContext();
+            return $command.getClientContext()
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
 
-            return false;
+            return false
         }
     }
 
@@ -440,7 +440,7 @@ class Realtime : EventEmitterInterface
      * @param string $threadItemId Thread ID.
      * @param string $reactionType One of: "like".
      * @param array  $options      An associative array of optional parameters, including:
-     *                             "client_context" - predefined UUID used to prevent double-posting;
+     *                             "client_context" - predefined UUID used to prevent double-posting
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
@@ -451,20 +451,20 @@ class Realtime : EventEmitterInterface
         array $options = [])
     {
         try {
-            $command = new DirectCommand.SendReaction(
+            $command = DirectCommand.SendReaction(
                 $threadId,
                 $threadItemId,
                 $reactionType,
                 DirectCommand.SendReaction::STATUS_DELETED,
                 $options
-            );
-            this._client.sendCommand($command);
+            )
+            this._client.sendCommand($command)
 
-            return $command.getClientContext();
+            return $command.getClientContext()
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
 
-            return false;
+            return false
         }
     }
 
@@ -477,9 +477,9 @@ class Realtime : EventEmitterInterface
         $sequenceId)
     {
         try {
-            this._client.sendCommand(new IrisSubscribe($sequenceId));
+            this._client.sendCommand(IrisSubscribe($sequenceId))
         } catch (.Exception $e) {
-            this._logger.warning($e.getMessage());
+            this._logger.warning($e.getMessage())
         }
     }
 
@@ -490,6 +490,6 @@ class Realtime : EventEmitterInterface
      */
     protected fun _isRtcReshareEnabled()
     {
-        return this._instagram.isExperimentEnabled('ig_android_rtc_reshare', 'is_rtc_reshare_enabled');
+        return this._instagram.isExperimentEnabled('ig_android_rtc_reshare', 'is_rtc_reshare_enabled')
     }
 }

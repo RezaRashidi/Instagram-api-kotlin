@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ProductImage.
@@ -16,5 +16,5 @@ class ProductImage : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         'image_versions2' => 'Image_Versions2',
-    ];
+    ]
 }

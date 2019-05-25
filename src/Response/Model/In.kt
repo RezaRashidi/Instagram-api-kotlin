@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * In.
@@ -41,5 +41,5 @@ class In : AutoPropertyMapper
         'start_time_in_video_in_sec' => '',
         'duration_in_video_in_sec'   => '',
         'product'                    => 'Product',
-    ];
+    ]
 }

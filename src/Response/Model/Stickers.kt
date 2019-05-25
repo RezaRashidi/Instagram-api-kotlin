@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Stickers.
@@ -51,5 +51,5 @@ class Stickers : AutoPropertyMapper
         'image_width'            => '',
         'name'                   => '',
         'image_url'              => 'string',
-    ];
+    ]
 }

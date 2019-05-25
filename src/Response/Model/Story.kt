@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Story.
@@ -36,5 +36,5 @@ class Story : AutoPropertyMapper
         'args'       => 'Args',
         'type'       => 'int',
         'story_type' => 'int',
-    ];
+    ]
 }

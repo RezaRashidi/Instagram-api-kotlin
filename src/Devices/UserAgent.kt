@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Devices;
 
-import InstagramAPI.Constants;
+package InstagramAPI.Devices
+
+import InstagramAPI.Constants
 
 /**
  * Android device User-Agent builder.
@@ -16,7 +16,7 @@ class UserAgent
      *
      * @var string
      */
-    val USER_AGENT_FORMAT = 'Instagram %s Android (%s/%s; %s; %s; %s; %s; %s; %s; %s; %s)';
+    val USER_AGENT_FORMAT = 'Instagram %s Android (%s/%s %s %s %s %s %s %s %s %s)'
 
     /**
      * Generates a User Agent string from a DeviceInterface.
@@ -33,9 +33,9 @@ class UserAgent
         DeviceInterface $device)
     {
         // Build the appropriate "Manufacturer" or "Manufacturer/Brand" string.
-        $manufacturerWithBrand = $device.getManufacturer();
+        $manufacturerWithBrand = $device.getManufacturer()
         if ($device.getBrand() !== null) {
-            $manufacturerWithBrand .= '/'.$device.getBrand();
+            $manufacturerWithBrand .= '/'.$device.getBrand()
         }
 
         // Generate the final User-Agent string.
@@ -52,7 +52,7 @@ class UserAgent
             $device.getCPU(),
             $userLocale, // Locale ("en_US").
             Constants::VERSION_CODE
-        );
+        )
     }
 
     /**
@@ -65,20 +65,20 @@ class UserAgent
     protected static fun _escapeFbString(
         $string)
     {
-        $result = '';
-        for ($i = 0; $i < strlen($string); ++$i) {
-            $char = $string[$i];
+        $result = ''
+        for ($i = 0 $i < strlen($string) ++$i) {
+            $char = $string[$i]
             if ($char === '&') {
-                $result .= '&amp;';
+                $result .= '&amp'
             } elseif ($char < ' ' || $char > '~') {
-                $result .= sprintf('&#%d;', ord($char));
+                $result .= sprintf('&#%d', ord($char))
             } else {
-                $result .= $char;
+                $result .= $char
             }
         }
-        $result = strtr($result, ['/' => '-', ';' => '-']);
+        $result = strtr($result, ['/' => '-', '' => '-'])
 
-        return $result;
+        return $result
     }
 
     /**
@@ -101,8 +101,8 @@ class UserAgent
         $userLocale,
         DeviceInterface $device)
     {
-        list($width, $height) = explode('x', $device.getResolution());
-        $density = round(str_replace('dpi', '', $device.getDPI()) / 160, 1);
+        list($width, $height) = explode('x', $device.getResolution())
+        $density = round(str_replace('dpi', '', $device.getDPI()) / 160, 1)
         $result = [
             'FBAN' => $appName,
             'FBAV' => $appVersion,
@@ -118,12 +118,12 @@ class UserAgent
             'FBLR' => 0, // android.hardware.ram.low
             'FBBK' => 1, // val (at least in 10.12.0).
             'FBCA' => self::_escapeFbString(GoodDevices::CPU_ABI),
-        ];
+        ]
         array_walk($result, fun (&$value, $key) {
-            $value = sprintf('%s/%s', $key, $value);
-        });
+            $value = sprintf('%s/%s', $key, $value)
+        })
 
         // Trailing semicolon is essential.
-        return '['.implode(';', $result).';]';
+        return '['.implode('', $result).']'
     }
 }

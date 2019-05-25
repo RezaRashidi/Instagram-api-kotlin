@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StaticStickers.
@@ -26,5 +26,5 @@ class StaticStickers : AutoPropertyMapper
         'include_in_recent' => '',
         'id'                => 'string',
         'stickers'          => 'Stickers[]',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * LocationItem.
@@ -31,5 +31,5 @@ class LocationItem : AutoPropertyMapper
         'subtitle'      => '',
         'location'      => 'Location',
         'title'         => '',
-    ];
+    ]
 }

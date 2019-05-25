@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Realtime.Payload.Event;
 
-import InstagramAPI.Realtime.Payload.RealtimeEvent;
+package InstagramAPI.Realtime.Payload.Event
+
+import InstagramAPI.Realtime.Payload.RealtimeEvent
 
 /**
  * PatchEvent.
@@ -40,5 +40,5 @@ class PatchEvent : RealtimeEvent
         'seq_id'        => 'int',
         'lazy'          => 'bool',
         'num_endpoints' => 'int',
-    ];
+    ]
 }

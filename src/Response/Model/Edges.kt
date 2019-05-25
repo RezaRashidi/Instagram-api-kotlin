@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Edges.
@@ -26,5 +26,5 @@ class Edges : AutoPropertyMapper
         'priority'      => 'int',
         'time_range'    => 'TimeRange',
         'node'          => 'QPNode',
-    ];
+    ]
 }

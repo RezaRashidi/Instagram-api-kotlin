@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Realtime.Payload.Event;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Realtime.Payload.Event
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * PatchEventOp.
@@ -30,10 +30,10 @@ import InstagramAPI.AutoPropertyMapper;
  */
 class PatchEventOp : AutoPropertyMapper
 {
-    val ADD = 'add';
-    val REMOVE = 'remove';
-    val REPLACE = 'replace';
-    val NOTIFY = 'notify';
+    val ADD = 'add'
+    val REMOVE = 'remove'
+    val REPLACE = 'replace'
+    val NOTIFY = 'notify'
 
     val JSON_PROPERTY_MAP = [
         'op'            => '',
@@ -41,5 +41,5 @@ class PatchEventOp : AutoPropertyMapper
         'value'         => '',
         'ts'            => '',
         'doublePublish' => '',
-    ];
+    ]
 }

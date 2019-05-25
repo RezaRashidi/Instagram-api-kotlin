@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Responder.
@@ -36,5 +36,5 @@ class Responder : AutoPropertyMapper
         'id'                  => 'string',
         'user'                => 'User',
         'ts'                  => 'int',
-    ];
+    ]
 }

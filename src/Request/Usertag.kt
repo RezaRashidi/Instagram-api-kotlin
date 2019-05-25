@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Response
 
 /**
  * funs related to managing and exploring user tags in media.
@@ -33,9 +33,9 @@ class Usertag : RequestCollection
             'in'      => [
                 ['position' => $position, 'user_id' => $userId],
             ],
-        ];
+        ]
 
-        return this.ig.media.edit($mediaId, $captionText, ['usertags' => $usertags]);
+        return this.ig.media.edit($mediaId, $captionText, ['usertags' => $usertags])
     }
 
     /**
@@ -60,9 +60,9 @@ class Usertag : RequestCollection
                 $userId,
             ],
             'in'      => [],
-        ];
+        ]
 
-        return this.ig.media.edit($mediaId, $captionText, ['usertags' => $usertags]);
+        return this.ig.media.edit($mediaId, $captionText, ['usertags' => $usertags])
     }
 
     /**
@@ -81,7 +81,7 @@ class Usertag : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.MediaInfoResponse());
+            .getResponse(Response.MediaInfoResponse())
     }
 
     /**
@@ -98,13 +98,13 @@ class Usertag : RequestCollection
         $userId,
         $maxId = null)
     {
-        $request = this.ig.request("usertags/{$userId}/feed/");
+        $request = this.ig.request("usertags/{$userId}/feed/")
 
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.UsertagsResponse());
+        return $request.getResponse(Response.UsertagsResponse())
     }
 
     /**
@@ -119,7 +119,7 @@ class Usertag : RequestCollection
     public fun getSelfUserFeed(
         $maxId = null)
     {
-        return this.getUserFeed(this.ig.account_id, $maxId);
+        return this.getUserFeed(this.ig.account_id, $maxId)
     }
 
     /**
@@ -139,6 +139,6 @@ class Usertag : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('enabled', (int) $enabled)
-            .getResponse(new Response.ReviewPreferenceResponse());
+            .getResponse(Response.ReviewPreferenceResponse())
     }
 }

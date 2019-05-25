@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Realtime.Payload;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Realtime.Payload
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoryScreenshot.
@@ -24,5 +24,5 @@ class StoryScreenshot : AutoPropertyMapper
          * A number describing what type of media this is.
          */
         'media_type'       => 'int',
-    ];
+    ]
 }

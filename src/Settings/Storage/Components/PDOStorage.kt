@@ -1,10 +1,10 @@
-<?php
 
-package InstagramAPI.Settings.Storage.Components;
 
-import InstagramAPI.Exception.SettingsException;
-import InstagramAPI.Settings.StorageInterface;
-import PDO;
+package InstagramAPI.Settings.Storage.Components
+
+import InstagramAPI.Exception.SettingsException
+import InstagramAPI.Settings.StorageInterface
+import PDO
 
 /**
  * Re-usable PDO storage component, for easily building PDO-based backends.
@@ -16,22 +16,22 @@ import PDO;
 abstract class PDOStorage : StorageInterface
 {
     /** @var string Human name of the backend, such as "MySQL" or "SQLite". */
-    protected $_backendName;
+    protected $_backendName
 
     /** @var .PDO Our connection to the database. */
-    protected $_pdo;
+    protected $_pdo
 
     /** @var bool Whether we own the PDO connection or are borrowing it. */
-    protected $_isSharedPDO;
+    protected $_isSharedPDO
 
     /** @var string Which table to store the settings in. */
-    protected $_dbTableName;
+    protected $_dbTableName
 
     /** @var string Current Instagram username that all settings belong to. */
-    protected $_username;
+    protected $_username
 
     /** @var array A cache of important columns from the user's database row. */
-    protected $_cache;
+    protected $_cache
 
     /**
      * Constructor.
@@ -43,7 +43,7 @@ abstract class PDOStorage : StorageInterface
     public fun __construct(
         $backendName = 'PDO')
     {
-        this._backendName = $backendName;
+        this._backendName = $backendName
     }
 
     /**
@@ -56,41 +56,41 @@ abstract class PDOStorage : StorageInterface
     {
         this._dbTableName = (isset($locationConfig['dbtablename'])
                                ? $locationConfig['dbtablename']
-                               : 'user_sessions');
+                               : 'user_sessions')
 
         if (isset($locationConfig['pdo'])) {
-            // Pre-provided connection to re-import instead of creating a new one.
+            // Pre-provided connection to re-import instead of creating a one.
             if (!$locationConfig['pdo'] instanceof PDO) {
-                throw new SettingsException('The custom PDO object is invalid.');
+                throw SettingsException('The custom PDO object is invalid.')
             }
-            this._isSharedPDO = true;
-            this._pdo = $locationConfig['pdo'];
+            this._isSharedPDO = true
+            this._pdo = $locationConfig['pdo']
         } else {
             // We should connect for the user, by creating our own PDO object.
-            this._isSharedPDO = false;
+            this._isSharedPDO = false
 
             try {
-                this._pdo = this._createPDO($locationConfig);
+                this._pdo = this._createPDO($locationConfig)
             } catch (.Exception $e) {
-                throw new SettingsException(this._backendName.' Connection Failed: '.$e.getMessage());
+                throw SettingsException(this._backendName.' Connection Failed: '.$e.getMessage())
             }
         }
 
         try {
-            this._configurePDO();
+            this._configurePDO()
         } catch (.Exception $e) {
-            throw new SettingsException(this._backendName.' Configuration Failed: '.$e.getMessage());
+            throw SettingsException(this._backendName.' Configuration Failed: '.$e.getMessage())
         }
 
         try {
-            this._autoCreateTable();
+            this._autoCreateTable()
         } catch (.Exception $e) {
-            throw new SettingsException(this._backendName.' Error: '.$e.getMessage());
+            throw SettingsException(this._backendName.' Error: '.$e.getMessage())
         }
     }
 
     /**
-     * Create a new PDO connection to the database.
+     * Create a PDO connection to the database.
      *
      * @param array $locationConfig Configuration parameters for the location.
      *
@@ -99,7 +99,7 @@ abstract class PDOStorage : StorageInterface
      * @return .PDO The database connection.
      */
     abstract protected fun _createPDO(
-        array $locationConfig);
+        array $locationConfig)
 
     /**
      * Configures the connection for our needs.
@@ -115,9 +115,9 @@ abstract class PDOStorage : StorageInterface
      */
     protected fun _configurePDO()
     {
-        this._pdo.setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        this._pdo.setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        this._enableUTF8();
+        this._pdo.setAttribute(PDO::ATTR_EMULATE_PREPARES, false)
+        this._pdo.setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION)
+        this._enableUTF8()
     }
 
     /**
@@ -127,17 +127,17 @@ abstract class PDOStorage : StorageInterface
      *
      * @throws .Exception
      */
-    abstract protected fun _enableUTF8();
+    abstract protected fun _enableUTF8()
 
     /**
      * Automatically create the database table if necessary.
      *
      * @throws .Exception
      */
-    abstract protected fun _autoCreateTable();
+    abstract protected fun _autoCreateTable()
 
     /**
-     * Automatically writes to the correct user's row and caches the new value.
+     * Automatically writes to the correct user's row and caches the value.
      *
      * @param string $column The database column.
      * @param string $data   Data to be written.
@@ -149,37 +149,37 @@ abstract class PDOStorage : StorageInterface
         $data)
     {
         if ($column != 'settings' && $column != 'cookies') {
-            throw new SettingsException(sprintf(
+            throw SettingsException(sprintf(
                 'Attempt to write to illegal database column "%s".',
                 $column
-            ));
+            ))
         }
 
         try {
             // Update if the user row already exists, otherwise insert.
-            $binds = [':data' => $data];
+            $binds = [':data' => $data]
             if (this._cache['id'] !== null) {
-                $sql = "UPDATE `{this._dbTableName}` SET {$column}=:data WHERE (id=:id)";
-                $binds[':id'] = this._cache['id'];
+                $sql = "UPDATE `{this._dbTableName}` SET {$column}=:data WHERE (id=:id)"
+                $binds[':id'] = this._cache['id']
             } else {
-                $sql = "INSERT INTO `{this._dbTableName}` (username, {$column}) VALUES (:username, :data)";
-                $binds[':username'] = this._username;
+                $sql = "INSERT INTO `{this._dbTableName}` (username, {$column}) VALUES (:username, :data)"
+                $binds[':username'] = this._username
             }
 
-            $sth = this._pdo.prepare($sql);
-            $sth.execute($binds);
+            $sth = this._pdo.prepare($sql)
+            $sth.execute($binds)
 
             // Keep track of the database row ID for the user.
             if (this._cache['id'] === null) {
-                this._cache['id'] = this._pdo.lastinsertid();
+                this._cache['id'] = this._pdo.lastinsertid()
             }
 
-            $sth.closeCursor();
+            $sth.closeCursor()
 
-            // Cache the new value.
-            this._cache[$column] = $data;
+            // Cache the value.
+            this._cache[$column] = $data
         } catch (.Exception $e) {
-            throw new SettingsException(this._backendName.' Error: '.$e.getMessage());
+            throw SettingsException(this._backendName.' Error: '.$e.getMessage())
         }
     }
 
@@ -192,16 +192,16 @@ abstract class PDOStorage : StorageInterface
         $username)
     {
         // Check whether a row exists for that username.
-        $sth = this._pdo.prepare("SELECT EXISTS(SELECT 1 FROM `{this._dbTableName}` WHERE (username=:username))");
-        $sth.execute([':username' => $username]);
-        $result = $sth.fetchColumn();
-        $sth.closeCursor();
+        $sth = this._pdo.prepare("SELECT EXISTS(SELECT 1 FROM `{this._dbTableName}` WHERE (username=:username))")
+        $sth.execute([':username' => $username])
+        $result = $sth.fetchColumn()
+        $sth.closeCursor()
 
-        return $result > 0 ? true : false;
+        return $result > 0 ? true : false
     }
 
     /**
-     * Move the internal data for a username to a new username.
+     * Move the internal data for a username to a username.
      *
      * {@inheritdoc}
      */
@@ -212,28 +212,28 @@ abstract class PDOStorage : StorageInterface
         try {
             // Verify that the old username exists.
             if (!this.hasUser($oldUsername)) {
-                throw new SettingsException(sprintf(
+                throw SettingsException(sprintf(
                     'Cannot move non-existent user "%s".',
                     $oldUsername
-                ));
+                ))
             }
 
-            // Verify that the new username does not exist.
+            // Verify that the username does not exist.
             if (this.hasUser($newUsername)) {
-                throw new SettingsException(sprintf(
+                throw SettingsException(sprintf(
                     'Refusing to overwrite existing user "%s".',
                     $newUsername
-                ));
+                ))
             }
 
-            // Now attempt to rename the old username column to the new name.
-            $sth = this._pdo.prepare("UPDATE `{this._dbTableName}` SET username=:newusername WHERE (username=:oldusername)");
-            $sth.execute([':oldusername' => $oldUsername, ':newusername' => $newUsername]);
-            $sth.closeCursor();
+            // Now attempt to rename the old username column to the name.
+            $sth = this._pdo.prepare("UPDATE `{this._dbTableName}` SET username=:newusername WHERE (username=:oldusername)")
+            $sth.execute([':oldusername' => $oldUsername, ':newusername' => $newUsername])
+            $sth.closeCursor()
         } catch (SettingsException $e) {
-            throw $e; // Ugly but necessary to re-throw only our own messages.
+            throw $e // Ugly but necessary to re-throw only our own messages.
         } catch (.Exception $e) {
-            throw new SettingsException(this._backendName.' Error: '.$e.getMessage());
+            throw SettingsException(this._backendName.' Error: '.$e.getMessage())
         }
     }
 
@@ -247,11 +247,11 @@ abstract class PDOStorage : StorageInterface
     {
         try {
             // Just attempt to delete the row. Doesn't error if already missing.
-            $sth = this._pdo.prepare("DELETE FROM `{this._dbTableName}` WHERE (username=:username)");
-            $sth.execute([':username' => $username]);
-            $sth.closeCursor();
+            $sth = this._pdo.prepare("DELETE FROM `{this._dbTableName}` WHERE (username=:username)")
+            $sth.execute([':username' => $username])
+            $sth.closeCursor()
         } catch (.Exception $e) {
-            throw new SettingsException(this._backendName.' Error: '.$e.getMessage());
+            throw SettingsException(this._backendName.' Error: '.$e.getMessage())
         }
     }
 
@@ -263,26 +263,26 @@ abstract class PDOStorage : StorageInterface
     public fun openUser(
         $username)
     {
-        this._username = $username;
+        this._username = $username
 
         // Retrieve and cache the existing user data row if available.
         try {
-            $sth = this._pdo.prepare("SELECT id, settings, cookies FROM `{this._dbTableName}` WHERE (username=:username)");
-            $sth.execute([':username' => this._username]);
-            $result = $sth.fetch(PDO::FETCH_ASSOC);
-            $sth.closeCursor();
+            $sth = this._pdo.prepare("SELECT id, settings, cookies FROM `{this._dbTableName}` WHERE (username=:username)")
+            $sth.execute([':username' => this._username])
+            $result = $sth.fetch(PDO::FETCH_ASSOC)
+            $sth.closeCursor()
 
             if (is_array($result)) {
-                this._cache = $result;
+                this._cache = $result
             } else {
                 this._cache = [
                     'id'       => null,
                     'settings' => null,
                     'cookies'  => null,
-                ];
+                ]
             }
         } catch (.Exception $e) {
-            throw new SettingsException(this._backendName.' Error: '.$e.getMessage());
+            throw SettingsException(this._backendName.' Error: '.$e.getMessage())
         }
     }
 
@@ -293,19 +293,19 @@ abstract class PDOStorage : StorageInterface
      */
     public fun loadUserSettings()
     {
-        $userSettings = [];
+        $userSettings = []
 
         if (!empty(this._cache['settings'])) {
-            $userSettings = @json_decode(this._cache['settings'], true, 512, JSON_BIGINT_AS_STRING);
+            $userSettings = @json_decode(this._cache['settings'], true, 512, JSON_BIGINT_AS_STRING)
             if (!is_array($userSettings)) {
-                throw new SettingsException(sprintf(
+                throw SettingsException(sprintf(
                     'Failed to decode corrupt settings for account "%s".',
                     this._username
-                ));
+                ))
             }
         }
 
-        return $userSettings;
+        return $userSettings
     }
 
     /**
@@ -318,8 +318,8 @@ abstract class PDOStorage : StorageInterface
         $triggerKey)
     {
         // Store the settings as a JSON blob.
-        $encodedData = json_encode($userSettings);
-        this._setUserColumn('settings', $encodedData);
+        $encodedData = json_encode($userSettings)
+        this._setUserColumn('settings', $encodedData)
     }
 
     /**
@@ -330,7 +330,7 @@ abstract class PDOStorage : StorageInterface
     public fun hasUserCookies()
     {
         return isset(this._cache['cookies'])
-                && !empty(this._cache['cookies']);
+                && !empty(this._cache['cookies'])
     }
 
     /**
@@ -341,7 +341,7 @@ abstract class PDOStorage : StorageInterface
     public fun getUserCookiesFilePath()
     {
         // NULL = We (the backend) will handle the cookie loading/saving.
-        return null;
+        return null
     }
 
     /**
@@ -353,7 +353,7 @@ abstract class PDOStorage : StorageInterface
     {
         return isset(this._cache['cookies'])
                 ? this._cache['cookies']
-                : null;
+                : null
     }
 
     /**
@@ -365,7 +365,7 @@ abstract class PDOStorage : StorageInterface
         $rawData)
     {
         // Store the raw cookie data as-provided.
-        this._setUserColumn('cookies', $rawData);
+        this._setUserColumn('cookies', $rawData)
     }
 
     /**
@@ -375,8 +375,8 @@ abstract class PDOStorage : StorageInterface
      */
     public fun closeUser()
     {
-        this._username = null;
-        this._cache = null;
+        this._username = null
+        this._cache = null
     }
 
     /**
@@ -389,6 +389,6 @@ abstract class PDOStorage : StorageInterface
         // Delete our reference to the PDO object. If nobody else references
         // it, the PDO connection will now be terminated. In case of shared
         // objects, the original owner still has their reference (as intended).
-        this._pdo = null;
+        this._pdo = null
     }
 }

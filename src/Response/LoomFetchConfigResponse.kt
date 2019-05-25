@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * LoomFetchConfigResponse.
@@ -38,5 +38,5 @@ class LoomFetchConfigResponse : Response
         'system_control' => 'Model.SystemControl',
         'trace_control'  => 'Model.TraceControl',
         'id'             => 'int',
-    ];
+    ]
 }

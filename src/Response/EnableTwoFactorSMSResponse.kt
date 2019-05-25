@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * EnableTwoFactorSMSResponse.
@@ -28,5 +28,5 @@ class EnableTwoFactorSMSResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'backup_codes' => '',
-    ];
+    ]
 }

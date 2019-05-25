@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * SuggestionCard.
@@ -26,5 +26,5 @@ class SuggestionCard : AutoPropertyMapper
         'user_card'            => 'UserCard',
         'upsell_ci_card'       => '',
         'upsell_fbc_card'      => '',
-    ];
+    ]
 }

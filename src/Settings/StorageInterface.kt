@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Settings;
+
+package InstagramAPI.Settings
 
 /**
  * Data Storage Interface.
@@ -67,7 +67,7 @@ interface StorageInterface
      * @throws .InstagramAPI.Exception.SettingsException
      */
     public fun openLocation(
-        array $locationConfig);
+        array $locationConfig)
 
     /**
      * Whether the storage backend contains a specific user.
@@ -84,27 +84,27 @@ interface StorageInterface
      * @return bool TRUE if user exists, otherwise FALSE.
      */
     public fun hasUser(
-        $username);
+        $username)
 
     /**
-     * Move the internal data for a username to a new username.
+     * Move the internal data for a username to a username.
      *
      * Is NEVER called for the currently loaded user, so Storage backend writers
      * can safely assume that you'll never be asked to rename the loaded user.
      *
      * Before performing the move, this fun MUST validate that the OLD user
-     * EXISTS and that the NEW user DOESN'T EXIST, and MUST throw an exception
+     * EXISTS and that the user DOESN'T EXIST, and MUST throw an exception
      * if either of those checks fail. This is to ensure that users don't lose
      * data by accidentally overwriting something.
      *
      * @param string $oldUsername The old name that settings are stored as.
-     * @param string $newUsername The new name to move the settings to.
+     * @param string $newUsername The name to move the settings to.
      *
      * @throws .InstagramAPI.Exception.SettingsException
      */
     public fun moveUser(
         $oldUsername,
-        $newUsername);
+        $newUsername)
 
     /**
      * Delete all internal data for a given username.
@@ -120,7 +120,7 @@ interface StorageInterface
      * @throws .InstagramAPI.Exception.SettingsException
      */
     public fun deleteUser(
-        $username);
+        $username)
 
     /**
      * Open the data storage for a specific user.
@@ -144,7 +144,7 @@ interface StorageInterface
      * @throws .InstagramAPI.Exception.SettingsException
      */
     public fun openUser(
-        $username);
+        $username)
 
     /**
      * Load all settings for the currently active user.
@@ -154,7 +154,7 @@ interface StorageInterface
      * @return array An array with all current key-value pairs for the user, or
      *               an empty array if no settings exist.
      */
-    public fun loadUserSettings();
+    public fun loadUserSettings()
 
     /**
      * Save the settings for the currently active user.
@@ -170,7 +170,7 @@ interface StorageInterface
      */
     public fun saveUserSettings(
         array $userSettings,
-        $triggerKey);
+        $triggerKey)
 
     /**
      * Whether the storage backend has cookies for the currently active user.
@@ -186,7 +186,7 @@ interface StorageInterface
      *
      * @return bool TRUE if cookies exist, otherwise FALSE.
      */
-    public fun hasUserCookies();
+    public fun hasUserCookies()
 
     /**
      * Get the cookiefile disk path (only if a file-based cookie jar is wanted).
@@ -202,7 +202,7 @@ interface StorageInterface
      *                     non-string value) if the BACKEND wants to
      *                     handle the cookies itself.
      */
-    public fun getUserCookiesFilePath();
+    public fun getUserCookiesFilePath()
 
     /**
      * (Non-cookiefile) Load all cookies for the currently active user.
@@ -217,7 +217,7 @@ interface StorageInterface
      * @return string|null A previously-stored raw cookie data string, or an
      *                     empty string/NULL if no data exists in the storage.
      */
-    public fun loadUserCookies();
+    public fun loadUserCookies()
 
     /**
      * (Non-cookiefile) Save all cookies for the currently active user.
@@ -232,7 +232,7 @@ interface StorageInterface
      * @throws .InstagramAPI.Exception.SettingsException
      */
     public fun saveUserCookies(
-        $rawData);
+        $rawData)
 
     /**
      * Close the settings storage for the currently active user.
@@ -247,7 +247,7 @@ interface StorageInterface
      *
      * @throws .InstagramAPI.Exception.SettingsException
      */
-    public fun closeUser();
+    public fun closeUser()
 
     /**
      * Disconnect from a storage location and perform necessary shutdown steps.
@@ -260,5 +260,5 @@ interface StorageInterface
      *
      * @throws .InstagramAPI.Exception.SettingsException
      */
-    public fun closeLocation();
+    public fun closeLocation()
 }

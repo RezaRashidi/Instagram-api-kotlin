@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * TVSearchResponse.
@@ -38,5 +38,5 @@ class TVSearchResponse : Response
         'results'       => 'Model.TVSearchResult[]',
         'num_results'   => 'int',
         'rank_token'    => 'string',
-    ];
+    ]
 }

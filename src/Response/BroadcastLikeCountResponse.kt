@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * BroadcastLikeCountResponse.
@@ -43,5 +43,5 @@ class BroadcastLikeCountResponse : Response
         'likes'       => 'int',
         'burst_likes' => 'int',
         'likers'      => 'Model.User[]',
-    ];
+    ]
 }

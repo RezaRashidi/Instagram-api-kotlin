@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Exception;
+
+package InstagramAPI.Exception
 
 /**
  * This exception re-wraps ALL networking/socket exceptions.
@@ -28,7 +28,7 @@ package InstagramAPI.Exception;
 class NetworkException : RequestException
 {
     /** @var .Exception */
-    private $_guzzleException;
+    private $_guzzleException
 
     /**
      * Constructor.
@@ -38,17 +38,17 @@ class NetworkException : RequestException
     public fun __construct(
         .Exception $guzzleException)
     {
-        this._guzzleException = $guzzleException;
+        this._guzzleException = $guzzleException
 
         // Ensure that the message is nicely formatted and follows our standard.
-        $message = 'Network: '.ServerMessageThrower::prettifyMessage(this._guzzleException.getMessage());
+        $message = 'Network: '.ServerMessageThrower::prettifyMessage(this._guzzleException.getMessage())
 
         // Construct with our custom message.
         // NOTE: We DON'T assign the guzzleException to "$previous", otherwise
         // the user would still see something like "Uncaught GuzzleHttp.Exception.
         // RequestException" and Guzzle's stack trace, instead of "Uncaught
         // InstagramAPI.Exception.NetworkException" and OUR correct stack trace.
-        parent::__construct($message);
+        parent::__construct($message)
     }
 
     /**
@@ -58,6 +58,6 @@ class NetworkException : RequestException
      */
     public fun getGuzzleException()
     {
-        return this._guzzleException;
+        return this._guzzleException
     }
 }

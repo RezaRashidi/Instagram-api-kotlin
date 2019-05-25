@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * MsisdnHeaderResponse.
@@ -43,5 +43,5 @@ class MsisdnHeaderResponse : Response
         'url'                   => 'string',
         'remaining_ttl_seconds' => 'int',
         'ttl'                   => 'int',
-    ];
+    ]
 }

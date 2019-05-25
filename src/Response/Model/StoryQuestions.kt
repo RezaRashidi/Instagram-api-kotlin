@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoryQuestions.
@@ -56,5 +56,5 @@ class StoryQuestions : AutoPropertyMapper
         'is_pinned'        => 'int',
         'is_hidden'        => 'int',
         'question_sticker' => 'QuestionSticker',
-    ];
+    ]
 }

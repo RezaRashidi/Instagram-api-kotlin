@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * SendSMSCodeResponse.
@@ -33,5 +33,5 @@ class SendSMSCodeResponse : Response
     val JSON_PROPERTY_MAP = [
         'phone_number_valid'          => 'bool',
         'phone_verification_settings' => 'Model.PhoneVerificationSettings',
-    ];
+    ]
 }

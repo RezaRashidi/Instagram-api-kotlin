@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Aymf.
@@ -21,5 +21,5 @@ class Aymf : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'items'          => 'AymfItem[]',
         'more_available' => '',
-    ];
+    ]
 }

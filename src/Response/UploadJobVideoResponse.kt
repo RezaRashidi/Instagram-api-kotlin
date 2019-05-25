@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * UploadJobVideoResponse.
@@ -33,5 +33,5 @@ class UploadJobVideoResponse : Response
     val JSON_PROPERTY_MAP = [
         'upload_id'         => 'string',
         'video_upload_urls' => 'Model.VideoUploadUrl[]',
-    ];
+    ]
 }

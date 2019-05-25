@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Realtime.Payload;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Realtime.Payload
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ThreadAction.
@@ -21,5 +21,5 @@ class ThreadAction : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'user_id'    => 'string',
         'action_log' => '.InstagramAPI.Response.Model.ActionLog',
-    ];
+    ]
 }

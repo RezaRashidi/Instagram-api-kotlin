@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * OnTagProductResponse.
@@ -38,5 +38,5 @@ class OnTagProductResponse : Response
         'product_item'              => 'Model.Product',
         'merchant'                  => 'Model.User',
         'other_product_items'       => 'Model.Product[]',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DirectSendItemResponse.
@@ -38,5 +38,5 @@ class DirectSendItemResponse : Response
         'action'      => '',
         'status_code' => '',
         'payload'     => 'Model.DirectSendItemPayload',
-    ];
+    ]
 }

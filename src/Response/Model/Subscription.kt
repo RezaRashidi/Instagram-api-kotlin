@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Subscription.
@@ -31,5 +31,5 @@ class Subscription : AutoPropertyMapper
         'url'      => 'string',
         'sequence' => '',
         'auth'     => '',
-    ];
+    ]
 }

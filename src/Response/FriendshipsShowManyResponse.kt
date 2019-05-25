@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FriendshipsShowManyResponse.
@@ -28,5 +28,5 @@ class FriendshipsShowManyResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'friendship_statuses' => 'Model.UnpredictableKeys.FriendshipStatusUnpredictableContainer',
-    ];
+    ]
 }

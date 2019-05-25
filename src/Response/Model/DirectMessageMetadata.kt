@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectMessageMetadata.
@@ -31,5 +31,5 @@ class DirectMessageMetadata : AutoPropertyMapper
         'item_id'         => 'string',
         'timestamp'       => 'string',
         'participant_ids' => 'string[]',
-    ];
+    ]
 }

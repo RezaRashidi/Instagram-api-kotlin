@@ -1,9 +1,9 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
-import InstagramAPI.Response.PropertyCollection;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
+import InstagramAPI.Response.PropertyCollection
 
 /**
  * ReelMention.
@@ -51,5 +51,5 @@ class ReelMention : AutoPropertyMapper
         PropertyCollection.Sticker::class,
         'user'      => 'User',
         'is_hidden' => 'int',
-    ];
+    ]
 }

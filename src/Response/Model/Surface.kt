@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Surface.
@@ -35,5 +35,5 @@ class Surface : AutoPropertyMapper
         'rank_token'     => 'string',
         'ttl_secs'       => 'int',
         'name'           => 'string',
-    ];
+    ]
 }

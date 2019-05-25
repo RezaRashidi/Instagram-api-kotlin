@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * CommentFilterResponse.
@@ -28,5 +28,5 @@ class CommentFilterResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'config_value' => '',
-    ];
+    ]
 }

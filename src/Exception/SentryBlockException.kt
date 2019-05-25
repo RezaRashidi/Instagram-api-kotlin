@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Exception;
+
+package InstagramAPI.Exception
 
 class SentryBlockException : RequestException
 {

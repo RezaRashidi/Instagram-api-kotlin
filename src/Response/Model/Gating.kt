@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Gating.
@@ -31,5 +31,5 @@ class Gating : AutoPropertyMapper
         'description' => '',
         'buttons'     => '',
         'title'       => '',
-    ];
+    ]
 }

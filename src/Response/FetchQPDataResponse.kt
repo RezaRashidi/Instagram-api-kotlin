@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FetchQPDataResponse.
@@ -48,5 +48,5 @@ class FetchQPDataResponse : Response
         'qp_data'                 => 'Model.QPData[]',
         'client_cache_ttl_in_sec' => 'int',
         'error_msg'               => '',
-    ];
+    ]
 }

@@ -1,9 +1,9 @@
-<?php
 
-package InstagramAPI.Exception;
 
-import InstagramAPI.Response;
-import Psr.Http.Message.ResponseInterface as HttpResponseInterface;
+package InstagramAPI.Exception
+
+import InstagramAPI.Response
+import Psr.Http.Message.ResponseInterface as HttpResponseInterface
 
 /**
  * Parses Instagram's API error messages and throws an appropriate exception.
@@ -84,7 +84,7 @@ class ServerMessageThrower
             'invalid_user', // error_type
         ],
         'ForcedPasswordResetException' => ['/reset(.*?)password/'],
-    ];
+    ]
 
     /**
      * Parses a server message and throws the appropriate exception.
@@ -118,19 +118,19 @@ class ServerMessageThrower
         HttpResponseInterface $httpResponse = null)
     {
         // We will analyze both the `message` AND `error_type` (if available).
-        $messages = [$serverMessage];
-        $serverErrorType = null;
+        $messages = [$serverMessage]
+        $serverErrorType = null
         if ($serverResponse instanceof Response) {
             // We are reading a property that isn't defined in the class
             // property map, so we must import "has" first, to ensure it exists.
             if ($serverResponse.hasErrorType()
                 && is_string($serverResponse.getErrorType())) {
-                $serverErrorType = $serverResponse.getErrorType();
-                $messages[] = $serverErrorType;
+                $serverErrorType = $serverResponse.getErrorType()
+                $messages[] = $serverErrorType
             }
         }
 
-        $exceptionClass = null;
+        $exceptionClass = null
 
         // Check if the server message is in our CRITICAL exception table.
         foreach ($messages as $message) {
@@ -139,14 +139,14 @@ class ServerMessageThrower
                     if ($pattern[0] == '/') {
                         // Regex check.
                         if (preg_match($pattern, $message)) {
-                            $exceptionClass = $className;
-                            break 3;
+                            $exceptionClass = $className
+                            break 3
                         }
                     } else {
                         // Regular string search.
                         if (strpos($message, $pattern) !== false) {
-                            $exceptionClass = $className;
-                            break 3;
+                            $exceptionClass = $className
+                            break 3
                         }
                     }
                 }
@@ -158,49 +158,49 @@ class ServerMessageThrower
             // NOTE FOR CONTRIBUTORS: All HTTP status exceptions below MUST be
             // derived from EndpointException, since all HTTP errors are
             // endpoint-error-related responses and MUST be easily catchable!
-            $httpStatusCode = $httpResponse !== null ? $httpResponse.getStatusCode() : null;
+            $httpStatusCode = $httpResponse !== null ? $httpResponse.getStatusCode() : null
             switch ($httpStatusCode) {
                 case 400:
-                    $exceptionClass = 'BadRequestException';
-                    break;
+                    $exceptionClass = 'BadRequestException'
+                    break
                 case 404:
-                    $exceptionClass = 'NotFoundException';
-                    break;
+                    $exceptionClass = 'NotFoundException'
+                    break
                 default:
                     // No critical exceptions and no HTTP code exceptions have
                     // been found, so import the generic "API fun exception"!
-                    $exceptionClass = 'EndpointException';
+                    $exceptionClass = 'EndpointException'
             }
         }
 
         // We need to specify the full package path to the exception class.
-        $fullClassPath = '..'.__package__.'..'.$exceptionClass;
+        $fullClassPath = '..'.__package__.'..'.$exceptionClass
 
         // Determine which message to display to the user.
         $displayMessage = is_string($serverMessage) && strlen($serverMessage)
-                        ? $serverMessage : $serverErrorType;
+                        ? $serverMessage : $serverErrorType
         if (!is_string($displayMessage) || !strlen($displayMessage)) {
-            $displayMessage = 'Request failed.';
+            $displayMessage = 'Request failed.'
         }
 
         // Some Instagram messages already have punctuation, and others need it.
-        $displayMessage = self::prettifyMessage($displayMessage);
+        $displayMessage = self::prettifyMessage($displayMessage)
 
         // Create an instance of the final exception class, with the pretty msg.
-        $e = new $fullClassPath(
+        $e = $fullClassPath(
             $prefixString !== null
             ? sprintf('%s: %s', $prefixString, $displayMessage)
             : $displayMessage
-        );
+        )
 
         // Attach the server response to the exception, IF a response exists.
         // NOTE: Only possible on exceptions derived from InstagramException.
         if ($serverResponse instanceof Response
             && $e instanceof .InstagramAPI.Exception.InstagramException) {
-            $e.setResponse($serverResponse);
+            $e.setResponse($serverResponse)
         }
 
-        throw $e;
+        throw $e
     }
 
     /**
@@ -219,17 +219,17 @@ class ServerMessageThrower
         // Some messages already have punctuation, and others need it. Prettify
         // the message by ensuring that it ALWAYS ends in punctuation, for
         // consistency with all of our internal error messages.
-        $lastChar = substr($message, -1);
+        $lastChar = substr($message, -1)
         if ($lastChar !== '' && $lastChar !== '.' && $lastChar !== '!' && $lastChar !== '?') {
-            $message .= '.';
+            $message .= '.'
         }
 
         // Guarantee that the first letter is uppercase.
-        $message = ucfirst($message);
+        $message = ucfirst($message)
 
         // Replace all underscores (ie. "Login_required.") with spaces.
-        $message = str_replace('_', ' ', $message);
+        $message = str_replace('_', ' ', $message)
 
-        return $message;
+        return $message
     }
 }

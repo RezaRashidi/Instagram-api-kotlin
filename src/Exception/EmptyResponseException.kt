@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Exception;
+
+package InstagramAPI.Exception
 
 /**
  * Used for endpoint calls that returned an empty/invalid (non-JSON) response.

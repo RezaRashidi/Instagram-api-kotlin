@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * BroadcastStatusItem.
@@ -36,5 +36,5 @@ class BroadcastStatusItem : AutoPropertyMapper
         'cover_frame_url'        => 'string',
         'viewer_count'           => 'int',
         'id'                     => 'string',
-    ];
+    ]
 }

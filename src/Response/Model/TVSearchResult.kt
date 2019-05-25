@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * TVSearchResult.
@@ -36,5 +36,5 @@ class TVSearchResult : AutoPropertyMapper
         'channel'       => 'TVChannel',
         'num_results'   => 'int',
         'rank_token'    => 'string',
-    ];
+    ]
 }

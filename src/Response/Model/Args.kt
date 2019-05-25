@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Args.
@@ -131,5 +131,5 @@ class Args : AutoPropertyMapper
         'second_profile_id'         => 'string',
         'second_profile_image'      => '',
         'profile_image_destination' => '',
-    ];
+    ]
 }

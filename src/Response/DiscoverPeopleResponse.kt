@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DiscoverPeopleResponse.
@@ -43,5 +43,5 @@ class DiscoverPeopleResponse : Response
         'max_id'              => 'string',
         'suggested_users'     => 'Model.SuggestedUsers',
         'new_suggested_users' => 'Model.SuggestedUsers',
-    ];
+    ]
 }

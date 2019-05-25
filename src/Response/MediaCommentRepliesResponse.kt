@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * MediaCommentRepliesResponse.
@@ -81,5 +81,5 @@ class MediaCommentRepliesResponse : Response
         'has_more_head_child_comments'      => 'bool',
         'next_min_child_cursor'             => 'string',
         'num_head_child_comments'           => 'int',
-    ];
+    ]
 }

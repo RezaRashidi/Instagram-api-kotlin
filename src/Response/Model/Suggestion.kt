@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Suggestion.
@@ -71,5 +71,5 @@ class Suggestion : AutoPropertyMapper
         'icon'              => '',
         'is_new_suggestion' => 'bool',
         'uuid'              => 'string',
-    ];
+    ]
 }

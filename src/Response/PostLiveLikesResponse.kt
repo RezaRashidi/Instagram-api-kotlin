@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * PostLiveLikesResponse.
@@ -43,5 +43,5 @@ class PostLiveLikesResponse : Response
         'ending_offset'     => '',
         'next_fetch_offset' => '',
         'time_series'       => '',
-    ];
+    ]
 }

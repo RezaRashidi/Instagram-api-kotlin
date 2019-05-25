@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ProfileNoticeResponse.
@@ -28,5 +28,5 @@ class ProfileNoticeResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'has_change_password_megaphone' => 'bool',
-    ];
+    ]
 }

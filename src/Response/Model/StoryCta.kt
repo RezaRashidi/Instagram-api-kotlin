@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoryCta.
@@ -16,5 +16,5 @@ class StoryCta : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         'links'          => 'AndroidLinks[]',
-    ];
+    ]
 }

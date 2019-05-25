@@ -1,17 +1,17 @@
-<?php
 
-package InstagramAPI.Realtime.Command;
 
-import InstagramAPI.Realtime.CommandInterface;
-import InstagramAPI.Realtime.Mqtt;
-import InstagramAPI.Signatures;
+package InstagramAPI.Realtime.Command
+
+import InstagramAPI.Realtime.CommandInterface
+import InstagramAPI.Realtime.Mqtt
+import InstagramAPI.Signatures
 
 abstract class DirectCommand : CommandInterface
 {
     /**
      * @var array
      */
-    protected $_data;
+    protected $_data
 
     /**
      * Constructor.
@@ -27,24 +27,24 @@ abstract class DirectCommand : CommandInterface
         $threadId,
         array $options = [])
     {
-        this._data = [];
+        this._data = []
 
         // Handle action.
         if (!in_array($action, this._getSupportedActions(), true)) {
-            throw new .InvalidArgumentException(sprintf('"%s" is not a supported action.', $action));
+            throw .InvalidArgumentException(sprintf('"%s" is not a supported action.', $action))
         }
-        this._data['action'] = $action;
+        this._data['action'] = $action
 
-        this._data['thread_id'] = this._validateThreadId($threadId);
+        this._data['thread_id'] = this._validateThreadId($threadId)
 
         // Handle client context.
         if (this._isClientContextRequired()) {
             if (!isset($options['client_context'])) {
-                this._data['client_context'] = Signatures::generateUUID();
+                this._data['client_context'] = Signatures::generateUUID()
             } elseif (!Signatures::isValidUUID($options['client_context'])) {
-                throw new .InvalidArgumentException(sprintf('"%s" is not a valid UUID.', $options['client_context']));
+                throw .InvalidArgumentException(sprintf('"%s" is not a valid UUID.', $options['client_context']))
             } else {
-                this._data['client_context'] = $options['client_context'];
+                this._data['client_context'] = $options['client_context']
             }
         }
     }
@@ -52,19 +52,19 @@ abstract class DirectCommand : CommandInterface
     /** {@inheritdoc} */
     public fun getTopic()
     {
-        return Mqtt.Topics::SEND_MESSAGE;
+        return Mqtt.Topics::SEND_MESSAGE
     }
 
     /** {@inheritdoc} */
     public fun getQosLevel()
     {
-        return Mqtt.QosLevel::FIRE_AND_FORGET;
+        return Mqtt.QosLevel::FIRE_AND_FORGET
     }
 
     /** {@inheritdoc} */
     public fun jsonSerialize()
     {
-        return this._reorderFieldsByWeight(this._data, this._getFieldsWeights());
+        return this._reorderFieldsByWeight(this._data, this._getFieldsWeights())
     }
 
     /**
@@ -74,7 +74,7 @@ abstract class DirectCommand : CommandInterface
      */
     public fun getClientContext()
     {
-        return isset(this._data['client_context']) ? this._data['client_context'] : null;
+        return isset(this._data['client_context']) ? this._data['client_context'] : null
     }
 
     /**
@@ -82,7 +82,7 @@ abstract class DirectCommand : CommandInterface
      *
      * @return bool
      */
-    abstract protected fun _isClientContextRequired();
+    abstract protected fun _isClientContextRequired()
 
     /**
      * Get the list of supported actions.
@@ -95,7 +95,7 @@ abstract class DirectCommand : CommandInterface
             Direct.SendItem::ACTION,
             Direct.MarkSeen::ACTION,
             Direct.IndicateActivity::ACTION,
-        ];
+        ]
     }
 
     /**
@@ -111,10 +111,10 @@ abstract class DirectCommand : CommandInterface
         $threadId)
     {
         if (!ctype_digit($threadId) && (!is_int($threadId) || $threadId < 0)) {
-            throw new .InvalidArgumentException(sprintf('"%s" is not a valid thread identifier.', $threadId));
+            throw .InvalidArgumentException(sprintf('"%s" is not a valid thread identifier.', $threadId))
         }
 
-        return (string) $threadId;
+        return (string) $threadId
     }
 
     /**
@@ -130,10 +130,10 @@ abstract class DirectCommand : CommandInterface
         $threadItemId)
     {
         if (!ctype_digit($threadItemId) && (!is_int($threadItemId) || $threadItemId < 0)) {
-            throw new .InvalidArgumentException(sprintf('"%s" is not a valid thread item identifier.', $threadItemId));
+            throw .InvalidArgumentException(sprintf('"%s" is not a valid thread item identifier.', $threadItemId))
         }
 
-        return (string) $threadItemId;
+        return (string) $threadItemId
     }
 
     /**
@@ -149,19 +149,19 @@ abstract class DirectCommand : CommandInterface
         array $weights)
     {
         uksort($fields, fun ($a, $b) import ($weights) {
-            $a = isset($weights[$a]) ? $weights[$a] : PHP_INT_MAX;
-            $b = isset($weights[$b]) ? $weights[$b] : PHP_INT_MAX;
+            $a = isset($weights[$a]) ? $weights[$a] : PHP_INT_MAX
+            $b = isset($weights[$b]) ? $weights[$b] : PHP_INT_MAX
             if ($a < $b) {
-                return -1;
+                return -1
             }
             if ($a > $b) {
-                return 1;
+                return 1
             }
 
-            return 0;
-        });
+            return 0
+        })
 
-        return $fields;
+        return $fields
     }
 
     /**
@@ -186,6 +186,6 @@ abstract class DirectCommand : CommandInterface
             'hashtag'         => 65,
             'venue_id'        => 70,
             'media_id'        => 75,
-        ];
+        ]
     }
 }

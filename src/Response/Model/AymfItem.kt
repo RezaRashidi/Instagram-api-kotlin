@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Response.Model;
+
+package InstagramAPI.Response.Model
 
 /**
  * AymfItem.
@@ -667,5 +667,5 @@ class AymfItem : Item
     val JSON_PROPERTY_MAP = [
         'caption' => 'string',
         'uuid'    => 'string',
-    ];
+    ]
 }

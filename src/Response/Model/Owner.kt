@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Owner.
@@ -56,5 +56,5 @@ class Owner : AutoPropertyMapper
         'lat'                  => 'float',
         'lng'                  => 'float',
         'location_dict'        => 'Location',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DirectRecentRecipientsResponse.
@@ -33,5 +33,5 @@ class DirectRecentRecipientsResponse : Response
     val JSON_PROPERTY_MAP = [
         'expiration_interval' => '',
         'recent_recipients'   => '',
-    ];
+    ]
 }

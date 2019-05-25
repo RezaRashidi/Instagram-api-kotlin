@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * BroadcastHeartbeatAndViewerCountResponse.
@@ -63,5 +63,5 @@ class BroadcastHeartbeatAndViewerCountResponse : Response
         'cobroadcaster_ids'         => 'string[]',
         'is_policy_violation'       => 'int',
         'policy_violation_reason'   => 'string',
-    ];
+    ]
 }

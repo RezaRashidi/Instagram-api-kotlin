@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectSeenItemPayload.
@@ -21,5 +21,5 @@ class DirectSeenItemPayload : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'count'     => '',
         'timestamp' => 'string',
-    ];
+    ]
 }

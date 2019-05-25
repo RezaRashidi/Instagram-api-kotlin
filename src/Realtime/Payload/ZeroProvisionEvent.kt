@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Realtime.Payload;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Realtime.Payload
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ZeroProvisionEvent.
@@ -26,5 +26,5 @@ class ZeroProvisionEvent : AutoPropertyMapper
         'device_id'             => 'string',
         'product_name'          => 'string',
         'zero_provisioned_time' => 'string',
-    ];
+    ]
 }

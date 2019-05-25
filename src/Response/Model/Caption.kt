@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Caption.
@@ -76,5 +76,5 @@ class Caption : AutoPropertyMapper
         'type'               => '',
         'has_translation'    => 'bool',
         'did_report_as_spam' => 'bool',
-    ];
+    ]
 }

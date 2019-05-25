@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Hashtag.
@@ -61,5 +61,5 @@ class Hashtag : AutoPropertyMapper
         'allow_muting_story' => 'bool',
         'related_tags'       => '',
         'debug_info'         => '',
-    ];
+    ]
 }

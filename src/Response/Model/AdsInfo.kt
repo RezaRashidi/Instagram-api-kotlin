@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * AdsInfo.
@@ -21,5 +21,5 @@ class AdsInfo : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'has_ads' => 'bool',
         'ads_url' => 'string',
-    ];
+    ]
 }

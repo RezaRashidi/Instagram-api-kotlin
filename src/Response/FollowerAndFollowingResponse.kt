@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FollowerAndFollowingResponse.
@@ -53,5 +53,5 @@ class FollowerAndFollowingResponse : Response
         'next_max_id'                       => 'string',
         'page_size'                         => '',
         'big_list'                          => '',
-    ];
+    ]
 }

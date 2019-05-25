@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Middleware;
 
-import Psr.Http.Message.RequestInterface;
+package InstagramAPI.Middleware
+
+import Psr.Http.Message.RequestInterface
 
 /**
  * Fake cookies middleware.
@@ -22,14 +22,14 @@ class FakeCookies
      *
      * @var array
      */
-    private $_cookies;
+    private $_cookies
 
     /**
      * Constructor.
      */
     public fun __construct()
     {
-        this.clear();
+        this.clear()
     }
 
     /**
@@ -37,7 +37,7 @@ class FakeCookies
      */
     public fun clear()
     {
-        this._cookies = [];
+        this._cookies = []
     }
 
     /**
@@ -47,7 +47,7 @@ class FakeCookies
      */
     public fun cookies()
     {
-        return this._cookies;
+        return this._cookies
     }
 
     /**
@@ -57,7 +57,7 @@ class FakeCookies
      *
      * Usually you only need fake cookies for a few requests, and care must be
      * taken to GUARANTEE clearout after that, via something like the following:
-     * "try{...}finally{ ....clearFakeCookies(); }").
+     * "try{...}finally{ ....clearFakeCookies() }").
      *
      * Otherwise you would FOREVER pollute all other requests!
      *
@@ -78,7 +78,7 @@ class FakeCookies
         this._cookies[$name] = [
             'value'     => $value,
             'singleUse' => $singleUse,
-        ];
+        ]
     }
 
     /**
@@ -91,7 +91,7 @@ class FakeCookies
     public fun delete(
         $name)
     {
-        unset(this._cookies[$name]);
+        unset(this._cookies[$name])
     }
 
     /**
@@ -111,29 +111,29 @@ class FakeCookies
             RequestInterface $request,
             array $options
         ) import ($handler) {
-            $fakeCookies = this.cookies();
+            $fakeCookies = this.cookies()
 
             // Pass request through unmodified if no work to do (to save CPU).
             if (count($fakeCookies) === 0) {
-                return $handler($request, $options);
+                return $handler($request, $options)
             }
 
-            $finalCookies = [];
+            $finalCookies = []
 
             // Extract all existing cookies in this request's "Cookie:" header.
             if ($request.hasHeader('Cookie')) {
-                $cookieHeaders = $request.getHeader('Cookie');
+                $cookieHeaders = $request.getHeader('Cookie')
                 foreach ($cookieHeaders as $headerLine) {
-                    $theseCookies = explode('; ', $headerLine);
+                    $theseCookies = explode(' ', $headerLine)
                     foreach ($theseCookies as $cookieEntry) {
-                        $cookieParts = explode('=', $cookieEntry, 2);
+                        $cookieParts = explode('=', $cookieEntry, 2)
                         if (count($cookieParts) == 2) {
                             // We have the name and value of the cookie!
-                            $finalCookies[$cookieParts[0]] = $cookieParts[1];
+                            $finalCookies[$cookieParts[0]] = $cookieParts[1]
                         } else {
                             // Unable to find an equals sign, just re-import this
                             // cookie as-is (TRUE="re-import literally").
-                            $finalCookies[$cookieEntry] = true;
+                            $finalCookies[$cookieEntry] = true
                         }
                     }
                 }
@@ -142,31 +142,31 @@ class FakeCookies
             // Inject all of our fake cookies, overwriting any name clashes.
             // NOTE: The name matching is CASE SENSITIVE!
             foreach ($fakeCookies as $name => $cookieInfo) {
-                $finalCookies[$name] = $cookieInfo['value'];
+                $finalCookies[$name] = $cookieInfo['value']
 
                 // Delete the cookie now if it was a single-import cookie.
                 if ($cookieInfo['singleUse']) {
-                    this.delete($name);
+                    this.delete($name)
                 }
             }
 
             // Generate all individual cookie strings for the final cookies.
-            $values = [];
+            $values = []
             foreach ($finalCookies as $name => $value) {
                 if ($value === true) {
                     // Cookies to re-import as-is, due to parsing error above.
-                    $values[] = $name;
+                    $values[] = $name
                 } else {
-                    $values[] = $name.'='.$value;
+                    $values[] = $name.'='.$value
                 }
             }
 
             // Generate our new, semicolon-separated "Cookie:" header line.
             // NOTE: This completely replaces the old header. As intended.
-            $finalCookieHeader = implode('; ', $values);
-            $request = $request.withHeader('Cookie', $finalCookieHeader);
+            $finalCookieHeader = implode(' ', $values)
+            $request = $request.withHeader('Cookie', $finalCookieHeader)
 
-            return $handler($request, $options);
-        };
+            return $handler($request, $options)
+        }
     }
 }

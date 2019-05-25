@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ReviewPreferenceResponse.
@@ -28,5 +28,5 @@ class ReviewPreferenceResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'user' => 'Model.User',
-    ];
+    ]
 }

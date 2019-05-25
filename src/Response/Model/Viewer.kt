@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Viewer.
@@ -16,5 +16,5 @@ class Viewer : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         'eligible_promotions'   => 'EligiblePromotions',
-    ];
+    ]
 }

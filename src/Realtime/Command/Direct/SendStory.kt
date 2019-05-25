@@ -1,12 +1,12 @@
-<?php
 
-package InstagramAPI.Realtime.Command.Direct;
+
+package InstagramAPI.Realtime.Command.Direct
 
 final class SendStory : ShareItem
 {
-    val TYPE = 'story_share';
+    val TYPE = 'story_share'
 
-    val STORY_REGEXP = '#^.d+_.d+$#D';
+    val STORY_REGEXP = '#^.d+_.d+$#D'
 
     /**
      * Constructor.
@@ -22,11 +22,11 @@ final class SendStory : ShareItem
         $storyId,
         array $options = [])
     {
-        parent::__construct($threadId, self::TYPE, $options);
+        parent::__construct($threadId, self::TYPE, $options)
 
         if (!preg_match(self::STORY_REGEXP, $storyId)) {
-            throw new .InvalidArgumentException(sprintf('"%s" is not a valid story ID.', $storyId));
+            throw .InvalidArgumentException(sprintf('"%s" is not a valid story ID.', $storyId))
         }
-        this._data['item_id'] = (string) $storyId;
+        this._data['item_id'] = (string) $storyId
     }
 }

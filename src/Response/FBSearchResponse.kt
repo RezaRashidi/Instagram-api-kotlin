@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FBSearchResponse.
@@ -44,5 +44,5 @@ class FBSearchResponse : Response
         'clear_client_cache'    => 'bool',
         'has_more'              => 'bool',
         'rank_token'            => 'string',
-    ];
+    ]
 }

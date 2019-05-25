@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ReelShare.
@@ -66,5 +66,5 @@ class ReelShare : AutoPropertyMapper
         'reel_type'           => 'string',
         'media'               => 'Item',
         'mentioned_user_id'   => 'string',
-    ];
+    ]
 }

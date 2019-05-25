@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * CreateLiveResponse.
@@ -153,5 +153,5 @@ class CreateLiveResponse : Response
         'connect_with_1rtt'                                     => 'int',
         'avc_rtmp_payload'                                      => 'int',
         'allow_resolution_change'                               => 'int',
-    ];
+    ]
 }

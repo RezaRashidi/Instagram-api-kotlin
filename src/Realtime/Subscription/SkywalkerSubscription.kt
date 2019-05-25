@@ -1,14 +1,14 @@
-<?php
 
-package InstagramAPI.Realtime.Subscription;
 
-import InstagramAPI.Realtime.Mqtt;
-import InstagramAPI.Realtime.SubscriptionInterface;
+package InstagramAPI.Realtime.Subscription
+
+import InstagramAPI.Realtime.Mqtt
+import InstagramAPI.Realtime.SubscriptionInterface
 
 abstract class SkywalkerSubscription : SubscriptionInterface
 {
     /** @var string */
-    protected $_accountId;
+    protected $_accountId
 
     /**
      * Constructor.
@@ -18,18 +18,18 @@ abstract class SkywalkerSubscription : SubscriptionInterface
     public fun __construct(
         $accountId)
     {
-        this._accountId = $accountId;
+        this._accountId = $accountId
     }
 
     /** {@inheritdoc} */
     public fun getTopic()
     {
-        return Mqtt.Topics::PUBSUB;
+        return Mqtt.Topics::PUBSUB
     }
 
     /** {@inheritdoc} */
-    abstract public fun getId();
+    abstract public fun getId()
 
     /** {@inheritdoc} */
-    abstract public fun __toString();
+    abstract public fun __toString()
 }

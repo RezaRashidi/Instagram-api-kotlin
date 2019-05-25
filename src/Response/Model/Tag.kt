@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Tag.
@@ -101,5 +101,5 @@ class Tag : AutoPropertyMapper
         'follow_button_text'           => '',
         'debug_info'                   => '',
         'search_result_subtitle'       => '',
-    ];
+    ]
 }

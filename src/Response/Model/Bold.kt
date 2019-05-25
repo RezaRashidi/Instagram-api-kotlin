@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Bold.
@@ -21,5 +21,5 @@ class Bold : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'start' => '',
         'end'   => '',
-    ];
+    ]
 }

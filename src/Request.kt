@@ -1,15 +1,15 @@
-<?php
 
-package InstagramAPI;
 
-import GuzzleHttp.Psr7.MultipartStream;
-import GuzzleHttp.Psr7.Request as HttpRequest;
-import GuzzleHttp.Psr7.Stream;
-import InstagramAPI.Exception.InstagramException;
-import InstagramAPI.Exception.LoginRequiredException;
-import Psr.Http.Message.ResponseInterface as HttpResponseInterface;
-import Psr.Http.Message.StreamInterface;
-import fun GuzzleHttp.Psr7.stream_for;
+package InstagramAPI
+
+import GuzzleHttp.Psr7.MultipartStream
+import GuzzleHttp.Psr7.Request as HttpRequest
+import GuzzleHttp.Psr7.Stream
+import InstagramAPI.Exception.InstagramException
+import InstagramAPI.Exception.LoginRequiredException
+import Psr.Http.Message.ResponseInterface as HttpResponseInterface
+import Psr.Http.Message.StreamInterface
+import fun GuzzleHttp.Psr7.stream_for
 
 /**
  * Bridge between Instagram Client calls, the object mapper & response objects.
@@ -21,70 +21,70 @@ class Request
      *
      * @var .InstagramAPI.Instagram
      */
-    protected $_parent;
+    protected $_parent
 
     /**
      * Which API version to import for this request.
      *
      * @var int
      */
-    protected $_apiVersion;
+    protected $_apiVersion
 
     /**
      * Endpoint URL (absolute or relative) for this request.
      *
      * @var string
      */
-    protected $_url;
+    protected $_url
 
     /**
      * An array of query params.
      *
      * @var array
      */
-    protected $_params;
+    protected $_params
 
     /**
      * An array of POST params.
      *
      * @var array
      */
-    protected $_posts;
+    protected $_posts
 
     /**
      * An array of POST params keys to exclude from signed body.
      *
      * @var string[]
      */
-    protected $_excludeSigned;
+    protected $_excludeSigned
 
     /**
      * Raw request body.
      *
      * @var StreamInterface
      */
-    protected $_body;
+    protected $_body
 
     /**
      * An array of files to upload.
      *
      * @var array
      */
-    protected $_files;
+    protected $_files
 
     /**
      * An array of HTTP headers to add to the request.
      *
      * @var string[]
      */
-    protected $_headers;
+    protected $_headers
 
     /**
      * Whether to add the default headers.
      *
      * @var bool
      */
-    protected $_defaultHeaders;
+    protected $_defaultHeaders
 
     /**
      * Whether this API call needs authorization.
@@ -93,7 +93,7 @@ class Request
      *
      * @var bool
      */
-    protected $_needsAuth;
+    protected $_needsAuth
 
     /**
      * Whether this API call needs signing of the POST data.
@@ -102,7 +102,7 @@ class Request
      *
      * @var bool
      */
-    protected $_signedPost;
+    protected $_signedPost
 
     /**
      * Whether this API call needs signing of the GET params.
@@ -111,7 +111,7 @@ class Request
      *
      * @var bool
      */
-    protected $_signedGet;
+    protected $_signedGet
 
     /**
      * Whether this API endpoint responds with multiple JSON objects.
@@ -120,7 +120,7 @@ class Request
      *
      * @var bool
      */
-    protected $_isMultiResponse;
+    protected $_isMultiResponse
 
     /**
      * Whether this API call needs gz-compressing of the POST data.
@@ -129,28 +129,28 @@ class Request
      *
      * @var bool
      */
-    protected $_isBodyCompressed;
+    protected $_isBodyCompressed
 
     /**
      * Opened file handles.
      *
      * @var resource[]
      */
-    protected $_handles;
+    protected $_handles
 
     /**
      * Extra Guzzle options for this request.
      *
      * @var array
      */
-    protected $_guzzleOptions;
+    protected $_guzzleOptions
 
     /**
      * Cached HTTP response object.
      *
      * @var HttpResponseInterface
      */
-    protected $_httpResponse;
+    protected $_httpResponse
 
     /**
      * Constructor.
@@ -162,24 +162,24 @@ class Request
         .InstagramAPI.Instagram $parent,
         $url)
     {
-        this._parent = $parent;
-        this._url = $url;
+        this._parent = $parent
+        this._url = $url
 
         // Set defaults.
-        this._apiVersion = 1;
-        this._headers = [];
-        this._params = [];
-        this._posts = [];
-        this._files = [];
-        this._handles = [];
-        this._guzzleOptions = [];
-        this._needsAuth = true;
-        this._signedPost = true;
-        this._signedGet = false;
-        this._isMultiResponse = false;
-        this._isBodyCompressed = false;
-        this._excludeSigned = [];
-        this._defaultHeaders = true;
+        this._apiVersion = 1
+        this._headers = []
+        this._params = []
+        this._posts = []
+        this._files = []
+        this._handles = []
+        this._guzzleOptions = []
+        this._needsAuth = true
+        this._signedPost = true
+        this._signedGet = false
+        this._isMultiResponse = false
+        this._isBodyCompressed = false
+        this._excludeSigned = []
+        this._defaultHeaders = true
     }
 
     /**
@@ -188,7 +188,7 @@ class Request
     public fun __destruct()
     {
         // Ensure that all opened handles are closed.
-        this._closeHandles();
+        this._closeHandles()
     }
 
     /**
@@ -204,11 +204,11 @@ class Request
         $apiVersion)
     {
         if (!array_key_exists($apiVersion, Constants::API_URLS)) {
-            throw new .InvalidArgumentException(sprintf('"%d" is not a supported API version.', $apiVersion));
+            throw .InvalidArgumentException(sprintf('"%d" is not a supported API version.', $apiVersion))
         }
-        this._apiVersion = $apiVersion;
+        this._apiVersion = $apiVersion
 
-        return this;
+        return this
     }
 
     /**
@@ -224,13 +224,13 @@ class Request
         $value)
     {
         if ($value === true) {
-            $value = 'true';
+            $value = 'true'
         } elseif ($value === false) {
-            $value = 'false';
+            $value = 'false'
         }
-        this._params[$key] = $value;
+        this._params[$key] = $value
 
-        return this;
+        return this
     }
 
     /**
@@ -246,13 +246,13 @@ class Request
         $value)
     {
         if ($value === true) {
-            $value = 'true';
+            $value = 'true'
         } elseif ($value === false) {
-            $value = 'false';
+            $value = 'false'
         }
-        this._posts[$key] = $value;
+        this._posts[$key] = $value
 
-        return this;
+        return this
     }
 
     /**
@@ -270,10 +270,10 @@ class Request
         $key,
         $value)
     {
-        this.addPost($key, $value);
-        this._excludeSigned[] = $key;
+        this.addPost($key, $value)
+        this._excludeSigned[] = $key
 
-        return this;
+        return this
     }
 
     /**
@@ -296,28 +296,28 @@ class Request
     {
         // Validate
         if (!is_file($filepath)) {
-            throw new .InvalidArgumentException(sprintf('File "%s" does not exist.', $filepath));
+            throw .InvalidArgumentException(sprintf('File "%s" does not exist.', $filepath))
         }
         if (!is_readable($filepath)) {
-            throw new .InvalidArgumentException(sprintf('File "%s" is not readable.', $filepath));
+            throw .InvalidArgumentException(sprintf('File "%s" is not readable.', $filepath))
         }
         // Inherit value from $filepath, if not supplied.
         if ($filename === null) {
-            $filename = $filepath;
+            $filename = $filepath
         }
-        $filename = basename($filename);
+        $filename = basename($filename)
         // Default headers.
         $headers = $headers + [
             'Content-Type'              => 'application/octet-stream',
             'Content-Transfer-Encoding' => 'binary',
-        ];
+        ]
         this._files[$key] = [
             'filepath' => $filepath,
             'filename' => $filename,
             'headers'  => $headers,
-        ];
+        ]
 
-        return this;
+        return this
     }
 
     /**
@@ -336,19 +336,19 @@ class Request
         $filename,
         array $headers = [])
     {
-        $filename = basename($filename);
+        $filename = basename($filename)
         // Default headers.
         $headers = $headers + [
             'Content-Type'              => 'application/octet-stream',
             'Content-Transfer-Encoding' => 'binary',
-        ];
+        ]
         this._files[$key] = [
             'contents' => $data,
             'filename' => $filename,
             'headers'  => $headers,
-        ];
+        ]
 
-        return this;
+        return this
     }
 
     /**
@@ -372,9 +372,9 @@ class Request
         $key,
         $value)
     {
-        this._headers[$key] = $value;
+        this._headers[$key] = $value
 
-        return this;
+        return this
     }
 
     /**
@@ -385,17 +385,17 @@ class Request
     protected fun _addDefaultHeaders()
     {
         if (this._defaultHeaders) {
-            this._headers['X-IG-App-ID'] = Constants::FACEBOOK_ANALYTICS_APPLICATION_ID;
-            this._headers['X-IG-Capabilities'] = Constants::X_IG_Capabilities;
-            this._headers['X-IG-Connection-Type'] = Constants::X_IG_Connection_Type;
-            this._headers['X-IG-Connection-Speed'] = mt_rand(1000, 3700).'kbps';
+            this._headers['X-IG-App-ID'] = Constants::FACEBOOK_ANALYTICS_APPLICATION_ID
+            this._headers['X-IG-Capabilities'] = Constants::X_IG_Capabilities
+            this._headers['X-IG-Connection-Type'] = Constants::X_IG_Connection_Type
+            this._headers['X-IG-Connection-Speed'] = mt_rand(1000, 3700).'kbps'
             // TODO: IMPLEMENT PROPER CALCULATION OF THESE HEADERS.
-            this._headers['X-IG-Bandwidth-Speed-KBPS'] = '-1.000';
-            this._headers['X-IG-Bandwidth-TotalBytes-B'] = '0';
-            this._headers['X-IG-Bandwidth-TotalTime-MS'] = '0';
+            this._headers['X-IG-Bandwidth-Speed-KBPS'] = '-1.000'
+            this._headers['X-IG-Bandwidth-TotalBytes-B'] = '0'
+            this._headers['X-IG-Bandwidth-TotalTime-MS'] = '0'
         }
 
-        return this;
+        return this
     }
 
     /**
@@ -408,9 +408,9 @@ class Request
     public fun setAddDefaultHeaders(
         $flag)
     {
-        this._defaultHeaders = $flag;
+        this._defaultHeaders = $flag
 
-        return this;
+        return this
     }
 
     /**
@@ -423,9 +423,9 @@ class Request
     public fun setGuzzleOptions(
         array $guzzleOptions)
     {
-        this._guzzleOptions = $guzzleOptions;
+        this._guzzleOptions = $guzzleOptions
 
-        return this;
+        return this
     }
 
     /**
@@ -438,9 +438,9 @@ class Request
     public fun setBody(
         StreamInterface $stream)
     {
-        this._body = $stream;
+        this._body = $stream
 
-        return this;
+        return this
     }
 
     /**
@@ -453,9 +453,9 @@ class Request
     public fun setNeedsAuth(
         $needsAuth)
     {
-        this._needsAuth = $needsAuth;
+        this._needsAuth = $needsAuth
 
-        return this;
+        return this
     }
 
     /**
@@ -468,9 +468,9 @@ class Request
     public fun setSignedPost(
         $signedPost = true)
     {
-        this._signedPost = $signedPost;
+        this._signedPost = $signedPost
 
-        return this;
+        return this
     }
 
     /**
@@ -483,9 +483,9 @@ class Request
     public fun setSignedGet(
         $signedGet = false)
     {
-        this._signedGet = $signedGet;
+        this._signedGet = $signedGet
 
-        return this;
+        return this
     }
 
     /**
@@ -498,9 +498,9 @@ class Request
     public fun setIsMultiResponse(
         $flag = false)
     {
-        this._isMultiResponse = $flag;
+        this._isMultiResponse = $flag
 
-        return this;
+        return this
     }
 
     /**
@@ -513,15 +513,15 @@ class Request
     public fun setIsBodyCompressed(
         $isBodyCompressed = false)
     {
-        this._isBodyCompressed = $isBodyCompressed;
+        this._isBodyCompressed = $isBodyCompressed
 
         if ($isBodyCompressed === true) {
-            this._headers['Content-Encoding'] = 'gzip';
+            this._headers['Content-Encoding'] = 'gzip'
         } elseif (isset(this._headers['Content-Encoding']) && this._headers['Content-Encoding'] === 'gzip') {
-            unset(this._headers['Content-Encoding']);
+            unset(this._headers['Content-Encoding'])
         }
 
-        return this;
+        return this
     }
 
     /**
@@ -538,19 +538,19 @@ class Request
         array $file)
     {
         if (isset($file['contents'])) {
-            $result = stream_for($file['contents']); // Throws.
+            $result = stream_for($file['contents']) // Throws.
         } elseif (isset($file['filepath'])) {
-            $handle = fopen($file['filepath'], 'rb');
+            $handle = fopen($file['filepath'], 'rb')
             if ($handle === false) {
-                throw new .RuntimeException(sprintf('Could not open file "%s" for reading.', $file['filepath']));
+                throw .RuntimeException(sprintf('Could not open file "%s" for reading.', $file['filepath']))
             }
-            this._handles[] = $handle;
-            $result = stream_for($handle); // Throws.
+            this._handles[] = $handle
+            $result = stream_for($handle) // Throws.
         } else {
-            throw new .InvalidArgumentException('No data for stream creation.');
+            throw .InvalidArgumentException('No data for stream creation.')
         }
 
-        return $result;
+        return $result
     }
 
     /**
@@ -565,31 +565,31 @@ class Request
     {
         // Here is a tricky part: all form data (including files) must be ordered by hash code.
         // So we are creating an index for building POST data.
-        $index = Utils::reorderByHashCode(array_merge(this._posts, this._files));
+        $index = Utils::reorderByHashCode(array_merge(this._posts, this._files))
         // Build multipart elements using created index.
-        $elements = [];
+        $elements = []
         foreach ($index as $key => $value) {
             if (!isset(this._files[$key])) {
                 $element = [
                     'name'     => $key,
                     'contents' => $value,
-                ];
+                ]
             } else {
-                $file = this._files[$key];
+                $file = this._files[$key]
                 $element = [
                     'name'     => $key,
                     'contents' => this._getStreamForFile($file), // Throws.
                     'filename' => isset($file['filename']) ? $file['filename'] : null,
                     'headers'  => isset($file['headers']) ? $file['headers'] : [],
-                ];
+                ]
             }
-            $elements[] = $element;
+            $elements[] = $element
         }
 
-        return new MultipartStream( // Throws.
+        return MultipartStream( // Throws.
             $elements,
             Utils::generateMultipartBoundary()
-        );
+        )
     }
 
     /**
@@ -598,13 +598,13 @@ class Request
     protected fun _closeHandles()
     {
         if (!is_array(this._handles) || !count(this._handles)) {
-            return;
+            return
         }
 
         foreach (this._handles as $handle) {
-            Utils::safe_fclose($handle);
+            Utils::safe_fclose($handle)
         }
-        this._resetHandles();
+        this._resetHandles()
     }
 
     /**
@@ -612,7 +612,7 @@ class Request
      */
     protected fun _resetHandles()
     {
-        this._handles = [];
+        this._handles = []
     }
 
     /**
@@ -624,11 +624,11 @@ class Request
      */
     protected fun _getUrlencodedBody()
     {
-        this._headers['Content-Type'] = Constants::CONTENT_TYPE;
+        this._headers['Content-Type'] = Constants::CONTENT_TYPE
 
         return stream_for( // Throws.
             http_build_query(Utils::reorderByHashCode(this._posts))
-        );
+        )
     }
 
     /**
@@ -637,38 +637,38 @@ class Request
      * @throws .InvalidArgumentException
      * @throws .RuntimeException
      *
-     * @return StreamInterface|null The body stream if POST request; otherwise NULL if GET request.
+     * @return StreamInterface|null The body stream if POST request otherwise NULL if GET request.
      */
     protected fun _getRequestBody()
     {
         // Check and return raw body stream if set.
         if (this._body !== null) {
             if (this._isBodyCompressed) {
-                return stream_for(zlib_encode((string) this._body, ZLIB_ENCODING_GZIP));
+                return stream_for(zlib_encode((string) this._body, ZLIB_ENCODING_GZIP))
             }
 
-            return this._body;
+            return this._body
         }
         // We have no POST data and no files.
         if (!count(this._posts) && !count(this._files)) {
-            return;
+            return
         }
         // Sign POST data if needed.
         if (this._signedPost) {
-            this._posts = Signatures::signData(this._posts, this._excludeSigned);
+            this._posts = Signatures::signData(this._posts, this._excludeSigned)
         }
         // Switch between multipart (at least one file) or urlencoded body.
         if (!count(this._files)) {
-            $result = this._getUrlencodedBody(); // Throws.
+            $result = this._getUrlencodedBody() // Throws.
         } else {
-            $result = this._getMultipartBody(); // Throws.
+            $result = this._getMultipartBody() // Throws.
         }
 
         if (this._isBodyCompressed) {
-            return stream_for(zlib_encode((string) $result, ZLIB_ENCODING_GZIP));
+            return stream_for(zlib_encode((string) $result, ZLIB_ENCODING_GZIP))
         }
 
-        return $result;
+        return $result
     }
 
     /**
@@ -681,34 +681,34 @@ class Request
      */
     protected fun _buildHttpRequest()
     {
-        $endpoint = this._url;
+        $endpoint = this._url
         // Determine the URI to import (it's either relative to API, or a full URI).
         if (strncmp($endpoint, 'http:', 5) !== 0 && strncmp($endpoint, 'https:', 6) !== 0) {
-            $endpoint = Constants::API_URLS[this._apiVersion].$endpoint;
+            $endpoint = Constants::API_URLS[this._apiVersion].$endpoint
         }
         // Check signed request params flag.
         if (this._signedGet) {
-            this._params = Signatures::signData(this._params);
+            this._params = Signatures::signData(this._params)
         }
         // Generate the final endpoint URL, by adding any custom query params.
         if (count(this._params)) {
             $endpoint = $endpoint
                 .(strpos($endpoint, '?') === false ? '?' : '&')
-                .http_build_query(Utils::reorderByHashCode(this._params));
+                .http_build_query(Utils::reorderByHashCode(this._params))
         }
         // Add default headers (if enabled).
-        this._addDefaultHeaders();
-        /** @var StreamInterface|null $postData The POST body stream; is NULL if GET request instead. */
-        $postData = this._getRequestBody(); // Throws.
+        this._addDefaultHeaders()
+        /** @var StreamInterface|null $postData The POST body stream is NULL if GET request instead. */
+        $postData = this._getRequestBody() // Throws.
         // Determine request method.
-        $method = $postData !== null ? 'POST' : 'GET';
+        $method = $postData !== null ? 'POST' : 'GET'
         // Build HTTP request object.
-        return new HttpRequest( // Throws (they didn't document that properly).
+        return HttpRequest( // Throws (they didn't document that properly).
             $method,
             $endpoint,
             this._headers,
             $postData
-        );
+        )
     }
 
     /**
@@ -724,7 +724,7 @@ class Request
         // Check the cached login state. May not reflect what will happen on the
         // server. But it's the best we can check without trying the actual request!
         if (!this._parent.isMaybeLoggedIn) {
-            throw new LoginRequiredException('User not logged in. Please call login() and then try again.');
+            throw LoginRequiredException('User not logged in. Please call login() and then try again.')
         }
     }
 
@@ -743,22 +743,22 @@ class Request
         if (this._httpResponse === null) {
             if (this._needsAuth) {
                 // Throw if this requires authentication and we're not logged in.
-                this._throwIfNotLoggedIn();
+                this._throwIfNotLoggedIn()
             }
 
-            this._resetHandles();
+            this._resetHandles()
 
             try {
                 this._httpResponse = this._parent.client.api( // Throws.
                     this._buildHttpRequest(), // Throws.
                     this._guzzleOptions
-                );
+                )
             } finally {
-                this._closeHandles();
+                this._closeHandles()
             }
         }
 
-        return this._httpResponse;
+        return this._httpResponse
     }
 
     /**
@@ -772,8 +772,8 @@ class Request
      */
     public fun getRawResponse()
     {
-        $httpResponse = this.getHttpResponse(); // Throws.
-        $body = (string) $httpResponse.getBody();
+        $httpResponse = this.getHttpResponse() // Throws.
+        $body = (string) $httpResponse.getBody()
 
         // Handle API endpoints that respond with multiple JSON objects.
         // NOTE: We simply merge all JSON objects into a single object. This
@@ -782,10 +782,10 @@ class Request
         // And if we get any duplicate properties, then PHP will simply select
         // the latest value for that property (ex: a:1,a:2 is treated as a:2).
         if (this._isMultiResponse) {
-            $body = str_replace("}.r.n{", ',', $body);
+            $body = str_replace("}.r.n{", ',', $body)
         }
 
-        return $body;
+        return $body
     }
 
     /**
@@ -808,7 +808,7 @@ class Request
         return Client::api_body_decode(
             this.getRawResponse(), // Throws.
             $assoc
-        );
+        )
     }
 
     /**
@@ -830,8 +830,8 @@ class Request
             $responseObject,
             this.getRawResponse(), // Throws.
             this.getHttpResponse() // Throws.
-        );
+        )
 
-        return $responseObject;
+        return $responseObject
     }
 }

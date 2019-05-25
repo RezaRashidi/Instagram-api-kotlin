@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Link.
@@ -41,5 +41,5 @@ class Link : AutoPropertyMapper
         'type'         => 'string',
         'text'         => 'string',
         'link_context' => 'LinkContext',
-    ];
+    ]
 }

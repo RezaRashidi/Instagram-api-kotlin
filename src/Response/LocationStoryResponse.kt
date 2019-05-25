@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * LocationStoryResponse.
@@ -28,5 +28,5 @@ class LocationStoryResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'story'               => 'Model.StoryTray',
-    ];
+    ]
 }

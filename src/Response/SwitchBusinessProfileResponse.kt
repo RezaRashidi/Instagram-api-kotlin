@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * SwitchBusinessProfileResponse.
@@ -28,5 +28,5 @@ class SwitchBusinessProfileResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'social_context' => '',
-    ];
+    ]
 }

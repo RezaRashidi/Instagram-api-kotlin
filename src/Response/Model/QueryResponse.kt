@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * QueryResponse.
@@ -16,5 +16,5 @@ class QueryResponse : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         'shadow_instagram_user' => 'ShadowInstagramUser',
-    ];
+    ]
 }

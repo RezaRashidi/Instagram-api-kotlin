@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * BroadcastInfoResponse.
@@ -108,5 +108,5 @@ class BroadcastInfoResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         Model.Broadcast::class, // Import property map.
-    ];
+    ]
 }

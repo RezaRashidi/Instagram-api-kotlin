@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * TVGuideResponse.
@@ -43,5 +43,5 @@ class TVGuideResponse : Response
         'my_channel' => 'Model.TVChannel',
         'badging'    => 'Model.Badging',
         'composer'   => 'Model.Composer',
-    ];
+    ]
 }

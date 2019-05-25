@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Ad4ad.
@@ -41,5 +41,5 @@ class Ad4ad : AutoPropertyMapper
         'footer'         => '',
         'id'             => 'string',
         'tracking_token' => 'string',
-    ];
+    ]
 }

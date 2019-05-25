@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * GraphqlResponse.
@@ -28,7 +28,7 @@ class GraphqlResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'data'            => 'Model.GraphData',
-    ];
+    ]
 
     /**
      * Checks if the response was successful.
@@ -37,6 +37,6 @@ class GraphqlResponse : Response
      */
     public fun isOk()
     {
-        return true;
+        return true
     }
 }

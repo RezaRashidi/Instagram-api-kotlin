@@ -1,12 +1,12 @@
-<?php
 
-package InstagramAPI.Realtime.Command.Direct;
 
-import InstagramAPI.Realtime.Command.DirectCommand;
+package InstagramAPI.Realtime.Command.Direct
+
+import InstagramAPI.Realtime.Command.DirectCommand
 
 abstract class SendItem : DirectCommand
 {
-    val ACTION = 'send_item';
+    val ACTION = 'send_item'
 
     /**
      * Constructor.
@@ -22,19 +22,19 @@ abstract class SendItem : DirectCommand
         $itemType,
         array $options = [])
     {
-        parent::__construct(self::ACTION, $threadId, $options);
+        parent::__construct(self::ACTION, $threadId, $options)
 
         // Handle action.
         if (!in_array($itemType, this._getSupportedItemTypes(), true)) {
-            throw new .InvalidArgumentException(sprintf('"%s" is not a supported item type.', $itemType));
+            throw .InvalidArgumentException(sprintf('"%s" is not a supported item type.', $itemType))
         }
-        this._data['item_type'] = $itemType;
+        this._data['item_type'] = $itemType
     }
 
     /** {@inheritdoc} */
     protected fun _isClientContextRequired()
     {
-        return true;
+        return true
     }
 
     /**
@@ -53,6 +53,6 @@ abstract class SendItem : DirectCommand
             SendProfile::TYPE,
             SendLocation::TYPE,
             SendHashtag::TYPE,
-        ];
+        ]
     }
 }

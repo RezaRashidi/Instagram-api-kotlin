@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * BroadcastJoinRequestCountResponse.
@@ -48,5 +48,5 @@ class BroadcastJoinRequestCountResponse : Response
         'num_new_requests'    => 'int',
         'users'               => 'Model.User[]',
         'num_unseen_requests' => 'int',
-    ];
+    ]
 }

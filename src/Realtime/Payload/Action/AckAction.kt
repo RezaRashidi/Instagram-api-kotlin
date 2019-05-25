@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Realtime.Payload.Action;
 
-import InstagramAPI.Realtime.Payload.RealtimeAction;
+package InstagramAPI.Realtime.Payload.Action
+
+import InstagramAPI.Realtime.Payload.RealtimeAction
 
 /**
  * AckAction.
@@ -29,5 +29,5 @@ class AckAction : RealtimeAction
     val JSON_PROPERTY_MAP = [
         'status_code' => '',
         'payload'     => '.InstagramAPI.Response.Model.DirectSendItemPayload',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ExploreItem.
@@ -31,5 +31,5 @@ class ExploreItem : AutoPropertyMapper
         'stories'           => 'Stories',
         'channel'           => 'Channel',
         'explore_item_info' => 'ExploreItemInfo',
-    ];
+    ]
 }

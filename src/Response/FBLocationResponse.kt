@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FBLocationResponse.
@@ -38,5 +38,5 @@ class FBLocationResponse : Response
         'has_more'   => 'bool',
         'items'      => 'Model.LocationItem[]',
         'rank_token' => 'string',
-    ];
+    ]
 }

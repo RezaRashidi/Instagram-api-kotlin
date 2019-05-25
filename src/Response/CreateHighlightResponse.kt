@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * CreateHighlightResponse.
@@ -28,5 +28,5 @@ class CreateHighlightResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'reel' => 'Model.Reel',
-    ];
+    ]
 }

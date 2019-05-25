@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * EditMediaResponse.
@@ -28,5 +28,5 @@ class EditMediaResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'media' => 'Model.Item',
-    ];
+    ]
 }

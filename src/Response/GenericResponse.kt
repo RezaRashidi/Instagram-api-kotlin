@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * Used for generic API responses that don't contain any extra data.
@@ -22,6 +22,6 @@ import InstagramAPI.Response;
  */
 class GenericResponse : Response
 {
-    // WARNING: Don't add any values here. Create new responses.
-    val JSON_PROPERTY_MAP = [];
+    // WARNING: Don't add any values here. Create responses.
+    val JSON_PROPERTY_MAP = []
 }

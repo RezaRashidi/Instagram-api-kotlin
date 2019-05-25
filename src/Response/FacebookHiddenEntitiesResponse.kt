@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FacebookHiddenEntitiesResponse.
@@ -28,5 +28,5 @@ class FacebookHiddenEntitiesResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'recent' => 'Model.HiddenEntities',
-    ];
+    ]
 }

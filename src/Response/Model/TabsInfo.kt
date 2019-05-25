@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * TabsInfo.
@@ -21,5 +21,5 @@ class TabsInfo : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'tabs'      => 'Tab[]',
         'selected'  => 'string',
-    ];
+    ]
 }

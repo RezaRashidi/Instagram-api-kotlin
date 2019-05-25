@@ -1,44 +1,44 @@
-<?php
 
-package InstagramAPI.Request.Metadata;
 
-import InstagramAPI.Media.Constraints.ConstraintsFactory;
-import InstagramAPI.Media.Photo.PhotoDetails;
-import InstagramAPI.Media.Video.VideoDetails;
-import InstagramAPI.Response.Model.VideoUploadUrl;
-import InstagramAPI.Response.UploadJobVideoResponse;
-import InstagramAPI.Response.UploadPhotoResponse;
-import InstagramAPI.Response.UploadVideoResponse;
-import InstagramAPI.Utils;
+package InstagramAPI.Request.Metadata
+
+import InstagramAPI.Media.Constraints.ConstraintsFactory
+import InstagramAPI.Media.Photo.PhotoDetails
+import InstagramAPI.Media.Video.VideoDetails
+import InstagramAPI.Response.Model.VideoUploadUrl
+import InstagramAPI.Response.UploadJobVideoResponse
+import InstagramAPI.Response.UploadPhotoResponse
+import InstagramAPI.Response.UploadVideoResponse
+import InstagramAPI.Utils
 
 final class Internal
 {
     /** @var PhotoDetails */
-    private $_photoDetails;
+    private $_photoDetails
 
     /** @var VideoDetails */
-    private $_videoDetails;
+    private $_videoDetails
 
     /** @var string */
-    private $_uploadId;
+    private $_uploadId
 
     /** @var VideoUploadUrl[] */
-    private $_videoUploadUrls;
+    private $_videoUploadUrls
 
     /** @var UploadVideoResponse */
-    private $_videoUploadResponse;
+    private $_videoUploadResponse
 
     /** @var UploadPhotoResponse */
-    private $_photoUploadResponse;
+    private $_photoUploadResponse
 
     /** @var string */
-    private $_directThreads;
+    private $_directThreads
 
     /** @var string */
-    private $_directUsers;
+    private $_directUsers
 
     /** @var bool */
-    private $_bestieMedia;
+    private $_bestieMedia
 
     /**
      * Constructor.
@@ -49,11 +49,11 @@ final class Internal
         $uploadId = null)
     {
         if ($uploadId !== null) {
-            this._uploadId = $uploadId;
+            this._uploadId = $uploadId
         } else {
-            this._uploadId = Utils::generateUploadId();
+            this._uploadId = Utils::generateUploadId()
         }
-        this._bestieMedia = false;
+        this._bestieMedia = false
     }
 
     /**
@@ -61,7 +61,7 @@ final class Internal
      */
     public fun getPhotoDetails()
     {
-        return this._photoDetails;
+        return this._photoDetails
     }
 
     /**
@@ -69,7 +69,7 @@ final class Internal
      */
     public fun getVideoDetails()
     {
-        return this._videoDetails;
+        return this._videoDetails
     }
 
     /**
@@ -90,12 +90,12 @@ final class Internal
         // Figure out the video file details.
         // NOTE: We do this first, since it validates whether the video file is
         // valid and lets us avoid wasting time uploading totally invalid files!
-        this._videoDetails = new VideoDetails($videoFilename);
+        this._videoDetails = VideoDetails($videoFilename)
 
         // Validate the video details and throw if Instagram won't allow it.
-        this._videoDetails.validate(ConstraintsFactory::createFor($targetFeed));
+        this._videoDetails.validate(ConstraintsFactory::createFor($targetFeed))
 
-        return this._videoDetails;
+        return this._videoDetails
     }
 
     /**
@@ -116,12 +116,12 @@ final class Internal
         // Figure out the photo file details.
         // NOTE: We do this first, since it validates whether the photo file is
         // valid and lets us avoid wasting time uploading totally invalid files!
-        this._photoDetails = new PhotoDetails($photoFilename);
+        this._photoDetails = PhotoDetails($photoFilename)
 
         // Validate the photo details and throw if Instagram won't allow it.
-        this._photoDetails.validate(ConstraintsFactory::createFor($targetFeed));
+        this._photoDetails.validate(ConstraintsFactory::createFor($targetFeed))
 
-        return this._photoDetails;
+        return this._photoDetails
     }
 
     /**
@@ -129,7 +129,7 @@ final class Internal
      */
     public fun getUploadId()
     {
-        return this._uploadId;
+        return this._uploadId
     }
 
     /**
@@ -142,12 +142,12 @@ final class Internal
     public fun setVideoUploadUrls(
         UploadJobVideoResponse $response)
     {
-        this._videoUploadUrls = [];
+        this._videoUploadUrls = []
         if ($response.getVideoUploadUrls() !== null) {
-            this._videoUploadUrls = $response.getVideoUploadUrls();
+            this._videoUploadUrls = $response.getVideoUploadUrls()
         }
 
-        return this._videoUploadUrls;
+        return this._videoUploadUrls
     }
 
     /**
@@ -155,7 +155,7 @@ final class Internal
      */
     public fun getVideoUploadUrls()
     {
-        return this._videoUploadUrls;
+        return this._videoUploadUrls
     }
 
     /**
@@ -163,7 +163,7 @@ final class Internal
      */
     public fun getVideoUploadResponse()
     {
-        return this._videoUploadResponse;
+        return this._videoUploadResponse
     }
 
     /**
@@ -172,7 +172,7 @@ final class Internal
     public fun setVideoUploadResponse(
         UploadVideoResponse $videoUploadResponse)
     {
-        this._videoUploadResponse = $videoUploadResponse;
+        this._videoUploadResponse = $videoUploadResponse
     }
 
     /**
@@ -180,7 +180,7 @@ final class Internal
      */
     public fun getPhotoUploadResponse()
     {
-        return this._photoUploadResponse;
+        return this._photoUploadResponse
     }
 
     /**
@@ -189,7 +189,7 @@ final class Internal
     public fun setPhotoUploadResponse(
         UploadPhotoResponse $photoUploadResponse)
     {
-        this._photoUploadResponse = $photoUploadResponse;
+        this._photoUploadResponse = $photoUploadResponse
     }
 
     /**
@@ -205,16 +205,16 @@ final class Internal
         array $recipients)
     {
         if (isset($recipients['users'])) {
-            this._directUsers = $recipients['users'];
-            this._directThreads = '[]';
+            this._directUsers = $recipients['users']
+            this._directThreads = '[]'
         } elseif (isset($recipients['thread'])) {
-            this._directUsers = '[]';
-            this._directThreads = $recipients['thread'];
+            this._directUsers = '[]'
+            this._directThreads = $recipients['thread']
         } else {
-            throw new .InvalidArgumentException('Please provide at least one recipient.');
+            throw .InvalidArgumentException('Please provide at least one recipient.')
         }
 
-        return this;
+        return this
     }
 
     /**
@@ -222,7 +222,7 @@ final class Internal
      */
     public fun getDirectThreads()
     {
-        return this._directThreads;
+        return this._directThreads
     }
 
     /**
@@ -230,7 +230,7 @@ final class Internal
      */
     public fun getDirectUsers()
     {
-        return this._directUsers;
+        return this._directUsers
     }
 
     /**
@@ -241,7 +241,7 @@ final class Internal
     public fun setBestieMedia(
         $bestieMedia)
     {
-        this._bestieMedia = $bestieMedia;
+        this._bestieMedia = $bestieMedia
     }
 
     /**
@@ -249,6 +249,6 @@ final class Internal
      */
     public fun isBestieMedia()
     {
-        return this._bestieMedia;
+        return this._bestieMedia
     }
 }

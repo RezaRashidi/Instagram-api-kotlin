@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ArchivedStoriesFeedItem.
@@ -36,5 +36,5 @@ class ArchivedStoriesFeedItem : AutoPropertyMapper
         'id'                    => 'string',
         'reel_type'             => 'string',
         'latest_reel_media'     => 'string',
-    ];
+    ]
 }

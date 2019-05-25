@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ReelMediaViewerResponse.
@@ -58,5 +58,5 @@ class ReelMediaViewerResponse : Response
         'screenshotter_user_ids'    => '',
         'total_screenshot_count'    => 'int',
         'updated_media'             => 'Model.Item',
-    ];
+    ]
 }

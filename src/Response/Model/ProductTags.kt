@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * ProductTags.
@@ -16,5 +16,5 @@ class ProductTags : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         'in'        => 'In[]',
-    ];
+    ]
 }

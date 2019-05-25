@@ -1,9 +1,9 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Constants;
-import InstagramAPI.Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Constants
+import InstagramAPI.Response
 
 /**
  * funs related to Instagram TV.
@@ -22,7 +22,7 @@ class TV : RequestCollection
     public fun getTvGuide()
     {
         return this.ig.request('igtv/tv_guide/')
-            .getResponse(new Response.TVGuideResponse());
+            .getResponse(Response.TVGuideResponse())
     }
 
     /**
@@ -45,20 +45,20 @@ class TV : RequestCollection
     {
         if (!in_array($id, ['for_you', 'chrono_following', 'popular', 'continue_watching'])
         && !preg_match('/^user_[1-9].d*$/', $id)) {
-            throw new .InvalidArgumentException('Invalid ID type.');
+            throw .InvalidArgumentException('Invalid ID type.')
         }
 
         $request = this.ig.request('igtv/channel/')
             .addPost('id', $id)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken());
+            .addPost('_csrftoken', this.ig.client.getToken())
 
         if ($maxId !== null) {
-            $request.addPost('max_id', $maxId);
+            $request.addPost('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.TVChannelsResponse());
+        return $request.getResponse(Response.TVChannelsResponse())
     }
 
     /**
@@ -80,7 +80,7 @@ class TV : RequestCollection
         $videoFilename,
         array $externalMetadata = [])
     {
-        return this.ig.internal.uploadSingleVideo(Constants::FEED_TV, $videoFilename, null, $externalMetadata);
+        return this.ig.internal.uploadSingleVideo(Constants::FEED_TV, $videoFilename, null, $externalMetadata)
     }
 
     /**
@@ -96,14 +96,14 @@ class TV : RequestCollection
         $query = '')
     {
         if ($query !== '') {
-            $endpoint = 'igtv/search/';
+            $endpoint = 'igtv/search/'
         } else {
-            $endpoint = 'igtv/suggested_searches/';
+            $endpoint = 'igtv/suggested_searches/'
         }
 
         return this.ig.request($endpoint)
             .addParam('query', $query)
-            .getResponse(new Response.TVSearchResponse());
+            .getResponse(Response.TVSearchResponse())
     }
 
     /**
@@ -124,7 +124,7 @@ class TV : RequestCollection
         $gridImpressions = [])
     {
         if (!ctype_digit($viewProgress) && (!is_int($viewProgress) || $viewProgress < 0)) {
-            throw new .InvalidArgumentException('View progress must be a positive integer.');
+            throw .InvalidArgumentException('View progress must be a positive integer.')
         }
 
         $seenState = json_encode([
@@ -134,13 +134,13 @@ class TV : RequestCollection
                 ],
             ],
             'grid_impressions'  => $gridImpressions,
-        ]);
+        ])
 
         return this.ig.request('igtv/write_seen_state/')
             .addPost('seen_state', $seenState)
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.GenericResponse());
+            .getResponse(Response.GenericResponse())
     }
 }

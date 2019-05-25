@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * BroadcastCommentsResponse.
@@ -91,5 +91,5 @@ class BroadcastCommentsResponse : Response
         'caption'                    => '',
         'comment_muted'              => 'int',
         'media_header_display'       => 'string',
-    ];
+    ]
 }

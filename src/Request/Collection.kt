@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Response
 
 /**
  * funs related to creating and managing collections of your saved media.
@@ -27,12 +27,12 @@ class Collection : RequestCollection
         $maxId = null)
     {
         $request = this.ig.request('collections/list/')
-        .addParam('collection_types', '["ALL_MEDIA_AUTO_COLLECTION","MEDIA","PRODUCT_AUTO_COLLECTION"]');
+        .addParam('collection_types', '["ALL_MEDIA_AUTO_COLLECTION","MEDIA","PRODUCT_AUTO_COLLECTION"]')
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.GetCollectionsListResponse());
+        return $request.getResponse(Response.GetCollectionsListResponse())
     }
 
     /**
@@ -49,16 +49,16 @@ class Collection : RequestCollection
         $collectionId,
         $maxId = null)
     {
-        $request = this.ig.request("feed/collection/{$collectionId}/");
+        $request = this.ig.request("feed/collection/{$collectionId}/")
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId)
         }
 
-        return $request.getResponse(new Response.CollectionFeedResponse());
+        return $request.getResponse(Response.CollectionFeedResponse())
     }
 
     /**
-     * Create a new collection of your bookmarked (saved) media.
+     * Create a collection of your bookmarked (saved) media.
      *
      * @param string $name       Name of the collection.
      * @param string $moduleName (optional) From which app module (page) you're performing this action.
@@ -78,7 +78,7 @@ class Collection : RequestCollection
             .addPost('_uid', this.ig.account_id)
             .addPost('name', $name)
             .addPost('_uuid', this.ig.uuid)
-            .getResponse(new Response.CreateCollectionResponse());
+            .getResponse(Response.CreateCollectionResponse())
     }
 
     /**
@@ -97,7 +97,7 @@ class Collection : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.DeleteCollectionResponse());
+            .getResponse(Response.DeleteCollectionResponse())
     }
 
     /**
@@ -119,34 +119,34 @@ class Collection : RequestCollection
         $collectionId,
         array $params)
     {
-        $postData = [];
+        $postData = []
         if (isset($params['name']) && $params['name'] !== '') {
-            $postData['name'] = $params['name'];
+            $postData['name'] = $params['name']
         }
         if (!empty($params['cover_media_id'])) {
-            $postData['cover_media_id'] = $params['cover_media_id'];
+            $postData['cover_media_id'] = $params['cover_media_id']
         }
         if (!empty($params['add_media']) && is_array($params['add_media'])) {
-            $postData['added_media_ids'] = json_encode(array_values($params['add_media']));
+            $postData['added_media_ids'] = json_encode(array_values($params['add_media']))
             if (isset($params['module_name']) && $params['module_name'] !== '') {
-                $postData['module_name'] = $params['module_name'];
+                $postData['module_name'] = $params['module_name']
             } else {
-                $postData['module_name'] = 'feed_saved_add_to_collection';
+                $postData['module_name'] = 'feed_saved_add_to_collection'
             }
         }
         if (empty($postData)) {
-            throw new .InvalidArgumentException('You must provide a name or at least one media ID.');
+            throw .InvalidArgumentException('You must provide a name or at least one media ID.')
         }
         $request = this.ig.request("collections/{$collectionId}/edit/")
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken());
+            .addPost('_csrftoken', this.ig.client.getToken())
 
         foreach ($postData as $key => $value) {
-            $request.addPost($key, $value);
+            $request.addPost($key, $value)
         }
 
-        return $request.getResponse(new Response.EditCollectionResponse());
+        return $request.getResponse(Response.EditCollectionResponse())
     }
 
     /**
@@ -175,6 +175,6 @@ class Collection : RequestCollection
             .addPost('_uuid', this.ig.uuid)
             .addPost('_uid', this.ig.account_id)
             .addPost('_csrftoken', this.ig.client.getToken())
-            .getResponse(new Response.EditCollectionResponse());
+            .getResponse(Response.EditCollectionResponse())
     }
 }

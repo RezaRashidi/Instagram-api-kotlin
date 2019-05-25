@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Nametag.
@@ -31,5 +31,5 @@ class Nametag : AutoPropertyMapper
         'gradient'             => 'int',
         'emoji'                => 'string',
         'selfie_sticker'       => 'int',
-    ];
+    ]
 }

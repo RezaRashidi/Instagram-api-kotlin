@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * VideoUploadUrl.
@@ -26,5 +26,5 @@ class VideoUploadUrl : AutoPropertyMapper
         'url'     => 'string',
         'job'     => 'string',
         'expires' => 'float',
-    ];
+    ]
 }

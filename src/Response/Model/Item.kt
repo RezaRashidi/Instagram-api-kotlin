@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Item.
@@ -662,9 +662,9 @@ import InstagramAPI.AutoPropertyMapper;
  */
 class Item : AutoPropertyMapper
 {
-    val PHOTO = 1;
-    val VIDEO = 2;
-    val CAROUSEL = 8;
+    val PHOTO = 1
+    val VIDEO = 2
+    val CAROUSEL = 8
 
     val JSON_PROPERTY_MAP = [
         /*
@@ -859,7 +859,7 @@ class Item : AutoPropertyMapper
          * HTML color string such as "#812A2A".
          */
         'dominant_color'                   => 'string',
-    ];
+    ]
 
     /**
      * Get the web URL for this media item.
@@ -868,7 +868,7 @@ class Item : AutoPropertyMapper
      */
     public fun getItemUrl()
     {
-        return sprintf('https://www.instagram.com/p/%s/', this._getProperty('code'));
+        return sprintf('https://www.instagram.com/p/%s/', this._getProperty('code'))
     }
 
     /**
@@ -878,6 +878,6 @@ class Item : AutoPropertyMapper
      */
     public fun isAd()
     {
-        return this._getProperty('dr_ad_type') !== null;
+        return this._getProperty('dr_ad_type') !== null
     }
 }

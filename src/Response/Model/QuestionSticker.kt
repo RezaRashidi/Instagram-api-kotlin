@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * QuestionSticker.
@@ -52,5 +52,5 @@ class QuestionSticker : AutoPropertyMapper
         'viewer_can_interact' => 'bool',
         'profile_pic_url'     => 'string',
         'question_type'       => 'string',
-    ];
+    ]
 }

@@ -1,9 +1,9 @@
-<?php
 
-package InstagramAPI.Settings.Storage;
 
-import InstagramAPI.Settings.Storage.Components.PDOStorage;
-import PDO;
+package InstagramAPI.Settings.Storage
+
+import InstagramAPI.Settings.Storage.Components.PDOStorage
+import PDO
 
 /**
  * Persistent storage backend which uses a MySQL server.
@@ -22,24 +22,24 @@ class MySQL : PDOStorage
     public fun __construct()
     {
         // Configure the name of this backend.
-        parent::__construct('MySQL');
+        parent::__construct('MySQL')
     }
 
     /**
-     * Create a new PDO connection to the database.
+     * Create a PDO connection to the database.
      *
      * {@inheritdoc}
      */
     protected fun _createPDO(
         array $locationConfig)
     {
-        $username = ($locationConfig['dbusername'] ? $locationConfig['dbusername'] : 'root');
-        $password = ($locationConfig['dbpassword'] ? $locationConfig['dbpassword'] : '');
-        $host = ($locationConfig['dbhost'] ? $locationConfig['dbhost'] : 'localhost');
-        $dbName = ($locationConfig['dbname'] ? $locationConfig['dbname'] : 'instagram');
+        $username = ($locationConfig['dbusername'] ? $locationConfig['dbusername'] : 'root')
+        $password = ($locationConfig['dbpassword'] ? $locationConfig['dbpassword'] : '')
+        $host = ($locationConfig['dbhost'] ? $locationConfig['dbhost'] : 'localhost')
+        $dbName = ($locationConfig['dbname'] ? $locationConfig['dbname'] : 'instagram')
 
-        return new PDO("mysql:host={$host};dbname={$dbName}",
-                       $username, $password);
+        return PDO("mysql:host={$host}dbname={$dbName}",
+                       $username, $password)
     }
 
     /**
@@ -55,7 +55,7 @@ class MySQL : PDOStorage
         // we MUST import their "utf8mb4" encoding instead. The "utf8mb4" storage
         // needs are identical for 1-3 byte characters, but supports 4 bytes!
         // See: https://dev.mysql.com/doc/refman/5.7/en/charset-unicode-utf8mb4.html
-        this._pdo.query("SET NAMES 'utf8mb4'").closeCursor();
+        this._pdo.query("SET NAMES 'utf8mb4'").closeCursor()
     }
 
     /**
@@ -66,15 +66,15 @@ class MySQL : PDOStorage
     protected fun _autoCreateTable()
     {
         // Detect the name of the MySQL database that PDO is connected to.
-        $dbName = this._pdo.query('SELECT database()').fetchColumn();
+        $dbName = this._pdo.query('SELECT database()').fetchColumn()
 
         // Abort if we already have the necessary table.
-        $sth = this._pdo.prepare('SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = :tableSchema) AND (TABLE_NAME = :tableName)');
-        $sth.execute([':tableSchema' => $dbName, ':tableName' => this._dbTableName]);
-        $result = $sth.fetchColumn();
-        $sth.closeCursor();
+        $sth = this._pdo.prepare('SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = :tableSchema) AND (TABLE_NAME = :tableName)')
+        $sth.execute([':tableSchema' => $dbName, ':tableName' => this._dbTableName])
+        $result = $sth.fetchColumn()
+        $sth.closeCursor()
         if ($result > 0) {
-            return;
+            return
         }
 
         // Create the database table. Throws in case of failure.
@@ -96,6 +96,6 @@ class MySQL : PDOStorage
             cookies MEDIUMBLOB NULL,
             last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             UNIQUE KEY (username)
-        ) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB;');
+        ) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB')
     }
 }

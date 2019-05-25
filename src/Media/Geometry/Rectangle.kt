@@ -1,23 +1,23 @@
-<?php
 
-package InstagramAPI.Media.Geometry;
+
+package InstagramAPI.Media.Geometry
 
 class Rectangle
 {
     /** @var int */
-    protected $_x;
+    protected $_x
 
     /** @var int */
-    protected $_y;
+    protected $_y
 
     /** @var int */
-    protected $_width;
+    protected $_width
 
     /** @var int */
-    protected $_height;
+    protected $_height
 
     /** @var float */
-    protected $_aspectRatio;
+    protected $_aspectRatio
 
     /**
      * Constructor.
@@ -33,12 +33,12 @@ class Rectangle
         $width,
         $height)
     {
-        this._x = (int) $x;
-        this._y = (int) $y;
-        this._width = (int) $width;
-        this._height = (int) $height;
+        this._x = (int) $x
+        this._y = (int) $y
+        this._width = (int) $width
+        this._height = (int) $height
         // NOTE: MUST `float`-cast to FORCE float even when dividing EQUAL ints.
-        this._aspectRatio = (float) (this._width / this._height);
+        this._aspectRatio = (float) (this._width / this._height)
     }
 
     /**
@@ -48,7 +48,7 @@ class Rectangle
      */
     public fun getX()
     {
-        return this._x;
+        return this._x
     }
 
     /**
@@ -58,7 +58,7 @@ class Rectangle
      */
     public fun getY()
     {
-        return this._y;
+        return this._y
     }
 
     /**
@@ -71,7 +71,7 @@ class Rectangle
      */
     public fun getX1()
     {
-        return this._x;
+        return this._x
     }
 
     /**
@@ -84,7 +84,7 @@ class Rectangle
      */
     public fun getY1()
     {
-        return this._y;
+        return this._y
     }
 
     /**
@@ -94,7 +94,7 @@ class Rectangle
      */
     public fun getX2()
     {
-        return this._x + this._width;
+        return this._x + this._width
     }
 
     /**
@@ -104,7 +104,7 @@ class Rectangle
      */
     public fun getY2()
     {
-        return this._y + this._height;
+        return this._y + this._height
     }
 
     /**
@@ -114,7 +114,7 @@ class Rectangle
      */
     public fun getWidth()
     {
-        return this._width;
+        return this._width
     }
 
     /**
@@ -124,7 +124,7 @@ class Rectangle
      */
     public fun getHeight()
     {
-        return this._height;
+        return this._height
     }
 
     /**
@@ -134,24 +134,24 @@ class Rectangle
      */
     public fun getAspectRatio()
     {
-        return this._aspectRatio;
+        return this._aspectRatio
     }
 
     /**
-     * Create a new object with swapped axes.
+     * Create a object with swapped axes.
      *
      * @return self
      */
     public fun withSwappedAxes()
     {
-        return new self(this._y, this._x, this._height, this._width);
+        return self(this._y, this._x, this._height, this._width)
     }
 
     /**
      * Create a new, scale-adjusted object.
      *
      * NOTE: The x1/y1 offsets are not affected. Only the width and height. But
-     * those new dimensions WILL affect the x2/y2 offsets, as you'd expect.
+     * those dimensions WILL affect the x2/y2 offsets, as you'd expect.
      *
      * @param float|int $newScale     The scale factor to apply.
      * @param string    $roundingFunc One of `round` (default), `floor` or `ceil`.
@@ -165,15 +165,15 @@ class Rectangle
         $roundingFunc = 'round')
     {
         if (!is_float($newScale) && !is_int($newScale)) {
-            throw new .InvalidArgumentException('The new scale must be a float or integer.');
+            throw .InvalidArgumentException('The scale must be a float or integer.')
         }
         if ($roundingFunc !== 'round' && $roundingFunc !== 'floor' && $roundingFunc !== 'ceil') {
-            throw new .InvalidArgumentException(sprintf('Invalid rounding fun "%s".', $roundingFunc));
+            throw .InvalidArgumentException(sprintf('Invalid rounding fun "%s".', $roundingFunc))
         }
 
-        $newWidth = (int) $roundingFunc($newScale * this._width);
-        $newHeight = (int) $roundingFunc($newScale * this._height);
+        $newWidth = (int) $roundingFunc($newScale * this._width)
+        $newHeight = (int) $roundingFunc($newScale * this._height)
 
-        return new self(this._x, this._y, $newWidth, $newHeight);
+        return self(this._x, this._y, $newWidth, $newHeight)
     }
 }

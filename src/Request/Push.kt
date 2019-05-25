@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Request;
 
-import InstagramAPI.Response;
+package InstagramAPI.Request
+
+import InstagramAPI.Response
 
 /**
  * funs for managing your push notifications.
@@ -26,7 +26,7 @@ class Push : RequestCollection
     {
         // Make sure we only allow these for push channels.
         if ($pushChannel != 'mqtt' && $pushChannel != 'gcm') {
-            throw new .InvalidArgumentException(sprintf('Bad push channel "%s".', $pushChannel));
+            throw .InvalidArgumentException(sprintf('Bad push channel "%s".', $pushChannel))
         }
 
         $request = this.ig.request('push/register/')
@@ -38,9 +38,9 @@ class Push : RequestCollection
             .addPost('_csrftoken', this.ig.client.getToken())
             .addPost('guid', this.ig.uuid)
             .addPost('_uuid', this.ig.uuid)
-            .addPost('users', this.ig.account_id);
+            .addPost('users', this.ig.account_id)
 
-        return $request.getResponse(new Response.PushRegisterResponse());
+        return $request.getResponse(Response.PushRegisterResponse())
     }
 
     /**
@@ -53,7 +53,7 @@ class Push : RequestCollection
     public fun getPreferences()
     {
         return this.ig.request('push/all_preferences/')
-            .getResponse(new Response.PushPreferencesResponse());
+            .getResponse(Response.PushPreferencesResponse())
     }
 
     /**
@@ -68,11 +68,11 @@ class Push : RequestCollection
     public fun setPreferences(
         array $preferences)
     {
-        $request = this.ig.request('push/preferences/');
+        $request = this.ig.request('push/preferences/')
         foreach ($preferences as $key => $value) {
-            $request.addPost($key, $value);
+            $request.addPost($key, $value)
         }
 
-        return $request.getResponse(new Response.PushPreferencesResponse());
+        return $request.getResponse(Response.PushPreferencesResponse())
     }
 }

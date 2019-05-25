@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ActiveReelAdsResponse.
@@ -38,5 +38,5 @@ class ActiveReelAdsResponse : Response
         'reels'          => 'Model.Reel[]',
         'next_max_id'    => 'string',
         'more_available' => 'bool',
-    ];
+    ]
 }

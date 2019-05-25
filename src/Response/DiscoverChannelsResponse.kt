@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DiscoverChannelsResponse.
@@ -43,5 +43,5 @@ class DiscoverChannelsResponse : Response
         'items'                  => 'Model.Item[]',
         'more_available'         => '',
         'next_max_id'            => 'string',
-    ];
+    ]
 }

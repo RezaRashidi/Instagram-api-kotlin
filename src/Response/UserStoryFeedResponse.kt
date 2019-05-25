@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * UserStoryFeedResponse.
@@ -38,5 +38,5 @@ class UserStoryFeedResponse : Response
         'broadcast'      => 'Model.Broadcast',
         'reel'           => 'Model.Reel',
         'post_live_item' => 'Model.PostLiveItem',
-    ];
+    ]
 }

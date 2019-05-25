@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * FelixShare.
@@ -21,5 +21,5 @@ class FelixShare : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'video' => 'Item[]',
         'text'  => 'string',
-    ];
+    ]
 }

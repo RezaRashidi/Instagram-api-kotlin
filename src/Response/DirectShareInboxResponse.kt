@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * DirectShareInboxResponse.
@@ -53,5 +53,5 @@ class DirectShareInboxResponse : Response
         'patches'         => '',
         'last_counted_at' => '',
         'new_shares_info' => '',
-    ];
+    ]
 }

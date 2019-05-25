@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ResumableOffsetResponse.
@@ -28,7 +28,7 @@ class ResumableOffsetResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'offset' => 'int',
-    ];
+    ]
 
     /**
      * Checks if the response was successful.
@@ -37,16 +37,16 @@ class ResumableOffsetResponse : Response
      */
     public fun isOk()
     {
-        $offset = this._getProperty('offset');
+        $offset = this._getProperty('offset')
         if ($offset !== null && $offset >= 0) {
-            return true;
+            return true
         } else {
             // Set a nice message for exceptions.
             if (this.getMessage() === null) {
-                this.setMessage('Offset for resumable uploader is missing or invalid.');
+                this.setMessage('Offset for resumable uploader is missing or invalid.')
             }
 
-            return false;
+            return false
         }
     }
 }

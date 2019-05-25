@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * MediaInsightsResponse.
@@ -28,5 +28,5 @@ class MediaInsightsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         'media_organic_insights' => 'Model.MediaInsights',
-    ];
+    ]
 }

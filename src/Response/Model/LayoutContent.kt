@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * LayoutContent.
@@ -41,5 +41,5 @@ class LayoutContent : AutoPropertyMapper
         'feed_type'         => 'string',
         'explore_item_info' => 'ExploreItemInfo',
         'tabs_info'         => 'TabsInfo',
-    ];
+    ]
 }

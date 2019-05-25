@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * DirectThreadItemMedia.
@@ -30,8 +30,8 @@ import InstagramAPI.AutoPropertyMapper;
  */
 class DirectThreadItemMedia : AutoPropertyMapper
 {
-    val PHOTO = 1;
-    val VIDEO = 2;
+    val PHOTO = 1
+    val VIDEO = 2
 
     val JSON_PROPERTY_MAP = [
         /*
@@ -44,5 +44,5 @@ class DirectThreadItemMedia : AutoPropertyMapper
         'video_versions'  => 'VideoVersions[]',
         'original_width'  => 'int',
         'original_height' => 'int',
-    ];
+    ]
 }

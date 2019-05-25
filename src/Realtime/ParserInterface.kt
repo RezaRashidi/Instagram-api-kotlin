@@ -1,6 +1,6 @@
-<?php
 
-package InstagramAPI.Realtime;
+
+package InstagramAPI.Realtime
 
 interface ParserInterface
 {
@@ -15,5 +15,5 @@ interface ParserInterface
     public fun parseMessage(
         $topic,
         $payload
-    );
+    )
 }

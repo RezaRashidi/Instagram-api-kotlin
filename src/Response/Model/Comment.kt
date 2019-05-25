@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Comment.
@@ -115,9 +115,9 @@ import InstagramAPI.AutoPropertyMapper;
 class Comment : AutoPropertyMapper
 {
     /** @var int Top-level comment. */
-    val PARENT = 0;
+    val PARENT = 0
     /** @var int Threaded reply to another comment. */
-    val CHILD = 2;
+    val CHILD = 2
 
     val JSON_PROPERTY_MAP = [
         'status'                            => 'string',
@@ -187,5 +187,5 @@ class Comment : AutoPropertyMapper
         'has_more_head_child_comments'      => 'bool',
         'next_min_child_cursor'             => 'string',
         'num_head_child_comments'           => 'int',
-    ];
+    ]
 }

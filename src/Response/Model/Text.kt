@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Text.
@@ -16,5 +16,5 @@ class Text : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         'text' => 'string',
-    ];
+    ]
 }

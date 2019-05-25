@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Usertag.
@@ -21,5 +21,5 @@ class Usertag : AutoPropertyMapper
     val JSON_PROPERTY_MAP = [
         'in'           => 'In[]',
         'photo_of_you' => 'bool',
-    ];
+    ]
 }

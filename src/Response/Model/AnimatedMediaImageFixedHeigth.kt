@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * AnimatedMediaImageFixedHeigth.
@@ -51,5 +51,5 @@ class AnimatedMediaImageFixedHeigth : AutoPropertyMapper
         'mp4_size'  => 'string',
         'webp'      => 'string',
         'webp_size' => 'string',
-    ];
+    ]
 }

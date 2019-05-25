@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * Broadcast.
@@ -122,5 +122,5 @@ class Broadcast : AutoPropertyMapper
         'total_unique_viewer_count' => 'int',
         'internal_only'             => 'bool',
         'number_of_qualities'       => 'int',
-    ];
+    ]
 }

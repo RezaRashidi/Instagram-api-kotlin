@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * VideoVersions.
@@ -36,5 +36,5 @@ class VideoVersions : AutoPropertyMapper
         'height' => 'int',
         'url'    => 'string',
         'id'     => 'string',
-    ];
+    ]
 }

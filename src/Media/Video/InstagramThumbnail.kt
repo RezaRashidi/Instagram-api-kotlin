@@ -1,9 +1,9 @@
-<?php
 
-package InstagramAPI.Media.Video;
 
-import InstagramAPI.Constants;
-import InstagramAPI.Utils;
+package InstagramAPI.Media.Video
+
+import InstagramAPI.Constants
+import InstagramAPI.Utils
 
 /**
  * Automatically creates a video thumbnail according to Instagram's rules.
@@ -11,7 +11,7 @@ import InstagramAPI.Utils;
 class InstagramThumbnail : InstagramVideo
 {
     /** @var float Thumbnail offset in secs, with milliseconds (decimals). */
-    protected $_thumbnailTimestamp;
+    protected $_thumbnailTimestamp
 
     /**
      * Constructor.
@@ -30,10 +30,10 @@ class InstagramThumbnail : InstagramVideo
         array $options = [],
         FFmpeg $ffmpeg = null)
     {
-        parent::__construct($inputFile, $options, $ffmpeg);
+        parent::__construct($inputFile, $options, $ffmpeg)
 
         // The timeline and most feeds have the thumbnail at "00:00:01.000".
-        this._thumbnailTimestamp = 1.0; // Default.
+        this._thumbnailTimestamp = 1.0 // Default.
 
         // Handle per-feed timestamps and custom thumbnail timestamps.
         if (isset($options['targetFeed'])) {
@@ -41,20 +41,20 @@ class InstagramThumbnail : InstagramVideo
             case Constants::FEED_STORY:
             case Constants::FEED_DIRECT_STORY:
                 // Stories always have the thumbnail at "00:00:00.000" instead.
-                this._thumbnailTimestamp = 0.0;
-                break;
+                this._thumbnailTimestamp = 0.0
+                break
             case Constants::FEED_TIMELINE || Constants::FEED_TIMELINE_ALBUM:
                 // Handle custom timestamp (only supported by timeline media).
                 // NOTE: Matches real app which only customizes timeline covers.
                 if (isset($options['thumbnailTimestamp'])) {
-                    $customTimestamp = $options['thumbnailTimestamp'];
+                    $customTimestamp = $options['thumbnailTimestamp']
                     // If custom timestamp is a number, import as-is. Else assume
                     // a "HH:MM:SS[.000]" string and convert it. Throws if bad.
                     this._thumbnailTimestamp = is_int($customTimestamp) || is_float($customTimestamp)
                                                ? (float) $customTimestamp
-                                               : Utils::hmsTimeToSeconds($customTimestamp);
+                                               : Utils::hmsTimeToSeconds($customTimestamp)
                 }
-                break;
+                break
             default:
                 // Keep the default.
             }
@@ -62,10 +62,10 @@ class InstagramThumbnail : InstagramVideo
 
         // Ensure the timestamp is 0+ and never longer than the video duration.
         if (this._thumbnailTimestamp > this._details.getDuration()) {
-            this._thumbnailTimestamp = this._details.getDuration();
+            this._thumbnailTimestamp = this._details.getDuration()
         }
         if (this._thumbnailTimestamp < 0.0) {
-            throw new .InvalidArgumentException('Thumbnail timestamp must be a positive number.');
+            throw .InvalidArgumentException('Thumbnail timestamp must be a positive number.')
         }
     }
 
@@ -76,7 +76,7 @@ class InstagramThumbnail : InstagramVideo
      */
     public fun getTimestamp()
     {
-        return this._thumbnailTimestamp;
+        return this._thumbnailTimestamp
     }
 
     /**
@@ -86,14 +86,14 @@ class InstagramThumbnail : InstagramVideo
      */
     public fun getTimestampString()
     {
-        return Utils::hmsTimeFromSeconds(this._thumbnailTimestamp);
+        return Utils::hmsTimeFromSeconds(this._thumbnailTimestamp)
     }
 
     /** {@inheritdoc} */
     protected fun _shouldProcess()
     {
         // We must always process the video to get its thumbnail.
-        return true;
+        return true
     }
 
     /** {@inheritdoc} */
@@ -115,13 +115,13 @@ class InstagramThumbnail : InstagramVideo
             foreach ($ffmpegOutput as $line) {
                 // Example: `[flv @ 0x7fc9cc002e00] warning: first frame is no keyframe`.
                 if (strpos($line, ': first frame is no keyframe') !== false) {
-                    return true;
+                    return true
                 }
             }
         }
 
         // If this was the 2nd run or there was no error, accept result as-is.
-        return false;
+        return false
     }
 
     /** {@inheritdoc} */
@@ -140,7 +140,7 @@ class InstagramThumbnail : InstagramVideo
             ? []
             : [
                 sprintf('-ss %s', this.getTimestampString()),
-            ];
+            ]
     }
 
     /** {@inheritdoc} */
@@ -150,6 +150,6 @@ class InstagramThumbnail : InstagramVideo
         return [
             '-f mjpeg',
             '-vframes 1',
-        ];
+        ]
     }
 }

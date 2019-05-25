@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * FinalViewerListResponse.
@@ -33,5 +33,5 @@ class FinalViewerListResponse : Response
     val JSON_PROPERTY_MAP = [
         'users'                     => 'Model.User[]',
         'total_unique_viewer_count' => 'int',
-    ];
+    ]
 }

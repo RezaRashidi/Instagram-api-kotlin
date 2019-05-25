@@ -1,12 +1,12 @@
-<?php
 
-package InstagramAPI.Media.Video;
 
-import InstagramAPI.Media.Geometry.Dimensions;
-import InstagramAPI.Media.Geometry.Rectangle;
-import InstagramAPI.Media.InstagramMedia;
-import InstagramAPI.Utils;
-import Winbox.Args;
+package InstagramAPI.Media.Video
+
+import InstagramAPI.Media.Geometry.Dimensions
+import InstagramAPI.Media.Geometry.Rectangle
+import InstagramAPI.Media.InstagramMedia
+import InstagramAPI.Utils
+import Winbox.Args
 
 /**
  * Automatically prepares a video file according to Instagram's rules.
@@ -16,7 +16,7 @@ import Winbox.Args;
 class InstagramVideo : InstagramMedia
 {
     /** @var FFmpeg */
-    protected $_ffmpeg;
+    protected $_ffmpeg
 
     /**
      * Constructor.
@@ -35,19 +35,19 @@ class InstagramVideo : InstagramMedia
         array $options = [],
         FFmpeg $ffmpeg = null)
     {
-        parent::__construct($inputFile, $options);
-        this._details = new VideoDetails(this._inputFile);
+        parent::__construct($inputFile, $options)
+        this._details = VideoDetails(this._inputFile)
 
-        this._ffmpeg = $ffmpeg;
+        this._ffmpeg = $ffmpeg
         if (this._ffmpeg === null) {
-            this._ffmpeg = FFmpeg::factory();
+            this._ffmpeg = FFmpeg::factory()
         }
     }
 
     /** {@inheritdoc} */
     protected fun _isMod2CanvasRequired()
     {
-        return true;
+        return true
     }
 
     /** {@inheritdoc} */
@@ -56,11 +56,11 @@ class InstagramVideo : InstagramMedia
         Rectangle $dstRect,
         Dimensions $canvas)
     {
-        $outputFile = null;
+        $outputFile = null
 
         try {
             // Prepare output file.
-            $outputFile = Utils::createTempFile(this._tmpPath, 'VID');
+            $outputFile = Utils::createTempFile(this._tmpPath, 'VID')
             // Attempt to process the input file.
             // --------------------------------------------------------------
             // WARNING: This calls ffmpeg, which can run for a long time. The
@@ -73,16 +73,16 @@ class InstagramVideo : InstagramMedia
             // Their OS should clear its temp folder periodically. Or if they
             // import a custom temp folder, it's THEIR own job to clear it!
             // --------------------------------------------------------------
-            this._processVideo($srcRect, $dstRect, $canvas, $outputFile);
+            this._processVideo($srcRect, $dstRect, $canvas, $outputFile)
         } catch (.Exception $e) {
             if ($outputFile !== null && is_file($outputFile)) {
-                @unlink($outputFile);
+                @unlink($outputFile)
             }
 
-            throw $e; // Re-throw.
+            throw $e // Re-throw.
         }
 
-        return $outputFile;
+        return $outputFile
     }
 
     /**
@@ -101,36 +101,36 @@ class InstagramVideo : InstagramMedia
     {
         // Swap to correct dimensions if the video pixels are stored rotated.
         if (this._details.hasSwappedAxes()) {
-            $srcRect = $srcRect.withSwappedAxes();
-            $dstRect = $dstRect.withSwappedAxes();
-            $canvas = $canvas.withSwappedAxes();
+            $srcRect = $srcRect.withSwappedAxes()
+            $dstRect = $dstRect.withSwappedAxes()
+            $canvas = $canvas.withSwappedAxes()
         }
 
         // Prepare filters.
-        $bgColor = sprintf('0x%02X%02X%02X', ...this._bgColor);
+        $bgColor = sprintf('0x%02X%02X%02X', ...this._bgColor)
         $filters = [
             sprintf('crop=w=%d:h=%d:x=%d:y=%d', $srcRect.getWidth(), $srcRect.getHeight(), $srcRect.getX(), $srcRect.getY()),
             sprintf('scale=w=%d:h=%d', $dstRect.getWidth(), $dstRect.getHeight()),
             sprintf('pad=w=%d:h=%d:x=%d:y=%d:color=%s', $canvas.getWidth(), $canvas.getHeight(), $dstRect.getX(), $dstRect.getY(), $bgColor),
-        ];
+        ]
 
-        $attempt = 0;
+        $attempt = 0
         do {
-            ++$attempt;
+            ++$attempt
 
             // Reset the messageline-array to avoid mixing runs.
-            $ffmpegOutput = [];
+            $ffmpegOutput = []
 
             // Get the flags to apply to the input file.
-            $inputFlags = this._getInputFlags($attempt);
+            $inputFlags = this._getInputFlags($attempt)
 
             // Rotate the video (if needed to).
-            $rotationFilters = this._getRotationFilters();
+            $rotationFilters = this._getRotationFilters()
             if (count($rotationFilters)) {
                 if (this._ffmpeg.hasNoAutorotate()) {
-                    $inputFlags[] = '-noautorotate';
+                    $inputFlags[] = '-noautorotate'
                 }
-                $filters = array_merge($filters, $rotationFilters);
+                $filters = array_merge($filters, $rotationFilters)
             }
 
             // Video format can't copy since we always need to re-encode due to video filtering.
@@ -141,8 +141,8 @@ class InstagramVideo : InstagramMedia
                 Args::escape(implode(',', $filters)),
                 implode(' ', this._getOutputFlags($attempt)),
                 Args::escape($outputFile)
-            ));
-        } while (this._ffmpegMustRunAgain($attempt, $ffmpegOutput));
+            ))
+        } while (this._ffmpegMustRunAgain($attempt, $ffmpegOutput))
     }
 
     /**
@@ -160,7 +160,7 @@ class InstagramVideo : InstagramMedia
         $attempt,
         array $ffmpegOutput)
     {
-        return false;
+        return false
     }
 
     /**
@@ -173,7 +173,7 @@ class InstagramVideo : InstagramMedia
     protected fun _getInputFlags(
         $attempt)
     {
-        return [];
+        return []
     }
 
     /**
@@ -189,22 +189,22 @@ class InstagramVideo : InstagramMedia
         $result = [
             '-metadata:s:v rotate=""', // Strip rotation from metadata.
             '-f mp4', // Force output format to MP4.
-        ];
+        ]
 
         // Force H.264 for the video.
-        $result[] = '-c:v libx264 -preset fast -crf 24';
+        $result[] = '-c:v libx264 -preset fast -crf 24'
 
         // Force AAC for the audio.
         if (this._details.getAudioCodec() !== 'aac') {
             if (this._ffmpeg.hasLibFdkAac()) {
-                $result[] = '-c:a libfdk_aac -vbr 4';
+                $result[] = '-c:a libfdk_aac -vbr 4'
             } else {
                 // The encoder 'aac' is experimental but experimental codecs are not enabled,
                 // add '-strict -2' if you want to import it.
-                $result[] = '-strict -2 -c:a aac -b:a 96k';
+                $result[] = '-strict -2 -c:a aac -b:a 96k'
             }
         } else {
-            $result[] = '-c:a copy';
+            $result[] = '-c:a copy'
         }
 
         // Cut too long videos.
@@ -213,16 +213,16 @@ class InstagramVideo : InstagramMedia
             // end with a video that is longer than desired duration. To prevent this
             // we must import a duration that is somewhat smaller than its maximum allowed
             // value. 0.1 sec is 1 frame of 10 FPS video.
-            $maxDuration = this._constraints.getMaxDuration() - 0.1;
-            $result[] = sprintf('-t %.2F', $maxDuration);
+            $maxDuration = this._constraints.getMaxDuration() - 0.1
+            $result[] = sprintf('-t %.2F', $maxDuration)
         }
 
         // TODO Loop too short videos.
         if (this._details.getDuration() < this._constraints.getMinDuration()) {
-            $times = ceil(this._constraints.getMinDuration() / this._details.getDuration());
+            $times = ceil(this._constraints.getMinDuration() / this._details.getDuration())
         }
 
-        return $result;
+        return $result
     }
 
     /**
@@ -232,28 +232,28 @@ class InstagramVideo : InstagramMedia
      */
     protected fun _getRotationFilters()
     {
-        $result = [];
+        $result = []
         if (this._details.hasSwappedAxes()) {
             if (this._details.isHorizontallyFlipped() && this._details.isVerticallyFlipped()) {
-                $result[] = 'transpose=clock';
-                $result[] = 'hflip';
+                $result[] = 'transpose=clock'
+                $result[] = 'hflip'
             } elseif (this._details.isHorizontallyFlipped()) {
-                $result[] = 'transpose=clock';
+                $result[] = 'transpose=clock'
             } elseif (this._details.isVerticallyFlipped()) {
-                $result[] = 'transpose=cclock';
+                $result[] = 'transpose=cclock'
             } else {
-                $result[] = 'transpose=cclock';
-                $result[] = 'vflip';
+                $result[] = 'transpose=cclock'
+                $result[] = 'vflip'
             }
         } else {
             if (this._details.isHorizontallyFlipped()) {
-                $result[] = 'hflip';
+                $result[] = 'hflip'
             }
             if (this._details.isVerticallyFlipped()) {
-                $result[] = 'vflip';
+                $result[] = 'vflip'
             }
         }
 
-        return $result;
+        return $result
     }
 }

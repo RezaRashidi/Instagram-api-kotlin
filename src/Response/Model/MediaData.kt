@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * MediaData.
@@ -39,5 +39,5 @@ class MediaData : AutoPropertyMapper
          */
         'media_type'      => 'int',
         'video_versions'  => 'VideoVersions[]',
-    ];
+    ]
 }

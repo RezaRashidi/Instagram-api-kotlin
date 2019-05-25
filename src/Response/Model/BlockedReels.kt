@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * BlockedReels.
@@ -26,5 +26,5 @@ class BlockedReels : AutoPropertyMapper
         'users'     => 'User[]',
         'page_size' => '',
         'big_list'  => '',
-    ];
+    ]
 }

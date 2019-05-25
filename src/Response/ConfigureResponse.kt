@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ConfigureResponse.
@@ -43,5 +43,5 @@ class ConfigureResponse : Response
         'media'             => 'Model.Item',
         'client_sidecar_id' => 'string',
         'message_metadata'  => 'Model.DirectMessageMetadata[]',
-    ];
+    ]
 }

@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response;
 
-import InstagramAPI.Response;
+package InstagramAPI.Response
+
+import InstagramAPI.Response
 
 /**
  * ActiveFeedAdsResponse.
@@ -38,5 +38,5 @@ class ActiveFeedAdsResponse : Response
         'feed_items'     => 'Model.FeedItem[]',
         'next_max_id'    => 'string',
         'more_available' => 'bool',
-    ];
+    ]
 }

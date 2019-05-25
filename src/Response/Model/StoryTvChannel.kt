@@ -1,8 +1,8 @@
-<?php
 
-package InstagramAPI.Response.Model;
 
-import InstagramAPI.AutoPropertyMapper;
+package InstagramAPI.Response.Model
+
+import InstagramAPI.AutoPropertyMapper
 
 /**
  * StoryTvChannel.
@@ -51,5 +51,5 @@ class StoryTvChannel : AutoPropertyMapper
         'more_available' => 'bool',
         'seen_state'     => 'mixed',
         'user_dict'      => 'User',
-    ];
+    ]
 }
