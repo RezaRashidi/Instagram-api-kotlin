@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Exception;
+package InstagramAPI.Exception;
 
-use InstagramAPI\Response;
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+import InstagramAPI.Response;
+import Psr.Http.Message.ResponseInterface as HttpResponseInterface;
 
 /**
  * Parses Instagram's API error messages and throws an appropriate exception.
@@ -23,7 +23,7 @@ class ServerMessageThrower
      * Note that not all exceptions are listed below. Some are thrown via other
      * methods than this automatic message parser.
      *
-     * WARNING TO CONTRIBUTORS: Do NOT "contribute" a bunch of endpoint function
+     * WARNING TO CONTRIBUTORS: Do NOT "contribute" a bunch of endpoint fun
      * specific garbage exceptions here, such as "User not found", "Duplicate
      * comment", "No permission to view profile" or other garbage. Those server
      * messages are human-readable, unreliable (they can change at any time) and
@@ -36,7 +36,7 @@ class ServerMessageThrower
      *
      * @var array
      */
-    const EXCEPTION_MAP = [
+    val EXCEPTION_MAP = [
         /*
          * WARNING: We MUST be sure to list these exception messages in an order
          * which guarantees that they will be properly detected without being
@@ -80,7 +80,7 @@ class ServerMessageThrower
         'SentryBlockException'         => ['sentry_block'],
         'InvalidUserException'         => [
             // "The username you entered doesn't appear to belong to an account"
-            '/username(.*?)doesn\'t(.*?)belong/', // message
+            '/username(.*?)doesn.'t(.*?)belong/', // message
             'invalid_user', // error_type
         ],
         'ForcedPasswordResetException' => ['/reset(.*?)password/'],
@@ -91,12 +91,12 @@ class ServerMessageThrower
      *
      * Uses the generic EndpointException if no other exceptions match.
      *
-     * @param string|null                $prefixString   What prefix to use for
+     * @param string|null                $prefixString   What prefix to import for
      *                                                   the message in the
      *                                                   final exception. Should
      *                                                   be something helpful
      *                                                   such as the name of the
-     *                                                   class or function which
+     *                                                   class or fun which
      *                                                   threw. Can be `NULL`.
      * @param string|null                $serverMessage  The failure string from
      *                                                   Instagram's API (from
@@ -111,7 +111,7 @@ class ServerMessageThrower
      *
      * @throws InstagramException The appropriate exception.
      */
-    public static function autoThrow(
+    public static fun autoThrow(
         $prefixString,
         $serverMessage,
         Response $serverResponse = null,
@@ -122,10 +122,10 @@ class ServerMessageThrower
         $serverErrorType = null;
         if ($serverResponse instanceof Response) {
             // We are reading a property that isn't defined in the class
-            // property map, so we must use "has" first, to ensure it exists.
-            if ($serverResponse->hasErrorType()
-                && is_string($serverResponse->getErrorType())) {
-                $serverErrorType = $serverResponse->getErrorType();
+            // property map, so we must import "has" first, to ensure it exists.
+            if ($serverResponse.hasErrorType()
+                && is_string($serverResponse.getErrorType())) {
+                $serverErrorType = $serverResponse.getErrorType();
                 $messages[] = $serverErrorType;
             }
         }
@@ -158,7 +158,7 @@ class ServerMessageThrower
             // NOTE FOR CONTRIBUTORS: All HTTP status exceptions below MUST be
             // derived from EndpointException, since all HTTP errors are
             // endpoint-error-related responses and MUST be easily catchable!
-            $httpStatusCode = $httpResponse !== null ? $httpResponse->getStatusCode() : null;
+            $httpStatusCode = $httpResponse !== null ? $httpResponse.getStatusCode() : null;
             switch ($httpStatusCode) {
                 case 400:
                     $exceptionClass = 'BadRequestException';
@@ -168,13 +168,13 @@ class ServerMessageThrower
                     break;
                 default:
                     // No critical exceptions and no HTTP code exceptions have
-                    // been found, so use the generic "API function exception"!
+                    // been found, so import the generic "API fun exception"!
                     $exceptionClass = 'EndpointException';
             }
         }
 
-        // We need to specify the full namespace path to the exception class.
-        $fullClassPath = '\\'.__NAMESPACE__.'\\'.$exceptionClass;
+        // We need to specify the full package path to the exception class.
+        $fullClassPath = '..'.__package__.'..'.$exceptionClass;
 
         // Determine which message to display to the user.
         $displayMessage = is_string($serverMessage) && strlen($serverMessage)
@@ -196,8 +196,8 @@ class ServerMessageThrower
         // Attach the server response to the exception, IF a response exists.
         // NOTE: Only possible on exceptions derived from InstagramException.
         if ($serverResponse instanceof Response
-            && $e instanceof \InstagramAPI\Exception\InstagramException) {
-            $e->setResponse($serverResponse);
+            && $e instanceof .InstagramAPI.Exception.InstagramException) {
+            $e.setResponse($serverResponse);
         }
 
         throw $e;
@@ -213,7 +213,7 @@ class ServerMessageThrower
      *
      * @return string The cleaned-up message.
      */
-    public static function prettifyMessage(
+    public static fun prettifyMessage(
         $message)
     {
         // Some messages already have punctuation, and others need it. Prettify

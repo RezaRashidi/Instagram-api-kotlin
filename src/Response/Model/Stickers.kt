@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Stickers.
@@ -23,26 +23,26 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isName()
  * @method bool isTrayImageWidthRatio()
  * @method bool isType()
- * @method $this setId(string $value)
- * @method $this setImageHeight(mixed $value)
- * @method $this setImageUrl(string $value)
- * @method $this setImageWidth(mixed $value)
- * @method $this setImageWidthRatio(mixed $value)
- * @method $this setName(mixed $value)
- * @method $this setTrayImageWidthRatio(mixed $value)
- * @method $this setType(mixed $value)
- * @method $this unsetId()
- * @method $this unsetImageHeight()
- * @method $this unsetImageUrl()
- * @method $this unsetImageWidth()
- * @method $this unsetImageWidthRatio()
- * @method $this unsetName()
- * @method $this unsetTrayImageWidthRatio()
- * @method $this unsetType()
+ * @method this setId(string $value)
+ * @method this setImageHeight(mixed $value)
+ * @method this setImageUrl(string $value)
+ * @method this setImageWidth(mixed $value)
+ * @method this setImageWidthRatio(mixed $value)
+ * @method this setName(mixed $value)
+ * @method this setTrayImageWidthRatio(mixed $value)
+ * @method this setType(mixed $value)
+ * @method this unsetId()
+ * @method this unsetImageHeight()
+ * @method this unsetImageUrl()
+ * @method this unsetImageWidth()
+ * @method this unsetImageWidthRatio()
+ * @method this unsetName()
+ * @method this unsetTrayImageWidthRatio()
+ * @method this unsetType()
  */
-class Stickers extends AutoPropertyMapper
+class Stickers : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'id'                     => 'string',
         'tray_image_width_ratio' => '',
         'image_height'           => '',

@@ -1,20 +1,20 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * QPViewerData.
  *
  * @method Viewer getViewer()
  * @method bool isViewer()
- * @method $this setViewer(Viewer $value)
- * @method $this unsetViewer()
+ * @method this setViewer(Viewer $value)
+ * @method this unsetViewer()
  */
-class QPViewerData extends AutoPropertyMapper
+class QPViewerData : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'viewer'   => 'Viewer',
     ];
 }

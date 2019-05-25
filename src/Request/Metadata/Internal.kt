@@ -1,15 +1,15 @@
 <?php
 
-namespace InstagramAPI\Request\Metadata;
+package InstagramAPI.Request.Metadata;
 
-use InstagramAPI\Media\Constraints\ConstraintsFactory;
-use InstagramAPI\Media\Photo\PhotoDetails;
-use InstagramAPI\Media\Video\VideoDetails;
-use InstagramAPI\Response\Model\VideoUploadUrl;
-use InstagramAPI\Response\UploadJobVideoResponse;
-use InstagramAPI\Response\UploadPhotoResponse;
-use InstagramAPI\Response\UploadVideoResponse;
-use InstagramAPI\Utils;
+import InstagramAPI.Media.Constraints.ConstraintsFactory;
+import InstagramAPI.Media.Photo.PhotoDetails;
+import InstagramAPI.Media.Video.VideoDetails;
+import InstagramAPI.Response.Model.VideoUploadUrl;
+import InstagramAPI.Response.UploadJobVideoResponse;
+import InstagramAPI.Response.UploadPhotoResponse;
+import InstagramAPI.Response.UploadVideoResponse;
+import InstagramAPI.Utils;
 
 final class Internal
 {
@@ -45,31 +45,31 @@ final class Internal
      *
      * @param string|null $uploadId
      */
-    public function __construct(
+    public fun __construct(
         $uploadId = null)
     {
         if ($uploadId !== null) {
-            $this->_uploadId = $uploadId;
+            this._uploadId = $uploadId;
         } else {
-            $this->_uploadId = Utils::generateUploadId();
+            this._uploadId = Utils::generateUploadId();
         }
-        $this->_bestieMedia = false;
+        this._bestieMedia = false;
     }
 
     /**
      * @return PhotoDetails
      */
-    public function getPhotoDetails()
+    public fun getPhotoDetails()
     {
-        return $this->_photoDetails;
+        return this._photoDetails;
     }
 
     /**
      * @return VideoDetails
      */
-    public function getVideoDetails()
+    public fun getVideoDetails()
     {
-        return $this->_videoDetails;
+        return this._videoDetails;
     }
 
     /**
@@ -78,24 +78,24 @@ final class Internal
      * @param int    $targetFeed    One of the FEED_X constants.
      * @param string $videoFilename
      *
-     * @throws \InvalidArgumentException If the video file is missing or invalid, or Instagram won't allow this video.
-     * @throws \RuntimeException         In case of various processing errors.
+     * @throws .InvalidArgumentException If the video file is missing or invalid, or Instagram won't allow this video.
+     * @throws .RuntimeException         In case of various processing errors.
      *
      * @return VideoDetails
      */
-    public function setVideoDetails(
+    public fun setVideoDetails(
         $targetFeed,
         $videoFilename)
     {
         // Figure out the video file details.
         // NOTE: We do this first, since it validates whether the video file is
         // valid and lets us avoid wasting time uploading totally invalid files!
-        $this->_videoDetails = new VideoDetails($videoFilename);
+        this._videoDetails = new VideoDetails($videoFilename);
 
         // Validate the video details and throw if Instagram won't allow it.
-        $this->_videoDetails->validate(ConstraintsFactory::createFor($targetFeed));
+        this._videoDetails.validate(ConstraintsFactory::createFor($targetFeed));
 
-        return $this->_videoDetails;
+        return this._videoDetails;
     }
 
     /**
@@ -104,32 +104,32 @@ final class Internal
      * @param int    $targetFeed    One of the FEED_X constants.
      * @param string $photoFilename
      *
-     * @throws \InvalidArgumentException If the photo file is missing or invalid, or Instagram won't allow this photo.
-     * @throws \RuntimeException         In case of various processing errors.
+     * @throws .InvalidArgumentException If the photo file is missing or invalid, or Instagram won't allow this photo.
+     * @throws .RuntimeException         In case of various processing errors.
      *
      * @return PhotoDetails
      */
-    public function setPhotoDetails(
+    public fun setPhotoDetails(
         $targetFeed,
         $photoFilename)
     {
         // Figure out the photo file details.
         // NOTE: We do this first, since it validates whether the photo file is
         // valid and lets us avoid wasting time uploading totally invalid files!
-        $this->_photoDetails = new PhotoDetails($photoFilename);
+        this._photoDetails = new PhotoDetails($photoFilename);
 
         // Validate the photo details and throw if Instagram won't allow it.
-        $this->_photoDetails->validate(ConstraintsFactory::createFor($targetFeed));
+        this._photoDetails.validate(ConstraintsFactory::createFor($targetFeed));
 
-        return $this->_photoDetails;
+        return this._photoDetails;
     }
 
     /**
      * @return string
      */
-    public function getUploadId()
+    public fun getUploadId()
     {
-        return $this->_uploadId;
+        return this._uploadId;
     }
 
     /**
@@ -139,57 +139,57 @@ final class Internal
      *
      * @return VideoUploadUrl[]
      */
-    public function setVideoUploadUrls(
+    public fun setVideoUploadUrls(
         UploadJobVideoResponse $response)
     {
-        $this->_videoUploadUrls = [];
-        if ($response->getVideoUploadUrls() !== null) {
-            $this->_videoUploadUrls = $response->getVideoUploadUrls();
+        this._videoUploadUrls = [];
+        if ($response.getVideoUploadUrls() !== null) {
+            this._videoUploadUrls = $response.getVideoUploadUrls();
         }
 
-        return $this->_videoUploadUrls;
+        return this._videoUploadUrls;
     }
 
     /**
      * @return VideoUploadUrl[]
      */
-    public function getVideoUploadUrls()
+    public fun getVideoUploadUrls()
     {
-        return $this->_videoUploadUrls;
+        return this._videoUploadUrls;
     }
 
     /**
      * @return UploadVideoResponse
      */
-    public function getVideoUploadResponse()
+    public fun getVideoUploadResponse()
     {
-        return $this->_videoUploadResponse;
+        return this._videoUploadResponse;
     }
 
     /**
      * @param UploadVideoResponse $videoUploadResponse
      */
-    public function setVideoUploadResponse(
+    public fun setVideoUploadResponse(
         UploadVideoResponse $videoUploadResponse)
     {
-        $this->_videoUploadResponse = $videoUploadResponse;
+        this._videoUploadResponse = $videoUploadResponse;
     }
 
     /**
      * @return UploadPhotoResponse
      */
-    public function getPhotoUploadResponse()
+    public fun getPhotoUploadResponse()
     {
-        return $this->_photoUploadResponse;
+        return this._photoUploadResponse;
     }
 
     /**
      * @param UploadPhotoResponse $photoUploadResponse
      */
-    public function setPhotoUploadResponse(
+    public fun setPhotoUploadResponse(
         UploadPhotoResponse $photoUploadResponse)
     {
-        $this->_photoUploadResponse = $photoUploadResponse;
+        this._photoUploadResponse = $photoUploadResponse;
     }
 
     /**
@@ -197,40 +197,40 @@ final class Internal
      *
      * @param array $recipients
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      *
      * @return self
      */
-    public function setDirectRecipients(
+    public fun setDirectRecipients(
         array $recipients)
     {
         if (isset($recipients['users'])) {
-            $this->_directUsers = $recipients['users'];
-            $this->_directThreads = '[]';
+            this._directUsers = $recipients['users'];
+            this._directThreads = '[]';
         } elseif (isset($recipients['thread'])) {
-            $this->_directUsers = '[]';
-            $this->_directThreads = $recipients['thread'];
+            this._directUsers = '[]';
+            this._directThreads = $recipients['thread'];
         } else {
-            throw new \InvalidArgumentException('Please provide at least one recipient.');
+            throw new .InvalidArgumentException('Please provide at least one recipient.');
         }
 
-        return $this;
+        return this;
     }
 
     /**
      * @return string
      */
-    public function getDirectThreads()
+    public fun getDirectThreads()
     {
-        return $this->_directThreads;
+        return this._directThreads;
     }
 
     /**
      * @return string
      */
-    public function getDirectUsers()
+    public fun getDirectUsers()
     {
-        return $this->_directUsers;
+        return this._directUsers;
     }
 
     /**
@@ -238,17 +238,17 @@ final class Internal
      *
      * @param bool $bestieMedia
      */
-    public function setBestieMedia(
+    public fun setBestieMedia(
         $bestieMedia)
     {
-        $this->_bestieMedia = $bestieMedia;
+        this._bestieMedia = $bestieMedia;
     }
 
     /**
      * @return bool
      */
-    public function isBestieMedia()
+    public fun isBestieMedia()
     {
-        return $this->_bestieMedia;
+        return this._bestieMedia;
     }
 }

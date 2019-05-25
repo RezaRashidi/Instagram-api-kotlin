@@ -1,54 +1,54 @@
 <?php
 
-namespace InstagramAPI\Request;
+package InstagramAPI.Request;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Response;
+import InstagramAPI.Constants;
+import InstagramAPI.Response;
 
 /**
- * Functions related to Instagram's "creative assets", such as stickers.
+ * funs related to Instagram's "creative assets", such as stickers.
  */
-class Creative extends RequestCollection
+class Creative : RequestCollection
 {
     /**
      * Get sticker assets.
      *
      * NOTE: This gives you a list of the stickers that the app can "paste" on
-     * top of story media. If you want to use any of them, you will have to
+     * top of story media. If you want to import any of them, you will have to
      * apply them MANUALLY via some external image/video editor or library!
      *
      * @param string     $stickerType Type of sticker (currently only "static_stickers").
      * @param array|null $location    (optional) Array containing lat, lng and horizontalAccuracy.
      *
-     * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InvalidArgumentException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\StickerAssetsResponse
+     * @return .InstagramAPI.Response.StickerAssetsResponse
      */
-    public function getStickerAssets(
+    public fun getStickerAssets(
         $stickerType = 'static_stickers',
         array $location = null)
     {
         if ($stickerType != 'static_stickers') {
-            throw new \InvalidArgumentException('You must provide a valid sticker type.');
+            throw new .InvalidArgumentException('You must provide a valid sticker type.');
         }
         if ($location !== null && (!isset($location['lat'])
                                     || !isset($location['lng'])
                                     || !isset($location['horizontalAccuracy']))) {
-            throw new \InvalidArgumentException('Your location array must contain keys for "lat", "lng" and "horizontalAccuracy".');
+            throw new .InvalidArgumentException('Your location array must contain keys for "lat", "lng" and "horizontalAccuracy".');
         }
 
-        $request = $this->ig->request('creatives/assets/')
-            ->addPost('type', $stickerType);
+        $request = this.ig.request('creatives/assets/')
+            .addPost('type', $stickerType);
 
         if ($location !== null) {
             $request
-                ->addPost('lat', $location['lat'])
-                ->addPost('lng', $location['lng'])
-                ->addPost('horizontalAccuracy', $location['horizontalAccuracy']);
+                .addPost('lat', $location['lat'])
+                .addPost('lng', $location['lng'])
+                .addPost('horizontalAccuracy', $location['horizontalAccuracy']);
         }
 
-        return $request->getResponse(new Response\StickerAssetsResponse());
+        return $request.getResponse(new Response.StickerAssetsResponse());
     }
 
     /**
@@ -57,18 +57,18 @@ class Creative extends RequestCollection
      * NOTE: The files are some strange binary format that only the Instagram
      * app understands. If anyone figures out the format, please contact us.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\FaceModelsResponse
+     * @return .InstagramAPI.Response.FaceModelsResponse
      */
-    public function getFaceModels()
+    public fun getFaceModels()
     {
-        return $this->ig->request('creatives/face_models/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('aml_facetracker_model_version', 12)
-            ->getResponse(new Response\FaceModelsResponse());
+        return this.ig.request('creatives/face_models/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('aml_facetracker_model_version', 12)
+            .getResponse(new Response.FaceModelsResponse());
     }
 
     /**
@@ -81,26 +81,26 @@ class Creative extends RequestCollection
      *
      * @param array|null $location (optional) Array containing lat, lng and horizontalAccuracy.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\FaceEffectsResponse
+     * @return .InstagramAPI.Response.FaceEffectsResponse
      */
-    public function getFaceEffects(
+    public fun getFaceEffects(
         array $location = null)
     {
-        $request = $this->ig->request('creatives/face_effects/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES));
+        $request = this.ig.request('creatives/face_effects/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES));
 
         if ($location !== null) {
             $request
-                ->addPost('lat', $location['lat'])
-                ->addPost('lng', $location['lng'])
-                ->addPost('horizontalAccuracy', $location['horizontalAccuracy']);
+                .addPost('lat', $location['lat'])
+                .addPost('lng', $location['lng'])
+                .addPost('horizontalAccuracy', $location['horizontalAccuracy']);
         }
 
-        return $request->getResponse(new Response\FaceEffectsResponse());
+        return $request.getResponse(new Response.FaceEffectsResponse());
     }
 }

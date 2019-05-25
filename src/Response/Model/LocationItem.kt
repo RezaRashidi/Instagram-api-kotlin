@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * LocationItem.
@@ -15,18 +15,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isMediaBundles()
  * @method bool isSubtitle()
  * @method bool isTitle()
- * @method $this setLocation(Location $value)
- * @method $this setMediaBundles(mixed $value)
- * @method $this setSubtitle(mixed $value)
- * @method $this setTitle(mixed $value)
- * @method $this unsetLocation()
- * @method $this unsetMediaBundles()
- * @method $this unsetSubtitle()
- * @method $this unsetTitle()
+ * @method this setLocation(Location $value)
+ * @method this setMediaBundles(mixed $value)
+ * @method this setSubtitle(mixed $value)
+ * @method this setTitle(mixed $value)
+ * @method this unsetLocation()
+ * @method this unsetMediaBundles()
+ * @method this unsetSubtitle()
+ * @method this unsetTitle()
  */
-class LocationItem extends AutoPropertyMapper
+class LocationItem : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'media_bundles' => '',
         'subtitle'      => '',
         'location'      => 'Location',

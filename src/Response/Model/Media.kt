@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Media.
@@ -17,20 +17,20 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isId()
  * @method bool isImage()
  * @method bool isUser()
- * @method $this setCommentThreadingEnabled(bool $value)
- * @method $this setExpiringAt(mixed $value)
- * @method $this setId(string $value)
- * @method $this setImage(string $value)
- * @method $this setUser(User $value)
- * @method $this unsetCommentThreadingEnabled()
- * @method $this unsetExpiringAt()
- * @method $this unsetId()
- * @method $this unsetImage()
- * @method $this unsetUser()
+ * @method this setCommentThreadingEnabled(bool $value)
+ * @method this setExpiringAt(mixed $value)
+ * @method this setId(string $value)
+ * @method this setImage(string $value)
+ * @method this setUser(User $value)
+ * @method this unsetCommentThreadingEnabled()
+ * @method this unsetExpiringAt()
+ * @method this unsetId()
+ * @method this unsetImage()
+ * @method this unsetUser()
  */
-class Media extends AutoPropertyMapper
+class Media : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'image'                            => 'string',
         'id'                               => 'string',
         'user'                             => 'User',

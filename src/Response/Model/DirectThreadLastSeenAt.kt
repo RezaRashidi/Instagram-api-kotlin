@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * DirectThreadLastSeenAt.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method mixed getTimestamp()
  * @method bool isItemId()
  * @method bool isTimestamp()
- * @method $this setItemId(string $value)
- * @method $this setTimestamp(mixed $value)
- * @method $this unsetItemId()
- * @method $this unsetTimestamp()
+ * @method this setItemId(string $value)
+ * @method this setTimestamp(mixed $value)
+ * @method this unsetItemId()
+ * @method this unsetTimestamp()
  */
-class DirectThreadLastSeenAt extends AutoPropertyMapper
+class DirectThreadLastSeenAt : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'item_id'   => 'string',
         'timestamp' => '',
     ];

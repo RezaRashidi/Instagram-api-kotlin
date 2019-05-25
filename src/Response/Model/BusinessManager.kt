@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * BusinessManager.
@@ -21,24 +21,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isPromotionsUnit()
  * @method bool isStoriesUnit()
  * @method bool isTopPostsUnit()
- * @method $this setAccountInsightsUnit(BusinessNode $value)
- * @method $this setAccountSummaryUnit(AccountSummaryUnit $value)
- * @method $this setFeed(BusinessFeed $value)
- * @method $this setFollowersUnit(BusinessNode $value)
- * @method $this setPromotionsUnit(PromotionsUnit $value)
- * @method $this setStoriesUnit(BusinessNode $value)
- * @method $this setTopPostsUnit(BusinessNode $value)
- * @method $this unsetAccountInsightsUnit()
- * @method $this unsetAccountSummaryUnit()
- * @method $this unsetFeed()
- * @method $this unsetFollowersUnit()
- * @method $this unsetPromotionsUnit()
- * @method $this unsetStoriesUnit()
- * @method $this unsetTopPostsUnit()
+ * @method this setAccountInsightsUnit(BusinessNode $value)
+ * @method this setAccountSummaryUnit(AccountSummaryUnit $value)
+ * @method this setFeed(BusinessFeed $value)
+ * @method this setFollowersUnit(BusinessNode $value)
+ * @method this setPromotionsUnit(PromotionsUnit $value)
+ * @method this setStoriesUnit(BusinessNode $value)
+ * @method this setTopPostsUnit(BusinessNode $value)
+ * @method this unsetAccountInsightsUnit()
+ * @method this unsetAccountSummaryUnit()
+ * @method this unsetFeed()
+ * @method this unsetFollowersUnit()
+ * @method this unsetPromotionsUnit()
+ * @method this unsetStoriesUnit()
+ * @method this unsetTopPostsUnit()
  */
-class BusinessManager extends AutoPropertyMapper
+class BusinessManager : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'account_summary_unit'  => 'AccountSummaryUnit',
         'account_insights_unit' => 'BusinessNode',
         'followers_unit'        => 'BusinessNode',

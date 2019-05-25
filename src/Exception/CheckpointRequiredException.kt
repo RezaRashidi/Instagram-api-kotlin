@@ -1,7 +1,7 @@
 <?php
 
-namespace InstagramAPI\Exception;
+package InstagramAPI.Exception;
 
-class CheckpointRequiredException extends RequestException
+class CheckpointRequiredException : RequestException
 {
 }

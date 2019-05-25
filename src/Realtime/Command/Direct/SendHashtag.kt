@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command\Direct;
+package InstagramAPI.Realtime.Command.Direct;
 
-final class SendHashtag extends ShareItem
+final class SendHashtag : ShareItem
 {
-    const TYPE = 'hashtag';
+    val TYPE = 'hashtag';
 
     /**
      * Constructor.
@@ -13,9 +13,9 @@ final class SendHashtag extends ShareItem
      * @param string $hashtag
      * @param array  $options
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public function __construct(
+    public fun __construct(
         $threadId,
         $hashtag,
         array $options = [])
@@ -23,20 +23,20 @@ final class SendHashtag extends ShareItem
         parent::__construct($threadId, self::TYPE, $options);
 
         if (!is_string($hashtag)) {
-            throw new \InvalidArgumentException('The hashtag must be a string.');
+            throw new .InvalidArgumentException('The hashtag must be a string.');
         }
 
         $hashtag = ltrim(trim($hashtag), '#');
         if ($hashtag === '') {
-            throw new \InvalidArgumentException('The hashtag must not be empty.');
+            throw new .InvalidArgumentException('The hashtag must not be empty.');
         }
 
         if (strpos($hashtag, ' ') !== false) {
-            throw new \InvalidArgumentException('The hashtag must be one word.');
+            throw new .InvalidArgumentException('The hashtag must be one word.');
         }
 
-        $this->_data['hashtag'] = $hashtag;
+        this._data['hashtag'] = $hashtag;
         // Yeah, we need to send the hashtag twice.
-        $this->_data['item_id'] = $hashtag;
+        this._data['item_id'] = $hashtag;
     }
 }

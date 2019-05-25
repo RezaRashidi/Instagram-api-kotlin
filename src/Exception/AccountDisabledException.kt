@@ -1,7 +1,7 @@
 <?php
 
-namespace InstagramAPI\Exception;
+package InstagramAPI.Exception;
 
-class AccountDisabledException extends RequestException
+class AccountDisabledException : RequestException
 {
 }

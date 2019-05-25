@@ -1,38 +1,38 @@
 <?php
 
-namespace InstagramAPI\Request;
+package InstagramAPI.Request;
 
-use InstagramAPI\Response;
+import InstagramAPI.Response;
 
 /**
- * Functions related to creating and managing collections of your saved media.
+ * funs related to creating and managing collections of your saved media.
  *
  * To put media in a collection, you must first mark that media item as "saved".
  *
- * @see Media for functions related to saving/unsaving media items.
+ * @see Media for funs related to saving/unsaving media items.
  * @see https://help.instagram.com/274531543007118
  */
-class Collection extends RequestCollection
+class Collection : RequestCollection
 {
     /**
      * Get a list of all of your collections.
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\GetCollectionsListResponse
+     * @return .InstagramAPI.Response.GetCollectionsListResponse
      */
-    public function getList(
+    public fun getList(
         $maxId = null)
     {
-        $request = $this->ig->request('collections/list/')
-        ->addParam('collection_types', '["ALL_MEDIA_AUTO_COLLECTION","MEDIA","PRODUCT_AUTO_COLLECTION"]');
+        $request = this.ig.request('collections/list/')
+        .addParam('collection_types', '["ALL_MEDIA_AUTO_COLLECTION","MEDIA","PRODUCT_AUTO_COLLECTION"]');
         if ($maxId !== null) {
-            $request->addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId);
         }
 
-        return $request->getResponse(new Response\GetCollectionsListResponse());
+        return $request.getResponse(new Response.GetCollectionsListResponse());
     }
 
     /**
@@ -41,20 +41,20 @@ class Collection extends RequestCollection
      * @param string      $collectionId The collection ID.
      * @param string|null $maxId        Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\CollectionFeedResponse
+     * @return .InstagramAPI.Response.CollectionFeedResponse
      */
-    public function getFeed(
+    public fun getFeed(
         $collectionId,
         $maxId = null)
     {
-        $request = $this->ig->request("feed/collection/{$collectionId}/");
+        $request = this.ig.request("feed/collection/{$collectionId}/");
         if ($maxId !== null) {
-            $request->addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId);
         }
 
-        return $request->getResponse(new Response\CollectionFeedResponse());
+        return $request.getResponse(new Response.CollectionFeedResponse());
     }
 
     /**
@@ -63,22 +63,22 @@ class Collection extends RequestCollection
      * @param string $name       Name of the collection.
      * @param string $moduleName (optional) From which app module (page) you're performing this action.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\CreateCollectionResponse
+     * @return .InstagramAPI.Response.CreateCollectionResponse
      */
-    public function create(
+    public fun create(
         $name,
         $moduleName = 'collection_create')
     {
-        return $this->ig->request('collections/create/')
-            ->addPost('module_name', $moduleName)
-            ->addPost('collection_visibility', '0') //Instagram is planning for public collections soon
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('name', $name)
-            ->addPost('_uuid', $this->ig->uuid)
-            ->getResponse(new Response\CreateCollectionResponse());
+        return this.ig.request('collections/create/')
+            .addPost('module_name', $moduleName)
+            .addPost('collection_visibility', '0') //Instagram is planning for public collections soon
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('_uid', this.ig.account_id)
+            .addPost('name', $name)
+            .addPost('_uuid', this.ig.uuid)
+            .getResponse(new Response.CreateCollectionResponse());
     }
 
     /**
@@ -86,18 +86,18 @@ class Collection extends RequestCollection
      *
      * @param string $collectionId The collection ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\DeleteCollectionResponse
+     * @return .InstagramAPI.Response.DeleteCollectionResponse
      */
-    public function delete(
+    public fun delete(
         $collectionId)
     {
-        return $this->ig->request("collections/{$collectionId}/delete/")
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\DeleteCollectionResponse());
+        return this.ig.request("collections/{$collectionId}/delete/")
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(new Response.DeleteCollectionResponse());
     }
 
     /**
@@ -110,12 +110,12 @@ class Collection extends RequestCollection
      *                             string[] 'add_media',
      *                             string 'module_name' (optional).
      *
-     * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InvalidArgumentException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\EditCollectionResponse
+     * @return .InstagramAPI.Response.EditCollectionResponse
      */
-    public function edit(
+    public fun edit(
         $collectionId,
         array $params)
     {
@@ -135,46 +135,46 @@ class Collection extends RequestCollection
             }
         }
         if (empty($postData)) {
-            throw new \InvalidArgumentException('You must provide a name or at least one media ID.');
+            throw new .InvalidArgumentException('You must provide a name or at least one media ID.');
         }
-        $request = $this->ig->request("collections/{$collectionId}/edit/")
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken());
+        $request = this.ig.request("collections/{$collectionId}/edit/")
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken());
 
         foreach ($postData as $key => $value) {
-            $request->addPost($key, $value);
+            $request.addPost($key, $value);
         }
 
-        return $request->getResponse(new Response\EditCollectionResponse());
+        return $request.getResponse(new Response.EditCollectionResponse());
     }
 
     /**
      * Remove a single media item from one or more of your collections.
      *
      * Note that you can only remove a single media item per call, since this
-     * function only accepts a single media ID.
+     * fun only accepts a single media ID.
      *
      * @param string[] $collectionIds Array with one or more collection IDs to remove the item from.
      * @param string   $mediaId       The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string   $moduleName    (optional) From which app module (page) you're performing this action.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\EditCollectionResponse
+     * @return .InstagramAPI.Response.EditCollectionResponse
      */
-    public function removeMedia(
+    public fun removeMedia(
         array $collectionIds,
         $mediaId,
         $moduleName = 'feed_contextual_saved_collections')
     {
-        return $this->ig->request("media/{$mediaId}/save/")
-            ->addPost('module_name', $moduleName)
-            ->addPost('removed_collection_ids', json_encode(array_values($collectionIds)))
-            ->addPost('radio_type', 'wifi-none')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\EditCollectionResponse());
+        return this.ig.request("media/{$mediaId}/save/")
+            .addPost('module_name', $moduleName)
+            .addPost('removed_collection_ids', json_encode(array_values($collectionIds)))
+            .addPost('radio_type', 'wifi-none')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(new Response.EditCollectionResponse());
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Thumbnail.
@@ -27,30 +27,30 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isThumbnailWidth()
  * @method bool isThumbnailsPerRow()
  * @method bool isVideoLength()
- * @method $this setMaxThumbnailsPerSprite(int $value)
- * @method $this setRenderedWidth(int $value)
- * @method $this setSpriteHeight(int $value)
- * @method $this setSpriteUrls(string[] $value)
- * @method $this setSpriteWidth(int $value)
- * @method $this setThumbnailDuration(float $value)
- * @method $this setThumbnailHeight(int $value)
- * @method $this setThumbnailWidth(int $value)
- * @method $this setThumbnailsPerRow(int $value)
- * @method $this setVideoLength(float $value)
- * @method $this unsetMaxThumbnailsPerSprite()
- * @method $this unsetRenderedWidth()
- * @method $this unsetSpriteHeight()
- * @method $this unsetSpriteUrls()
- * @method $this unsetSpriteWidth()
- * @method $this unsetThumbnailDuration()
- * @method $this unsetThumbnailHeight()
- * @method $this unsetThumbnailWidth()
- * @method $this unsetThumbnailsPerRow()
- * @method $this unsetVideoLength()
+ * @method this setMaxThumbnailsPerSprite(int $value)
+ * @method this setRenderedWidth(int $value)
+ * @method this setSpriteHeight(int $value)
+ * @method this setSpriteUrls(string[] $value)
+ * @method this setSpriteWidth(int $value)
+ * @method this setThumbnailDuration(float $value)
+ * @method this setThumbnailHeight(int $value)
+ * @method this setThumbnailWidth(int $value)
+ * @method this setThumbnailsPerRow(int $value)
+ * @method this setVideoLength(float $value)
+ * @method this unsetMaxThumbnailsPerSprite()
+ * @method this unsetRenderedWidth()
+ * @method this unsetSpriteHeight()
+ * @method this unsetSpriteUrls()
+ * @method this unsetSpriteWidth()
+ * @method this unsetThumbnailDuration()
+ * @method this unsetThumbnailHeight()
+ * @method this unsetThumbnailWidth()
+ * @method this unsetThumbnailsPerRow()
+ * @method this unsetVideoLength()
  */
-class Thumbnail extends AutoPropertyMapper
+class Thumbnail : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'video_length'              => 'float',
         'thumbnail_width'           => 'int',
         'thumbnail_height'          => 'int',

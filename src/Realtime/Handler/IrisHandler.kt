@@ -1,27 +1,27 @@
 <?php
 
-namespace InstagramAPI\Realtime\Handler;
+package InstagramAPI.Realtime.Handler;
 
-use InstagramAPI\Realtime\HandlerInterface;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\Payload\IrisSubscribeAck;
+import InstagramAPI.Realtime.HandlerInterface;
+import InstagramAPI.Realtime.Message;
+import InstagramAPI.Realtime.Payload.IrisSubscribeAck;
 
-class IrisHandler extends AbstractHandler implements HandlerInterface
+class IrisHandler : AbstractHandler : HandlerInterface
 {
-    const MODULE = 'iris';
+    val MODULE = 'iris';
 
     /** {@inheritdoc} */
-    public function handleMessage(
+    public fun handleMessage(
         Message $message)
     {
-        $iris = new IrisSubscribeAck($message->getData());
-        if (!$iris->isSucceeded()) {
+        $iris = new IrisSubscribeAck($message.getData());
+        if (!$iris.isSucceeded()) {
             throw new HandlerException(sprintf(
                 'Failed to subscribe to Iris (%d): %s.',
-                $iris->getErrorType(),
-                $iris->getErrorMessage()
+                $iris.getErrorType(),
+                $iris.getErrorMessage()
             ));
         }
-        $this->_target->emit('iris-subscribed', [$iris]);
+        this._target.emit('iris-subscribed', [$iris]);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Usertag.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool getPhotoOfYou()
  * @method bool isIn()
  * @method bool isPhotoOfYou()
- * @method $this setIn(In[] $value)
- * @method $this setPhotoOfYou(bool $value)
- * @method $this unsetIn()
- * @method $this unsetPhotoOfYou()
+ * @method this setIn(In[] $value)
+ * @method this setPhotoOfYou(bool $value)
+ * @method this unsetIn()
+ * @method this unsetPhotoOfYou()
  */
-class Usertag extends AutoPropertyMapper
+class Usertag : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'in'           => 'In[]',
         'photo_of_you' => 'bool',
     ];

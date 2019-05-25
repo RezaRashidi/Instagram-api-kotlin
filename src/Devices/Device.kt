@@ -1,13 +1,13 @@
 <?php
 
-namespace InstagramAPI\Devices;
+package InstagramAPI.Devices;
 
 /**
  * Android hardware device representation.
  *
  * @author SteveJobzniak (https://github.com/SteveJobzniak)
  */
-class Device implements DeviceInterface
+class Device : DeviceInterface
 {
     /**
      * The Android version of Instagram currently runs on Android OS 2.2+.
@@ -18,7 +18,7 @@ class Device implements DeviceInterface
      *
      * @see https://help.instagram.com/513067452056347
      */
-    const REQUIRED_ANDROID_VERSION = '2.2';
+    val REQUIRED_ANDROID_VERSION = '2.2';
 
     /**
      * Which Instagram client app version this "device" is running.
@@ -49,14 +49,14 @@ class Device implements DeviceInterface
     protected $_deviceString;
 
     /**
-     * The user agent to use for this device. Built from properties.
+     * The user agent to import for this device. Built from properties.
      *
      * @var string
      */
     protected $_userAgent;
 
     /**
-     * The FB user agents to use for this device. Built from properties.
+     * The FB user agents to import for this device. Built from properties.
      *
      * @var array
      */
@@ -99,29 +99,29 @@ class Device implements DeviceInterface
      * @param string      $userLocale   The user's locale, such as "en_US".
      * @param string|null $deviceString (optional) The device string to attempt
      *                                  to construct from. If NULL or not a good
-     *                                  device, we'll use a random good device.
+     *                                  device, we'll import a random good device.
      * @param bool        $autoFallback (optional) Toggle automatic fallback.
      *
-     * @throws \RuntimeException If fallback is disabled and device is invalid.
+     * @throws .RuntimeException If fallback is disabled and device is invalid.
      */
-    public function __construct(
+    public fun __construct(
         $appVersion,
         $versionCode,
         $userLocale,
         $deviceString = null,
         $autoFallback = true)
     {
-        $this->_appVersion = $appVersion;
-        $this->_versionCode = $versionCode;
-        $this->_userLocale = $userLocale;
+        this._appVersion = $appVersion;
+        this._versionCode = $versionCode;
+        this._userLocale = $userLocale;
 
-        // Use the provided device if a valid good device. Otherwise use random.
+        // import the provided device if a valid good device. Otherwise import random.
         if ($autoFallback && (!is_string($deviceString) || !GoodDevices::isGoodDevice($deviceString))) {
             $deviceString = GoodDevices::getRandomGoodDevice();
         }
 
         // Initialize ourselves from the device string.
-        $this->_initFromDeviceString($deviceString);
+        this._initFromDeviceString($deviceString);
     }
 
     /**
@@ -131,138 +131,138 @@ class Device implements DeviceInterface
      *
      * @param string $deviceString
      *
-     * @throws \RuntimeException If the device string is invalid.
+     * @throws .RuntimeException If the device string is invalid.
      */
-    protected function _initFromDeviceString(
+    protected fun _initFromDeviceString(
         $deviceString)
     {
         if (!is_string($deviceString) || empty($deviceString)) {
-            throw new \RuntimeException('Device string is empty.');
+            throw new .RuntimeException('Device string is empty.');
         }
 
         // Split the device identifier into its components and verify it.
         $parts = explode('; ', $deviceString);
         if (count($parts) !== 7) {
-            throw new \RuntimeException(sprintf('Device string "%s" does not conform to the required device format.', $deviceString));
+            throw new .RuntimeException(sprintf('Device string "%s" does not conform to the required device format.', $deviceString));
         }
 
         // Check the android version.
         $androidOS = explode('/', $parts[0], 2);
         if (version_compare($androidOS[1], self::REQUIRED_ANDROID_VERSION, '<')) {
-            throw new \RuntimeException(sprintf('Device string "%s" does not meet the minimum required Android version "%s" for Instagram.', $deviceString, self::REQUIRED_ANDROID_VERSION));
+            throw new .RuntimeException(sprintf('Device string "%s" does not meet the minimum required Android version "%s" for Instagram.', $deviceString, self::REQUIRED_ANDROID_VERSION));
         }
 
         // Check the screen resolution.
         $resolution = explode('x', $parts[2], 2);
         $pixelCount = (int) $resolution[0] * (int) $resolution[1];
         if ($pixelCount < 2073600) { // 1920x1080.
-            throw new \RuntimeException(sprintf('Device string "%s" does not meet the minimum resolution requirement of 1920x1080.', $deviceString));
+            throw new .RuntimeException(sprintf('Device string "%s" does not meet the minimum resolution requirement of 1920x1080.', $deviceString));
         }
 
         // Extract "Manufacturer/Brand" string into separate fields.
         $manufacturerAndBrand = explode('/', $parts[3], 2);
 
         // Store all field values.
-        $this->_deviceString = $deviceString;
-        $this->_androidVersion = $androidOS[0]; // "23".
-        $this->_androidRelease = $androidOS[1]; // "6.0.1".
-        $this->_dpi = $parts[1];
-        $this->_resolution = $parts[2];
-        $this->_manufacturer = $manufacturerAndBrand[0];
-        $this->_brand = (isset($manufacturerAndBrand[1])
+        this._deviceString = $deviceString;
+        this._androidVersion = $androidOS[0]; // "23".
+        this._androidRelease = $androidOS[1]; // "6.0.1".
+        this._dpi = $parts[1];
+        this._resolution = $parts[2];
+        this._manufacturer = $manufacturerAndBrand[0];
+        this._brand = (isset($manufacturerAndBrand[1])
                          ? $manufacturerAndBrand[1] : null);
-        $this->_model = $parts[4];
-        $this->_device = $parts[5];
-        $this->_cpu = $parts[6];
+        this._model = $parts[4];
+        this._device = $parts[5];
+        this._cpu = $parts[6];
 
         // Build our user agent.
-        $this->_userAgent = UserAgent::buildUserAgent($this->_appVersion, $this->_userLocale, $this);
+        this._userAgent = UserAgent::buildUserAgent(this._appVersion, this._userLocale, this);
 
-        $this->_fbUserAgents = [];
+        this._fbUserAgents = [];
     }
 
     // Getters for all properties...
 
     /** {@inheritdoc} */
-    public function getDeviceString()
+    public fun getDeviceString()
     {
-        return $this->_deviceString;
+        return this._deviceString;
     }
 
     /** {@inheritdoc} */
-    public function getUserAgent()
+    public fun getUserAgent()
     {
-        return $this->_userAgent;
+        return this._userAgent;
     }
 
     /** {@inheritdoc} */
-    public function getFbUserAgent(
+    public fun getFbUserAgent(
         $appName)
     {
-        if (!isset($this->_fbUserAgents[$appName])) {
-            $this->_fbUserAgents[$appName] = UserAgent::buildFbUserAgent(
+        if (!isset(this._fbUserAgents[$appName])) {
+            this._fbUserAgents[$appName] = UserAgent::buildFbUserAgent(
                 $appName,
-                $this->_appVersion,
-                $this->_versionCode,
-                $this->_userLocale,
-                $this
+                this._appVersion,
+                this._versionCode,
+                this._userLocale,
+                this
             );
         }
 
-        return $this->_fbUserAgents[$appName];
+        return this._fbUserAgents[$appName];
     }
 
     /** {@inheritdoc} */
-    public function getAndroidVersion()
+    public fun getAndroidVersion()
     {
-        return $this->_androidVersion;
+        return this._androidVersion;
     }
 
     /** {@inheritdoc} */
-    public function getAndroidRelease()
+    public fun getAndroidRelease()
     {
-        return $this->_androidRelease;
+        return this._androidRelease;
     }
 
     /** {@inheritdoc} */
-    public function getDPI()
+    public fun getDPI()
     {
-        return $this->_dpi;
+        return this._dpi;
     }
 
     /** {@inheritdoc} */
-    public function getResolution()
+    public fun getResolution()
     {
-        return $this->_resolution;
+        return this._resolution;
     }
 
     /** {@inheritdoc} */
-    public function getManufacturer()
+    public fun getManufacturer()
     {
-        return $this->_manufacturer;
+        return this._manufacturer;
     }
 
     /** {@inheritdoc} */
-    public function getBrand()
+    public fun getBrand()
     {
-        return $this->_brand;
+        return this._brand;
     }
 
     /** {@inheritdoc} */
-    public function getModel()
+    public fun getModel()
     {
-        return $this->_model;
+        return this._model;
     }
 
     /** {@inheritdoc} */
-    public function getDevice()
+    public fun getDevice()
     {
-        return $this->_device;
+        return this._device;
     }
 
     /** {@inheritdoc} */
-    public function getCPU()
+    public fun getCPU()
     {
-        return $this->_cpu;
+        return this._cpu;
     }
 }

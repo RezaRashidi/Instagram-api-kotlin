@@ -1,7 +1,7 @@
 <?php
 
-namespace InstagramAPI\Exception;
+package InstagramAPI.Exception;
 
-class ChallengeRequiredException extends RequestException
+class ChallengeRequiredException : RequestException
 {
 }

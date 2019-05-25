@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * PushSettings.
@@ -19,22 +19,22 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isName()
  * @method bool isOptions()
  * @method bool isTitle()
- * @method $this setChecked(mixed $value)
- * @method $this setEligible(mixed $value)
- * @method $this setExample(mixed $value)
- * @method $this setName(mixed $value)
- * @method $this setOptions(mixed $value)
- * @method $this setTitle(mixed $value)
- * @method $this unsetChecked()
- * @method $this unsetEligible()
- * @method $this unsetExample()
- * @method $this unsetName()
- * @method $this unsetOptions()
- * @method $this unsetTitle()
+ * @method this setChecked(mixed $value)
+ * @method this setEligible(mixed $value)
+ * @method this setExample(mixed $value)
+ * @method this setName(mixed $value)
+ * @method this setOptions(mixed $value)
+ * @method this setTitle(mixed $value)
+ * @method this unsetChecked()
+ * @method this unsetEligible()
+ * @method this unsetExample()
+ * @method this unsetName()
+ * @method this unsetOptions()
+ * @method this unsetTitle()
  */
-class PushSettings extends AutoPropertyMapper
+class PushSettings : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'name'     => '',
         'eligible' => '',
         'title'    => '',

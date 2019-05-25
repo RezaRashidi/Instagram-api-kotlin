@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * TabsInfo.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method Tab[] getTabs()
  * @method bool isSelected()
  * @method bool isTabs()
- * @method $this setSelected(string $value)
- * @method $this setTabs(Tab[] $value)
- * @method $this unsetSelected()
- * @method $this unsetTabs()
+ * @method this setSelected(string $value)
+ * @method this setTabs(Tab[] $value)
+ * @method this unsetSelected()
+ * @method this unsetTabs()
  */
-class TabsInfo extends AutoPropertyMapper
+class TabsInfo : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'tabs'      => 'Tab[]',
         'selected'  => 'string',
     ];

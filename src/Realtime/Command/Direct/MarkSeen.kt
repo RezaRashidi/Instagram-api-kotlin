@@ -1,12 +1,12 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command\Direct;
+package InstagramAPI.Realtime.Command.Direct;
 
-use InstagramAPI\Realtime\Command\DirectCommand;
+import InstagramAPI.Realtime.Command.DirectCommand;
 
-final class MarkSeen extends DirectCommand
+final class MarkSeen : DirectCommand
 {
-    const ACTION = 'mark_seen';
+    val ACTION = 'mark_seen';
 
     /**
      * Constructor.
@@ -15,20 +15,20 @@ final class MarkSeen extends DirectCommand
      * @param string $threadItemId
      * @param array  $options
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public function __construct(
+    public fun __construct(
         $threadId,
         $threadItemId,
         array $options = [])
     {
         parent::__construct(self::ACTION, $threadId, $options);
 
-        $this->_data['item_id'] = $this->_validateThreadItemId($threadItemId);
+        this._data['item_id'] = this._validateThreadItemId($threadItemId);
     }
 
     /** {@inheritdoc} */
-    protected function _isClientContextRequired()
+    protected fun _isClientContextRequired()
     {
         return false;
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * TwoFactorInfo.
@@ -15,18 +15,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isPhoneVerificationSettings()
  * @method bool isTwoFactorIdentifier()
  * @method bool isUsername()
- * @method $this setObfuscatedPhoneNumber(mixed $value)
- * @method $this setPhoneVerificationSettings(PhoneVerificationSettings $value)
- * @method $this setTwoFactorIdentifier(string $value)
- * @method $this setUsername(string $value)
- * @method $this unsetObfuscatedPhoneNumber()
- * @method $this unsetPhoneVerificationSettings()
- * @method $this unsetTwoFactorIdentifier()
- * @method $this unsetUsername()
+ * @method this setObfuscatedPhoneNumber(mixed $value)
+ * @method this setPhoneVerificationSettings(PhoneVerificationSettings $value)
+ * @method this setTwoFactorIdentifier(string $value)
+ * @method this setUsername(string $value)
+ * @method this unsetObfuscatedPhoneNumber()
+ * @method this unsetPhoneVerificationSettings()
+ * @method this unsetTwoFactorIdentifier()
+ * @method this unsetUsername()
  */
-class TwoFactorInfo extends AutoPropertyMapper
+class TwoFactorInfo : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'username'                    => 'string',
         'two_factor_identifier'       => 'string',
         'phone_verification_settings' => 'PhoneVerificationSettings',

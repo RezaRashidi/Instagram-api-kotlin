@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Explore.
@@ -13,16 +13,16 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isActorId()
  * @method bool isExplanation()
  * @method bool isSourceToken()
- * @method $this setActorId(string $value)
- * @method $this setExplanation(mixed $value)
- * @method $this setSourceToken(mixed $value)
- * @method $this unsetActorId()
- * @method $this unsetExplanation()
- * @method $this unsetSourceToken()
+ * @method this setActorId(string $value)
+ * @method this setExplanation(mixed $value)
+ * @method this setSourceToken(mixed $value)
+ * @method this unsetActorId()
+ * @method this unsetExplanation()
+ * @method this unsetSourceToken()
  */
-class Explore extends AutoPropertyMapper
+class Explore : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'explanation'  => '',
         'actor_id'     => 'string',
         'source_token' => '',

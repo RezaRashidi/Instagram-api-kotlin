@@ -1,27 +1,27 @@
 <?php
 
-namespace InstagramAPI\Realtime\Handler;
+package InstagramAPI.Realtime.Handler;
 
-use InstagramAPI\Client as HttpClient;
-use InstagramAPI\Realtime\HandlerInterface;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\Payload\Event\PatchEvent;
-use InstagramAPI\Realtime\Payload\Event\PatchEventOp;
-use InstagramAPI\Realtime\Payload\LiveBroadcast;
-use InstagramAPI\Realtime\Payload\RealtimeEvent;
+import InstagramAPI.Client as HttpClient;
+import InstagramAPI.Realtime.HandlerInterface;
+import InstagramAPI.Realtime.Message;
+import InstagramAPI.Realtime.Payload.Event.PatchEvent;
+import InstagramAPI.Realtime.Payload.Event.PatchEventOp;
+import InstagramAPI.Realtime.Payload.LiveBroadcast;
+import InstagramAPI.Realtime.Payload.RealtimeEvent;
 
-class LiveHandler extends AbstractHandler implements HandlerInterface
+class LiveHandler : AbstractHandler : HandlerInterface
 {
-    const MODULE = 'live';
+    val MODULE = 'live';
 
     /** {@inheritdoc} */
-    public function handleMessage(
+    public fun handleMessage(
         Message $message)
     {
-        $data = $message->getData();
+        $data = $message.getData();
 
         if (isset($data['event'])) {
-            $this->_processEvent($data);
+            this._processEvent($data);
         } else {
             throw new HandlerException('Invalid message (event type is missing).');
         }
@@ -34,13 +34,13 @@ class LiveHandler extends AbstractHandler implements HandlerInterface
      *
      * @throws HandlerException
      */
-    protected function _processEvent(
+    protected fun _processEvent(
         array $message)
     {
         if ($message['event'] === RealtimeEvent::PATCH) {
             $event = new PatchEvent($message);
-            foreach ($event->getData() as $op) {
-                $this->_handlePatchOp($op);
+            foreach ($event.getData() as $op) {
+                this._handlePatchOp($op);
             }
         } else {
             throw new HandlerException(sprintf('Unknown event type "%s".', $message['event']));
@@ -54,10 +54,10 @@ class LiveHandler extends AbstractHandler implements HandlerInterface
      *
      * @throws HandlerException
      */
-    protected function _handlePatchOp(
+    protected fun _handlePatchOp(
         PatchEventOp $op)
     {
-        switch ($op->getOp()) {
+        switch ($op.getOp()) {
             case PatchEventOp::ADD:
                 $event = 'live-started';
                 break;
@@ -65,17 +65,17 @@ class LiveHandler extends AbstractHandler implements HandlerInterface
                 $event = 'live-stopped';
                 break;
             default:
-                throw new HandlerException(sprintf('Unsupported live broadcast op: "%s".', $op->getOp()));
+                throw new HandlerException(sprintf('Unsupported live broadcast op: "%s".', $op.getOp()));
         }
-        if (!$this->_hasListeners($event)) {
+        if (!this._hasListeners($event)) {
             return;
         }
 
-        $json = HttpClient::api_body_decode($op->getValue());
+        $json = HttpClient::api_body_decode($op.getValue());
         if (!is_array($json)) {
             throw new HandlerException(sprintf('Failed to decode live broadcast JSON: %s.', json_last_error_msg()));
         }
 
-        $this->_target->emit($event, [new LiveBroadcast($json)]);
+        this._target.emit($event, [new LiveBroadcast($json)]);
     }
 }

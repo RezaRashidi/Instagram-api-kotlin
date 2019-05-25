@@ -1,13 +1,13 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command;
+package InstagramAPI.Realtime.Command;
 
-use InstagramAPI\Realtime\CommandInterface;
-use InstagramAPI\Realtime\Mqtt;
+import InstagramAPI.Realtime.CommandInterface;
+import InstagramAPI.Realtime.Mqtt;
 
-class IrisSubscribe implements CommandInterface
+class IrisSubscribe : CommandInterface
 {
-    const INVALID_SEQUENCE_ID = -1;
+    val INVALID_SEQUENCE_ID = -1;
 
     /** @var int */
     private $_sequenceId;
@@ -17,34 +17,34 @@ class IrisSubscribe implements CommandInterface
      *
      * @param int $sequenceId
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public function __construct(
+    public fun __construct(
         $sequenceId)
     {
         if ($sequenceId === self::INVALID_SEQUENCE_ID) {
-            throw new \InvalidArgumentException('Invalid Iris sequence identifier.');
+            throw new .InvalidArgumentException('Invalid Iris sequence identifier.');
         }
-        $this->_sequenceId = $sequenceId;
+        this._sequenceId = $sequenceId;
     }
 
     /** {@inheritdoc} */
-    public function getTopic()
+    public fun getTopic()
     {
-        return Mqtt\Topics::IRIS_SUB;
+        return Mqtt.Topics::IRIS_SUB;
     }
 
     /** {@inheritdoc} */
-    public function getQosLevel()
+    public fun getQosLevel()
     {
-        return Mqtt\QosLevel::ACKNOWLEDGED_DELIVERY;
+        return Mqtt.QosLevel::ACKNOWLEDGED_DELIVERY;
     }
 
     /** {@inheritdoc} */
-    public function jsonSerialize()
+    public fun jsonSerialize()
     {
         return [
-            'seq_id' => $this->_sequenceId,
+            'seq_id' => this._sequenceId,
         ];
     }
 }

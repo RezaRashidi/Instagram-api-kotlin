@@ -1,13 +1,13 @@
 <?php
 
-namespace InstagramAPI\Request;
+package InstagramAPI.Request;
 
-use InstagramAPI\Response;
+import InstagramAPI.Response;
 
 /**
- * Functions related to managing and exploring user tags in media.
+ * funs related to managing and exploring user tags in media.
  */
-class Usertag extends RequestCollection
+class Usertag : RequestCollection
 {
     /**
      * Tag a user in a media item.
@@ -15,14 +15,14 @@ class Usertag extends RequestCollection
      * @param string  $mediaId     The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string  $userId      Numerical UserPK ID.
      * @param float[] $position    Position relative to image where the tag should sit. Example: [0.4890625,0.6140625]
-     * @param string  $captionText Caption to use for the media.
+     * @param string  $captionText Caption to import for the media.
      *
-     * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InvalidArgumentException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\EditMediaResponse
+     * @return .InstagramAPI.Response.EditMediaResponse
      */
-    public function tagMedia(
+    public fun tagMedia(
         $mediaId,
         $userId,
         array $position,
@@ -35,7 +35,7 @@ class Usertag extends RequestCollection
             ],
         ];
 
-        return $this->ig->media->edit($mediaId, $captionText, ['usertags' => $usertags]);
+        return this.ig.media.edit($mediaId, $captionText, ['usertags' => $usertags]);
     }
 
     /**
@@ -43,14 +43,14 @@ class Usertag extends RequestCollection
      *
      * @param string $mediaId     The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string $userId      Numerical UserPK ID.
-     * @param string $captionText Caption to use for the media.
+     * @param string $captionText Caption to import for the media.
      *
-     * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InvalidArgumentException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\EditMediaResponse
+     * @return .InstagramAPI.Response.EditMediaResponse
      */
-    public function untagMedia(
+    public fun untagMedia(
         $mediaId,
         $userId,
         $captionText = '')
@@ -62,7 +62,7 @@ class Usertag extends RequestCollection
             'in'      => [],
         ];
 
-        return $this->ig->media->edit($mediaId, $captionText, ['usertags' => $usertags]);
+        return this.ig.media.edit($mediaId, $captionText, ['usertags' => $usertags]);
     }
 
     /**
@@ -70,18 +70,18 @@ class Usertag extends RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\MediaInfoResponse
+     * @return .InstagramAPI.Response.MediaInfoResponse
      */
-    public function removeSelfTag(
+    public fun removeSelfTag(
         $mediaId)
     {
-        return $this->ig->request("usertags/{$mediaId}/remove/")
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->getResponse(new Response\MediaInfoResponse());
+        return this.ig.request("usertags/{$mediaId}/remove/")
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .getResponse(new Response.MediaInfoResponse());
     }
 
     /**
@@ -90,21 +90,21 @@ class Usertag extends RequestCollection
      * @param string      $userId Numerical UserPK ID.
      * @param string|null $maxId  Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\UsertagsResponse
+     * @return .InstagramAPI.Response.UsertagsResponse
      */
-    public function getUserFeed(
+    public fun getUserFeed(
         $userId,
         $maxId = null)
     {
-        $request = $this->ig->request("usertags/{$userId}/feed/");
+        $request = this.ig.request("usertags/{$userId}/feed/");
 
         if ($maxId !== null) {
-            $request->addParam('max_id', $maxId);
+            $request.addParam('max_id', $maxId);
         }
 
-        return $request->getResponse(new Response\UsertagsResponse());
+        return $request.getResponse(new Response.UsertagsResponse());
     }
 
     /**
@@ -112,14 +112,14 @@ class Usertag extends RequestCollection
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\UsertagsResponse
+     * @return .InstagramAPI.Response.UsertagsResponse
      */
-    public function getSelfUserFeed(
+    public fun getSelfUserFeed(
         $maxId = null)
     {
-        return $this->getUserFeed($this->ig->account_id, $maxId);
+        return this.getUserFeed(this.ig.account_id, $maxId);
     }
 
     /**
@@ -127,18 +127,18 @@ class Usertag extends RequestCollection
      *
      * @param bool $enabled TRUE to manually accept photos, or FALSE to accept automatically.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws .InstagramAPI.Exception.InstagramException
      *
-     * @return \InstagramAPI\Response\ReviewPreferenceResponse
+     * @return .InstagramAPI.Response.ReviewPreferenceResponse
      */
-    public function setReviewPreference(
+    public fun setReviewPreference(
         $enabled)
     {
-        return $this->ig->request('usertags/review_preference/')
-            ->addPost('_uuid', $this->ig->uuid)
-            ->addPost('_uid', $this->ig->account_id)
-            ->addPost('_csrftoken', $this->ig->client->getToken())
-            ->addPost('enabled', (int) $enabled)
-            ->getResponse(new Response\ReviewPreferenceResponse());
+        return this.ig.request('usertags/review_preference/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('enabled', (int) $enabled)
+            .getResponse(new Response.ReviewPreferenceResponse());
     }
 }

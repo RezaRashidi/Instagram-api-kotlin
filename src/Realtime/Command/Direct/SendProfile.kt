@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command\Direct;
+package InstagramAPI.Realtime.Command.Direct;
 
-final class SendProfile extends ShareItem
+final class SendProfile : ShareItem
 {
-    const TYPE = 'profile';
+    val TYPE = 'profile';
 
     /**
      * Constructor.
@@ -13,9 +13,9 @@ final class SendProfile extends ShareItem
      * @param string $userId
      * @param array  $options
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public function __construct(
+    public fun __construct(
         $threadId,
         $userId,
         array $options = [])
@@ -23,10 +23,10 @@ final class SendProfile extends ShareItem
         parent::__construct($threadId, self::TYPE, $options);
 
         if (!ctype_digit($userId) && (!is_int($userId) || $userId < 0)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a valid numerical UserPK ID.', $userId));
+            throw new .InvalidArgumentException(sprintf('"%s" is not a valid numerical UserPK ID.', $userId));
         }
-        $this->_data['profile_user_id'] = (string) $userId;
+        this._data['profile_user_id'] = (string) $userId;
         // Yeah, we need to send the user ID twice.
-        $this->_data['item_id'] = (string) $userId;
+        this._data['item_id'] = (string) $userId;
     }
 }

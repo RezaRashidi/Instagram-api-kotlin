@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Edges.
@@ -13,16 +13,16 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isNode()
  * @method bool isPriority()
  * @method bool isTimeRange()
- * @method $this setNode(QPNode $value)
- * @method $this setPriority(int $value)
- * @method $this setTimeRange(TimeRange $value)
- * @method $this unsetNode()
- * @method $this unsetPriority()
- * @method $this unsetTimeRange()
+ * @method this setNode(QPNode $value)
+ * @method this setPriority(int $value)
+ * @method this setTimeRange(TimeRange $value)
+ * @method this unsetNode()
+ * @method this unsetPriority()
+ * @method this unsetTimeRange()
  */
-class Edges extends AutoPropertyMapper
+class Edges : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'priority'      => 'int',
         'time_range'    => 'TimeRange',
         'node'          => 'QPNode',

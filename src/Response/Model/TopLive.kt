@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * TopLive.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method mixed getRankedPosition()
  * @method bool isBroadcastOwners()
  * @method bool isRankedPosition()
- * @method $this setBroadcastOwners(User[] $value)
- * @method $this setRankedPosition(mixed $value)
- * @method $this unsetBroadcastOwners()
- * @method $this unsetRankedPosition()
+ * @method this setBroadcastOwners(User[] $value)
+ * @method this setRankedPosition(mixed $value)
+ * @method this unsetBroadcastOwners()
+ * @method this unsetRankedPosition()
  */
-class TopLive extends AutoPropertyMapper
+class TopLive : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'broadcast_owners' => 'User[]',
         'ranked_position'  => '',
     ];

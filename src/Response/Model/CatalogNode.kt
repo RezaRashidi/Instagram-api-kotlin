@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * CatalogNode.
@@ -21,24 +21,24 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isMainImageWithSafeFallback()
  * @method bool isName()
  * @method bool isRetailerId()
- * @method $this setCurrentPrice(mixed $value)
- * @method $this setDescription(string $value)
- * @method $this setFullPrice(mixed $value)
- * @method $this setId(string $value)
- * @method $this setMainImageWithSafeFallback(mixed $value)
- * @method $this setName(string $value)
- * @method $this setRetailerId(string $value)
- * @method $this unsetCurrentPrice()
- * @method $this unsetDescription()
- * @method $this unsetFullPrice()
- * @method $this unsetId()
- * @method $this unsetMainImageWithSafeFallback()
- * @method $this unsetName()
- * @method $this unsetRetailerId()
+ * @method this setCurrentPrice(mixed $value)
+ * @method this setDescription(string $value)
+ * @method this setFullPrice(mixed $value)
+ * @method this setId(string $value)
+ * @method this setMainImageWithSafeFallback(mixed $value)
+ * @method this setName(string $value)
+ * @method this setRetailerId(string $value)
+ * @method this unsetCurrentPrice()
+ * @method this unsetDescription()
+ * @method this unsetFullPrice()
+ * @method this unsetId()
+ * @method this unsetMainImageWithSafeFallback()
+ * @method this unsetName()
+ * @method this unsetRetailerId()
  */
-class CatalogNode extends AutoPropertyMapper
+class CatalogNode : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'id'                            => 'string',
         'full_price'                    => '',
         'current_price'                 => '',

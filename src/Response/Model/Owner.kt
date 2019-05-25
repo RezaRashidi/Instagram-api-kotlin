@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Owner.
@@ -25,28 +25,28 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isProfilePicUsername()
  * @method bool isShortName()
  * @method bool isType()
- * @method $this setLat(float $value)
- * @method $this setLng(float $value)
- * @method $this setLocationDict(Location $value)
- * @method $this setName(string $value)
- * @method $this setPk(string $value)
- * @method $this setProfilePicUrl(string $value)
- * @method $this setProfilePicUsername(string $value)
- * @method $this setShortName(string $value)
- * @method $this setType(mixed $value)
- * @method $this unsetLat()
- * @method $this unsetLng()
- * @method $this unsetLocationDict()
- * @method $this unsetName()
- * @method $this unsetPk()
- * @method $this unsetProfilePicUrl()
- * @method $this unsetProfilePicUsername()
- * @method $this unsetShortName()
- * @method $this unsetType()
+ * @method this setLat(float $value)
+ * @method this setLng(float $value)
+ * @method this setLocationDict(Location $value)
+ * @method this setName(string $value)
+ * @method this setPk(string $value)
+ * @method this setProfilePicUrl(string $value)
+ * @method this setProfilePicUsername(string $value)
+ * @method this setShortName(string $value)
+ * @method this setType(mixed $value)
+ * @method this unsetLat()
+ * @method this unsetLng()
+ * @method this unsetLocationDict()
+ * @method this unsetName()
+ * @method this unsetPk()
+ * @method this unsetProfilePicUrl()
+ * @method this unsetProfilePicUsername()
+ * @method this unsetShortName()
+ * @method this unsetType()
  */
-class Owner extends AutoPropertyMapper
+class Owner : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'type'                 => '',
         'pk'                   => 'string',
         'name'                 => 'string',

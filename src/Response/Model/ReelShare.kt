@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * ReelShare.
@@ -29,32 +29,32 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isText()
  * @method bool isTray()
  * @method bool isType()
- * @method $this setBroadcasts(mixed $value)
- * @method $this setIsReelPersisted(bool $value)
- * @method $this setMedia(Item $value)
- * @method $this setMentionedUserId(string $value)
- * @method $this setReelOwnerId(string $value)
- * @method $this setReelType(string $value)
- * @method $this setStickerVersion(int $value)
- * @method $this setStoryRankingToken(string $value)
- * @method $this setText(string $value)
- * @method $this setTray(Item[] $value)
- * @method $this setType(string $value)
- * @method $this unsetBroadcasts()
- * @method $this unsetIsReelPersisted()
- * @method $this unsetMedia()
- * @method $this unsetMentionedUserId()
- * @method $this unsetReelOwnerId()
- * @method $this unsetReelType()
- * @method $this unsetStickerVersion()
- * @method $this unsetStoryRankingToken()
- * @method $this unsetText()
- * @method $this unsetTray()
- * @method $this unsetType()
+ * @method this setBroadcasts(mixed $value)
+ * @method this setIsReelPersisted(bool $value)
+ * @method this setMedia(Item $value)
+ * @method this setMentionedUserId(string $value)
+ * @method this setReelOwnerId(string $value)
+ * @method this setReelType(string $value)
+ * @method this setStickerVersion(int $value)
+ * @method this setStoryRankingToken(string $value)
+ * @method this setText(string $value)
+ * @method this setTray(Item[] $value)
+ * @method this setType(string $value)
+ * @method this unsetBroadcasts()
+ * @method this unsetIsReelPersisted()
+ * @method this unsetMedia()
+ * @method this unsetMentionedUserId()
+ * @method this unsetReelOwnerId()
+ * @method this unsetReelType()
+ * @method this unsetStickerVersion()
+ * @method this unsetStoryRankingToken()
+ * @method this unsetText()
+ * @method this unsetTray()
+ * @method this unsetType()
  */
-class ReelShare extends AutoPropertyMapper
+class ReelShare : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'tray'                => 'Item[]',
         'story_ranking_token' => 'string',
         'broadcasts'          => '',

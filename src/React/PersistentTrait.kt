@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\React;
+package InstagramAPI.React;
 
-use React\EventLoop\Timer\TimerInterface;
-use React\Promise\PromiseInterface;
+import React.EventLoop.Timer.TimerInterface;
+import React.Promise.PromiseInterface;
 
 /**
  * @mixin PersistentInterface
@@ -19,14 +19,14 @@ trait PersistentTrait
     /**
      * Cancel a reconnect timer (if any).
      */
-    protected function _cancelReconnectTimer()
+    protected fun _cancelReconnectTimer()
     {
-        if ($this->_reconnectTimer !== null) {
-            if ($this->_reconnectTimer->isActive()) {
-                $this->getLogger()->info('Existing reconnect timer has been canceled.');
-                $this->_reconnectTimer->cancel();
+        if (this._reconnectTimer !== null) {
+            if (this._reconnectTimer.isActive()) {
+                this.getLogger().info('Existing reconnect timer has been canceled.');
+                this._reconnectTimer.cancel();
             }
-            $this->_reconnectTimer = null;
+            this._reconnectTimer = null;
         }
     }
 
@@ -35,44 +35,44 @@ trait PersistentTrait
      *
      * @param callable $callback
      */
-    protected function _setReconnectTimer(
+    protected fun _setReconnectTimer(
         callable $callback)
     {
-        $this->_cancelReconnectTimer();
-        if (!$this->isActive()) {
+        this._cancelReconnectTimer();
+        if (!this.isActive()) {
             return;
         }
-        $this->_reconnectInterval = min(
-            $this->getMaxReconnectInterval(),
+        this._reconnectInterval = min(
+            this.getMaxReconnectInterval(),
             max(
-                $this->getMinReconnectInterval(),
-                $this->_reconnectInterval * 2
+                this.getMinReconnectInterval(),
+                this._reconnectInterval * 2
             )
         );
-        $this->getLogger()->info(sprintf('Setting up reconnect timer to %d seconds.', $this->_reconnectInterval));
-        $this->_reconnectTimer = $this->getLoop()->addTimer($this->_reconnectInterval, function () use ($callback) {
+        this.getLogger().info(sprintf('Setting up reconnect timer to %d seconds.', this._reconnectInterval));
+        this._reconnectTimer = this.getLoop().addTimer(this._reconnectInterval, fun () import ($callback) {
             /** @var PromiseInterface $promise */
             $promise = $callback();
-            $promise->then(
-                function () {
+            $promise.then(
+                fun () {
                     // Reset reconnect interval on successful connection attempt.
-                    $this->_reconnectInterval = 0;
+                    this._reconnectInterval = 0;
                 },
-                function () use ($callback) {
-                    $this->_setReconnectTimer($callback);
+                fun () import ($callback) {
+                    this._setReconnectTimer($callback);
                 }
             );
         });
     }
 
     /** {@inheritdoc} */
-    public function getMinReconnectInterval()
+    public fun getMinReconnectInterval()
     {
         return PersistentInterface::MIN_RECONNECT_INTERVAL;
     }
 
     /** {@inheritdoc} */
-    public function getMaxReconnectInterval()
+    public fun getMaxReconnectInterval()
     {
         return PersistentInterface::MAX_RECONNECT_INTERVAL;
     }

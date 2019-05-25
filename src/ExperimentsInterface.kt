@@ -1,9 +1,6 @@
-<?php
+package InstagramAPI
 
-namespace InstagramAPI;
-
-interface ExperimentsInterface
-{
+interface ExperimentsInterface {
     /**
      * Checks if a parameter is enabled in the given experiment.
      *
@@ -13,10 +10,10 @@ interface ExperimentsInterface
      *
      * @return bool
      */
-    public function isExperimentEnabled(
-        $experiment,
-        $param,
-        $default = false);
+    public fun isExperimentEnabled(
+            experiment,
+            param,
+            default = false)
 
     /**
      * Get a parameter value for the given experiment.
@@ -27,8 +24,8 @@ interface ExperimentsInterface
      *
      * @return mixed
      */
-    public function getExperimentParam(
-        $experiment,
-        $param,
-        $default = null);
+    public fun getExperimentParam(
+            experiment,
+            param,
+            default = null)
 }

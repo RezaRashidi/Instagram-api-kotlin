@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI;
+package InstagramAPI;
 
 class Signatures
 {
@@ -11,20 +11,20 @@ class Signatures
      *
      * @return string
      */
-    public static function generateSignature(
+    public static fun generateSignature(
         $data)
     {
         return hash_hmac('sha256', $data, Constants::IG_SIG_KEY);
     }
 
     /**
-     * @deprecated Use signData() instead.
+     * @deprecated import signData() instead.
      *
      * @param string $data
      *
      * @return string
      */
-    public static function generateSignatureForPost(
+    public static fun generateSignatureForPost(
         $data)
     {
         return 'ig_sig_key_version='.Constants::SIG_KEY_VERSION.'&signed_body='.self::generateSignature($data).'.'.urlencode($data);
@@ -38,7 +38,7 @@ class Signatures
      *
      * @return array
      */
-    public static function signData(
+    public static fun signData(
         array $data,
         array $exclude = [])
     {
@@ -66,7 +66,7 @@ class Signatures
         return Utils::reorderByHashCode($result);
     }
 
-    public static function generateDeviceId()
+    public static fun generateDeviceId()
     {
         // This has 10 million possible hash subdivisions per clock second.
         $megaRandomHash = md5(number_format(microtime(true), 7, '', ''));
@@ -81,17 +81,17 @@ class Signatures
      *
      * @return bool
      */
-    public static function isValidUUID(
+    public static fun isValidUUID(
         $uuid)
     {
         if (!is_string($uuid)) {
             return false;
         }
 
-        return (bool) preg_match('#^[a-f\d]{8}-(?:[a-f\d]{4}-){3}[a-f\d]{12}$#D', $uuid);
+        return (bool) preg_match('#^[a-f.d]{8}-(?:[a-f.d]{4}-){3}[a-f.d]{12}$#D', $uuid);
     }
 
-    public static function generateUUID(
+    public static fun generateUUID(
         $keepDashes = true)
     {
         $uuid = sprintf(

@@ -1,19 +1,19 @@
 <?php
 
-namespace InstagramAPI\Media\Video;
+package InstagramAPI.Media.Video;
 
-use InstagramAPI\Utils;
-use Symfony\Component\Process\Process;
-use Winbox\Args;
+import InstagramAPI.Utils;
+import Symfony.Component.Process.Process;
+import Winbox.Args;
 
 class FFmpeg
 {
-    const BINARIES = [
+    val BINARIES = [
         'ffmpeg',
         'avconv',
     ];
 
-    const WINDOWS_BINARIES = [
+    val WINDOWS_BINARIES = [
         'ffmpeg.exe',
         'avconv.exe',
     ];
@@ -41,28 +41,28 @@ class FFmpeg
      *
      * @param string $ffmpegBinary
      *
-     * @throws \RuntimeException When a ffmpeg binary is missing.
+     * @throws .RuntimeException When a ffmpeg binary is missing.
      */
-    protected function __construct(
+    protected fun __construct(
         $ffmpegBinary)
     {
-        $this->_ffmpegBinary = $ffmpegBinary;
+        this._ffmpegBinary = $ffmpegBinary;
 
         try {
-            $this->version();
-        } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('It seems that the path to ffmpeg binary is invalid. Please check your path to ensure that it is correct.'));
+            this.version();
+        } catch (.Exception $e) {
+            throw new .RuntimeException(sprintf('It seems that the path to ffmpeg binary is invalid. Please check your path to ensure that it is correct.'));
         }
     }
 
     /**
-     * Create a new instance or use a cached one.
+     * Create a new instance or import a cached one.
      *
      * @param string|null $ffmpegBinary Path to a ffmpeg binary, or NULL to autodetect.
      *
      * @return static
      */
-    public static function factory(
+    public static fun factory(
         $ffmpegBinary = null)
     {
         if ($ffmpegBinary === null) {
@@ -84,28 +84,28 @@ class FFmpeg
      *
      * @param string $command
      *
-     * @throws \RuntimeException
+     * @throws .RuntimeException
      *
      * @return string[]
      */
-    public function run(
+    public fun run(
         $command)
     {
-        $process = $this->runAsync($command);
+        $process = this.runAsync($command);
 
         try {
-            $exitCode = $process->wait();
-        } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('Failed to run the ffmpeg binary: %s', $e->getMessage()));
+            $exitCode = $process.wait();
+        } catch (.Exception $e) {
+            throw new .RuntimeException(sprintf('Failed to run the ffmpeg binary: %s', $e.getMessage()));
         }
         if ($exitCode) {
-            $errors = preg_replace('#[\r\n]+#', '"], ["', trim($process->getErrorOutput()));
+            $errors = preg_replace('#[.r.n]+#', '"], ["', trim($process.getErrorOutput()));
             $errorMsg = sprintf('FFmpeg Errors: ["%s"], Command: "%s".', $errors, $command);
 
-            throw new \RuntimeException($errorMsg, $exitCode);
+            throw new .RuntimeException($errorMsg, $exitCode);
         }
 
-        return preg_split('#[\r\n]+#', $process->getOutput(), null, PREG_SPLIT_NO_EMPTY);
+        return preg_split('#[.r.n]+#', $process.getOutput(), null, PREG_SPLIT_NO_EMPTY);
     }
 
     /**
@@ -115,16 +115,16 @@ class FFmpeg
      *
      * @return Process
      */
-    public function runAsync(
+    public fun runAsync(
         $command)
     {
-        $fullCommand = sprintf('%s -v error %s', Args::escape($this->_ffmpegBinary), $command);
+        $fullCommand = sprintf('%s -v error %s', Args::escape(this._ffmpegBinary), $command);
 
         $process = new Process($fullCommand);
         if (is_int(self::$defaultTimeout) && self::$defaultTimeout > 60) {
-            $process->setTimeout(self::$defaultTimeout);
+            $process.setTimeout(self::$defaultTimeout);
         }
-        $process->start();
+        $process.start();
 
         return $process;
     }
@@ -132,13 +132,13 @@ class FFmpeg
     /**
      * Get the ffmpeg version.
      *
-     * @throws \RuntimeException
+     * @throws .RuntimeException
      *
      * @return string
      */
-    public function version()
+    public fun version()
     {
-        return $this->run('-version')[0];
+        return this.run('-version')[0];
     }
 
     /**
@@ -146,9 +146,9 @@ class FFmpeg
      *
      * @return string
      */
-    public function getFFmpegBinary()
+    public fun getFFmpegBinary()
     {
-        return $this->_ffmpegBinary;
+        return this._ffmpegBinary;
     }
 
     /**
@@ -156,18 +156,18 @@ class FFmpeg
      *
      * @return bool
      */
-    public function hasNoAutorotate()
+    public fun hasNoAutorotate()
     {
-        if ($this->_hasNoAutorotate === null) {
+        if (this._hasNoAutorotate === null) {
             try {
-                $this->run('-noautorotate -f lavfi -i color=color=red -t 1 -f null -');
-                $this->_hasNoAutorotate = true;
-            } catch (\RuntimeException $e) {
-                $this->_hasNoAutorotate = false;
+                this.run('-noautorotate -f lavfi -i color=color=red -t 1 -f null -');
+                this._hasNoAutorotate = true;
+            } catch (.RuntimeException $e) {
+                this._hasNoAutorotate = false;
             }
         }
 
-        return $this->_hasNoAutorotate;
+        return this._hasNoAutorotate;
     }
 
     /**
@@ -175,13 +175,13 @@ class FFmpeg
      *
      * @return bool
      */
-    public function hasLibFdkAac()
+    public fun hasLibFdkAac()
     {
-        if ($this->_hasLibFdkAac === null) {
-            $this->_hasLibFdkAac = $this->_hasAudioEncoder('libfdk_aac');
+        if (this._hasLibFdkAac === null) {
+            this._hasLibFdkAac = this._hasAudioEncoder('libfdk_aac');
         }
 
-        return $this->_hasLibFdkAac;
+        return this._hasLibFdkAac;
     }
 
     /**
@@ -191,27 +191,27 @@ class FFmpeg
      *
      * @return bool
      */
-    protected function _hasAudioEncoder(
+    protected fun _hasAudioEncoder(
         $encoder)
     {
         try {
-            $this->run(sprintf(
+            this.run(sprintf(
                 '-f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 -c:a %s -t 1 -f null -',
                 Args::escape($encoder)
             ));
 
             return true;
-        } catch (\RuntimeException $e) {
+        } catch (.RuntimeException $e) {
             return false;
         }
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws .RuntimeException
      *
      * @return static
      */
-    protected static function _autoDetectBinary()
+    protected static fun _autoDetectBinary()
     {
         $binaries = defined('PHP_WINDOWS_VERSION_MAJOR') ? self::WINDOWS_BINARIES : self::BINARIES;
         if (self::$defaultBinary !== null) {
@@ -230,7 +230,7 @@ class FFmpeg
 
             try {
                 $instance = new static($binary);
-            } catch (\Exception $e) {
+            } catch (.Exception $e) {
                 continue;
             }
             self::$defaultBinary = $binary;
@@ -239,6 +239,6 @@ class FFmpeg
             return $instance;
         }
 
-        throw new \RuntimeException('You must have FFmpeg to process videos. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via "\InstagramAPI\Media\Video\FFmpeg::$defaultBinary = \'/home/exampleuser/ffmpeg/bin/ffmpeg\';" at the start of your script.');
+        throw new .RuntimeException('You must have FFmpeg to process videos. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via ".InstagramAPI.Media.Video.FFmpeg::$defaultBinary = .'/home/exampleuser/ffmpeg/bin/ffmpeg.';" at the start of your script.');
     }
 }

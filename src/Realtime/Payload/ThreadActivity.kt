@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Realtime\Payload;
+package InstagramAPI.Realtime.Payload;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * ThreadActivity.
@@ -15,18 +15,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isSenderId()
  * @method bool isTimestamp()
  * @method bool isTtl()
- * @method $this setActivityStatus(mixed $value)
- * @method $this setSenderId(string $value)
- * @method $this setTimestamp(mixed $value)
- * @method $this setTtl(mixed $value)
- * @method $this unsetActivityStatus()
- * @method $this unsetSenderId()
- * @method $this unsetTimestamp()
- * @method $this unsetTtl()
+ * @method this setActivityStatus(mixed $value)
+ * @method this setSenderId(string $value)
+ * @method this setTimestamp(mixed $value)
+ * @method this setTtl(mixed $value)
+ * @method this unsetActivityStatus()
+ * @method this unsetSenderId()
+ * @method this unsetTimestamp()
+ * @method this unsetTtl()
  */
-class ThreadActivity extends AutoPropertyMapper
+class ThreadActivity : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'timestamp'       => '',
         'sender_id'       => 'string',
         'activity_status' => '',

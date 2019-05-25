@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * ProductShare.
@@ -13,16 +13,16 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isMedia()
  * @method bool isProduct()
  * @method bool isText()
- * @method $this setMedia(Item $value)
- * @method $this setProduct(Product $value)
- * @method $this setText(string $value)
- * @method $this unsetMedia()
- * @method $this unsetProduct()
- * @method $this unsetText()
+ * @method this setMedia(Item $value)
+ * @method this setProduct(Product $value)
+ * @method this setText(string $value)
+ * @method this unsetMedia()
+ * @method this unsetProduct()
+ * @method this unsetText()
  */
-class ProductShare extends AutoPropertyMapper
+class ProductShare : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'media'   => 'Item',
         'text'    => 'string',
         'product' => 'Product',

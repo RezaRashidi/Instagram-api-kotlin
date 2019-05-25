@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * LiveVideoShare.
@@ -13,16 +13,16 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isBroadcast()
  * @method bool isText()
  * @method bool isVideoOffset()
- * @method $this setBroadcast(Broadcast $value)
- * @method $this setText(string $value)
- * @method $this setVideoOffset(int $value)
- * @method $this unsetBroadcast()
- * @method $this unsetText()
- * @method $this unsetVideoOffset()
+ * @method this setBroadcast(Broadcast $value)
+ * @method this setText(string $value)
+ * @method this setVideoOffset(int $value)
+ * @method this unsetBroadcast()
+ * @method this unsetText()
+ * @method this unsetVideoOffset()
  */
-class LiveVideoShare extends AutoPropertyMapper
+class LiveVideoShare : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'text'                => 'string',
         'broadcast'           => 'Broadcast',
         'video_offset'        => 'int',

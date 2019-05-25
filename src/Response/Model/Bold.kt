@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Bold.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method mixed getStart()
  * @method bool isEnd()
  * @method bool isStart()
- * @method $this setEnd(mixed $value)
- * @method $this setStart(mixed $value)
- * @method $this unsetEnd()
- * @method $this unsetStart()
+ * @method this setEnd(mixed $value)
+ * @method this setStart(mixed $value)
+ * @method this unsetEnd()
+ * @method this unsetStart()
  */
-class Bold extends AutoPropertyMapper
+class Bold : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'start' => '',
         'end'   => '',
     ];

@@ -1,7 +1,7 @@
 <?php
 
-namespace InstagramAPI\Exception;
+package InstagramAPI.Exception;
 
-class ConsentRequiredException extends RequestException
+class ConsentRequiredException : RequestException
 {
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Suggestion.
@@ -31,34 +31,34 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isUser()
  * @method bool isUuid()
  * @method bool isValue()
- * @method $this setAlgorithm(string $value)
- * @method $this setCaption(mixed $value)
- * @method $this setIcon(mixed $value)
- * @method $this setIsNewSuggestion(bool $value)
- * @method $this setLargeUrls(string[] $value)
- * @method $this setMediaIds(mixed $value)
- * @method $this setMediaInfos(mixed $value)
- * @method $this setSocialContext(string $value)
- * @method $this setThumbnailUrls(string[] $value)
- * @method $this setUser(User $value)
- * @method $this setUuid(string $value)
- * @method $this setValue(float $value)
- * @method $this unsetAlgorithm()
- * @method $this unsetCaption()
- * @method $this unsetIcon()
- * @method $this unsetIsNewSuggestion()
- * @method $this unsetLargeUrls()
- * @method $this unsetMediaIds()
- * @method $this unsetMediaInfos()
- * @method $this unsetSocialContext()
- * @method $this unsetThumbnailUrls()
- * @method $this unsetUser()
- * @method $this unsetUuid()
- * @method $this unsetValue()
+ * @method this setAlgorithm(string $value)
+ * @method this setCaption(mixed $value)
+ * @method this setIcon(mixed $value)
+ * @method this setIsNewSuggestion(bool $value)
+ * @method this setLargeUrls(string[] $value)
+ * @method this setMediaIds(mixed $value)
+ * @method this setMediaInfos(mixed $value)
+ * @method this setSocialContext(string $value)
+ * @method this setThumbnailUrls(string[] $value)
+ * @method this setUser(User $value)
+ * @method this setUuid(string $value)
+ * @method this setValue(float $value)
+ * @method this unsetAlgorithm()
+ * @method this unsetCaption()
+ * @method this unsetIcon()
+ * @method this unsetIsNewSuggestion()
+ * @method this unsetLargeUrls()
+ * @method this unsetMediaIds()
+ * @method this unsetMediaInfos()
+ * @method this unsetSocialContext()
+ * @method this unsetThumbnailUrls()
+ * @method this unsetUser()
+ * @method this unsetUuid()
+ * @method this unsetValue()
  */
-class Suggestion extends AutoPropertyMapper
+class Suggestion : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'media_infos'       => '',
         'social_context'    => 'string',
         'algorithm'         => 'string',

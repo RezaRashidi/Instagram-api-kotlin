@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Settings\Storage;
+package InstagramAPI.Settings.Storage;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Settings\Storage\Components\PDOStorage;
-use InstagramAPI\Utils;
-use PDO;
+import InstagramAPI.Constants;
+import InstagramAPI.Settings.Storage.Components.PDOStorage;
+import InstagramAPI.Utils;
+import PDO;
 
 /**
  * Persistent storage backend which uses a SQLite database file.
@@ -14,14 +14,14 @@ use PDO;
  *
  * @author SteveJobzniak (https://github.com/SteveJobzniak)
  */
-class SQLite extends PDOStorage
+class SQLite : PDOStorage
 {
     /**
      * Constructor.
      *
      * {@inheritdoc}
      */
-    public function __construct()
+    public fun __construct()
     {
         // Configure the name of this backend.
         parent::__construct('SQLite');
@@ -32,7 +32,7 @@ class SQLite extends PDOStorage
      *
      * {@inheritdoc}
      */
-    protected function _createPDO(
+    protected fun _createPDO(
         array $locationConfig)
     {
         // Determine the filename for the SQLite database.
@@ -44,7 +44,7 @@ class SQLite extends PDOStorage
         // Ensure that the whole directory path to the database exists.
         $sqliteDir = dirname($sqliteFile); // Can be "." in case of CWD.
         if (!Utils::createFolder($sqliteDir)) {
-            throw new \RuntimeException(sprintf(
+            throw new .RuntimeException(sprintf(
                 'The "%s" folder is not writable.',
                 $sqliteDir
             ));
@@ -58,12 +58,12 @@ class SQLite extends PDOStorage
      *
      * {@inheritdoc}
      */
-    protected function _enableUTF8()
+    protected fun _enableUTF8()
     {
         // NOTE: SQLite can only set encoding when the database is 1st created,
         // so this only does something if we're the ones creating the db file!
         // Afterwards, SQLite always keeps the encoding used at db creation.
-        $this->_pdo->query('PRAGMA encoding = "UTF-8"')->closeCursor();
+        this._pdo.query('PRAGMA encoding = "UTF-8"').closeCursor();
     }
 
     /**
@@ -71,13 +71,13 @@ class SQLite extends PDOStorage
      *
      * {@inheritdoc}
      */
-    protected function _autoCreateTable()
+    protected fun _autoCreateTable()
     {
         // Abort if we already have the necessary table.
-        $sth = $this->_pdo->prepare('SELECT count(*) FROM sqlite_master WHERE (type = "table") AND (name = :tableName)');
-        $sth->execute([':tableName' => $this->_dbTableName]);
-        $result = $sth->fetchColumn();
-        $sth->closeCursor();
+        $sth = this._pdo.prepare('SELECT count(*) FROM sqlite_master WHERE (type = "table") AND (name = :tableName)');
+        $sth.execute([':tableName' => this._dbTableName]);
+        $result = $sth.fetchColumn();
+        $sth.closeCursor();
         if ($result > 0) {
             return;
         }
@@ -86,7 +86,7 @@ class SQLite extends PDOStorage
         // NOTE: We store all settings as a JSON blob so that we support all
         // current and future data without having to alter the table schema.
         // NOTE: SQLite automatically increments "integer primary key" cols.
-        $this->_pdo->exec('CREATE TABLE `'.$this->_dbTableName.'` (
+        this._pdo.exec('CREATE TABLE `'.this._dbTableName.'` (
             id INTEGER PRIMARY KEY NOT NULL,
             username TEXT NOT NULL UNIQUE,
             settings BLOB,
@@ -95,20 +95,20 @@ class SQLite extends PDOStorage
         );');
 
         // Set up a trigger to automatically update the modification timestamp.
-        // NOTE: The WHEN clause is important to avoid infinite recursive loops,
+        // NOTE: The WHEN claimport is important to avoid infinite recursive loops,
         // otherwise you'll get "Error: too many levels of trigger recursion" if
         // recursive triggers are enabled in SQLite. The WHEN constraint simply
         // ensures that we only update last_modified automatically after UPDATEs
         // that did NOT change last_modified. So our own UPDATEs of other fields
         // will trigger this automatic UPDATE, which does an UPDATE with a NEW
         // last_modified value, meaning that the trigger won't execute again!
-        $this->_pdo->exec('CREATE TRIGGER IF NOT EXISTS `'.$this->_dbTableName.'_update_last_modified`
+        this._pdo.exec('CREATE TRIGGER IF NOT EXISTS `'.this._dbTableName.'_update_last_modified`
             AFTER UPDATE
-            ON `'.$this->_dbTableName.'`
+            ON `'.this._dbTableName.'`
             FOR EACH ROW
             WHEN NEW.last_modified = OLD.last_modified -- Avoids infinite loop.
             BEGIN
-                UPDATE `'.$this->_dbTableName.'` SET last_modified=CURRENT_TIMESTAMP WHERE (id=OLD.id);
+                UPDATE `'.this._dbTableName.'` SET last_modified=CURRENT_TIMESTAMP WHERE (id=OLD.id);
             END;'
         );
     }

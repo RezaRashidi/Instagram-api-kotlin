@@ -8,24 +8,24 @@
  * This source file is subject to the MIT license.
  */
 
-namespace InstagramAPI\Realtime\Mqtt;
+package InstagramAPI.Realtime.Mqtt;
 
-use BinSoul\Net\Mqtt\Exception\UnknownPacketTypeException;
-use BinSoul\Net\Mqtt\Packet;
-use BinSoul\Net\Mqtt\Packet\ConnectRequestPacket;
-use BinSoul\Net\Mqtt\Packet\ConnectResponsePacket;
-use BinSoul\Net\Mqtt\Packet\DisconnectRequestPacket;
-use BinSoul\Net\Mqtt\Packet\PingRequestPacket;
-use BinSoul\Net\Mqtt\Packet\PingResponsePacket;
-use BinSoul\Net\Mqtt\Packet\PublishCompletePacket;
-use BinSoul\Net\Mqtt\Packet\PublishReceivedPacket;
-use BinSoul\Net\Mqtt\Packet\PublishReleasePacket;
-use BinSoul\Net\Mqtt\Packet\PublishRequestPacket;
-use BinSoul\Net\Mqtt\Packet\SubscribeRequestPacket;
-use BinSoul\Net\Mqtt\Packet\SubscribeResponsePacket;
-use BinSoul\Net\Mqtt\Packet\UnsubscribeRequestPacket;
-use BinSoul\Net\Mqtt\Packet\UnsubscribeResponsePacket;
-use Fbns\Client\Common\PublishAckPacket;
+import BinSoul.Net.Mqtt.Exception.UnknownPacketTypeException;
+import BinSoul.Net.Mqtt.Packet;
+import BinSoul.Net.Mqtt.Packet.ConnectRequestPacket;
+import BinSoul.Net.Mqtt.Packet.ConnectResponsePacket;
+import BinSoul.Net.Mqtt.Packet.DisconnectRequestPacket;
+import BinSoul.Net.Mqtt.Packet.PingRequestPacket;
+import BinSoul.Net.Mqtt.Packet.PingResponsePacket;
+import BinSoul.Net.Mqtt.Packet.PublishCompletePacket;
+import BinSoul.Net.Mqtt.Packet.PublishReceivedPacket;
+import BinSoul.Net.Mqtt.Packet.PublishReleasePacket;
+import BinSoul.Net.Mqtt.Packet.PublishRequestPacket;
+import BinSoul.Net.Mqtt.Packet.SubscribeRequestPacket;
+import BinSoul.Net.Mqtt.Packet.SubscribeResponsePacket;
+import BinSoul.Net.Mqtt.Packet.UnsubscribeRequestPacket;
+import BinSoul.Net.Mqtt.Packet.UnsubscribeResponsePacket;
+import Fbns.Client.Common.PublishAckPacket;
 
 /**
  * Builds instances of the {@see Packet} interface.
@@ -63,7 +63,7 @@ class PacketFactory
      *
      * @return Packet
      */
-    public function build(
+    public fun build(
         $type)
     {
         if (!isset(self::$_mapping[$type])) {

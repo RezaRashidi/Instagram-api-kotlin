@@ -1,34 +1,34 @@
 <?php
 
-namespace InstagramAPI;
+package InstagramAPI;
 
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
-use RuntimeException;
+import Psr.Http.Message.ResponseInterface as HttpResponseInterface;
+import RuntimeException;
 
 /**
  * Core class for Instagram API responses.
  *
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Response\Model\_Message[] get_Messages()
+ * @method Response.Model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method $this setMessage(mixed $value)
- * @method $this setStatus(string $value)
- * @method $this set_Messages(Response\Model\_Message[] $value)
- * @method $this unsetMessage()
- * @method $this unsetStatus()
- * @method $this unset_Messages()
+ * @method this setMessage(mixed $value)
+ * @method this setStatus(string $value)
+ * @method this set_Messages(Response.Model._Message[] $value)
+ * @method this unsetMessage()
+ * @method this unsetStatus()
+ * @method this unset_Messages()
  */
-class Response extends AutoPropertyMapper
+class Response : AutoPropertyMapper
 {
     /** @var string */
-    const STATUS_OK = 'ok';
+    val STATUS_OK = 'ok';
     /** @var string */
-    const STATUS_FAIL = 'fail';
+    val STATUS_FAIL = 'fail';
 
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         /*
          * Whether the API request succeeded or not.
          *
@@ -50,7 +50,7 @@ class Response extends AutoPropertyMapper
          * Known messages: "fb_needs_reauth", "vkontakte_needs_reauth",
          * "twitter_needs_reauth", "ameba_needs_reauth", "update_push_token".
          */
-        '_messages' => 'Response\Model\_Message[]',
+        '_messages' => 'Response.Model._Message[]',
     ];
 
     /** @var HttpResponseInterface */
@@ -61,22 +61,22 @@ class Response extends AutoPropertyMapper
      *
      * @return bool
      */
-    public function isOk()
+    public fun isOk()
     {
-        return $this->_getProperty('status') === self::STATUS_OK;
+        return this._getProperty('status') === self::STATUS_OK;
     }
 
     /**
      * Gets the message.
      *
-     * This function overrides the normal getter with some special processing
+     * This fun overrides the normal getter with some special processing
      * to handle unusual multi-error message values in certain responses.
      *
      * @throws RuntimeException If the message object is of an unsupported type.
      *
      * @return string|null A message string if one exists, otherwise NULL.
      */
-    public function getMessage()
+    public fun getMessage()
     {
         // Instagram's API usually returns a simple error string. But in some
         // cases, they instead return a subarray of individual errors, in case
@@ -86,9 +86,9 @@ class Response extends AutoPropertyMapper
         // $json = '{"status":"fail","message":{"errors":["Select a valid choice. 0 is not one of the available choices."]}}';
         // $json = '{"status":"fail","message":{"errors":["Select a valid choice. 0 is not one of the available choices.","Another error.","One more error."]}}';
         // $data = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
-        // $this->_setProperty('message', $data['message']);
+        // this._setProperty('message', $data['message']);
 
-        $message = $this->_getProperty('message');
+        $message = this._getProperty('message');
         if ($message === null || is_string($message)) {
             // Single error string or nothing at all.
             return $message;
@@ -113,9 +113,9 @@ class Response extends AutoPropertyMapper
      *
      * @return HttpResponseInterface
      */
-    public function getHttpResponse()
+    public fun getHttpResponse()
     {
-        return $this->httpResponse;
+        return this.httpResponse;
     }
 
     /**
@@ -123,10 +123,10 @@ class Response extends AutoPropertyMapper
      *
      * @param HttpResponseInterface $response
      */
-    public function setHttpResponse(
+    public fun setHttpResponse(
         HttpResponseInterface $response)
     {
-        $this->httpResponse = $response;
+        this.httpResponse = $response;
     }
 
     /**
@@ -134,8 +134,8 @@ class Response extends AutoPropertyMapper
      *
      * @return bool
      */
-    public function isHttpResponse()
+    public fun isHttpResponse()
     {
-        return $this->httpResponse !== null;
+        return this.httpResponse !== null;
     }
 }

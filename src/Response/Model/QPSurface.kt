@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * QPSurface.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method int getSurfaceId()
  * @method bool isCooldown()
  * @method bool isSurfaceId()
- * @method $this setCooldown(int $value)
- * @method $this setSurfaceId(int $value)
- * @method $this unsetCooldown()
- * @method $this unsetSurfaceId()
+ * @method this setCooldown(int $value)
+ * @method this setSurfaceId(int $value)
+ * @method this unsetCooldown()
+ * @method this unsetSurfaceId()
  */
-class QPSurface extends AutoPropertyMapper
+class QPSurface : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'surface_id'             => 'int',
         'cooldown'               => 'int',
     ];

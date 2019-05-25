@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * ExploreItemInfo.
@@ -17,20 +17,20 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isDestinationView()
  * @method bool isNumColumns()
  * @method bool isTotalNumColumns()
- * @method $this setAspectRatio(int $value)
- * @method $this setAutoplay(bool $value)
- * @method $this setDestinationView(string $value)
- * @method $this setNumColumns(int $value)
- * @method $this setTotalNumColumns(int $value)
- * @method $this unsetAspectRatio()
- * @method $this unsetAutoplay()
- * @method $this unsetDestinationView()
- * @method $this unsetNumColumns()
- * @method $this unsetTotalNumColumns()
+ * @method this setAspectRatio(int $value)
+ * @method this setAutoplay(bool $value)
+ * @method this setDestinationView(string $value)
+ * @method this setNumColumns(int $value)
+ * @method this setTotalNumColumns(int $value)
+ * @method this unsetAspectRatio()
+ * @method this unsetAutoplay()
+ * @method this unsetDestinationView()
+ * @method this unsetNumColumns()
+ * @method this unsetTotalNumColumns()
  */
-class ExploreItemInfo extends AutoPropertyMapper
+class ExploreItemInfo : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'num_columns'       => 'int',
         'total_num_columns' => 'int',
         'aspect_ratio'      => 'int',

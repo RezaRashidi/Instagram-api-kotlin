@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Action.
@@ -15,18 +15,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isLimit()
  * @method bool isTitle()
  * @method bool isUrl()
- * @method $this setDismissPromotion(bool $value)
- * @method $this setLimit(int $value)
- * @method $this setTitle(Text $value)
- * @method $this setUrl(string $value)
- * @method $this unsetDismissPromotion()
- * @method $this unsetLimit()
- * @method $this unsetTitle()
- * @method $this unsetUrl()
+ * @method this setDismissPromotion(bool $value)
+ * @method this setLimit(int $value)
+ * @method this setTitle(Text $value)
+ * @method this setUrl(string $value)
+ * @method this unsetDismissPromotion()
+ * @method this unsetLimit()
+ * @method this unsetTitle()
+ * @method this unsetUrl()
  */
-class Action extends AutoPropertyMapper
+class Action : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'title'             => 'Text',
         'url'               => 'string',
         'limit'             => 'int',

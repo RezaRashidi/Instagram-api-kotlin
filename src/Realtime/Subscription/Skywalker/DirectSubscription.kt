@@ -1,23 +1,23 @@
 <?php
 
-namespace InstagramAPI\Realtime\Subscription\Skywalker;
+package InstagramAPI.Realtime.Subscription.Skywalker;
 
-use InstagramAPI\Realtime\Subscription\SkywalkerSubscription;
+import InstagramAPI.Realtime.Subscription.SkywalkerSubscription;
 
-class DirectSubscription extends SkywalkerSubscription
+class DirectSubscription : SkywalkerSubscription
 {
-    const ID = 'direct';
-    const TEMPLATE = 'ig/u/v1/%s';
+    val ID = 'direct';
+    val TEMPLATE = 'ig/u/v1/%s';
 
     /** {@inheritdoc} */
-    public function getId()
+    public fun getId()
     {
         return self::ID;
     }
 
     /** {@inheritdoc} */
-    public function __toString()
+    public fun __toString()
     {
-        return sprintf(self::TEMPLATE, $this->_accountId);
+        return sprintf(self::TEMPLATE, this._accountId);
     }
 }

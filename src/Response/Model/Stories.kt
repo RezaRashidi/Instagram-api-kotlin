@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Stories.
@@ -15,18 +15,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isIsPortrait()
  * @method bool isTopLive()
  * @method bool isTray()
- * @method $this setId(string $value)
- * @method $this setIsPortrait(mixed $value)
- * @method $this setTopLive(TopLive $value)
- * @method $this setTray(StoryTray[] $value)
- * @method $this unsetId()
- * @method $this unsetIsPortrait()
- * @method $this unsetTopLive()
- * @method $this unsetTray()
+ * @method this setId(string $value)
+ * @method this setIsPortrait(mixed $value)
+ * @method this setTopLive(TopLive $value)
+ * @method this setTray(StoryTray[] $value)
+ * @method this unsetId()
+ * @method this unsetIsPortrait()
+ * @method this unsetTopLive()
+ * @method this unsetTray()
  */
-class Stories extends AutoPropertyMapper
+class Stories : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'is_portrait' => '',
         'tray'        => 'StoryTray[]',
         'id'          => 'string',

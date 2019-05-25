@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * LiveViewerInvite.
@@ -15,18 +15,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isMessage()
  * @method bool isText()
  * @method bool isTitle()
- * @method $this setBroadcast(Broadcast $value)
- * @method $this setMessage(string $value)
- * @method $this setText(string $value)
- * @method $this setTitle(string $value)
- * @method $this unsetBroadcast()
- * @method $this unsetMessage()
- * @method $this unsetText()
- * @method $this unsetTitle()
+ * @method this setBroadcast(Broadcast $value)
+ * @method this setMessage(string $value)
+ * @method this setText(string $value)
+ * @method this setTitle(string $value)
+ * @method this unsetBroadcast()
+ * @method this unsetMessage()
+ * @method this unsetText()
+ * @method this unsetTitle()
  */
-class LiveViewerInvite extends AutoPropertyMapper
+class LiveViewerInvite : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'text'      => 'string',
         'broadcast' => 'Broadcast',
         'title'     => 'string',

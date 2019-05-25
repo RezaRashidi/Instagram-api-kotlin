@@ -1,20 +1,20 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Composer.
  *
  * @method bool getNuxFinished()
  * @method bool isNuxFinished()
- * @method $this setNuxFinished(bool $value)
- * @method $this unsetNuxFinished()
+ * @method this setNuxFinished(bool $value)
+ * @method this unsetNuxFinished()
  */
-class Composer extends AutoPropertyMapper
+class Composer : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'nux_finished'   => 'bool',
     ];
 }

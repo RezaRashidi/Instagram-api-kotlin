@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * VideoUploadUrl.
@@ -13,16 +13,16 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isExpires()
  * @method bool isJob()
  * @method bool isUrl()
- * @method $this setExpires(float $value)
- * @method $this setJob(string $value)
- * @method $this setUrl(string $value)
- * @method $this unsetExpires()
- * @method $this unsetJob()
- * @method $this unsetUrl()
+ * @method this setExpires(float $value)
+ * @method this setJob(string $value)
+ * @method this setUrl(string $value)
+ * @method this unsetExpires()
+ * @method this unsetJob()
+ * @method this unsetUrl()
  */
-class VideoUploadUrl extends AutoPropertyMapper
+class VideoUploadUrl : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'url'     => 'string',
         'job'     => 'string',
         'expires' => 'float',

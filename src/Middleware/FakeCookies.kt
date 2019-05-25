@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Middleware;
+package InstagramAPI.Middleware;
 
-use Psr\Http\Message\RequestInterface;
+import Psr.Http.Message.RequestInterface;
 
 /**
  * Fake cookies middleware.
@@ -27,17 +27,17 @@ class FakeCookies
     /**
      * Constructor.
      */
-    public function __construct()
+    public fun __construct()
     {
-        $this->clear();
+        this.clear();
     }
 
     /**
      * Removes all fake cookies so they won't be added to further requests.
      */
-    public function clear()
+    public fun clear()
     {
-        $this->_cookies = [];
+        this._cookies = [];
     }
 
     /**
@@ -45,9 +45,9 @@ class FakeCookies
      *
      * @return array
      */
-    public function cookies()
+    public fun cookies()
     {
-        return $this->_cookies;
+        return this._cookies;
     }
 
     /**
@@ -57,7 +57,7 @@ class FakeCookies
      *
      * Usually you only need fake cookies for a few requests, and care must be
      * taken to GUARANTEE clearout after that, via something like the following:
-     * "try{...}finally{ ...->clearFakeCookies(); }").
+     * "try{...}finally{ ....clearFakeCookies(); }").
      *
      * Otherwise you would FOREVER pollute all other requests!
      *
@@ -66,16 +66,16 @@ class FakeCookies
      *
      * @param string $name      The name of the cookie. CASE SENSITIVE!
      * @param string $value     The value of the cookie.
-     * @param bool   $singleUse If TRUE, the cookie will be deleted after 1 use.
+     * @param bool   $singleimport If TRUE, the cookie will be deleted after 1 use.
      */
-    public function add(
+    public fun add(
         $name,
         $value,
-        $singleUse = true)
+        $singleimport = true)
     {
         // This overwrites any existing fake cookie with the same name, which is
         // intentional since the names of cookies must be unique.
-        $this->_cookies[$name] = [
+        this._cookies[$name] = [
             'value'     => $value,
             'singleUse' => $singleUse,
         ];
@@ -88,14 +88,14 @@ class FakeCookies
      *
      * @param string $name The name of the cookie. CASE SENSITIVE!
      */
-    public function delete(
+    public fun delete(
         $name)
     {
-        unset($this->_cookies[$name]);
+        unset(this._cookies[$name]);
     }
 
     /**
-     * Middleware setup function.
+     * Middleware setup fun.
      *
      * Called by Guzzle when it needs to add an instance of our middleware to
      * its stack. We simply return a callable which will process all requests.
@@ -104,14 +104,14 @@ class FakeCookies
      *
      * @return callable
      */
-    public function __invoke(
+    public fun __invoke(
         callable $handler)
     {
-        return function (
+        return fun (
             RequestInterface $request,
             array $options
-        ) use ($handler) {
-            $fakeCookies = $this->cookies();
+        ) import ($handler) {
+            $fakeCookies = this.cookies();
 
             // Pass request through unmodified if no work to do (to save CPU).
             if (count($fakeCookies) === 0) {
@@ -121,8 +121,8 @@ class FakeCookies
             $finalCookies = [];
 
             // Extract all existing cookies in this request's "Cookie:" header.
-            if ($request->hasHeader('Cookie')) {
-                $cookieHeaders = $request->getHeader('Cookie');
+            if ($request.hasHeader('Cookie')) {
+                $cookieHeaders = $request.getHeader('Cookie');
                 foreach ($cookieHeaders as $headerLine) {
                     $theseCookies = explode('; ', $headerLine);
                     foreach ($theseCookies as $cookieEntry) {
@@ -131,8 +131,8 @@ class FakeCookies
                             // We have the name and value of the cookie!
                             $finalCookies[$cookieParts[0]] = $cookieParts[1];
                         } else {
-                            // Unable to find an equals sign, just re-use this
-                            // cookie as-is (TRUE="re-use literally").
+                            // Unable to find an equals sign, just re-import this
+                            // cookie as-is (TRUE="re-import literally").
                             $finalCookies[$cookieEntry] = true;
                         }
                     }
@@ -144,9 +144,9 @@ class FakeCookies
             foreach ($fakeCookies as $name => $cookieInfo) {
                 $finalCookies[$name] = $cookieInfo['value'];
 
-                // Delete the cookie now if it was a single-use cookie.
+                // Delete the cookie now if it was a single-import cookie.
                 if ($cookieInfo['singleUse']) {
-                    $this->delete($name);
+                    this.delete($name);
                 }
             }
 
@@ -154,7 +154,7 @@ class FakeCookies
             $values = [];
             foreach ($finalCookies as $name => $value) {
                 if ($value === true) {
-                    // Cookies to re-use as-is, due to parsing error above.
+                    // Cookies to re-import as-is, due to parsing error above.
                     $values[] = $name;
                 } else {
                     $values[] = $name.'='.$value;
@@ -164,7 +164,7 @@ class FakeCookies
             // Generate our new, semicolon-separated "Cookie:" header line.
             // NOTE: This completely replaces the old header. As intended.
             $finalCookieHeader = implode('; ', $values);
-            $request = $request->withHeader('Cookie', $finalCookieHeader);
+            $request = $request.withHeader('Cookie', $finalCookieHeader);
 
             return $handler($request, $options);
         };

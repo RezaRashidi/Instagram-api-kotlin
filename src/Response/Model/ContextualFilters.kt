@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * ContextualFilters.
@@ -13,16 +13,16 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isClauseType()
  * @method bool isClauses()
  * @method bool isFilters()
- * @method $this setClauseType(string $value)
- * @method $this setClauses(mixed $value)
- * @method $this setFilters(mixed $value)
- * @method $this unsetClauseType()
- * @method $this unsetClauses()
- * @method $this unsetFilters()
+ * @method this setClauseType(string $value)
+ * @method this setClauses(mixed $value)
+ * @method this setFilters(mixed $value)
+ * @method this unsetClauseType()
+ * @method this unsetClauses()
+ * @method this unsetFilters()
  */
-class ContextualFilters extends AutoPropertyMapper
+class ContextualFilters : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'clause_type' => 'string',
         'filters'     => '',
         'clauses'     => '',

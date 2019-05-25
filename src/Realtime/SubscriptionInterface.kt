@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Realtime;
+package InstagramAPI.Realtime;
 
 interface SubscriptionInterface
 {
@@ -9,19 +9,19 @@ interface SubscriptionInterface
      *
      * @return string
      */
-    public function getTopic();
+    public fun getTopic();
 
     /**
      * Get the unique subscription identifier.
      *
      * @return string
      */
-    public function getId();
+    public fun getId();
 
     /**
      * Get the string representation.
      *
      * @return string
      */
-    public function __toString();
+    public fun __toString();
 }

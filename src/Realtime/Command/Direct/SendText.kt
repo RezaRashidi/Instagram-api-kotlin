@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command\Direct;
+package InstagramAPI.Realtime.Command.Direct;
 
-final class SendText extends SendItem
+final class SendText : SendItem
 {
-    const TYPE = 'text';
+    val TYPE = 'text';
 
     /**
      * Constructor.
@@ -13,9 +13,9 @@ final class SendText extends SendItem
      * @param string $text
      * @param array  $options
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public function __construct(
+    public fun __construct(
         $threadId,
         $text,
         array $options = [])
@@ -23,12 +23,12 @@ final class SendText extends SendItem
         parent::__construct($threadId, self::TYPE, $options);
 
         if (!is_string($text)) {
-            throw new \InvalidArgumentException('The text must be a string.');
+            throw new .InvalidArgumentException('The text must be a string.');
         }
 
         if ($text === '') {
-            throw new \InvalidArgumentException('The text can not be empty.');
+            throw new .InvalidArgumentException('The text can not be empty.');
         }
-        $this->_data['text'] = $text;
+        this._data['text'] = $text;
     }
 }

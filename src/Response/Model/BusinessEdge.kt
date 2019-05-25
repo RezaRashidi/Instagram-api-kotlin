@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * BusinessEdge.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method BusinessNode getNode()
  * @method bool isCursor()
  * @method bool isNode()
- * @method $this setCursor(mixed $value)
- * @method $this setNode(BusinessNode $value)
- * @method $this unsetCursor()
- * @method $this unsetNode()
+ * @method this setCursor(mixed $value)
+ * @method this setNode(BusinessNode $value)
+ * @method this unsetCursor()
+ * @method this unsetNode()
  */
-class BusinessEdge extends AutoPropertyMapper
+class BusinessEdge : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'node'   => 'BusinessNode',
         'cursor' => '',
     ];

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Realtime\Payload;
+package InstagramAPI.Realtime.Payload;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * ZeroProvisionEvent.
@@ -13,16 +13,16 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isDeviceId()
  * @method bool isProductName()
  * @method bool isZeroProvisionedTime()
- * @method $this setDeviceId(string $value)
- * @method $this setProductName(string $value)
- * @method $this setZeroProvisionedTime(string $value)
- * @method $this unsetDeviceId()
- * @method $this unsetProductName()
- * @method $this unsetZeroProvisionedTime()
+ * @method this setDeviceId(string $value)
+ * @method this setProductName(string $value)
+ * @method this setZeroProvisionedTime(string $value)
+ * @method this unsetDeviceId()
+ * @method this unsetProductName()
+ * @method this unsetZeroProvisionedTime()
  */
-class ZeroProvisionEvent extends AutoPropertyMapper
+class ZeroProvisionEvent : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'device_id'             => 'string',
         'product_name'          => 'string',
         'zero_provisioned_time' => 'string',

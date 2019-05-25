@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response;
+package InstagramAPI.Response;
 
-use InstagramAPI\Response;
+import InstagramAPI.Response;
 
 /**
  * PinCommentBroadcastResponse.
@@ -10,23 +10,23 @@ use InstagramAPI\Response;
  * @method string getCommentId()
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model\_Message[] get_Messages()
+ * @method Model._Message[] get_Messages()
  * @method bool isCommentId()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method $this setCommentId(string $value)
- * @method $this setMessage(mixed $value)
- * @method $this setStatus(string $value)
- * @method $this set_Messages(Model\_Message[] $value)
- * @method $this unsetCommentId()
- * @method $this unsetMessage()
- * @method $this unsetStatus()
- * @method $this unset_Messages()
+ * @method this setCommentId(string $value)
+ * @method this setMessage(mixed $value)
+ * @method this setStatus(string $value)
+ * @method this set_Messages(Model._Message[] $value)
+ * @method this unsetCommentId()
+ * @method this unsetMessage()
+ * @method this unsetStatus()
+ * @method this unset_Messages()
  */
-class PinCommentBroadcastResponse extends Response
+class PinCommentBroadcastResponse : Response
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'comment_id' => 'string',
     ];
 }

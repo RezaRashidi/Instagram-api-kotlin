@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response;
+package InstagramAPI.Response;
 
-use InstagramAPI\Response;
+import InstagramAPI.Response;
 
 /**
  * FriendshipsShowResponse.
@@ -19,7 +19,7 @@ use InstagramAPI\Response;
  * @method bool getMuting()
  * @method bool getOutgoingRequest()
  * @method string getStatus()
- * @method Model\_Message[] get_Messages()
+ * @method Model._Message[] get_Messages()
  * @method bool isBlocking()
  * @method bool isFollowedBy()
  * @method bool isFollowing()
@@ -33,36 +33,36 @@ use InstagramAPI\Response;
  * @method bool isOutgoingRequest()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method $this setBlocking(bool $value)
- * @method $this setFollowedBy(bool $value)
- * @method $this setFollowing(bool $value)
- * @method $this setIncomingRequest(bool $value)
- * @method $this setIsBestie(bool $value)
- * @method $this setIsBlockingReel(bool $value)
- * @method $this setIsMutingReel(bool $value)
- * @method $this setIsPrivate(bool $value)
- * @method $this setMessage(mixed $value)
- * @method $this setMuting(bool $value)
- * @method $this setOutgoingRequest(bool $value)
- * @method $this setStatus(string $value)
- * @method $this set_Messages(Model\_Message[] $value)
- * @method $this unsetBlocking()
- * @method $this unsetFollowedBy()
- * @method $this unsetFollowing()
- * @method $this unsetIncomingRequest()
- * @method $this unsetIsBestie()
- * @method $this unsetIsBlockingReel()
- * @method $this unsetIsMutingReel()
- * @method $this unsetIsPrivate()
- * @method $this unsetMessage()
- * @method $this unsetMuting()
- * @method $this unsetOutgoingRequest()
- * @method $this unsetStatus()
- * @method $this unset_Messages()
+ * @method this setBlocking(bool $value)
+ * @method this setFollowedBy(bool $value)
+ * @method this setFollowing(bool $value)
+ * @method this setIncomingRequest(bool $value)
+ * @method this setIsBestie(bool $value)
+ * @method this setIsBlockingReel(bool $value)
+ * @method this setIsMutingReel(bool $value)
+ * @method this setIsPrivate(bool $value)
+ * @method this setMessage(mixed $value)
+ * @method this setMuting(bool $value)
+ * @method this setOutgoingRequest(bool $value)
+ * @method this setStatus(string $value)
+ * @method this set_Messages(Model._Message[] $value)
+ * @method this unsetBlocking()
+ * @method this unsetFollowedBy()
+ * @method this unsetFollowing()
+ * @method this unsetIncomingRequest()
+ * @method this unsetIsBestie()
+ * @method this unsetIsBlockingReel()
+ * @method this unsetIsMutingReel()
+ * @method this unsetIsPrivate()
+ * @method this unsetMessage()
+ * @method this unsetMuting()
+ * @method this unsetOutgoingRequest()
+ * @method this unsetStatus()
+ * @method this unset_Messages()
  */
-class FriendshipsShowResponse extends Response
+class FriendshipsShowResponse : Response
 {
-    const JSON_PROPERTY_MAP = [
-        Model\FriendshipStatus::class, // Import property map.
+    val JSON_PROPERTY_MAP = [
+        Model.FriendshipStatus::class, // Import property map.
     ];
 }

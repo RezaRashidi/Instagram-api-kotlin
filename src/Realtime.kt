@@ -1,17 +1,17 @@
 <?php
 
-namespace InstagramAPI;
+package InstagramAPI;
 
-use Evenement\EventEmitterInterface;
-use Evenement\EventEmitterTrait;
-use InstagramAPI\React\Connector;
-use InstagramAPI\Realtime\Command\Direct as DirectCommand;
-use InstagramAPI\Realtime\Command\IrisSubscribe;
-use InstagramAPI\Realtime\Mqtt\Auth;
-use InstagramAPI\Realtime\Payload\ZeroProvisionEvent;
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
-use React\EventLoop\LoopInterface;
+import Evenement.EventEmitterInterface;
+import Evenement.EventEmitterTrait;
+import InstagramAPI.React.Connector;
+import InstagramAPI.Realtime.Command.Direct as DirectCommand;
+import InstagramAPI.Realtime.Command.IrisSubscribe;
+import InstagramAPI.Realtime.Mqtt.Auth;
+import InstagramAPI.Realtime.Payload.ZeroProvisionEvent;
+import Psr.Log.LoggerInterface;
+import Psr.Log.NullLogger;
+import React.EventLoop.LoopInterface;
 
 /**
  * The following events are emitted:
@@ -36,9 +36,9 @@ use React\EventLoop\LoopInterface;
  *  - warning - An exception of severity "warning" occurred.
  *  - error - An exception of severity "error" occurred.
  */
-class Realtime implements EventEmitterInterface
+class Realtime : EventEmitterInterface
 {
-    use EventEmitterTrait;
+    import EventEmitterTrait;
 
     /** @var Instagram */
     protected $_instagram;
@@ -49,7 +49,7 @@ class Realtime implements EventEmitterInterface
     /** @var LoggerInterface */
     protected $_logger;
 
-    /** @var Realtime\Mqtt */
+    /** @var Realtime.Mqtt */
     protected $_client;
 
     /**
@@ -59,63 +59,63 @@ class Realtime implements EventEmitterInterface
      * @param LoopInterface        $loop
      * @param LoggerInterface|null $logger
      *
-     * @throws \RuntimeException
+     * @throws .RuntimeException
      */
-    public function __construct(
+    public fun __construct(
         Instagram $instagram,
         LoopInterface $loop,
         LoggerInterface $logger = null)
     {
         if (PHP_SAPI !== 'cli') {
-            throw new \RuntimeException('The Realtime client can only run from the command line.');
+            throw new .RuntimeException('The Realtime client can only run from the command line.');
         }
 
-        $this->_instagram = $instagram;
-        $this->_loop = $loop;
-        $this->_logger = $logger;
-        if ($this->_logger === null) {
-            $this->_logger = new NullLogger();
+        this._instagram = $instagram;
+        this._loop = $loop;
+        this._logger = $logger;
+        if (this._logger === null) {
+            this._logger = new NullLogger();
         }
 
-        $this->_client = $this->_buildMqttClient();
-        $this->on('region-hint', function ($region) {
-            $this->_instagram->settings->set('datacenter', $region);
-            $this->_client->setAdditionalOption('datacenter', $region);
+        this._client = this._buildMqttClient();
+        this.on('region-hint', fun ($region) {
+            this._instagram.settings.set('datacenter', $region);
+            this._client.setAdditionalOption('datacenter', $region);
         });
-        $this->on('zero-provision', function (ZeroProvisionEvent $event) {
-            if ($event->getZeroProvisionedTime() === null) {
+        this.on('zero-provision', fun (ZeroProvisionEvent $event) {
+            if ($event.getZeroProvisionedTime() === null) {
                 return;
             }
-            if ($event->getProductName() !== 'select') {
+            if ($event.getProductName() !== 'select') {
                 return;
             }
             // TODO check whether we already have a fresh token.
 
-            $this->_instagram->client->zeroRating()->reset();
-            $this->_instagram->internal->fetchZeroRatingToken('mqtt_token_push');
+            this._instagram.client.zeroRating().reset();
+            this._instagram.internal.fetchZeroRatingToken('mqtt_token_push');
         });
     }
 
     /**
      * Build a new MQTT client.
      *
-     * @return Realtime\Mqtt
+     * @return Realtime.Mqtt
      */
-    protected function _buildMqttClient()
+    protected fun _buildMqttClient()
     {
         $additionalOptions = [
-            'datacenter'       => $this->_instagram->settings->get('datacenter'),
-            'disable_presence' => (bool) $this->_instagram->settings->get('presence_disabled'),
+            'datacenter'       => this._instagram.settings.get('datacenter'),
+            'disable_presence' => (bool) this._instagram.settings.get('presence_disabled'),
         ];
 
-        return new Realtime\Mqtt(
-            $this,
-            new Connector($this->_instagram, $this->_loop),
-            new Auth($this->_instagram),
-            $this->_instagram->device,
-            $this->_instagram,
-            $this->_loop,
-            $this->_logger,
+        return new Realtime.Mqtt(
+            this,
+            new Connector(this._instagram, this._loop),
+            new Auth(this._instagram),
+            this._instagram.device,
+            this._instagram,
+            this._loop,
+            this._logger,
             $additionalOptions
         );
     }
@@ -123,17 +123,17 @@ class Realtime implements EventEmitterInterface
     /**
      * Starts underlying client.
      */
-    public function start()
+    public fun start()
     {
-        $this->_client->start();
+        this._client.start();
     }
 
     /**
      * Stops underlying client.
      */
-    public function stop()
+    public fun stop()
     {
-        $this->_client->stop();
+        this._client.stop();
     }
 
     /**
@@ -144,14 +144,14 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool
      */
-    public function markDirectItemSeen(
+    public fun markDirectItemSeen(
         $threadId,
         $threadItemId)
     {
         try {
-            $this->_client->sendCommand(new DirectCommand\MarkSeen($threadId, $threadItemId));
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            this._client.sendCommand(new DirectCommand.MarkSeen($threadId, $threadItemId));
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
 
             return false;
         }
@@ -167,17 +167,17 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
-    public function indicateActivityInDirectThread(
+    public fun indicateActivityInDirectThread(
         $threadId,
         $activityFlag)
     {
         try {
-            $command = new DirectCommand\IndicateActivity($threadId, $activityFlag);
-            $this->_client->sendCommand($command);
+            $command = new DirectCommand.IndicateActivity($threadId, $activityFlag);
+            this._client.sendCommand($command);
 
-            return $command->getClientContext();
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            return $command.getClientContext();
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
 
             return false;
         }
@@ -193,18 +193,18 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
-    public function sendTextToDirect(
+    public fun sendTextToDirect(
         $threadId,
         $message,
         array $options = [])
     {
         try {
-            $command = new DirectCommand\SendText($threadId, $message, $options);
-            $this->_client->sendCommand($command);
+            $command = new DirectCommand.SendText($threadId, $message, $options);
+            this._client.sendCommand($command);
 
-            return $command->getClientContext();
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            return $command.getClientContext();
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
 
             return false;
         }
@@ -219,17 +219,17 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
-    public function sendLikeToDirect(
+    public fun sendLikeToDirect(
         $threadId,
         array $options = [])
     {
         try {
-            $command = new DirectCommand\SendLike($threadId, $options);
-            $this->_client->sendCommand($command);
+            $command = new DirectCommand.SendLike($threadId, $options);
+            this._client.sendCommand($command);
 
-            return $command->getClientContext();
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            return $command.getClientContext();
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
 
             return false;
         }
@@ -246,22 +246,22 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
-    public function sendPostToDirect(
+    public fun sendPostToDirect(
         $threadId,
         $mediaId,
         array $options = [])
     {
-        if (!$this->_isRtcReshareEnabled()) {
+        if (!this._isRtcReshareEnabled()) {
             return false;
         }
 
         try {
-            $command = new DirectCommand\SendPost($threadId, $mediaId, $options);
-            $this->_client->sendCommand($command);
+            $command = new DirectCommand.SendPost($threadId, $mediaId, $options);
+            this._client.sendCommand($command);
 
-            return $command->getClientContext();
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            return $command.getClientContext();
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
 
             return false;
         }
@@ -278,22 +278,22 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
-    public function sendStoryToDirect(
+    public fun sendStoryToDirect(
         $threadId,
         $storyId,
         array $options = [])
     {
-        if (!$this->_isRtcReshareEnabled()) {
+        if (!this._isRtcReshareEnabled()) {
             return false;
         }
 
         try {
-            $command = new DirectCommand\SendStory($threadId, $storyId, $options);
-            $this->_client->sendCommand($command);
+            $command = new DirectCommand.SendStory($threadId, $storyId, $options);
+            this._client.sendCommand($command);
 
-            return $command->getClientContext();
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            return $command.getClientContext();
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
 
             return false;
         }
@@ -310,22 +310,22 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
-    public function sendProfileToDirect(
+    public fun sendProfileToDirect(
         $threadId,
         $userId,
         array $options = [])
     {
-        if (!$this->_isRtcReshareEnabled()) {
+        if (!this._isRtcReshareEnabled()) {
             return false;
         }
 
         try {
-            $command = new DirectCommand\SendProfile($threadId, $userId, $options);
-            $this->_client->sendCommand($command);
+            $command = new DirectCommand.SendProfile($threadId, $userId, $options);
+            this._client.sendCommand($command);
 
-            return $command->getClientContext();
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            return $command.getClientContext();
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
 
             return false;
         }
@@ -335,7 +335,7 @@ class Realtime implements EventEmitterInterface
      * Share a location to a given direct thread.
      *
      * You must provide a valid Instagram location ID, which you get via other
-     * functions such as Location::search().
+     * funs such as Location::search().
      *
      * @param string $threadId   Thread ID.
      * @param string $locationId Instagram's internal ID for the location.
@@ -345,22 +345,22 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
-    public function sendLocationToDirect(
+    public fun sendLocationToDirect(
         $threadId,
         $locationId,
         array $options = [])
     {
-        if (!$this->_isRtcReshareEnabled()) {
+        if (!this._isRtcReshareEnabled()) {
             return false;
         }
 
         try {
-            $command = new DirectCommand\SendLocation($threadId, $locationId, $options);
-            $this->_client->sendCommand($command);
+            $command = new DirectCommand.SendLocation($threadId, $locationId, $options);
+            this._client.sendCommand($command);
 
-            return $command->getClientContext();
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            return $command.getClientContext();
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
 
             return false;
         }
@@ -377,22 +377,22 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
-    public function sendHashtagToDirect(
+    public fun sendHashtagToDirect(
         $threadId,
         $hashtag,
         array $options = [])
     {
-        if (!$this->_isRtcReshareEnabled()) {
+        if (!this._isRtcReshareEnabled()) {
             return false;
         }
 
         try {
-            $command = new DirectCommand\SendHashtag($threadId, $hashtag, $options);
-            $this->_client->sendCommand($command);
+            $command = new DirectCommand.SendHashtag($threadId, $hashtag, $options);
+            this._client.sendCommand($command);
 
-            return $command->getClientContext();
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            return $command.getClientContext();
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
 
             return false;
         }
@@ -409,25 +409,25 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
-    public function sendReactionToDirect(
+    public fun sendReactionToDirect(
         $threadId,
         $threadItemId,
         $reactionType,
         array $options = [])
     {
         try {
-            $command = new DirectCommand\SendReaction(
+            $command = new DirectCommand.SendReaction(
                 $threadId,
                 $threadItemId,
                 $reactionType,
-                DirectCommand\SendReaction::STATUS_CREATED,
+                DirectCommand.SendReaction::STATUS_CREATED,
                 $options
             );
-            $this->_client->sendCommand($command);
+            this._client.sendCommand($command);
 
-            return $command->getClientContext();
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            return $command.getClientContext();
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
 
             return false;
         }
@@ -444,25 +444,25 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool|string Client context or false if sending is unavailable.
      */
-    public function deleteReactionFromDirect(
+    public fun deleteReactionFromDirect(
         $threadId,
         $threadItemId,
         $reactionType,
         array $options = [])
     {
         try {
-            $command = new DirectCommand\SendReaction(
+            $command = new DirectCommand.SendReaction(
                 $threadId,
                 $threadItemId,
                 $reactionType,
-                DirectCommand\SendReaction::STATUS_DELETED,
+                DirectCommand.SendReaction::STATUS_DELETED,
                 $options
             );
-            $this->_client->sendCommand($command);
+            this._client.sendCommand($command);
 
-            return $command->getClientContext();
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            return $command.getClientContext();
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
 
             return false;
         }
@@ -473,13 +473,13 @@ class Realtime implements EventEmitterInterface
      *
      * @param int $sequenceId
      */
-    public function receiveOfflineMessages(
+    public fun receiveOfflineMessages(
         $sequenceId)
     {
         try {
-            $this->_client->sendCommand(new IrisSubscribe($sequenceId));
-        } catch (\Exception $e) {
-            $this->_logger->warning($e->getMessage());
+            this._client.sendCommand(new IrisSubscribe($sequenceId));
+        } catch (.Exception $e) {
+            this._logger.warning($e.getMessage());
         }
     }
 
@@ -488,8 +488,8 @@ class Realtime implements EventEmitterInterface
      *
      * @return bool
      */
-    protected function _isRtcReshareEnabled()
+    protected fun _isRtcReshareEnabled()
     {
-        return $this->_instagram->isExperimentEnabled('ig_android_rtc_reshare', 'is_rtc_reshare_enabled');
+        return this._instagram.isExperimentEnabled('ig_android_rtc_reshare', 'is_rtc_reshare_enabled');
     }
 }

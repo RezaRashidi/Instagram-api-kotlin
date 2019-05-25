@@ -1,12 +1,12 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command;
+package InstagramAPI.Realtime.Command;
 
-use InstagramAPI\Realtime\CommandInterface;
-use InstagramAPI\Realtime\Mqtt\QosLevel;
-use InstagramAPI\Utils;
+import InstagramAPI.Realtime.CommandInterface;
+import InstagramAPI.Realtime.Mqtt.QosLevel;
+import InstagramAPI.Utils;
 
-class UpdateSubscriptions implements CommandInterface
+class UpdateSubscriptions : CommandInterface
 {
     /** @var string */
     private $_topic;
@@ -24,24 +24,24 @@ class UpdateSubscriptions implements CommandInterface
      * @param array  $subscribe
      * @param array  $unsubscribe
      */
-    public function __construct(
+    public fun __construct(
         $topic,
         array $subscribe,
         array $unsubscribe)
     {
-        $this->_topic = $topic;
-        $this->_subscribe = $subscribe;
-        $this->_unsubscribe = $unsubscribe;
+        this._topic = $topic;
+        this._subscribe = $subscribe;
+        this._unsubscribe = $unsubscribe;
     }
 
     /** {@inheritdoc} */
-    public function getTopic()
+    public fun getTopic()
     {
-        return $this->_topic;
+        return this._topic;
     }
 
     /** {@inheritdoc} */
-    public function getQosLevel()
+    public fun getQosLevel()
     {
         return QosLevel::ACKNOWLEDGED_DELIVERY;
     }
@@ -53,14 +53,14 @@ class UpdateSubscriptions implements CommandInterface
      *
      * @return array
      */
-    private function _prepareSubscriptions(
+    private fun _prepareSubscriptions(
         array $subscriptions)
     {
         $result = [];
         foreach ($subscriptions as $subscription) {
             $result[] = (string) $subscription;
         }
-        usort($result, function ($a, $b) {
+        usort($result, fun ($a, $b) {
             $hashA = Utils::hashCode($a);
             $hashB = Utils::hashCode($b);
 
@@ -78,14 +78,14 @@ class UpdateSubscriptions implements CommandInterface
     }
 
     /** {@inheritdoc} */
-    public function jsonSerialize()
+    public fun jsonSerialize()
     {
         $result = [];
-        if (count($this->_subscribe)) {
-            $result['sub'] = $this->_prepareSubscriptions($this->_subscribe);
+        if (count(this._subscribe)) {
+            $result['sub'] = this._prepareSubscriptions(this._subscribe);
         }
-        if (count($this->_unsubscribe)) {
-            $result['unsub'] = $this->_prepareSubscriptions($this->_unsubscribe);
+        if (count(this._unsubscribe)) {
+            $result['unsub'] = this._prepareSubscriptions(this._unsubscribe);
         }
 
         return $result;

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * PostLiveItem.
@@ -27,30 +27,30 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isRankedPosition()
  * @method bool isSeenRankedPosition()
  * @method bool isUser()
- * @method $this setBroadcasts(Broadcast[] $value)
- * @method $this setCanReply(mixed $value)
- * @method $this setCanReshare(mixed $value)
- * @method $this setLastSeenBroadcastTs(mixed $value)
- * @method $this setMuted(mixed $value)
- * @method $this setPeakViewerCount(int $value)
- * @method $this setPk(string $value)
- * @method $this setRankedPosition(mixed $value)
- * @method $this setSeenRankedPosition(mixed $value)
- * @method $this setUser(User $value)
- * @method $this unsetBroadcasts()
- * @method $this unsetCanReply()
- * @method $this unsetCanReshare()
- * @method $this unsetLastSeenBroadcastTs()
- * @method $this unsetMuted()
- * @method $this unsetPeakViewerCount()
- * @method $this unsetPk()
- * @method $this unsetRankedPosition()
- * @method $this unsetSeenRankedPosition()
- * @method $this unsetUser()
+ * @method this setBroadcasts(Broadcast[] $value)
+ * @method this setCanReply(mixed $value)
+ * @method this setCanReshare(mixed $value)
+ * @method this setLastSeenBroadcastTs(mixed $value)
+ * @method this setMuted(mixed $value)
+ * @method this setPeakViewerCount(int $value)
+ * @method this setPk(string $value)
+ * @method this setRankedPosition(mixed $value)
+ * @method this setSeenRankedPosition(mixed $value)
+ * @method this setUser(User $value)
+ * @method this unsetBroadcasts()
+ * @method this unsetCanReply()
+ * @method this unsetCanReshare()
+ * @method this unsetLastSeenBroadcastTs()
+ * @method this unsetMuted()
+ * @method this unsetPeakViewerCount()
+ * @method this unsetPk()
+ * @method this unsetRankedPosition()
+ * @method this unsetSeenRankedPosition()
+ * @method this unsetUser()
  */
-class PostLiveItem extends AutoPropertyMapper
+class PostLiveItem : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'pk'                     => 'string',
         'user'                   => 'User',
         'broadcasts'             => 'Broadcast[]',

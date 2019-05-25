@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * QPData.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method int getSurface()
  * @method bool isData()
  * @method bool isSurface()
- * @method $this setData(QPViewerData $value)
- * @method $this setSurface(int $value)
- * @method $this unsetData()
- * @method $this unsetSurface()
+ * @method this setData(QPViewerData $value)
+ * @method this setSurface(int $value)
+ * @method this unsetData()
+ * @method this unsetSurface()
  */
-class QPData extends AutoPropertyMapper
+class QPData : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'surface'   => 'int',
         'data'      => 'QPViewerData',
     ];

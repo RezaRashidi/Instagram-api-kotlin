@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Ad4ad.
@@ -19,22 +19,22 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isTitle()
  * @method bool isTrackingToken()
  * @method bool isType()
- * @method $this setFooter(mixed $value)
- * @method $this setId(string $value)
- * @method $this setMedia(Item $value)
- * @method $this setTitle(mixed $value)
- * @method $this setTrackingToken(string $value)
- * @method $this setType(mixed $value)
- * @method $this unsetFooter()
- * @method $this unsetId()
- * @method $this unsetMedia()
- * @method $this unsetTitle()
- * @method $this unsetTrackingToken()
- * @method $this unsetType()
+ * @method this setFooter(mixed $value)
+ * @method this setId(string $value)
+ * @method this setMedia(Item $value)
+ * @method this setTitle(mixed $value)
+ * @method this setTrackingToken(string $value)
+ * @method this setType(mixed $value)
+ * @method this unsetFooter()
+ * @method this unsetId()
+ * @method this unsetMedia()
+ * @method this unsetTitle()
+ * @method this unsetTrackingToken()
+ * @method this unsetType()
  */
-class Ad4ad extends AutoPropertyMapper
+class Ad4ad : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'type'           => '',
         'title'          => '',
         'media'          => 'Item',

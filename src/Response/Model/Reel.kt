@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Reel.
@@ -41,44 +41,44 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isSeenRankedPosition()
  * @method bool isTitle()
  * @method bool isUser()
- * @method $this setBroadcast(Broadcast $value)
- * @method $this setCanReply(bool $value)
- * @method $this setCanReshare(bool $value)
- * @method $this setCoverMedia(CoverMedia $value)
- * @method $this setExpiringAt(string $value)
- * @method $this setHasBestiesMedia(bool $value)
- * @method $this setId(string $value)
- * @method $this setItems(Item[] $value)
- * @method $this setLatestReelMedia(string $value)
- * @method $this setLocation(Location $value)
- * @method $this setPrefetchCount(int $value)
- * @method $this setRankedPosition(string $value)
- * @method $this setReelType(string $value)
- * @method $this setSeen(string $value)
- * @method $this setSeenRankedPosition(string $value)
- * @method $this setTitle(string $value)
- * @method $this setUser(User $value)
- * @method $this unsetBroadcast()
- * @method $this unsetCanReply()
- * @method $this unsetCanReshare()
- * @method $this unsetCoverMedia()
- * @method $this unsetExpiringAt()
- * @method $this unsetHasBestiesMedia()
- * @method $this unsetId()
- * @method $this unsetItems()
- * @method $this unsetLatestReelMedia()
- * @method $this unsetLocation()
- * @method $this unsetPrefetchCount()
- * @method $this unsetRankedPosition()
- * @method $this unsetReelType()
- * @method $this unsetSeen()
- * @method $this unsetSeenRankedPosition()
- * @method $this unsetTitle()
- * @method $this unsetUser()
+ * @method this setBroadcast(Broadcast $value)
+ * @method this setCanReply(bool $value)
+ * @method this setCanReshare(bool $value)
+ * @method this setCoverMedia(CoverMedia $value)
+ * @method this setExpiringAt(string $value)
+ * @method this setHasBestiesMedia(bool $value)
+ * @method this setId(string $value)
+ * @method this setItems(Item[] $value)
+ * @method this setLatestReelMedia(string $value)
+ * @method this setLocation(Location $value)
+ * @method this setPrefetchCount(int $value)
+ * @method this setRankedPosition(string $value)
+ * @method this setReelType(string $value)
+ * @method this setSeen(string $value)
+ * @method this setSeenRankedPosition(string $value)
+ * @method this setTitle(string $value)
+ * @method this setUser(User $value)
+ * @method this unsetBroadcast()
+ * @method this unsetCanReply()
+ * @method this unsetCanReshare()
+ * @method this unsetCoverMedia()
+ * @method this unsetExpiringAt()
+ * @method this unsetHasBestiesMedia()
+ * @method this unsetId()
+ * @method this unsetItems()
+ * @method this unsetLatestReelMedia()
+ * @method this unsetLocation()
+ * @method this unsetPrefetchCount()
+ * @method this unsetRankedPosition()
+ * @method this unsetReelType()
+ * @method this unsetSeen()
+ * @method this unsetSeenRankedPosition()
+ * @method this unsetTitle()
+ * @method this unsetUser()
  */
-class Reel extends AutoPropertyMapper
+class Reel : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'id'                => 'string',
         /*
          * Unix "taken_at" timestamp of the newest item in their story reel.

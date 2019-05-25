@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Realtime;
+package InstagramAPI.Realtime;
 
-use InstagramAPI\Realtime\Handler\HandlerException;
+import InstagramAPI.Realtime.Handler.HandlerException;
 
 interface HandlerInterface
 {
@@ -13,6 +13,6 @@ interface HandlerInterface
      *
      * @throws HandlerException
      */
-    public function handleMessage(
+    public fun handleMessage(
         Message $message);
 }

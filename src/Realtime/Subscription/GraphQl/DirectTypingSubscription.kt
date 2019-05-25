@@ -1,19 +1,19 @@
 <?php
 
-namespace InstagramAPI\Realtime\Subscription\GraphQl;
+package InstagramAPI.Realtime.Subscription.GraphQl;
 
-use InstagramAPI\Realtime\Subscription\GraphQlSubscription;
+import InstagramAPI.Realtime.Subscription.GraphQlSubscription;
 
-class DirectTypingSubscription extends GraphQlSubscription
+class DirectTypingSubscription : GraphQlSubscription
 {
-    const QUERY = '17867973967082385';
+    val QUERY = '17867973967082385';
 
     /**
      * Constructor.
      *
      * @param string $accountId
      */
-    public function __construct(
+    public fun __construct(
         $accountId)
     {
         parent::__construct(self::QUERY, [
@@ -22,7 +22,7 @@ class DirectTypingSubscription extends GraphQlSubscription
     }
 
     /** {@inheritdoc} */
-    public function getId()
+    public fun getId()
     {
         return 'direct_typing';
     }

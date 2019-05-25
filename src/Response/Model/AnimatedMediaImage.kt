@@ -1,20 +1,20 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * AnimatedMediaImage.
  *
  * @method AnimatedMediaImageFixedHeigth getFixedHeight()
  * @method bool isFixedHeight()
- * @method $this setFixedHeight(AnimatedMediaImageFixedHeigth $value)
- * @method $this unsetFixedHeight()
+ * @method this setFixedHeight(AnimatedMediaImageFixedHeigth $value)
+ * @method this unsetFixedHeight()
  */
-class AnimatedMediaImage extends AutoPropertyMapper
+class AnimatedMediaImage : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'fixed_height'  => 'AnimatedMediaImageFixedHeigth',
     ];
 }

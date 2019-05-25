@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Media;
+package InstagramAPI.Media;
 
 /**
  * Represents Instagram's media constraints.
@@ -12,54 +12,54 @@ interface ConstraintsInterface
      *
      * @return string
      */
-    public function getTitle();
+    public fun getTitle();
 
     /**
      * Get the minimum allowed media aspect ratio.
      *
      * @return float
      */
-    public function getMinAspectRatio();
+    public fun getMinAspectRatio();
 
     /**
      * Get the maximum allowed media aspect ratio.
      *
      * @return float
      */
-    public function getMaxAspectRatio();
+    public fun getMaxAspectRatio();
 
     /**
      * Get the recommended media aspect ratio.
      *
      * @return float
      */
-    public function getRecommendedRatio();
+    public fun getRecommendedRatio();
 
     /**
      * Get the deviation for recommended media aspect ratio.
      *
      * @return float
      */
-    public function getRecommendedRatioDeviation();
+    public fun getRecommendedRatioDeviation();
 
     /**
-     * Whether to use the recommended media aspect ratio by default.
+     * Whether to import the recommended media aspect ratio by default.
      *
      * @return bool
      */
-    public function useRecommendedRatioByDefault();
+    public fun useRecommendedRatioByDefault();
 
     /**
      * Get the minimum allowed video duration.
      *
      * @return float
      */
-    public function getMinDuration();
+    public fun getMinDuration();
 
     /**
      * Get the maximum allowed video duration.
      *
      * @return float
      */
-    public function getMaxDuration();
+    public fun getMaxDuration();
 }

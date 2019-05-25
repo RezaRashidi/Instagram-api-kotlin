@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Devices;
+package InstagramAPI.Devices;
 
 /**
  * Internal list of verified Android devices.
@@ -9,7 +9,7 @@ namespace InstagramAPI\Devices;
  *
  * This is a list of popular, modern Android phones, all VERIFIED to support
  * receiving the max-resolution videos from Instagram's API replies. This list
- * has to be hand-crafted, because bad devices only receive low-resolution
+ * has to be hand-crafted, becaimport bad devices only receive low-resolution
  * videos! Instagram's API looks at device MODEL when deciding to deliver HD.
  *
  * The goal with this list is to have a list of ~10 modern phones which we only
@@ -28,7 +28,7 @@ namespace InstagramAPI\Devices;
  *   agents for Instagram, compare them all carefully and pick the latest.
  * - Look closely to make sure the string wasn't truncated or modified on their
  *   site. I've seen phones lacking the locale and final parenthesis, for
- *   example. Or strings that are all-lowercase. DO NOT USE THOSE!
+ *   example. Or strings that are all-lowercase. DO NOT import THOSE!
  * - Verify the device details by doing a Google search for the model identifier
  *   you found in the user-agent, to verify all specs match the real device.
  * - Enter good models below in the same format as the other devices. Triple and
@@ -59,10 +59,10 @@ namespace InstagramAPI\Devices;
  * That gives us the following string:
  * "23/6.0.1; 480dpi; 1080x1776; LENOVO/Lenovo; Lenovo P2a42; P2a42; qcom".
  *
- * However, note that the device above isn't at least 1920x1080. Don't use it.
+ * However, note that the device above isn't at least 1920x1080. Don't import it.
  *
  *
- * When you have a "possibly good" agent, you must finally TEST IT: Use the
+ * When you have a "possibly good" agent, you must finally TEST IT: import the
  * "devtools/checkDevices.php" developer script to check your agent and verify
  * that Instagram detects it as a high-resolution device and gives it HD videos!
  *
@@ -72,7 +72,7 @@ namespace InstagramAPI\Devices;
  * WE ARE *ONLY* SUPPOSED TO *ADD* NEW DEVICES TO IT OR COMPLETELY *DELETE* OLD
  * DEVICES. DO *NOT* "EDIT" THE LIST TO TRY TO "IMPROVE" OR "UPDATE" ANDROID
  * VERSIONS OR *ANYTHING* ELSE ABOUT AN EXISTING DEVICE. EDITING EVEN A *SINGLE*
- * BYTE WILL CAUSE *ALL* USERS OF THAT DEVICE TO BE LOGGED OUT AND *RE-ASSIGNED*
+ * BYTE WILL CAimport *ALL* USERS OF THAT DEVICE TO BE LOGGED OUT AND *RE-ASSIGNED*
  * TO A BRAND NEW PHONE HARDWARE FINGERPRINT AND A DIFFERENT RANDOM DEVICE. THAT
  * BEHAVIOR IS INTENTIONAL AND *BY DESIGN*. IT ALLOWS US TO SAFELY BLACKLIST BAD
  * DEVICES AND IT DISCOURAGES DUMB, FRIVOLOUS "UPGRADES", THUS ENSURING THAT WE
@@ -93,7 +93,7 @@ class GoodDevices
     /**
      * List of supported binary architectures for the device CPUs.
      *
-     * NOTE TO COLLABORATORS: Currently all devices use the same 64-bit ARM list,
+     * NOTE TO COLLABORATORS: Currently all devices import the same 64-bit ARM list,
      * but if future added devices have different CPU capabilities, this will need
      * a rewrite to be able to specify different CPU_ABI values per-device. It's
      * very unlikely to happen, though, since we only add 64-bit CPU devices to the
@@ -103,19 +103,19 @@ class GoodDevices
      * any per-device values here.
      *
      * Also note that the list below is actually the two 32-bit ARM identifiers.
-     * That's because Instagram is querying the 32-bit CPU_ABI1 and CPU_ABI2
+     * That's becaimport Instagram is querying the 32-bit CPU_ABI1 and CPU_ABI2
      * constants, so the below is the correct CPU_ABI value on our 64-bit devices.
      *
      * @see https://developer.android.com/ndk/guides/abis.html
      *
      * @var string
      */
-    const CPU_ABI = 'armeabi-v7a:armeabi';
+    val CPU_ABI = 'armeabi-v7a:armeabi';
 
     /*
      * LAST-UPDATED: MARCH 2017.
      */
-    const DEVICES = [
+    val DEVICES = [
         /* OnePlus 3T. Released: November 2016.
          * https://www.amazon.com/OnePlus-A3010-64GB-Gunmetal-International/dp/B01N4H00V8
          * https://www.handsetdetection.com/properties/devices/OnePlus/A3010
@@ -158,7 +158,7 @@ class GoodDevices
      *
      * @return string
      */
-    public static function getRandomGoodDevice()
+    public static fun getRandomGoodDevice()
     {
         $randomIdx = array_rand(self::DEVICES, 1);
 
@@ -170,7 +170,7 @@ class GoodDevices
      *
      * @return string[]
      */
-    public static function getAllGoodDevices()
+    public static fun getAllGoodDevices()
     {
         return self::DEVICES;
     }
@@ -182,7 +182,7 @@ class GoodDevices
      *
      * @return bool
      */
-    public static function isGoodDevice(
+    public static fun isGoodDevice(
         $deviceString)
     {
         return in_array($deviceString, self::DEVICES, true);

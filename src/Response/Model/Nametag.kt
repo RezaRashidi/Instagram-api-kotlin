@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Nametag.
@@ -15,18 +15,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isGradient()
  * @method bool isMode()
  * @method bool isSelfieSticker()
- * @method $this setEmoji(string $value)
- * @method $this setGradient(int $value)
- * @method $this setMode(int $value)
- * @method $this setSelfieSticker(int $value)
- * @method $this unsetEmoji()
- * @method $this unsetGradient()
- * @method $this unsetMode()
- * @method $this unsetSelfieSticker()
+ * @method this setEmoji(string $value)
+ * @method this setGradient(int $value)
+ * @method this setMode(int $value)
+ * @method this setSelfieSticker(int $value)
+ * @method this unsetEmoji()
+ * @method this unsetGradient()
+ * @method this unsetMode()
+ * @method this unsetSelfieSticker()
  */
-class Nametag extends AutoPropertyMapper
+class Nametag : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'mode'                 => 'int',
         'gradient'             => 'int',
         'emoji'                => 'string',

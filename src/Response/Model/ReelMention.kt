@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
-use InstagramAPI\Response\PropertyCollection;
+import InstagramAPI.AutoPropertyMapper;
+import InstagramAPI.Response.PropertyCollection;
 
 /**
  * ReelMention.
@@ -26,29 +26,29 @@ use InstagramAPI\Response\PropertyCollection;
  * @method bool isX()
  * @method bool isY()
  * @method bool isZ()
- * @method $this setHeight(float $value)
- * @method $this setIsHidden(int $value)
- * @method $this setIsPinned(int $value)
- * @method $this setRotation(float $value)
- * @method $this setUser(User $value)
- * @method $this setWidth(float $value)
- * @method $this setX(float $value)
- * @method $this setY(float $value)
- * @method $this setZ(float $value)
- * @method $this unsetHeight()
- * @method $this unsetIsHidden()
- * @method $this unsetIsPinned()
- * @method $this unsetRotation()
- * @method $this unsetUser()
- * @method $this unsetWidth()
- * @method $this unsetX()
- * @method $this unsetY()
- * @method $this unsetZ()
+ * @method this setHeight(float $value)
+ * @method this setIsHidden(int $value)
+ * @method this setIsPinned(int $value)
+ * @method this setRotation(float $value)
+ * @method this setUser(User $value)
+ * @method this setWidth(float $value)
+ * @method this setX(float $value)
+ * @method this setY(float $value)
+ * @method this setZ(float $value)
+ * @method this unsetHeight()
+ * @method this unsetIsHidden()
+ * @method this unsetIsPinned()
+ * @method this unsetRotation()
+ * @method this unsetUser()
+ * @method this unsetWidth()
+ * @method this unsetX()
+ * @method this unsetY()
+ * @method this unsetZ()
  */
-class ReelMention extends AutoPropertyMapper
+class ReelMention : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
-        PropertyCollection\Sticker::class,
+    val JSON_PROPERTY_MAP = [
+        PropertyCollection.Sticker::class,
         'user'      => 'User',
         'is_hidden' => 'int',
     ];

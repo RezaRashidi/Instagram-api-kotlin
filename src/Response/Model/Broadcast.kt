@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Broadcast.
@@ -49,52 +49,52 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isSeenRankedPosition()
  * @method bool isTotalUniqueViewerCount()
  * @method bool isViewerCount()
- * @method $this setBroadcastMessage(string $value)
- * @method $this setBroadcastOwner(User $value)
- * @method $this setBroadcastStatus(string $value)
- * @method $this setCoverFrameUrl(string $value)
- * @method $this setDashAbrPlaybackUrl(string $value)
- * @method $this setDashManifest(string $value)
- * @method $this setDashPlaybackUrl(string $value)
- * @method $this setEncodingTag(string $value)
- * @method $this setExpireAt(string $value)
- * @method $this setId(string $value)
- * @method $this setInternalOnly(bool $value)
- * @method $this setMediaId(string $value)
- * @method $this setMuted(mixed $value)
- * @method $this setNumberOfQualities(int $value)
- * @method $this setOrganicTrackingToken(string $value)
- * @method $this setPublishedTime(string $value)
- * @method $this setRankedPosition(mixed $value)
- * @method $this setRtmpPlaybackUrl(string $value)
- * @method $this setSeenRankedPosition(mixed $value)
- * @method $this setTotalUniqueViewerCount(int $value)
- * @method $this setViewerCount(int $value)
- * @method $this unsetBroadcastMessage()
- * @method $this unsetBroadcastOwner()
- * @method $this unsetBroadcastStatus()
- * @method $this unsetCoverFrameUrl()
- * @method $this unsetDashAbrPlaybackUrl()
- * @method $this unsetDashManifest()
- * @method $this unsetDashPlaybackUrl()
- * @method $this unsetEncodingTag()
- * @method $this unsetExpireAt()
- * @method $this unsetId()
- * @method $this unsetInternalOnly()
- * @method $this unsetMediaId()
- * @method $this unsetMuted()
- * @method $this unsetNumberOfQualities()
- * @method $this unsetOrganicTrackingToken()
- * @method $this unsetPublishedTime()
- * @method $this unsetRankedPosition()
- * @method $this unsetRtmpPlaybackUrl()
- * @method $this unsetSeenRankedPosition()
- * @method $this unsetTotalUniqueViewerCount()
- * @method $this unsetViewerCount()
+ * @method this setBroadcastMessage(string $value)
+ * @method this setBroadcastOwner(User $value)
+ * @method this setBroadcastStatus(string $value)
+ * @method this setCoverFrameUrl(string $value)
+ * @method this setDashAbrPlaybackUrl(string $value)
+ * @method this setDashManifest(string $value)
+ * @method this setDashPlaybackUrl(string $value)
+ * @method this setEncodingTag(string $value)
+ * @method this setExpireAt(string $value)
+ * @method this setId(string $value)
+ * @method this setInternalOnly(bool $value)
+ * @method this setMediaId(string $value)
+ * @method this setMuted(mixed $value)
+ * @method this setNumberOfQualities(int $value)
+ * @method this setOrganicTrackingToken(string $value)
+ * @method this setPublishedTime(string $value)
+ * @method this setRankedPosition(mixed $value)
+ * @method this setRtmpPlaybackUrl(string $value)
+ * @method this setSeenRankedPosition(mixed $value)
+ * @method this setTotalUniqueViewerCount(int $value)
+ * @method this setViewerCount(int $value)
+ * @method this unsetBroadcastMessage()
+ * @method this unsetBroadcastOwner()
+ * @method this unsetBroadcastStatus()
+ * @method this unsetCoverFrameUrl()
+ * @method this unsetDashAbrPlaybackUrl()
+ * @method this unsetDashManifest()
+ * @method this unsetDashPlaybackUrl()
+ * @method this unsetEncodingTag()
+ * @method this unsetExpireAt()
+ * @method this unsetId()
+ * @method this unsetInternalOnly()
+ * @method this unsetMediaId()
+ * @method this unsetMuted()
+ * @method this unsetNumberOfQualities()
+ * @method this unsetOrganicTrackingToken()
+ * @method this unsetPublishedTime()
+ * @method this unsetRankedPosition()
+ * @method this unsetRtmpPlaybackUrl()
+ * @method this unsetSeenRankedPosition()
+ * @method this unsetTotalUniqueViewerCount()
+ * @method this unsetViewerCount()
  */
-class Broadcast extends AutoPropertyMapper
+class Broadcast : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'broadcast_owner'           => 'User',
         /*
          * A string such as "active" or "post_live".

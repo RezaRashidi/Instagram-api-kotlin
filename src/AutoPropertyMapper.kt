@@ -1,22 +1,22 @@
 <?php
 
-namespace InstagramAPI;
+package InstagramAPI;
 
-use LazyJsonMapper\LazyJsonMapper;
+import LazyJsonMapper.LazyJsonMapper;
 
 /**
- * Automatically maps JSON data onto PHP objects with virtual functions.
+ * Automatically maps JSON data onto PHP objects with virtual funs.
  *
  * Configures important core settings for the property mapping process.
  */
-class AutoPropertyMapper extends LazyJsonMapper
+class AutoPropertyMapper : LazyJsonMapper
 {
     /** @var bool */
-    const ALLOW_VIRTUAL_PROPERTIES = false;
+    val ALLOW_VIRTUAL_PROPERTIES = false;
 
     /** @var bool */
-    const ALLOW_VIRTUAL_FUNCTIONS = true;
+    val ALLOW_VIRTUAL_funS = true;
 
     /** @var bool */
-    const USE_MAGIC_LOOKUP_CACHE = true;
+    val USE_MAGIC_LOOKUP_CACHE = true;
 }

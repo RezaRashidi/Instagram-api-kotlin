@@ -1,23 +1,23 @@
 <?php
 
-namespace InstagramAPI;
+package InstagramAPI;
 
-use InstagramAPI\Media\Video\FFmpeg;
-use InstagramAPI\Response\Model\Item;
-use InstagramAPI\Response\Model\Location;
+import InstagramAPI.Media.Video.FFmpeg;
+import InstagramAPI.Response.Model.Item;
+import InstagramAPI.Response.Model.Location;
 
 class Utils
 {
     /**
-     * Override for the default temp path used by various class functions.
+     * Override for the default temp path used by various class funs.
      *
-     * If this value is non-null, we'll use it. Otherwise we'll use the default
+     * If this value is non-null, we'll import it. Otherwise we'll import the default
      * system tmp folder.
      *
      * TIP: If your default system temp folder isn't writable, it's NECESSARY
      * for you to set this value to another, writable path, like this:
      *
-     * \InstagramAPI\Utils::$defaultTmpPath = '/home/example/foo/';
+     * .InstagramAPI.Utils::$defaultTmpPath = '/home/example/foo/';
      */
     public static $defaultTmpPath = null;
 
@@ -26,14 +26,14 @@ class Utils
      *
      * @var string
      */
-    const BOUNDARY_CHARS = '-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    val BOUNDARY_CHARS = '-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     /**
      * Length of generated multipart boundary.
      *
      * @var int
      */
-    const BOUNDARY_LENGTH = 30;
+    val BOUNDARY_LENGTH = 30;
 
     /**
      * Name of the detected ffmpeg executable.
@@ -64,7 +64,7 @@ class Utils
      *
      * @return string
      */
-    public static function generateUploadId(
+    public static fun generateUploadId(
         $useNano = false)
     {
         $result = null;
@@ -95,15 +95,15 @@ class Utils
     /**
      * Calculates Java hashCode() for a given string.
      *
-     * WARNING: This method is not Unicode-aware, so use it only on ANSI strings.
+     * WARNING: This method is not Unicode-aware, so import it only on ANSI strings.
      *
      * @param string $string
      *
      * @return int
      *
-     * @see https://en.wikipedia.org/wiki/Java_hashCode()#The_java.lang.String_hash_function
+     * @see https://en.wikipedia.org/wiki/Java_hashCode()#The_java.lang.String_hash_fun
      */
-    public static function hashCode(
+    public static fun hashCode(
         $string)
     {
         $result = 0;
@@ -128,7 +128,7 @@ class Utils
      *
      * @return array
      */
-    public static function reorderByHashCode(
+    public static fun reorderByHashCode(
         array $data)
     {
         $hashCodes = [];
@@ -136,7 +136,7 @@ class Utils
             $hashCodes[$key] = self::hashCode($key);
         }
 
-        uksort($data, function ($a, $b) use ($hashCodes) {
+        uksort($data, fun ($a, $b) import ($hashCodes) {
             $a = $hashCodes[$a];
             $b = $hashCodes[$b];
             if ($a < $b) {
@@ -156,7 +156,7 @@ class Utils
      *
      * @return string
      */
-    public static function generateMultipartBoundary()
+    public static fun generateMultipartBoundary()
     {
         $result = '';
         $max = strlen(self::BOUNDARY_CHARS) - 1;
@@ -168,13 +168,13 @@ class Utils
     }
 
     /**
-     * Generates user breadcrumb for use when posting a comment.
+     * Generates user breadcrumb for import when posting a comment.
      *
      * @param int $size
      *
      * @return string
      */
-    public static function generateUserBreadcrumb(
+    public static fun generateUserBreadcrumb(
         $size)
     {
         $key = 'iN4$aGr0m';
@@ -192,7 +192,7 @@ class Utils
         // generate typing data
         $data = $size.' '.$term.' '.$text_change_event_count.' '.$date;
 
-        return base64_encode(hash_hmac('sha256', $data, $key, true))."\n".base64_encode($data)."\n";
+        return base64_encode(hash_hmac('sha256', $data, $key, true)).".n".base64_encode($data).".n";
     }
 
     /**
@@ -203,35 +203,35 @@ class Utils
      *                        optional millisecond precision if wanted, such as
      *                        `00:01:01.149`.
      *
-     * @throws \InvalidArgumentException If any part of the input is invalid.
+     * @throws .InvalidArgumentException If any part of the input is invalid.
      *
      * @return float The number of seconds, with decimals (milliseconds).
      */
-    public static function hmsTimeToSeconds(
+    public static fun hmsTimeToSeconds(
         $timeStr)
     {
         if (!is_string($timeStr)) {
-            throw new \InvalidArgumentException('Invalid non-string timestamp.');
+            throw new .InvalidArgumentException('Invalid non-string timestamp.');
         }
 
         $sec = 0.0;
         foreach (array_reverse(explode(':', $timeStr)) as $offsetKey => $v) {
             if ($offsetKey > 2) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new .InvalidArgumentException(sprintf(
                     'Invalid input "%s" with too many components (max 3 is allowed "HH:MM:SS").',
                     $timeStr
                 ));
             }
 
             // Parse component (supports "01" or "01.123" (milli-precision)).
-            if ($v === '' || !preg_match('/^\d+(?:\.\d+)?$/', $v)) {
-                throw new \InvalidArgumentException(sprintf(
+            if ($v === '' || !preg_match('/^.d+(?:...d+)?$/', $v)) {
+                throw new .InvalidArgumentException(sprintf(
                     'Invalid non-digit or empty component "%s" in time string "%s".',
                     $v, $timeStr
                 ));
             }
             if ($offsetKey !== 0 && strpos($v, '.') !== false) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new .InvalidArgumentException(sprintf(
                     'Unexpected period in time component "%s" in time string "%s". Only the seconds-component supports milliseconds.',
                     $v, $timeStr
                 ));
@@ -242,7 +242,7 @@ class Utils
             $v = (float) $v;
             $maxValue = $offsetKey < 2 ? 60 : -1;
             if ($maxValue >= 0 && $v > $maxValue) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new .InvalidArgumentException(sprintf(
                     'Invalid time component "%d" (its allowed range is 0-%d) in time string "%s".',
                     $v, $maxValue, $timeStr
                 ));
@@ -262,15 +262,15 @@ class Utils
      *
      * @param int|float $sec The number of seconds. Can have fractions (millis).
      *
-     * @throws \InvalidArgumentException If any part of the input is invalid.
+     * @throws .InvalidArgumentException If any part of the input is invalid.
      *
      * @return string The time formatted as `HH:MM:SS.###` (`###` is millis).
      */
-    public static function hmsTimeFromSeconds(
+    public static fun hmsTimeFromSeconds(
         $sec)
     {
         if (!is_int($sec) && !is_float($sec)) {
-            throw new \InvalidArgumentException('Seconds must be a number.');
+            throw new .InvalidArgumentException('Seconds must be a number.');
         }
 
         $wasNegative = false;
@@ -280,7 +280,7 @@ class Utils
         }
 
         $result = sprintf(
-            '%02d:%02d:%06.3f', // "%06f" is because it counts the whole string.
+            '%02d:%02d:%06.3f', // "%06f" is becaimport it counts the whole string.
             floor($sec / 3600),
             floor(fmod($sec / 60, 60)),
             fmod($sec, 60)
@@ -296,20 +296,20 @@ class Utils
     /**
      * Builds an Instagram media location JSON object in the correct format.
      *
-     * This function is used whenever we need to send a location to Instagram's
+     * This fun is used whenever we need to send a location to Instagram's
      * API. All endpoints (so far) expect location data in this exact format.
      *
      * @param Location $location A model object representing the location.
      *
-     * @throws \InvalidArgumentException If the location is invalid.
+     * @throws .InvalidArgumentException If the location is invalid.
      *
      * @return string The final JSON string ready to submit as an API parameter.
      */
-    public static function buildMediaLocationJSON(
+    public static fun buildMediaLocationJSON(
         $location)
     {
         if (!$location instanceof Location) {
-            throw new \InvalidArgumentException('The location must be an instance of \InstagramAPI\Response\Model\Location.');
+            throw new .InvalidArgumentException('The location must be an instance of .InstagramAPI.Response.Model.Location.');
         }
 
         // Forbid locations that came from Location::searchFacebook() and
@@ -317,23 +317,23 @@ class Utils
         // properties, and they don't always contain all data we need. The
         // real application NEVER uses the "Facebook" endpoints for attaching
         // locations to media, and NEITHER SHOULD WE.
-        if ($location->getFacebookPlacesId() !== null) {
-            throw new \InvalidArgumentException('You are not allowed to use Location model objects from the Facebook-based location search functions. They are not valid media locations!');
+        if ($location.getFacebookPlacesId() !== null) {
+            throw new .InvalidArgumentException('You are not allowed to import Location model objects from the Facebook-based location search funs. They are not valid media locations!');
         }
 
         // Core location keys that always exist.
         $obj = [
-            'name'            => $location->getName(),
-            'lat'             => $location->getLat(),
-            'lng'             => $location->getLng(),
-            'address'         => $location->getAddress(),
-            'external_source' => $location->getExternalIdSource(),
+            'name'            => $location.getName(),
+            'lat'             => $location.getLat(),
+            'lng'             => $location.getLng(),
+            'address'         => $location.getAddress(),
+            'external_source' => $location.getExternalIdSource(),
         ];
 
         // Attach the location ID via a dynamically generated key.
         // NOTE: This automatically generates a key such as "facebook_places_id".
-        $key = $location->getExternalIdSource().'_id';
-        $obj[$key] = $location->getExternalId();
+        $key = $location.getExternalIdSource().'_id';
+        $obj[$key] = $location.getExternalId();
 
         // Ensure that all keys are listed in the correct hash order.
         $obj = self::reorderByHashCode($obj);
@@ -345,15 +345,15 @@ class Utils
      * Check for ffprobe dependency.
      *
      * TIP: If your binary isn't findable via the PATH environment locations,
-     * you can manually set the correct path to it. Before calling any functions
+     * you can manually set the correct path to it. Before calling any funs
      * that need FFprobe, you must simply assign a manual value (ONCE) to tell
      * us where to find your FFprobe, like this:
      *
-     * \InstagramAPI\Utils::$ffprobeBin = '/home/exampleuser/ffmpeg/bin/ffprobe';
+     * .InstagramAPI.Utils::$ffprobeBin = '/home/exampleuser/ffmpeg/bin/ffprobe';
      *
      * @return string|bool Name of the library if present, otherwise FALSE.
      */
-    public static function checkFFPROBE()
+    public static fun checkFFPROBE()
     {
         // We only resolve this once per session and then cache the result.
         if (self::$ffprobeBin === null) {
@@ -378,21 +378,21 @@ class Utils
      * @param mixed $userTag An array containing the user ID and the tag position.
      *                       Example: ['position'=>[0.5,0.5],'user_id'=>'123'].
      *
-     * @throws \InvalidArgumentException If the tag is invalid.
+     * @throws .InvalidArgumentException If the tag is invalid.
      */
-    public static function throwIfInvalidUserTag(
+    public static fun throwIfInvalidUserTag(
         $userTag)
     {
-        // NOTE: We can use "array" typehint, but it doesn't give us enough freedom.
+        // NOTE: We can import "array" typehint, but it doesn't give us enough freedom.
         if (!is_array($userTag)) {
-            throw new \InvalidArgumentException('User tag must be an array.');
+            throw new .InvalidArgumentException('User tag must be an array.');
         }
 
         // Check for required keys.
         $requiredKeys = ['position', 'user_id'];
         $missingKeys = array_diff($requiredKeys, array_keys($userTag));
         if (!empty($missingKeys)) {
-            throw new \InvalidArgumentException(sprintf('Missing keys "%s" for user tag array.', implode('", "', $missingKeys)));
+            throw new .InvalidArgumentException(sprintf('Missing keys "%s" for user tag array.', implode('", "', $missingKeys)));
         }
 
         // Verify this product tag entry, ensuring that the entry is format
@@ -401,21 +401,21 @@ class Utils
             switch ($key) {
                 case 'user_id':
                     if (!is_int($value) && !ctype_digit($value)) {
-                        throw new \InvalidArgumentException('User ID must be an integer.');
+                        throw new .InvalidArgumentException('User ID must be an integer.');
                     }
                     if ($value < 0) {
-                        throw new \InvalidArgumentException('User ID must be a positive integer.');
+                        throw new .InvalidArgumentException('User ID must be a positive integer.');
                     }
                     break;
                 case 'position':
                     try {
                         self::throwIfInvalidPosition($value);
-                    } catch (\InvalidArgumentException $e) {
-                        throw new \InvalidArgumentException(sprintf('Invalid user tag position: %s', $e->getMessage()), $e->getCode(), $e);
+                    } catch (.InvalidArgumentException $e) {
+                        throw new .InvalidArgumentException(sprintf('Invalid user tag position: %s', $e.getMessage()), $e.getCode(), $e);
                     }
                     break;
                 default:
-                    throw new \InvalidArgumentException(sprintf('Invalid key "%s" in user tag array.', $key));
+                    throw new .InvalidArgumentException(sprintf('Invalid key "%s" in user tag array.', $key));
             }
         }
     }
@@ -431,23 +431,23 @@ class Utils
      *                        "removed" top-level keys holding the usertags. Example:
      *                        ['in'=>[['position'=>[0.5,0.5],'user_id'=>'123'], ...]].
      *
-     * @throws \InvalidArgumentException If any tags are invalid.
+     * @throws .InvalidArgumentException If any tags are invalid.
      */
-    public static function throwIfInvalidUsertags(
+    public static fun throwIfInvalidUsertags(
         $usertags)
     {
-        // NOTE: We can use "array" typehint, but it doesn't give us enough freedom.
+        // NOTE: We can import "array" typehint, but it doesn't give us enough freedom.
         if (!is_array($usertags)) {
-            throw new \InvalidArgumentException('Usertags must be an array.');
+            throw new .InvalidArgumentException('Usertags must be an array.');
         }
 
         if (empty($usertags)) {
-            throw new \InvalidArgumentException('Empty usertags array.');
+            throw new .InvalidArgumentException('Empty usertags array.');
         }
 
         foreach ($usertags as $k => $v) {
             if (!is_array($v)) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new .InvalidArgumentException(sprintf(
                     'Invalid usertags array. The value for key "%s" must be an array.', $k
                 ));
             }
@@ -462,10 +462,10 @@ class Utils
                     foreach ($v as $idx => $userTag) {
                         try {
                             self::throwIfInvalidUserTag($userTag);
-                        } catch (\InvalidArgumentException $e) {
-                            throw new \InvalidArgumentException(
-                                sprintf('Invalid usertag at index "%d": %s', $idx, $e->getMessage()),
-                                $e->getCode(),
+                        } catch (.InvalidArgumentException $e) {
+                            throw new .InvalidArgumentException(
+                                sprintf('Invalid usertag at index "%d": %s', $idx, $e.getMessage()),
+                                $e.getCode(),
                                 $e
                             );
                         }
@@ -475,12 +475,12 @@ class Utils
                     // Check the array of userids to remove.
                     foreach ($v as $userId) {
                         if (!ctype_digit($userId) && (!is_int($userId) || $userId < 0)) {
-                            throw new \InvalidArgumentException('Invalid user ID in usertags "removed" array.');
+                            throw new .InvalidArgumentException('Invalid user ID in usertags "removed" array.');
                         }
                     }
                     break;
                 default:
-                    throw new \InvalidArgumentException(sprintf('Invalid key "%s" in user tags array.', $k));
+                    throw new .InvalidArgumentException(sprintf('Invalid key "%s" in user tags array.', $k));
             }
         }
     }
@@ -496,23 +496,23 @@ class Utils
      *                           "removed" top-level keys holding the usertags. Example:
      *                           ['in'=>[['position'=>[0.5,0.5],'product_id'=>'123'], ...]].
      *
-     * @throws \InvalidArgumentException If any tags are invalid.
+     * @throws .InvalidArgumentException If any tags are invalid.
      */
-    public static function throwIfInvalidProductTags(
+    public static fun throwIfInvalidProductTags(
         $productTags)
     {
-        // NOTE: We can use "array" typehint, but it doesn't give us enough freedom.
+        // NOTE: We can import "array" typehint, but it doesn't give us enough freedom.
         if (!is_array($productTags)) {
-            throw new \InvalidArgumentException('Products tags must be an array.');
+            throw new .InvalidArgumentException('Products tags must be an array.');
         }
 
         if (empty($productTags)) {
-            throw new \InvalidArgumentException('Empty product tags array.');
+            throw new .InvalidArgumentException('Empty product tags array.');
         }
 
         foreach ($productTags as $k => $v) {
             if (!is_array($v)) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new .InvalidArgumentException(sprintf(
                     'Invalid product tags array. The value for key "%s" must be an array.', $k
                 ));
             }
@@ -530,10 +530,10 @@ class Utils
                     foreach ($v as $idx => $productTag) {
                         try {
                             self::throwIfInvalidProductTag($productTag);
-                        } catch (\InvalidArgumentException $e) {
-                            throw new \InvalidArgumentException(
-                                sprintf('Invalid product tag at index "%d": %s', $idx, $e->getMessage()),
-                                $e->getCode(),
+                        } catch (.InvalidArgumentException $e) {
+                            throw new .InvalidArgumentException(
+                                sprintf('Invalid product tag at index "%d": %s', $idx, $e.getMessage()),
+                                $e.getCode(),
                                 $e
                             );
                         }
@@ -543,12 +543,12 @@ class Utils
                     // Check the array of product_id to remove.
                     foreach ($v as $productId) {
                         if (!ctype_digit($productId) && (!is_int($productId) || $productId < 0)) {
-                            throw new \InvalidArgumentException('Invalid product ID in product tags "removed" array.');
+                            throw new .InvalidArgumentException('Invalid product ID in product tags "removed" array.');
                         }
                     }
                     break;
                 default:
-                    throw new \InvalidArgumentException(sprintf('Invalid key "%s" in product tags array.', $k));
+                    throw new .InvalidArgumentException(sprintf('Invalid key "%s" in product tags array.', $k));
             }
         }
     }
@@ -563,21 +563,21 @@ class Utils
      * @param mixed $productTag An array containing the product ID and the tag position.
      *                          Example: ['position'=>[0.5,0.5],'product_id'=>'123'].
      *
-     * @throws \InvalidArgumentException If any tags are invalid.
+     * @throws .InvalidArgumentException If any tags are invalid.
      */
-    public static function throwIfInvalidProductTag(
+    public static fun throwIfInvalidProductTag(
         $productTag)
     {
-        // NOTE: We can use "array" typehint, but it doesn't give us enough freedom.
+        // NOTE: We can import "array" typehint, but it doesn't give us enough freedom.
         if (!is_array($productTag)) {
-            throw new \InvalidArgumentException('Product tag must be an array.');
+            throw new .InvalidArgumentException('Product tag must be an array.');
         }
 
         // Check for required keys.
         $requiredKeys = ['position', 'product_id'];
         $missingKeys = array_diff($requiredKeys, array_keys($productTag));
         if (!empty($missingKeys)) {
-            throw new \InvalidArgumentException(sprintf('Missing keys "%s" for product tag array.', implode('", "', $missingKeys)));
+            throw new .InvalidArgumentException(sprintf('Missing keys "%s" for product tag array.', implode('", "', $missingKeys)));
         }
 
         // Verify this product tag entry, ensuring that the entry is format
@@ -586,21 +586,21 @@ class Utils
             switch ($key) {
                 case 'product_id':
                     if (!is_int($value) && !ctype_digit($value)) {
-                        throw new \InvalidArgumentException('Product ID must be an integer.');
+                        throw new .InvalidArgumentException('Product ID must be an integer.');
                     }
                     if ($value < 0) {
-                        throw new \InvalidArgumentException('Product ID must be a positive integer.');
+                        throw new .InvalidArgumentException('Product ID must be a positive integer.');
                     }
                     break;
                 case 'position':
                     try {
                         self::throwIfInvalidPosition($value);
-                    } catch (\InvalidArgumentException $e) {
-                        throw new \InvalidArgumentException(sprintf('Invalid product tag position: %s', $e->getMessage()), $e->getCode(), $e);
+                    } catch (.InvalidArgumentException $e) {
+                        throw new .InvalidArgumentException(sprintf('Invalid product tag position: %s', $e.getMessage()), $e.getCode(), $e);
                     }
                     break;
                 default:
-                    throw new \InvalidArgumentException(sprintf('Invalid key "%s" in product tag array.', $key));
+                    throw new .InvalidArgumentException(sprintf('Invalid key "%s" in product tag array.', $key));
             }
         }
     }
@@ -610,59 +610,59 @@ class Utils
      *
      * @param mixed $position An array containing a position coordinates.
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public static function throwIfInvalidPosition(
+    public static fun throwIfInvalidPosition(
         $position)
     {
         if (!is_array($position)) {
-            throw new \InvalidArgumentException('Position must be an array.');
+            throw new .InvalidArgumentException('Position must be an array.');
         }
 
         if (!isset($position[0])) {
-            throw new \InvalidArgumentException('X coordinate is required.');
+            throw new .InvalidArgumentException('X coordinate is required.');
         }
         $x = $position[0];
         if (!is_int($x) && !is_float($x)) {
-            throw new \InvalidArgumentException('X coordinate must be a number.');
+            throw new .InvalidArgumentException('X coordinate must be a number.');
         }
         if ($x < 0.0 || $x > 1.0) {
-            throw new \InvalidArgumentException('X coordinate must be a float between 0.0 and 1.0.');
+            throw new .InvalidArgumentException('X coordinate must be a float between 0.0 and 1.0.');
         }
 
         if (!isset($position[1])) {
-            throw new \InvalidArgumentException('Y coordinate is required.');
+            throw new .InvalidArgumentException('Y coordinate is required.');
         }
         $y = $position[1];
         if (!is_int($y) && !is_float($y)) {
-            throw new \InvalidArgumentException('Y coordinate must be a number.');
+            throw new .InvalidArgumentException('Y coordinate must be a number.');
         }
         if ($y < 0.0 || $y > 1.0) {
-            throw new \InvalidArgumentException('Y coordinate must be a float between 0.0 and 1.0.');
+            throw new .InvalidArgumentException('Y coordinate must be a float between 0.0 and 1.0.');
         }
     }
 
     /**
      * Verifies that a single hashtag is valid.
      *
-     * This function enforces the following requirements: It must be a string,
+     * This fun enforces the following requirements: It must be a string,
      * at least 1 character long, and cannot contain the "#" character itself.
      *
      * @param mixed $hashtag The hashtag to check (should be string but we
      *                       accept anything for checking purposes).
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public static function throwIfInvalidHashtag(
+    public static fun throwIfInvalidHashtag(
         $hashtag)
     {
         if (!is_string($hashtag) || !strlen($hashtag)) {
-            throw new \InvalidArgumentException('Hashtag must be a non-empty string.');
+            throw new .InvalidArgumentException('Hashtag must be a non-empty string.');
         }
         // Perform an UTF-8 aware search for the illegal "#" symbol (anywhere).
-        // NOTE: We must use mb_strpos() to support international tags.
+        // NOTE: We must import mb_strpos() to support international tags.
         if (mb_strpos($hashtag, '#') !== false) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new .InvalidArgumentException(sprintf(
                 'Hashtag "%s" is not allowed to contain the "#" character.',
                 $hashtag
             ));
@@ -674,13 +674,13 @@ class Utils
      *
      * @param string $rankToken
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public static function throwIfInvalidRankToken(
+    public static fun throwIfInvalidRankToken(
         $rankToken
     ) {
         if (!Signatures::isValidUUID($rankToken)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a valid rank token.', $rankToken));
+            throw new .InvalidArgumentException(sprintf('"%s" is not a valid rank token.', $rankToken));
         }
     }
 
@@ -689,44 +689,44 @@ class Utils
      *
      * @param array[] $storyPoll Array with story poll key-value pairs.
      *
-     * @throws \InvalidArgumentException If it's missing keys or has invalid values.
+     * @throws .InvalidArgumentException If it's missing keys or has invalid values.
      */
-    public static function throwIfInvalidStoryPoll(
+    public static fun throwIfInvalidStoryPoll(
         array $storyPoll)
     {
         $requiredKeys = ['question', 'viewer_vote', 'viewer_can_vote', 'tallies', 'is_sticker'];
 
         if (count($storyPoll) !== 1) {
-            throw new \InvalidArgumentException(sprintf('Only one story poll is permitted. You added %d story polls.', count($storyPoll)));
+            throw new .InvalidArgumentException(sprintf('Only one story poll is permitted. You added %d story polls.', count($storyPoll)));
         }
 
         // Ensure that all keys exist.
         $missingKeys = array_keys(array_diff_key(['question' => 1, 'viewer_vote' => 1, 'viewer_can_vote' => 1, 'tallies' => 1, 'is_sticker' => 1], $storyPoll[0]));
         if (count($missingKeys)) {
-            throw new \InvalidArgumentException(sprintf('Missing keys "%s" for story poll array.', implode(', ', $missingKeys)));
+            throw new .InvalidArgumentException(sprintf('Missing keys "%s" for story poll array.', implode(', ', $missingKeys)));
         }
 
         foreach ($storyPoll[0] as $k => $v) {
             switch ($k) {
                 case 'question':
                     if (!is_string($v)) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
                     }
                     break;
                 case 'viewer_vote':
                     if ($v !== 0) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
                     }
                     break;
                 case 'viewer_can_vote':
                 case 'is_sticker':
                     if (!is_bool($v) && $v !== true) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
                     }
                     break;
                 case 'tallies':
                     if (!is_array($v)) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
                     }
                     self::_throwIfInvalidStoryPollTallies($v);
                     break;
@@ -740,41 +740,41 @@ class Utils
      *
      * @param array[] $storySlider Array with story slider key-value pairs.
      *
-     * @throws \InvalidArgumentException If it's missing keys or has invalid values.
+     * @throws .InvalidArgumentException If it's missing keys or has invalid values.
      */
-    public static function throwIfInvalidStorySlider(
+    public static fun throwIfInvalidStorySlider(
         array $storySlider)
     {
         $requiredKeys = ['question', 'viewer_vote', 'viewer_can_vote', 'slider_vote_average', 'slider_vote_count', 'emoji', 'background_color', 'text_color', 'is_sticker'];
 
         if (count($storySlider) !== 1) {
-            throw new \InvalidArgumentException(sprintf('Only one story slider is permitted. You added %d story sliders.', count($storySlider)));
+            throw new .InvalidArgumentException(sprintf('Only one story slider is permitted. You added %d story sliders.', count($storySlider)));
         }
 
         // Ensure that all keys exist.
         $missingKeys = array_keys(array_diff_key(['question' => 1, 'viewer_vote' => 1, 'viewer_can_vote' => 1, 'slider_vote_average' => 1, 'slider_vote_count' => 1, 'emoji' => 1, 'background_color' => 1, 'text_color' => 1, 'is_sticker' => 1], $storySlider[0]));
         if (count($missingKeys)) {
-            throw new \InvalidArgumentException(sprintf('Missing keys "%s" for story slider array.', implode(', ', $missingKeys)));
+            throw new .InvalidArgumentException(sprintf('Missing keys "%s" for story slider array.', implode(', ', $missingKeys)));
         }
 
         foreach ($storySlider[0] as $k => $v) {
             switch ($k) {
                 case 'question':
                     if (!is_string($v)) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story slider array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story slider array-key "%s".', $v, $k));
                     }
                     break;
                 case 'viewer_vote':
                 case 'slider_vote_count':
                 case 'slider_vote_average':
                     if ($v !== 0) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story slider array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story slider array-key "%s".', $v, $k));
                     }
                     break;
                 case 'background_color':
                 case 'text_color':
                     if (!preg_match('/^[0-9a-fA-F]{6}$/', substr($v, 1))) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story slider array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story slider array-key "%s".', $v, $k));
                     }
                     break;
                 case 'emoji':
@@ -782,12 +782,12 @@ class Utils
                     break;
                 case 'viewer_can_vote':
                     if (!is_bool($v) && $v !== false) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
                     }
                     break;
                 case 'is_sticker':
                     if (!is_bool($v) && $v !== true) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story poll array-key "%s".', $v, $k));
                     }
                     break;
             }
@@ -800,60 +800,60 @@ class Utils
      *
      * @param array $storyQuestion Array with story question key-value pairs.
      *
-     * @throws \InvalidArgumentException If it's missing keys or has invalid values.
+     * @throws .InvalidArgumentException If it's missing keys or has invalid values.
      */
-    public static function throwIfInvalidStoryQuestion(
+    public static fun throwIfInvalidStoryQuestion(
         array $storyQuestion)
     {
         $requiredKeys = ['z', 'viewer_can_interact', 'background_color', 'profile_pic_url', 'question_type', 'question', 'text_color', 'is_sticker'];
 
         if (count($storyQuestion) !== 1) {
-            throw new \InvalidArgumentException(sprintf('Only one story question is permitted. You added %d story questions.', count($storyQuestion)));
+            throw new .InvalidArgumentException(sprintf('Only one story question is permitted. You added %d story questions.', count($storyQuestion)));
         }
 
         // Ensure that all keys exist.
         $missingKeys = array_keys(array_diff_key(['viewer_can_interact' => 1, 'background_color' => 1, 'profile_pic_url' => 1, 'question_type' => 1, 'question' => 1, 'text_color' => 1, 'is_sticker' => 1], $storyQuestion[0]));
         if (count($missingKeys)) {
-            throw new \InvalidArgumentException(sprintf('Missing keys "%s" for story question array.', implode(', ', $missingKeys)));
+            throw new .InvalidArgumentException(sprintf('Missing keys "%s" for story question array.', implode(', ', $missingKeys)));
         }
 
         foreach ($storyQuestion[0] as $k => $v) {
             switch ($k) {
                 case 'z': // May be used for AR in the future, for now it's always 0.
                     if ($v !== 0) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
                     }
                     break;
                 case 'viewer_can_interact':
                     if (!is_bool($v) || $v !== false) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
                     }
                     break;
                 case 'background_color':
                 case 'text_color':
                     if (!preg_match('/^[0-9a-fA-F]{6}$/', substr($v, 1))) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
                     }
                     break;
                 case 'question_type':
                     // At this time only text questions are supported.
                     if (!is_string($v) || $v !== 'text') {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
                     }
                     break;
                 case 'question':
                     if (!is_string($v)) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
                     }
                     break;
                 case 'profile_pic_url':
                     if (!self::hasValidWebURLSyntax($v)) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
                     }
                     break;
                 case 'is_sticker':
                     if (!is_bool($v) && $v !== true) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story question array-key "%s".', $v, $k));
                     }
                     break;
             }
@@ -866,33 +866,33 @@ class Utils
      *
      * @param array $storyCountdown Array with story countdown key-value pairs.
      *
-     * @throws \InvalidArgumentException If it's missing keys or has invalid values.
+     * @throws .InvalidArgumentException If it's missing keys or has invalid values.
      */
-    public static function throwIfInvalidStoryCountdown(
+    public static fun throwIfInvalidStoryCountdown(
         array $storyCountdown)
     {
         $requiredKeys = ['z', 'text', 'text_color', 'start_background_color', 'end_background_color', 'digit_color', 'digit_card_color', 'end_ts', 'following_enabled', 'is_sticker'];
 
         if (count($storyCountdown) !== 1) {
-            throw new \InvalidArgumentException(sprintf('Only one story countdown is permitted. You added %d story countdowns.', count($storyCountdown)));
+            throw new .InvalidArgumentException(sprintf('Only one story countdown is permitted. You added %d story countdowns.', count($storyCountdown)));
         }
 
         // Ensure that all keys exist.
         $missingKeys = array_keys(array_diff_key(['z' => 1, 'text' => 1, 'text_color' => 1, 'start_background_color' => 1, 'end_background_color' => 1, 'digit_color' => 1, 'digit_card_color' => 1, 'end_ts' => 1, 'following_enabled' => 1, 'is_sticker' => 1], $storyCountdown[0]));
         if (count($missingKeys)) {
-            throw new \InvalidArgumentException(sprintf('Missing keys "%s" for story countdown array.', implode(', ', $missingKeys)));
+            throw new .InvalidArgumentException(sprintf('Missing keys "%s" for story countdown array.', implode(', ', $missingKeys)));
         }
 
         foreach ($storyCountdown[0] as $k => $v) {
             switch ($k) {
                 case 'z': // May be used for AR in the future, for now it's always 0.
                     if ($v !== 0) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
                     }
                     break;
                 case 'text':
                     if (!is_string($v)) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
                     }
                     break;
                 case 'text_color':
@@ -901,22 +901,22 @@ class Utils
                 case 'digit_color':
                 case 'digit_card_color':
                     if (!preg_match('/^[0-9a-fA-F]{6}$/', substr($v, 1))) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
                     }
                     break;
                 case 'end_ts':
                     if (!is_int($v)) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
                     }
                     break;
                 case 'following_enabled':
                     if (!is_bool($v)) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
                     }
                     break;
                 case 'is_sticker':
                     if (!is_bool($v) && $v !== true) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story countdown array-key "%s".', $v, $k));
                     }
                     break;
             }
@@ -929,40 +929,40 @@ class Utils
      *
      * @param array[] $tallies Array with story poll key-value pairs.
      *
-     * @throws \InvalidArgumentException If it's missing keys or has invalid values.
+     * @throws .InvalidArgumentException If it's missing keys or has invalid values.
      */
-    protected static function _throwIfInvalidStoryPollTallies(
+    protected static fun _throwIfInvalidStoryPollTallies(
         array $tallies)
     {
         $requiredKeys = ['text', 'count', 'font_size'];
         if (count($tallies) !== 2) {
-            throw new \InvalidArgumentException(sprintf('Missing data for tallies.'));
+            throw new .InvalidArgumentException(sprintf('Missing data for tallies.'));
         }
 
         foreach ($tallies as $tallie) {
             $missingKeys = array_keys(array_diff_key(['text' => 1, 'count' => 1, 'font_size' => 1], $tallie));
 
             if (count($missingKeys)) {
-                throw new \InvalidArgumentException(sprintf('Missing keys "%s" for location array.', implode(', ', $missingKeys)));
+                throw new .InvalidArgumentException(sprintf('Missing keys "%s" for location array.', implode(', ', $missingKeys)));
             }
             foreach ($tallie as $k => $v) {
                 if (!in_array($k, $requiredKeys, true)) {
-                    throw new \InvalidArgumentException(sprintf('Invalid key "%s" for story poll tallies.', $k));
+                    throw new .InvalidArgumentException(sprintf('Invalid key "%s" for story poll tallies.', $k));
                 }
                 switch ($k) {
                     case 'text':
                         if (!is_string($v)) {
-                            throw new \InvalidArgumentException(sprintf('Invalid value "%s" for tallies array-key "%s".', $v, $k));
+                            throw new .InvalidArgumentException(sprintf('Invalid value "%s" for tallies array-key "%s".', $v, $k));
                         }
                         break;
                     case 'count':
                         if ($v !== 0) {
-                            throw new \InvalidArgumentException(sprintf('Invalid value "%s" for tallies array-key "%s".', $v, $k));
+                            throw new .InvalidArgumentException(sprintf('Invalid value "%s" for tallies array-key "%s".', $v, $k));
                         }
                         break;
                     case 'font_size':
                         if (!is_float($v) || ($v < 17.5 || $v > 35.0)) {
-                            throw new \InvalidArgumentException(sprintf('Invalid value "%s" for tallies array-key "%s".', $v, $k));
+                            throw new .InvalidArgumentException(sprintf('Invalid value "%s" for tallies array-key "%s".', $v, $k));
                         }
                         break;
                 }
@@ -975,9 +975,9 @@ class Utils
      *
      * @param array[] $storyMentions The array of all story mentions.
      *
-     * @throws \InvalidArgumentException If it's missing keys or has invalid values.
+     * @throws .InvalidArgumentException If it's missing keys or has invalid values.
      */
-    public static function throwIfInvalidStoryMentions(
+    public static fun throwIfInvalidStoryMentions(
         array $storyMentions)
     {
         $requiredKeys = ['user_id'];
@@ -986,14 +986,14 @@ class Utils
             // Ensure that all keys exist.
             $missingKeys = array_keys(array_diff_key(['user_id' => 1], $mention));
             if (count($missingKeys)) {
-                throw new \InvalidArgumentException(sprintf('Missing keys "%s" for mention array.', implode(', ', $missingKeys)));
+                throw new .InvalidArgumentException(sprintf('Missing keys "%s" for mention array.', implode(', ', $missingKeys)));
             }
 
             foreach ($mention as $k => $v) {
                 switch ($k) {
                     case 'user_id':
                         if (!ctype_digit($v) && (!is_int($v) || $v < 0)) {
-                            throw new \InvalidArgumentException(sprintf('Invalid value "%s" for story mention array-key "%s".', $v, $k));
+                            throw new .InvalidArgumentException(sprintf('Invalid value "%s" for story mention array-key "%s".', $v, $k));
                         }
                         break;
                 }
@@ -1007,28 +1007,28 @@ class Utils
      *
      * @param array[] $locationSticker Array with location sticker key-value pairs.
      *
-     * @throws \InvalidArgumentException If it's missing keys or has invalid values.
+     * @throws .InvalidArgumentException If it's missing keys or has invalid values.
      */
-    public static function throwIfInvalidStoryLocationSticker(
+    public static fun throwIfInvalidStoryLocationSticker(
         array $locationSticker)
     {
         $requiredKeys = ['location_id', 'is_sticker'];
         $missingKeys = array_keys(array_diff_key(['location_id' => 1, 'is_sticker' => 1], $locationSticker));
 
         if (count($missingKeys)) {
-            throw new \InvalidArgumentException(sprintf('Missing keys "%s" for location array.', implode(', ', $missingKeys)));
+            throw new .InvalidArgumentException(sprintf('Missing keys "%s" for location array.', implode(', ', $missingKeys)));
         }
 
         foreach ($locationSticker as $k => $v) {
             switch ($k) {
                 case 'location_id':
                     if (!is_string($v) && !is_numeric($v)) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for location array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for location array-key "%s".', $v, $k));
                     }
                     break;
                 case 'is_sticker':
                     if (!is_bool($v)) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for hashtag array-key "%s".', $v, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for hashtag array-key "%s".', $v, $k));
                     }
                     break;
             }
@@ -1042,25 +1042,25 @@ class Utils
      * @param string  $captionText The caption for the story hashtag to verify.
      * @param array[] $hashtags    The array of all story hashtags.
      *
-     * @throws \InvalidArgumentException If caption doesn't contain any hashtag,
+     * @throws .InvalidArgumentException If caption doesn't contain any hashtag,
      *                                   or if any tags are invalid.
      */
-    public static function throwIfInvalidStoryHashtags(
+    public static fun throwIfInvalidStoryHashtags(
          $captionText,
          array $hashtags)
     {
         $requiredKeys = ['tag_name', 'use_custom_title', 'is_sticker'];
 
         // Extract all hashtags from the caption using a UTF-8 aware regex.
-        if (!preg_match_all('/#(\w+[^\x00-\x7F]?+)/u', $captionText, $tagsInCaption)) {
-            throw new \InvalidArgumentException('Invalid caption for hashtag.');
+        if (!preg_match_all('/#(.w+[^.x00-.x7F]?+)/u', $captionText, $tagsInCaption)) {
+            throw new .InvalidArgumentException('Invalid caption for hashtag.');
         }
 
         // Verify all provided hashtags.
         foreach ($hashtags as $hashtag) {
             $missingKeys = array_keys(array_diff_key(['tag_name' => 1, 'use_custom_title' => 1, 'is_sticker' => 1], $hashtag));
             if (count($missingKeys)) {
-                throw new \InvalidArgumentException(sprintf('Missing keys "%s" for hashtag array.', implode(', ', $missingKeys)));
+                throw new .InvalidArgumentException(sprintf('Missing keys "%s" for hashtag array.', implode(', ', $missingKeys)));
             }
 
             foreach ($hashtag as $k => $v) {
@@ -1070,17 +1070,17 @@ class Utils
                         self::throwIfInvalidHashtag($v);
                         // Verify that this tag exists somewhere in the caption to check.
                         if (!in_array($v, $tagsInCaption[1])) { // NOTE: UTF-8 aware.
-                            throw new \InvalidArgumentException(sprintf('Tag name "%s" does not exist in the caption text.', $v));
+                            throw new .InvalidArgumentException(sprintf('Tag name "%s" does not exist in the caption text.', $v));
                         }
                         break;
                     case 'use_custom_title':
                         if (!is_bool($v)) {
-                            throw new \InvalidArgumentException(sprintf('Invalid value "%s" for hashtag array-key "%s".', $v, $k));
+                            throw new .InvalidArgumentException(sprintf('Invalid value "%s" for hashtag array-key "%s".', $v, $k));
                         }
                         break;
                     case 'is_sticker':
                         if (!is_bool($v)) {
-                            throw new \InvalidArgumentException(sprintf('Invalid value "%s" for hashtag array-key "%s".', $v, $k));
+                            throw new .InvalidArgumentException(sprintf('Invalid value "%s" for hashtag array-key "%s".', $v, $k));
                         }
                         break;
                 }
@@ -1094,9 +1094,9 @@ class Utils
      *
      * @param array[] $attachedMedia Array containing the attached media data.
      *
-     * @throws \InvalidArgumentException If it's missing keys or has invalid values.
+     * @throws .InvalidArgumentException If it's missing keys or has invalid values.
      */
-    public static function throwIfInvalidAttachedMedia(
+    public static fun throwIfInvalidAttachedMedia(
         array $attachedMedia)
     {
         $attachedMedia = reset($attachedMedia);
@@ -1105,15 +1105,15 @@ class Utils
         // Ensure that all keys exist.
         $missingKeys = array_keys(array_diff_key(['media_id' => 1, 'is_sticker' => 1], $attachedMedia));
         if (count($missingKeys)) {
-            throw new \InvalidArgumentException(sprintf('Missing keys "%s" for attached media.', implode(', ', $missingKeys)));
+            throw new .InvalidArgumentException(sprintf('Missing keys "%s" for attached media.', implode(', ', $missingKeys)));
         }
 
         if (!is_string($attachedMedia['media_id']) && !is_numeric($attachedMedia['media_id'])) {
-            throw new \InvalidArgumentException(sprintf('Invalid value "%s" for media_id.', $attachedMedia['media_id']));
+            throw new .InvalidArgumentException(sprintf('Invalid value "%s" for media_id.', $attachedMedia['media_id']));
         }
 
         if (!is_bool($attachedMedia['is_sticker']) && $attachedMedia['is_sticker'] !== true) {
-            throw new \InvalidArgumentException(sprintf('Invalid value "%s" for attached media.', $attachedMedia['is_sticker']));
+            throw new .InvalidArgumentException(sprintf('Invalid value "%s" for attached media.', $attachedMedia['is_sticker']));
         }
 
         self::_throwIfInvalidStoryStickerPlacement(array_diff_key($attachedMedia, array_flip($requiredKeys)), 'attached media');
@@ -1124,15 +1124,15 @@ class Utils
      *
      * There are many kinds of story stickers, such as hashtags, locations,
      * mentions, etc. To place them on the media, the user must provide certain
-     * parameters for things like position and size. This function verifies all
+     * parameters for things like position and size. This fun verifies all
      * of those parameters and ensures that the sticker placement is valid.
      *
      * @param array  $storySticker The array describing the story sticker placement.
      * @param string $type         What type of sticker this is.
      *
-     * @throws \InvalidArgumentException If storySticker is missing keys or has invalid values.
+     * @throws .InvalidArgumentException If storySticker is missing keys or has invalid values.
      */
-    protected static function _throwIfInvalidStoryStickerPlacement(
+    protected static fun _throwIfInvalidStoryStickerPlacement(
         array $storySticker,
         $type)
     {
@@ -1141,13 +1141,13 @@ class Utils
         // Ensure that all required hashtag array keys exist.
         $missingKeys = array_keys(array_diff_key(['x' => 1, 'y' => 1, 'width' => 1, 'height' => 1, 'rotation' => 0], $storySticker));
         if (count($missingKeys)) {
-            throw new \InvalidArgumentException(sprintf('Missing keys "%s" for "%s".', implode(', ', $missingKeys), $type));
+            throw new .InvalidArgumentException(sprintf('Missing keys "%s" for "%s".', implode(', ', $missingKeys), $type));
         }
 
         // Check the individual array values.
         foreach ($storySticker as $k => $v) {
             if (!in_array($k, $requiredKeys, true)) {
-                throw new \InvalidArgumentException(sprintf('Invalid key "%s" for "%s".', $k, $type));
+                throw new .InvalidArgumentException(sprintf('Invalid key "%s" for "%s".', $k, $type));
             }
             switch ($k) {
                 case 'x':
@@ -1156,7 +1156,7 @@ class Utils
                 case 'height':
                 case 'rotation':
                     if (!is_float($v) || $v < 0.0 || $v > 1.0) {
-                        throw new \InvalidArgumentException(sprintf('Invalid value "%s" for "%s" key "%s".', $v, $type, $k));
+                        throw new .InvalidArgumentException(sprintf('Invalid value "%s" for "%s" key "%s".', $v, $type, $k));
                     }
                     break;
             }
@@ -1167,13 +1167,13 @@ class Utils
      * Checks and validates a media item's type.
      *
      * @param string|int $mediaType The type of the media item. One of: "PHOTO", "VIDEO"
-     *                              "CAROUSEL", or the raw value of the Item's "getMediaType()" function.
+     *                              "CAROUSEL", or the raw value of the Item's "getMediaType()" fun.
      *
-     * @throws \InvalidArgumentException If the type is invalid.
+     * @throws .InvalidArgumentException If the type is invalid.
      *
      * @return string The verified final type; either "PHOTO", "VIDEO" or "CAROUSEL".
      */
-    public static function checkMediaType(
+    public static fun checkMediaType(
         $mediaType)
     {
         if (ctype_digit($mediaType) || is_int($mediaType)) {
@@ -1186,13 +1186,13 @@ class Utils
             }
         }
         if (!in_array($mediaType, ['PHOTO', 'VIDEO', 'CAROUSEL'], true)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a valid media type.', $mediaType));
+            throw new .InvalidArgumentException(sprintf('"%s" is not a valid media type.', $mediaType));
         }
 
         return $mediaType;
     }
 
-    public static function formatBytes(
+    public static fun formatBytes(
         $bytes,
         $precision = 2)
     {
@@ -1207,7 +1207,7 @@ class Utils
         return round($bytes, $precision).''.$units[$pow];
     }
 
-    public static function colouredString(
+    public static fun colouredString(
         $string,
         $colour)
     {
@@ -1231,15 +1231,15 @@ class Utils
         $colored_string = '';
 
         if (isset($colours[$colour])) {
-            $colored_string .= "\033[".$colours[$colour].'m';
+            $colored_string .= ".033[".$colours[$colour].'m';
         }
 
-        $colored_string .= $string."\033[0m";
+        $colored_string .= $string.".033[0m";
 
         return $colored_string;
     }
 
-    public static function getFilterCode(
+    public static fun getFilterCode(
         $filter)
     {
         $filters = [];
@@ -1300,7 +1300,7 @@ class Utils
      *
      * @return bool TRUE if folder exists and is writable, otherwise FALSE.
      */
-    public static function createFolder(
+    public static fun createFolder(
         $folder)
     {
         // Test write-permissions for the folder and create/fix if necessary.
@@ -1321,7 +1321,7 @@ class Utils
      *
      * @return bool TRUE on success, otherwise FALSE.
      */
-    public static function deleteTree(
+    public static fun deleteTree(
         $folder,
         $keepRootFolder = false)
     {
@@ -1333,14 +1333,14 @@ class Utils
         }
 
         // Delete all children.
-        $files = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($folder, \RecursiveDirectoryIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::CHILD_FIRST
+        $files = new .RecursiveIteratorIterator(
+            new .RecursiveDirectoryIterator($folder, .RecursiveDirectoryIterator::SKIP_DOTS),
+            .RecursiveIteratorIterator::CHILD_FIRST
         );
 
         foreach ($files as $fileinfo) {
-            $action = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
-            if (!@$action($fileinfo->getRealPath())) {
+            $action = ($fileinfo.isDir() ? 'rmdir' : 'unlink');
+            if (!@$action($fileinfo.getRealPath())) {
                 return false; // Abort due to the failure.
             }
         }
@@ -1365,7 +1365,7 @@ class Utils
      *
      * @return int|bool Number of bytes written on success, otherwise `FALSE`.
      */
-    public static function atomicWrite(
+    public static fun atomicWrite(
         $filename,
         $data,
         $atomicSuffix = 'atomictmp')
@@ -1396,13 +1396,13 @@ class Utils
      * Creates an empty temp file with a unique filename.
      *
      * @param string $outputDir  Folder to place the temp file in.
-     * @param string $namePrefix (optional) What prefix to use for the temp file.
+     * @param string $namePrefix (optional) What prefix to import for the temp file.
      *
-     * @throws \RuntimeException If the file cannot be created.
+     * @throws .RuntimeException If the file cannot be created.
      *
      * @return string
      */
-    public static function createTempFile(
+    public static fun createTempFile(
         $outputDir,
         $namePrefix = 'TEMP')
     {
@@ -1412,7 +1412,7 @@ class Utils
         // Try to create the file (detects errors).
         $tmpFile = @tempnam($outputDir, $finalPrefix);
         if (!is_string($tmpFile)) {
-            throw new \RuntimeException(sprintf(
+            throw new .RuntimeException(sprintf(
                 'Unable to create temporary output file in "%s" (with prefix "%s").',
                 $outputDir, $finalPrefix
             ));
@@ -1424,9 +1424,9 @@ class Utils
     /**
      * Closes a file pointer if it's open.
      *
-     * Always use this function instead of fclose()!
+     * Always import this fun instead of fclose()!
      *
-     * Unlike the normal fclose(), this function is safe to call multiple times
+     * Unlike the normal fclose(), this fun is safe to call multiple times
      * since it only attempts to close the pointer if it's actually still open.
      * The normal fclose() would give an annoying warning in that scenario.
      *
@@ -1434,7 +1434,7 @@ class Utils
      *
      * @return bool TRUE on success or FALSE on failure.
      */
-    public static function safe_fclose(
+    public static fun safe_fclose(
         $handle)
     {
         if (is_resource($handle)) {
@@ -1447,7 +1447,7 @@ class Utils
     /**
      * Checks if a URL has valid "web" syntax.
      *
-     * This function is Unicode-aware.
+     * This fun is Unicode-aware.
      *
      * Be aware that it only performs URL syntax validation! It doesn't check
      * if the domain/URL is fully valid and actually reachable!
@@ -1468,22 +1468,22 @@ class Utils
      *
      * @return bool TRUE if valid web syntax, otherwise FALSE.
      */
-    public static function hasValidWebURLSyntax(
+    public static fun hasValidWebURLSyntax(
         $url)
     {
-        return (bool) preg_match('/^https?:\/\/[^\s.\/]+\.[^\s.\/]{2}\S*$/iu', $url);
+        return (bool) preg_match('/^https?:././[^.s../]+..[^.s../]{2}.S*$/iu', $url);
     }
 
     /**
      * Extract all URLs from a text string.
      *
-     * This function is Unicode-aware.
+     * This fun is Unicode-aware.
      *
      * @param string $text The string to scan for URLs.
      *
      * @return array An array of URLs and their individual components.
      */
-    public static function extractURLs(
+    public static fun extractURLs(
         $text)
     {
         $urls = [];
@@ -1494,7 +1494,7 @@ class Utils
             // app so that our link-detection acts *exactly* like the real app!
             // NOTE: Here is the "to PHP regex" conversion algorithm we used:
             // https://github.com/mgp25/Instagram-API/issues/1445#issuecomment-318921867
-            '/((?:(http|https|Http|Https|rtsp|Rtsp):\/\/(?:(?:[a-zA-Z0-9$\-\_\.\+\!\*\'\(\)\,\;\?\&\=]|(?:\%[a-fA-F0-9]{2})){1,64}(?:\:(?:[a-zA-Z0-9$\-\_\.\+\!\*\'\(\)\,\;\?\&\=]|(?:\%[a-fA-F0-9]{2})){1,25})?\@)?)?((?:(?:[a-zA-Z0-9\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}\_][a-zA-Z0-9\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}\_\-]{0,64}\.)+(?:(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])|(?:biz|b[abdefghijmnorstvwyz])|(?:cat|com|coop|c[acdfghiklmnoruvxyz])|d[ejkmoz]|(?:edu|e[cegrstu])|f[ijkmor]|(?:gov|g[abdefghilmnpqrstuwy])|h[kmnrtu]|(?:info|int|i[delmnoqrst])|(?:jobs|j[emop])|k[eghimnprwyz]|l[abcikrstuvy]|(?:mil|mobi|museum|m[acdeghklmnopqrstuvwxyz])|(?:name|net|n[acefgilopruz])|(?:org|om)|(?:pro|p[aefghklmnrstwy])|qa|r[eosuw]|s[abcdeghijklmnortuvyz]|(?:tel|travel|t[cdfghjklmnoprtvwz])|u[agksyz]|v[aceginu]|w[fs]|(?:\x{03B4}\x{03BF}\x{03BA}\x{03B9}\x{03BC}\x{03AE}|\x{0438}\x{0441}\x{043F}\x{044B}\x{0442}\x{0430}\x{043D}\x{0438}\x{0435}|\x{0440}\x{0444}|\x{0441}\x{0440}\x{0431}|\x{05D8}\x{05E2}\x{05E1}\x{05D8}|\x{0622}\x{0632}\x{0645}\x{0627}\x{06CC}\x{0634}\x{06CC}|\x{0625}\x{062E}\x{062A}\x{0628}\x{0627}\x{0631}|\x{0627}\x{0644}\x{0627}\x{0631}\x{062F}\x{0646}|\x{0627}\x{0644}\x{062C}\x{0632}\x{0627}\x{0626}\x{0631}|\x{0627}\x{0644}\x{0633}\x{0639}\x{0648}\x{062F}\x{064A}\x{0629}|\x{0627}\x{0644}\x{0645}\x{063A}\x{0631}\x{0628}|\x{0627}\x{0645}\x{0627}\x{0631}\x{0627}\x{062A}|\x{0628}\x{06BE}\x{0627}\x{0631}\x{062A}|\x{062A}\x{0648}\x{0646}\x{0633}|\x{0633}\x{0648}\x{0631}\x{064A}\x{0629}|\x{0641}\x{0644}\x{0633}\x{0637}\x{064A}\x{0646}|\x{0642}\x{0637}\x{0631}|\x{0645}\x{0635}\x{0631}|\x{092A}\x{0930}\x{0940}\x{0915}\x{094D}\x{0937}\x{093E}|\x{092D}\x{093E}\x{0930}\x{0924}|\x{09AD}\x{09BE}\x{09B0}\x{09A4}|\x{0A2D}\x{0A3E}\x{0A30}\x{0A24}|\x{0AAD}\x{0ABE}\x{0AB0}\x{0AA4}|\x{0B87}\x{0BA8}\x{0BCD}\x{0BA4}\x{0BBF}\x{0BAF}\x{0BBE}|\x{0B87}\x{0BB2}\x{0B99}\x{0BCD}\x{0B95}\x{0BC8}|\x{0B9A}\x{0BBF}\x{0B99}\x{0BCD}\x{0B95}\x{0BAA}\x{0BCD}\x{0BAA}\x{0BC2}\x{0BB0}\x{0BCD}|\x{0BAA}\x{0BB0}\x{0BBF}\x{0B9F}\x{0BCD}\x{0B9A}\x{0BC8}|\x{0C2D}\x{0C3E}\x{0C30}\x{0C24}\x{0C4D}|\x{0DBD}\x{0D82}\x{0D9A}\x{0DCF}|\x{0E44}\x{0E17}\x{0E22}|\x{30C6}\x{30B9}\x{30C8}|\x{4E2D}\x{56FD}|\x{4E2D}\x{570B}|\x{53F0}\x{6E7E}|\x{53F0}\x{7063}|\x{65B0}\x{52A0}\x{5761}|\x{6D4B}\x{8BD5}|\x{6E2C}\x{8A66}|\x{9999}\x{6E2F}|\x{D14C}\x{C2A4}\x{D2B8}|\x{D55C}\x{AD6D}|xn\-\-0zwm56d|xn\-\-11b5bs3a9aj6g|xn\-\-3e0b707e|xn\-\-45brj9c|xn\-\-80akhbyknj4f|xn\-\-90a3ac|xn\-\-9t4b11yi5a|xn\-\-clchc0ea0b2g2a9gcd|xn\-\-deba0ad|xn\-\-fiqs8s|xn\-\-fiqz9s|xn\-\-fpcrj9c3d|xn\-\-fzc2c9e2c|xn\-\-g6w251d|xn\-\-gecrj9c|xn\-\-h2brj9c|xn\-\-hgbk6aj7f53bba|xn\-\-hlcj6aya9esc7a|xn\-\-j6w193g|xn\-\-jxalpdlp|xn\-\-kgbechtv|xn\-\-kprw13d|xn\-\-kpry57d|xn\-\-lgbbat1ad8j|xn\-\-mgbaam7a8h|xn\-\-mgbayh7gpa|xn\-\-mgbbh1a71e|xn\-\-mgbc0a9azcg|xn\-\-mgberp4a5d4ar|xn\-\-o3cw4h|xn\-\-ogbpf8fl|xn\-\-p1ai|xn\-\-pgbs0dh|xn\-\-s9brj9c|xn\-\-wgbh1c|xn\-\-wgbl6a|xn\-\-xkc2al3hye2a|xn\-\-xkc2dl3a5ee0h|xn\-\-yfro4i67o|xn\-\-ygbi2ammx|xn\-\-zckzah|xxx)|y[et]|z[amw]))|(?:(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])))(?:\:\d{1,5})?)(\/(?:(?:[a-zA-Z0-9\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}\;\/\?\:\@\&\=\#\~\-\.\+\!\*\'\(\)\,\_])|(?:\%[a-fA-F0-9]{2}))*)?(?:\b|$)/iu',
+            '/((?:(http|https|Http|Https|rtsp|Rtsp):././(?:(?:[a-zA-Z0-9$.-._...+.!.*.'.(.).,.;.?.&.=]|(?:.%[a-fA-F0-9]{2})){1,64}(?:.:(?:[a-zA-Z0-9$.-._...+.!.*.'.(.).,.;.?.&.=]|(?:.%[a-fA-F0-9]{2})){1,25})?.@)?)?((?:(?:[a-zA-Z0-9.x{00A0}-.x{D7FF}.x{F900}-.x{FDCF}.x{FDF0}-.x{FFEF}._][a-zA-Z0-9.x{00A0}-.x{D7FF}.x{F900}-.x{FDCF}.x{FDF0}-.x{FFEF}._.-]{0,64}..)+(?:(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])|(?:biz|b[abdefghijmnorstvwyz])|(?:cat|com|coop|c[acdfghiklmnoruvxyz])|d[ejkmoz]|(?:edu|e[cegrstu])|f[ijkmor]|(?:gov|g[abdefghilmnpqrstuwy])|h[kmnrtu]|(?:info|int|i[delmnoqrst])|(?:jobs|j[emop])|k[eghimnprwyz]|l[abcikrstuvy]|(?:mil|mobi|museum|m[acdeghklmnopqrstuvwxyz])|(?:name|net|n[acefgilopruz])|(?:org|om)|(?:pro|p[aefghklmnrstwy])|qa|r[eosuw]|s[abcdeghijklmnortuvyz]|(?:tel|travel|t[cdfghjklmnoprtvwz])|u[agksyz]|v[aceginu]|w[fs]|(?:.x{03B4}.x{03BF}.x{03BA}.x{03B9}.x{03BC}.x{03AE}|.x{0438}.x{0441}.x{043F}.x{044B}.x{0442}.x{0430}.x{043D}.x{0438}.x{0435}|.x{0440}.x{0444}|.x{0441}.x{0440}.x{0431}|.x{05D8}.x{05E2}.x{05E1}.x{05D8}|.x{0622}.x{0632}.x{0645}.x{0627}.x{06CC}.x{0634}.x{06CC}|.x{0625}.x{062E}.x{062A}.x{0628}.x{0627}.x{0631}|.x{0627}.x{0644}.x{0627}.x{0631}.x{062F}.x{0646}|.x{0627}.x{0644}.x{062C}.x{0632}.x{0627}.x{0626}.x{0631}|.x{0627}.x{0644}.x{0633}.x{0639}.x{0648}.x{062F}.x{064A}.x{0629}|.x{0627}.x{0644}.x{0645}.x{063A}.x{0631}.x{0628}|.x{0627}.x{0645}.x{0627}.x{0631}.x{0627}.x{062A}|.x{0628}.x{06BE}.x{0627}.x{0631}.x{062A}|.x{062A}.x{0648}.x{0646}.x{0633}|.x{0633}.x{0648}.x{0631}.x{064A}.x{0629}|.x{0641}.x{0644}.x{0633}.x{0637}.x{064A}.x{0646}|.x{0642}.x{0637}.x{0631}|.x{0645}.x{0635}.x{0631}|.x{092A}.x{0930}.x{0940}.x{0915}.x{094D}.x{0937}.x{093E}|.x{092D}.x{093E}.x{0930}.x{0924}|.x{09AD}.x{09BE}.x{09B0}.x{09A4}|.x{0A2D}.x{0A3E}.x{0A30}.x{0A24}|.x{0AAD}.x{0ABE}.x{0AB0}.x{0AA4}|.x{0B87}.x{0BA8}.x{0BCD}.x{0BA4}.x{0BBF}.x{0BAF}.x{0BBE}|.x{0B87}.x{0BB2}.x{0B99}.x{0BCD}.x{0B95}.x{0BC8}|.x{0B9A}.x{0BBF}.x{0B99}.x{0BCD}.x{0B95}.x{0BAA}.x{0BCD}.x{0BAA}.x{0BC2}.x{0BB0}.x{0BCD}|.x{0BAA}.x{0BB0}.x{0BBF}.x{0B9F}.x{0BCD}.x{0B9A}.x{0BC8}|.x{0C2D}.x{0C3E}.x{0C30}.x{0C24}.x{0C4D}|.x{0DBD}.x{0D82}.x{0D9A}.x{0DCF}|.x{0E44}.x{0E17}.x{0E22}|.x{30C6}.x{30B9}.x{30C8}|.x{4E2D}.x{56FD}|.x{4E2D}.x{570B}|.x{53F0}.x{6E7E}|.x{53F0}.x{7063}|.x{65B0}.x{52A0}.x{5761}|.x{6D4B}.x{8BD5}|.x{6E2C}.x{8A66}|.x{9999}.x{6E2F}|.x{D14C}.x{C2A4}.x{D2B8}|.x{D55C}.x{AD6D}|xn.-.-0zwm56d|xn.-.-11b5bs3a9aj6g|xn.-.-3e0b707e|xn.-.-45brj9c|xn.-.-80akhbyknj4f|xn.-.-90a3ac|xn.-.-9t4b11yi5a|xn.-.-clchc0ea0b2g2a9gcd|xn.-.-deba0ad|xn.-.-fiqs8s|xn.-.-fiqz9s|xn.-.-fpcrj9c3d|xn.-.-fzc2c9e2c|xn.-.-g6w251d|xn.-.-gecrj9c|xn.-.-h2brj9c|xn.-.-hgbk6aj7f53bba|xn.-.-hlcj6aya9esc7a|xn.-.-j6w193g|xn.-.-jxalpdlp|xn.-.-kgbechtv|xn.-.-kprw13d|xn.-.-kpry57d|xn.-.-lgbbat1ad8j|xn.-.-mgbaam7a8h|xn.-.-mgbayh7gpa|xn.-.-mgbbh1a71e|xn.-.-mgbc0a9azcg|xn.-.-mgberp4a5d4ar|xn.-.-o3cw4h|xn.-.-ogbpf8fl|xn.-.-p1ai|xn.-.-pgbs0dh|xn.-.-s9brj9c|xn.-.-wgbh1c|xn.-.-wgbl6a|xn.-.-xkc2al3hye2a|xn.-.-xkc2dl3a5ee0h|xn.-.-yfro4i67o|xn.-.-ygbi2ammx|xn.-.-zckzah|xxx)|y[et]|z[amw]))|(?:(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])..(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)..(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)..(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])))(?:.:.d{1,5})?)(./(?:(?:[a-zA-Z0-9.x{00A0}-.x{D7FF}.x{F900}-.x{FDCF}.x{FDF0}-.x{FFEF}.;./.?.:.@.&.=.#.~.-...+.!.*.'.(.).,._])|(?:.%[a-fA-F0-9]{2}))*)?(?:.b|$)/iu',
             $text,
             $matches,
             PREG_SET_ORDER

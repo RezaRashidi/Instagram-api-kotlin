@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * BiographyEntities.
@@ -13,16 +13,16 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isEntities()
  * @method bool isNuxType()
  * @method bool isRawText()
- * @method $this setEntities(mixed $value)
- * @method $this setNuxType(string $value)
- * @method $this setRawText(string $value)
- * @method $this unsetEntities()
- * @method $this unsetNuxType()
- * @method $this unsetRawText()
+ * @method this setEntities(mixed $value)
+ * @method this setNuxType(string $value)
+ * @method this setRawText(string $value)
+ * @method this unsetEntities()
+ * @method this unsetNuxType()
+ * @method this unsetRawText()
  */
-class BiographyEntities extends AutoPropertyMapper
+class BiographyEntities : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'entities'   => '',
         'raw_text'   => 'string',
         'nux_type'   => 'string',

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * IOSLinks.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method int getLinkType()
  * @method bool isCanvasDocId()
  * @method bool isLinkType()
- * @method $this setCanvasDocId(string $value)
- * @method $this setLinkType(int $value)
- * @method $this unsetCanvasDocId()
- * @method $this unsetLinkType()
+ * @method this setCanvasDocId(string $value)
+ * @method this setLinkType(int $value)
+ * @method this unsetCanvasDocId()
+ * @method this unsetLinkType()
  */
-class IOSLinks extends AutoPropertyMapper
+class IOSLinks : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'linkType'    => 'int',
         'canvasDocId' => 'string',
     ];

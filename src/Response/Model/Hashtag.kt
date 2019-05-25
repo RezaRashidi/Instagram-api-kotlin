@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Hashtag.
@@ -27,30 +27,30 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isName()
  * @method bool isProfilePicUrl()
  * @method bool isRelatedTags()
- * @method $this setAllowFollowing(int $value)
- * @method $this setAllowMutingStory(bool $value)
- * @method $this setDebugInfo(mixed $value)
- * @method $this setFollowStatus(int $value)
- * @method $this setFollowing(int $value)
- * @method $this setId(string $value)
- * @method $this setMediaCount(int $value)
- * @method $this setName(string $value)
- * @method $this setProfilePicUrl(string $value)
- * @method $this setRelatedTags(mixed $value)
- * @method $this unsetAllowFollowing()
- * @method $this unsetAllowMutingStory()
- * @method $this unsetDebugInfo()
- * @method $this unsetFollowStatus()
- * @method $this unsetFollowing()
- * @method $this unsetId()
- * @method $this unsetMediaCount()
- * @method $this unsetName()
- * @method $this unsetProfilePicUrl()
- * @method $this unsetRelatedTags()
+ * @method this setAllowFollowing(int $value)
+ * @method this setAllowMutingStory(bool $value)
+ * @method this setDebugInfo(mixed $value)
+ * @method this setFollowStatus(int $value)
+ * @method this setFollowing(int $value)
+ * @method this setId(string $value)
+ * @method this setMediaCount(int $value)
+ * @method this setName(string $value)
+ * @method this setProfilePicUrl(string $value)
+ * @method this setRelatedTags(mixed $value)
+ * @method this unsetAllowFollowing()
+ * @method this unsetAllowMutingStory()
+ * @method this unsetDebugInfo()
+ * @method this unsetFollowStatus()
+ * @method this unsetFollowing()
+ * @method this unsetId()
+ * @method this unsetMediaCount()
+ * @method this unsetName()
+ * @method this unsetProfilePicUrl()
+ * @method this unsetRelatedTags()
  */
-class Hashtag extends AutoPropertyMapper
+class Hashtag : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'id'                 => 'string',
         'name'               => 'string',
         'media_count'        => 'int',

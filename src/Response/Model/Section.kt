@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Section.
@@ -15,18 +15,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isFeedType()
  * @method bool isLayoutContent()
  * @method bool isLayoutType()
- * @method $this setExploreItemInfo(ExploreItemInfo $value)
- * @method $this setFeedType(string $value)
- * @method $this setLayoutContent(LayoutContent $value)
- * @method $this setLayoutType(string $value)
- * @method $this unsetExploreItemInfo()
- * @method $this unsetFeedType()
- * @method $this unsetLayoutContent()
- * @method $this unsetLayoutType()
+ * @method this setExploreItemInfo(ExploreItemInfo $value)
+ * @method this setFeedType(string $value)
+ * @method this setLayoutContent(LayoutContent $value)
+ * @method this setLayoutType(string $value)
+ * @method this unsetExploreItemInfo()
+ * @method this unsetFeedType()
+ * @method this unsetLayoutContent()
+ * @method this unsetLayoutType()
  */
-class Section extends AutoPropertyMapper
+class Section : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'layout_type'       => 'string',
         'layout_content'    => 'LayoutContent',
         'feed_type'         => 'string',

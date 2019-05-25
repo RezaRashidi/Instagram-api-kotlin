@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * CountdownSticker.
@@ -31,34 +31,34 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isText()
  * @method bool isTextColor()
  * @method bool isViewerIsFollowing()
- * @method $this setAttribution(mixed $value)
- * @method $this setCountdownId(string $value)
- * @method $this setDigitCardColor(string $value)
- * @method $this setDigitColor(string $value)
- * @method $this setEndBackgroundColor(string $value)
- * @method $this setEndTs(string $value)
- * @method $this setFollowingEnabled(bool $value)
- * @method $this setIsOwner(bool $value)
- * @method $this setStartBackgroundColor(string $value)
- * @method $this setText(string $value)
- * @method $this setTextColor(string $value)
- * @method $this setViewerIsFollowing(bool $value)
- * @method $this unsetAttribution()
- * @method $this unsetCountdownId()
- * @method $this unsetDigitCardColor()
- * @method $this unsetDigitColor()
- * @method $this unsetEndBackgroundColor()
- * @method $this unsetEndTs()
- * @method $this unsetFollowingEnabled()
- * @method $this unsetIsOwner()
- * @method $this unsetStartBackgroundColor()
- * @method $this unsetText()
- * @method $this unsetTextColor()
- * @method $this unsetViewerIsFollowing()
+ * @method this setAttribution(mixed $value)
+ * @method this setCountdownId(string $value)
+ * @method this setDigitCardColor(string $value)
+ * @method this setDigitColor(string $value)
+ * @method this setEndBackgroundColor(string $value)
+ * @method this setEndTs(string $value)
+ * @method this setFollowingEnabled(bool $value)
+ * @method this setIsOwner(bool $value)
+ * @method this setStartBackgroundColor(string $value)
+ * @method this setText(string $value)
+ * @method this setTextColor(string $value)
+ * @method this setViewerIsFollowing(bool $value)
+ * @method this unsetAttribution()
+ * @method this unsetCountdownId()
+ * @method this unsetDigitCardColor()
+ * @method this unsetDigitColor()
+ * @method this unsetEndBackgroundColor()
+ * @method this unsetEndTs()
+ * @method this unsetFollowingEnabled()
+ * @method this unsetIsOwner()
+ * @method this unsetStartBackgroundColor()
+ * @method this unsetText()
+ * @method this unsetTextColor()
+ * @method this unsetViewerIsFollowing()
  */
-class CountdownSticker extends AutoPropertyMapper
+class CountdownSticker : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'countdown_id'           => 'string',
         'end_ts'                 => 'string',
         'text'                   => 'string',

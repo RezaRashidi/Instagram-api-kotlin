@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Injected.
@@ -45,48 +45,48 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isShowIcon()
  * @method bool isTrackingToken()
  * @method bool isViewTags()
- * @method $this setAboutAdParams(string $value)
- * @method $this setAdId(string $value)
- * @method $this setAdTitle(string $value)
- * @method $this setCookies(string[] $value)
- * @method $this setDirectShare(bool $value)
- * @method $this setDisplayViewabilityEligible(bool $value)
- * @method $this setFbPageUrl(string $value)
- * @method $this setHideFlowType(int $value)
- * @method $this setHideLabel(string $value)
- * @method $this setHideReasonsV2(HideReason[] $value)
- * @method $this setInvalidation(mixed $value)
- * @method $this setIsDemo(bool $value)
- * @method $this setIsHoldout(bool $value)
- * @method $this setLabel(string $value)
- * @method $this setLeadGenFormId(string $value)
- * @method $this setShowAdChoices(bool $value)
- * @method $this setShowIcon(bool $value)
- * @method $this setTrackingToken(string $value)
- * @method $this setViewTags(mixed $value)
- * @method $this unsetAboutAdParams()
- * @method $this unsetAdId()
- * @method $this unsetAdTitle()
- * @method $this unsetCookies()
- * @method $this unsetDirectShare()
- * @method $this unsetDisplayViewabilityEligible()
- * @method $this unsetFbPageUrl()
- * @method $this unsetHideFlowType()
- * @method $this unsetHideLabel()
- * @method $this unsetHideReasonsV2()
- * @method $this unsetInvalidation()
- * @method $this unsetIsDemo()
- * @method $this unsetIsHoldout()
- * @method $this unsetLabel()
- * @method $this unsetLeadGenFormId()
- * @method $this unsetShowAdChoices()
- * @method $this unsetShowIcon()
- * @method $this unsetTrackingToken()
- * @method $this unsetViewTags()
+ * @method this setAboutAdParams(string $value)
+ * @method this setAdId(string $value)
+ * @method this setAdTitle(string $value)
+ * @method this setCookies(string[] $value)
+ * @method this setDirectShare(bool $value)
+ * @method this setDisplayViewabilityEligible(bool $value)
+ * @method this setFbPageUrl(string $value)
+ * @method this setHideFlowType(int $value)
+ * @method this setHideLabel(string $value)
+ * @method this setHideReasonsV2(HideReason[] $value)
+ * @method this setInvalidation(mixed $value)
+ * @method this setIsDemo(bool $value)
+ * @method this setIsHoldout(bool $value)
+ * @method this setLabel(string $value)
+ * @method this setLeadGenFormId(string $value)
+ * @method this setShowAdChoices(bool $value)
+ * @method this setShowIcon(bool $value)
+ * @method this setTrackingToken(string $value)
+ * @method this setViewTags(mixed $value)
+ * @method this unsetAboutAdParams()
+ * @method this unsetAdId()
+ * @method this unsetAdTitle()
+ * @method this unsetCookies()
+ * @method this unsetDirectShare()
+ * @method this unsetDisplayViewabilityEligible()
+ * @method this unsetFbPageUrl()
+ * @method this unsetHideFlowType()
+ * @method this unsetHideLabel()
+ * @method this unsetHideReasonsV2()
+ * @method this unsetInvalidation()
+ * @method this unsetIsDemo()
+ * @method this unsetIsHoldout()
+ * @method this unsetLabel()
+ * @method this unsetLeadGenFormId()
+ * @method this unsetShowAdChoices()
+ * @method this unsetShowIcon()
+ * @method this unsetTrackingToken()
+ * @method this unsetViewTags()
  */
-class Injected extends AutoPropertyMapper
+class Injected : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'label'                        => 'string',
         'show_icon'                    => 'bool',
         'hide_label'                   => 'string',

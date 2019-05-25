@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Badging.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method mixed getItems()
  * @method bool isIds()
  * @method bool isItems()
- * @method $this setIds(mixed $value)
- * @method $this setItems(mixed $value)
- * @method $this unsetIds()
- * @method $this unsetItems()
+ * @method this setIds(mixed $value)
+ * @method this setItems(mixed $value)
+ * @method this unsetIds()
+ * @method this unsetItems()
  */
-class Badging extends AutoPropertyMapper
+class Badging : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'ids'   => '',
         'items' => '',
     ];

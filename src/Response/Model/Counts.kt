@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Counts.
@@ -23,26 +23,26 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isRelationships()
  * @method bool isRequests()
  * @method bool isUsertags()
- * @method $this setCampaignNotification(mixed $value)
- * @method $this setCommentLikes(mixed $value)
- * @method $this setComments(mixed $value)
- * @method $this setLikes(mixed $value)
- * @method $this setPhotosOfYou(mixed $value)
- * @method $this setRelationships(mixed $value)
- * @method $this setRequests(mixed $value)
- * @method $this setUsertags(mixed $value)
- * @method $this unsetCampaignNotification()
- * @method $this unsetCommentLikes()
- * @method $this unsetComments()
- * @method $this unsetLikes()
- * @method $this unsetPhotosOfYou()
- * @method $this unsetRelationships()
- * @method $this unsetRequests()
- * @method $this unsetUsertags()
+ * @method this setCampaignNotification(mixed $value)
+ * @method this setCommentLikes(mixed $value)
+ * @method this setComments(mixed $value)
+ * @method this setLikes(mixed $value)
+ * @method this setPhotosOfYou(mixed $value)
+ * @method this setRelationships(mixed $value)
+ * @method this setRequests(mixed $value)
+ * @method this setUsertags(mixed $value)
+ * @method this unsetCampaignNotification()
+ * @method this unsetCommentLikes()
+ * @method this unsetComments()
+ * @method this unsetLikes()
+ * @method this unsetPhotosOfYou()
+ * @method this unsetRelationships()
+ * @method this unsetRequests()
+ * @method this unsetUsertags()
  */
-class Counts extends AutoPropertyMapper
+class Counts : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'relationships'         => '',
         'requests'              => '',
         'photos_of_you'         => '',

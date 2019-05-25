@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Media\Constraints;
+package InstagramAPI.Media.Constraints;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Media\ConstraintsInterface;
+import InstagramAPI.Constants;
+import InstagramAPI.Media.ConstraintsInterface;
 
 class ConstraintsFactory
 {
@@ -16,7 +16,7 @@ class ConstraintsFactory
      *
      * @see Constants
      */
-    public static function createFor(
+    public static fun createFor(
         $targetFeed)
     {
         switch ($targetFeed) {

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * UserPresence.
@@ -15,18 +15,18 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isIsActive()
  * @method bool isLastActivityAtMs()
  * @method bool isUserId()
- * @method $this setInThreads(string[] $value)
- * @method $this setIsActive(bool $value)
- * @method $this setLastActivityAtMs(string $value)
- * @method $this setUserId(string $value)
- * @method $this unsetInThreads()
- * @method $this unsetIsActive()
- * @method $this unsetLastActivityAtMs()
- * @method $this unsetUserId()
+ * @method this setInThreads(string[] $value)
+ * @method this setIsActive(bool $value)
+ * @method this setLastActivityAtMs(string $value)
+ * @method this setUserId(string $value)
+ * @method this unsetInThreads()
+ * @method this unsetIsActive()
+ * @method this unsetLastActivityAtMs()
+ * @method this unsetUserId()
  */
-class UserPresence extends AutoPropertyMapper
+class UserPresence : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'user_id'             => 'string',
         'last_activity_at_ms' => 'string',
         'is_active'           => 'bool',

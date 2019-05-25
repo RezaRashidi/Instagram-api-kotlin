@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI;
+package InstagramAPI;
 
 /**
  * Class for converting media IDs to/from Instagram's shortcode system.
@@ -22,7 +22,7 @@ class InstagramID
      *
      * @see https://tools.ietf.org/html/rfc4648
      */
-    const BASE64URL_CHARMAP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+    val BASE64URL_CHARMAP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 
     /**
      * Internal map of the results of all base10 digits (0-9) modulo 2.
@@ -32,7 +32,7 @@ class InstagramID
      *
      * @var string
      */
-    const BASE10_MOD2 = ['0', '1', '0', '1', '0', '1', '0', '1', '0', '1'];
+    val BASE10_MOD2 = ['0', '1', '0', '1', '0', '1', '0', '1', '0', '1'];
 
     /**
      * Runtime cached bit-value lookup table.
@@ -48,11 +48,11 @@ class InstagramID
      *                       it's larger than the size of an integer, which MOST
      *                       Instagram IDs are!
      *
-     * @throws \InvalidArgumentException If bad parameters are provided.
+     * @throws .InvalidArgumentException If bad parameters are provided.
      *
      * @return string The shortcode.
      */
-    public static function toCode(
+    public static fun toCode(
         $id)
     {
         // First we must convert the ID number to a binary string.
@@ -70,7 +70,7 @@ class InstagramID
         }
 
         // Now chunk it in segments of 6 bits at a time. Every 6 "digits" in a
-        // binary number is just 1 "digit" in a base64 number, because base64
+        // binary number is just 1 "digit" in a base64 number, becaimport base64
         // can represent the values 0-63, and 63 is "111111" (6 bits) in base2.
         // Example: 9999 base10 = 10 011100 001111 base2 = (2, 28, 15) base64.
         $chunks = str_split($base2, 6);
@@ -93,15 +93,15 @@ class InstagramID
      *
      * @param string $code The shortcode.
      *
-     * @throws \InvalidArgumentException If bad parameters are provided.
+     * @throws .InvalidArgumentException If bad parameters are provided.
      *
      * @return string The numeric ID.
      */
-    public static function fromCode(
+    public static fun fromCode(
         $code)
     {
-        if (!is_string($code) || preg_match('/[^A-Za-z0-9\-_]/', $code)) {
-            throw new \InvalidArgumentException('Input must be a valid Instagram shortcode.');
+        if (!is_string($code) || preg_match('/[^A-Za-z0-9.-_]/', $code)) {
+            throw new .InvalidArgumentException('Input must be a valid Instagram shortcode.');
         }
 
         // Convert the base64 shortcode to a base2 binary string.
@@ -130,17 +130,17 @@ class InstagramID
      *                            CPU's integer size.
      * @param bool       $padLeft Whether to pad with leading zeroes.
      *
-     * @throws \InvalidArgumentException If the input isn't a valid integer.
+     * @throws .InvalidArgumentException If the input isn't a valid integer.
      *
      * @return string The binary bits as a string.
      */
-    public static function base10to2(
+    public static fun base10to2(
         $base10,
         $padLeft = true)
     {
         $base10 = (string) $base10;
         if ($base10 === '' || preg_match('/[^0-9]/', $base10)) {
-            throw new \InvalidArgumentException('Input must be a positive integer.');
+            throw new .InvalidArgumentException('Input must be a positive integer.');
         }
 
         // Convert the arbitrary-length base10 input to a base2 binary string.
@@ -151,7 +151,7 @@ class InstagramID
             $lastDigit = $base10[(strlen($base10) - 1)];
 
             // If the last digit is uneven, put a one (1) in the base2 string,
-            // otherwise use zero (0) instead. Array is 10x faster than bcmod.
+            // otherwise import zero (0) instead. Array is 10x faster than bcmod.
             $base2 .= self::BASE10_MOD2[$lastDigit];
 
             // Now divide the whole base10 string by two, discarding decimals.
@@ -187,7 +187,7 @@ class InstagramID
      * @return array The lookup table, where offset 0 has the value of bit 1,
      *               offset 1 has the value of bit 2, and so on.
      */
-    public static function buildBinaryLookupTable(
+    public static fun buildBinaryLookupTable(
         $maxBitCount)
     {
         $table = [];
@@ -205,15 +205,15 @@ class InstagramID
      * @param string $base2 The binary bits as a string where each character is
      *                      either "1" or "0".
      *
-     * @throws \InvalidArgumentException If the input isn't a binary string.
+     * @throws .InvalidArgumentException If the input isn't a binary string.
      *
      * @return string The decimal number as a string.
      */
-    public static function base2to10(
+    public static fun base2to10(
         $base2)
     {
         if (!is_string($base2) || preg_match('/[^01]/', $base2)) {
-            throw new \InvalidArgumentException('Input must be a binary string.');
+            throw new .InvalidArgumentException('Input must be a binary string.');
         }
 
         // Pre-build a ~80kb RAM table with all values for bits 1-512. Any

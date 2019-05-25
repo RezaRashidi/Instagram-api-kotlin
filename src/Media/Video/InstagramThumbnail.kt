@@ -1,14 +1,14 @@
 <?php
 
-namespace InstagramAPI\Media\Video;
+package InstagramAPI.Media.Video;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Utils;
+import InstagramAPI.Constants;
+import InstagramAPI.Utils;
 
 /**
  * Automatically creates a video thumbnail according to Instagram's rules.
  */
-class InstagramThumbnail extends InstagramVideo
+class InstagramThumbnail : InstagramVideo
 {
     /** @var float Thumbnail offset in secs, with milliseconds (decimals). */
     protected $_thumbnailTimestamp;
@@ -20,12 +20,12 @@ class InstagramThumbnail extends InstagramVideo
      * @param array       $options   An associative array of optional parameters.
      * @param FFmpeg|null $ffmpeg    Custom FFmpeg wrapper.
      *
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
+     * @throws .InvalidArgumentException
+     * @throws .RuntimeException
      *
      * @see InstagramMedia::__construct() description for the list of parameters.
      */
-    public function __construct(
+    public fun __construct(
         $inputFile,
         array $options = [],
         FFmpeg $ffmpeg = null)
@@ -33,7 +33,7 @@ class InstagramThumbnail extends InstagramVideo
         parent::__construct($inputFile, $options, $ffmpeg);
 
         // The timeline and most feeds have the thumbnail at "00:00:01.000".
-        $this->_thumbnailTimestamp = 1.0; // Default.
+        this._thumbnailTimestamp = 1.0; // Default.
 
         // Handle per-feed timestamps and custom thumbnail timestamps.
         if (isset($options['targetFeed'])) {
@@ -41,16 +41,16 @@ class InstagramThumbnail extends InstagramVideo
             case Constants::FEED_STORY:
             case Constants::FEED_DIRECT_STORY:
                 // Stories always have the thumbnail at "00:00:00.000" instead.
-                $this->_thumbnailTimestamp = 0.0;
+                this._thumbnailTimestamp = 0.0;
                 break;
             case Constants::FEED_TIMELINE || Constants::FEED_TIMELINE_ALBUM:
                 // Handle custom timestamp (only supported by timeline media).
                 // NOTE: Matches real app which only customizes timeline covers.
                 if (isset($options['thumbnailTimestamp'])) {
                     $customTimestamp = $options['thumbnailTimestamp'];
-                    // If custom timestamp is a number, use as-is. Else assume
+                    // If custom timestamp is a number, import as-is. Else assume
                     // a "HH:MM:SS[.000]" string and convert it. Throws if bad.
-                    $this->_thumbnailTimestamp = is_int($customTimestamp) || is_float($customTimestamp)
+                    this._thumbnailTimestamp = is_int($customTimestamp) || is_float($customTimestamp)
                                                ? (float) $customTimestamp
                                                : Utils::hmsTimeToSeconds($customTimestamp);
                 }
@@ -61,11 +61,11 @@ class InstagramThumbnail extends InstagramVideo
         }
 
         // Ensure the timestamp is 0+ and never longer than the video duration.
-        if ($this->_thumbnailTimestamp > $this->_details->getDuration()) {
-            $this->_thumbnailTimestamp = $this->_details->getDuration();
+        if (this._thumbnailTimestamp > this._details.getDuration()) {
+            this._thumbnailTimestamp = this._details.getDuration();
         }
-        if ($this->_thumbnailTimestamp < 0.0) {
-            throw new \InvalidArgumentException('Thumbnail timestamp must be a positive number.');
+        if (this._thumbnailTimestamp < 0.0) {
+            throw new .InvalidArgumentException('Thumbnail timestamp must be a positive number.');
         }
     }
 
@@ -74,9 +74,9 @@ class InstagramThumbnail extends InstagramVideo
      *
      * @return float Thumbnail offset in secs, with milliseconds (decimals).
      */
-    public function getTimestamp()
+    public fun getTimestamp()
     {
-        return $this->_thumbnailTimestamp;
+        return this._thumbnailTimestamp;
     }
 
     /**
@@ -84,20 +84,20 @@ class InstagramThumbnail extends InstagramVideo
      *
      * @return string The time formatted as `HH:MM:SS.###` (`###` is millis).
      */
-    public function getTimestampString()
+    public fun getTimestampString()
     {
-        return Utils::hmsTimeFromSeconds($this->_thumbnailTimestamp);
+        return Utils::hmsTimeFromSeconds(this._thumbnailTimestamp);
     }
 
     /** {@inheritdoc} */
-    protected function _shouldProcess()
+    protected fun _shouldProcess()
     {
         // We must always process the video to get its thumbnail.
         return true;
     }
 
     /** {@inheritdoc} */
-    protected function _ffmpegMustRunAgain(
+    protected fun _ffmpegMustRunAgain(
         $attempt,
         array $ffmpegOutput)
     {
@@ -111,7 +111,7 @@ class InstagramThumbnail extends InstagramVideo
         // such files to automatically make ffmpeg extract the 1st VALID frame.
         // NOTE: We'll only need to retry if timestamp is over 0.0. If it was
         // zero, then we already executed without `-ss` and shouldn't retry.
-        if ($attempt === 1 && $this->_thumbnailTimestamp > 0.0) {
+        if ($attempt === 1 && this._thumbnailTimestamp > 0.0) {
             foreach ($ffmpegOutput as $line) {
                 // Example: `[flv @ 0x7fc9cc002e00] warning: first frame is no keyframe`.
                 if (strpos($line, ': first frame is no keyframe') !== false) {
@@ -125,7 +125,7 @@ class InstagramThumbnail extends InstagramVideo
     }
 
     /** {@inheritdoc} */
-    protected function _getInputFlags(
+    protected fun _getInputFlags(
         $attempt)
     {
         // The seektime *must* be specified here, before the input file.
@@ -136,15 +136,15 @@ class InstagramThumbnail extends InstagramVideo
         // COMMENTS IN `_ffmpegMustRunAgain()` FOR MORE INFORMATION ABOUT WHY.
         // AND WE'LL OMIT SEEKING COMPLETELY IF IT'S "0.0" ("EARLIEST POSSIBLE"), TO
         // GUARANTEE SUCCESS AT GRABBING THE "EARLIEST FRAME" W/O NEEDING RETRIES.
-        return $attempt > 1 || $this->_thumbnailTimestamp === 0.0
+        return $attempt > 1 || this._thumbnailTimestamp === 0.0
             ? []
             : [
-                sprintf('-ss %s', $this->getTimestampString()),
+                sprintf('-ss %s', this.getTimestampString()),
             ];
     }
 
     /** {@inheritdoc} */
-    protected function _getOutputFlags(
+    protected fun _getOutputFlags(
         $attempt)
     {
         return [

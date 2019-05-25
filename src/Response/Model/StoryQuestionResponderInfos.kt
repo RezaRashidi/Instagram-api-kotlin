@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * StoryQuestionResponderInfos.
@@ -27,30 +27,30 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isQuestionType()
  * @method bool isResponders()
  * @method bool isTextColor()
- * @method $this setBackgroundColor(string $value)
- * @method $this setLatestQuestionResponseTime(int $value)
- * @method $this setMaxId(mixed $value)
- * @method $this setMoreAvailable(bool $value)
- * @method $this setQuestion(string $value)
- * @method $this setQuestionId(string $value)
- * @method $this setQuestionResponseCount(int $value)
- * @method $this setQuestionType(string $value)
- * @method $this setResponders(Responder[] $value)
- * @method $this setTextColor(string $value)
- * @method $this unsetBackgroundColor()
- * @method $this unsetLatestQuestionResponseTime()
- * @method $this unsetMaxId()
- * @method $this unsetMoreAvailable()
- * @method $this unsetQuestion()
- * @method $this unsetQuestionId()
- * @method $this unsetQuestionResponseCount()
- * @method $this unsetQuestionType()
- * @method $this unsetResponders()
- * @method $this unsetTextColor()
+ * @method this setBackgroundColor(string $value)
+ * @method this setLatestQuestionResponseTime(int $value)
+ * @method this setMaxId(mixed $value)
+ * @method this setMoreAvailable(bool $value)
+ * @method this setQuestion(string $value)
+ * @method this setQuestionId(string $value)
+ * @method this setQuestionResponseCount(int $value)
+ * @method this setQuestionType(string $value)
+ * @method this setResponders(Responder[] $value)
+ * @method this setTextColor(string $value)
+ * @method this unsetBackgroundColor()
+ * @method this unsetLatestQuestionResponseTime()
+ * @method this unsetMaxId()
+ * @method this unsetMoreAvailable()
+ * @method this unsetQuestion()
+ * @method this unsetQuestionId()
+ * @method this unsetQuestionResponseCount()
+ * @method this unsetQuestionType()
+ * @method this unsetResponders()
+ * @method this unsetTextColor()
  */
-class StoryQuestionResponderInfos extends AutoPropertyMapper
+class StoryQuestionResponderInfos : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'question_id'                   => 'string',
         'question'                      => 'string',
         'question_type'                 => 'string',

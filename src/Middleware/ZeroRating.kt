@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Middleware;
+package InstagramAPI.Middleware;
 
-use GuzzleHttp\Psr7\Uri;
-use Psr\Http\Message\RequestInterface;
+import GuzzleHttp.Psr7.Uri;
+import Psr.Http.Message.RequestInterface;
 
 /**
  * Zero rating rewrite middleware.
@@ -15,8 +15,8 @@ class ZeroRating
      *
      * @var array
      */
-    const DEFAULT_REWRITE = [
-        '^(https?:\/\/)(i)(\.instagram\.com/.*)$' => '$1b.$2$3',
+    val DEFAULT_REWRITE = [
+        '^(https?:././)(i)(..instagram..com/.*)$' => '$1b.$2$3',
     ];
 
     /**
@@ -29,17 +29,17 @@ class ZeroRating
     /**
      * Constructor.
      */
-    public function __construct()
+    public fun __construct()
     {
-        $this->reset();
+        this.reset();
     }
 
     /**
      * Reset rules to default ones.
      */
-    public function reset()
+    public fun reset()
     {
-        $this->update(self::DEFAULT_REWRITE);
+        this.update(self::DEFAULT_REWRITE);
     }
 
     /**
@@ -47,24 +47,24 @@ class ZeroRating
      *
      * @param array $rules
      */
-    public function update(
+    public fun update(
         array $rules = [])
     {
-        $this->_rules = [];
+        this._rules = [];
         foreach ($rules as $from => $to) {
             $regex = "#{$from}#";
             $test = @preg_match($regex, '');
             if ($test === false) {
                 continue;
             }
-            $this->_rules[$regex] = strtr($to, [
-                '\.' => '.',
+            this._rules[$regex] = strtr($to, [
+                '..' => '.',
             ]);
         }
     }
 
     /**
-     * Middleware setup function.
+     * Middleware setup fun.
      *
      * Called by Guzzle when it needs to add an instance of our middleware to
      * its stack. We simply return a callable which will process all requests.
@@ -73,21 +73,21 @@ class ZeroRating
      *
      * @return callable
      */
-    public function __invoke(
+    public fun __invoke(
         callable $handler)
     {
-        return function (
+        return fun (
             RequestInterface $request,
             array $options
-        ) use ($handler) {
-            if (empty($this->_rules)) {
+        ) import ($handler) {
+            if (empty(this._rules)) {
                 return $handler($request, $options);
             }
 
-            $oldUri = (string) $request->getUri();
-            $uri = $this->rewrite($oldUri);
+            $oldUri = (string) $request.getUri();
+            $uri = this.rewrite($oldUri);
             if ($uri !== $oldUri) {
-                $request = $request->withUri(new Uri($uri));
+                $request = $request.withUri(new Uri($uri));
             }
 
             return $handler($request, $options);
@@ -101,10 +101,10 @@ class ZeroRating
      *
      * @return string
      */
-    public function rewrite(
+    public fun rewrite(
         $uri)
     {
-        foreach ($this->_rules as $from => $to) {
+        foreach (this._rules as $from => $to) {
             $result = @preg_replace($from, $to, $uri);
             if (!is_string($result)) {
                 continue;

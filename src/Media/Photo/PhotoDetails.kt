@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Media\Photo;
+package InstagramAPI.Media.Photo;
 
-use InstagramAPI\Media\ConstraintsInterface;
-use InstagramAPI\Media\MediaDetails;
+import InstagramAPI.Media.ConstraintsInterface;
+import InstagramAPI.Media.MediaDetails;
 
-class PhotoDetails extends MediaDetails
+class PhotoDetails : MediaDetails
 {
     /**
      * Minimum allowed image width.
@@ -18,7 +18,7 @@ class PhotoDetails extends MediaDetails
      *
      * @see https://help.instagram.com/1631821640426723
      */
-    const MIN_WIDTH = 320;
+    val MIN_WIDTH = 320;
 
     /**
      * Maximum allowed image width.
@@ -32,16 +32,16 @@ class PhotoDetails extends MediaDetails
      *
      * @var int
      */
-    const MAX_WIDTH = 1080;
+    val MAX_WIDTH = 1080;
 
     /**
-     * Default orientation to use if no EXIF JPG orientation exists.
+     * Default orientation to import if no EXIF JPG orientation exists.
      *
      * This value represents a non-rotated, non-flipped image.
      *
      * @var int
      */
-    const DEFAULT_ORIENTATION = 1;
+    val DEFAULT_ORIENTATION = 1;
 
     /** @var int */
     private $_type;
@@ -52,37 +52,37 @@ class PhotoDetails extends MediaDetails
     /**
      * @return int
      */
-    public function getType()
+    public fun getType()
     {
-        return $this->_type;
+        return this._type;
     }
 
     /** {@inheritdoc} */
-    public function hasSwappedAxes()
+    public fun hasSwappedAxes()
     {
-        return in_array($this->_orientation, [5, 6, 7, 8], true);
+        return in_array(this._orientation, [5, 6, 7, 8], true);
     }
 
     /** {@inheritdoc} */
-    public function isHorizontallyFlipped()
+    public fun isHorizontallyFlipped()
     {
-        return in_array($this->_orientation, [2, 3, 6, 7], true);
+        return in_array(this._orientation, [2, 3, 6, 7], true);
     }
 
     /** {@inheritdoc} */
-    public function isVerticallyFlipped()
+    public fun isVerticallyFlipped()
     {
-        return in_array($this->_orientation, [3, 4, 7, 8], true);
+        return in_array(this._orientation, [3, 4, 7, 8], true);
     }
 
     /** {@inheritdoc} */
-    public function getMinAllowedWidth()
+    public fun getMinAllowedWidth()
     {
         return self::MIN_WIDTH;
     }
 
     /** {@inheritdoc} */
-    public function getMaxAllowedWidth()
+    public fun getMaxAllowedWidth()
     {
         return self::MAX_WIDTH;
     }
@@ -92,20 +92,20 @@ class PhotoDetails extends MediaDetails
      *
      * @param string $filename Path to the photo file.
      *
-     * @throws \InvalidArgumentException If the photo file is missing or invalid.
+     * @throws .InvalidArgumentException If the photo file is missing or invalid.
      */
-    public function __construct(
+    public fun __construct(
         $filename)
     {
         // Check if input file exists.
         if (empty($filename) || !is_file($filename)) {
-            throw new \InvalidArgumentException(sprintf('The photo file "%s" does not exist on disk.', $filename));
+            throw new .InvalidArgumentException(sprintf('The photo file "%s" does not exist on disk.', $filename));
         }
 
         // Determine photo file size and throw when the file is empty.
         $filesize = filesize($filename);
         if ($filesize < 1) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new .InvalidArgumentException(sprintf(
                 'The photo file "%s" is empty.',
                 $filename
             ));
@@ -114,37 +114,37 @@ class PhotoDetails extends MediaDetails
         // Get image details.
         $result = @getimagesize($filename);
         if ($result === false) {
-            throw new \InvalidArgumentException(sprintf('The photo file "%s" is not a valid image.', $filename));
+            throw new .InvalidArgumentException(sprintf('The photo file "%s" is not a valid image.', $filename));
         }
-        list($width, $height, $this->_type) = $result;
+        list($width, $height, this._type) = $result;
 
         // Detect JPEG EXIF orientation if it exists.
-        $this->_orientation = $this->_getExifOrientation($filename, $this->_type);
+        this._orientation = this._getExifOrientation($filename, this._type);
 
         parent::__construct($filename, $filesize, $width, $height);
     }
 
     /** {@inheritdoc} */
-    public function validate(
+    public fun validate(
         ConstraintsInterface $constraints)
     {
         parent::validate($constraints);
 
         // WARNING TO CONTRIBUTORS: $mediaFilename is for ERROR DISPLAY to
-        // users. Do NOT use it to read from the hard disk!
-        $mediaFilename = $this->getBasename();
+        // users. Do NOT import it to read from the hard disk!
+        $mediaFilename = this.getBasename();
 
         // Validate image type.
         // NOTE: It is confirmed that Instagram only accepts JPEG files.
-        $type = $this->getType();
+        $type = this.getType();
         if ($type !== IMAGETYPE_JPEG) {
-            throw new \InvalidArgumentException(sprintf('The photo file "%s" is not a JPEG file.', $mediaFilename));
+            throw new .InvalidArgumentException(sprintf('The photo file "%s" is not a JPEG file.', $mediaFilename));
         }
 
-        $width = $this->getWidth();
+        $width = this.getWidth();
         // Validate photo resolution. Instagram allows between 320px-1080px width.
         if ($width < self::MIN_WIDTH || $width > self::MAX_WIDTH) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new .InvalidArgumentException(sprintf(
                 'Instagram only accepts photos that are between %d and %d pixels wide. Your file "%s" is %d pixels wide.',
                 self::MIN_WIDTH, self::MAX_WIDTH, $mediaFilename, $width
             ));
@@ -159,11 +159,11 @@ class PhotoDetails extends MediaDetails
      *
      * @return int
      */
-    protected function _getExifOrientation(
+    protected fun _getExifOrientation(
         $filename,
         $type)
     {
-        if ($type !== IMAGETYPE_JPEG || !function_exists('exif_read_data')) {
+        if ($type !== IMAGETYPE_JPEG || !fun_exists('exif_read_data')) {
             return self::DEFAULT_ORIENTATION;
         }
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command;
+package InstagramAPI.Realtime.Command;
 
-use InstagramAPI\Realtime\CommandInterface;
-use InstagramAPI\Realtime\Mqtt;
-use InstagramAPI\Signatures;
+import InstagramAPI.Realtime.CommandInterface;
+import InstagramAPI.Realtime.Mqtt;
+import InstagramAPI.Signatures;
 
-abstract class DirectCommand implements CommandInterface
+abstract class DirectCommand : CommandInterface
 {
     /**
      * @var array
@@ -20,51 +20,51 @@ abstract class DirectCommand implements CommandInterface
      * @param string $threadId
      * @param array  $options
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public function __construct(
+    public fun __construct(
         $action,
         $threadId,
         array $options = [])
     {
-        $this->_data = [];
+        this._data = [];
 
         // Handle action.
-        if (!in_array($action, $this->_getSupportedActions(), true)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a supported action.', $action));
+        if (!in_array($action, this._getSupportedActions(), true)) {
+            throw new .InvalidArgumentException(sprintf('"%s" is not a supported action.', $action));
         }
-        $this->_data['action'] = $action;
+        this._data['action'] = $action;
 
-        $this->_data['thread_id'] = $this->_validateThreadId($threadId);
+        this._data['thread_id'] = this._validateThreadId($threadId);
 
         // Handle client context.
-        if ($this->_isClientContextRequired()) {
+        if (this._isClientContextRequired()) {
             if (!isset($options['client_context'])) {
-                $this->_data['client_context'] = Signatures::generateUUID();
+                this._data['client_context'] = Signatures::generateUUID();
             } elseif (!Signatures::isValidUUID($options['client_context'])) {
-                throw new \InvalidArgumentException(sprintf('"%s" is not a valid UUID.', $options['client_context']));
+                throw new .InvalidArgumentException(sprintf('"%s" is not a valid UUID.', $options['client_context']));
             } else {
-                $this->_data['client_context'] = $options['client_context'];
+                this._data['client_context'] = $options['client_context'];
             }
         }
     }
 
     /** {@inheritdoc} */
-    public function getTopic()
+    public fun getTopic()
     {
-        return Mqtt\Topics::SEND_MESSAGE;
+        return Mqtt.Topics::SEND_MESSAGE;
     }
 
     /** {@inheritdoc} */
-    public function getQosLevel()
+    public fun getQosLevel()
     {
-        return Mqtt\QosLevel::FIRE_AND_FORGET;
+        return Mqtt.QosLevel::FIRE_AND_FORGET;
     }
 
     /** {@inheritdoc} */
-    public function jsonSerialize()
+    public fun jsonSerialize()
     {
-        return $this->_reorderFieldsByWeight($this->_data, $this->_getFieldsWeights());
+        return this._reorderFieldsByWeight(this._data, this._getFieldsWeights());
     }
 
     /**
@@ -72,9 +72,9 @@ abstract class DirectCommand implements CommandInterface
      *
      * @return string|null
      */
-    public function getClientContext()
+    public fun getClientContext()
     {
-        return isset($this->_data['client_context']) ? $this->_data['client_context'] : null;
+        return isset(this._data['client_context']) ? this._data['client_context'] : null;
     }
 
     /**
@@ -82,19 +82,19 @@ abstract class DirectCommand implements CommandInterface
      *
      * @return bool
      */
-    abstract protected function _isClientContextRequired();
+    abstract protected fun _isClientContextRequired();
 
     /**
      * Get the list of supported actions.
      *
      * @return array
      */
-    protected function _getSupportedActions()
+    protected fun _getSupportedActions()
     {
         return [
-            Direct\SendItem::ACTION,
-            Direct\MarkSeen::ACTION,
-            Direct\IndicateActivity::ACTION,
+            Direct.SendItem::ACTION,
+            Direct.MarkSeen::ACTION,
+            Direct.IndicateActivity::ACTION,
         ];
     }
 
@@ -103,15 +103,15 @@ abstract class DirectCommand implements CommandInterface
      *
      * @param string $threadId
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      *
      * @return string
      */
-    protected function _validateThreadId(
+    protected fun _validateThreadId(
         $threadId)
     {
         if (!ctype_digit($threadId) && (!is_int($threadId) || $threadId < 0)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a valid thread identifier.', $threadId));
+            throw new .InvalidArgumentException(sprintf('"%s" is not a valid thread identifier.', $threadId));
         }
 
         return (string) $threadId;
@@ -122,15 +122,15 @@ abstract class DirectCommand implements CommandInterface
      *
      * @param string $threadItemId
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      *
      * @return string
      */
-    protected function _validateThreadItemId(
+    protected fun _validateThreadItemId(
         $threadItemId)
     {
         if (!ctype_digit($threadItemId) && (!is_int($threadItemId) || $threadItemId < 0)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a valid thread item identifier.', $threadItemId));
+            throw new .InvalidArgumentException(sprintf('"%s" is not a valid thread item identifier.', $threadItemId));
         }
 
         return (string) $threadItemId;
@@ -144,11 +144,11 @@ abstract class DirectCommand implements CommandInterface
      *
      * @return array
      */
-    protected function _reorderFieldsByWeight(
+    protected fun _reorderFieldsByWeight(
         array $fields,
         array $weights)
     {
-        uksort($fields, function ($a, $b) use ($weights) {
+        uksort($fields, fun ($a, $b) import ($weights) {
             $a = isset($weights[$a]) ? $weights[$a] : PHP_INT_MAX;
             $b = isset($weights[$b]) ? $weights[$b] : PHP_INT_MAX;
             if ($a < $b) {
@@ -169,7 +169,7 @@ abstract class DirectCommand implements CommandInterface
      *
      * @return array
      */
-    protected function _getFieldsWeights()
+    protected fun _getFieldsWeights()
     {
         return [
             'thread_id'       => 10,

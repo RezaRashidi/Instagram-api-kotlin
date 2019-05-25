@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Media\Geometry;
+package InstagramAPI.Media.Geometry;
 
 class Rectangle
 {
@@ -27,18 +27,18 @@ class Rectangle
      * @param int $width
      * @param int $height
      */
-    public function __construct(
+    public fun __construct(
         $x,
         $y,
         $width,
         $height)
     {
-        $this->_x = (int) $x;
-        $this->_y = (int) $y;
-        $this->_width = (int) $width;
-        $this->_height = (int) $height;
+        this._x = (int) $x;
+        this._y = (int) $y;
+        this._width = (int) $width;
+        this._height = (int) $height;
         // NOTE: MUST `float`-cast to FORCE float even when dividing EQUAL ints.
-        $this->_aspectRatio = (float) ($this->_width / $this->_height);
+        this._aspectRatio = (float) (this._width / this._height);
     }
 
     /**
@@ -46,9 +46,9 @@ class Rectangle
      *
      * @return int
      */
-    public function getX()
+    public fun getX()
     {
-        return $this->_x;
+        return this._x;
     }
 
     /**
@@ -56,9 +56,9 @@ class Rectangle
      *
      * @return int
      */
-    public function getY()
+    public fun getY()
     {
-        return $this->_y;
+        return this._y;
     }
 
     /**
@@ -69,9 +69,9 @@ class Rectangle
      *
      * @return int
      */
-    public function getX1()
+    public fun getX1()
     {
-        return $this->_x;
+        return this._x;
     }
 
     /**
@@ -82,9 +82,9 @@ class Rectangle
      *
      * @return int
      */
-    public function getY1()
+    public fun getY1()
     {
-        return $this->_y;
+        return this._y;
     }
 
     /**
@@ -92,9 +92,9 @@ class Rectangle
      *
      * @return int
      */
-    public function getX2()
+    public fun getX2()
     {
-        return $this->_x + $this->_width;
+        return this._x + this._width;
     }
 
     /**
@@ -102,9 +102,9 @@ class Rectangle
      *
      * @return int
      */
-    public function getY2()
+    public fun getY2()
     {
-        return $this->_y + $this->_height;
+        return this._y + this._height;
     }
 
     /**
@@ -112,9 +112,9 @@ class Rectangle
      *
      * @return int
      */
-    public function getWidth()
+    public fun getWidth()
     {
-        return $this->_width;
+        return this._width;
     }
 
     /**
@@ -122,9 +122,9 @@ class Rectangle
      *
      * @return int
      */
-    public function getHeight()
+    public fun getHeight()
     {
-        return $this->_height;
+        return this._height;
     }
 
     /**
@@ -132,9 +132,9 @@ class Rectangle
      *
      * @return float
      */
-    public function getAspectRatio()
+    public fun getAspectRatio()
     {
-        return $this->_aspectRatio;
+        return this._aspectRatio;
     }
 
     /**
@@ -142,9 +142,9 @@ class Rectangle
      *
      * @return self
      */
-    public function withSwappedAxes()
+    public fun withSwappedAxes()
     {
-        return new self($this->_y, $this->_x, $this->_height, $this->_width);
+        return new self(this._y, this._x, this._height, this._width);
     }
 
     /**
@@ -156,24 +156,24 @@ class Rectangle
      * @param float|int $newScale     The scale factor to apply.
      * @param string    $roundingFunc One of `round` (default), `floor` or `ceil`.
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      *
      * @return self
      */
-    public function withRescaling(
+    public fun withRescaling(
         $newScale = 1.0,
         $roundingFunc = 'round')
     {
         if (!is_float($newScale) && !is_int($newScale)) {
-            throw new \InvalidArgumentException('The new scale must be a float or integer.');
+            throw new .InvalidArgumentException('The new scale must be a float or integer.');
         }
         if ($roundingFunc !== 'round' && $roundingFunc !== 'floor' && $roundingFunc !== 'ceil') {
-            throw new \InvalidArgumentException(sprintf('Invalid rounding function "%s".', $roundingFunc));
+            throw new .InvalidArgumentException(sprintf('Invalid rounding fun "%s".', $roundingFunc));
         }
 
-        $newWidth = (int) $roundingFunc($newScale * $this->_width);
-        $newHeight = (int) $roundingFunc($newScale * $this->_height);
+        $newWidth = (int) $roundingFunc($newScale * this._width);
+        $newHeight = (int) $roundingFunc($newScale * this._height);
 
-        return new self($this->_x, $this->_y, $newWidth, $newHeight);
+        return new self(this._x, this._y, $newWidth, $newHeight);
     }
 }

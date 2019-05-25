@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Media\Geometry;
+package InstagramAPI.Media.Geometry;
 
 class Dimensions
 {
@@ -19,14 +19,14 @@ class Dimensions
      * @param int $width
      * @param int $height
      */
-    public function __construct(
+    public fun __construct(
         $width,
         $height)
     {
-        $this->_width = (int) $width;
-        $this->_height = (int) $height;
+        this._width = (int) $width;
+        this._height = (int) $height;
         // NOTE: MUST `float`-cast to FORCE float even when dividing EQUAL ints.
-        $this->_aspectRatio = (float) ($this->_width / $this->_height);
+        this._aspectRatio = (float) (this._width / this._height);
     }
 
     /**
@@ -34,9 +34,9 @@ class Dimensions
      *
      * @return int
      */
-    public function getWidth()
+    public fun getWidth()
     {
-        return $this->_width;
+        return this._width;
     }
 
     /**
@@ -44,9 +44,9 @@ class Dimensions
      *
      * @return int
      */
-    public function getHeight()
+    public fun getHeight()
     {
-        return $this->_height;
+        return this._height;
     }
 
     /**
@@ -54,9 +54,9 @@ class Dimensions
      *
      * @return float
      */
-    public function getAspectRatio()
+    public fun getAspectRatio()
     {
-        return $this->_aspectRatio;
+        return this._aspectRatio;
     }
 
     /**
@@ -64,9 +64,9 @@ class Dimensions
      *
      * @return self
      */
-    public function withSwappedAxes()
+    public fun withSwappedAxes()
     {
-        return new self($this->_height, $this->_width);
+        return new self(this._height, this._width);
     }
 
     /**
@@ -75,23 +75,23 @@ class Dimensions
      * @param float|int $newScale     The scale factor to apply.
      * @param string    $roundingFunc One of `round` (default), `floor` or `ceil`.
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      *
      * @return self
      */
-    public function withRescaling(
+    public fun withRescaling(
         $newScale = 1.0,
         $roundingFunc = 'round')
     {
         if (!is_float($newScale) && !is_int($newScale)) {
-            throw new \InvalidArgumentException('The new scale must be a float or integer.');
+            throw new .InvalidArgumentException('The new scale must be a float or integer.');
         }
         if ($roundingFunc !== 'round' && $roundingFunc !== 'floor' && $roundingFunc !== 'ceil') {
-            throw new \InvalidArgumentException(sprintf('Invalid rounding function "%s".', $roundingFunc));
+            throw new .InvalidArgumentException(sprintf('Invalid rounding fun "%s".', $roundingFunc));
         }
 
-        $newWidth = (int) $roundingFunc($newScale * $this->_width);
-        $newHeight = (int) $roundingFunc($newScale * $this->_height);
+        $newWidth = (int) $roundingFunc($newScale * this._width);
+        $newHeight = (int) $roundingFunc($newScale * this._height);
 
         return new self($newWidth, $newHeight);
     }

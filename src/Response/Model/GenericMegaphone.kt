@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * GenericMegaphone.
@@ -35,38 +35,38 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isTitleColor()
  * @method bool isType()
  * @method bool isUuid()
- * @method $this setActionInfo(mixed $value)
- * @method $this setBackgroundColor(mixed $value)
- * @method $this setButtonLayout(mixed $value)
- * @method $this setButtonLocation(mixed $value)
- * @method $this setButtons(Button[] $value)
- * @method $this setDismissible(mixed $value)
- * @method $this setIcon(mixed $value)
- * @method $this setMegaphoneVersion(mixed $value)
- * @method $this setMessage(mixed $value)
- * @method $this setMessageColor(mixed $value)
- * @method $this setTitle(mixed $value)
- * @method $this setTitleColor(mixed $value)
- * @method $this setType(mixed $value)
- * @method $this setUuid(string $value)
- * @method $this unsetActionInfo()
- * @method $this unsetBackgroundColor()
- * @method $this unsetButtonLayout()
- * @method $this unsetButtonLocation()
- * @method $this unsetButtons()
- * @method $this unsetDismissible()
- * @method $this unsetIcon()
- * @method $this unsetMegaphoneVersion()
- * @method $this unsetMessage()
- * @method $this unsetMessageColor()
- * @method $this unsetTitle()
- * @method $this unsetTitleColor()
- * @method $this unsetType()
- * @method $this unsetUuid()
+ * @method this setActionInfo(mixed $value)
+ * @method this setBackgroundColor(mixed $value)
+ * @method this setButtonLayout(mixed $value)
+ * @method this setButtonLocation(mixed $value)
+ * @method this setButtons(Button[] $value)
+ * @method this setDismissible(mixed $value)
+ * @method this setIcon(mixed $value)
+ * @method this setMegaphoneVersion(mixed $value)
+ * @method this setMessage(mixed $value)
+ * @method this setMessageColor(mixed $value)
+ * @method this setTitle(mixed $value)
+ * @method this setTitleColor(mixed $value)
+ * @method this setType(mixed $value)
+ * @method this setUuid(string $value)
+ * @method this unsetActionInfo()
+ * @method this unsetBackgroundColor()
+ * @method this unsetButtonLayout()
+ * @method this unsetButtonLocation()
+ * @method this unsetButtons()
+ * @method this unsetDismissible()
+ * @method this unsetIcon()
+ * @method this unsetMegaphoneVersion()
+ * @method this unsetMessage()
+ * @method this unsetMessageColor()
+ * @method this unsetTitle()
+ * @method this unsetTitleColor()
+ * @method this unsetType()
+ * @method this unsetUuid()
  */
-class GenericMegaphone extends AutoPropertyMapper
+class GenericMegaphone : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'type'              => '',
         'title'             => '',
         'message'           => '',

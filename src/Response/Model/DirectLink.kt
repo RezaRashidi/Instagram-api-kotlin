@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * DirectLink.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method string getText()
  * @method bool isLinkContext()
  * @method bool isText()
- * @method $this setLinkContext(LinkContext $value)
- * @method $this setText(string $value)
- * @method $this unsetLinkContext()
- * @method $this unsetText()
+ * @method this setLinkContext(LinkContext $value)
+ * @method this setText(string $value)
+ * @method this unsetLinkContext()
+ * @method this unsetText()
  */
-class DirectLink extends AutoPropertyMapper
+class DirectLink : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'text'         => 'string',
         'link_context' => 'LinkContext',
     ];

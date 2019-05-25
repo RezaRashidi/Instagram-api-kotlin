@@ -1,40 +1,40 @@
 <?php
 
-namespace InstagramAPI\Media\Constraints;
+package InstagramAPI.Media.Constraints;
 
 /**
  * Instagram's direct messaging general media constraints.
  */
-class DirectConstraints extends TimelineConstraints
+class DirectConstraints : TimelineConstraints
 {
     /**
      * Minimum allowed video duration.
      *
      * @var float
      */
-    const MIN_DURATION = 0.1;
+    val MIN_DURATION = 0.1;
 
     /**
      * Maximum allowed video duration.
      *
      * @var float
      */
-    const MAX_DURATION = 15.0;
+    val MAX_DURATION = 15.0;
 
     /** {@inheritdoc} */
-    public function getTitle()
+    public fun getTitle()
     {
         return 'direct';
     }
 
     /** {@inheritdoc} */
-    public function getMinDuration()
+    public fun getMinDuration()
     {
         return self::MIN_DURATION;
     }
 
     /** {@inheritdoc} */
-    public function getMaxDuration()
+    public fun getMaxDuration()
     {
         return self::MAX_DURATION;
     }

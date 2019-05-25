@@ -1,35 +1,35 @@
 <?php
 
-namespace InstagramAPI\Realtime\Parser;
+package InstagramAPI.Realtime.Parser;
 
-use Fbns\Client\Thrift\Compact;
-use Fbns\Client\Thrift\Reader;
-use InstagramAPI\Realtime\Handler\RegionHintHandler;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\ParserInterface;
+import Fbns.Client.Thrift.Compact;
+import Fbns.Client.Thrift.Reader;
+import InstagramAPI.Realtime.Handler.RegionHintHandler;
+import InstagramAPI.Realtime.Message;
+import InstagramAPI.Realtime.ParserInterface;
 
-class RegionHintParser implements ParserInterface
+class RegionHintParser : ParserInterface
 {
-    const FIELD_TOPIC = 1;
+    val FIELD_TOPIC = 1;
 
     /**
      * {@inheritdoc}
      *
-     * @throws \RuntimeException
-     * @throws \DomainException
+     * @throws .RuntimeException
+     * @throws .DomainException
      */
-    public function parseMessage(
+    public fun parseMessage(
         $topic,
         $payload)
     {
         $region = null;
-        new Reader($payload, function ($context, $field, $value, $type) use (&$region) {
+        new Reader($payload, fun ($context, $field, $value, $type) import (&$region) {
             if ($type === Compact::TYPE_BINARY && $field === self::FIELD_TOPIC) {
                 $region = $value;
             }
         });
 
-        return [$this->_createMessage($region)];
+        return [this._createMessage($region)];
     }
 
     /**
@@ -37,16 +37,16 @@ class RegionHintParser implements ParserInterface
      *
      * @param string $region
      *
-     * @throws \RuntimeException
-     * @throws \DomainException
+     * @throws .RuntimeException
+     * @throws .DomainException
      *
      * @return Message
      */
-    protected function _createMessage(
+    protected fun _createMessage(
         $region)
     {
         if ($region === null) {
-            throw new \RuntimeException('Incomplete region hint message.');
+            throw new .RuntimeException('Incomplete region hint message.');
         }
 
         return new Message(RegionHintHandler::MODULE, $region);

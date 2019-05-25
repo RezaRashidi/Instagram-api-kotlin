@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * SummaryPromotions.
@@ -11,14 +11,14 @@ use InstagramAPI\AutoPropertyMapper;
  * @method PageInfo getPageInfo()
  * @method bool isEdges()
  * @method bool isPageInfo()
- * @method $this setEdges(BusinessEdge[] $value)
- * @method $this setPageInfo(PageInfo $value)
- * @method $this unsetEdges()
- * @method $this unsetPageInfo()
+ * @method this setEdges(BusinessEdge[] $value)
+ * @method this setPageInfo(PageInfo $value)
+ * @method this unsetEdges()
+ * @method this unsetPageInfo()
  */
-class SummaryPromotions extends AutoPropertyMapper
+class SummaryPromotions : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'edges'     => 'BusinessEdge[]',
         'page_info' => 'PageInfo',
     ];

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * Tag.
@@ -43,46 +43,46 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isSocialContextProfileLinks()
  * @method bool isSubtitle()
  * @method bool isType()
- * @method $this setAllowFollowing(mixed $value)
- * @method $this setAllowMutingStory(mixed $value)
- * @method $this setDebugInfo(mixed $value)
- * @method $this setFollowButtonText(mixed $value)
- * @method $this setFollowStatus(mixed $value)
- * @method $this setFollowing(mixed $value)
- * @method $this setId(string $value)
- * @method $this setMediaCount(int $value)
- * @method $this setName(string $value)
- * @method $this setNonViolating(mixed $value)
- * @method $this setProfilePicUrl(mixed $value)
- * @method $this setRelatedTags(mixed $value)
- * @method $this setSearchResultSubtitle(mixed $value)
- * @method $this setShowFollowDropDown(mixed $value)
- * @method $this setSocialContext(mixed $value)
- * @method $this setSocialContextProfileLinks(mixed $value)
- * @method $this setSubtitle(mixed $value)
- * @method $this setType(string $value)
- * @method $this unsetAllowFollowing()
- * @method $this unsetAllowMutingStory()
- * @method $this unsetDebugInfo()
- * @method $this unsetFollowButtonText()
- * @method $this unsetFollowStatus()
- * @method $this unsetFollowing()
- * @method $this unsetId()
- * @method $this unsetMediaCount()
- * @method $this unsetName()
- * @method $this unsetNonViolating()
- * @method $this unsetProfilePicUrl()
- * @method $this unsetRelatedTags()
- * @method $this unsetSearchResultSubtitle()
- * @method $this unsetShowFollowDropDown()
- * @method $this unsetSocialContext()
- * @method $this unsetSocialContextProfileLinks()
- * @method $this unsetSubtitle()
- * @method $this unsetType()
+ * @method this setAllowFollowing(mixed $value)
+ * @method this setAllowMutingStory(mixed $value)
+ * @method this setDebugInfo(mixed $value)
+ * @method this setFollowButtonText(mixed $value)
+ * @method this setFollowStatus(mixed $value)
+ * @method this setFollowing(mixed $value)
+ * @method this setId(string $value)
+ * @method this setMediaCount(int $value)
+ * @method this setName(string $value)
+ * @method this setNonViolating(mixed $value)
+ * @method this setProfilePicUrl(mixed $value)
+ * @method this setRelatedTags(mixed $value)
+ * @method this setSearchResultSubtitle(mixed $value)
+ * @method this setShowFollowDropDown(mixed $value)
+ * @method this setSocialContext(mixed $value)
+ * @method this setSocialContextProfileLinks(mixed $value)
+ * @method this setSubtitle(mixed $value)
+ * @method this setType(string $value)
+ * @method this unsetAllowFollowing()
+ * @method this unsetAllowMutingStory()
+ * @method this unsetDebugInfo()
+ * @method this unsetFollowButtonText()
+ * @method this unsetFollowStatus()
+ * @method this unsetFollowing()
+ * @method this unsetId()
+ * @method this unsetMediaCount()
+ * @method this unsetName()
+ * @method this unsetNonViolating()
+ * @method this unsetProfilePicUrl()
+ * @method this unsetRelatedTags()
+ * @method this unsetSearchResultSubtitle()
+ * @method this unsetShowFollowDropDown()
+ * @method this unsetSocialContext()
+ * @method this unsetSocialContextProfileLinks()
+ * @method this unsetSubtitle()
+ * @method this unsetType()
  */
-class Tag extends AutoPropertyMapper
+class Tag : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'id'                           => 'string',
         'name'                         => 'string',
         'media_count'                  => 'int',

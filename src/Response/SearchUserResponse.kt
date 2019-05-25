@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response;
+package InstagramAPI.Response;
 
-use InstagramAPI\Response;
+import InstagramAPI.Response;
 
 /**
  * SearchUserResponse.
@@ -12,8 +12,8 @@ use InstagramAPI\Response;
  * @method int getNumResults()
  * @method string getRankToken()
  * @method string getStatus()
- * @method Model\User[] getUsers()
- * @method Model\_Message[] get_Messages()
+ * @method Model.User[] getUsers()
+ * @method Model._Message[] get_Messages()
  * @method bool isHasMore()
  * @method bool isMessage()
  * @method bool isNumResults()
@@ -21,27 +21,27 @@ use InstagramAPI\Response;
  * @method bool isStatus()
  * @method bool isUsers()
  * @method bool is_Messages()
- * @method $this setHasMore(bool $value)
- * @method $this setMessage(mixed $value)
- * @method $this setNumResults(int $value)
- * @method $this setRankToken(string $value)
- * @method $this setStatus(string $value)
- * @method $this setUsers(Model\User[] $value)
- * @method $this set_Messages(Model\_Message[] $value)
- * @method $this unsetHasMore()
- * @method $this unsetMessage()
- * @method $this unsetNumResults()
- * @method $this unsetRankToken()
- * @method $this unsetStatus()
- * @method $this unsetUsers()
- * @method $this unset_Messages()
+ * @method this setHasMore(bool $value)
+ * @method this setMessage(mixed $value)
+ * @method this setNumResults(int $value)
+ * @method this setRankToken(string $value)
+ * @method this setStatus(string $value)
+ * @method this setUsers(Model.User[] $value)
+ * @method this set_Messages(Model._Message[] $value)
+ * @method this unsetHasMore()
+ * @method this unsetMessage()
+ * @method this unsetNumResults()
+ * @method this unsetRankToken()
+ * @method this unsetStatus()
+ * @method this unsetUsers()
+ * @method this unset_Messages()
  */
-class SearchUserResponse extends Response
+class SearchUserResponse : Response
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'has_more'    => 'bool',
         'num_results' => 'int',
-        'users'       => 'Model\User[]',
+        'users'       => 'Model.User[]',
         'rank_token'  => 'string',
     ];
 }

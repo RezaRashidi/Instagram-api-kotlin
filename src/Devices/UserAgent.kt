@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Devices;
+package InstagramAPI.Devices;
 
-use InstagramAPI\Constants;
+import InstagramAPI.Constants;
 
 /**
  * Android device User-Agent builder.
@@ -16,7 +16,7 @@ class UserAgent
      *
      * @var string
      */
-    const USER_AGENT_FORMAT = 'Instagram %s Android (%s/%s; %s; %s; %s; %s; %s; %s; %s; %s)';
+    val USER_AGENT_FORMAT = 'Instagram %s Android (%s/%s; %s; %s; %s; %s; %s; %s; %s; %s)';
 
     /**
      * Generates a User Agent string from a DeviceInterface.
@@ -27,29 +27,29 @@ class UserAgent
      *
      * @return string
      */
-    public static function buildUserAgent(
+    public static fun buildUserAgent(
         $appVersion,
         $userLocale,
         DeviceInterface $device)
     {
         // Build the appropriate "Manufacturer" or "Manufacturer/Brand" string.
-        $manufacturerWithBrand = $device->getManufacturer();
-        if ($device->getBrand() !== null) {
-            $manufacturerWithBrand .= '/'.$device->getBrand();
+        $manufacturerWithBrand = $device.getManufacturer();
+        if ($device.getBrand() !== null) {
+            $manufacturerWithBrand .= '/'.$device.getBrand();
         }
 
         // Generate the final User-Agent string.
         return sprintf(
             self::USER_AGENT_FORMAT,
             $appVersion, // App version ("27.0.0.7.97").
-            $device->getAndroidVersion(),
-            $device->getAndroidRelease(),
-            $device->getDPI(),
-            $device->getResolution(),
+            $device.getAndroidVersion(),
+            $device.getAndroidRelease(),
+            $device.getDPI(),
+            $device.getResolution(),
             $manufacturerWithBrand,
-            $device->getModel(),
-            $device->getDevice(),
-            $device->getCPU(),
+            $device.getModel(),
+            $device.getDevice(),
+            $device.getCPU(),
             $userLocale, // Locale ("en_US").
             Constants::VERSION_CODE
         );
@@ -62,7 +62,7 @@ class UserAgent
      *
      * @return string
      */
-    protected static function _escapeFbString(
+    protected static fun _escapeFbString(
         $string)
     {
         $result = '';
@@ -90,19 +90,19 @@ class UserAgent
      * @param string          $userLocale  The user's locale, such as "en_US".
      * @param DeviceInterface $device
      *
-     * @throws \InvalidArgumentException If the device parameter is invalid.
+     * @throws .InvalidArgumentException If the device parameter is invalid.
      *
      * @return string
      */
-    public static function buildFbUserAgent(
+    public static fun buildFbUserAgent(
         $appName,
         $appVersion,
         $versionCode,
         $userLocale,
         DeviceInterface $device)
     {
-        list($width, $height) = explode('x', $device->getResolution());
-        $density = round(str_replace('dpi', '', $device->getDPI()) / 160, 1);
+        list($width, $height) = explode('x', $device.getResolution());
+        $density = round(str_replace('dpi', '', $device.getDPI()) / 160, 1);
         $result = [
             'FBAN' => $appName,
             'FBAV' => $appVersion,
@@ -110,16 +110,16 @@ class UserAgent
             'FBDM' => sprintf('{density=%.1f,width=%d,height=%d}', $density, $width, $height),
             'FBLC' => $userLocale,
             'FBCR' => '', // We don't have cellular.
-            'FBMF' => self::_escapeFbString($device->getManufacturer()),
-            'FBBD' => self::_escapeFbString($device->getBrand() ? $device->getBrand() : $device->getManufacturer()),
+            'FBMF' => self::_escapeFbString($device.getManufacturer()),
+            'FBBD' => self::_escapeFbString($device.getBrand() ? $device.getBrand() : $device.getManufacturer()),
             'FBPN' => Constants::PACKAGE_NAME,
-            'FBDV' => self::_escapeFbString($device->getModel()),
-            'FBSV' => self::_escapeFbString($device->getAndroidRelease()),
+            'FBDV' => self::_escapeFbString($device.getModel()),
+            'FBSV' => self::_escapeFbString($device.getAndroidRelease()),
             'FBLR' => 0, // android.hardware.ram.low
-            'FBBK' => 1, // Const (at least in 10.12.0).
+            'FBBK' => 1, // val (at least in 10.12.0).
             'FBCA' => self::_escapeFbString(GoodDevices::CPU_ABI),
         ];
-        array_walk($result, function (&$value, $key) {
+        array_walk($result, fun (&$value, $key) {
             $value = sprintf('%s/%s', $key, $value);
         });
 

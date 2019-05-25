@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command\Direct;
+package InstagramAPI.Realtime.Command.Direct;
 
-final class SendLike extends SendItem
+final class SendLike : SendItem
 {
-    const TYPE = 'like';
+    val TYPE = 'like';
 
     /**
      * Constructor.
@@ -12,9 +12,9 @@ final class SendLike extends SendItem
      * @param string $threadId
      * @param array  $options
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public function __construct(
+    public fun __construct(
         $threadId,
         array $options = [])
     {

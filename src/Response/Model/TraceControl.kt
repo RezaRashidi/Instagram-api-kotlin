@@ -1,20 +1,20 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * TraceControl.
  *
  * @method int getMaxTraceTimeoutMs()
  * @method bool isMaxTraceTimeoutMs()
- * @method $this setMaxTraceTimeoutMs(int $value)
- * @method $this unsetMaxTraceTimeoutMs()
+ * @method this setMaxTraceTimeoutMs(int $value)
+ * @method this unsetMaxTraceTimeoutMs()
  */
-class TraceControl extends AutoPropertyMapper
+class TraceControl : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'max_trace_timeout_ms'             => 'int',
     ];
 }

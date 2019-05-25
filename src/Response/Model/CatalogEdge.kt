@@ -1,20 +1,20 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * CatalogEdge.
  *
  * @method CatalogNode getNode()
  * @method bool isNode()
- * @method $this setNode(CatalogNode $value)
- * @method $this unsetNode()
+ * @method this setNode(CatalogNode $value)
+ * @method this unsetNode()
  */
-class CatalogEdge extends AutoPropertyMapper
+class CatalogEdge : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'node'          => 'CatalogNode',
     ];
 }

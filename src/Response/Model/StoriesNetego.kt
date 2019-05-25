@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+package InstagramAPI.Response.Model;
 
-use InstagramAPI\AutoPropertyMapper;
+import InstagramAPI.AutoPropertyMapper;
 
 /**
  * StoriesNetego.
@@ -13,16 +13,16 @@ use InstagramAPI\AutoPropertyMapper;
  * @method bool isHideUnitIfSeen()
  * @method bool isId()
  * @method bool isTrackingToken()
- * @method $this setHideUnitIfSeen(string $value)
- * @method $this setId(string $value)
- * @method $this setTrackingToken(string $value)
- * @method $this unsetHideUnitIfSeen()
- * @method $this unsetId()
- * @method $this unsetTrackingToken()
+ * @method this setHideUnitIfSeen(string $value)
+ * @method this setId(string $value)
+ * @method this setTrackingToken(string $value)
+ * @method this unsetHideUnitIfSeen()
+ * @method this unsetId()
+ * @method this unsetTrackingToken()
  */
-class StoriesNetego extends AutoPropertyMapper
+class StoriesNetego : AutoPropertyMapper
 {
-    const JSON_PROPERTY_MAP = [
+    val JSON_PROPERTY_MAP = [
         'tracking_token'    => 'string',
         'hide_unit_if_seen' => 'string',
         'id'                => 'string',

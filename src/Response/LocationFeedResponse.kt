@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response;
+package InstagramAPI.Response;
 
-use InstagramAPI\Response;
+import InstagramAPI.Response;
 
 /**
  * LocationFeedResponse.
@@ -12,9 +12,9 @@ use InstagramAPI\Response;
  * @method string getNextMaxId()
  * @method int[] getNextMediaIds()
  * @method int getNextPage()
- * @method Model\Section[] getSections()
+ * @method Model.Section[] getSections()
  * @method string getStatus()
- * @method Model\_Message[] get_Messages()
+ * @method Model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isMoreAvailable()
  * @method bool isNextMaxId()
@@ -23,27 +23,27 @@ use InstagramAPI\Response;
  * @method bool isSections()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method $this setMessage(mixed $value)
- * @method $this setMoreAvailable(bool $value)
- * @method $this setNextMaxId(string $value)
- * @method $this setNextMediaIds(int[] $value)
- * @method $this setNextPage(int $value)
- * @method $this setSections(Model\Section[] $value)
- * @method $this setStatus(string $value)
- * @method $this set_Messages(Model\_Message[] $value)
- * @method $this unsetMessage()
- * @method $this unsetMoreAvailable()
- * @method $this unsetNextMaxId()
- * @method $this unsetNextMediaIds()
- * @method $this unsetNextPage()
- * @method $this unsetSections()
- * @method $this unsetStatus()
- * @method $this unset_Messages()
+ * @method this setMessage(mixed $value)
+ * @method this setMoreAvailable(bool $value)
+ * @method this setNextMaxId(string $value)
+ * @method this setNextMediaIds(int[] $value)
+ * @method this setNextPage(int $value)
+ * @method this setSections(Model.Section[] $value)
+ * @method this setStatus(string $value)
+ * @method this set_Messages(Model._Message[] $value)
+ * @method this unsetMessage()
+ * @method this unsetMoreAvailable()
+ * @method this unsetNextMaxId()
+ * @method this unsetNextMediaIds()
+ * @method this unsetNextPage()
+ * @method this unsetSections()
+ * @method this unsetStatus()
+ * @method this unset_Messages()
  */
-class LocationFeedResponse extends Response
+class LocationFeedResponse : Response
 {
-    const JSON_PROPERTY_MAP = [
-        'sections'               => 'Model\Section[]',
+    val JSON_PROPERTY_MAP = [
+        'sections'               => 'Model.Section[]',
         'next_page'              => 'int',
         'more_available'         => 'bool',
         'next_media_ids'         => 'int[]',

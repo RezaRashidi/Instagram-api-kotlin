@@ -1,15 +1,15 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command\Direct;
+package InstagramAPI.Realtime.Command.Direct;
 
-final class SendReaction extends SendItem
+final class SendReaction : SendItem
 {
-    const TYPE = 'reaction';
+    val TYPE = 'reaction';
 
-    const REACTION_LIKE = 'like';
+    val REACTION_LIKE = 'like';
 
-    const STATUS_CREATED = 'created';
-    const STATUS_DELETED = 'deleted';
+    val STATUS_CREATED = 'created';
+    val STATUS_DELETED = 'deleted';
 
     /**
      * Constructor.
@@ -20,9 +20,9 @@ final class SendReaction extends SendItem
      * @param string $status
      * @param array  $options
      *
-     * @throws \InvalidArgumentException
+     * @throws .InvalidArgumentException
      */
-    public function __construct(
+    public fun __construct(
         $threadId,
         $threadItemId,
         $reaction,
@@ -32,20 +32,20 @@ final class SendReaction extends SendItem
         parent::__construct($threadId, self::TYPE, $options);
 
         // Handle thread item identifier.
-        $this->_data['item_id'] = $this->_validateThreadItemId($threadItemId);
-        $this->_data['node_type'] = 'item';
+        this._data['item_id'] = this._validateThreadItemId($threadItemId);
+        this._data['node_type'] = 'item';
 
         // Handle reaction type.
-        if (!in_array($reaction, $this->_getSupportedReactions(), true)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a supported reaction.', $reaction));
+        if (!in_array($reaction, this._getSupportedReactions(), true)) {
+            throw new .InvalidArgumentException(sprintf('"%s" is not a supported reaction.', $reaction));
         }
-        $this->_data['reaction_type'] = $reaction;
+        this._data['reaction_type'] = $reaction;
 
         // Handle reaction status.
-        if (!in_array($status, $this->_getSupportedStatuses(), true)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a supported reaction status.', $status));
+        if (!in_array($status, this._getSupportedStatuses(), true)) {
+            throw new .InvalidArgumentException(sprintf('"%s" is not a supported reaction status.', $status));
         }
-        $this->_data['reaction_status'] = $status;
+        this._data['reaction_status'] = $status;
     }
 
     /**
@@ -53,7 +53,7 @@ final class SendReaction extends SendItem
      *
      * @return array
      */
-    protected function _getSupportedReactions()
+    protected fun _getSupportedReactions()
     {
         return [
             self::REACTION_LIKE,
@@ -65,7 +65,7 @@ final class SendReaction extends SendItem
      *
      * @return array
      */
-    protected function _getSupportedStatuses()
+    protected fun _getSupportedStatuses()
     {
         return [
             self::STATUS_CREATED,
