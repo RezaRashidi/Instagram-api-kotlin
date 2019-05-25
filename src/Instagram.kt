@@ -121,7 +121,7 @@ class Instagram : ExperimentsInterface  {
      *
      * @var string
      */
-    public var account_id: String
+     var account_id: String
 
     /**
      * Our current guess about the session status.
