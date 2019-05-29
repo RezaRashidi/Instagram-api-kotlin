@@ -4,16 +4,23 @@ package InstagramAPI
 /*
 * adding summery of change in this file
 *
-* convert static functoin to kotlin code with companion object.
-* use .length method in kotlin instence of strlen() in php
-* use .repeat method in kotlin instence of str_repeat() in php
-* use .chunked method in kotlin instence of str_split() in php
-* change foreach from php to kotlin
+* convert static functoin to kotlin code with companion object,
+* use .length method in kotlin instence of strlen() in php,
+* use .repeat method in kotlin instence of str_repeat() in php,
+* use .chunked method in kotlin instence of str_split() in php,
+* change foreach from php to kotlin,
+* change InvalidArgumentException to IllegalArgumentException,
+* change !is_string(x) to x !is string,
+* chang strpos to indexOf(),
+* chang str_pad to padStart(),
+* chang strrev() to reversed(),
+* chang ltrim() to trimStart(),
+* type casting,
+* simulate bcdiv() fun from php
 *
 *
-* add function to convert binery number to decimal number.
-* bindec() is php default method so i put that name to this function.
-*
+* add bindec() function to convert binery to decimal. this function is default in php,
+* add decbin() function to convert decimal to binery. this function is default in php,
 */
 
 /**
@@ -95,8 +102,8 @@ class InstagramID{
                 var chunks = base2.chunked(6)
 
                 // Process and encode all chunks as base64 using Instagram's alphabet.
-                var encoded = ''
-                (chunks in chunk).foreach {
+                var encoded = ""
+                (var chunk in chunks).foreach {
                     // Interpret the chunk bitstring as an unsigned integer (0-63).
                     var base64 = bindec(chunk)
 
@@ -124,22 +131,24 @@ class InstagramID{
     class fromCode private constructor() {
         companion object {
             fun fromCode(code: String) {
-                if (!is_string(code) || preg_match('/[^A-Za-z0-9\-_]/', code)) {
-                    throw new \InvalidArgumentException('Input must be a valid Instagram shortcode.')
+                if (code !is string || preg_match('/[^A-Za-z0-9\-_]/', code)) { //Todo preg_match
+                    throw IllegalArgumentException("Input must be a valid Instagram shortcode.")
                 }
 
                 // Convert the base64 shortcode to a base2 binary string.
                 base2 = ''
-                for (i = 0, len = strlen(code); i < len; ++i) {
+
+                var i: Int = 0
+                for (i in 0 until code.length step ++i){
                     // Find the base64 value of the current character.
-                    var base64 = strpos(self::BASE64URL_CHARMAP, code[i])
+                    var base64 = this.BASE64URL_CHARMAP.indexOf(code[i])+1
 
                     // Convert it to 6 binary bits (left-padded if needed).
-                    base2 .= str_pad(decbin(base64), 6, '0', STR_PAD_LEFT)
+                    base2 = base2 + decbin(base64).toString.padStart(6, '0')
                 }
 
                 // Now just convert the base2 binary string to a base10 decimal string.
-                var base10 = self::base2to10(base2)
+                var base10 = this.base2to10(base2)
 
                 return base10
             }
@@ -163,46 +172,54 @@ class InstagramID{
      *
      * @return string The binary bits as a string.
      */
-    static fun base10to2(base10, padLeft: Boolean = true)    {
-        base10 = (string) base10
-        if (base10 === '' || preg_match('/[^0-9]/', base10)) {
-            throw new \InvalidArgumentException('Input must be a positive integer.')
-        }
 
-        // Convert the arbitrary-length base10 input to a base2 binary string.
-        // We process as strings to support unlimited input number sizes!
-        base2 = ''
-        do {
-            // Get the last digit.
-            var lastDigit = base10[(strlen(base10) - 1)]
+    class base10to2 private constructor(){
+        companion object {
+            fun base10to2(base10, padLeft: Boolean = true){
+                var base10: String = base10 as String
+                        if (base10 === '' || preg_match('/[^0-9]/', base10)) {
+                            throw IllegalArgumentException("Input must be a positive integer.")
+                        }
 
-            // If the last digit is uneven, put a one (1) in the base2 string,
-            // otherwise use zero (0) instead. Array is 10x faster than bcmod.
-            base2 .= self::BASE10_MOD2[lastDigit]
+                // Convert the arbitrary-length base10 input to a base2 binary string.
+                // We process as strings to support unlimited input number sizes!
+                base2 = ''
+                do {
+                    // Get the last digit.
+                    var lastDigit = base10.get(base10.length - 1)
 
-            // Now divide the whole base10 string by two, discarding decimals.
-            // NOTE: Division is unavoidable when converting decimal to binary,
-            // but at least it's implemented in pure C thanks to the BC library.
-            // An implementation of arbitrary-length division by 2 in just PHP
-            // was ~4x slower. Anyway, my old laptop can do ~1.6 million bcdiv()
-            // per second so this is no problem.
-            base10 = bcdiv($base10, '2', 0)
-        } while (base10 !== '0')
+                    // If the last digit is uneven, put a one (1) in the base2 string,
+                    // otherwise use zero (0) instead. Array is 10x faster than bcmod.
+                    base2 = base2 + this.BASE10_MOD2.get(lastDigit)
 
-        // We built the base2 string backwards, so now we must reverse it.
-        base2 = strrev(base2)
+                    // Now divide the whole base10 string by two, discarding decimals.
+                    // NOTE: Division is unavoidable when converting decimal to binary,
+                    // but at least it's implemented in pure C thanks to the BC library.
+                    // An implementation of arbitrary-length division by 2 in just PHP
+                    // was ~4x slower. Anyway, my old laptop can do ~1.6 million bcdiv()
+                    // per second so this is no problem.
+                    base10 = bcdiv(base10, '2')
+                } while (base10 !== '0')
 
-        // Add or remove proper left-padding with zeroes as needed.
-        if (padLeft) {
-            padAmount = (8 - (strlen(base2) % 8));
-            if (padAmount != 8 || strlen(base2) === 0) {
-                base2 = str_repeat('0', padAmount).base2
+                // We built the base2 string backwards, so now we must reverse it.
+                base2 = base2.reversed()
+
+                // Add or remove proper left-padding with zeroes as needed.
+                if (padLeft) {
+                    padAmount = (8 - (base2.length % 8))
+                    if (padAmount != 8 || base2.length === 0) {
+                        base2 = "0".repeat(padAmount) + base2
+                    }
+                } else {
+                    base2 = base2.trimStart('0')
+                }
+
+                return base2
             }
-        } else {
-            base2 = ltrim(base2, '0')
         }
 
-        return base2
+        constructor():this{}
+
     }
 
     /**
@@ -271,8 +288,9 @@ class InstagramID{
 
 
 
+    // Convert binary to decimal function
     fun bindec(num: Long): Int {
-        var num = num
+        var num: Long = num
         var decimalNumber = 0
         var i = 0
         var remainder: Long
@@ -284,6 +302,30 @@ class InstagramID{
             ++i
         }
         return decimalNumber
+    }
+
+    // Convert decimal to binary function
+    fun decbin(n: Int): Long {
+        var n: Int = n
+        var binaryNumber: Long = 0
+        var remainder: Int
+        var i = 1
+
+        while (n != 0) {
+            remainder = n % 2
+            n /= 2
+            binaryNumber += (remainder * i).toLong()
+            i *= 10
+        }
+        return binaryNumber
+    }
+
+    // simulate bcdiv() from php without spacific decimal
+    fun bcdiv(dividend: String, divisor: String){
+        var num = dividend.div(divisor)
+        var resultNum = "%.0f".format(num)
+        return resultNum
+
     }
 }
 
