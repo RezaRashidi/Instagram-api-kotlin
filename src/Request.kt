@@ -21,70 +21,71 @@ class Request
      *
      * @var .InstagramAPI.Instagram
      */
-    protected $_parent
+    private lateinit var _parent:Instagram
 
     /**
      * Which API version to import for this request.
      *
      * @var int
      */
-    protected $_apiVersion
+    protected var _apiVersion:Int? = null
 
     /**
      * Endpoint URL (absolute or relative) for this request.
      *
      * @var string
      */
-    protected $_url
+    protected var _url :String
+
 
     /**
      * An array of query params.
      *
      * @var array
      */
-    protected $_params
+    protected var _params
 
     /**
      * An array of POST params.
      *
      * @var array
      */
-    protected $_posts
+    protected var _posts
 
     /**
      * An array of POST params keys to exclude from signed body.
      *
      * @var string[]
      */
-    protected $_excludeSigned
+    protected var _excludeSigned
 
     /**
      * Raw request body.
      *
      * @var StreamInterface
      */
-    protected $_body
+    protected var _body
 
     /**
      * An array of files to upload.
      *
      * @var array
      */
-    protected $_files
+    protected var _files
 
     /**
      * An array of HTTP headers to add to the request.
      *
      * @var string[]
      */
-    protected $_headers
+    protected var _headers
 
     /**
      * Whether to add the default headers.
      *
      * @var bool
      */
-    protected $_defaultHeaders
+    protected var _defaultHeaders:Boolean? = null
 
     /**
      * Whether this API call needs authorization.
@@ -93,7 +94,7 @@ class Request
      *
      * @var bool
      */
-    protected $_needsAuth
+    protected var _needsAuth:Boolean? = null
 
     /**
      * Whether this API call needs signing of the POST data.
@@ -102,7 +103,7 @@ class Request
      *
      * @var bool
      */
-    protected $_signedPost
+    protected var _signedPost:Boolean? = null
 
     /**
      * Whether this API call needs signing of the GET params.
@@ -111,7 +112,7 @@ class Request
      *
      * @var bool
      */
-    protected $_signedGet
+    protected var _signedGet:Boolean? = null
 
     /**
      * Whether this API endpoint responds with multiple JSON objects.
@@ -120,7 +121,7 @@ class Request
      *
      * @var bool
      */
-    protected $_isMultiResponse
+    protected var _isMultiResponse:Boolean? = null
 
     /**
      * Whether this API call needs gz-compressing of the POST data.
@@ -129,41 +130,42 @@ class Request
      *
      * @var bool
      */
-    protected $_isBodyCompressed
+    protected var _isBodyCompressed:Boolean? = null
 
     /**
      * Opened file handles.
      *
      * @var resource[]
      */
-    protected $_handles
+    protected var _handles
 
     /**
      * Extra Guzzle options for this request.
      *
      * @var array
      */
-    protected $_guzzleOptions
+    protected var _guzzleOptions
 
     /**
      * Cached HTTP response object.
      *
      * @var HttpResponseInterface
      */
-    protected $_httpResponse
+    protected var _httpResponse
+
 
     /**
      * Constructor.
      *
-     * @param Instagram $parent
-     * @param string    $url
+     * @param Instagram parent
+     * @param string    url
      */
     public fun __construct(
-        .InstagramAPI.Instagram $parent,
-        $url)
+        .InstagramAPI.Instagram parent,
+        url)
     {
-        this._parent = $parent
-        this._url = $url
+        this._parent = parent
+        this._url = url
 
         // Set defaults.
         this._apiVersion = 1
@@ -194,19 +196,19 @@ class Request
     /**
      * Set API version to use.
      *
-     * @param int $apiVersion
+     * @param int apiVersion
      *
      * @throws .InvalidArgumentException In case of unsupported API version.
      *
      * @return self
      */
     public fun setVersion(
-        $apiVersion)
+        apiVersion)
     {
-        if (!array_key_exists($apiVersion, Constants::API_URLS)) {
-            throw .InvalidArgumentException(sprintf('"%d" is not a supported API version.', $apiVersion))
+        if (!array_key_exists(apiVersion, Constants::API_URLS)) {
+            throw .InvalidArgumentException(sprintf('"%d" is not a supported API version.', apiVersion))
         }
-        this._apiVersion = $apiVersion
+        this._apiVersion = apiVersion
 
         return this
     }
@@ -214,21 +216,21 @@ class Request
     /**
      * Add query param to request, overwriting any previous value.
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param string key
+     * @param mixed  value
      *
      * @return self
      */
     public fun addParam(
-        $key,
-        $value)
+        key,
+        value)
     {
-        if ($value === true) {
-            $value = 'true'
-        } elseif ($value === false) {
-            $value = 'false'
+        if (value === true) {
+            value = 'true'
+        } elseif (value === false) {
+            value = 'false'
         }
-        this._params[$key] = $value
+        this._params[key] = value
 
         return this
     }
@@ -236,21 +238,21 @@ class Request
     /**
      * Add POST param to request, overwriting any previous value.
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param string key
+     * @param mixed  value
      *
      * @return self
      */
     public fun addPost(
-        $key,
-        $value)
+        key,
+        value)
     {
-        if ($value === true) {
-            $value = 'true'
-        } elseif ($value === false) {
-            $value = 'false'
+        if (value === true) {
+            value = 'true'
+        } elseif (value === false) {
+            value = 'false'
         }
-        this._posts[$key] = $value
+        this._posts[key] = value
 
         return this
     }
@@ -261,17 +263,17 @@ class Request
      * This adds a POST value and marks it as "never sign it", even if this
      * is a signed request. Instagram sometimes needs a few unsigned values.
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param string key
+     * @param mixed  value
      *
      * @return self
      */
     public fun addUnsignedPost(
-        $key,
-        $value)
+        key,
+        value)
     {
-        this.addPost($key, $value)
-        this._excludeSigned[] = $key
+        this.addPost(key, value)
+        this._excludeSigned[] = key
 
         return this
     }
@@ -279,42 +281,42 @@ class Request
     /**
      * Add an on-disk file to a POST request, which causes this to become a multipart form request.
      *
-     * @param string      $key      Form field name.
-     * @param string      $filepath Path to a file.
-     * @param string|null $filename Filename to import in Content-Disposition header.
-     * @param array       $headers  An associative array of headers.
+     * @param string      key      Form field name.
+     * @param string      filepath Path to a file.
+     * @param string|null filename Filename to import in Content-Disposition header.
+     * @param array       headers  An associative array of headers.
      *
      * @throws .InvalidArgumentException
      *
      * @return self
      */
     public fun addFile(
-        $key,
-        $filepath,
-        $filename = null,
-        array $headers = [])
+        key,
+        filepath,
+        filename = null,
+        array headers = [])
     {
         // Validate
-        if (!is_file($filepath)) {
-            throw .InvalidArgumentException(sprintf('File "%s" does not exist.', $filepath))
+        if (!is_file(filepath)) {
+            throw .InvalidArgumentException(sprintf('File "%s" does not exist.', filepath))
         }
-        if (!is_readable($filepath)) {
-            throw .InvalidArgumentException(sprintf('File "%s" is not readable.', $filepath))
+        if (!is_readable(filepath)) {
+            throw .InvalidArgumentException(sprintf('File "%s" is not readable.', filepath))
         }
-        // Inherit value from $filepath, if not supplied.
-        if ($filename === null) {
-            $filename = $filepath
+        // Inherit value from filepath, if not supplied.
+        if (filename === null) {
+            filename = filepath
         }
-        $filename = basename($filename)
+        filename = basename(filename)
         // Default headers.
-        $headers = $headers + [
+        headers = headers + [
             'Content-Type'              => 'application/octet-stream',
             'Content-Transfer-Encoding' => 'binary',
         ]
-        this._files[$key] = [
-            'filepath' => $filepath,
-            'filename' => $filename,
-            'headers'  => $headers,
+        this._files[key] = [
+            'filepath' => filepath,
+            'filename' => filename,
+            'headers'  => headers,
         ]
 
         return this
@@ -323,29 +325,29 @@ class Request
     /**
      * Add raw file data to a POST request, which causes this to become a multipart form request.
      *
-     * @param string      $key      Form field name.
-     * @param string      $data     File data.
-     * @param string|null $filename Filename to import in Content-Disposition header.
-     * @param array       $headers  An associative array of headers.
+     * @param string      key      Form field name.
+     * @param string      data     File data.
+     * @param string|null filename Filename to import in Content-Disposition header.
+     * @param array       headers  An associative array of headers.
      *
      * @return self
      */
     public fun addFileData(
-        $key,
-        $data,
-        $filename,
-        array $headers = [])
+        key,
+        data,
+        filename,
+        array headers = [])
     {
-        $filename = basename($filename)
+        filename = basename(filename)
         // Default headers.
-        $headers = $headers + [
+        headers = headers + [
             'Content-Type'              => 'application/octet-stream',
             'Content-Transfer-Encoding' => 'binary',
         ]
-        this._files[$key] = [
-            'contents' => $data,
-            'filename' => $filename,
-            'headers'  => $headers,
+        this._files[key] = [
+            'contents' => data,
+            'filename' => filename,
+            'headers'  => headers,
         ]
 
         return this
@@ -363,16 +365,16 @@ class Request
      * it, you must manually format them properly and send us the final string,
      * usually by separating the value string entries with a semicolon.
      *
-     * @param string $key
-     * @param string $value
+     * @param string key
+     * @param string value
      *
      * @return self
      */
     public fun addHeader(
-        $key,
-        $value)
+        key,
+        value)
     {
-        this._headers[$key] = $value
+        this._headers[key] = value
 
         return this
     }
@@ -401,14 +403,14 @@ class Request
     /**
      * Set the "add default headers" flag.
      *
-     * @param bool $flag
+     * @param bool flag
      *
      * @return self
      */
     public fun setAddDefaultHeaders(
-        $flag)
+        flag)
     {
-        this._defaultHeaders = $flag
+        this._defaultHeaders = flag
 
         return this
     }
@@ -416,14 +418,14 @@ class Request
     /**
      * Set the extra Guzzle options for this request.
      *
-     * @param array $guzzleOptions Extra Guzzle options for this request.
+     * @param array guzzleOptions Extra Guzzle options for this request.
      *
      * @return self
      */
     public fun setGuzzleOptions(
-        array $guzzleOptions)
+        array guzzleOptions)
     {
-        this._guzzleOptions = $guzzleOptions
+        this._guzzleOptions = guzzleOptions
 
         return this
     }
@@ -431,14 +433,14 @@ class Request
     /**
      * Set raw request body.
      *
-     * @param StreamInterface $stream
+     * @param StreamInterface stream
      *
      * @return self
      */
     public fun setBody(
-        StreamInterface $stream)
+        StreamInterface stream)
     {
-        this._body = $stream
+        this._body = stream
 
         return this
     }
@@ -446,14 +448,14 @@ class Request
     /**
      * Set authorized request flag.
      *
-     * @param bool $needsAuth
+     * @param bool needsAuth
      *
      * @return self
      */
     public fun setNeedsAuth(
-        $needsAuth)
+        needsAuth)
     {
-        this._needsAuth = $needsAuth
+        this._needsAuth = needsAuth
 
         return this
     }
@@ -461,14 +463,14 @@ class Request
     /**
      * Set signed request data flag.
      *
-     * @param bool $signedPost
+     * @param bool signedPost
      *
      * @return self
      */
     public fun setSignedPost(
-        $signedPost = true)
+        signedPost = true)
     {
-        this._signedPost = $signedPost
+        this._signedPost = signedPost
 
         return this
     }
@@ -476,14 +478,14 @@ class Request
     /**
      * Set signed request params flag.
      *
-     * @param bool $signedGet
+     * @param bool signedGet
      *
      * @return self
      */
     public fun setSignedGet(
-        $signedGet = false)
+        signedGet = false)
     {
-        this._signedGet = $signedGet
+        this._signedGet = signedGet
 
         return this
     }
@@ -491,14 +493,14 @@ class Request
     /**
      * Set the "this API endpoint responds with multiple JSON objects" flag.
      *
-     * @param bool $flag
+     * @param bool flag
      *
      * @return self
      */
     public fun setIsMultiResponse(
-        $flag = false)
+        flag = false)
     {
-        this._isMultiResponse = $flag
+        this._isMultiResponse = flag
 
         return this
     }
@@ -506,16 +508,16 @@ class Request
     /**
      * Set gz-compressed request params flag.
      *
-     * @param bool $isBodyCompressed
+     * @param bool isBodyCompressed
      *
      * @return self
      */
     public fun setIsBodyCompressed(
-        $isBodyCompressed = false)
+        isBodyCompressed = false)
     {
-        this._isBodyCompressed = $isBodyCompressed
+        this._isBodyCompressed = isBodyCompressed
 
-        if ($isBodyCompressed === true) {
+        if (isBodyCompressed === true) {
             this._headers['Content-Encoding'] = 'gzip'
         } elseif (isset(this._headers['Content-Encoding']) && this._headers['Content-Encoding'] === 'gzip') {
             unset(this._headers['Content-Encoding'])
@@ -527,7 +529,7 @@ class Request
     /**
      * Get a Stream for the given file.
      *
-     * @param array $file
+     * @param array file
      *
      * @throws .InvalidArgumentException
      * @throws .RuntimeException
@@ -535,22 +537,22 @@ class Request
      * @return StreamInterface
      */
     protected fun _getStreamForFile(
-        array $file)
+        array file)
     {
-        if (isset($file['contents'])) {
-            $result = stream_for($file['contents']) // Throws.
-        } elseif (isset($file['filepath'])) {
-            $handle = fopen($file['filepath'], 'rb')
-            if ($handle === false) {
-                throw .RuntimeException(sprintf('Could not open file "%s" for reading.', $file['filepath']))
+        if (isset(file['contents'])) {
+            result = stream_for(file['contents']) // Throws.
+        } elseif (isset(file['filepath'])) {
+            handle = fopen(file['filepath'], 'rb')
+            if (handle === false) {
+                throw .RuntimeException(sprintf('Could not open file "%s" for reading.', file['filepath']))
             }
-            this._handles[] = $handle
-            $result = stream_for($handle) // Throws.
+            this._handles[] = handle
+            result = stream_for(handle) // Throws.
         } else {
             throw .InvalidArgumentException('No data for stream creation.')
         }
 
-        return $result
+        return result
     }
 
     /**
@@ -565,29 +567,29 @@ class Request
     {
         // Here is a tricky part: all form data (including files) must be ordered by hash code.
         // So we are creating an index for building POST data.
-        $index = Utils::reorderByHashCode(array_merge(this._posts, this._files))
+        index = Utils::reorderByHashCode(array_merge(this._posts, this._files))
         // Build multipart elements using created index.
-        $elements = []
-        foreach ($index as $key => $value) {
-            if (!isset(this._files[$key])) {
-                $element = [
-                    'name'     => $key,
-                    'contents' => $value,
+        elements = []
+        foreach (index as key => value) {
+            if (!isset(this._files[key])) {
+                element = [
+                    'name'     => key,
+                    'contents' => value,
                 ]
             } else {
-                $file = this._files[$key]
-                $element = [
-                    'name'     => $key,
-                    'contents' => this._getStreamForFile($file), // Throws.
-                    'filename' => isset($file['filename']) ? $file['filename'] : null,
-                    'headers'  => isset($file['headers']) ? $file['headers'] : [],
+                file = this._files[key]
+                element = [
+                    'name'     => key,
+                    'contents' => this._getStreamForFile(file), // Throws.
+                    'filename' => isset(file['filename']) ? file['filename'] : null,
+                    'headers'  => isset(file['headers']) ? file['headers'] : [],
                 ]
             }
-            $elements[] = $element
+            elements[] = element
         }
 
         return MultipartStream( // Throws.
-            $elements,
+            elements,
             Utils::generateMultipartBoundary()
         )
     }
@@ -601,8 +603,8 @@ class Request
             return
         }
 
-        foreach (this._handles as $handle) {
-            Utils::safe_fclose($handle)
+        foreach (this._handles as handle) {
+            Utils::safe_fclose(handle)
         }
         this._resetHandles()
     }
@@ -659,16 +661,16 @@ class Request
         }
         // Switch between multipart (at least one file) or urlencoded body.
         if (!count(this._files)) {
-            $result = this._getUrlencodedBody() // Throws.
+            result = this._getUrlencodedBody() // Throws.
         } else {
-            $result = this._getMultipartBody() // Throws.
+            result = this._getMultipartBody() // Throws.
         }
 
         if (this._isBodyCompressed) {
-            return stream_for(zlib_encode((string) $result, ZLIB_ENCODING_GZIP))
+            return stream_for(zlib_encode((string) result, ZLIB_ENCODING_GZIP))
         }
 
-        return $result
+        return result
     }
 
     /**
@@ -681,10 +683,10 @@ class Request
      */
     protected fun _buildHttpRequest()
     {
-        $endpoint = this._url
+        endpoint = this._url
         // Determine the URI to import (it's either relative to API, or a full URI).
-        if (strncmp($endpoint, 'http:', 5) !== 0 && strncmp($endpoint, 'https:', 6) !== 0) {
-            $endpoint = Constants::API_URLS[this._apiVersion].$endpoint
+        if (strncmp(endpoint, 'http:', 5) !== 0 && strncmp(endpoint, 'https:', 6) !== 0) {
+            endpoint = Constants::API_URLS[this._apiVersion].endpoint
         }
         // Check signed request params flag.
         if (this._signedGet) {
@@ -692,22 +694,22 @@ class Request
         }
         // Generate the final endpoint URL, by adding any custom query params.
         if (count(this._params)) {
-            $endpoint = $endpoint
-                .(strpos($endpoint, '?') === false ? '?' : '&')
+            endpoint = endpoint
+                .(strpos(endpoint, '?') === false ? '?' : '&')
                 .http_build_query(Utils::reorderByHashCode(this._params))
         }
         // Add default headers (if enabled).
         this._addDefaultHeaders()
-        /** @var StreamInterface|null $postData The POST body stream is NULL if GET request instead. */
-        $postData = this._getRequestBody() // Throws.
+        /** @var StreamInterface|null postData The POST body stream is NULL if GET request instead. */
+        postData = this._getRequestBody() // Throws.
         // Determine request method.
-        $method = $postData !== null ? 'POST' : 'GET'
+        method = postData !== null ? 'POST' : 'GET'
         // Build HTTP request object.
         return HttpRequest( // Throws (they didn't document that properly).
-            $method,
-            $endpoint,
+            method,
+            endpoint,
             this._headers,
-            $postData
+            postData
         )
     }
 
@@ -772,8 +774,8 @@ class Request
      */
     public fun getRawResponse()
     {
-        $httpResponse = this.getHttpResponse() // Throws.
-        $body = (string) $httpResponse.getBody()
+        httpResponse = this.getHttpResponse() // Throws.
+        body = (string) httpResponse.getBody()
 
         // Handle API endpoints that respond with multiple JSON objects.
         // NOTE: We simply merge all JSON objects into a single object. This
@@ -782,10 +784,10 @@ class Request
         // And if we get any duplicate properties, then PHP will simply select
         // the latest value for that property (ex: a:1,a:2 is treated as a:2).
         if (this._isMultiResponse) {
-            $body = str_replace("}.r.n{", ',', $body)
+            body = str_replace("}.r.n{", ',', body)
         }
 
-        return $body
+        return body
     }
 
     /**
@@ -793,7 +795,7 @@ class Request
      *
      * This uses a special decoder which handles 64-bit numbers correctly.
      *
-     * @param bool $assoc When FALSE, decode to object instead of associative array.
+     * @param bool assoc When FALSE, decode to object instead of associative array.
      *
      * @throws .InvalidArgumentException
      * @throws .RuntimeException
@@ -802,19 +804,19 @@ class Request
      * @return mixed
      */
     public fun getDecodedResponse(
-        $assoc = true)
+        assoc = true)
     {
         // Important: Special JSON decoder.
         return Client::api_body_decode(
             this.getRawResponse(), // Throws.
-            $assoc
+            assoc
         )
     }
 
     /**
      * Perform the request and map its response data to the provided object.
      *
-     * @param Response $responseObject An instance of a class object whose properties to fill with the response.
+     * @param Response responseObject An instance of a class object whose properties to fill with the response.
      *
      * @throws .InvalidArgumentException
      * @throws .RuntimeException
@@ -823,15 +825,15 @@ class Request
      * @return Response The provided responseObject with all JSON properties filled.
      */
     public fun getResponse(
-        Response $responseObject)
+        Response responseObject)
     {
         // Check for API response success and put its response in the object.
         this._parent.client.mapServerResponse( // Throws.
-            $responseObject,
+            responseObject,
             this.getRawResponse(), // Throws.
             this.getHttpResponse() // Throws.
         )
 
-        return $responseObject
+        return responseObject
     }
 }

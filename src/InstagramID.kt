@@ -35,7 +35,7 @@ class InstagramID{
      *
      * @see https://tools.ietf.org/html/rfc4648
      */
-    val BASE64URL_CHARMAP: String = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
+    val BASE64URL_CHARMAP: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
 
     /**
      * Internal map of the results of all base10 digits (0-9) modulo 2.
