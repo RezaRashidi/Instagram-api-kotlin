@@ -1,28 +1,24 @@
 package InstagramAPI
 
-
 /*
 * adding summery of change in this file
 *
-* convert static functoin to kotlin code with companion object,
-* use .length method in kotlin instence of strlen() in php,
-* use .repeat method in kotlin instence of str_repeat() in php,
-* use .chunked method in kotlin instence of str_split() in php,
 * change foreach from php to kotlin,
 * change InvalidArgumentException to IllegalArgumentException,
-* change !is_string(x) to x !is string,
-* chang strpos to indexOf(),
-* chang str_pad to padStart(),
-* chang strrev() to reversed(),
-* chang ltrim() to trimStart(),
-* type casting,
-* simulate bcdiv() fun from php
-*
-*
-* add bindec() function to convert binery to decimal. this function is default in php,
-* add decbin() function to convert decimal to binery. this function is default in php,
+* change !is_string(x) to x !is string : type casting,
+* convert static functoin to kotlin code with companion object,
+* change strlen()     to .length,
+* change str_repeat() to .repeat,
+* change str_split()  to .chunked,
+* change strpos()     to indexOf(),
+* change str_pad()    to padStart(),
+* change strrev()     to reversed(),
+* change ltrim()      to trimStart(),
+* simulate bcdiv()  fun from php : divid two number and round,
+* simulate bcpow()  fun from php : pow two number and round,
+* simulate bindec() fun from php : convert binery to decimal,
+* simulate decbin() fun from php : convert decimal to binery,
 */
-
 /**
  * Class for converting media IDs to/from Instagram's shortcode system.
  *
@@ -60,9 +56,11 @@ class InstagramID{
      * @var array|null
      */
 
-    public static $bitValueTable = null;
+    companion object {
+        val bitValueTable = null
+    }
 
-    /*
+    /**
      * Converts an Instagram ID to their shortcode system.
      *
      * @param string|int $id The ID to convert. Must be provided as a string if
@@ -230,15 +228,23 @@ class InstagramID{
      * @return array The lookup table, where offset 0 has the value of bit 1,
      *               offset 1 has the value of bit 2, and so on.
      */
-     static fun buildBinaryLookupTable(maxBitCount){
-        var table = []
-        for (bitPosition = 0; bitPosition < maxBitCount; ++bitPosition) {
-            bitValue = bcpow('2', (string) bitPosition, 0)
-            table[] = bitValue
+
+    class buildBinaryLookupTable private constructor(){
+        companion object {
+            fun buildBinaryLookupTable(maxBitCount){
+                var table = ArrayList<String>()
+                var bitPosition = 0
+                for (bitPosition in 0 until maxBitCount step ++bitPosition){
+                    var bitValue = bcpow("2", bitPosition as string)
+                    table.add(bitValue)
+                }
+                return table
+            }
         }
 
-        return table
+        constructor():this{}
     }
+
 
     /**
      * Converts a binary number of any size into a decimal string.
@@ -250,41 +256,51 @@ class InstagramID{
      *
      * @return string The decimal number as a string.
      */
-    static fun base2to10(base2){
-        if (!is_string(base2) || preg_match('/[^01]/', base2)) {
-            throw new \InvalidArgumentException('Input must be a binary string.')
-        }
 
-        // Pre-build a ~80kb RAM table with all values for bits 1-512. Any
-        // higher bits than that will be generated and cached live instead.
-        if (self::$bitValueTable === null) {
-            self::bitValueTable = self::buildBinaryLookupTable(512)
-        }
+    class base2to10 private constructor(){
 
-        // Reverse the bit-sequence so that the least significant bit is first,
-        // which is necessary when converting binary via its bit offset powers.
-        var base2rev = strrev(base2)
-
-        // Process each bit individually and reconstruct the base10 number.
-        base10 = '0'
-        var bits = str_split(base2rev, 1)
-        for (var bitPosition = 0, var len = count(bits); bitPosition < len; ++bitPosition) {
-            if (bits[bitPosition] == '1') {
-                // Look up the bit value in the table or generate if missing.
-                if (isset(self::$bitValueTable[bitPosition])) {
-                    var bitValue = self::$bitValueTable[bitPosition]
-                } else {
-                    var bitValue = bcpow('2', (string) bitPosition, 0)
-                    self::$bitValueTable[bitPosition] = bitValue
+        companion object {
+            fun base2to10(base2){
+                if (base2 !is string || preg_match('/[^01]/', base2)) {// Todo pregMatch
+                    throw IllegalArgumentException("Input must be a binary string.")
                 }
 
-                // Now just add the bit's value to the current total.
-                base10 = bcadd(base10, bitValue, 0)
+                // Pre-build a ~80kb RAM table with all values for bits 1-512. Any
+                // higher bits than that will be generated and cached live instead.
+                if (this.bitValueTable === null) {
+                    this.bitValueTable = this.buildBinaryLookupTable(512)
+                }
+
+                // Reverse the bit-sequence so that the least significant bit is first,
+                // which is necessary when converting binary via its bit offset powers.
+                var base2rev = base2.reversed()
+
+                // Process each bit individually and reconstruct the base10 number.
+                base10 = "0"
+                var bits = base2rev.chunked(1)
+                var len = 0..count(bits)
+                for (bitPosition in len step ++bitPosition){
+                    if (bits.get(bitPosition) == '1') {
+                        // Look up the bit value in the table or generate if missing.
+                        if (this.bitValueTable.get(bitPosition))) {
+                            var bitValue = this.bitValueTable.get(bitPosition)
+                        } else {
+                            var bitValue = bcpow("2", bitPosition as string)
+                            this.bitValueTable[bitPosition] = bitValue
+                        }
+
+                        // Now just add the bit's value to the current total.
+                        base10 = bcadd(base10, bitValue.toSting())
+                    }
+                }
+
+                return base10
             }
         }
 
-        return base10
+        constructor():this{}
     }
+
 
 
 
@@ -327,6 +343,22 @@ class InstagramID{
         return resultNum
 
     }
+
+    // simulate bcpow() from php without specific decimal
+    fun bcpow(base: String, exponent: String): String{
+        val powNum= base.toDouble().pow(exponent.toDouble())
+        var resultNum = "%.0f".format(powNum)
+        return resultNum.toString()
+    }
+
+    // simulate bcpow() from php without specific decimal
+    fun bcadd(left_operand: String, right_operand: String): String{
+        var addNum = left_operand.toDouble() + right_operand.toDouble()
+        var resultNum = "%.0f".format(addNum)
+        return resultNum.toString()
+    }
+
 }
+
 
 
