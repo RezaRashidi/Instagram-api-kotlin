@@ -38,7 +38,7 @@ class InstagramID{
      *
      * @var string
      *
-     * @see https://tools.ietf.org/html/rfc4648
+     * @see (https://tools.ietf.org/html/rfc4648)
      */
     val BASE64URL_CHARMAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
 
@@ -52,35 +52,33 @@ class InstagramID{
      */
     val BASE10_MOD2: List<String> = listOf("0", "1", "0", "1", "0", "1", "0", "1", "0", "1")
 
-    /**
-     * Runtime cached bit-value lookup table.
-     *
-     * @var array|null
-     */
 
     companion object {
-        val bitValueTable = emptyList<String>()
-    }
+        /**
+         * Runtime cached bit-value lookup table.
+         *
+         * @var array|null
+         */
+        private var bitValueTable: MutableList<Int> ?= null
 
-    /**
-     * Converts an Instagram ID to their shortcode system.
-     *
-     * @param string|int $id The ID to convert. Must be provided as a string if
-     *                       it's larger than the size of an integer, which MOST
-     *                       Instagram IDs are!
-     *
-     * @throws \InvalidArgumentException If bad parameters are provided.
-     *
-     * @return string The shortcode.
-     */
 
-    object ToCode{
-        fun toCode(id: String): String {
+        /**
+         * Converts an Instagram ID to their shortcode system.
+         *
+         * @param (string)|int $id The ID to convert. Must be provided as a string if
+         *                       it's larger than the size of an integer, which MOST
+         *                       Instagram IDs are!
+         *
+         * @throws \InvalidArgumentException If bad parameters are provided.
+         *
+         * @return string The shortcode.
+         */
+        fun toCode(id: String, a: InstagramID): String {
             // First we must convert the ID number to a binary string.
             // NOTE: Conversion speed depends on number size. With the most common
             // number size used for Instagram's IDs, my old laptop can do ~18k/s.
 
-             var base2: String = Base10to2.base10to2(id, false)
+            var base2: String = base10to2(id, false)
             // No left-padding. Throws if bad.
 
             if (base2 === "") {
@@ -90,7 +88,7 @@ class InstagramID{
             // Left-pad with leading zeroes to make length a multiple of 6 bits.
             val padAmount: Int = (6 - (base2.length % 6))
             if (padAmount != 6 || base2.length === 0){
-                base2 = "0".repeat(padAmount)
+                base2 = "0".repeat(padAmount) + base2
             }
 
             // Now chunk it in segments of 6 bits at a time. Every 6 "digits" in a
@@ -104,29 +102,26 @@ class InstagramID{
             var encoded = ""
             chunks.forEach {
                 // Interpret the chunk bitstring as an unsigned integer (0-63).
-                var base64 = bindec(it.toLong())
+                val base64 = bindec(it.toLong())
 
                 // Look up that base64 character in Instagram's alphabet.
-                encoded += BASE64URL_CHARMAP[base64]//Todo
+                encoded += a.BASE64URL_CHARMAP[base64]//Todo
             }
 
             return encoded
         }
-    }
 
-    /**
-     * Converts an Instagram shortcode to a numeric ID.
-     *
-     * @param string $code The shortcode.
-     *
-     * @throws \InvalidArgumentException If bad parameters are provided.
-     *
-     * @return string The numeric ID.
-     */
-
-    object FromCode{
+        /**
+         * Converts an Instagram shortcode to a numeric ID.
+         *
+         * @param (string) $code The shortcode.
+         *
+         * @throws \InvalidArgumentException If bad parameters are provided.
+         *
+         * @return string The numeric ID.
+         */
         fun fromCode(code: String): String {
-            if (code !is String || "/[^A-Za-z0-9\\-_]/".toRegex().matches(code)) { //Todo regex
+            if ("/[^A-Za-z0-9\\-_]/".toRegex().matches(code)) { //Todo regex
                 throw IllegalArgumentException("Input must be a valid Instagram shortcode.")
             }
 
@@ -135,37 +130,32 @@ class InstagramID{
 
             for(i in 0 until code.length){//Todo   review step of loop
                 // Find the base64 value of the current character.
-                var base64 = BASE64URL_CHARMAP.indexOf(code[i])+1
+                val base64 = BASE64URL_CHARMAP.indexOf(code[i])+1
 
                 // Convert it to 6 binary bits (left-padded if needed).
                 base2 += decbin(base64).toString().padStart(6, '0')
             }
-
             // Now just convert the base2 binary string to a base10 decimal string.
-
-            return Base2to10.base2to10(base2)
+            return base2to10(base2)
         }
-    }
 
 
-    /**
-     * Converts a decimal number of any size into a binary string.
-     *
-     * @param string|int $base10  The number to convert, in base 10. Must be 0+,
-     *                            a positive integer. And you must pass the
-     *                            number as a string if you want to convert a
-     *                            number that's larger than what fits in your
-     *                            CPU's integer size.
-     * @param bool       $padLeft Whether to pad with leading zeroes.
-     *
-     * @throws \InvalidArgumentException If the input isn't a valid integer.
-     *
-     * @return string The binary bits as a string.
-     */
-
-    object Base10to2{
-        fun base10to2(base10: String, padLeft: Boolean = true): String {
-            var base10 = base10
+        /**
+         * Converts a decimal number of any size into a binary string.
+         *
+         * @param (string)|int $base10  The number to convert, in base 10. Must be 0+,
+         *                            a positive integer. And you must pass the
+         *                            number as a string if you want to convert a
+         *                            number that's larger than what fits in your
+         *                            CPU's integer size.
+         * @param (bool)       $padLeft Whether to pad with leading zeroes.
+         *
+         * @throws \InvalidArgumentException If the input isn't a valid integer.
+         *
+         * @return string The binary bits as a string.
+         */
+        fun base10to2(base10F: String, padLeft: Boolean = true): String {
+            var base10 = base10F
             if (base10 === "" || "/[^0-9]".toRegex().matches(base10)) { //Todo regex
                 throw IllegalArgumentException("Input must be a positive integer.")
             }
@@ -205,50 +195,45 @@ class InstagramID{
 
             return base2
         }
-    }
 
-    /**
-     * Builds a binary bit-value lookup table.
-     *
-     * @param int $maxBitCount Maximum number of bits to calculate values for.
-     *
-     * @return array The lookup table, where offset 0 has the value of bit 1,
-     *               offset 1 has the value of bit 2, and so on.
-     */
 
-    object BuildBinaryLookupTable{
+        /**
+         * Builds a binary bit-value lookup table.
+         *
+         * @param (int) $maxBitCount Maximum number of bits to calculate values for.
+         *
+         * @return array The lookup table, where offset 0 has the value of bit 1,
+         *               offset 1 has the value of bit 2, and so on.
+         */
         fun buildBinaryLookupTable(maxBitCount: Int): MutableList<Int>{
-            var table = mutableListOf<Int>()
+            val table = mutableListOf<Int>()
             for (bitPosition in 0 until maxBitCount){ //Todo   review step of loop
                 val bitValue = bcpow(2, bitPosition)
                 table.add(bitValue)
             }
             return table
         }
-    }
 
 
-    /**
-     * Converts a binary number of any size into a decimal string.
-     *
-     * @param string $base2 The binary bits as a string where each character is
-     *                      either "1" or "0".
-     *
-     * @throws \InvalidArgumentException If the input isn't a binary string.
-     *
-     * @return string The decimal number as a string.
-     */
-
-    object Base2to10{
+        /**
+         * Converts a binary number of any size into a decimal string.
+         *
+         * @param (string) $base2 The binary bits as a string where each character is
+         *                      either "1" or "0".
+         *
+         * @throws \InvalidArgumentException If the input isn't a binary string.
+         *
+         * @return string The decimal number as a string.
+         */
         fun base2to10(base2: String): String {
-            if (base2 !is String || "/[^01]/".toRegex().matches(base2)) {// Todo regex
+            if ("/[^01]/".toRegex().matches(base2)) {// Todo regex
                 throw IllegalArgumentException("Input must be a binary string.")
             }
 
             // Pre-build a ~80kb RAM table with all values for bits 1-512. Any
             // higher bits than that will be generated and cached live instead.
-            if (this.bitValueTable === null) {
-                this.bitValueTable = BuildBinaryLookupTable.buildBinaryLookupTable(512)
+            if (bitValueTable === null) {
+                bitValueTable = buildBinaryLookupTable(512)
             }
 
             // Reverse the bit-sequence so that the least significant bit is first,
@@ -258,25 +243,24 @@ class InstagramID{
             // Process each bit individually and reconstruct the base10 number.
             var base10 = "0"
             val bits = base2rev.chunked(1)
-            for (bitPosition in 0..bits.count()){
+            for (bitPosition in 0..bits.count()){ //Todo  for loop review
                 if (bits[bitPosition] == "1") {
                     // Look up the bit value in the table or generate if missing.
-                    if (this.bitValueTable[bitPosition]) {
-                        var bitValue = this.bitValueTable[bitPosition]
+                    var bitValue: Int
+                    if (bitValueTable[bitPosition]) {
+                        bitValue = bitValueTable[bitPosition]
                     } else {
-                        val bitValue = bcpow(2, bitPosition)
-                        this.bitValueTable[bitPosition] = bitValue
+                        bitValue = bcpow(2, bitPosition)
+                        bitValueTable[bitPosition] = bitValue
                     }
 
                     // Now just add the bit's value to the current total.
                     base10 = bcadd(base10, bitValue.toString())
                 }
             }
-
             return base10
         }
     }
-
 }
 
 // Convert binary to decimal function
