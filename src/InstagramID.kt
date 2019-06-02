@@ -59,7 +59,7 @@ class InstagramID{
          *
          * @var array|null
          */
-        private var bitValueTable: MutableList<Int> ?= null
+        private lateinit var bitValueTable: MutableList<Int>
 
 
         /**
@@ -73,12 +73,12 @@ class InstagramID{
          *
          * @return string The shortcode.
          */
-        fun toCode(id: String, a: InstagramID): String {
+        fun toCode(id: String): String {
             // First we must convert the ID number to a binary string.
             // NOTE: Conversion speed depends on number size. With the most common
             // number size used for Instagram's IDs, my old laptop can do ~18k/s.
 
-            var base2: String = base10to2(id, false)
+            var base2 = base10to2(id, false)
             // No left-padding. Throws if bad.
 
             if (base2 === "") {
@@ -105,7 +105,7 @@ class InstagramID{
                 val base64 = bindec(it.toLong())
 
                 // Look up that base64 character in Instagram's alphabet.
-                encoded += a.BASE64URL_CHARMAP[base64]//Todo
+                encoded += InstagramID().BASE64URL_CHARMAP[base64]//Todo
             }
 
             return encoded
@@ -130,7 +130,7 @@ class InstagramID{
 
             for(i in 0 until code.length){//Todo   review step of loop
                 // Find the base64 value of the current character.
-                val base64 = BASE64URL_CHARMAP.indexOf(code[i])+1
+                val base64 = InstagramID().BASE64URL_CHARMAP.indexOf(code[i])+1
 
                 // Convert it to 6 binary bits (left-padded if needed).
                 base2 += decbin(base64).toString().padStart(6, '0')
@@ -165,11 +165,11 @@ class InstagramID{
             var base2 = ""
             do {
                 // Get the last digit.
-                val lastDigit = base10[base10.length - 1]
+                val lastDigit = base10[base10.length - 1].toInt()
 
                 // If the last digit is uneven, put a one (1) in the base2 string,
                 // otherwise use zero (0) instead. Array is 10x faster than bcmod.
-                base2 += BASE10_MOD2[lastDigit]
+                base2 += InstagramID().BASE10_MOD2[lastDigit]
 
                 // Now divide the whole base10 string by two, discarding decimals.
                 // NOTE: Division is unavoidable when converting decimal to binary,
@@ -247,7 +247,7 @@ class InstagramID{
                 if (bits[bitPosition] == "1") {
                     // Look up the bit value in the table or generate if missing.
                     var bitValue: Int
-                    if (bitValueTable[bitPosition]) {
+                    if (bitValueTable[bitPosition].toString().toBoolean()) { // Todo possible to not work -- maybe return always true
                         bitValue = bitValueTable[bitPosition]
                     } else {
                         bitValue = bcpow(2, bitPosition)
