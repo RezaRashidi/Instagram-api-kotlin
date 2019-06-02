@@ -1,6 +1,5 @@
 package InstagramAPI
 
-import InstagramAPI.Request.Account
 import InstagramAPI.Settings.StorageHandler
 import sun.jvm.hotspot.utilities.Assert.that
 import kotlin.system.exitProcess
@@ -180,43 +179,43 @@ class Instagram : ExperimentsInterface {
     var experiments
 
     /** @var Request.Account Collection of Account related funs. */
-   lateinit var account : Account
+    var account
     /** @var Request.Business Collection of Business related funs. */
-    lateinit var business: InstagramAPI.Request.Business
+    var business
     /** @var Request.Collection Collection of Collections related funs. */
-    lateinit var collection:InstagramAPI.Request.Collection
+    var collection
     /** @var Request.Creative Collection of Creative related funs. */
-    lateinit var creative:InstagramAPI.Request.Creative
+    var creative
     /** @var Request.Direct Collection of Direct related funs. */
-    lateinit var direct:InstagramAPI.Request.Direct
+    var direct
     /** @var Request.Discover Collection of Discover related funs. */
-    lateinit var discover: InstagramAPI.Request.Discover
+    var discover
     /** @var Request.Hashtag Collection of Hashtag related funs. */
-    lateinit var hashtag:  InstagramAPI.Request.Hashtag
+    var hashtag
     /** @var Request.Highlight Collection of Highlight related funs. */
-    lateinit var highlight: InstagramAPI.Request.Highlight
+    var highlight
     /** @var Request.TV Collection of Instagram TV funs. */
-    lateinit var tv:InstagramAPI.Request.TV
+    var tv
     /** @var Request.Internal Collection of Internal (non-public) funs. */
-    lateinit var internal:InstagramAPI.Request.Internal
+    var internal
     /** @var Request.Live Collection of Live related funs. */
-    lateinit var live:InstagramAPI.Request.Live
+    var live
     /** @var Request.Location Collection of Location related funs. */
-    lateinit var location:InstagramAPI.Request.Location
+    var location
     /** @var Request.Media Collection of Media related funs. */
-    lateinit var media:InstagramAPI.Request.Media
+    var media
     /** @var Request.People Collection of People related funs. */
-    lateinit var people:InstagramAPI.Request.People
+    var people
     /** @var Request.Push Collection of Push related funs. */
-    lateinit var push:InstagramAPI.Request.Push
+    var push
     /** @var Request.Shopping Collection of Shopping related funs. */
-    lateinit var shopping: InstagramAPI.Request.Shopping
+    var shopping
     /** @var Request.Story Collection of Story related funs. */
-    lateinit var story:InstagramAPI.Request.Story
+    var story
     /** @var Request.Timeline Collection of Timeline related funs. */
-    lateinit var timeline:InstagramAPI.Request.Timeline
+    var timeline
     /** @var Request.Usertag Collection of Usertag related funs. */
-    lateinit var usertag: InstagramAPI.Request.Usertag
+    var usertag
 
     /**
      *  valructor.
@@ -229,14 +228,16 @@ class Instagram : ExperimentsInterface {
      * @throws .InstagramAPI.Exception.InstagramException
      */
     fun constructor(
-        debug: Boolean = false, truncatedDebug: Boolean = false, storageConfig: Array<String>
+        debug: Boolean = false,
+        truncatedDebug: Boolean = false,
+        storageConfig: Array<String>
     ) {
         // Disable incorrect web usage by default. People should never embed
         // this application emulator library directly in a webpage, or they
         // might caimport all kinds of damage and data corruption. They should
         // import an intermediary layer such as a database or a permanent process!
         // NOTE: People can disable this safety via the flag at their own risk.
-        if (!allowDangerousWebUsageAtMyOwnRisk ) {
+        if (!allowDangerousWebUsageAtMyOwnRisk && (!defined('PHP_SAPI') || PHP_SAPI !== 'cli')) {
             // IMPORTANT: We do NOT throw any exception here for users who are
             // running the library via a webpage. Many webservers are configured
             // to hide all PHP errors, and would just give the user a totally
@@ -273,7 +274,7 @@ class Instagram : ExperimentsInterface {
 
         // Load all fun collections.
 
-        this.account = Account(this)
+        this.account = InstagramAPI.Request.Account(this)
         this.business = InstagramAPI.Request.Business(this)
         this.collection = InstagramAPI.Request.Collection(this)
         this.creative = InstagramAPI.Request.Creative(this)
