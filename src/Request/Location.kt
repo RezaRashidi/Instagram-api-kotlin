@@ -10,7 +10,7 @@ import InstagramAPI.Utils
 /**
  * funs related to finding and exploring locations.
  */
-class Location : RequestCollection
+class Location(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Search for nearby Instagram locations by geographical coordinates.

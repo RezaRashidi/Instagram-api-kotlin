@@ -9,7 +9,7 @@ import InstagramAPI.Response
 /**
  * General content discovery funs which don't fit into any better groups.
  */
-class Discover : RequestCollection
+class Discover(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get Explore tab feed.

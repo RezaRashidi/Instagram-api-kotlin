@@ -31,7 +31,7 @@ import fun GuzzleHttp.Psr7.stream_for
  *
  * THESE funS ARE NOT FOR PUBLIC USE! DO NOT TOUCH!
  */
-class Internal : RequestCollection
+class Internal (instagram:Instagram) : RequestCollection(instagram)
 {
     /** @var int Number of retries for each video chunk. */
     val MAX_CHUNK_RETRIES = 5

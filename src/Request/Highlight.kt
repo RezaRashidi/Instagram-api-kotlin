@@ -8,7 +8,7 @@ import InstagramAPI.Response
 /**
  * funs related to creating and managing highlights of your media.
  */
-class Highlight : RequestCollection
+class Highlight(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get highlight feed.

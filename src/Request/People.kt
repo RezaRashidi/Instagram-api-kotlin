@@ -10,7 +10,7 @@ import InstagramAPI.Utils
 /**
  * funs related to finding, exploring and managing relations with people.
  */
-class People : RequestCollection
+class People(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get details about a specific user via their numerical UserPK ID.

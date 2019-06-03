@@ -7,7 +7,7 @@ import InstagramAPI.Response
 /**
  * funs for managing your push notifications.
  */
-class Push : RequestCollection
+class Push(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Register to the MQTT or GCM push server.

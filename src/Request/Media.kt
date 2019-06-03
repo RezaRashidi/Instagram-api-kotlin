@@ -12,7 +12,7 @@ import InstagramAPI.Utils
  *
  * @see Usertag for funs that let you tag people in media.
  */
-class Media : RequestCollection
+class Media(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get detailed media information.

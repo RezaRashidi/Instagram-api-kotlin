@@ -2,7 +2,6 @@ package InstagramAPI
 
 import InstagramAPI.Request.Account
 import InstagramAPI.Settings.StorageHandler
-import sun.jvm.hotspot.utilities.Assert.that
 import kotlin.system.exitProcess
 
 /**
@@ -229,20 +228,20 @@ class Instagram : ExperimentsInterface {
      * @throws .InstagramAPI.Exception.InstagramException
      */
     fun constructor(
-        debug: Boolean = false, truncatedDebug: Boolean = false, storageConfig: Array<String>
+        debug: Boolean = false, truncatedDebug: Boolean = false, storageConfig: map<String,String>
     ) {
         // Disable incorrect web usage by default. People should never embed
-        // this application emulator library directly in a webpage, or they
-        // might caimport all kinds of damage and data corruption. They should
+        // this application emulator library directly in a web page, or they
+        // might caim port all kinds of damage and data corruption. They should
         // import an intermediary layer such as a database or a permanent process!
         // NOTE: People can disable this safety via the flag at their own risk.
         if (!allowDangerousWebUsageAtMyOwnRisk ) {
             // IMPORTANT: We do NOT throw any exception here for users who are
-            // running the library via a webpage. Many webservers are configured
+            // running the library via a web page. Many web servers are configured
             // to hide all PHP errors, and would just give the user a totally
-            // blank webpage with "Error 500" if we throw here, which would just
+            // blank web page with "Error 500" if we throw here, which would just
             // confimport the newbies even more. Instead, we output a HTML warning
-            // message for people who try to run the library on a webpage.
+            // message for people who try to run the library on a web page.
 
           print("<p>If you truly want to enable <em>incorrect</em> website usage by directly embedding this application emulator library in your page, then you can do that <strong>AT YOUR OWN RISK</strong> by setting the following flag <em>before</em> you create the <code>Instagram()</code> object:</p>")
             print("<p><code>.InstagramAPI.Instagram::allowDangerousWebUsageAtMyOwnRisk = true </code></p>")
@@ -295,18 +294,13 @@ class Instagram : ExperimentsInterface {
 
         // Configure the settings storage and network client.
         val self = this
-        this.settings = Settings.Factory::createHandler(
+        settings = InstagramAPI.Settings.Factory.createHandler(
             storageConfig,
-            [
+            mapOf(
                 // This saves all user session cookies "in bulk" at script exit
                 // or when switching to a different user, so that it only needs
                 // to write cookies to storage a few times per user session:
-                'onCloseUser' => fun(storage) import (self) {
-            if (self.client instanceof Client) {
-                self.client.saveCookieJar()
-            }
-        },
-        ]
+                "onCloseUser" to {(self:this)-> self.client.saveCookieJar()})
         )
         this.client = Client(this)
         this.experiments = []

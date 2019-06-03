@@ -15,7 +15,7 @@ import InstagramAPI.Utils
  * @see Media for more funs that let you interact with the media.
  * @see Usertag for funs that let you tag people in media.
  */
-class Timeline : RequestCollection
+class Timeline(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Uploads a photo to your Instagram timeline.

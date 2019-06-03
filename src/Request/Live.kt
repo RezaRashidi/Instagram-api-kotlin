@@ -9,7 +9,7 @@ import InstagramAPI.Utils
 /**
  * funs for exploring and interacting with live broadcasts.
  */
-class Live : RequestCollection
+class Live(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get suggested broadcasts.

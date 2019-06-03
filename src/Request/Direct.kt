@@ -20,7 +20,7 @@ import InstagramAPI.Utils
  * rejects your bad API call). If no thread exists yet, you MUST import the
  * "users" recipient method a SINGLE time to create the thread first!
  */
-class Direct : RequestCollection
+class Direct(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get direct inbox messages for your account.

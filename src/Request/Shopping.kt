@@ -8,7 +8,7 @@ import InstagramAPI.Response
 /**
  * funs related to Shopping and catalogs.
  */
-class Shopping : RequestCollection
+class Shopping(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get on tag product information.

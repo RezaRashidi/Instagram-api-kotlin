@@ -3,15 +3,11 @@
 package InstagramAPI.Request
 
 import InstagramAPI.Instagram
-import InstagramAPI.Request
 import InstagramAPI.Utils
-import java.lang.reflect.Constructor
-
 /**
  * Base class for grouping multiple related request funs.
  */
-class RequestCollection
-{
+open class RequestCollection() {
     /** @var Instagram The parent class instance we belong to. */
     public lateinit  var ig:Instagram
 
@@ -20,8 +16,7 @@ class RequestCollection
      *
      * @param Instagram parent The parent class instance we belong to.
      */
-    fun Constructor(parent)
-    {
+   constructor(parent:Instagram) : this() {
         this.ig = parent
     }
 

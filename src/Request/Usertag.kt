@@ -7,7 +7,7 @@ import InstagramAPI.Response
 /**
  * funs related to managing and exploring user tags in media.
  */
-class Usertag : RequestCollection
+class Usertag(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Tag a user in a media item.

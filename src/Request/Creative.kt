@@ -8,7 +8,7 @@ import InstagramAPI.Response
 /**
  * funs related to Instagram's "creative assets", such as stickers.
  */
-class Creative : RequestCollection
+class Creative(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get sticker assets.

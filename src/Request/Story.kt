@@ -12,7 +12,7 @@ import InstagramAPI.Utils
  *
  * @see Media for more funs that let you interact with the media.
  */
-class Story : RequestCollection
+class Story(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Uploads a photo to your Instagram story.

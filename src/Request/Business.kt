@@ -10,7 +10,7 @@ import InstagramAPI.Response
  *
  * These only work if you have a Business account.
  */
-class Business : RequestCollection
+class Business(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get insights.

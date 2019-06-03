@@ -12,7 +12,7 @@ import InstagramAPI.Response
  * @see Media for funs related to saving/unsaving media items.
  * @see https://help.instagram.com/274531543007118
  */
-class Collection : RequestCollection
+class Collection(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get a list of all of your collections.

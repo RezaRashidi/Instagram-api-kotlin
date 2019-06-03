@@ -8,7 +8,7 @@ import InstagramAPI.Response
 /**
  * funs related to Instagram TV.
  */
-class TV : RequestCollection
+class TV(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get Instagram TV guide.

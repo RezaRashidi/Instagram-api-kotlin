@@ -1,15 +1,13 @@
-
-
 package InstagramAPI.Request
 
 import InstagramAPI.Exception.InternalException
-import InstagramAPI.Exception.SettingsException
+import InstagramAPI.Instagram
 import InstagramAPI.Response
 
 /**
  * Account-related funs, such as profile editing and security.
  */
-class Account : RequestCollection
+class Account(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get details about the currently logged in account.

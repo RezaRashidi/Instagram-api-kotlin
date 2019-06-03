@@ -10,7 +10,7 @@ import InstagramAPI.Utils
 /**
  * funs related to finding and exploring hashtags.
  */
-class Hashtag : RequestCollection
+class Hashtag(instagram:Instagram) : RequestCollection(instagram)
 {
     /**
      * Get detailed hashtag information.
