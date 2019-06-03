@@ -4,28 +4,22 @@ interface ExperimentsInterface {
     /**
      * Checks if a parameter is enabled in the given experiment.
      *
-     * @param string $experiment
-     * @param string $param
-     * @param bool   $default
+     * @param (string) $experiment
+     * @param (string) $param
+     * @param (bool)   $default
      *
      * @return bool
      */
-    public fun isExperimentEnabled(
-            experiment,
-            param,
-            default = false)
+    fun isExperimentEnabled(experiment: String, param: String, default: Boolean = false): Boolean
 
     /**
      * Get a parameter value for the given experiment.
      *
-     * @param string $experiment
-     * @param string $param
-     * @param mixed  $default
+     * @param (string) $experiment
+     * @param (string) $param
+     * @param (bool)   $default
      *
      * @return mixed
      */
-    public fun getExperimentParam(
-            experiment,
-            param,
-            default = null)
+     fun getExperimentParam(experiment: String, param: String, default: Boolean ?= null)
 }
