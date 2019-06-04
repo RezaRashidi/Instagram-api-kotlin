@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class CommentResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'comment' => 'Model.Comment',
+        "comment" => "Model.Comment",
     ]
 }

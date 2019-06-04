@@ -35,11 +35,11 @@ import InstagramAPI.AutoPropertyMapper
 class PushSettings : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'name'     => '',
-        'eligible' => '',
-        'title'    => '',
-        'example'  => '',
-        'options'  => '',
-        'checked'  => '',
+        "name"     => "",
+        "eligible" => "",
+        "title"    => "",
+        "example"  => "",
+        "options"  => "",
+        "checked"  => "",
     ]
 }

@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class OnTagProductResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'product_item'              => 'Model.Product',
-        'merchant'                  => 'Model.User',
-        'other_product_items'       => 'Model.Product[]',
+        "product_item"              => "Model.Product",
+        "merchant"                  => "Model.User",
+        "other_product_items"       => "Model.Product[]",
     ]
 }

@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class FelixShare : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'video' => 'Item[]',
-        'text'  => 'string',
+        "video" => "Item[]",
+        "text"  => "string",
     ]
 }

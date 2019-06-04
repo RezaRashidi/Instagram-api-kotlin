@@ -39,12 +39,12 @@ import InstagramAPI.AutoPropertyMapper
 class CatalogNode : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'id'                            => 'string',
-        'full_price'                    => '',
-        'current_price'                 => '',
-        'name'                          => 'string',
-        'description'                   => 'string',
-        'main_image_with_safe_fallback' => '',
-        'retailer_id'                   => 'string',
+        "id"                            => "string",
+        "full_price"                    => "",
+        "current_price"                 => "",
+        "name"                          => "string",
+        "description"                   => "string",
+        "main_image_with_safe_fallback" => "",
+        "retailer_id"                   => "string",
     ]
 }

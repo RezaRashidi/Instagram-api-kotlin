@@ -7,7 +7,7 @@ import InstagramAPI.Realtime.SubscriptionInterface
 
 abstract class GraphQlSubscription : SubscriptionInterface
 {
-    val TEMPLATE = '1/graphqlsubscriptions/%s/%s'
+    val TEMPLATE = "1/graphqlsubscriptions/%s/%s"
 
     /** @var string */
     protected $_queryId
@@ -41,6 +41,6 @@ abstract class GraphQlSubscription : SubscriptionInterface
     /** {@inheritdoc} */
     public fun __toString()
     {
-        return sprintf(self::TEMPLATE, this._queryId, json_encode(['input_data' => this._inputData]))
+        return sprintf(self::TEMPLATE, this._queryId, json_encode(["input_data" => this._inputData]))
     }
 }

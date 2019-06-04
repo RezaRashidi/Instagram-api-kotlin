@@ -42,12 +42,12 @@ import InstagramAPI.AutoPropertyMapper
 class Sticker : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'x'         => 'float',
-        'y'         => 'float',
-        'z'         => 'float', // Unused by IG for now. So far it's always int(0).
-        'width'     => 'float',
-        'height'    => 'float',
-        'rotation'  => 'float',
-        'is_pinned' => 'int',
+        "x"         => "float",
+        "y"         => "float",
+        "z"         => "float", // Unused by IG for now. So far it"s always int(0).
+        "width"     => "float",
+        "height"    => "float",
+        "rotation"  => "float",
+        "is_pinned" => "int",
     ]
 }

@@ -82,10 +82,10 @@ class UpdateSubscriptions : CommandInterface
     {
         $result = []
         if (count(this._subscribe)) {
-            $result['sub'] = this._prepareSubscriptions(this._subscribe)
+            $result["sub"] = this._prepareSubscriptions(this._subscribe)
         }
         if (count(this._unsubscribe)) {
-            $result['unsub'] = this._prepareSubscriptions(this._unsubscribe)
+            $result["unsub"] = this._prepareSubscriptions(this._unsubscribe)
         }
 
         return $result

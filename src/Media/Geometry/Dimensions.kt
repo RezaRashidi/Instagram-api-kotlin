@@ -81,13 +81,13 @@ class Dimensions
      */
     public fun withRescaling(
         $newScale = 1.0,
-        $roundingFunc = 'round')
+        $roundingFunc = "round")
     {
         if (!is_float($newScale) && !is_int($newScale)) {
-            throw .InvalidArgumentException('The scale must be a float or integer.')
+            throw .InvalidArgumentException("The scale must be a float or integer.")
         }
-        if ($roundingFunc !== 'round' && $roundingFunc !== 'floor' && $roundingFunc !== 'ceil') {
-            throw .InvalidArgumentException(sprintf('Invalid rounding fun "%s".', $roundingFunc))
+        if ($roundingFunc !== "round" && $roundingFunc !== "floor" && $roundingFunc !== "ceil") {
+            throw .InvalidArgumentException(sprintf("Invalid rounding fun "%s".", $roundingFunc))
         }
 
         $newWidth = (int) $roundingFunc($newScale * this._width)

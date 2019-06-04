@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class TopLive : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'broadcast_owners' => 'User[]',
-        'ranked_position'  => '',
+        "broadcast_owners" => "User[]",
+        "ranked_position"  => "",
     ]
 }

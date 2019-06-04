@@ -47,11 +47,11 @@ import InstagramAPI.Response
 class DirectShareInboxResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'shares'          => '',
-        'max_id'          => 'string',
-        'new_shares'      => '',
-        'patches'         => '',
-        'last_counted_at' => '',
-        'new_shares_info' => '',
+        "shares"          => "",
+        "max_id"          => "string",
+        "new_shares"      => "",
+        "patches"         => "",
+        "last_counted_at" => "",
+        "new_shares_info" => "",
     ]
 }

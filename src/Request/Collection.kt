@@ -26,10 +26,10 @@ class Collection(instagram:Instagram) : RequestCollection(instagram)
     public fun getList(
         $maxId = null)
     {
-        $request = this.ig.request('collections/list/')
-        .addParam('collection_types', '["ALL_MEDIA_AUTO_COLLECTION","MEDIA","PRODUCT_AUTO_COLLECTION"]')
+        $request = this.ig.request("collections/list/")
+        .addParam("collection_types", "["ALL_MEDIA_AUTO_COLLECTION","MEDIA","PRODUCT_AUTO_COLLECTION"]")
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId)
+            $request.addParam("max_id", $maxId)
         }
 
         return $request.getResponse(Response.GetCollectionsListResponse())
@@ -51,7 +51,7 @@ class Collection(instagram:Instagram) : RequestCollection(instagram)
     {
         $request = this.ig.request("feed/collection/{$collectionId}/")
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId)
+            $request.addParam("max_id", $maxId)
         }
 
         return $request.getResponse(Response.CollectionFeedResponse())
@@ -61,7 +61,7 @@ class Collection(instagram:Instagram) : RequestCollection(instagram)
      * Create a collection of your bookmarked (saved) media.
      *
      * @param string $name       Name of the collection.
-     * @param string $moduleName (optional) From which app module (page) you're performing this action.
+     * @param string $moduleName (optional) From which app module (page) you"re performing this action.
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -69,15 +69,15 @@ class Collection(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun create(
         $name,
-        $moduleName = 'collection_create')
+        $moduleName = "collection_create")
     {
-        return this.ig.request('collections/create/')
-            .addPost('module_name', $moduleName)
-            .addPost('collection_visibility', '0') //Instagram is planning for public collections soon
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uid', this.ig.account_id)
-            .addPost('name', $name)
-            .addPost('_uuid', this.ig.uuid)
+        return this.ig.request("collections/create/")
+            .addPost("module_name", $moduleName)
+            .addPost("collection_visibility", "0") //Instagram is planning for public collections soon
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uid", this.ig.account_id)
+            .addPost("name", $name)
+            .addPost("_uuid", this.ig.uuid)
             .getResponse(Response.CreateCollectionResponse())
     }
 
@@ -94,9 +94,9 @@ class Collection(instagram:Instagram) : RequestCollection(instagram)
         $collectionId)
     {
         return this.ig.request("collections/{$collectionId}/delete/")
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
             .getResponse(Response.DeleteCollectionResponse())
     }
 
@@ -105,10 +105,10 @@ class Collection(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string $collectionId The collection ID.
      * @param array  $params       User-provided key-value pairs:
-     *                             string 'name',
-     *                             string 'cover_media_id',
-     *                             string[] 'add_media',
-     *                             string 'module_name' (optional).
+     *                             string "name",
+     *                             string "cover_media_id",
+     *                             string[] "add_media",
+     *                             string "module_name" (optional).
      *
      * @throws .InvalidArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
@@ -120,27 +120,27 @@ class Collection(instagram:Instagram) : RequestCollection(instagram)
         array $params)
     {
         $postData = []
-        if (isset($params['name']) && $params['name'] !== '') {
-            $postData['name'] = $params['name']
+        if (isset($params["name"]) && $params["name"] !== "") {
+            $postData["name"] = $params["name"]
         }
-        if (!empty($params['cover_media_id'])) {
-            $postData['cover_media_id'] = $params['cover_media_id']
+        if (!empty($params["cover_media_id"])) {
+            $postData["cover_media_id"] = $params["cover_media_id"]
         }
-        if (!empty($params['add_media']) && is_array($params['add_media'])) {
-            $postData['added_media_ids'] = json_encode(array_values($params['add_media']))
-            if (isset($params['module_name']) && $params['module_name'] !== '') {
-                $postData['module_name'] = $params['module_name']
+        if (!empty($params["add_media"]) && is_array($params["add_media"])) {
+            $postData["added_media_ids"] = json_encode(array_values($params["add_media"]))
+            if (isset($params["module_name"]) && $params["module_name"] !== "") {
+                $postData["module_name"] = $params["module_name"]
             } else {
-                $postData['module_name'] = 'feed_saved_add_to_collection'
+                $postData["module_name"] = "feed_saved_add_to_collection"
             }
         }
         if (empty($postData)) {
-            throw .InvalidArgumentException('You must provide a name or at least one media ID.')
+            throw .InvalidArgumentException("You must provide a name or at least one media ID.")
         }
         $request = this.ig.request("collections/{$collectionId}/edit/")
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
 
         foreach ($postData as $key => $value) {
             $request.addPost($key, $value)
@@ -156,8 +156,8 @@ class Collection(instagram:Instagram) : RequestCollection(instagram)
      * fun only accepts a single media ID.
      *
      * @param string[] $collectionIds Array with one or more collection IDs to remove the item from.
-     * @param string   $mediaId       The media ID in Instagram's internal format (ie "3482384834_43294").
-     * @param string   $moduleName    (optional) From which app module (page) you're performing this action.
+     * @param string   $mediaId       The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string   $moduleName    (optional) From which app module (page) you"re performing this action.
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -166,15 +166,15 @@ class Collection(instagram:Instagram) : RequestCollection(instagram)
     public fun removeMedia(
         array $collectionIds,
         $mediaId,
-        $moduleName = 'feed_contextual_saved_collections')
+        $moduleName = "feed_contextual_saved_collections")
     {
         return this.ig.request("media/{$mediaId}/save/")
-            .addPost('module_name', $moduleName)
-            .addPost('removed_collection_ids', json_encode(array_values($collectionIds)))
-            .addPost('radio_type', 'wifi-none')
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost("module_name", $moduleName)
+            .addPost("removed_collection_ids", json_encode(array_values($collectionIds)))
+            .addPost("radio_type", "wifi-none")
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
             .getResponse(Response.EditCollectionResponse())
     }
 }

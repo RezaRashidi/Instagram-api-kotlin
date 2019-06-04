@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class Usertag : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'in'           => 'In[]',
-        'photo_of_you' => 'bool',
+        "in"           => "In[]",
+        "photo_of_you" => "bool",
     ]
 }

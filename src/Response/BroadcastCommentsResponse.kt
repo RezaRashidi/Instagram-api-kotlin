@@ -75,21 +75,21 @@ import InstagramAPI.Response
 class BroadcastCommentsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'comments'                   => 'Model.Comment[]',
-        'comment_count'              => 'int',
-        'live_seconds_per_comment'   => 'int',
-        'has_more_headload_comments' => 'bool',
+        "comments"                   => "Model.Comment[]",
+        "comment_count"              => "int",
+        "live_seconds_per_comment"   => "int",
+        "has_more_headload_comments" => "bool",
         /*
          * NOTE: Instagram sends "True" or "False" as a string in this property.
          */
-        'is_first_fetch'             => 'string',
-        'comment_likes_enabled'      => 'bool',
-        'pinned_comment'             => 'Model.Comment',
-        'system_comments'            => 'Model.Comment[]',
-        'has_more_comments'          => 'bool',
-        'caption_is_edited'          => 'bool',
-        'caption'                    => '',
-        'comment_muted'              => 'int',
-        'media_header_display'       => 'string',
+        "is_first_fetch"             => "string",
+        "comment_likes_enabled"      => "bool",
+        "pinned_comment"             => "Model.Comment",
+        "system_comments"            => "Model.Comment[]",
+        "has_more_comments"          => "bool",
+        "caption_is_edited"          => "bool",
+        "caption"                    => "",
+        "comment_muted"              => "int",
+        "media_header_display"       => "string",
     ]
 }

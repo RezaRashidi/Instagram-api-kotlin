@@ -34,11 +34,11 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
     public fun getInbox(
         $cursorId = null)
     {
-        $request = this.ig.request('direct_v2/inbox/')
-            .addParam('persistentBadging', 'true')
-            .addParam('use_unified_inbox', 'true')
+        $request = this.ig.request("direct_v2/inbox/")
+            .addParam("persistentBadging", "true")
+            .addParam("use_unified_inbox", "true")
         if ($cursorId !== null) {
-            $request.addParam('cursor', $cursorId)
+            $request.addParam("cursor", $cursorId)
         }
 
         return $request.getResponse(Response.DirectInboxResponse())
@@ -56,11 +56,11 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
     public fun getPendingInbox(
         $cursorId = null)
     {
-        $request = this.ig.request('direct_v2/pending_inbox/')
-            .addParam('persistentBadging', 'true')
-            .addParam('use_unified_inbox', 'true')
+        $request = this.ig.request("direct_v2/pending_inbox/")
+            .addParam("persistentBadging", "true")
+            .addParam("use_unified_inbox", "true")
         if ($cursorId !== null) {
-            $request.addParam('cursor', $cursorId)
+            $request.addParam("cursor", $cursorId)
         }
 
         return $request.getResponse(Response.DirectPendingInboxResponse())
@@ -80,22 +80,22 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         array $threads)
     {
         if (!count($threads)) {
-            throw .InvalidArgumentException('Please provide at least one thread to approve.')
+            throw .InvalidArgumentException("Please provide at least one thread to approve.")
         }
         // Validate threads.
         foreach ($threads as &$thread) {
             if (!is_scalar($thread)) {
-                throw .InvalidArgumentException('Thread identifier must be scalar.')
+                throw .InvalidArgumentException("Thread identifier must be scalar.")
             } elseif (!ctype_digit($thread) && (!is_int($thread) || $thread < 0)) {
-                throw .InvalidArgumentException(sprintf('"%s" is not a valid thread identifier.', $thread))
+                throw .InvalidArgumentException(sprintf(""%s" is not a valid thread identifier.", $thread))
             }
             $thread = (string) $thread
         }
         unset($thread)
         // Choose appropriate endpoint.
         if (count($threads) > 1) {
-            $request = this.ig.request('direct_v2/threads/approve_multiple/')
-                .addPost('thread_ids', json_encode($threads))
+            $request = this.ig.request("direct_v2/threads/approve_multiple/")
+                .addPost("thread_ids", json_encode($threads))
         } else {
             /** @var string $thread */
             $thread = reset($threads)
@@ -103,8 +103,8 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         }
 
         return $request
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
             .setSignedPost(false)
             .getResponse(Response.GenericResponse())
     }
@@ -123,22 +123,22 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         array $threads)
     {
         if (!count($threads)) {
-            throw .InvalidArgumentException('Please provide at least one thread to decline.')
+            throw .InvalidArgumentException("Please provide at least one thread to decline.")
         }
         // Validate threads.
         foreach ($threads as &$thread) {
             if (!is_scalar($thread)) {
-                throw .InvalidArgumentException('Thread identifier must be scalar.')
+                throw .InvalidArgumentException("Thread identifier must be scalar.")
             } elseif (!ctype_digit($thread) && (!is_int($thread) || $thread < 0)) {
-                throw .InvalidArgumentException(sprintf('"%s" is not a valid thread identifier.', $thread))
+                throw .InvalidArgumentException(sprintf(""%s" is not a valid thread identifier.", $thread))
             }
             $thread = (string) $thread
         }
         unset($thread)
         // Choose appropriate endpoint.
         if (count($threads) > 1) {
-            $request = this.ig.request('direct_v2/threads/decline_multiple/')
-                .addPost('thread_ids', json_encode($threads))
+            $request = this.ig.request("direct_v2/threads/decline_multiple/")
+                .addPost("thread_ids", json_encode($threads))
         } else {
             /** @var string $thread */
             $thread = reset($threads)
@@ -146,8 +146,8 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         }
 
         return $request
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
             .setSignedPost(false)
             .getResponse(Response.GenericResponse())
     }
@@ -161,9 +161,9 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun declineAllPendingThreads()
     {
-        return this.ig.request('direct_v2/threads/decline_all/')
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uuid', this.ig.uuid)
+        return this.ig.request("direct_v2/threads/decline_all/")
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
             .setSignedPost(false)
             .getResponse(Response.GenericResponse())
     }
@@ -177,7 +177,7 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getPresences()
     {
-        return this.ig.request('direct_v2/get_presence/')
+        return this.ig.request("direct_v2/get_presence/")
             .getResponse(Response.PresencesResponse())
     }
 
@@ -201,18 +201,18 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $query = null)
     {
         try {
-            $request = this.ig.request('direct_v2/ranked_recipients/')
-                .addParam('mode', $mode)
-                .addParam('show_threads', $showThreads ? 'true' : 'false')
-                .addParam('use_unified_inbox', 'true')
+            $request = this.ig.request("direct_v2/ranked_recipients/")
+                .addParam("mode", $mode)
+                .addParam("show_threads", $showThreads ? "true" : "false")
+                .addParam("use_unified_inbox", "true")
             if ($query !== null) {
-                $request.addParam('query', $query)
+                $request.addParam("query", $query)
             }
 
             return $request
                 .getResponse(Response.DirectRankedRecipientsResponse())
         } catch (ThrottledException $e) {
-            // Throttling is so common that we'll simply return NULL in that case.
+            // Throttling is so common that we"ll simply return NULL in that case.
             return null
         }
     }
@@ -231,18 +231,18 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         array $users)
     {
         if (!count($users)) {
-            throw .InvalidArgumentException('Please provide at least one participant.')
+            throw .InvalidArgumentException("Please provide at least one participant.")
         }
         foreach ($users as $user) {
             if (!is_scalar($user)) {
-                throw .InvalidArgumentException('User identifier must be scalar.')
+                throw .InvalidArgumentException("User identifier must be scalar.")
             }
             if (!ctype_digit($user) && (!is_int($user) || $user < 0)) {
-                throw .InvalidArgumentException(sprintf('"%s" is not a valid user identifier.', $user))
+                throw .InvalidArgumentException(sprintf(""%s" is not a valid user identifier.", $user))
             }
         }
-        $request = this.ig.request('direct_v2/threads/get_by_participants/')
-            .addParam('recipient_users', '['.implode(',', $users).']')
+        $request = this.ig.request("direct_v2/threads/get_by_participants/")
+            .addParam("recipient_users", "[".implode(",", $users)."]")
 
         return $request.getResponse(Response.DirectThreadResponse())
     }
@@ -262,9 +262,9 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $cursorId = null)
     {
         $request = this.ig.request("direct_v2/threads/$threadId/")
-            .addParam('use_unified_inbox', 'true')
+            .addParam("use_unified_inbox", "true")
         if ($cursorId !== null) {
-            $request.addParam('cursor', $cursorId)
+            $request.addParam("cursor", $cursorId)
         }
 
         return $request.getResponse(Response.DirectThreadResponse())
@@ -291,7 +291,7 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
     {
         $request = this.ig.request("direct_v2/visual_threads/{$threadId}/")
         if ($cursorId !== null) {
-            $request.addParam('cursor', $cursorId)
+            $request.addParam("cursor", $cursorId)
         }
 
         return $request.getResponse(Response.DirectVisualThreadResponse())
@@ -312,9 +312,9 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $title)
     {
         return this.ig.request("direct_v2/threads/{$threadId}/update_title/")
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('title', trim($title))
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("title", trim($title))
             .setSignedPost(false)
             .getResponse(Response.DirectThreadResponse())
     }
@@ -332,8 +332,8 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $threadId)
     {
         return this.ig.request("direct_v2/threads/{$threadId}/mute/")
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
             .setSignedPost(false)
             .getResponse(Response.GenericResponse())
     }
@@ -351,8 +351,8 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $threadId)
     {
         return this.ig.request("direct_v2/threads/{$threadId}/unmute/")
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
             .setSignedPost(false)
             .getResponse(Response.GenericResponse())
     }
@@ -378,23 +378,23 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $threadTitle)
     {
         if (count($userIds) < 2) {
-            throw .InvalidArgumentException('You must invite at least 2 users to create a group.')
+            throw .InvalidArgumentException("You must invite at least 2 users to create a group.")
         }
         foreach ($userIds as &$user) {
             if (!is_scalar($user)) {
-                throw .InvalidArgumentException('User identifier must be scalar.')
+                throw .InvalidArgumentException("User identifier must be scalar.")
             } elseif (!ctype_digit($user) && (!is_int($user) || $user < 0)) {
-                throw .InvalidArgumentException(sprintf('"%s" is not a valid user identifier.', $user))
+                throw .InvalidArgumentException(sprintf(""%s" is not a valid user identifier.", $user))
             }
             $user = (string) $user
         }
 
-        $request = this.ig.request('direct_v2/create_group_thread/')
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('recipient_users', json_encode($userIds))
-            .addPost('_uid', this.ig.account_id)
-            .addPost('thread_title', $threadTitle)
+        $request = this.ig.request("direct_v2/create_group_thread/")
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("recipient_users", json_encode($userIds))
+            .addPost("_uid", this.ig.account_id)
+            .addPost("thread_title", $threadTitle)
 
         return $request.getResponse(Response.DirectCreateGroupThreadResponse())
     }
@@ -415,21 +415,21 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         array $users)
     {
         if (!count($users)) {
-            throw .InvalidArgumentException('Please provide at least one user.')
+            throw .InvalidArgumentException("Please provide at least one user.")
         }
         foreach ($users as &$user) {
             if (!is_scalar($user)) {
-                throw .InvalidArgumentException('User identifier must be scalar.')
+                throw .InvalidArgumentException("User identifier must be scalar.")
             } elseif (!ctype_digit($user) && (!is_int($user) || $user < 0)) {
-                throw .InvalidArgumentException(sprintf('"%s" is not a valid user identifier.', $user))
+                throw .InvalidArgumentException(sprintf(""%s" is not a valid user identifier.", $user))
             }
             $user = (string) $user
         }
 
         return this.ig.request("direct_v2/threads/{$threadId}/add_user/")
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('user_ids', json_encode($users))
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("user_ids", json_encode($users))
+            .addPost("_uuid", this.ig.uuid)
             .setSignedPost(false)
             .getResponse(Response.DirectThreadResponse())
     }
@@ -447,8 +447,8 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $threadId)
     {
         return this.ig.request("direct_v2/threads/{$threadId}/leave/")
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
             .setSignedPost(false)
             .getResponse(Response.GenericResponse())
     }
@@ -466,15 +466,15 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $threadId)
     {
         return this.ig.request("direct_v2/threads/{$threadId}/hide/")
-            .addPost('use_unified_inbox', 'true')
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("use_unified_inbox", "true")
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
             .setSignedPost(false)
             .getResponse(Response.GenericResponse())
     }
 
     /**
-     * Send a direct text message to a user's inbox.
+     * Send a direct text message to a user"s inbox.
      *
      * @param array  $recipients An array with "users" or "thread" keys.
      *                           To start a thread, provide "users" as an array
@@ -495,22 +495,22 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         array $options = [])
     {
         if (!strlen($text)) {
-            throw .InvalidArgumentException('Text can not be empty.')
+            throw .InvalidArgumentException("Text can not be empty.")
         }
 
         $urls = Utils::extractURLs($text)
         if (count($urls)) {
             /** @var Response.DirectSendItemResponse $result */
-            $result = this._sendDirectItem('links', $recipients, array_merge($options, [
-                'link_urls' => json_encode(array_map(fun (array $url) {
-                    return $url['fullUrl']
+            $result = this._sendDirectItem("links", $recipients, array_merge($options, [
+                "link_urls" => json_encode(array_map(fun (array $url) {
+                    return $url["fullUrl"]
                 }, $urls)),
-                'link_text' => $text,
+                "link_text" => $text,
             ]))
         } else {
             /** @var Response.DirectSendItemResponse $result */
-            $result = this._sendDirectItem('message', $recipients, array_merge($options, [
-                'text' => $text,
+            $result = this._sendDirectItem("message", $recipients, array_merge($options, [
+                "text" => $text,
             ]))
         }
 
@@ -518,13 +518,13 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
     }
 
     /**
-     * Share an existing media post via direct message to a user's inbox.
+     * Share an existing media post via direct message to a user"s inbox.
      *
      * @param array  $recipients An array with "users" or "thread" keys.
      *                           To start a thread, provide "users" as an array
      *                           of numerical UserPK IDs. To import an existing thread
      *                           instead, provide "thread" with the thread ID.
-     * @param string $mediaId    The media ID in Instagram's internal format (ie "3482384834_43294").
+     * @param string $mediaId    The media ID in Instagram"s internal format (ie "3482384834_43294").
      * @param array  $options    An associative array of additional parameters, including:
      *                           "media_type" (required) - either "photo" or "video"
      *                           "client_context" (optional) - predefined UUID used to prevent double-posting
@@ -542,23 +542,23 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $mediaId,
         array $options = [])
     {
-        if (!preg_match('#^.d+_.d+$#D', $mediaId)) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a valid media ID.', $mediaId))
+        if (!preg_match("#^.d+_.d+$#D", $mediaId)) {
+            throw .InvalidArgumentException(sprintf(""%s" is not a valid media ID.", $mediaId))
         }
-        if (!isset($options['media_type'])) {
-            throw .InvalidArgumentException('Please provide media_type in options.')
+        if (!isset($options["media_type"])) {
+            throw .InvalidArgumentException("Please provide media_type in options.")
         }
-        if ($options['media_type'] !== 'photo' && $options['media_type'] !== 'video') {
-            throw .InvalidArgumentException(sprintf('"%s" is not a valid media_type.', $options['media_type']))
+        if ($options["media_type"] !== "photo" && $options["media_type"] !== "video") {
+            throw .InvalidArgumentException(sprintf(""%s" is not a valid media_type.", $options["media_type"]))
         }
 
-        return this._sendDirectItems('media_share', $recipients, array_merge($options, [
-            'media_id' => $mediaId,
+        return this._sendDirectItems("media_share", $recipients, array_merge($options, [
+            "media_id" => $mediaId,
         ]))
     }
 
     /**
-     * Send a photo (upload) via direct message to a user's inbox.
+     * Send a photo (upload) via direct message to a user"s inbox.
      *
      * @param array  $recipients    An array with "users" or "thread" keys.
      *                              To start a thread, provide "users" as an array
@@ -579,16 +579,16 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         array $options = [])
     {
         if (!is_file($photoFilename) || !is_readable($photoFilename)) {
-            throw .InvalidArgumentException(sprintf('File "%s" is not available for reading.', $photoFilename))
+            throw .InvalidArgumentException(sprintf("File "%s" is not available for reading.", $photoFilename))
         }
 
-        return this._sendDirectItem('photo', $recipients, array_merge($options, [
-            'filepath' => $photoFilename,
+        return this._sendDirectItem("photo", $recipients, array_merge($options, [
+            "filepath" => $photoFilename,
         ]))
     }
 
     /**
-     * Send a disappearing photo (upload) via direct message to a user's inbox.
+     * Send a disappearing photo (upload) via direct message to a user"s inbox.
      *
      * @param array  $recipients       An array with "users" or "thread" keys.
      *                                 To start a thread, provide "users" as an array
@@ -617,7 +617,7 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
     }
 
     /**
-     * Send a video (upload) via direct message to a user's inbox.
+     * Send a video (upload) via direct message to a user"s inbox.
      *
      * @param array  $recipients    An array with "users" or "thread" keys.
      *                              To start a thread, provide "users" as an array
@@ -645,8 +645,8 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $internalMetadata = this.ig.internal.uploadVideo(Constants::FEED_DIRECT, $videoFilename, $internalMetadata)
 
         // We must import the same client_context for all attempts to prevent double-posting.
-        if (!isset($options['client_context'])) {
-            $options['client_context'] = Signatures::generateUUID(true)
+        if (!isset($options["client_context"])) {
+            $options["client_context"] = Signatures::generateUUID(true)
         }
 
         // Send the uploaded video to recipients.
@@ -656,20 +656,20 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
                 fun () import ($internalMetadata, $recipients, $options) {
                     $videoUploadResponse = $internalMetadata.getVideoUploadResponse()
                     // Attempt to configure video parameters (which sends it to the thread).
-                    return this._sendDirectItem('video', $recipients, array_merge($options, [
-                        'upload_id'    => $internalMetadata.getUploadId(),
-                        'video_result' => $videoUploadResponse !== null ? $videoUploadResponse.getResult() : '',
+                    return this._sendDirectItem("video", $recipients, array_merge($options, [
+                        "upload_id"    => $internalMetadata.getUploadId(),
+                        "video_result" => $videoUploadResponse !== null ? $videoUploadResponse.getResult() : "",
                     ]))
                 }
             )
         } catch (InstagramException $e) {
-            // Pass Instagram's error as is.
+            // Pass Instagram"s error as is.
             throw $e
         } catch (.Exception $e) {
             // Wrap runtime errors.
             throw UploadFailedException(
                 sprintf(
-                    'Upload of "%s" failed: %s',
+                    "Upload of "%s" failed: %s",
                     $internalMetadata.getPhotoDetails().getBasename(),
                     $e.getMessage()
                 ),
@@ -682,7 +682,7 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
     }
 
     /**
-     * Send a disappearing video (upload) via direct message to a user's inbox.
+     * Send a disappearing video (upload) via direct message to a user"s inbox.
      *
      * @param array  $recipients       An array with "users" or "thread" keys.
      *                                 To start a thread, provide "users" as an array
@@ -712,7 +712,7 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
     }
 
     /**
-     * Send a like to a user's inbox.
+     * Send a like to a user"s inbox.
      *
      * @param array $recipients An array with "users" or "thread" keys.
      *                          To start a thread, provide "users" as an array
@@ -729,11 +729,11 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         array $recipients,
         array $options = [])
     {
-        return this._sendDirectItem('like', $recipients, $options)
+        return this._sendDirectItem("like", $recipients, $options)
     }
 
     /**
-     * Send a hashtag to a user's inbox.
+     * Send a hashtag to a user"s inbox.
      *
      * @param array  $recipients An array with "users" or "thread" keys.
      *                           To start a thread, provide "users" as an array
@@ -755,16 +755,16 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         array $options = [])
     {
         if (!strlen($hashtag)) {
-            throw .InvalidArgumentException('Hashtag can not be empty.')
+            throw .InvalidArgumentException("Hashtag can not be empty.")
         }
 
-        return this._sendDirectItem('hashtag', $recipients, array_merge($options, [
-            'hashtag' => $hashtag,
+        return this._sendDirectItem("hashtag", $recipients, array_merge($options, [
+            "hashtag" => $hashtag,
         ]))
     }
 
     /**
-     * Send a location to a user's inbox.
+     * Send a location to a user"s inbox.
      *
      * You must provide a valid Instagram location ID, which you get via other
      * funs such as Location::search().
@@ -773,7 +773,7 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
      *                           To start a thread, provide "users" as an array
      *                           of numerical UserPK IDs. To import an existing thread
      *                           instead, provide "thread" with the thread ID.
-     * @param string $locationId Instagram's internal ID for the location.
+     * @param string $locationId Instagram"s internal ID for the location.
      * @param array  $options    An associative array of optional parameters, including:
      *                           "client_context" - predefined UUID used to prevent double-posting
      *                           "text" - text message.
@@ -791,16 +791,16 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         array $options = [])
     {
         if (!ctype_digit($locationId) && (!is_int($locationId) || $locationId < 0)) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a valid location ID.', $locationId))
+            throw .InvalidArgumentException(sprintf(""%s" is not a valid location ID.", $locationId))
         }
 
-        return this._sendDirectItem('location', $recipients, array_merge($options, [
-            'venue_id' => $locationId,
+        return this._sendDirectItem("location", $recipients, array_merge($options, [
+            "venue_id" => $locationId,
         ]))
     }
 
     /**
-     * Send a profile to a user's inbox.
+     * Send a profile to a user"s inbox.
      *
      * @param array  $recipients An array with "users" or "thread" keys.
      *                           To start a thread, provide "users" as an array
@@ -822,11 +822,11 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         array $options = [])
     {
         if (!ctype_digit($userId) && (!is_int($userId) || $userId < 0)) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a valid numerical UserPK ID.', $userId))
+            throw .InvalidArgumentException(sprintf(""%s" is not a valid numerical UserPK ID.", $userId))
         }
 
-        return this._sendDirectItem('profile', $recipients, array_merge($options, [
-            'profile_user_id' => $userId,
+        return this._sendDirectItem("profile", $recipients, array_merge($options, [
+            "profile_user_id" => $userId,
         ]))
     }
 
@@ -850,11 +850,11 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $reactionType,
         array $options = [])
     {
-        return this._handleReaction($threadId, $threadItemId, $reactionType, 'created', $options)
+        return this._handleReaction($threadId, $threadItemId, $reactionType, "created", $options)
     }
 
     /**
-     * Share an existing story post via direct message to a user's inbox.
+     * Share an existing story post via direct message to a user"s inbox.
      *
      * You are able to share your own stories, as well as public stories from
      * other people.
@@ -863,8 +863,8 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
      *                           To start a thread, provide "users" as an array
      *                           of numerical UserPK IDs. To import an existing thread
      *                           instead, provide "thread" with the thread ID.
-     * @param string $storyId    The story ID in Instagram's internal format (ie "3482384834_43294").
-     * @param string $reelId     The reel ID in Instagram's internal format (ie "highlight:12970012453081168")
+     * @param string $storyId    The story ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $reelId     The reel ID in Instagram"s internal format (ie "highlight:12970012453081168")
      * @param array  $options    An associative array of additional parameters, including:
      *                           "media_type" (required) - either "photo" or "video"
      *                           "client_context" - predefined UUID used to prevent double-posting
@@ -883,32 +883,32 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $reelId = null,
         array $options = [])
     {
-        if (!preg_match('#^.d+_.d+$#D', $storyId)) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a valid story ID.', $storyId))
+        if (!preg_match("#^.d+_.d+$#D", $storyId)) {
+            throw .InvalidArgumentException(sprintf(""%s" is not a valid story ID.", $storyId))
         }
         if ($reelId !== null) {
-            if (!preg_match('#^highlight:.d+$#D', $reelId)) {
-                throw .InvalidArgumentException(sprintf('"%s" is not a valid reel ID.', $reelId))
+            if (!preg_match("#^highlight:.d+$#D", $reelId)) {
+                throw .InvalidArgumentException(sprintf(""%s" is not a valid reel ID.", $reelId))
             }
             $options = array_merge($options,
                 [
-                    'reel_id' => $reelId,
+                    "reel_id" => $reelId,
                 ])
         }
-        if (!isset($options['media_type'])) {
-            throw .InvalidArgumentException('Please provide media_type in options.')
+        if (!isset($options["media_type"])) {
+            throw .InvalidArgumentException("Please provide media_type in options.")
         }
-        if ($options['media_type'] !== 'photo' && $options['media_type'] !== 'video') {
-            throw .InvalidArgumentException(sprintf('"%s" is not a valid media_type.', $options['media_type']))
+        if ($options["media_type"] !== "photo" && $options["media_type"] !== "video") {
+            throw .InvalidArgumentException(sprintf(""%s" is not a valid media_type.", $options["media_type"]))
         }
 
-        return this._sendDirectItems('story_share', $recipients, array_merge($options, [
-            'story_media_id' => $storyId,
+        return this._sendDirectItems("story_share", $recipients, array_merge($options, [
+            "story_media_id" => $storyId,
         ]))
     }
 
     /**
-     * Share an occurring or archived live stream via direct message to a user's inbox.
+     * Share an occurring or archived live stream via direct message to a user"s inbox.
      *
      * You are able to share your own broadcasts, as well as broadcasts from
      * other people.
@@ -917,7 +917,7 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
      *                            To start a thread, provide "users" as an array
      *                            of numerical UserPK IDs. To import an existing thread
      *                            instead, provide "thread" with the thread ID.
-     * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
+     * @param string $broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
      * @param array  $options     An associative array of optional parameters, including:
      *                            "client_context" - predefined UUID used to prevent double-posting.
      *
@@ -931,8 +931,8 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $broadcastId,
         array $options = [])
     {
-        return this._sendDirectItem('live', $recipients, array_merge($options, [
-            'broadcast_id' => $broadcastId,
+        return this._sendDirectItem("live", $recipients, array_merge($options, [
+            "broadcast_id" => $broadcastId,
         ]))
     }
 
@@ -956,7 +956,7 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $reactionType,
         array $options = [])
     {
-        return this._handleReaction($threadId, $threadItemId, $reactionType, 'deleted', $options)
+        return this._handleReaction($threadId, $threadItemId, $reactionType, "deleted", $options)
     }
 
     /**
@@ -974,8 +974,8 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $threadItemId)
     {
         return this.ig.request("direct_v2/threads/{$threadId}/items/{$threadItemId}/delete/")
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
             .setSignedPost(false)
             .getResponse(Response.GenericResponse())
     }
@@ -995,12 +995,12 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         $threadItemId)
     {
         return this.ig.request("direct_v2/threads/{$threadId}/items/{$threadItemId}/seen/")
-            .addPost('use_unified_inbox', 'true')
-            .addPost('action', 'mark_seen')
-            .addPost('thread_id', $threadId)
-            .addPost('item_id', $threadItemId)
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost("use_unified_inbox", "true")
+            .addPost("action", "mark_seen")
+            .addPost("thread_id", $threadId)
+            .addPost("item_id", $threadItemId)
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
             .setSignedPost(false)
             .getResponse(Response.DirectSeenItemResponse())
     }
@@ -1025,14 +1025,14 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         if (!is_array($threadItemIds)) {
             $threadItemIds = [$threadItemIds]
         } elseif (!count($threadItemIds)) {
-            throw .InvalidArgumentException('Please provide at least one thread item ID.')
+            throw .InvalidArgumentException("Please provide at least one thread item ID.")
         }
 
         return this.ig.request("direct_v2/visual_threads/{$threadId}/item_seen/")
-            .addPost('item_ids', '['.implode(',', $threadItemIds).']')
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost("item_ids", "[".implode(",", $threadItemIds)."]")
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
             .getResponse(Response.GenericResponse())
     }
 
@@ -1056,14 +1056,14 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         if (!is_array($threadItemIds)) {
             $threadItemIds = [$threadItemIds]
         } elseif (!count($threadItemIds)) {
-            throw .InvalidArgumentException('Please provide at least one thread item ID.')
+            throw .InvalidArgumentException("Please provide at least one thread item ID.")
         }
 
         return this.ig.request("direct_v2/visual_threads/{$threadId}/item_replayed/")
-            .addPost('item_ids', '['.implode(',', $threadItemIds).']')
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost("item_ids", "[".implode(",", $threadItemIds)."]")
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
             .getResponse(Response.GenericResponse())
     }
 
@@ -1086,43 +1086,43 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
     {
         $result = []
         // users
-        if (isset($recipients['users'])) {
-            if (!is_array($recipients['users'])) {
-                throw .InvalidArgumentException('"users" must be an array.')
+        if (isset($recipients["users"])) {
+            if (!is_array($recipients["users"])) {
+                throw .InvalidArgumentException(""users" must be an array.")
             }
-            foreach ($recipients['users'] as $userId) {
+            foreach ($recipients["users"] as $userId) {
                 if (!is_scalar($userId)) {
-                    throw .InvalidArgumentException('User identifier must be scalar.')
+                    throw .InvalidArgumentException("User identifier must be scalar.")
                 } elseif (!ctype_digit($userId) && (!is_int($userId) || $userId < 0)) {
-                    throw .InvalidArgumentException(sprintf('"%s" is not a valid user identifier.', $userId))
+                    throw .InvalidArgumentException(sprintf(""%s" is not a valid user identifier.", $userId))
                 }
             }
             // Although this is an array of groups, you will get "Only one group is supported." error
             // if you will try to import more than one group here.
-            // We can't import json_encode() here, becaimport each user id must be a number.
-            $result['users'] = '[['.implode(',', $recipients['users']).']]'
+            // We can"t import json_encode() here, becaimport each user id must be a number.
+            $result["users"] = "[[".implode(",", $recipients["users"])."]]"
         }
         // thread
-        if (isset($recipients['thread'])) {
-            if (!is_scalar($recipients['thread'])) {
-                throw .InvalidArgumentException('Thread identifier must be scalar.')
-            } elseif (!ctype_digit($recipients['thread']) && (!is_int($recipients['thread']) || $recipients['thread'] < 0)) {
-                throw .InvalidArgumentException(sprintf('"%s" is not a valid thread identifier.', $recipients['thread']))
+        if (isset($recipients["thread"])) {
+            if (!is_scalar($recipients["thread"])) {
+                throw .InvalidArgumentException("Thread identifier must be scalar.")
+            } elseif (!ctype_digit($recipients["thread"]) && (!is_int($recipients["thread"]) || $recipients["thread"] < 0)) {
+                throw .InvalidArgumentException(sprintf(""%s" is not a valid thread identifier.", $recipients["thread"]))
             }
             // Although this is an array, you will get "Need to specify thread ID or recipient users." error
             // if you will try to import more than one thread identifier here.
             if (!$useQuotes) {
-                // We can't import json_encode() here, becaimport thread id must be a number.
-                $result['thread'] = '['.$recipients['thread'].']'
+                // We can"t import json_encode() here, becaimport thread id must be a number.
+                $result["thread"] = "[".$recipients["thread"]."]"
             } else {
-                // We can't import json_encode() here, becaimport thread id must be a string.
-                $result['thread'] = '["'.$recipients['thread'].'"]'
+                // We can"t import json_encode() here, becaimport thread id must be a string.
+                $result["thread"] = "["".$recipients["thread"].""]"
             }
         }
         if (!count($result)) {
-            throw .InvalidArgumentException('Please provide at least one recipient.')
-        } elseif (isset($result['thread']) && isset($result['users'])) {
-            throw .InvalidArgumentException('You can not mix "users" with "thread".')
+            throw .InvalidArgumentException("Please provide at least one recipient.")
+        } elseif (isset($result["thread"]) && isset($result["users"])) {
+            throw .InvalidArgumentException("You can not mix "users" with "thread".")
         }
 
         return $result
@@ -1163,155 +1163,155 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
 
         // Handle the request...
         switch ($type) {
-            case 'message':
-                $request = this.ig.request('direct_v2/threads/broadcast/text/')
+            case "message":
+                $request = this.ig.request("direct_v2/threads/broadcast/text/")
                 // Check and set text.
-                if (!isset($options['text'])) {
-                    throw .InvalidArgumentException('No text message provided.')
+                if (!isset($options["text"])) {
+                    throw .InvalidArgumentException("No text message provided.")
                 }
-                $request.addPost('text', $options['text'])
+                $request.addPost("text", $options["text"])
                 break
-            case 'like':
-                $request = this.ig.request('direct_v2/threads/broadcast/like/')
+            case "like":
+                $request = this.ig.request("direct_v2/threads/broadcast/like/")
                 break
-            case 'hashtag':
-                $request = this.ig.request('direct_v2/threads/broadcast/hashtag/')
+            case "hashtag":
+                $request = this.ig.request("direct_v2/threads/broadcast/hashtag/")
                 // Check and set hashtag.
-                if (!isset($options['hashtag'])) {
-                    throw .InvalidArgumentException('No hashtag provided.')
+                if (!isset($options["hashtag"])) {
+                    throw .InvalidArgumentException("No hashtag provided.")
                 }
-                $request.addPost('hashtag', $options['hashtag'])
+                $request.addPost("hashtag", $options["hashtag"])
                 // Set text if provided.
-                if (isset($options['text']) && strlen($options['text'])) {
-                    $request.addPost('text', $options['text'])
+                if (isset($options["text"]) && strlen($options["text"])) {
+                    $request.addPost("text", $options["text"])
                 }
                 break
-            case 'location':
-                $request = this.ig.request('direct_v2/threads/broadcast/location/')
+            case "location":
+                $request = this.ig.request("direct_v2/threads/broadcast/location/")
                 // Check and set venue_id.
-                if (!isset($options['venue_id'])) {
-                    throw .InvalidArgumentException('No venue_id provided.')
+                if (!isset($options["venue_id"])) {
+                    throw .InvalidArgumentException("No venue_id provided.")
                 }
-                $request.addPost('venue_id', $options['venue_id'])
+                $request.addPost("venue_id", $options["venue_id"])
                 // Set text if provided.
-                if (isset($options['text']) && strlen($options['text'])) {
-                    $request.addPost('text', $options['text'])
+                if (isset($options["text"]) && strlen($options["text"])) {
+                    $request.addPost("text", $options["text"])
                 }
                 break
-            case 'profile':
-                $request = this.ig.request('direct_v2/threads/broadcast/profile/')
+            case "profile":
+                $request = this.ig.request("direct_v2/threads/broadcast/profile/")
                 // Check and set profile_user_id.
-                if (!isset($options['profile_user_id'])) {
-                    throw .InvalidArgumentException('No profile_user_id provided.')
+                if (!isset($options["profile_user_id"])) {
+                    throw .InvalidArgumentException("No profile_user_id provided.")
                 }
-                $request.addPost('profile_user_id', $options['profile_user_id'])
+                $request.addPost("profile_user_id", $options["profile_user_id"])
                 // Set text if provided.
-                if (isset($options['text']) && strlen($options['text'])) {
-                    $request.addPost('text', $options['text'])
+                if (isset($options["text"]) && strlen($options["text"])) {
+                    $request.addPost("text", $options["text"])
                 }
                 break
-            case 'photo':
-                $request = this.ig.request('direct_v2/threads/broadcast/upload_photo/')
+            case "photo":
+                $request = this.ig.request("direct_v2/threads/broadcast/upload_photo/")
                 // Check and set filepath.
-                if (!isset($options['filepath'])) {
-                    throw .InvalidArgumentException('No filepath provided.')
+                if (!isset($options["filepath"])) {
+                    throw .InvalidArgumentException("No filepath provided.")
                 }
-                $request.addFile('photo', $options['filepath'], 'direct_temp_photo_'.Utils::generateUploadId().'.jpg')
+                $request.addFile("photo", $options["filepath"], "direct_temp_photo_".Utils::generateUploadId().".jpg")
                 break
-            case 'video':
-                $request = this.ig.request('direct_v2/threads/broadcast/configure_video/')
+            case "video":
+                $request = this.ig.request("direct_v2/threads/broadcast/configure_video/")
                 // Check and set upload_id.
-                if (!isset($options['upload_id'])) {
-                    throw .InvalidArgumentException('No upload_id provided.')
+                if (!isset($options["upload_id"])) {
+                    throw .InvalidArgumentException("No upload_id provided.")
                 }
-                $request.addPost('upload_id', $options['upload_id'])
+                $request.addPost("upload_id", $options["upload_id"])
                 // Set video_result if provided.
-                if (isset($options['video_result'])) {
-                    $request.addPost('video_result', $options['video_result'])
+                if (isset($options["video_result"])) {
+                    $request.addPost("video_result", $options["video_result"])
                 }
                 break
-            case 'links':
-                $request = this.ig.request('direct_v2/threads/broadcast/link/')
+            case "links":
+                $request = this.ig.request("direct_v2/threads/broadcast/link/")
                 // Check and set link_urls.
-                if (!isset($options['link_urls'])) {
-                    throw .InvalidArgumentException('No link_urls provided.')
+                if (!isset($options["link_urls"])) {
+                    throw .InvalidArgumentException("No link_urls provided.")
                 }
-                $request.addPost('link_urls', $options['link_urls'])
+                $request.addPost("link_urls", $options["link_urls"])
                 // Check and set link_text.
-                if (!isset($options['link_text'])) {
-                    throw .InvalidArgumentException('No link_text provided.')
+                if (!isset($options["link_text"])) {
+                    throw .InvalidArgumentException("No link_text provided.")
                 }
-                $request.addPost('link_text', $options['link_text'])
+                $request.addPost("link_text", $options["link_text"])
                 break
-            case 'reaction':
-                $request = this.ig.request('direct_v2/threads/broadcast/reaction/')
+            case "reaction":
+                $request = this.ig.request("direct_v2/threads/broadcast/reaction/")
                 // Check and set reaction_type.
-                if (!isset($options['reaction_type'])) {
-                    throw .InvalidArgumentException('No reaction_type provided.')
+                if (!isset($options["reaction_type"])) {
+                    throw .InvalidArgumentException("No reaction_type provided.")
                 }
-                $request.addPost('reaction_type', $options['reaction_type'])
+                $request.addPost("reaction_type", $options["reaction_type"])
                 // Check and set reaction_status.
-                if (!isset($options['reaction_status'])) {
-                    throw .InvalidArgumentException('No reaction_status provided.')
+                if (!isset($options["reaction_status"])) {
+                    throw .InvalidArgumentException("No reaction_status provided.")
                 }
-                $request.addPost('reaction_status', $options['reaction_status'])
+                $request.addPost("reaction_status", $options["reaction_status"])
                 // Check and set item_id.
-                if (!isset($options['item_id'])) {
-                    throw .InvalidArgumentException('No item_id provided.')
+                if (!isset($options["item_id"])) {
+                    throw .InvalidArgumentException("No item_id provided.")
                 }
-                $request.addPost('item_id', $options['item_id'])
+                $request.addPost("item_id", $options["item_id"])
                 // Check and set node_type.
-                if (!isset($options['node_type'])) {
-                    throw .InvalidArgumentException('No node_type provided.')
+                if (!isset($options["node_type"])) {
+                    throw .InvalidArgumentException("No node_type provided.")
                 }
-                $request.addPost('node_type', $options['node_type'])
+                $request.addPost("node_type", $options["node_type"])
                 break
-            case 'live':
-                $request = this.ig.request('direct_v2/threads/broadcast/live_viewer_invite/')
+            case "live":
+                $request = this.ig.request("direct_v2/threads/broadcast/live_viewer_invite/")
                 // Check and set broadcast id.
-                if (!isset($options['broadcast_id'])) {
-                    throw .InvalidArgumentException('No broadcast_id provided.')
+                if (!isset($options["broadcast_id"])) {
+                    throw .InvalidArgumentException("No broadcast_id provided.")
                 }
-                $request.addPost('broadcast_id', $options['broadcast_id'])
+                $request.addPost("broadcast_id", $options["broadcast_id"])
                 // Set text if provided.
-                if (isset($options['text']) && strlen($options['text'])) {
-                    $request.addPost('text', $options['text'])
+                if (isset($options["text"]) && strlen($options["text"])) {
+                    $request.addPost("text", $options["text"])
                 }
                 break
             default:
-                throw .InvalidArgumentException('Unsupported _sendDirectItem() type.')
+                throw .InvalidArgumentException("Unsupported _sendDirectItem() type.")
         }
 
         // Add recipients.
         $recipients = this._prepareRecipients($recipients, false)
-        if (isset($recipients['users'])) {
-            $request.addPost('recipient_users', $recipients['users'])
-        } elseif (isset($recipients['thread'])) {
-            $request.addPost('thread_ids', $recipients['thread'])
+        if (isset($recipients["users"])) {
+            $request.addPost("recipient_users", $recipients["users"])
+        } elseif (isset($recipients["thread"])) {
+            $request.addPost("thread_ids", $recipients["thread"])
         } else {
-            throw .InvalidArgumentException('Please provide at least one recipient.')
+            throw .InvalidArgumentException("Please provide at least one recipient.")
         }
 
         // Handle client_context.
-        if (!isset($options['client_context'])) {
+        if (!isset($options["client_context"])) {
             // WARNING: Must be random every time otherwise we can only
             // make a single post per direct-discussion thread.
-            $options['client_context'] = Signatures::generateUUID(true)
-        } elseif (!Signatures::isValidUUID($options['client_context'])) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a valid UUID.', $options['client_context']))
+            $options["client_context"] = Signatures::generateUUID(true)
+        } elseif (!Signatures::isValidUUID($options["client_context"])) {
+            throw .InvalidArgumentException(sprintf(""%s" is not a valid UUID.", $options["client_context"]))
         }
 
         // Add some additional data if signed post.
         if ($signedPost) {
-            $request.addPost('_uid', this.ig.account_id)
+            $request.addPost("_uid", this.ig.account_id)
         }
 
         // Execute the request with all data used by both signed and unsigned.
         return $request.setSignedPost($signedPost)
-            .addPost('action', 'send_item')
-            .addPost('client_context', $options['client_context'])
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("action", "send_item")
+            .addPost("client_context", $options["client_context"])
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
             .getResponse(Response.DirectSendItemResponse())
     }
 
@@ -1342,82 +1342,82 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
 
         // Handle the request...
         switch ($type) {
-            case 'media_share':
-                $request = this.ig.request('direct_v2/threads/broadcast/media_share/')
+            case "media_share":
+                $request = this.ig.request("direct_v2/threads/broadcast/media_share/")
                 // Check and set media_id.
-                if (!isset($options['media_id'])) {
-                    throw .InvalidArgumentException('No media_id provided.')
+                if (!isset($options["media_id"])) {
+                    throw .InvalidArgumentException("No media_id provided.")
                 }
-                $request.addPost('media_id', $options['media_id'])
+                $request.addPost("media_id", $options["media_id"])
                 // Set text if provided.
-                if (isset($options['text']) && strlen($options['text'])) {
-                    $request.addPost('text', $options['text'])
+                if (isset($options["text"]) && strlen($options["text"])) {
+                    $request.addPost("text", $options["text"])
                 }
                 // Check and set media_type.
-                if (isset($options['media_type']) && $options['media_type'] === 'video') {
-                    $request.addParam('media_type', 'video')
+                if (isset($options["media_type"]) && $options["media_type"] === "video") {
+                    $request.addParam("media_type", "video")
                 } else {
-                    $request.addParam('media_type', 'photo')
+                    $request.addParam("media_type", "photo")
                 }
                 break
-            case 'story_share':
+            case "story_share":
                 $signedPost = true // This must be a signed post!
-                $request = this.ig.request('direct_v2/threads/broadcast/story_share/')
+                $request = this.ig.request("direct_v2/threads/broadcast/story_share/")
                 // Check and set story_media_id.
-                if (!isset($options['story_media_id'])) {
-                    throw .InvalidArgumentException('No story_media_id provided.')
+                if (!isset($options["story_media_id"])) {
+                    throw .InvalidArgumentException("No story_media_id provided.")
                 }
-                $request.addPost('story_media_id', $options['story_media_id'])
+                $request.addPost("story_media_id", $options["story_media_id"])
                 // Set text if provided.
-                if (isset($options['reel_id'])) {
-                    $request.addPost('reel_id', $options['reel_id'])
+                if (isset($options["reel_id"])) {
+                    $request.addPost("reel_id", $options["reel_id"])
                 }
                 // Set text if provided.
-                if (isset($options['text']) && strlen($options['text'])) {
-                    $request.addPost('text', $options['text'])
+                if (isset($options["text"]) && strlen($options["text"])) {
+                    $request.addPost("text", $options["text"])
                 }
                 // Check and set media_type.
-                if (isset($options['media_type']) && $options['media_type'] === 'video') {
-                    $request.addParam('media_type', 'video')
+                if (isset($options["media_type"]) && $options["media_type"] === "video") {
+                    $request.addParam("media_type", "video")
                 } else {
-                    $request.addParam('media_type', 'photo')
+                    $request.addParam("media_type", "photo")
                 }
                 break
             default:
-                throw .InvalidArgumentException('Unsupported _sendDirectItems() type.')
+                throw .InvalidArgumentException("Unsupported _sendDirectItems() type.")
         }
 
         // Add recipients.
         $recipients = this._prepareRecipients($recipients, false)
-        if (isset($recipients['users'])) {
-            $request.addPost('recipient_users', $recipients['users'])
-        } elseif (isset($recipients['thread'])) {
-            $request.addPost('thread_ids', $recipients['thread'])
+        if (isset($recipients["users"])) {
+            $request.addPost("recipient_users", $recipients["users"])
+        } elseif (isset($recipients["thread"])) {
+            $request.addPost("thread_ids", $recipients["thread"])
         } else {
-            throw .InvalidArgumentException('Please provide at least one recipient.')
+            throw .InvalidArgumentException("Please provide at least one recipient.")
         }
 
         // Handle client_context.
-        if (!isset($options['client_context'])) {
+        if (!isset($options["client_context"])) {
             // WARNING: Must be random every time otherwise we can only
             // make a single post per direct-discussion thread.
-            $options['client_context'] = Signatures::generateUUID(true)
-        } elseif (!Signatures::isValidUUID($options['client_context'])) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a valid UUID.', $options['client_context']))
+            $options["client_context"] = Signatures::generateUUID(true)
+        } elseif (!Signatures::isValidUUID($options["client_context"])) {
+            throw .InvalidArgumentException(sprintf(""%s" is not a valid UUID.", $options["client_context"]))
         }
 
         // Add some additional data if signed post.
         if ($signedPost) {
-            $request.addPost('_uid', this.ig.account_id)
+            $request.addPost("_uid", this.ig.account_id)
         }
 
         // Execute the request with all data used by both signed and unsigned.
         return $request.setSignedPost($signedPost)
-            .addPost('action', 'send_item')
-            .addPost('unified_broadcast_format', '1')
-            .addPost('client_context', $options['client_context'])
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("action", "send_item")
+            .addPost("unified_broadcast_format", "1")
+            .addPost("client_context", $options["client_context"])
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
             .getResponse(Response.DirectSendItemsResponse())
     }
 
@@ -1444,20 +1444,20 @@ class Direct(instagram:Instagram) : RequestCollection(instagram)
         array $options = [])
     {
         if (!ctype_digit($threadId) && (!is_int($threadId) || $threadId < 0)) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a valid thread ID.', $threadId))
+            throw .InvalidArgumentException(sprintf(""%s" is not a valid thread ID.", $threadId))
         }
         if (!ctype_digit($threadItemId) && (!is_int($threadItemId) || $threadItemId < 0)) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a valid thread item ID.', $threadItemId))
+            throw .InvalidArgumentException(sprintf(""%s" is not a valid thread item ID.", $threadItemId))
         }
-        if (!in_array($reactionType, ['like'], true)) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a supported reaction type.', $reactionType))
+        if (!in_array($reactionType, ["like"], true)) {
+            throw .InvalidArgumentException(sprintf(""%s" is not a supported reaction type.", $reactionType))
         }
 
-        return this._sendDirectItem('reaction', ['thread' => $threadId], array_merge($options, [
-            'reaction_type'   => $reactionType,
-            'reaction_status' => $reactionStatus,
-            'item_id'         => $threadItemId,
-            'node_type'       => 'item',
+        return this._sendDirectItem("reaction", ["thread" => $threadId], array_merge($options, [
+            "reaction_type"   => $reactionType,
+            "reaction_status" => $reactionStatus,
+            "item_id"         => $threadItemId,
+            "node_type"       => "item",
         ]))
     }
 }

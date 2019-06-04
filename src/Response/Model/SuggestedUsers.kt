@@ -59,17 +59,17 @@ import InstagramAPI.AutoPropertyMapper
 class SuggestedUsers : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'id'                 => 'string',
-        'view_all_text'      => '',
-        'title'              => '',
-        'auto_dvance'        => '',
-        'type'               => '',
-        'tracking_token'     => 'string',
-        'landing_site_type'  => '',
-        'landing_site_title' => '',
-        'upsell_fb_pos'      => '',
-        'suggestions'        => 'Suggestion[]',
-        'suggestion_cards'   => 'SuggestionCard[]',
-        'netego_type'        => '',
+        "id"                 => "string",
+        "view_all_text"      => "",
+        "title"              => "",
+        "auto_dvance"        => "",
+        "type"               => "",
+        "tracking_token"     => "string",
+        "landing_site_type"  => "",
+        "landing_site_title" => "",
+        "upsell_fb_pos"      => "",
+        "suggestions"        => "Suggestion[]",
+        "suggestion_cards"   => "SuggestionCard[]",
+        "netego_type"        => "",
     ]
 }

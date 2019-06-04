@@ -47,17 +47,17 @@ import InstagramAPI.AutoPropertyMapper
 class CoverMedia : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'id'              => 'string',
-        'media_id'        => 'string',
+        "id"              => "string",
+        "media_id"        => "string",
         /*
          * A number describing what type of media this is.
          */
-        'media_type'            => 'int',
-        'image_versions2'       => 'Image_Versions2',
-        'original_width'        => 'int',
-        'original_height'       => 'int',
-        'cropped_image_version' => 'ImageCandidate',
-        'crop_rect'             => 'int[]',
-        'full_image_version'    => 'ImageCandidate',
+        "media_type"            => "int",
+        "image_versions2"       => "Image_Versions2",
+        "original_width"        => "int",
+        "original_height"       => "int",
+        "cropped_image_version" => "ImageCandidate",
+        "crop_rect"             => "int[]",
+        "full_image_version"    => "ImageCandidate",
     ]
 }

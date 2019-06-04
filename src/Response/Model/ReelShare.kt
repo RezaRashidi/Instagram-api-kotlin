@@ -55,16 +55,16 @@ import InstagramAPI.AutoPropertyMapper
 class ReelShare : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'tray'                => 'Item[]',
-        'story_ranking_token' => 'string',
-        'broadcasts'          => '',
-        'sticker_version'     => 'int',
-        'text'                => 'string',
-        'type'                => 'string',
-        'is_reel_persisted'   => 'bool',
-        'reel_owner_id'       => 'string',
-        'reel_type'           => 'string',
-        'media'               => 'Item',
-        'mentioned_user_id'   => 'string',
+        "tray"                => "Item[]",
+        "story_ranking_token" => "string",
+        "broadcasts"          => "",
+        "sticker_version"     => "int",
+        "text"                => "string",
+        "type"                => "string",
+        "is_reel_persisted"   => "bool",
+        "reel_owner_id"       => "string",
+        "reel_type"           => "string",
+        "media"               => "Item",
+        "mentioned_user_id"   => "string",
     ]
 }

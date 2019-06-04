@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class MediaDeleteResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'did_delete' => '',
+        "did_delete" => "",
     ]
 }

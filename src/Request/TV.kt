@@ -21,15 +21,15 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getTvGuide()
     {
-        return this.ig.request('igtv/tv_guide/')
+        return this.ig.request("igtv/tv_guide/")
             .getResponse(Response.TVGuideResponse())
     }
 
     /**
      * Get channel.
      *
-     * You can filter the channel with different IDs: 'for_you', 'chrono_following', 'popular', 'continue_watching'
-     * and using a user ID in the following format: 'user_1234567891'.
+     * You can filter the channel with different IDs: "for_you", "chrono_following", "popular", "continue_watching"
+     * and using a user ID in the following format: "user_1234567891".
      *
      * @param string      $id    ID used to filter channels.
      * @param string|null $maxId Next "maximum ID", used for pagination.
@@ -40,22 +40,22 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      * @return .InstagramAPI.Response.TVChannelsResponse
      */
     public fun getChannel(
-        $id = 'for_you',
+        $id = "for_you",
         $maxId = null)
     {
-        if (!in_array($id, ['for_you', 'chrono_following', 'popular', 'continue_watching'])
-        && !preg_match('/^user_[1-9].d*$/', $id)) {
-            throw .InvalidArgumentException('Invalid ID type.')
+        if (!in_array($id, ["for_you", "chrono_following", "popular", "continue_watching"])
+        && !preg_match("/^user_[1-9].d*$/", $id)) {
+            throw .InvalidArgumentException("Invalid ID type.")
         }
 
-        $request = this.ig.request('igtv/channel/')
-            .addPost('id', $id)
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
+        $request = this.ig.request("igtv/channel/")
+            .addPost("id", $id)
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
 
         if ($maxId !== null) {
-            $request.addPost('max_id', $maxId)
+            $request.addPost("max_id", $maxId)
         }
 
         return $request.getResponse(Response.TVChannelsResponse())
@@ -93,16 +93,16 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      * @return .InstagramAPI.Response.TVSearchResponse
      */
     public fun search(
-        $query = '')
+        $query = "")
     {
-        if ($query !== '') {
-            $endpoint = 'igtv/search/'
+        if ($query !== "") {
+            $endpoint = "igtv/search/"
         } else {
-            $endpoint = 'igtv/suggested_searches/'
+            $endpoint = "igtv/suggested_searches/"
         }
 
         return this.ig.request($endpoint)
-            .addParam('query', $query)
+            .addParam("query", $query)
             .getResponse(Response.TVSearchResponse())
     }
 
@@ -124,23 +124,23 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
         $gridImpressions = [])
     {
         if (!ctype_digit($viewProgress) && (!is_int($viewProgress) || $viewProgress < 0)) {
-            throw .InvalidArgumentException('View progress must be a positive integer.')
+            throw .InvalidArgumentException("View progress must be a positive integer.")
         }
 
         $seenState = json_encode([
-            'impressions'       => [
+            "impressions"       => [
                 $impression => [
-                    'view_progress_s'   => $viewProgress,
+                    "view_progress_s"   => $viewProgress,
                 ],
             ],
-            'grid_impressions'  => $gridImpressions,
+            "grid_impressions"  => $gridImpressions,
         ])
 
-        return this.ig.request('igtv/write_seen_state/')
-            .addPost('seen_state', $seenState)
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
+        return this.ig.request("igtv/write_seen_state/")
+            .addPost("seen_state", $seenState)
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
             .getResponse(Response.GenericResponse())
     }
 }

@@ -4,7 +4,7 @@ package InstagramAPI.Realtime.Command.Direct
 
 final class SendProfile : ShareItem
 {
-    val TYPE = 'profile'
+    val TYPE = "profile"
 
     /**
      * Constructor.
@@ -23,10 +23,10 @@ final class SendProfile : ShareItem
         parent::__construct($threadId, self::TYPE, $options)
 
         if (!ctype_digit($userId) && (!is_int($userId) || $userId < 0)) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a valid numerical UserPK ID.', $userId))
+            throw .InvalidArgumentException(sprintf(""%s" is not a valid numerical UserPK ID.", $userId))
         }
-        this._data['profile_user_id'] = (string) $userId
+        this._data["profile_user_id"] = (string) $userId
         // Yeah, we need to send the user ID twice.
-        this._data['item_id'] = (string) $userId
+        this._data["item_id"] = (string) $userId
     }
 }

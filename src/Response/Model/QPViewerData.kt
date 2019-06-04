@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class QPViewerData : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'viewer'   => 'Viewer',
+        "viewer"   => "Viewer",
     ]
 }

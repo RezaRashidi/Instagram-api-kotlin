@@ -49,7 +49,7 @@ class ReelMention : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         PropertyCollection.Sticker::class,
-        'user'      => 'User',
-        'is_hidden' => 'int',
+        "user"      => "User",
+        "is_hidden" => "int",
     ]
 }

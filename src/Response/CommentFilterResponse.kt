@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class CommentFilterResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'config_value' => '',
+        "config_value" => "",
     ]
 }

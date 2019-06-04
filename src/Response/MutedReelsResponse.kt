@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class MutedReelsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'users'       => 'Model.User[]',
-        'next_max_id' => 'string',
-        'page_size'   => '',
-        'big_list'    => '',
+        "users"       => "Model.User[]",
+        "next_max_id" => "string",
+        "page_size"   => "",
+        "big_list"    => "",
     ]
 }

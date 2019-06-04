@@ -127,31 +127,31 @@ import InstagramAPI.Response
 class LoginResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'username'                      => 'string',
-        'has_anonymous_profile_picture' => 'bool',
-        'profile_pic_url'               => 'string',
-        'profile_pic_id'                => 'string',
-        'full_name'                     => 'string',
-        'pk'                            => 'string',
-        'is_private'                    => 'bool',
-        'is_verified'                   => 'bool',
-        'allowed_commenter_type'        => 'string',
-        'reel_auto_archive'             => 'string',
-        'allow_contacts_sync'           => 'bool',
-        'phone_number'                  => 'string',
-        'country_code'                  => 'int',
-        'national_number'               => 'int',
-        'error_title'                   => '', // On wrong pass.
-        'error_type'                    => '', // On wrong pass.
-        'buttons'                       => '', // On wrong pass.
-        'invalid_credentials'           => '', // On wrong pass.
-        'logged_in_user'                => 'Model.User',
-        'two_factor_required'           => '',
-        'phone_verification_settings'   => 'Model.PhoneVerificationSettings',
-        'two_factor_info'               => 'Model.TwoFactorInfo',
-        'checkpoint_url'                => 'string',
-        'lock'                          => '',
-        'help_url'                      => 'string',
-        'challenge'                     => 'Model.Challenge',
+        "username"                      => "string",
+        "has_anonymous_profile_picture" => "bool",
+        "profile_pic_url"               => "string",
+        "profile_pic_id"                => "string",
+        "full_name"                     => "string",
+        "pk"                            => "string",
+        "is_private"                    => "bool",
+        "is_verified"                   => "bool",
+        "allowed_commenter_type"        => "string",
+        "reel_auto_archive"             => "string",
+        "allow_contacts_sync"           => "bool",
+        "phone_number"                  => "string",
+        "country_code"                  => "int",
+        "national_number"               => "int",
+        "error_title"                   => "", // On wrong pass.
+        "error_type"                    => "", // On wrong pass.
+        "buttons"                       => "", // On wrong pass.
+        "invalid_credentials"           => "", // On wrong pass.
+        "logged_in_user"                => "Model.User",
+        "two_factor_required"           => "",
+        "phone_verification_settings"   => "Model.PhoneVerificationSettings",
+        "two_factor_info"               => "Model.TwoFactorInfo",
+        "checkpoint_url"                => "string",
+        "lock"                          => "",
+        "help_url"                      => "string",
+        "challenge"                     => "Model.Challenge",
     ]
 }

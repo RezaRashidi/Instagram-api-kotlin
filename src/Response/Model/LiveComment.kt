@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class LiveComment : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'comment' => 'Comment',
-        'offset'  => '',
-        'event'   => '',
+        "comment" => "Comment",
+        "offset"  => "",
+        "event"   => "",
     ]
 }

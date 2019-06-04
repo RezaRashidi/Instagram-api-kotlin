@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class RecoveryResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'phone_number_valid' => 'bool',
-        'title'              => 'string',
-        'body'               => 'string',
+        "phone_number_valid" => "bool",
+        "title"              => "string",
+        "body"               => "string",
     ]
 }

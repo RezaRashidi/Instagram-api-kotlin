@@ -47,14 +47,14 @@ import InstagramAPI.AutoPropertyMapper
 class StoryQuestions : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'x'                => 'float',
-        'y'                => 'float',
-        'z'                => 'float',
-        'width'            => 'float',
-        'height'           => 'float',
-        'rotation'         => 'float',
-        'is_pinned'        => 'int',
-        'is_hidden'        => 'int',
-        'question_sticker' => 'QuestionSticker',
+        "x"                => "float",
+        "y"                => "float",
+        "z"                => "float",
+        "width"            => "float",
+        "height"           => "float",
+        "rotation"         => "float",
+        "is_pinned"        => "int",
+        "is_hidden"        => "int",
+        "question_sticker" => "QuestionSticker",
     ]
 }

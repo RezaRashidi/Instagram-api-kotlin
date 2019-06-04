@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class GetCollectionsListResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'items'                  => 'Model.Collection[]',
-        'more_available'         => 'bool',
-        'auto_load_more_enabled' => 'bool',
-        'next_max_id'            => 'string',
+        "items"                  => "Model.Collection[]",
+        "more_available"         => "bool",
+        "auto_load_more_enabled" => "bool",
+        "next_max_id"            => "string",
     ]
 }

@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class CatalogEdge : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'node'          => 'CatalogNode',
+        "node"          => "CatalogNode",
     ]
 }

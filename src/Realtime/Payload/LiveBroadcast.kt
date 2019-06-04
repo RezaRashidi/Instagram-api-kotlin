@@ -31,10 +31,10 @@ import InstagramAPI.AutoPropertyMapper
 class LiveBroadcast : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'user'                 => '.InstagramAPI.Response.Model.User',
-        'broadcast_id'         => 'string',
-        'is_periodic'          => '',
-        'broadcast_message'    => 'string',
-        'display_notification' => '',
+        "user"                 => ".InstagramAPI.Response.Model.User",
+        "broadcast_id"         => "string",
+        "is_periodic"          => "",
+        "broadcast_message"    => "string",
+        "display_notification" => "",
     ]
 }

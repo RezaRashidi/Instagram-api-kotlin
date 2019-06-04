@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class MegaphoneLogResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'success' => '',
+        "success" => "",
     ]
 }

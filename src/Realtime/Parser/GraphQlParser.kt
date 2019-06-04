@@ -15,9 +15,9 @@ class GraphQlParser : ParserInterface
     val FIELD_TOPIC = 1
     val FIELD_PAYLOAD = 2
 
-    val TOPIC_DIRECT = 'direct'
+    val TOPIC_DIRECT = "direct"
 
-    val MODULE_DIRECT = 'direct'
+    val MODULE_DIRECT = "direct"
 
     val TOPIC_TO_MODULE_ENUM = [
         self::TOPIC_DIRECT               => self::MODULE_DIRECT,
@@ -65,16 +65,16 @@ class GraphQlParser : ParserInterface
         $payload)
     {
         if ($topic === null || $payload === null) {
-            throw .RuntimeException('Incomplete GraphQL message.')
+            throw .RuntimeException("Incomplete GraphQL message.")
         }
 
         if (!array_key_exists($topic, self::TOPIC_TO_MODULE_ENUM)) {
-            throw .DomainException(sprintf('Unknown GraphQL topic "%s".', $topic))
+            throw .DomainException(sprintf("Unknown GraphQL topic "%s".", $topic))
         }
 
         $data = Client::api_body_decode($payload)
         if (!is_array($data)) {
-            throw .RuntimeException('Invalid GraphQL payload.')
+            throw .RuntimeException("Invalid GraphQL payload.")
         }
 
         return Message(self::TOPIC_TO_MODULE_ENUM[$topic], $data)

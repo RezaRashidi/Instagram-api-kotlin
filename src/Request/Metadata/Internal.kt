@@ -78,7 +78,7 @@ final class Internal
      * @param int    $targetFeed    One of the FEED_X constants.
      * @param string $videoFilename
      *
-     * @throws .InvalidArgumentException If the video file is missing or invalid, or Instagram won't allow this video.
+     * @throws .InvalidArgumentException If the video file is missing or invalid, or Instagram won"t allow this video.
      * @throws .RuntimeException         In case of various processing errors.
      *
      * @return VideoDetails
@@ -92,7 +92,7 @@ final class Internal
         // valid and lets us avoid wasting time uploading totally invalid files!
         this._videoDetails = VideoDetails($videoFilename)
 
-        // Validate the video details and throw if Instagram won't allow it.
+        // Validate the video details and throw if Instagram won"t allow it.
         this._videoDetails.validate(ConstraintsFactory::createFor($targetFeed))
 
         return this._videoDetails
@@ -104,7 +104,7 @@ final class Internal
      * @param int    $targetFeed    One of the FEED_X constants.
      * @param string $photoFilename
      *
-     * @throws .InvalidArgumentException If the photo file is missing or invalid, or Instagram won't allow this photo.
+     * @throws .InvalidArgumentException If the photo file is missing or invalid, or Instagram won"t allow this photo.
      * @throws .RuntimeException         In case of various processing errors.
      *
      * @return PhotoDetails
@@ -118,7 +118,7 @@ final class Internal
         // valid and lets us avoid wasting time uploading totally invalid files!
         this._photoDetails = PhotoDetails($photoFilename)
 
-        // Validate the photo details and throw if Instagram won't allow it.
+        // Validate the photo details and throw if Instagram won"t allow it.
         this._photoDetails.validate(ConstraintsFactory::createFor($targetFeed))
 
         return this._photoDetails
@@ -204,14 +204,14 @@ final class Internal
     public fun setDirectRecipients(
         array $recipients)
     {
-        if (isset($recipients['users'])) {
-            this._directUsers = $recipients['users']
-            this._directThreads = '[]'
-        } elseif (isset($recipients['thread'])) {
-            this._directUsers = '[]'
-            this._directThreads = $recipients['thread']
+        if (isset($recipients["users"])) {
+            this._directUsers = $recipients["users"]
+            this._directThreads = "[]"
+        } elseif (isset($recipients["thread"])) {
+            this._directUsers = "[]"
+            this._directThreads = $recipients["thread"]
         } else {
-            throw .InvalidArgumentException('Please provide at least one recipient.')
+            throw .InvalidArgumentException("Please provide at least one recipient.")
         }
 
         return this

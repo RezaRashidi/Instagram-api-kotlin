@@ -19,10 +19,10 @@ import InstagramAPI.AutoPropertyMapper
 class StoryScreenshot : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'action_user_dict' => '.InstagramAPI.Response.Model.User',
+        "action_user_dict" => ".InstagramAPI.Response.Model.User",
         /*
          * A number describing what type of media this is.
          */
-        'media_type'       => 'int',
+        "media_type"       => "int",
     ]
 }

@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class Insights : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'instagram_insights' => '',
+        "instagram_insights" => "",
     ]
 }

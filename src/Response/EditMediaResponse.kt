@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class EditMediaResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'media' => 'Model.Item',
+        "media" => "Model.Item",
     ]
 }

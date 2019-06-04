@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class TagsStoryResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'story'       => 'Model.Reel',
+        "story"       => "Model.Reel",
     ]
 }

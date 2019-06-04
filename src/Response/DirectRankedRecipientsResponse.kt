@@ -43,10 +43,10 @@ import InstagramAPI.Response
 class DirectRankedRecipientsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'expires'           => '',
-        'ranked_recipients' => 'Model.DirectRankedRecipient[]',
-        'filtered'          => '',
-        'request_id'        => 'string',
-        'rank_token'        => 'string',
+        "expires"           => "",
+        "ranked_recipients" => "Model.DirectRankedRecipient[]",
+        "filtered"          => "",
+        "request_id"        => "string",
+        "rank_token"        => "string",
     ]
 }

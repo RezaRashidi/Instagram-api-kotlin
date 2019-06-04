@@ -16,10 +16,10 @@ class PresenceHandler : AbstractHandler : HandlerInterface
         Message $message)
     {
         $data = $message.getData()
-        if (!isset($data['presence_event']) || !is_array($data['presence_event'])) {
-            throw HandlerException('Invalid presence (event data is missing).')
+        if (!isset($data["presence_event"]) || !is_array($data["presence_event"])) {
+            throw HandlerException("Invalid presence (event data is missing).")
         }
-        $presence = UserPresence($data['presence_event'])
-        this._target.emit('presence', [$presence])
+        $presence = UserPresence($data["presence_event"])
+        this._target.emit("presence", [$presence])
     }
 }

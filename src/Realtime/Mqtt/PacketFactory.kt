@@ -67,7 +67,7 @@ class PacketFactory
         $type)
     {
         if (!isset(self::$_mapping[$type])) {
-            throw UnknownPacketTypeException(sprintf('Unknown packet type %d.', $type))
+            throw UnknownPacketTypeException(sprintf("Unknown packet type %d.", $type))
         }
 
         $class = self::$_mapping[$type]

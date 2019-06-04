@@ -8,10 +8,10 @@ class Debug
         $method,
         $endpoint)
     {
-        if (PHP_SAPI === 'cli') {
-            $method = Utils::colouredString("{$method}:  ", 'light_blue')
+        if (PHP_SAPI === "cli") {
+            $method = Utils::colouredString("{$method}:  ", "light_blue")
         } else {
-            $method = $method.':  '
+            $method = $method.":  "
         }
         echo $method.$endpoint.".n"
     }
@@ -19,10 +19,10 @@ class Debug
     public static fun printUpload(
         $uploadBytes)
     {
-        if (PHP_SAPI === 'cli') {
-            $dat = Utils::colouredString('→ '.$uploadBytes, 'yellow')
+        if (PHP_SAPI === "cli") {
+            $dat = Utils::colouredString("→ ".$uploadBytes, "yellow")
         } else {
-            $dat = '→ '.$uploadBytes
+            $dat = "→ ".$uploadBytes
         }
         echo $dat.".n"
     }
@@ -31,8 +31,8 @@ class Debug
         $httpCode,
         $bytes)
     {
-        if (PHP_SAPI === 'cli') {
-            echo Utils::colouredString("← {$httpCode} .t {$bytes}", 'green').".n"
+        if (PHP_SAPI === "cli") {
+            echo Utils::colouredString("← {$httpCode} .t {$bytes}", "green").".n"
         } else {
             echo "← {$httpCode} .t {$bytes}.n"
         }
@@ -42,13 +42,13 @@ class Debug
         $response,
         $truncated = false)
     {
-        if (PHP_SAPI === 'cli') {
-            $res = Utils::colouredString('RESPONSE: ', 'cyan')
+        if (PHP_SAPI === "cli") {
+            $res = Utils::colouredString("RESPONSE: ", "cyan")
         } else {
-            $res = 'RESPONSE: '
+            $res = "RESPONSE: "
         }
         if ($truncated && strlen($response) > 1000) {
-            $response = substr($response, 0, 1000).'...'
+            $response = substr($response, 0, 1000)."..."
         }
         echo $res.$response.".n.n"
     }
@@ -56,11 +56,11 @@ class Debug
     public static fun printPostData(
         $post)
     {
-        $gzip = mb_strpos($post, ".x1f".".x8b".".x08", 0, 'US-ASCII') === 0
-        if (PHP_SAPI === 'cli') {
-            $dat = Utils::colouredString(($gzip ? 'DECODED ' : '').'DATA: ', 'yellow')
+        $gzip = mb_strpos($post, ".x1f".".x8b".".x08", 0, "US-ASCII") === 0
+        if (PHP_SAPI === "cli") {
+            $dat = Utils::colouredString(($gzip ? "DECODED " : "")."DATA: ", "yellow")
         } else {
-            $dat = 'DATA: '
+            $dat = "DATA: "
         }
         echo $dat.urldecode(($gzip ? zlib_decode($post) : $post)).".n"
     }

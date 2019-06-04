@@ -6,8 +6,8 @@ import InstagramAPI.Realtime.Subscription.SkywalkerSubscription
 
 class LiveSubscription : SkywalkerSubscription
 {
-    val ID = 'live'
-    val TEMPLATE = 'ig/live_notification_subscribe/%s'
+    val ID = "live"
+    val TEMPLATE = "ig/live_notification_subscribe/%s"
 
     /** {@inheritdoc} */
     public fun getId()

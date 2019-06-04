@@ -39,12 +39,12 @@ import InstagramAPI.AutoPropertyMapper
 class ShadowInstagramUser : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'id'                => 'string',
-        'instagram_user_id' => 'string',
-        'followers_count'   => 'int',
-        'username'          => 'string',
-        'profile_picture'   => 'Image',
-        'business_manager'  => 'BusinessManager',
-        'error'             => '',
+        "id"                => "string",
+        "instagram_user_id" => "string",
+        "followers_count"   => "int",
+        "username"          => "string",
+        "profile_picture"   => "Image",
+        "business_manager"  => "BusinessManager",
+        "error"             => "",
     ]
 }

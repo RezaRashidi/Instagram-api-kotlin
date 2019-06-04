@@ -112,8 +112,8 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * Get the global story feed which contains everyone you follow.
      *
      * Note that users will eventually drop out of this list even though they
-     * still have stories. So it's always safer to call getUserStoryFeed() if
-     * a specific user's story feed matters to you.
+     * still have stories. So it"s always safer to call getUserStoryFeed() if
+     * a specific user"s story feed matters to you.
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -123,21 +123,21 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getReelsTrayFeed()
     {
-        return this.ig.request('feed/reels_tray/')
+        return this.ig.request("feed/reels_tray/")
             .setSignedPost(false)
-            .addPost('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
-            .addPost('reason', 'pull_to_refresh')
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("supported_capabilities_new", json_encode(Constants::SUPPORTED_CAPABILITIES))
+            .addPost("reason", "pull_to_refresh")
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uuid", this.ig.uuid)
             .getResponse(Response.ReelsTrayFeedResponse())
     }
 
     /**
-     * Get a specific user's story reel feed.
+     * Get a specific user"s story reel feed.
      *
-     * This fun gets the user's story Reel object directly, which always
+     * This fun gets the user"s story Reel object directly, which always
      * exists and contains information about the user and their last story even
-     * if that user doesn't have any active story anymore.
+     * if that user doesn"t have any active story anymore.
      *
      * @param string $userId Numerical UserPK ID.
      *
@@ -155,15 +155,15 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
     }
 
     /**
-     * Get a specific user's story feed with broadcast details.
+     * Get a specific user"s story feed with broadcast details.
      *
      * This fun gets the story in a roundabout way, with some extra details
      * about the "broadcast". But if there is no story available, this endpoint
      * gives you an empty response.
      *
      * NOTE: At least AT THIS MOMENT, this endpoint and the reels-tray endpoint
-     * are the only ones that will give you people's "post_live" fields (their
-     * saved Instagram Live Replays). The other "get user stories" funcs don't!
+     * are the only ones that will give you people"s "post_live" fields (their
+     * saved Instagram Live Replays). The other "get user stories" funcs don"t!
      *
      * @param string $userId Numerical UserPK ID.
      *
@@ -177,17 +177,17 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("feed/user/{$userId}/story/")
-            .addParam('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
+            .addParam("supported_capabilities_new", json_encode(Constants::SUPPORTED_CAPABILITIES))
             .getResponse(Response.UserStoryFeedResponse())
     }
 
     /**
-     * Get multiple users' story feeds (or specific highlight-details) at once.
+     * Get multiple users" story feeds (or specific highlight-details) at once.
      *
      * NOTE: Normally, you would only import this endpoint for stories (by passing
-     * UserPK IDs as the parameter). But if you're looking at people's highlight
+     * UserPK IDs as the parameter). But if you"re looking at people"s highlight
      * feeds (via `Highlight::getUserFeed()`), you may also sometimes discover
-     * highlight entries that don't have any `items` array. In that case, you
+     * highlight entries that don"t have any `items` array. In that case, you
      * are supposed to get the items for those highlights via this endpoint!
      * Simply pass their `id` values as the argument to this API to get details.
      *
@@ -202,7 +202,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getReelsMediaFeed(
         $feedList,
-        $source = 'feed_timeline')
+        $source = "feed_timeline")
     {
         if (!is_array($feedList)) {
             $feedList = [$feedList]
@@ -213,13 +213,13 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         }
         unset($value) // Clear reference.
 
-        return this.ig.request('feed/reels_media/')
-            .addPost('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('user_ids', $feedList) // Must be string[] array.
-            .addPost('source', $source)
+        return this.ig.request("feed/reels_media/")
+            .addPost("supported_capabilities_new", json_encode(Constants::SUPPORTED_CAPABILITIES))
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("user_ids", $feedList) // Must be string[] array.
+            .addPost("source", $source)
             .getResponse(Response.ReelsMediaResponse())
     }
 
@@ -232,21 +232,21 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getArchivedStoriesFeed()
     {
-        return this.ig.request('archive/reel/day_shells/')
-            .addParam('include_suggested_highlights', false)
-            .addParam('is_in_archive_home', true)
-            .addParam('include_cover', 0)
-            .addParam('timezone_offset', date('Z'))
+        return this.ig.request("archive/reel/day_shells/")
+            .addParam("include_suggested_highlights", false)
+            .addParam("is_in_archive_home", true)
+            .addParam("include_cover", 0)
+            .addParam("timezone_offset", date("Z"))
             .getResponse(Response.ArchivedStoriesFeedResponse())
     }
 
     /**
      * Get the list of users who have seen one of your story items.
      *
-     * Note that this only works for your own story items. Instagram doesn't
-     * allow you to see the viewer list for other people's stories!
+     * Note that this only works for your own story items. Instagram doesn"t
+     * allow you to see the viewer list for other people"s stories!
      *
-     * @param string      $storyPk The story media item's PK in Instagram's internal format (ie "3482384834").
+     * @param string      $storyPk The story media item"s PK in Instagram"s internal format (ie "3482384834").
      * @param string|null $maxId   Next "maximum ID", used for pagination.
      *
      * @throws .InstagramAPI.Exception.InstagramException
@@ -258,9 +258,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         $maxId = null)
     {
         $request = this.ig.request("media/{$storyPk}/list_reel_media_viewer/")
-            .addParam('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
+            .addParam("supported_capabilities_new", json_encode(Constants::SUPPORTED_CAPABILITIES))
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId)
+            $request.addParam("max_id", $maxId)
         }
 
         return $request.getResponse(Response.ReelMediaViewerResponse())
@@ -271,8 +271,8 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *
      * Note that once you vote on a story poll, you cannot change your vote.
      *
-     * @param string $storyId      The story media item's ID in Instagram's internal format (ie "1542304813904481224_6112344004").
-     * @param string $pollId       The poll ID in Instagram's internal format (ie "17956159684032257").
+     * @param string $storyId      The story media item"s ID in Instagram"s internal format (ie "1542304813904481224_6112344004").
+     * @param string $pollId       The poll ID in Instagram"s internal format (ie "17956159684032257").
      * @param int    $votingOption Value that represents the voting option of the voter. 0 for the first option, 1 for the second option.
      *
      * @throws .InvalidArgumentException
@@ -286,15 +286,15 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         $votingOption)
     {
         if (($votingOption !== 0) && ($votingOption !== 1)) {
-            throw .InvalidArgumentException('You must provide a valid value for voting option.')
+            throw .InvalidArgumentException("You must provide a valid value for voting option.")
         }
 
         return this.ig.request("media/{$storyId}/{$pollId}/story_poll_vote/")
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('radio_type', 'wifi-none')
-            .addPost('vote', $votingOption)
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("radio_type", "wifi-none")
+            .addPost("vote", $votingOption)
             .getResponse(Response.ReelMediaViewerResponse())
     }
 
@@ -304,8 +304,8 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * Note that once you vote on a story poll, you cannot change your vote.
      *
      *
-     * @param string $storyId      The story media item's ID in Instagram's internal format (ie "1542304813904481224_6112344004").
-     * @param string $sliderId     The slider ID in Instagram's internal format (ie "17956159684032257").
+     * @param string $storyId      The story media item"s ID in Instagram"s internal format (ie "1542304813904481224_6112344004").
+     * @param string $sliderId     The slider ID in Instagram"s internal format (ie "17956159684032257").
      * @param float  $votingOption Value that represents the voting option of the voter. Should be a float from 0 to 1 (ie "0.25").
      *
      * @throws .InvalidArgumentException
@@ -319,26 +319,26 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         $votingOption)
     {
         if ($votingOption < 0 || $votingOption > 1) {
-            throw .InvalidArgumentException('You must provide a valid value from 0 to 1 for voting option.')
+            throw .InvalidArgumentException("You must provide a valid value from 0 to 1 for voting option.")
         }
 
         return this.ig.request("media/{$storyId}/{$sliderId}/story_slider_vote/")
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('radio_type', 'wifi-none')
-            .addPost('vote', $votingOption)
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("radio_type", "wifi-none")
+            .addPost("vote", $votingOption)
             .getResponse(Response.ReelMediaViewerResponse())
     }
 
     /**
      * Get the list of users who have voted an option in a story poll.
      *
-     * Note that this only works for your own story polls. Instagram doesn't
-     * allow you to see the results from other people's polls!
+     * Note that this only works for your own story polls. Instagram doesn"t
+     * allow you to see the results from other people"s polls!
      *
-     * @param string      $storyId      The story media item's ID in Instagram's internal format (ie "1542304813904481224_6112344004").
-     * @param string      $pollId       The poll ID in Instagram's internal format (ie "17956159684032257").
+     * @param string      $storyId      The story media item"s ID in Instagram"s internal format (ie "1542304813904481224_6112344004").
+     * @param string      $pollId       The poll ID in Instagram"s internal format (ie "17956159684032257").
      * @param int         $votingOption Value that represents the voting option of the voter. 0 for the first option, 1 for the second option.
      * @param string|null $maxId        Next "maximum ID", used for pagination.
      *
@@ -354,14 +354,14 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         $maxId = null)
     {
         if (($votingOption !== 0) && ($votingOption !== 1)) {
-            throw .InvalidArgumentException('You must provide a valid value for voting option.')
+            throw .InvalidArgumentException("You must provide a valid value for voting option.")
         }
 
         $request = this.ig.request("media/{$storyId}/{$pollId}/story_poll_voters/")
-            .addParam('vote', $votingOption)
+            .addParam("vote", $votingOption)
 
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId)
+            $request.addParam("max_id", $maxId)
         }
 
         return $request.getResponse(Response.StoryPollVotersResponse())
@@ -370,8 +370,8 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Respond to a question sticker on a story.
      *
-     * @param string $storyId      The story media item's ID in Instagram's internal format (ie "1542304813904481224_6112344004").
-     * @param string $questionId   The question ID in Instagram's internal format (ie "17956159684032257").
+     * @param string $storyId      The story media item"s ID in Instagram"s internal format (ie "1542304813904481224_6112344004").
+     * @param string $questionId   The question ID in Instagram"s internal format (ie "17956159684032257").
      * @param string $responseText The text to respond to the question with. (Note: Android App limits this to 94 characters).
      *
      * @throws .InstagramAPI.Exception.InstagramException
@@ -384,19 +384,19 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         $responseText)
     {
         return this.ig.request("media/{$storyId}/{$questionId}/story_question_response/")
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('response', $responseText)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('type', 'text')
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("response", $responseText)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("type", "text")
+            .addPost("_uuid", this.ig.uuid)
             .getResponse(Response.GenericResponse())
     }
 
     /**
      * Get all responses of a story question.
      *
-     * @param string      $storyId    The story media item's ID in Instagram's internal format (ie "1542304813904481224_6112344004").
-     * @param string      $questionId The question ID in Instagram's internal format (ie "17956159684032257").
+     * @param string      $storyId    The story media item"s ID in Instagram"s internal format (ie "1542304813904481224_6112344004").
+     * @param string      $questionId The question ID in Instagram"s internal format (ie "17956159684032257").
      * @param string|null $maxId      Next "maximum ID", used for pagination.
      *
      * @throws .InstagramAPI.Exception.InstagramException
@@ -411,7 +411,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         $request = this.ig.request("media/{$storyId}/{$questionId}/story_question_responses/")
 
         if ($maxId !== null) {
-            $request.addParam('max_id', $maxId)
+            $request.addParam("max_id", $maxId)
         }
 
         return $request.getResponse(Response.StoryAnswersResponse())
@@ -426,14 +426,14 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getStoryCountdowns()
     {
-        return this.ig.request('media/story_countdowns/')
+        return this.ig.request("media/story_countdowns/")
             .getResponse(Response.StoryCountdownsResponse())
     }
 
     /**
      * Follows a story countdown to subscribe to a notification when the countdown is finished.
      *
-     * @param string $countdownId The countdown ID in Instagram's internal format (ie "17956159684032257").
+     * @param string $countdownId The countdown ID in Instagram"s internal format (ie "17956159684032257").
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -443,16 +443,16 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         $countdownId)
     {
         return this.ig.request("media/{$countdownId}/follow_story_countdown/")
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_uuid", this.ig.uuid)
             .getResponse(Response.GenericResponse())
     }
 
     /**
      * Unfollows a story countdown to unsubscribe from a notification when the countdown is finished.
      *
-     * @param string $countdownId The countdown ID in Instagram's internal format (ie "17956159684032257").
+     * @param string $countdownId The countdown ID in Instagram"s internal format (ie "17956159684032257").
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -462,9 +462,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         $countdownId)
     {
         return this.ig.request("media/{$countdownId}/unfollow_story_countdown/")
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_uuid', this.ig.uuid)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_uuid", this.ig.uuid)
             .getResponse(Response.GenericResponse())
     }
 
@@ -472,14 +472,14 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * Mark story media items as seen.
      *
      * The various story-related endpoints only give you lists of story media.
-     * They don't actually mark any stories as "seen", so the user doesn't know
-     * that you've seen their story. Actually marking the story as "seen" is
+     * They don"t actually mark any stories as "seen", so the user doesn"t know
+     * that you"ve seen their story. Actually marking the story as "seen" is
      * done via this endpoint instead. The official app calls this endpoint
      * periodically (with 1 or more items at a time) while watching a story.
      *
-     * Tip: You can pass in the whole "getItems()" array from a user's story
+     * Tip: You can pass in the whole "getItems()" array from a user"s story
      * feed (retrieved via any of the other story endpoints), to easily mark
-     * all of that user's story media items as seen.
+     * all of that user"s story media items as seen.
      *
      * WARNING: ONLY import *THIS* ENDPOINT IF THE STORIES CAME FROM THE ENDPOINTS
      * IN *THIS* REQUEST-COLLECTION FILE: From "getReelsTrayFeed()" or the
@@ -500,7 +500,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
     public fun markMediaSeen(
         array $items)
     {
-        // NOTE: NULL = import each item's owner ID as the "source ID".
+        // NOTE: NULL = import each item"s owner ID as the "source ID".
         return this.ig.internal.markStoryMediaSeen($items, null)
     }
 
@@ -517,7 +517,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getReelSettings()
     {
-        return this.ig.request('users/reel_settings/')
+        return this.ig.request("users/reel_settings/")
             .getResponse(Response.ReelSettingsResponse())
     }
 
@@ -542,28 +542,28 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         $allowStoryReshare = null,
         $autoArchive = null)
     {
-        if (!in_array($messagePrefs, ['anyone', 'following', 'off'])) {
-            throw .InvalidArgumentException('You must provide a valid message preference value.')
+        if (!in_array($messagePrefs, ["anyone", "following", "off"])) {
+            throw .InvalidArgumentException("You must provide a valid message preference value.")
         }
 
-        $request = this.ig.request('users/set_reel_settings/')
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('message_prefs', $messagePrefs)
+        $request = this.ig.request("users/set_reel_settings/")
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("message_prefs", $messagePrefs)
 
         if ($allowStoryReshare !== null) {
             if (!is_bool($allowStoryReshare)) {
-                throw .InvalidArgumentException('You must provide a valid value for allowing story reshare.')
+                throw .InvalidArgumentException("You must provide a valid value for allowing story reshare.")
             }
-            $request.addPost('allow_story_reshare', $allowStoryReshare)
+            $request.addPost("allow_story_reshare", $allowStoryReshare)
         }
 
         if ($autoArchive !== null) {
-            if (!in_array($autoArchive, ['on', 'off'])) {
-                throw .InvalidArgumentException('You must provide a valid value for auto archive.')
+            if (!in_array($autoArchive, ["on", "off"])) {
+                throw .InvalidArgumentException("You must provide a valid value for auto archive.")
             }
-            $request.addPost('reel_auto_archive', $autoArchive)
+            $request.addPost("reel_auto_archive", $autoArchive)
         }
 
         return $request.getResponse(Response.ReelSettingsResponse())

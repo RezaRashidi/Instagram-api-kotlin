@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class SuggestedSearchesResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'suggested'  => 'Model.Suggested[]',
-        'rank_token' => 'string',
+        "suggested"  => "Model.Suggested[]",
+        "rank_token" => "string",
     ]
 }

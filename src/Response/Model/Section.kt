@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class Section : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'layout_type'       => 'string',
-        'layout_content'    => 'LayoutContent',
-        'feed_type'         => 'string',
-        'explore_item_info' => 'ExploreItemInfo',
+        "layout_type"       => "string",
+        "layout_content"    => "LayoutContent",
+        "feed_type"         => "string",
+        "explore_item_info" => "ExploreItemInfo",
     ]
 }

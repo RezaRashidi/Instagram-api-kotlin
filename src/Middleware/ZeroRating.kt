@@ -16,7 +16,7 @@ class ZeroRating
      * @var array
      */
     val DEFAULT_REWRITE = [
-        '^(https?:././)(i)(..instagram..com/.*)$' => '$1b.$2$3',
+        "^(https?:././)(i)(..instagram..com/.*)$" => "$1b.$2$3",
     ]
 
     /**
@@ -53,12 +53,12 @@ class ZeroRating
         this._rules = []
         foreach ($rules as $from => $to) {
             $regex = "#{$from}#"
-            $test = @preg_match($regex, '')
+            $test = @preg_match($regex, "")
             if ($test === false) {
                 continue
             }
             this._rules[$regex] = strtr($to, [
-                '..' => '.',
+                ".." => ".",
             ])
         }
     }

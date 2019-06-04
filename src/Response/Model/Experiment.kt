@@ -35,11 +35,11 @@ import InstagramAPI.AutoPropertyMapper
 class Experiment : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'name'              => 'string',
-        'group'             => 'string',
-        'additional_params' => '', // TODO: Only seen as [] empty array so far.
-        'params'            => 'Param[]',
-        'logging_id'        => 'string',
-        'expired'           => 'bool',
+        "name"              => "string",
+        "group"             => "string",
+        "additional_params" => "", // TODO: Only seen as [] empty array so far.
+        "params"            => "Param[]",
+        "logging_id"        => "string",
+        "expired"           => "bool",
     ]
 }

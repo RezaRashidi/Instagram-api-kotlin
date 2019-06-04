@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class StickerAssetsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'version'         => '',
-        'static_stickers' => 'Model.StaticStickers[]',
+        "version"         => "",
+        "static_stickers" => "Model.StaticStickers[]",
     ]
 }

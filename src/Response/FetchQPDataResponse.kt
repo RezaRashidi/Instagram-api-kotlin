@@ -43,10 +43,10 @@ import InstagramAPI.Response
 class FetchQPDataResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'request_status'          => 'string',
-        'extra_info'              => 'Model.QPExtraInfo[]',
-        'qp_data'                 => 'Model.QPData[]',
-        'client_cache_ttl_in_sec' => 'int',
-        'error_msg'               => '',
+        "request_status"          => "string",
+        "extra_info"              => "Model.QPExtraInfo[]",
+        "qp_data"                 => "Model.QPData[]",
+        "client_cache_ttl_in_sec" => "int",
+        "error_msg"               => "",
     ]
 }

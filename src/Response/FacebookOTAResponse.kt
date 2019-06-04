@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class FacebookOTAResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'bundles'    => '',
-        'request_id' => 'string',
+        "bundles"    => "",
+        "request_id" => "string",
     ]
 }

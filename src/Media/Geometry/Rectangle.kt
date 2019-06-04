@@ -151,7 +151,7 @@ class Rectangle
      * Create a new, scale-adjusted object.
      *
      * NOTE: The x1/y1 offsets are not affected. Only the width and height. But
-     * those dimensions WILL affect the x2/y2 offsets, as you'd expect.
+     * those dimensions WILL affect the x2/y2 offsets, as you"d expect.
      *
      * @param float|int $newScale     The scale factor to apply.
      * @param string    $roundingFunc One of `round` (default), `floor` or `ceil`.
@@ -162,13 +162,13 @@ class Rectangle
      */
     public fun withRescaling(
         $newScale = 1.0,
-        $roundingFunc = 'round')
+        $roundingFunc = "round")
     {
         if (!is_float($newScale) && !is_int($newScale)) {
-            throw .InvalidArgumentException('The scale must be a float or integer.')
+            throw .InvalidArgumentException("The scale must be a float or integer.")
         }
-        if ($roundingFunc !== 'round' && $roundingFunc !== 'floor' && $roundingFunc !== 'ceil') {
-            throw .InvalidArgumentException(sprintf('Invalid rounding fun "%s".', $roundingFunc))
+        if ($roundingFunc !== "round" && $roundingFunc !== "floor" && $roundingFunc !== "ceil") {
+            throw .InvalidArgumentException(sprintf("Invalid rounding fun "%s".", $roundingFunc))
         }
 
         $newWidth = (int) $roundingFunc($newScale * this._width)

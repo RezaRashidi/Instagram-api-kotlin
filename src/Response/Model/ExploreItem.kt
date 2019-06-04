@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class ExploreItem : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'media'             => 'Item',
-        'stories'           => 'Stories',
-        'channel'           => 'Channel',
-        'explore_item_info' => 'ExploreItemInfo',
+        "media"             => "Item",
+        "stories"           => "Stories",
+        "channel"           => "Channel",
+        "explore_item_info" => "ExploreItemInfo",
     ]
 }

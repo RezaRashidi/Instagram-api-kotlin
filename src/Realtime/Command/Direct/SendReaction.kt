@@ -4,12 +4,12 @@ package InstagramAPI.Realtime.Command.Direct
 
 final class SendReaction : SendItem
 {
-    val TYPE = 'reaction'
+    val TYPE = "reaction"
 
-    val REACTION_LIKE = 'like'
+    val REACTION_LIKE = "like"
 
-    val STATUS_CREATED = 'created'
-    val STATUS_DELETED = 'deleted'
+    val STATUS_CREATED = "created"
+    val STATUS_DELETED = "deleted"
 
     /**
      * Constructor.
@@ -32,20 +32,20 @@ final class SendReaction : SendItem
         parent::__construct($threadId, self::TYPE, $options)
 
         // Handle thread item identifier.
-        this._data['item_id'] = this._validateThreadItemId($threadItemId)
-        this._data['node_type'] = 'item'
+        this._data["item_id"] = this._validateThreadItemId($threadItemId)
+        this._data["node_type"] = "item"
 
         // Handle reaction type.
         if (!in_array($reaction, this._getSupportedReactions(), true)) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a supported reaction.', $reaction))
+            throw .InvalidArgumentException(sprintf(""%s" is not a supported reaction.", $reaction))
         }
-        this._data['reaction_type'] = $reaction
+        this._data["reaction_type"] = $reaction
 
         // Handle reaction status.
         if (!in_array($status, this._getSupportedStatuses(), true)) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a supported reaction status.', $status))
+            throw .InvalidArgumentException(sprintf(""%s" is not a supported reaction status.", $status))
         }
-        this._data['reaction_status'] = $status
+        this._data["reaction_status"] = $status
     }
 
     /**

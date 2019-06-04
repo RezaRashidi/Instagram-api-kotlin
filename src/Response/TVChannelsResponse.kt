@@ -55,13 +55,13 @@ import InstagramAPI.Response
 class TVChannelsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'type'              => 'string',
-        'title'             => 'string',
-        'id'                => 'string',
-        'items'             => 'Model.Item[]',
-        'more_available'    => 'bool',
-        'max_id'            => 'string',
-        'seen_state'        => '',
-        'user_dict'         => 'Model.User',
+        "type"              => "string",
+        "title"             => "string",
+        "id"                => "string",
+        "items"             => "Model.Item[]",
+        "more_available"    => "bool",
+        "max_id"            => "string",
+        "seen_state"        => "",
+        "user_dict"         => "Model.User",
     ]
 }

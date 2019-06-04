@@ -59,17 +59,17 @@ import InstagramAPI.AutoPropertyMapper
 class Suggestion : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'media_infos'       => '',
-        'social_context'    => 'string',
-        'algorithm'         => 'string',
-        'thumbnail_urls'    => 'string[]',
-        'value'             => 'float',
-        'caption'           => '',
-        'user'              => 'User',
-        'large_urls'        => 'string[]',
-        'media_ids'         => '',
-        'icon'              => '',
-        'is_new_suggestion' => 'bool',
-        'uuid'              => 'string',
+        "media_infos"       => "",
+        "social_context"    => "string",
+        "algorithm"         => "string",
+        "thumbnail_urls"    => "string[]",
+        "value"             => "float",
+        "caption"           => "",
+        "user"              => "User",
+        "large_urls"        => "string[]",
+        "media_ids"         => "",
+        "icon"              => "",
+        "is_new_suggestion" => "bool",
+        "uuid"              => "string",
     ]
 }

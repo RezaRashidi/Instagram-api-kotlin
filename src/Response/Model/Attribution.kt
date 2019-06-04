@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class Attribution : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'name' => 'string',
+        "name" => "string",
     ]
 }

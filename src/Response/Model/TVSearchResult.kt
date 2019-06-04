@@ -31,10 +31,10 @@ import InstagramAPI.AutoPropertyMapper
 class TVSearchResult : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'type'          => 'string',
-        'User'          => 'User',
-        'channel'       => 'TVChannel',
-        'num_results'   => 'int',
-        'rank_token'    => 'string',
+        "type"          => "string",
+        "User"          => "User",
+        "channel"       => "TVChannel",
+        "num_results"   => "int",
+        "rank_token"    => "string",
     ]
 }

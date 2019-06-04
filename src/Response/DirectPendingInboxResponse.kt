@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class DirectPendingInboxResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'seq_id'                 => 'string',
-        'pending_requests_total' => '',
-        'inbox'                  => 'Model.DirectInbox',
+        "seq_id"                 => "string",
+        "pending_requests_total" => "",
+        "inbox"                  => "Model.DirectInbox",
     ]
 }

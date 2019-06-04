@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class CommentFilterKeywordsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'keywords' => '',
+        "keywords" => "",
     ]
 }

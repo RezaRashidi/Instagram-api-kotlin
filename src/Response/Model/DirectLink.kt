@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class DirectLink : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'text'         => 'string',
-        'link_context' => 'LinkContext',
+        "text"         => "string",
+        "link_context" => "LinkContext",
     ]
 }

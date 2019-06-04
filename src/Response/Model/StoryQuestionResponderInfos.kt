@@ -51,15 +51,15 @@ import InstagramAPI.AutoPropertyMapper
 class StoryQuestionResponderInfos : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'question_id'                   => 'string',
-        'question'                      => 'string',
-        'question_type'                 => 'string',
-        'background_color'              => 'string',
-        'text_color'                    => 'string',
-        'responders'                    => 'Responder[]',
-        'max_id'                        => '',
-        'more_available'                => 'bool',
-        'question_response_count'       => 'int',
-        'latest_question_response_time' => 'int',
+        "question_id"                   => "string",
+        "question"                      => "string",
+        "question_type"                 => "string",
+        "background_color"              => "string",
+        "text_color"                    => "string",
+        "responders"                    => "Responder[]",
+        "max_id"                        => "",
+        "more_available"                => "bool",
+        "question_response_count"       => "int",
+        "latest_question_response_time" => "int",
     ]
 }

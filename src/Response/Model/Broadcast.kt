@@ -95,32 +95,32 @@ import InstagramAPI.AutoPropertyMapper
 class Broadcast : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'broadcast_owner'           => 'User',
+        "broadcast_owner"           => "User",
         /*
          * A string such as "active" or "post_live".
          */
-        'broadcast_status'          => 'string',
-        'cover_frame_url'           => 'string',
-        'published_time'            => 'string',
-        'broadcast_message'         => 'string',
-        'muted'                     => '',
-        'media_id'                  => 'string',
-        'id'                        => 'string',
-        'rtmp_playback_url'         => 'string',
-        'dash_abr_playback_url'     => 'string',
-        'dash_playback_url'         => 'string',
-        'ranked_position'           => '',
-        'organic_tracking_token'    => 'string',
-        'seen_ranked_position'      => '',
-        'viewer_count'              => 'int',
-        'dash_manifest'             => 'string',
+        "broadcast_status"          => "string",
+        "cover_frame_url"           => "string",
+        "published_time"            => "string",
+        "broadcast_message"         => "string",
+        "muted"                     => "",
+        "media_id"                  => "string",
+        "id"                        => "string",
+        "rtmp_playback_url"         => "string",
+        "dash_abr_playback_url"     => "string",
+        "dash_playback_url"         => "string",
+        "ranked_position"           => "",
+        "organic_tracking_token"    => "string",
+        "seen_ranked_position"      => "",
+        "viewer_count"              => "int",
+        "dash_manifest"             => "string",
         /*
          * Unix timestamp of when the "post_live" will expire.
          */
-        'expire_at'                 => 'string',
-        'encoding_tag'              => 'string',
-        'total_unique_viewer_count' => 'int',
-        'internal_only'             => 'bool',
-        'number_of_qualities'       => 'int',
+        "expire_at"                 => "string",
+        "encoding_tag"              => "string",
+        "total_unique_viewer_count" => "int",
+        "internal_only"             => "bool",
+        "number_of_qualities"       => "int",
     ]
 }

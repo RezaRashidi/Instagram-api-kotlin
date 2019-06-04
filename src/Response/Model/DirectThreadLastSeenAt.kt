@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class DirectThreadLastSeenAt : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'item_id'   => 'string',
-        'timestamp' => '',
+        "item_id"   => "string",
+        "timestamp" => "",
     ]
 }

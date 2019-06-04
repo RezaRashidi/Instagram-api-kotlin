@@ -111,47 +111,47 @@ import InstagramAPI.AutoPropertyMapper
 class Location : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'name'                 => 'string',
-        'external_id_source'   => 'string',
-        'external_source'      => 'string',
-        'address'              => 'string',
-        'lat'                  => 'float',
-        'lng'                  => 'float',
-        'external_id'          => 'string',
-        'facebook_places_id'   => 'string',
-        'city'                 => 'string',
-        'pk'                   => 'string',
-        'short_name'           => 'string',
-        'facebook_events_id'   => 'string',
-        'start_time'           => '',
-        'end_time'             => '',
-        'location_dict'        => 'Location',
-        'type'                 => '',
-        'profile_pic_url'      => 'string',
-        'profile_pic_username' => 'string',
-        'time_granularity'     => '',
-        'timezone'             => '',
+        "name"                 => "string",
+        "external_id_source"   => "string",
+        "external_source"      => "string",
+        "address"              => "string",
+        "lat"                  => "float",
+        "lng"                  => "float",
+        "external_id"          => "string",
+        "facebook_places_id"   => "string",
+        "city"                 => "string",
+        "pk"                   => "string",
+        "short_name"           => "string",
+        "facebook_events_id"   => "string",
+        "start_time"           => "",
+        "end_time"             => "",
+        "location_dict"        => "Location",
+        "type"                 => "",
+        "profile_pic_url"      => "string",
+        "profile_pic_username" => "string",
+        "time_granularity"     => "",
+        "timezone"             => "",
         /*
          * Country number such as int(398), but it has no relation to actual
          * country codes, so the number is useless...
          */
-        'country'              => 'int',
+        "country"              => "int",
         /*
          * Regular unix timestamp of when the location was created.
          */
-        'created_at'           => 'string',
+        "created_at"           => "string",
         /*
          * Some kind of internal number to signify what type of event a special
-         * location (such as a festival) is. We've only seen this with int(0).
+         * location (such as a festival) is. We"ve only seen this with int(0).
          */
-        'event_category'       => 'int',
+        "event_category"       => "int",
         /*
          * 64-bit integer with the facebook places ID for the location.
          */
-        'place_fbid'           => 'string',
+        "place_fbid"           => "string",
         /*
          * Human-readable name of the facebook place for the location.
          */
-        'place_name'           => 'string',
+        "place_name"           => "string",
     ]
 }

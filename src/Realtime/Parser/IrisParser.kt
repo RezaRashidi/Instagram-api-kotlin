@@ -8,7 +8,7 @@ import InstagramAPI.Realtime.ParserInterface
 
 class IrisParser : ParserInterface
 {
-    val MODULE = 'direct'
+    val MODULE = "direct"
 
     /**
      * {@inheritdoc}
@@ -21,7 +21,7 @@ class IrisParser : ParserInterface
     {
         $messages = Client::api_body_decode($payload)
         if (!is_array($messages)) {
-            throw .RuntimeException('Invalid Iris payload.')
+            throw .RuntimeException("Invalid Iris payload.")
         }
 
         $result = []

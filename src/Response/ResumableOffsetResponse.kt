@@ -27,7 +27,7 @@ import InstagramAPI.Response
 class ResumableOffsetResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'offset' => 'int',
+        "offset" => "int",
     ]
 
     /**
@@ -37,13 +37,13 @@ class ResumableOffsetResponse : Response
      */
     public fun isOk()
     {
-        $offset = this._getProperty('offset')
+        $offset = this._getProperty("offset")
         if ($offset !== null && $offset >= 0) {
             return true
         } else {
             // Set a nice message for exceptions.
             if (this.getMessage() === null) {
-                this.setMessage('Offset for resumable uploader is missing or invalid.')
+                this.setMessage("Offset for resumable uploader is missing or invalid.")
             }
 
             return false

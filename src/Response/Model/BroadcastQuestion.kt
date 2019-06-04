@@ -35,11 +35,11 @@ import InstagramAPI.AutoPropertyMapper
 class BroadcastQuestion : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'text'               => 'string',
-        'qid'                => 'string',
-        'source'             => 'string',
-        'user'               => 'User',
-        'story_sticker_text' => 'string',
-        'timestamp'          => 'string',
+        "text"               => "string",
+        "qid"                => "string",
+        "source"             => "string",
+        "user"               => "User",
+        "story_sticker_text" => "string",
+        "timestamp"          => "string",
     ]
 }
