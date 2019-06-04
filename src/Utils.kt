@@ -1,13 +1,10 @@
-
-
 package InstagramAPI
 
 import InstagramAPI.Media.Video.FFmpeg
 import InstagramAPI.Response.Model.Item
 import InstagramAPI.Response.Model.Location
 
-class Utils
-{
+object Utils{
     /**
      * Override for the default temp path used by various class funs.
      *
@@ -19,14 +16,14 @@ class Utils
      *
      * .InstagramAPI.Utils::$defaultTmpPath = '/home/example/foo/'
      */
-    public static $defaultTmpPath = null
+    var defaultTmpPath = null
 
     /**
      * Used for multipart boundary generation.
      *
      * @var string
      */
-    val BOUNDARY_CHARS = '-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    val BOUNDARY_CHARS = "-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     /**
      * Length of generated multipart boundary.
@@ -41,55 +38,53 @@ class Utils
      * @var string|null
      *
      * @deprecated
-     * @see FFmpeg::$defaultBinary
+     * @see (FFmpeg)::$defaultBinary
      */
-    public static $ffmpegBin = null
+    var ffmpegBin = null
 
     /**
      * Name of the detected ffprobe executable, or FALSE if none found.
      *
      * @var string|bool|null
      */
-    public static $ffprobeBin = null
+    var ffprobeBin = null
 
     /**
      * Last uploadId generated with microtime().
      *
      * @var string|null
      */
-    protected static $_lastUploadId = null
+    var _lastUploadId: String ?= null
 
     /**
-     * @param bool $useNano Whether to return result in usec instead of msec.
+     * @param (bool) $useNano Whether to return result in usec instead of msec.
      *
      * @return string
      */
-    public static fun generateUploadId(
-        $useNano = false)
-    {
-        $result = null
-        if (!$useNano) {
+    fun generateUploadId(useNano: Boolean = false): String {
+        var result: String = null
+        if (!useNano) {
             while (true) {
-                $result = number_format(round(microtime(true) * 1000), 0, '', '')
-                if (self::$_lastUploadId !== null && $result === self::$_lastUploadId) {
+                result = number_format(round(microtime(true) * 1000), 0, '', '')
+                if (_lastUploadId !== null && result === _lastUploadId) {
                     // NOTE: Fast machines can process files too quick (< 0.001
                     // sec), which leads to identical upload IDs, which leads to
                     // "500 Oops, an error occurred" errors. So we sleep 0.001
                     // sec to guarantee different upload IDs per each call.
                     usleep(1000)
                 } else { // OK!
-                    self::$_lastUploadId = $result
+                    _lastUploadId = result
                     break
                 }
             }
         } else {
             // Emulate System.nanoTime().
-            $result = number_format(microtime(true) - strtotime('Last Monday'), 6, '', '')
+            result = number_format(microtime(true) - strtotime("Last Monday"), 6, '', '')
             // Append nanoseconds.
-            $result .= str_pad((string) mt_rand(1, 999), 3, '0', STR_PAD_LEFT)
+            result += (1..999).random().toString().padStart(3, '0')
         }
 
-        return $result
+        return result
     }
 
     /**
@@ -97,28 +92,29 @@ class Utils
      *
      * WARNING: This method is not Unicode-aware, so import it only on ANSI strings.
      *
-     * @param string $string
+     * @param (string) $string
      *
      * @return int
      *
-     * @see https://en.wikipedia.org/wiki/Java_hashCode()#The_java.lang.String_hash_fun
+     * @see (https://en.wikipedia.org/wiki/Java_hashCode()#The_java.lang.String_hash_fun)
      */
-    public static fun hashCode(
-        $string)
-    {
-        $result = 0
-        for ($i = 0, $len = strlen($string) $i < $len ++$i) {
-            $result = (-$result + ($result << 5) + ord($string[$i])) & 0xFFFFFFFF
+    fun hashCode(string: String): Int{
+        var result: Long = 0
+//        for ($i = 0, $len = strlen($string) $i < $len ++$i) {
+//            $result = (-$result + ($result << 5) + ord($string[$i])) & 0xFFFFFFFF
+//        }
+        for (i in 0 until string.length){   //Todo check loop step
+            result = (-result + (result << 5) + string[i].toInt()) & 0xFFFFFFFF
         }
         if (PHP_INT_SIZE > 4) {
-            if ($result > 0x7FFFFFFF) {
-                $result -= 0x100000000
-            } elseif ($result < -0x80000000) {
-                $result += 0x100000000
+            if (result > 0x7FFFFFFF) {
+                result -= 0x100000000
+            } else if (result < -0x80000000) {
+                result += 0x100000000
             }
         }
 
-        return $result
+        return result.toInt()
     }
 
     /**
@@ -128,12 +124,10 @@ class Utils
      *
      * @return array
      */
-    public static fun reorderByHashCode(
-        array $data)
-    {
+    fun reorderByHashCode(data){
         $hashCodes = []
-        foreach ($data as $key => $value) {
-            $hashCodes[$key] = self::hashCode($key)
+        foreach (data as key => value) {
+            hashCodes[key] = self::hashCode(key)
         }
 
         uksort($data, fun ($a, $b) import ($hashCodes) {
