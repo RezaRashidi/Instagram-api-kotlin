@@ -8,7 +8,7 @@ import InstagramAPI.Realtime.Payload.IrisSubscribeAck
 
 class IrisHandler : AbstractHandler : HandlerInterface
 {
-    val MODULE = "iris"
+    val MODULE = 'iris'
 
     /** {@inheritdoc} */
     public fun handleMessage(
@@ -17,11 +17,11 @@ class IrisHandler : AbstractHandler : HandlerInterface
         $iris = IrisSubscribeAck($message.getData())
         if (!$iris.isSucceeded()) {
             throw HandlerException(sprintf(
-                "Failed to subscribe to Iris (%d): %s.",
+                'Failed to subscribe to Iris (%d): %s.',
                 $iris.getErrorType(),
                 $iris.getErrorMessage()
             ))
         }
-        this._target.emit("iris-subscribed", [$iris])
+        this._target.emit('iris-subscribed', [$iris])
     }
 }

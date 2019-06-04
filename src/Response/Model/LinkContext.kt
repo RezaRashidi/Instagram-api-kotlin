@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class LinkContext : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "link_url"       => "string",
-        "link_title"     => "string",
-        "link_summary"   => "string",
-        "link_image_url" => "string",
+        'link_url'       => 'string',
+        'link_title'     => 'string',
+        'link_summary'   => 'string',
+        'link_image_url' => 'string',
     ]
 }

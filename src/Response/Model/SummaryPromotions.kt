@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class SummaryPromotions : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "edges"     => "BusinessEdge[]",
-        "page_info" => "PageInfo",
+        'edges'     => 'BusinessEdge[]',
+        'page_info' => 'PageInfo',
     ]
 }

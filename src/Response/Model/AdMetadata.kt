@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class AdMetadata : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "value" => "",
-        "type"  => "",
+        'value' => '',
+        'type'  => '',
     ]
 }

@@ -120,13 +120,13 @@ class Comment : AutoPropertyMapper
     val CHILD = 2
 
     val JSON_PROPERTY_MAP = [
-        "status"                            => "string",
-        "user_id"                           => "string",
+        'status'                            => 'string',
+        'user_id'                           => 'string',
         /*
          * Unix timestamp (UTC) of when the comment was posted.
-         * Yes, this is the UTC timestamp even though it"s not named "utc"!
+         * Yes, this is the UTC timestamp even though it's not named "utc"!
          */
-        "created_at"                        => "string",
+        'created_at'                        => 'string',
         /*
          * WARNING: DO NOT import THIS VALUE! It is NOT a real UTC timestamp.
          * Instagram has messed up their values of "created_at" vs "created_at_utc".
@@ -136,56 +136,56 @@ class Comment : AutoPropertyMapper
          * the future, beyond the real UTC time). So just ignore this bad value!
          * The real app only reads "created_at" for showing comment timestamps!
          */
-        "created_at_utc"                    => "string",
-        "bit_flags"                         => "int",
-        "user"                              => "User",
-        "pk"                                => "string",
-        "media_id"                          => "string",
-        "text"                              => "string",
-        "content_type"                      => "string",
+        'created_at_utc'                    => 'string',
+        'bit_flags'                         => 'int',
+        'user'                              => 'User',
+        'pk'                                => 'string',
+        'media_id'                          => 'string',
+        'text'                              => 'string',
+        'content_type'                      => 'string',
         /*
          * A number describing what type of comment this is. Should be compared
          * against the `Comment::PARENT` and `Comment::CHILD` constants. All
          * replies are of type `CHILD`, and all parents are of type `PARENT`.
          */
-        "type"                              => "int",
-        "comment_like_count"                => "int",
-        "has_liked_comment"                 => "bool",
-        "has_translation"                   => "bool",
-        "did_report_as_spam"                => "bool",
+        'type'                              => 'int',
+        'comment_like_count'                => 'int',
+        'has_liked_comment'                 => 'bool',
+        'has_translation'                   => 'bool',
+        'did_report_as_spam'                => 'bool',
         /*
          * If this is a child in a thread, this is the ID of its parent thread.
          */
-        "parent_comment_id"                 => "string",
+        'parent_comment_id'                 => 'string',
         /*
          * Number of child comments in this comment thread.
          */
-        "child_comment_count"               => "int",
+        'child_comment_count'               => 'int',
         /*
          * Previews of some of the child comments. Compare it to the child
          * comment count. If there are more, you must request the comment thread.
          */
-        "preview_child_comments"            => "Comment[]",
+        'preview_child_comments'            => 'Comment[]',
         /*
          * Previews of users in very long comment threads.
          */
-        "other_preview_users"               => "User[]",
-        "inline_composer_display_condition" => "string",
+        'other_preview_users'               => 'User[]',
+        'inline_composer_display_condition' => 'string',
         /*
          * When "has_more_tail_child_comments" is true, you can import the value
          * in "next_max_child_cursor" as "max_id" parameter to load up to
          * "num_tail_child_comments" older child-comments.
          */
-        "has_more_tail_child_comments"      => "bool",
-        "next_max_child_cursor"             => "string",
-        "num_tail_child_comments"           => "int",
+        'has_more_tail_child_comments'      => 'bool',
+        'next_max_child_cursor'             => 'string',
+        'num_tail_child_comments'           => 'int',
         /*
          * When "has_more_head_child_comments" is true, you can import the value
          * in "next_min_child_cursor" as "min_id" parameter to load up to
          * "num_head_child_comments" newer child-comments.
          */
-        "has_more_head_child_comments"      => "bool",
-        "next_min_child_cursor"             => "string",
-        "num_head_child_comments"           => "int",
+        'has_more_head_child_comments'      => 'bool',
+        'next_min_child_cursor'             => 'string',
+        'num_head_child_comments'           => 'int',
     ]
 }

@@ -16,7 +16,7 @@ class Memcached : StorageInterface
     /** @var .Memcached Our connection to the database. */
     private $_memcached
 
-    /** @var bool Whether we own Memcached"s connection or are borrowing it. */
+    /** @var bool Whether we own Memcached's connection or are borrowing it. */
     private $_isSharedMemcached
 
     /** @var string Current Instagram username that all settings belong to. */
@@ -30,54 +30,54 @@ class Memcached : StorageInterface
     public fun openLocation(
         array $locationConfig)
     {
-        if (isset($locationConfig["memcached"])) {
+        if (isset($locationConfig['memcached'])) {
             // Pre-provided connection to re-import instead of creating a one.
-            if (!$locationConfig["memcached"] instanceof PHPMemcached) {
-                throw SettingsException("The custom Memcached object is invalid.")
+            if (!$locationConfig['memcached'] instanceof PHPMemcached) {
+                throw SettingsException('The custom Memcached object is invalid.')
             }
             this._isSharedMemcached = true
-            this._memcached = $locationConfig["memcached"]
+            this._memcached = $locationConfig['memcached']
         } else {
             try {
                 // Configure memcached with a persistent data retention ID.
                 this._isSharedMemcached = false
                 this._memcached = PHPMemcached(
-                    is_string($locationConfig["persistent_id"])
-                    ? $locationConfig["persistent_id"]
-                    : "instagram"
+                    is_string($locationConfig['persistent_id'])
+                    ? $locationConfig['persistent_id']
+                    : 'instagram'
                 )
 
                 // Enable SASL authentication if credentials were provided.
-                // NOTE: PHP"s Memcached API doesn"t support individual
+                // NOTE: PHP's Memcached API doesn't support individual
                 // authentication credentials per-server!
-                if (isset($locationConfig["sasl_username"])
-                    && isset($locationConfig["sasl_password"])) {
+                if (isset($locationConfig['sasl_username'])
+                    && isset($locationConfig['sasl_password'])) {
                     // When SASL is used, the servers almost always NEED binary
-                    // protocol, but if that doesn"t work with the user"s server
+                    // protocol, but if that doesn't work with the user's server
                     // then then the user can manually override this default by
                     // providing the "false" option via "memcached_options".
                     this._memcached.setOption(PHPMemcached::OPT_BINARY_PROTOCOL, true)
                     this._memcached.setSaslAuthData(
-                        $locationConfig["sasl_username"],
-                        $locationConfig["sasl_password"]
+                        $locationConfig['sasl_username'],
+                        $locationConfig['sasl_password']
                     )
                 }
 
                 // Apply any custom options the user has provided.
                 // NOTE: This is where "OPT_BINARY_PROTOCOL" can be overridden.
-                if (is_array($locationConfig["memcached_options"])) {
-                    this._memcached.setOptions($locationConfig["memcached_options"])
+                if (is_array($locationConfig['memcached_options'])) {
+                    this._memcached.setOptions($locationConfig['memcached_options'])
                 }
 
                 // Add the provided servers to the pool.
-                if (is_array($locationConfig["servers"])) {
-                    this._memcached.addServers($locationConfig["servers"])
+                if (is_array($locationConfig['servers'])) {
+                    this._memcached.addServers($locationConfig['servers'])
                 } else {
                     // import default port on localhost if nothing was provided.
-                    this._memcached.addServer("localhost", 11211)
+                    this._memcached.addServer('localhost', 11211)
                 }
             } catch (.Exception $e) {
-                throw SettingsException("Memcached Connection Failed: ".$e.getMessage())
+                throw SettingsException('Memcached Connection Failed: '.$e.getMessage())
             }
         }
     }
@@ -90,7 +90,7 @@ class Memcached : StorageInterface
      *
      * @throws .InstagramAPI.Exception.SettingsException
      *
-     * @return string|null The value as a string IF the user"s key exists,
+     * @return string|null The value as a string IF the user's key exists,
      *                     otherwise NULL.
      */
     private fun _getUserKey(
@@ -98,14 +98,14 @@ class Memcached : StorageInterface
         $key)
     {
         try {
-            $realKey = $username."_".$key
+            $realKey = $username.'_'.$key
             $result = this._memcached.get($realKey)
 
             return this._memcached.getResultCode() !== PHPMemcached::RES_NOTFOUND
                     ? (string) $result
                     : null
         } catch (.Exception $e) {
-            throw SettingsException("Memcached Error: ".$e.getMessage())
+            throw SettingsException('Memcached Error: '.$e.getMessage())
         }
     }
 
@@ -124,18 +124,18 @@ class Memcached : StorageInterface
         $value)
     {
         try {
-            $realKey = $username."_".$key
+            $realKey = $username.'_'.$key
             $success = this._memcached.set($realKey, (string) $value)
             if (!$success) {
                 throw SettingsException(sprintf(
-                    "Memcached failed to write to key "%s".",
+                    'Memcached failed to write to key "%s".',
                     $realKey
                 ))
             }
         } catch (SettingsException $e) {
             throw $e // Ugly but necessary to re-throw only our own messages.
         } catch (.Exception $e) {
-            throw SettingsException("Memcached Error: ".$e.getMessage())
+            throw SettingsException('Memcached Error: '.$e.getMessage())
         }
     }
 
@@ -152,10 +152,10 @@ class Memcached : StorageInterface
         $key)
     {
         try {
-            $realKey = $username."_".$key
+            $realKey = $username.'_'.$key
             this._memcached.delete($realKey)
         } catch (.Exception $e) {
-            throw SettingsException("Memcached Error: ".$e.getMessage())
+            throw SettingsException('Memcached Error: '.$e.getMessage())
         }
     }
 
@@ -167,8 +167,8 @@ class Memcached : StorageInterface
     public fun hasUser(
         $username)
     {
-        // Check whether the user"s settings exist (empty string allowed).
-        $hasUser = this._getUserKey($username, "settings")
+        // Check whether the user's settings exist (empty string allowed).
+        $hasUser = this._getUserKey($username, 'settings')
 
         return $hasUser !== null ? true : false
     }
@@ -183,11 +183,11 @@ class Memcached : StorageInterface
         $newUsername)
     {
         // Verify that the old username exists and fetch the old data.
-        $oldSettings = this._getUserKey($oldUsername, "settings")
-        $oldCookies = this._getUserKey($oldUsername, "cookies")
+        $oldSettings = this._getUserKey($oldUsername, 'settings')
+        $oldCookies = this._getUserKey($oldUsername, 'cookies')
         if ($oldSettings === null) { // Only settings are vital.
             throw SettingsException(sprintf(
-                "Cannot move non-existent user "%s".",
+                'Cannot move non-existent user "%s".',
                 $oldUsername
             ))
         }
@@ -195,15 +195,15 @@ class Memcached : StorageInterface
         // Verify that the username does not exist.
         if (this.hasUser($newUsername)) {
             throw SettingsException(sprintf(
-                "Refusing to overwrite existing user "%s".",
+                'Refusing to overwrite existing user "%s".',
                 $newUsername
             ))
         }
 
         // Now attempt to write all data to the name.
-        this._setUserKey($newUsername, "settings", $oldSettings)
+        this._setUserKey($newUsername, 'settings', $oldSettings)
         if ($oldCookies !== null) { // Only if cookies existed.
-            this._setUserKey($newUsername, "cookies", $oldCookies)
+            this._setUserKey($newUsername, 'cookies', $oldCookies)
         }
 
         // Delete the previous user keys.
@@ -218,8 +218,8 @@ class Memcached : StorageInterface
     public fun deleteUser(
         $username)
     {
-        this._delUserKey($username, "settings")
-        this._delUserKey($username, "cookies")
+        this._delUserKey($username, 'settings')
+        this._delUserKey($username, 'cookies')
     }
 
     /**
@@ -230,7 +230,7 @@ class Memcached : StorageInterface
     public fun openUser(
         $username)
     {
-        // Just cache the username. We"ll create storage later if necessary.
+        // Just cache the username. We'll create storage later if necessary.
         this._username = $username
     }
 
@@ -243,12 +243,12 @@ class Memcached : StorageInterface
     {
         $userSettings = []
 
-        $encodedData = this._getUserKey(this._username, "settings")
+        $encodedData = this._getUserKey(this._username, 'settings')
         if (!empty($encodedData)) {
             $userSettings = @json_decode($encodedData, true, 512, JSON_BIGINT_AS_STRING)
             if (!is_array($userSettings)) {
                 throw SettingsException(sprintf(
-                    "Failed to decode corrupt settings for account "%s".",
+                    'Failed to decode corrupt settings for account "%s".',
                     this._username
                 ))
             }
@@ -268,7 +268,7 @@ class Memcached : StorageInterface
     {
         // Store the settings as a JSON blob.
         $encodedData = json_encode($userSettings)
-        this._setUserKey(this._username, "settings", $encodedData)
+        this._setUserKey(this._username, 'settings', $encodedData)
     }
 
     /**
@@ -300,7 +300,7 @@ class Memcached : StorageInterface
      */
     public fun loadUserCookies()
     {
-        return this._getUserKey(this._username, "cookies")
+        return this._getUserKey(this._username, 'cookies')
     }
 
     /**
@@ -312,7 +312,7 @@ class Memcached : StorageInterface
         $rawData)
     {
         // Store the raw cookie data as-provided.
-        this._setUserKey(this._username, "cookies", $rawData)
+        this._setUserKey(this._username, 'cookies', $rawData)
     }
 
     /**
@@ -337,7 +337,7 @@ class Memcached : StorageInterface
             try {
                 this._memcached.quit()
             } catch (.Exception $e) {
-                throw SettingsException("Memcached Disconnection Failed: ".$e.getMessage())
+                throw SettingsException('Memcached Disconnection Failed: '.$e.getMessage())
             }
         }
         this._memcached = null

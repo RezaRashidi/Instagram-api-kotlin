@@ -33,7 +33,7 @@ class JsonParser : ParserInterface
     {
         $data = Client::api_body_decode($payload)
         if (!is_array($data)) {
-            throw .RuntimeException("Invalid JSON payload.")
+            throw .RuntimeException('Invalid JSON payload.')
         }
 
         return [Message(this._module, $data)]

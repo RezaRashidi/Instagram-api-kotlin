@@ -43,13 +43,13 @@ import InstagramAPI.AutoPropertyMapper
 class Counts : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "relationships"         => "",
-        "requests"              => "",
-        "photos_of_you"         => "",
-        "usertags"              => "",
-        "comments"              => "",
-        "likes"                 => "",
-        "comment_likes"         => "",
-        "campaign_notification" => "",
+        'relationships'         => '',
+        'requests'              => '',
+        'photos_of_you'         => '',
+        'usertags'              => '',
+        'comments'              => '',
+        'likes'                 => '',
+        'comment_likes'         => '',
+        'campaign_notification' => '',
     ]
 }

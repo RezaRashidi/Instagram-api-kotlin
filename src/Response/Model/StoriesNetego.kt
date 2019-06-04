@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class StoriesNetego : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "tracking_token"    => "string",
-        "hide_unit_if_seen" => "string",
-        "id"                => "string",
+        'tracking_token'    => 'string',
+        'hide_unit_if_seen' => 'string',
+        'id'                => 'string',
     ]
 }

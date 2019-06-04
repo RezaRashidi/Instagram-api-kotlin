@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class Composer : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "nux_finished"   => "bool",
+        'nux_finished'   => 'bool',
     ]
 }

@@ -47,14 +47,14 @@ import InstagramAPI.AutoPropertyMapper
 class Owner : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "type"                 => "",
-        "pk"                   => "string",
-        "name"                 => "string",
-        "profile_pic_url"      => "string",
-        "profile_pic_username" => "string",
-        "short_name"           => "string",
-        "lat"                  => "float",
-        "lng"                  => "float",
-        "location_dict"        => "Location",
+        'type'                 => '',
+        'pk'                   => 'string',
+        'name'                 => 'string',
+        'profile_pic_url'      => 'string',
+        'profile_pic_username' => 'string',
+        'short_name'           => 'string',
+        'lat'                  => 'float',
+        'lng'                  => 'float',
+        'location_dict'        => 'Location',
     ]
 }

@@ -39,12 +39,12 @@ import InstagramAPI.AutoPropertyMapper
 class Effect : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "title"          => "",
-        "id"             => "string",
-        "effect_id"      => "string",
-        "effect_file_id" => "string",
-        "asset_url"      => "string",
-        "thumbnail_url"  => "string",
-        "instructions"   => "",
+        'title'          => '',
+        'id'             => 'string',
+        'effect_id'      => 'string',
+        'effect_file_id' => 'string',
+        'asset_url'      => 'string',
+        'thumbnail_url'  => 'string',
+        'instructions'   => '',
     ]
 }

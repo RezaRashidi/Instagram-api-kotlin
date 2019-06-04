@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class PostLive : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "post_live_items" => "PostLiveItem[]",
+        'post_live_items' => 'PostLiveItem[]',
     ]
 }

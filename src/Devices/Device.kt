@@ -18,7 +18,7 @@ class Device : DeviceInterface
      *
      * @see https://help.instagram.com/513067452056347
      */
-    val REQUIRED_ANDROID_VERSION = "2.2"
+    val REQUIRED_ANDROID_VERSION = '2.2'
 
     /**
      * Which Instagram client app version this "device" is running.
@@ -35,7 +35,7 @@ class Device : DeviceInterface
     protected $_versionCode
 
     /**
-     * The device user"s locale, such as "en_US".
+     * The device user's locale, such as "en_US".
      *
      * @var string
      */
@@ -79,7 +79,7 @@ class Device : DeviceInterface
     /** @var string Manufacturer. */
     protected $_manufacturer
 
-    /** @var string|null Manufacturer"s sub-brand (optional). */
+    /** @var string|null Manufacturer's sub-brand (optional). */
     protected $_brand
 
     /** @var string Hardware MODEL. */
@@ -96,10 +96,10 @@ class Device : DeviceInterface
      *
      * @param string      $appVersion   Instagram client app version.
      * @param string      $versionCode  Instagram client app version code.
-     * @param string      $userLocale   The user"s locale, such as "en_US".
+     * @param string      $userLocale   The user's locale, such as "en_US".
      * @param string|null $deviceString (optional) The device string to attempt
      *                                  to construct from. If NULL or not a good
-     *                                  device, we"ll import a random good device.
+     *                                  device, we'll import a random good device.
      * @param bool        $autoFallback (optional) Toggle automatic fallback.
      *
      * @throws .RuntimeException If fallback is disabled and device is invalid.
@@ -137,30 +137,30 @@ class Device : DeviceInterface
         $deviceString)
     {
         if (!is_string($deviceString) || empty($deviceString)) {
-            throw .RuntimeException("Device string is empty.")
+            throw .RuntimeException('Device string is empty.')
         }
 
         // Split the device identifier into its components and verify it.
-        $parts = explode(" ", $deviceString)
+        $parts = explode(' ', $deviceString)
         if (count($parts) !== 7) {
-            throw .RuntimeException(sprintf("Device string "%s" does not conform to the required device format.", $deviceString))
+            throw .RuntimeException(sprintf('Device string "%s" does not conform to the required device format.', $deviceString))
         }
 
         // Check the android version.
-        $androidOS = explode("/", $parts[0], 2)
-        if (version_compare($androidOS[1], self::REQUIRED_ANDROID_VERSION, "<")) {
-            throw .RuntimeException(sprintf("Device string "%s" does not meet the minimum required Android version "%s" for Instagram.", $deviceString, self::REQUIRED_ANDROID_VERSION))
+        $androidOS = explode('/', $parts[0], 2)
+        if (version_compare($androidOS[1], self::REQUIRED_ANDROID_VERSION, '<')) {
+            throw .RuntimeException(sprintf('Device string "%s" does not meet the minimum required Android version "%s" for Instagram.', $deviceString, self::REQUIRED_ANDROID_VERSION))
         }
 
         // Check the screen resolution.
-        $resolution = explode("x", $parts[2], 2)
+        $resolution = explode('x', $parts[2], 2)
         $pixelCount = (int) $resolution[0] * (int) $resolution[1]
         if ($pixelCount < 2073600) { // 1920x1080.
-            throw .RuntimeException(sprintf("Device string "%s" does not meet the minimum resolution requirement of 1920x1080.", $deviceString))
+            throw .RuntimeException(sprintf('Device string "%s" does not meet the minimum resolution requirement of 1920x1080.', $deviceString))
         }
 
         // Extract "Manufacturer/Brand" string into separate fields.
-        $manufacturerAndBrand = explode("/", $parts[3], 2)
+        $manufacturerAndBrand = explode('/', $parts[3], 2)
 
         // Store all field values.
         this._deviceString = $deviceString

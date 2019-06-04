@@ -39,18 +39,18 @@ import InstagramAPI.AutoPropertyMapper
 class QuestionSticker : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "question_id"         => "string",
-        "question"            => "string",
+        'question_id'         => 'string',
+        'question'            => 'string',
         /*
          * HTML color string such as "#812A2A".
          */
-        "text_color"          => "string",
+        'text_color'          => 'string',
         /*
          * HTML color string such as "#812A2A".
          */
-        "background_color"    => "string",
-        "viewer_can_interact" => "bool",
-        "profile_pic_url"     => "string",
-        "question_type"       => "string",
+        'background_color'    => 'string',
+        'viewer_can_interact' => 'bool',
+        'profile_pic_url'     => 'string',
+        'question_type'       => 'string',
     ]
 }

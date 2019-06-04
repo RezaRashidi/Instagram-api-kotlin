@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class PageInfo : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "end_cursor"        => "string",
-        "has_next_page"     => "bool",
-        "has_previous_page" => "bool",
+        'end_cursor'        => 'string',
+        'has_next_page'     => 'bool',
+        'has_previous_page' => 'bool',
     ]
 }

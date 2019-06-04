@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class ZeroProvisionEvent : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "device_id"             => "string",
-        "product_name"          => "string",
-        "zero_provisioned_time" => "string",
+        'device_id'             => 'string',
+        'product_name'          => 'string',
+        'zero_provisioned_time' => 'string',
     ]
 }

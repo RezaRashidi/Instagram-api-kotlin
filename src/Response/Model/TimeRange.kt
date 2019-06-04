@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class TimeRange : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "start" => "string",
-        "end"   => "string",
+        'start' => 'string',
+        'end'   => 'string',
     ]
 }

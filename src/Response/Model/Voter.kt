@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class Voter : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "user"  => "User",
-        "vote"  => "int",
+        'user'  => 'User',
+        'vote'  => 'int',
     ]
 }

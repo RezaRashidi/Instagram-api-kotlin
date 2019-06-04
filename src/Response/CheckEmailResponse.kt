@@ -43,10 +43,10 @@ import InstagramAPI.Response
 class CheckEmailResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "valid"                => "",
-        "available"            => "",
-        "confirmed"            => "",
-        "username_suggestions" => "string[]",
-        "error_type"           => "",
+        'valid'                => '',
+        'available'            => '',
+        'confirmed'            => '',
+        'username_suggestions' => 'string[]',
+        'error_type'           => '',
     ]
 }

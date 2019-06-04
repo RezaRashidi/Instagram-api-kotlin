@@ -3,7 +3,7 @@
 package InstagramAPI.Media
 
 /**
- * Represents Instagram"s media constraints.
+ * Represents Instagram's media constraints.
  */
 interface ConstraintsInterface
 {

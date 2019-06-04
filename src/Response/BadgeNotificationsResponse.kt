@@ -32,6 +32,6 @@ class BadgeNotificationsResponse : Response
         // the data sub-values will be arrays (no type-conversion of the values
         // will happen). We should define this as a specific type (like
         // UserUnpredictableContainer) when we know exactly what the data is.
-        "badge_payload" => "Model.UnpredictableKeys.CoreUnpredictableContainer",
+        'badge_payload' => 'Model.UnpredictableKeys.CoreUnpredictableContainer',
     ]
 }

@@ -39,12 +39,12 @@ import InstagramAPI.AutoPropertyMapper
 class QPNode : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "id"                 => "string",
-        "promotion_id"       => "string",
-        "max_impressions"    => "int",
-        "triggers"           => "string[]",
-        "contextual_filters" => "ContextualFilters",
-        "template"           => "Template",
-        "creatives"          => "Creative[]",
+        'id'                 => 'string',
+        'promotion_id'       => 'string',
+        'max_impressions'    => 'int',
+        'triggers'           => 'string[]',
+        'contextual_filters' => 'ContextualFilters',
+        'template'           => 'Template',
+        'creatives'          => 'Creative[]',
     ]
 }

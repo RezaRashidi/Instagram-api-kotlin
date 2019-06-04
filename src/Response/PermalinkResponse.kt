@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class PermalinkResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "permalink"       => "string",
+        'permalink'       => 'string',
     ]
 }

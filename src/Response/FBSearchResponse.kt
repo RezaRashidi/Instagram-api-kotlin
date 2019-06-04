@@ -39,10 +39,10 @@ import InstagramAPI.Response
 class FBSearchResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "has_more"              => "bool",
-        "list"                  => "Model.UserList[]",
-        "clear_client_cache"    => "bool",
-        "has_more"              => "bool",
-        "rank_token"            => "string",
+        'has_more'              => 'bool',
+        'list'                  => 'Model.UserList[]',
+        'clear_client_cache'    => 'bool',
+        'has_more'              => 'bool',
+        'rank_token'            => 'string',
     ]
 }

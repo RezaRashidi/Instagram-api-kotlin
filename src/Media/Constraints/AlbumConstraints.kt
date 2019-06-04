@@ -3,7 +3,7 @@
 package InstagramAPI.Media.Constraints
 
 /**
- * Instagram"s timeline album media constraints.
+ * Instagram's timeline album media constraints.
  */
 class AlbumConstraints : TimelineConstraints
 {

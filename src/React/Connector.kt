@@ -63,7 +63,7 @@ class Connector : ConnectorInterface
                 return RejectedPromise($e)
             }
         }
-        $niceUri = ltrim((string) $uriObj, "/")
+        $niceUri = ltrim((string) $uriObj, '/')
         /** @var PromiseInterface $promise */
         $promise = this._connectors[$host].connect($niceUri)
 
@@ -85,11 +85,11 @@ class Connector : ConnectorInterface
         $proxyAddress = null)
     {
         $connector = SocketConnector(this._loop, [
-            "tcp"     => true,
-            "tls"     => false,
-            "unix"    => false,
-            "dns"     => true,
-            "timeout" => true,
+            'tcp'     => true,
+            'tls'     => false,
+            'unix'    => false,
+            'dns'     => true,
+            'timeout' => true,
         ])
 
         if ($proxyAddress !== null) {
@@ -126,16 +126,16 @@ class Connector : ConnectorInterface
         }
 
         // HTTP proxies do not have CONNECT method.
-        if (!isset($proxyConfig["https"])) {
-            throw .InvalidArgumentException("No proxy with CONNECT method found.")
+        if (!isset($proxyConfig['https'])) {
+            throw .InvalidArgumentException('No proxy with CONNECT method found.')
         }
 
         // Check exceptions.
-        if (isset($proxyConfig["no"]) && .GuzzleHttp.is_host_in_noproxy($host, $proxyConfig["no"])) {
+        if (isset($proxyConfig['no']) && .GuzzleHttp.is_host_in_noproxy($host, $proxyConfig['no'])) {
             return
         }
 
-        return $proxyConfig["https"]
+        return $proxyConfig['https']
     }
 
     /**
@@ -158,24 +158,24 @@ class Connector : ConnectorInterface
             // PHP 5.6 or greater will find the system cert by default. When
             // < 5.6, import the Guzzle bundled cacert.
             if (PHP_VERSION_ID < 50600) {
-                $context["cafile"] = .GuzzleHttp.default_ca_bundle()
+                $context['cafile'] = .GuzzleHttp.default_ca_bundle()
             }
         } elseif (is_string($config)) {
-            $context["cafile"] = $config
+            $context['cafile'] = $config
             if (!is_file($config)) {
-                throw .RuntimeException(sprintf("SSL CA bundle not found: "%s".", $config))
+                throw .RuntimeException(sprintf('SSL CA bundle not found: "%s".', $config))
             }
         } elseif ($config === false) {
-            $context["verify_peer"] = false
-            $context["verify_peer_name"] = false
+            $context['verify_peer'] = false
+            $context['verify_peer_name'] = false
 
             return $context
         } else {
-            throw .InvalidArgumentException("Invalid verify request option.")
+            throw .InvalidArgumentException('Invalid verify request option.')
         }
-        $context["verify_peer"] = true
-        $context["verify_peer_name"] = true
-        $context["allow_self_signed"] = false
+        $context['verify_peer'] = true
+        $context['verify_peer_name'] = true
+        $context['allow_self_signed'] = false
 
         return $context
     }
@@ -196,26 +196,26 @@ class Connector : ConnectorInterface
         $proxyAddress,
         array $secureContext = [])
     {
-        if (strpos($proxyAddress, "://") === false) {
-            $scheme = "http"
+        if (strpos($proxyAddress, '://') === false) {
+            $scheme = 'http'
         } else {
             $scheme = parse_url($proxyAddress, PHP_URL_SCHEME)
         }
         switch ($scheme) {
-            case "socks":
-            case "socks4":
-            case "socks4a":
-            case "socks5":
+            case 'socks':
+            case 'socks4':
+            case 'socks4a':
+            case 'socks5':
                 $connector = SocksProxy($proxyAddress, $connector)
                 break
-            case "http":
+            case 'http':
                 $connector = HttpConnectProxy($proxyAddress, $connector)
                 break
-            case "https":
+            case 'https':
                 $connector = HttpConnectProxy($proxyAddress, SecureConnector($connector, this._loop, $secureContext))
                 break
             default:
-                throw .InvalidArgumentException(sprintf("Unsupported proxy scheme: "%s".", $scheme))
+                throw .InvalidArgumentException(sprintf('Unsupported proxy scheme: "%s".', $scheme))
         }
 
         return $connector

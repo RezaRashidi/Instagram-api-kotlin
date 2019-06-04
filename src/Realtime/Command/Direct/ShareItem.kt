@@ -18,13 +18,13 @@ abstract class ShareItem : SendItem
     {
         parent::__construct($threadId, $itemType, $options)
 
-        if (isset($options["text"])) {
-            if (!is_string($options["text"])) {
-                throw .InvalidArgumentException("The text must be a string.")
+        if (isset($options['text'])) {
+            if (!is_string($options['text'])) {
+                throw .InvalidArgumentException('The text must be a string.')
             }
-            this._data["text"] = $options["text"]
+            this._data['text'] = $options['text']
         } else {
-            this._data["text"] = ""
+            this._data['text'] = ''
         }
     }
 }

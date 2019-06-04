@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class SyncResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "experiments" => "Model.Experiment[]",
+        'experiments' => 'Model.Experiment[]',
     ]
 }

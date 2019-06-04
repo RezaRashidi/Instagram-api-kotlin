@@ -31,10 +31,10 @@ import InstagramAPI.AutoPropertyMapper
 class StoryShare : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "media"                            => "Item",
-        "text"                             => "string",
-        "title"                            => "string",
-        "message"                          => "string",
-        "is_linked"                        => "bool",
+        'media'                            => 'Item',
+        'text'                             => 'string',
+        'title'                            => 'string',
+        'message'                          => 'string',
+        'is_linked'                        => 'bool',
     ]
 }

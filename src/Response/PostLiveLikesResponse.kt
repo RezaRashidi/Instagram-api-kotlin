@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class PostLiveLikesResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "starting_offset"   => "",
-        "ending_offset"     => "",
-        "next_fetch_offset" => "",
-        "time_series"       => "",
+        'starting_offset'   => '',
+        'ending_offset'     => '',
+        'next_fetch_offset' => '',
+        'time_series'       => '',
     ]
 }

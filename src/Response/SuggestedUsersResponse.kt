@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class SuggestedUsersResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "users"     => "Model.User[]",
-        "is_backup" => "",
+        'users'     => 'Model.User[]',
+        'is_backup' => '',
     ]
 }

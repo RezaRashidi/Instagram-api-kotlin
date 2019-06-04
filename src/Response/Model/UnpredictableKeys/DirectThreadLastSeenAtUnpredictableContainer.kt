@@ -9,5 +9,5 @@ package InstagramAPI.Response.Model.UnpredictableKeys
  */
 class DirectThreadLastSeenAtUnpredictableContainer : CoreUnpredictableContainer
 {
-    protected $_type = ".InstagramAPI.Response.Model.DirectThreadLastSeenAt"
+    protected $_type = '.InstagramAPI.Response.Model.DirectThreadLastSeenAt'
 }

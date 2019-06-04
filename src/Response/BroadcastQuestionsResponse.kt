@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class BroadcastQuestionsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "questions"          => "Model.BroadcastQuestion[]",
+        'questions'          => 'Model.BroadcastQuestion[]',
     ]
 }

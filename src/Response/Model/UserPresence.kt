@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class UserPresence : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "user_id"             => "string",
-        "last_activity_at_ms" => "string",
-        "is_active"           => "bool",
-        "in_threads"          => "string[]",
+        'user_id'             => 'string',
+        'last_activity_at_ms' => 'string',
+        'is_active'           => 'bool',
+        'in_threads'          => 'string[]',
     ]
 }

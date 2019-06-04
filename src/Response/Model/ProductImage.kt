@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class ProductImage : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "image_versions2" => "Image_Versions2",
+        'image_versions2' => 'Image_Versions2',
     ]
 }

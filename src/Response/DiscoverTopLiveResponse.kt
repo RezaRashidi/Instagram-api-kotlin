@@ -47,11 +47,11 @@ import InstagramAPI.Response
 class DiscoverTopLiveResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "broadcasts"             => "Model.Broadcast[]",
-        "post_live_broadcasts"   => "Model.PostLiveItem[]",
-        "score_map"              => "",
-        "more_available"         => "bool",
-        "auto_load_more_enabled" => "bool",
-        "next_max_id"            => "string",
+        'broadcasts'             => 'Model.Broadcast[]',
+        'post_live_broadcasts'   => 'Model.PostLiveItem[]',
+        'score_map'              => '',
+        'more_available'         => 'bool',
+        'auto_load_more_enabled' => 'bool',
+        'next_max_id'            => 'string',
     ]
 }

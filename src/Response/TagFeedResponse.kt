@@ -63,15 +63,15 @@ import InstagramAPI.Response
 class TagFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "sections"               => "Model.Section[]",
-        "num_results"            => "int",
-        "ranked_items"           => "Model.Item[]",
-        "auto_load_more_enabled" => "bool",
-        "items"                  => "Model.Item[]",
-        "story"                  => "Model.StoryTray",
-        "more_available"         => "bool",
-        "next_max_id"            => "string",
-        "next_media_ids"         => "",
-        "next_page"              => "int",
+        'sections'               => 'Model.Section[]',
+        'num_results'            => 'int',
+        'ranked_items'           => 'Model.Item[]',
+        'auto_load_more_enabled' => 'bool',
+        'items'                  => 'Model.Item[]',
+        'story'                  => 'Model.StoryTray',
+        'more_available'         => 'bool',
+        'next_max_id'            => 'string',
+        'next_media_ids'         => '',
+        'next_page'              => 'int',
     ]
 }

@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class StoryAnswersResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "responder_info" => "Model.StoryQuestionResponderInfos",
+        'responder_info' => 'Model.StoryQuestionResponderInfos',
     ]
 }

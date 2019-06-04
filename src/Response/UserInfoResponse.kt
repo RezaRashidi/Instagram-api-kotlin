@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class UserInfoResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "megaphone" => "",
-        "user"      => "Model.User",
+        'megaphone' => '',
+        'user'      => 'Model.User',
     ]
 }

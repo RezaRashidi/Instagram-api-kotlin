@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class MediaLikersResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "user_count" => "int",
-        "users"      => "Model.User[]",
+        'user_count' => 'int',
+        'users'      => 'Model.User[]',
     ]
 }

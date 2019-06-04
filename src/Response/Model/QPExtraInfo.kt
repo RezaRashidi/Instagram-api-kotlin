@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class QPExtraInfo : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "surface"                 => "int",
-        "extra_info"              => "string",
+        'surface'                 => 'int',
+        'extra_info'              => 'string',
     ]
 }

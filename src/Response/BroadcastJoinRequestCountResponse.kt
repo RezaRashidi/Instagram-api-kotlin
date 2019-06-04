@@ -43,10 +43,10 @@ import InstagramAPI.Response
 class BroadcastJoinRequestCountResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "fetch_ts"            => "string",
-        "num_total_requests"  => "int",
-        "num_new_requests"    => "int",
-        "users"               => "Model.User[]",
-        "num_unseen_requests" => "int",
+        'fetch_ts'            => 'string',
+        'num_total_requests'  => 'int',
+        'num_new_requests'    => 'int',
+        'users'               => 'Model.User[]',
+        'num_unseen_requests' => 'int',
     ]
 }

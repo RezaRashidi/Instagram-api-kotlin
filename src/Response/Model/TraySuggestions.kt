@@ -31,10 +31,10 @@ import InstagramAPI.AutoPropertyMapper
 class TraySuggestions : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "tray"            => "StoryTray[]",
-        "tray_title"      => "string",
-        "banner_title"    => "string",
-        "banner_subtitle" => "string",
-        "suggestion_type" => "string",
+        'tray'            => 'StoryTray[]',
+        'tray_title'      => 'string',
+        'banner_title'    => 'string',
+        'banner_subtitle' => 'string',
+        'suggestion_type' => 'string',
     ]
 }

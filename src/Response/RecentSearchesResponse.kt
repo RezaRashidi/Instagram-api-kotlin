@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class RecentSearchesResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "recent" => "Model.Suggested[]",
+        'recent' => 'Model.Suggested[]',
     ]
 }

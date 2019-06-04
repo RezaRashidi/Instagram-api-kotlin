@@ -23,7 +23,7 @@ class IrisSubscribe : CommandInterface
         $sequenceId)
     {
         if ($sequenceId === self::INVALID_SEQUENCE_ID) {
-            throw .InvalidArgumentException("Invalid Iris sequence identifier.")
+            throw .InvalidArgumentException('Invalid Iris sequence identifier.')
         }
         this._sequenceId = $sequenceId
     }
@@ -44,7 +44,7 @@ class IrisSubscribe : CommandInterface
     public fun jsonSerialize()
     {
         return [
-            "seq_id" => this._sequenceId,
+            'seq_id' => this._sequenceId,
         ]
     }
 }

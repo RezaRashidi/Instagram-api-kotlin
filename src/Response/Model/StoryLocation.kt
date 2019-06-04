@@ -53,8 +53,8 @@ class StoryLocation : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         PropertyCollection.Sticker::class,
-        "location"    => "Location",
-        "attribution" => "string",
-        "is_hidden"   => "int",
+        'location'    => 'Location',
+        'attribution' => 'string',
+        'is_hidden'   => 'int',
     ]
 }

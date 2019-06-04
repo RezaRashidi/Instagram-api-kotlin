@@ -4,7 +4,7 @@ package InstagramAPI.Realtime.Command.Direct
 
 final class SendLocation : ShareItem
 {
-    val TYPE = "location"
+    val TYPE = 'location'
 
     /**
      * Constructor.
@@ -23,10 +23,10 @@ final class SendLocation : ShareItem
         parent::__construct($threadId, self::TYPE, $options)
 
         if (!ctype_digit($locationId) && (!is_int($locationId) || $locationId < 0)) {
-            throw .InvalidArgumentException(sprintf(""%s" is not a valid location ID.", $locationId))
+            throw .InvalidArgumentException(sprintf('"%s" is not a valid location ID.', $locationId))
         }
-        this._data["venue_id"] = (string) $locationId
+        this._data['venue_id'] = (string) $locationId
         // Yeah, we need to send the location ID twice.
-        this._data["item_id"] = (string) $locationId
+        this._data['item_id'] = (string) $locationId
     }
 }

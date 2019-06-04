@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class PinCommentBroadcastResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "comment_id" => "string",
+        'comment_id' => 'string',
     ]
 }

@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class VideoUploadUrl : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "url"     => "string",
-        "job"     => "string",
-        "expires" => "float",
+        'url'     => 'string',
+        'job'     => 'string',
+        'expires' => 'float',
     ]
 }

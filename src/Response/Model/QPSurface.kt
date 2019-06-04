@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class QPSurface : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "surface_id"             => "int",
-        "cooldown"               => "int",
+        'surface_id'             => 'int',
+        'cooldown'               => 'int',
     ]
 }

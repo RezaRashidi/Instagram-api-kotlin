@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class ActiveReelAdsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "reels"          => "Model.Reel[]",
-        "next_max_id"    => "string",
-        "more_available" => "bool",
+        'reels'          => 'Model.Reel[]',
+        'next_max_id'    => 'string',
+        'more_available' => 'bool',
     ]
 }

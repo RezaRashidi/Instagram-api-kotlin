@@ -35,11 +35,11 @@ import InstagramAPI.AutoPropertyMapper
 class LayoutContent : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "related_style"     => "string",
-        "related"           => "Tag[]",
-        "medias"            => "SectionMedia[]",
-        "feed_type"         => "string",
-        "explore_item_info" => "ExploreItemInfo",
-        "tabs_info"         => "TabsInfo",
+        'related_style'     => 'string',
+        'related'           => 'Tag[]',
+        'medias'            => 'SectionMedia[]',
+        'feed_type'         => 'string',
+        'explore_item_info' => 'ExploreItemInfo',
+        'tabs_info'         => 'TabsInfo',
     ]
 }

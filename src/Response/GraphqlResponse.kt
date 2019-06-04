@@ -27,7 +27,7 @@ import InstagramAPI.Response
 class GraphqlResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "data"            => "Model.GraphData",
+        'data'            => 'Model.GraphData',
     ]
 
     /**

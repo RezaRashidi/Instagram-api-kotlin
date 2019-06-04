@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class AnimatedMedia : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "id"       => "string",
-        "images"   => "AnimatedMediaImage",
+        'id'       => 'string',
+        'images'   => 'AnimatedMediaImage',
     ]
 }

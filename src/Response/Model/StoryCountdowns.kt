@@ -47,14 +47,14 @@ import InstagramAPI.AutoPropertyMapper
 class StoryCountdowns : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "x"                 => "float",
-        "y"                 => "float",
-        "z"                 => "float",
-        "width"             => "float",
-        "height"            => "float",
-        "rotation"          => "float",
-        "is_pinned"         => "int",
-        "is_hidden"         => "int",
-        "countdown_sticker" => "CountdownSticker",
+        'x'                 => 'float',
+        'y'                 => 'float',
+        'z'                 => 'float',
+        'width'             => 'float',
+        'height'            => 'float',
+        'rotation'          => 'float',
+        'is_pinned'         => 'int',
+        'is_hidden'         => 'int',
+        'countdown_sticker' => 'CountdownSticker',
     ]
 }

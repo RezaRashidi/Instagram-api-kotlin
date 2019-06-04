@@ -43,13 +43,13 @@ import InstagramAPI.AutoPropertyMapper
 class TVChannel : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "type"              => "string",
-        "title"             => "string",
-        "id"                => "string",
-        "items"             => "Item[]",
-        "more_available"    => "bool",
-        "max_id"            => "string",
-        "seen_state"        => "",
-        "user_dict"         => "User",
+        'type'              => 'string',
+        'title'             => 'string',
+        'id'                => 'string',
+        'items'             => 'Item[]',
+        'more_available'    => 'bool',
+        'max_id'            => 'string',
+        'seen_state'        => '',
+        'user_dict'         => 'User',
     ]
 }

@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class HashtagsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "tags" => "Model.Hashtag[]",
+        'tags' => 'Model.Hashtag[]',
     ]
 }

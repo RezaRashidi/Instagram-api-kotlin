@@ -33,15 +33,15 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
         $longitude,
         $query = null)
     {
-        $locations = this.ig.request("location_search/")
-            .addParam("rank_token", this.ig.account_id."_".Signatures::generateUUID())
-            .addParam("latitude", $latitude)
-            .addParam("longitude", $longitude)
+        $locations = this.ig.request('location_search/')
+            .addParam('rank_token', this.ig.account_id.'_'.Signatures::generateUUID())
+            .addParam('latitude', $latitude)
+            .addParam('longitude', $longitude)
 
         if ($query === null) {
-            $locations.addParam("timestamp", time())
+            $locations.addParam('timestamp', time())
         } else {
-            $locations.addParam("search_query", $query)
+            $locations.addParam('search_query', $query)
         }
 
         return $locations.getResponse(Response.LocationResponse())
@@ -57,7 +57,7 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
      * @param string[]|int[] $excludeList Array of numerical location IDs (ie "17841562498105353")
      *                                    to exclude from the response, allowing you to skip locations
      *                                    from a previous call to get more results.
-     * @param string|null    $rankToken   (When paginating) The rank token from the previous page"s response.
+     * @param string|null    $rankToken   (When paginating) The rank token from the previous page's response.
      *
      * @throws .InvalidArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
@@ -74,12 +74,12 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
     {
         // Do basic query validation. Do NOT import throwIfInvalidHashtag here.
         if (!is_string($query) || $query === null) {
-            throw .InvalidArgumentException("Query must be a non-empty string.")
+            throw .InvalidArgumentException('Query must be a non-empty string.')
         }
         $location = this._paginateWithExclusion(
-            this.ig.request("fbsearch/places/")
-                .addParam("timezone_offset", date("Z"))
-                .addParam("query", $query),
+            this.ig.request('fbsearch/places/')
+                .addParam('timezone_offset', date('Z'))
+                .addParam('query', $query),
             $excludeList,
             $rankToken
         )
@@ -89,9 +89,9 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
             $result = $location.getResponse(Response.FBLocationResponse())
         } catch (RequestHeadersTooLargeException $e) {
             $result = Response.FBLocationResponse([
-                "has_more"   => false,
-                "items"      => [],
-                "rank_token" => $rankToken,
+                'has_more'   => false,
+                'items'      => [],
+                'rank_token' => $rankToken,
             ])
         }
 
@@ -110,7 +110,7 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
      * @param string[]|int[] $excludeList Array of numerical location IDs (ie "17841562498105353")
      *                                    to exclude from the response, allowing you to skip locations
      *                                    from a previous call to get more results.
-     * @param string|null    $rankToken   (When paginating) The rank token from the previous page"s response.
+     * @param string|null    $rankToken   (When paginating) The rank token from the previous page's response.
      *
      * @throws .InvalidArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
@@ -128,17 +128,17 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
         $rankToken = null)
     {
         $location = this._paginateWithExclusion(
-            this.ig.request("fbsearch/places/")
-                .addParam("lat", $latitude)
-                .addParam("lng", $longitude)
-                .addParam("timezone_offset", date("Z")),
+            this.ig.request('fbsearch/places/')
+                .addParam('lat', $latitude)
+                .addParam('lng', $longitude)
+                .addParam('timezone_offset', date('Z')),
             $excludeList,
             $rankToken,
             50
         )
 
         if ($query !== null) {
-            $location.addParam("query", $query)
+            $location.addParam('query', $query)
         }
 
         try {
@@ -146,9 +146,9 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
             $result = $location.getResponse(Response.FBLocationResponse())
         } catch (RequestHeadersTooLargeException $e) {
             $result = Response.FBLocationResponse([
-                "has_more"   => false,
-                "items"      => [],
-                "rank_token" => $rankToken,
+                'has_more'   => false,
+                'items'      => [],
+                'rank_token' => $rankToken,
             ])
         }
 
@@ -172,8 +172,8 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
         $locationId)
     {
         return this.ig.request("locations/{$locationId}/related/")
-            .addParam("visited", json_encode(["id" => $locationId, "type" => "location"]))
-            .addParam("related_types", json_encode(["location"]))
+            .addParam('visited', json_encode(['id' => $locationId, 'type' => 'location']))
+            .addParam('related_types', json_encode(['location']))
             .getResponse(Response.RelatedLocationResponse())
     }
 
@@ -204,37 +204,37 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
     public fun getFeed(
         $locationId,
         $rankToken,
-        $tab = "ranked",
+        $tab = 'ranked',
         $nextMediaIds = null,
         $nextPage = null,
         $maxId = null)
     {
         Utils::throwIfInvalidRankToken($rankToken)
-        if ($tab !== "ranked" && $tab !== "recent") {
-            throw .InvalidArgumentException("The provided section tab is invalid.")
+        if ($tab !== 'ranked' && $tab !== 'recent') {
+            throw .InvalidArgumentException('The provided section tab is invalid.')
         }
 
         $locationFeed = this.ig.request("locations/{$locationId}/sections/")
             .setSignedPost(false)
-            .addPost("rank_token", $rankToken)
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("session_id", this.ig.session_id)
-            .addPost("tab", $tab)
+            .addPost('rank_token', $rankToken)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('session_id', this.ig.session_id)
+            .addPost('tab', $tab)
 
         if ($nextMediaIds !== null) {
-            if (!is_array($nextMediaIds) || !array_filter($nextMediaIds, "is_int")) {
-                throw .InvalidArgumentException("Next media IDs must be an Int[].")
+            if (!is_array($nextMediaIds) || !array_filter($nextMediaIds, 'is_int')) {
+                throw .InvalidArgumentException('Next media IDs must be an Int[].')
             }
-            $locationFeed.addPost("next_media_ids", json_encode($nextMediaIds))
+            $locationFeed.addPost('next_media_ids', json_encode($nextMediaIds))
         }
 
         if ($nextPage !== null) {
-            $locationFeed.addPost("page", $nextPage)
+            $locationFeed.addPost('page', $nextPage)
         }
 
         if ($maxId !== null) {
-            $locationFeed.addPost("max_id", $maxId)
+            $locationFeed.addPost('max_id', $maxId)
         }
 
         return $locationFeed.getResponse(Response.LocationFeedResponse())
@@ -262,18 +262,18 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
      * Mark LocationStoryResponse story media items as seen.
      *
      * The "story" property of a `LocationStoryResponse` only gives you a
-     * list of story media. It doesn"t actually mark any stories as "seen",
-     * so the user doesn"t know that you"ve seen their story. Actually
+     * list of story media. It doesn't actually mark any stories as "seen",
+     * so the user doesn't know that you've seen their story. Actually
      * marking the story as "seen" is done via this endpoint instead. The
      * official app calls this endpoint periodically (with 1 or more items
      * at a time) while watching a story.
      *
-     * This tells the user that you"ve seen their story, and also helps
-     * Instagram know that it shouldn"t give you those seen stories again
+     * This tells the user that you've seen their story, and also helps
+     * Instagram know that it shouldn't give you those seen stories again
      * if you request the same location feed multiple times.
      *
-     * Tip: You can pass in the whole "getItems()" array from the location"s
-     * "story" property, to easily mark all of the LocationStoryResponse"s story
+     * Tip: You can pass in the whole "getItems()" array from the location's
+     * "story" property, to easily mark all of the LocationStoryResponse's story
      * media items as seen.
      *
      * @param Response.LocationStoryResponse $locationFeed The location feed
@@ -296,15 +296,15 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
         Response.LocationStoryResponse $locationFeed,
         array $items)
     {
-        // Extract the Location Story-Tray ID from the user"s location response.
+        // Extract the Location Story-Tray ID from the user's location response.
         // NOTE: This can NEVER fail if the user has properly given us the exact
         // same location response that they got the story items from!
-        $sourceId = ""
+        $sourceId = ''
         if ($locationFeed.getStory() instanceof Response.Model.StoryTray) {
             $sourceId = $locationFeed.getStory().getId()
         }
         if (!strlen($sourceId)) {
-            throw .InvalidArgumentException("Your provided LocationStoryResponse is invalid and does not contain any Location Story-Tray ID.")
+            throw .InvalidArgumentException('Your provided LocationStoryResponse is invalid and does not contain any Location Story-Tray ID.')
         }
 
         // Ensure they only gave us valid items for this location response.
@@ -317,7 +317,7 @@ class Location(instagram:Instagram) : RequestCollection(instagram)
             // NOTE: We only check Items here. Other data is rejected by Internal.
             if ($item instanceof Response.Model.Item && !isset($validIds[$item.getId()])) {
                 throw .InvalidArgumentException(sprintf(
-                    "The item with ID "%s" does not belong to this LocationStoryResponse.",
+                    'The item with ID "%s" does not belong to this LocationStoryResponse.',
                     $item.getId()
                 ))
             }

@@ -206,7 +206,7 @@ class Request
         apiVersion)
     {
         if (!array_key_exists(apiVersion, Constants::API_URLS)) {
-            throw .InvalidArgumentException(sprintf(""%d" is not a supported API version.", apiVersion))
+            throw .InvalidArgumentException(sprintf('"%d" is not a supported API version.', apiVersion))
         }
         this._apiVersion = apiVersion
 
@@ -226,9 +226,9 @@ class Request
         value)
     {
         if (value === true) {
-            value = "true"
+            value = 'true'
         } elseif (value === false) {
-            value = "false"
+            value = 'false'
         }
         this._params[key] = value
 
@@ -248,9 +248,9 @@ class Request
         value)
     {
         if (value === true) {
-            value = "true"
+            value = 'true'
         } elseif (value === false) {
-            value = "false"
+            value = 'false'
         }
         this._posts[key] = value
 
@@ -298,10 +298,10 @@ class Request
     {
         // Validate
         if (!is_file(filepath)) {
-            throw .InvalidArgumentException(sprintf("File "%s" does not exist.", filepath))
+            throw .InvalidArgumentException(sprintf('File "%s" does not exist.', filepath))
         }
         if (!is_readable(filepath)) {
-            throw .InvalidArgumentException(sprintf("File "%s" is not readable.", filepath))
+            throw .InvalidArgumentException(sprintf('File "%s" is not readable.', filepath))
         }
         // Inherit value from filepath, if not supplied.
         if (filename === null) {
@@ -310,13 +310,13 @@ class Request
         filename = basename(filename)
         // Default headers.
         headers = headers + [
-            "Content-Type"              => "application/octet-stream",
-            "Content-Transfer-Encoding" => "binary",
+            'Content-Type'              => 'application/octet-stream',
+            'Content-Transfer-Encoding' => 'binary',
         ]
         this._files[key] = [
-            "filepath" => filepath,
-            "filename" => filename,
-            "headers"  => headers,
+            'filepath' => filepath,
+            'filename' => filename,
+            'headers'  => headers,
         ]
 
         return this
@@ -341,13 +341,13 @@ class Request
         filename = basename(filename)
         // Default headers.
         headers = headers + [
-            "Content-Type"              => "application/octet-stream",
-            "Content-Transfer-Encoding" => "binary",
+            'Content-Type'              => 'application/octet-stream',
+            'Content-Transfer-Encoding' => 'binary',
         ]
         this._files[key] = [
-            "contents" => data,
-            "filename" => filename,
-            "headers"  => headers,
+            'contents' => data,
+            'filename' => filename,
+            'headers'  => headers,
         ]
 
         return this
@@ -387,14 +387,14 @@ class Request
     protected fun _addDefaultHeaders()
     {
         if (this._defaultHeaders) {
-            this._headers["X-IG-App-ID"] = Constants::FACEBOOK_ANALYTICS_APPLICATION_ID
-            this._headers["X-IG-Capabilities"] = Constants::X_IG_Capabilities
-            this._headers["X-IG-Connection-Type"] = Constants::X_IG_Connection_Type
-            this._headers["X-IG-Connection-Speed"] = mt_rand(1000, 3700)."kbps"
+            this._headers['X-IG-App-ID'] = Constants::FACEBOOK_ANALYTICS_APPLICATION_ID
+            this._headers['X-IG-Capabilities'] = Constants::X_IG_Capabilities
+            this._headers['X-IG-Connection-Type'] = Constants::X_IG_Connection_Type
+            this._headers['X-IG-Connection-Speed'] = mt_rand(1000, 3700).'kbps'
             // TODO: IMPLEMENT PROPER CALCULATION OF THESE HEADERS.
-            this._headers["X-IG-Bandwidth-Speed-KBPS"] = "-1.000"
-            this._headers["X-IG-Bandwidth-TotalBytes-B"] = "0"
-            this._headers["X-IG-Bandwidth-TotalTime-MS"] = "0"
+            this._headers['X-IG-Bandwidth-Speed-KBPS'] = '-1.000'
+            this._headers['X-IG-Bandwidth-TotalBytes-B'] = '0'
+            this._headers['X-IG-Bandwidth-TotalTime-MS'] = '0'
         }
 
         return this
@@ -518,9 +518,9 @@ class Request
         this._isBodyCompressed = isBodyCompressed
 
         if (isBodyCompressed === true) {
-            this._headers["Content-Encoding"] = "gzip"
-        } elseif (isset(this._headers["Content-Encoding"]) && this._headers["Content-Encoding"] === "gzip") {
-            unset(this._headers["Content-Encoding"])
+            this._headers['Content-Encoding'] = 'gzip'
+        } elseif (isset(this._headers['Content-Encoding']) && this._headers['Content-Encoding'] === 'gzip') {
+            unset(this._headers['Content-Encoding'])
         }
 
         return this
@@ -539,24 +539,24 @@ class Request
     protected fun _getStreamForFile(
         array file)
     {
-        if (isset(file["contents"])) {
-            result = stream_for(file["contents"]) // Throws.
-        } elseif (isset(file["filepath"])) {
-            handle = fopen(file["filepath"], "rb")
+        if (isset(file['contents'])) {
+            result = stream_for(file['contents']) // Throws.
+        } elseif (isset(file['filepath'])) {
+            handle = fopen(file['filepath'], 'rb')
             if (handle === false) {
-                throw .RuntimeException(sprintf("Could not open file "%s" for reading.", file["filepath"]))
+                throw .RuntimeException(sprintf('Could not open file "%s" for reading.', file['filepath']))
             }
             this._handles[] = handle
             result = stream_for(handle) // Throws.
         } else {
-            throw .InvalidArgumentException("No data for stream creation.")
+            throw .InvalidArgumentException('No data for stream creation.')
         }
 
         return result
     }
 
     /**
-     * Convert the request"s data into its HTTP POST multipart body contents.
+     * Convert the request's data into its HTTP POST multipart body contents.
      *
      * @throws .InvalidArgumentException
      * @throws .RuntimeException
@@ -573,16 +573,16 @@ class Request
         foreach (index as key => value) {
             if (!isset(this._files[key])) {
                 element = [
-                    "name"     => key,
-                    "contents" => value,
+                    'name'     => key,
+                    'contents' => value,
                 ]
             } else {
                 file = this._files[key]
                 element = [
-                    "name"     => key,
-                    "contents" => this._getStreamForFile(file), // Throws.
-                    "filename" => isset(file["filename"]) ? file["filename"] : null,
-                    "headers"  => isset(file["headers"]) ? file["headers"] : [],
+                    'name'     => key,
+                    'contents' => this._getStreamForFile(file), // Throws.
+                    'filename' => isset(file['filename']) ? file['filename'] : null,
+                    'headers'  => isset(file['headers']) ? file['headers'] : [],
                 ]
             }
             elements[] = element
@@ -618,7 +618,7 @@ class Request
     }
 
     /**
-     * Convert the request"s data into its HTTP POST urlencoded body contents.
+     * Convert the request's data into its HTTP POST urlencoded body contents.
      *
      * @throws .InvalidArgumentException
      *
@@ -626,7 +626,7 @@ class Request
      */
     protected fun _getUrlencodedBody()
     {
-        this._headers["Content-Type"] = Constants::CONTENT_TYPE
+        this._headers['Content-Type'] = Constants::CONTENT_TYPE
 
         return stream_for( // Throws.
             http_build_query(Utils::reorderByHashCode(this._posts))
@@ -634,7 +634,7 @@ class Request
     }
 
     /**
-     * Convert the request"s data into its HTTP POST body contents.
+     * Convert the request's data into its HTTP POST body contents.
      *
      * @throws .InvalidArgumentException
      * @throws .RuntimeException
@@ -684,8 +684,8 @@ class Request
     protected fun _buildHttpRequest()
     {
         endpoint = this._url
-        // Determine the URI to import (it"s either relative to API, or a full URI).
-        if (strncmp(endpoint, "http:", 5) !== 0 && strncmp(endpoint, "https:", 6) !== 0) {
+        // Determine the URI to import (it's either relative to API, or a full URI).
+        if (strncmp(endpoint, 'http:', 5) !== 0 && strncmp(endpoint, 'https:', 6) !== 0) {
             endpoint = Constants::API_URLS[this._apiVersion].endpoint
         }
         // Check signed request params flag.
@@ -695,7 +695,7 @@ class Request
         // Generate the final endpoint URL, by adding any custom query params.
         if (count(this._params)) {
             endpoint = endpoint
-                .(strpos(endpoint, "?") === false ? "?" : "&")
+                .(strpos(endpoint, '?') === false ? '?' : '&')
                 .http_build_query(Utils::reorderByHashCode(this._params))
         }
         // Add default headers (if enabled).
@@ -703,9 +703,9 @@ class Request
         /** @var StreamInterface|null postData The POST body stream is NULL if GET request instead. */
         postData = this._getRequestBody() // Throws.
         // Determine request method.
-        method = postData !== null ? "POST" : "GET"
+        method = postData !== null ? 'POST' : 'GET'
         // Build HTTP request object.
-        return HttpRequest( // Throws (they didn"t document that properly).
+        return HttpRequest( // Throws (they didn't document that properly).
             method,
             endpoint,
             this._headers,
@@ -724,9 +724,9 @@ class Request
     protected fun _throwIfNotLoggedIn()
     {
         // Check the cached login state. May not reflect what will happen on the
-        // server. But it"s the best we can check without trying the actual request!
+        // server. But it's the best we can check without trying the actual request!
         if (!this._parent.isMaybeLoggedIn) {
-            throw LoginRequiredException("User not logged in. Please call login() and then try again.")
+            throw LoginRequiredException('User not logged in. Please call login() and then try again.')
         }
     }
 
@@ -744,7 +744,7 @@ class Request
         // Prevent request from sending multiple times.
         if (this._httpResponse === null) {
             if (this._needsAuth) {
-                // Throw if this requires authentication and we"re not logged in.
+                // Throw if this requires authentication and we're not logged in.
                 this._throwIfNotLoggedIn()
             }
 
@@ -784,7 +784,7 @@ class Request
         // And if we get any duplicate properties, then PHP will simply select
         // the latest value for that property (ex: a:1,a:2 is treated as a:2).
         if (this._isMultiResponse) {
-            body = str_replace("}.r.n{", ",", body)
+            body = str_replace("}.r.n{", ',', body)
         }
 
         return body

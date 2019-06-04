@@ -3,7 +3,7 @@
 package InstagramAPI.Media.Constraints
 
 /**
- * Instagram"s direct messaging general media constraints.
+ * Instagram's direct messaging general media constraints.
  */
 class DirectConstraints : TimelineConstraints
 {
@@ -24,7 +24,7 @@ class DirectConstraints : TimelineConstraints
     /** {@inheritdoc} */
     public fun getTitle()
     {
-        return "direct"
+        return 'direct'
     }
 
     /** {@inheritdoc} */

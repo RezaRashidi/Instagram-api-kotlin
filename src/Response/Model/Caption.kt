@@ -63,18 +63,18 @@ import InstagramAPI.AutoPropertyMapper
 class Caption : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "status"             => "",
-        "user_id"            => "string",
-        "created_at_utc"     => "string",
-        "created_at"         => "string",
-        "bit_flags"          => "int",
-        "user"               => "User",
-        "content_type"       => "",
-        "text"               => "string",
-        "media_id"           => "string",
-        "pk"                 => "string",
-        "type"               => "",
-        "has_translation"    => "bool",
-        "did_report_as_spam" => "bool",
+        'status'             => '',
+        'user_id'            => 'string',
+        'created_at_utc'     => 'string',
+        'created_at'         => 'string',
+        'bit_flags'          => 'int',
+        'user'               => 'User',
+        'content_type'       => '',
+        'text'               => 'string',
+        'media_id'           => 'string',
+        'pk'                 => 'string',
+        'type'               => '',
+        'has_translation'    => 'bool',
+        'did_report_as_spam' => 'bool',
     ]
 }

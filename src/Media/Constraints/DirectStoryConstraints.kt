@@ -3,14 +3,14 @@
 package InstagramAPI.Media.Constraints
 
 /**
- * Instagram"s direct messaging story media constraints.
+ * Instagram's direct messaging story media constraints.
  */
 class DirectStoryConstraints : StoryConstraints
 {
     /** {@inheritdoc} */
     public fun getTitle()
     {
-        return "direct story"
+        return 'direct story'
     }
 
     /** {@inheritdoc} */

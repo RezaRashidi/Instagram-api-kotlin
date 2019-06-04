@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class MsisdnHeaderResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "phone_number"          => "string",
-        "url"                   => "string",
-        "remaining_ttl_seconds" => "int",
-        "ttl"                   => "int",
+        'phone_number'          => 'string',
+        'url'                   => 'string',
+        'remaining_ttl_seconds' => 'int',
+        'ttl'                   => 'int',
     ]
 }

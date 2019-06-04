@@ -51,15 +51,15 @@ import InstagramAPI.AutoPropertyMapper
 class Hashtag : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "id"                 => "string",
-        "name"               => "string",
-        "media_count"        => "int",
-        "profile_pic_url"    => "string",
-        "follow_status"      => "int",
-        "following"          => "int",
-        "allow_following"    => "int",
-        "allow_muting_story" => "bool",
-        "related_tags"       => "",
-        "debug_info"         => "",
+        'id'                 => 'string',
+        'name'               => 'string',
+        'media_count'        => 'int',
+        'profile_pic_url'    => 'string',
+        'follow_status'      => 'int',
+        'following'          => 'int',
+        'allow_following'    => 'int',
+        'allow_muting_story' => 'bool',
+        'related_tags'       => '',
+        'debug_info'         => '',
     ]
 }

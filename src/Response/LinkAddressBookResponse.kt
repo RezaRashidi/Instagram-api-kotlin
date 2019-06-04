@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class LinkAddressBookResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "items" => "Model.Suggestion[]",
+        'items' => 'Model.Suggestion[]',
     ]
 }

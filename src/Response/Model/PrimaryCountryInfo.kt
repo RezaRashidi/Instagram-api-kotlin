@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class PrimaryCountryInfo : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "is_visible"              => "bool",
-        "has_country"             => "bool",
-        "country_name"            => "string",
+        'is_visible'              => 'bool',
+        'has_country'             => 'bool',
+        'country_name'            => 'string',
     ]
 }

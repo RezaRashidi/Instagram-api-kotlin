@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class FormerUsernamesResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "former_usernames" => "Model.FormerUsername[]",
+        'former_usernames' => 'Model.FormerUsername[]',
     ]
 }

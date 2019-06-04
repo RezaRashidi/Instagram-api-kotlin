@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class TagRelatedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "related" => "Model.Related[]",
+        'related' => 'Model.Related[]',
     ]
 }

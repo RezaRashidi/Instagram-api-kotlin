@@ -43,13 +43,13 @@ import InstagramAPI.AutoPropertyMapper
 class AnimatedMediaImageFixedHeigth : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "url"       => "string",
-        "width"     => "string",
-        "heigth"    => "string",
-        "size"      => "string",
-        "mp4"       => "string",
-        "mp4_size"  => "string",
-        "webp"      => "string",
-        "webp_size" => "string",
+        'url'       => 'string',
+        'width'     => 'string',
+        'heigth'    => 'string',
+        'size'      => 'string',
+        'mp4'       => 'string',
+        'mp4_size'  => 'string',
+        'webp'      => 'string',
+        'webp_size' => 'string',
     ]
 }

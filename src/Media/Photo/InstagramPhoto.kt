@@ -8,7 +8,7 @@ import InstagramAPI.Media.InstagramMedia
 import InstagramAPI.Utils
 
 /**
- * Automatically prepares a photo file according to Instagram"s rules.
+ * Automatically prepares a photo file according to Instagram's rules.
  *
  * @property PhotoDetails $_details
  */
@@ -17,13 +17,13 @@ class InstagramPhoto : InstagramMedia
     /**
      * Output JPEG quality.
      *
-     * This value was chosen becaimport 100 is very wasteful. And don"t tweak this
+     * This value was chosen becaimport 100 is very wasteful. And don't tweak this
      * number, becaimport the JPEG quality number is actually totally meaningless
-     * (it is non-standardized) and Instagram can"t even read it from the file.
-     * They have no idea what quality we"ve used, and it can be harmful to go
-     * lower since different JPEG compressors (such as PHP"s implementation) use
+     * (it is non-standardized) and Instagram can't even read it from the file.
+     * They have no idea what quality we've used, and it can be harmful to go
+     * lower since different JPEG compressors (such as PHP's implementation) use
      * different quality scales and are often awful at lower qualities! We know
-     * that PHP"s JPEG quality at 95 is great, so there"s no reason to lower it.
+     * that PHP's JPEG quality at 95 is great, so there's no reason to lower it.
      *
      * @var int
      */
@@ -74,10 +74,10 @@ class InstagramPhoto : InstagramMedia
             // Write the result to disk.
             try {
                 // Prepare output file.
-                $outputFile = Utils::createTempFile(this._tmpPath, "IMG")
+                $outputFile = Utils::createTempFile(this._tmpPath, 'IMG')
 
                 if (!imagejpeg($output, $outputFile, self::JPEG_QUALITY)) {
-                    throw .RuntimeException("Failed to create JPEG image file.")
+                    throw .RuntimeException('Failed to create JPEG image file.')
                 }
             } finally {
                 @imagedestroy($output)
@@ -114,10 +114,10 @@ class InstagramPhoto : InstagramMedia
                 $resource = imagecreatefromgif(this._inputFile)
                 break
             default:
-                throw .RuntimeException("Unsupported image type.")
+                throw .RuntimeException('Unsupported image type.')
         }
         if ($resource === false) {
-            throw .RuntimeException("Failed to load image.")
+            throw .RuntimeException('Failed to load image.')
         }
 
         return $resource
@@ -150,7 +150,7 @@ class InstagramPhoto : InstagramMedia
         // Create an output canvas with our desired size.
         $output = imagecreatetruecolor($canvas.getWidth(), $canvas.getHeight())
         if ($output === false) {
-            throw .RuntimeException("Failed to create output image.")
+            throw .RuntimeException('Failed to create output image.')
         }
 
         // Fill the output canvas with our background color.
@@ -159,10 +159,10 @@ class InstagramPhoto : InstagramMedia
         // If expanding, this will be the color of the border as well.
         $bgColor = imagecolorallocate($output, this._bgColor[0], this._bgColor[1], this._bgColor[2])
         if ($bgColor === false) {
-            throw .RuntimeException("Failed to allocate background color.")
+            throw .RuntimeException('Failed to allocate background color.')
         }
         if (imagefilledrectangle($output, 0, 0, $canvas.getWidth() - 1, $canvas.getHeight() - 1, $bgColor) === false) {
-            throw .RuntimeException("Failed to fill image with background color.")
+            throw .RuntimeException('Failed to fill image with background color.')
         }
 
         // Copy the resized (and resampled) image onto the canvas.
@@ -173,7 +173,7 @@ class InstagramPhoto : InstagramMedia
                 $dstRect.getWidth(), $dstRect.getHeight(),
                 $srcRect.getWidth(), $srcRect.getHeight()
             ) === false) {
-            throw .RuntimeException("Failed to resample image.")
+            throw .RuntimeException('Failed to resample image.')
         }
 
         // Handle image rotation.
@@ -183,7 +183,7 @@ class InstagramPhoto : InstagramMedia
     }
 
     /**
-     * Wrapper for PHP"s imagerotate fun.
+     * Wrapper for PHP's imagerotate fun.
      *
      * @param resource $original
      * @param int      $bgColor
@@ -225,7 +225,7 @@ class InstagramPhoto : InstagramMedia
 
         // Flip the image resource if needed. Does not create a resource.
         if ($flip !== null && imageflip($original, $flip) === false) {
-            throw .RuntimeException("Failed to flip image.")
+            throw .RuntimeException('Failed to flip image.')
         }
 
         // Return original resource if no rotation is needed.
@@ -236,10 +236,10 @@ class InstagramPhoto : InstagramMedia
         // Attempt to create a new, rotated image resource.
         $result = imagerotate($original, $angle, $bgColor)
         if ($result === false) {
-            throw .RuntimeException("Failed to rotate image.")
+            throw .RuntimeException('Failed to rotate image.')
         }
 
-        // Destroy the original resource since we"ll return the resource.
+        // Destroy the original resource since we'll return the resource.
         @imagedestroy($original)
 
         return $result

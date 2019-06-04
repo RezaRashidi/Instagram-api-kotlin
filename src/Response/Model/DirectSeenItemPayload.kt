@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class DirectSeenItemPayload : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "count"     => "",
-        "timestamp" => "string",
+        'count'     => '',
+        'timestamp' => 'string',
     ]
 }

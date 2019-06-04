@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class BusinessEdge : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "node"   => "BusinessNode",
-        "cursor" => "",
+        'node'   => 'BusinessNode',
+        'cursor' => '',
     ]
 }

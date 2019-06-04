@@ -9,5 +9,5 @@ package InstagramAPI.Response.Model.UnpredictableKeys
  */
 class FriendshipStatusUnpredictableContainer : CoreUnpredictableContainer
 {
-    protected $_type = ".InstagramAPI.Response.Model.FriendshipStatus"
+    protected $_type = '.InstagramAPI.Response.Model.FriendshipStatus'
 }

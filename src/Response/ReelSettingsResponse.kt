@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class ReelSettingsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "message_prefs" => "",
-        "blocked_reels" => "Model.BlockedReels",
+        'message_prefs' => '',
+        'blocked_reels' => 'Model.BlockedReels',
     ]
 }

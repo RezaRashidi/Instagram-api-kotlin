@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class SearchUserResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "has_more"    => "bool",
-        "num_results" => "int",
-        "users"       => "Model.User[]",
-        "rank_token"  => "string",
+        'has_more'    => 'bool',
+        'num_results' => 'int',
+        'users'       => 'Model.User[]',
+        'rank_token'  => 'string',
     ]
 }

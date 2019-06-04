@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class UploadVideoResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "upload_id"          => "string",
-        "configure_delay_ms" => "float",
-        "result"             => "",
+        'upload_id'          => 'string',
+        'configure_delay_ms' => 'float',
+        'result'             => '',
     ]
 }

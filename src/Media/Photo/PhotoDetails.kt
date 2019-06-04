@@ -27,7 +27,7 @@ class PhotoDetails : MediaDetails
      *
      * This value is the same for both stories and general media.
      *
-     * Note that Instagram doesn"t enforce any max-height. Instead, it checks
+     * Note that Instagram doesn't enforce any max-height. Instead, it checks
      * the width and aspect ratio which ensures that the height is legal too.
      *
      * @var int
@@ -99,14 +99,14 @@ class PhotoDetails : MediaDetails
     {
         // Check if input file exists.
         if (empty($filename) || !is_file($filename)) {
-            throw .InvalidArgumentException(sprintf("The photo file "%s" does not exist on disk.", $filename))
+            throw .InvalidArgumentException(sprintf('The photo file "%s" does not exist on disk.', $filename))
         }
 
         // Determine photo file size and throw when the file is empty.
         $filesize = filesize($filename)
         if ($filesize < 1) {
             throw .InvalidArgumentException(sprintf(
-                "The photo file "%s" is empty.",
+                'The photo file "%s" is empty.',
                 $filename
             ))
         }
@@ -114,7 +114,7 @@ class PhotoDetails : MediaDetails
         // Get image details.
         $result = @getimagesize($filename)
         if ($result === false) {
-            throw .InvalidArgumentException(sprintf("The photo file "%s" is not a valid image.", $filename))
+            throw .InvalidArgumentException(sprintf('The photo file "%s" is not a valid image.', $filename))
         }
         list($width, $height, this._type) = $result
 
@@ -138,14 +138,14 @@ class PhotoDetails : MediaDetails
         // NOTE: It is confirmed that Instagram only accepts JPEG files.
         $type = this.getType()
         if ($type !== IMAGETYPE_JPEG) {
-            throw .InvalidArgumentException(sprintf("The photo file "%s" is not a JPEG file.", $mediaFilename))
+            throw .InvalidArgumentException(sprintf('The photo file "%s" is not a JPEG file.', $mediaFilename))
         }
 
         $width = this.getWidth()
         // Validate photo resolution. Instagram allows between 320px-1080px width.
         if ($width < self::MIN_WIDTH || $width > self::MAX_WIDTH) {
             throw .InvalidArgumentException(sprintf(
-                "Instagram only accepts photos that are between %d and %d pixels wide. Your file "%s" is %d pixels wide.",
+                'Instagram only accepts photos that are between %d and %d pixels wide. Your file "%s" is %d pixels wide.',
                 self::MIN_WIDTH, self::MAX_WIDTH, $mediaFilename, $width
             ))
         }
@@ -163,15 +163,15 @@ class PhotoDetails : MediaDetails
         $filename,
         $type)
     {
-        if ($type !== IMAGETYPE_JPEG || !fun_exists("exif_read_data")) {
+        if ($type !== IMAGETYPE_JPEG || !fun_exists('exif_read_data')) {
             return self::DEFAULT_ORIENTATION
         }
 
         $exif = @exif_read_data($filename)
-        if ($exif === false || !isset($exif["Orientation"])) {
+        if ($exif === false || !isset($exif['Orientation'])) {
             return self::DEFAULT_ORIENTATION
         }
 
-        return (int) $exif["Orientation"]
+        return (int) $exif['Orientation']
     }
 }

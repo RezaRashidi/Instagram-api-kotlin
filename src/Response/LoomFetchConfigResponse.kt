@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class LoomFetchConfigResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "system_control" => "Model.SystemControl",
-        "trace_control"  => "Model.TraceControl",
-        "id"             => "int",
+        'system_control' => 'Model.SystemControl',
+        'trace_control'  => 'Model.TraceControl',
+        'id'             => 'int',
     ]
 }

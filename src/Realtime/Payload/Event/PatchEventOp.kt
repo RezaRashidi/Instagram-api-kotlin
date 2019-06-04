@@ -30,16 +30,16 @@ import InstagramAPI.AutoPropertyMapper
  */
 class PatchEventOp : AutoPropertyMapper
 {
-    val ADD = "add"
-    val REMOVE = "remove"
-    val REPLACE = "replace"
-    val NOTIFY = "notify"
+    val ADD = 'add'
+    val REMOVE = 'remove'
+    val REPLACE = 'replace'
+    val NOTIFY = 'notify'
 
     val JSON_PROPERTY_MAP = [
-        "op"            => "",
-        "path"          => "",
-        "value"         => "",
-        "ts"            => "",
-        "doublePublish" => "",
+        'op'            => '',
+        'path'          => '',
+        'value'         => '',
+        'ts'            => '',
+        'doublePublish' => '',
     ]
 }

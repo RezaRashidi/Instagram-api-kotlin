@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class Slot : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "slot"                 => "int",
-        "cooldown"             => "int",
+        'slot'                 => 'int',
+        'cooldown'             => 'int',
     ]
 }

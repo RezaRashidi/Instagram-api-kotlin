@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class DirectSeenItemResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "action"  => "",
-        "payload" => "Model.DirectSeenItemPayload", // The number of unseen items.
+        'action'  => '',
+        'payload' => 'Model.DirectSeenItemPayload', // The number of unseen items.
     ]
 }

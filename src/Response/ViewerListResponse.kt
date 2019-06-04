@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class ViewerListResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "users" => "Model.User[]",
+        'users' => 'Model.User[]',
     ]
 }

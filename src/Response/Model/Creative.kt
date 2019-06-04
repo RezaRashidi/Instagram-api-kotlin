@@ -43,14 +43,14 @@ import InstagramAPI.AutoPropertyMapper
 class Creative : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "title"            => "Text",
-        "content"          => "Text",
-        "footer"           => "Text",
-        "social_context"   => "Text",
-        "content"          => "Text",
-        "primary_action"   => "Action",
-        "secondary_action" => "Action",
-        "dismiss_action"   => "",
-        "image"            => "Image",
+        'title'            => 'Text',
+        'content'          => 'Text',
+        'footer'           => 'Text',
+        'social_context'   => 'Text',
+        'content'          => 'Text',
+        'primary_action'   => 'Action',
+        'secondary_action' => 'Action',
+        'dismiss_action'   => '',
+        'image'            => 'Image',
     ]
 }

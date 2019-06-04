@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class AdsInfo : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "has_ads" => "bool",
-        "ads_url" => "string",
+        'has_ads' => 'bool',
+        'ads_url' => 'string',
     ]
 }

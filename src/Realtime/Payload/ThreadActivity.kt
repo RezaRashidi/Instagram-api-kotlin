@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class ThreadActivity : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "timestamp"       => "",
-        "sender_id"       => "string",
-        "activity_status" => "",
-        "ttl"             => "",
+        'timestamp'       => '',
+        'sender_id'       => 'string',
+        'activity_status' => '',
+        'ttl'             => '',
     ]
 }

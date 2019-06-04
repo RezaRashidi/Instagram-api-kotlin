@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class CheckUsernameResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "username"   => "string",
-        "available"  => "",
-        "error"      => "",
-        "error_type" => "",
+        'username'   => 'string',
+        'available'  => '',
+        'error'      => '',
+        'error_type' => '',
     ]
 }

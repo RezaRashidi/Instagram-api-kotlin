@@ -47,11 +47,11 @@ import InstagramAPI.Response
 class DirectInboxResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "pending_requests_total" => "",
-        "seq_id"                 => "string",
-        "pending_requests_users" => "Model.User[]",
-        "inbox"                  => "Model.DirectInbox",
-        "megaphone"              => "Model.Megaphone",
-        "snapshot_at_ms"         => "string",
+        'pending_requests_total' => '',
+        'seq_id'                 => 'string',
+        'pending_requests_users' => 'Model.User[]',
+        'inbox'                  => 'Model.DirectInbox',
+        'megaphone'              => 'Model.Megaphone',
+        'snapshot_at_ms'         => 'string',
     ]
 }

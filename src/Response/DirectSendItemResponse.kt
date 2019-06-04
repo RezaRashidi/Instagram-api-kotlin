@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class DirectSendItemResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "action"      => "",
-        "status_code" => "",
-        "payload"     => "Model.DirectSendItemPayload",
+        'action'      => '',
+        'status_code' => '',
+        'payload'     => 'Model.DirectSendItemPayload',
     ]
 }

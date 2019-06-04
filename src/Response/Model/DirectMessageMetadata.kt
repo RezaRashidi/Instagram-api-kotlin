@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class DirectMessageMetadata : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "thread_id"       => "string",
-        "item_id"         => "string",
-        "timestamp"       => "string",
-        "participant_ids" => "string[]",
+        'thread_id'       => 'string',
+        'item_id'         => 'string',
+        'timestamp'       => 'string',
+        'participant_ids' => 'string[]',
     ]
 }

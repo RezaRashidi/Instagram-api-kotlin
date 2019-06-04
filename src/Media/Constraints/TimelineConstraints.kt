@@ -5,7 +5,7 @@ package InstagramAPI.Media.Constraints
 import InstagramAPI.Media.ConstraintsInterface
 
 /**
- * Instagram"s timeline general media constraints.
+ * Instagram's timeline general media constraints.
  */
 class TimelineConstraints : ConstraintsInterface
 {
@@ -32,7 +32,7 @@ class TimelineConstraints : ConstraintsInterface
     /**
      * The recommended aspect ratio for timeline media.
      *
-     * This creates square media, which is Instagram"s "standard" format.
+     * This creates square media, which is Instagram's "standard" format.
      *
      * @var float
      */
@@ -68,7 +68,7 @@ class TimelineConstraints : ConstraintsInterface
     /** {@inheritdoc} */
     public fun getTitle()
     {
-        return "timeline"
+        return 'timeline'
     }
 
     /** {@inheritdoc} */

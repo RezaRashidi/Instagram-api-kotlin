@@ -79,29 +79,29 @@ import InstagramAPI.AutoPropertyMapper
 class Reel : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "id"                => "string",
+        'id'                => 'string',
         /*
          * Unix "taken_at" timestamp of the newest item in their story reel.
          */
-        "latest_reel_media" => "string",
+        'latest_reel_media' => 'string',
         /*
          * The "taken_at" timestamp of the last story media you have seen for
-         * that user (the current reel"s user). Defaults to `0` (not seen).
+         * that user (the current reel's user). Defaults to `0` (not seen).
          */
-        "seen"                 => "string",
-        "can_reply"            => "bool",
-        "can_reshare"          => "bool",
-        "reel_type"            => "string",
-        "cover_media"          => "CoverMedia",
-        "user"                 => "User",
-        "items"                => "Item[]",
-        "ranked_position"      => "string",
-        "title"                => "string",
-        "seen_ranked_position" => "string",
-        "expiring_at"          => "string",
-        "has_besties_media"    => "bool", // Uses int(0) for false and 1 for true.
-        "location"             => "Location",
-        "prefetch_count"       => "int",
-        "broadcast"            => "Broadcast",
+        'seen'                 => 'string',
+        'can_reply'            => 'bool',
+        'can_reshare'          => 'bool',
+        'reel_type'            => 'string',
+        'cover_media'          => 'CoverMedia',
+        'user'                 => 'User',
+        'items'                => 'Item[]',
+        'ranked_position'      => 'string',
+        'title'                => 'string',
+        'seen_ranked_position' => 'string',
+        'expiring_at'          => 'string',
+        'has_besties_media'    => 'bool', // Uses int(0) for false and 1 for true.
+        'location'             => 'Location',
+        'prefetch_count'       => 'int',
+        'broadcast'            => 'Broadcast',
     ]
 }

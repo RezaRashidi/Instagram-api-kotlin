@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class Aymf : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "items"          => "AymfItem[]",
-        "more_available" => "",
+        'items'          => 'AymfItem[]',
+        'more_available' => '',
     ]
 }

@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class SendSMSCodeResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "phone_number_valid"          => "bool",
-        "phone_verification_settings" => "Model.PhoneVerificationSettings",
+        'phone_number_valid'          => 'bool',
+        'phone_verification_settings' => 'Model.PhoneVerificationSettings',
     ]
 }

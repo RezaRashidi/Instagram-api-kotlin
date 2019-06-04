@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class StoryPollVotersResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "voter_info"    => "Model.VoterInfo",
+        'voter_info'    => 'Model.VoterInfo',
     ]
 }

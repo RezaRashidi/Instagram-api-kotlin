@@ -18,14 +18,14 @@ import InstagramAPI.AutoPropertyMapper
  */
 class VideoCallEvent : AutoPropertyMapper
 {
-    val VIDEO_CALL_STARTED = "video_call_started"
-    val VIDEO_CALL_JOINED = "video_call_joined"
-    val VIDEO_CALL_LEFT = "video_call_left"
-    val VIDEO_CALL_ENDED = "video_call_ended"
-    val UNKNOWN = "unknown"
+    val VIDEO_CALL_STARTED = 'video_call_started'
+    val VIDEO_CALL_JOINED = 'video_call_joined'
+    val VIDEO_CALL_LEFT = 'video_call_left'
+    val VIDEO_CALL_ENDED = 'video_call_ended'
+    val UNKNOWN = 'unknown'
 
     val JSON_PROPERTY_MAP = [
-        "action" => "string",
-        "vc_id"  => "string",
+        'action' => 'string',
+        'vc_id'  => 'string',
     ]
 }

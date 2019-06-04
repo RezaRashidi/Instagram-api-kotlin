@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class TwoFactorLoginSMSResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "two_factor_required" => "bool",
-        "two_factor_info"     => "Model.TwoFactorInfo",
+        'two_factor_required' => 'bool',
+        'two_factor_info'     => 'Model.TwoFactorInfo',
     ]
 }

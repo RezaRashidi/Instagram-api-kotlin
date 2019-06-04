@@ -22,7 +22,7 @@ import kotlin.math.pow
 * simulate decbin() fun from php : convert decimal to binary,
 */
 /**
- * Class for converting media IDs to/from Instagram"s shortcode system.
+ * Class for converting media IDs to/from Instagram's shortcode system.
  *
  * The shortcode is the https://instagram.com/p/SHORTCODE/ part of the URL.
  * There are many reasons why you would want to be able to convert back and
@@ -66,7 +66,7 @@ class InstagramID{
          * Converts an Instagram ID to their shortcode system.
          *
          * @param (string)|int $id The ID to convert. Must be provided as a string if
-         *                       it"s larger than the size of an integer, which MOST
+         *                       it's larger than the size of an integer, which MOST
          *                       Instagram IDs are!
          *
          * @throws \InvalidArgumentException If bad parameters are provided.
@@ -76,7 +76,7 @@ class InstagramID{
         fun toCode(id: String): String {
             // First we must convert the ID number to a binary string.
             // NOTE: Conversion speed depends on number size. With the most common
-            // number size used for Instagram"s IDs, my old laptop can do ~18k/s.
+            // number size used for Instagram's IDs, my old laptop can do ~18k/s.
 
             var base2 = base10to2(id, false)
             // No left-padding. Throws if bad.
@@ -98,13 +98,13 @@ class InstagramID{
 
             val chunks = base2.chunked(6)
 
-            // Process and encode all chunks as base64 using Instagram"s alphabet.
+            // Process and encode all chunks as base64 using Instagram's alphabet.
             var encoded = ""
             chunks.forEach {
                 // Interpret the chunk bitstring as an unsigned integer (0-63).
                 val base64 = bindec(it.toLong())
 
-                // Look up that base64 character in Instagram"s alphabet.
+                // Look up that base64 character in Instagram's alphabet.
                 encoded += InstagramID().BASE64URL_CHARMAP[base64]//Todo
             }
 
@@ -133,7 +133,7 @@ class InstagramID{
                 val base64 = InstagramID().BASE64URL_CHARMAP.indexOf(code[i])+1
 
                 // Convert it to 6 binary bits (left-padded if needed).
-                base2 += decbin(base64).toString().padStart(6, "0")
+                base2 += decbin(base64).toString().padStart(6, '0')
             }
             // Now just convert the base2 binary string to a base10 decimal string.
             return base2to10(base2)
@@ -146,11 +146,11 @@ class InstagramID{
          * @param (string)|int $base10  The number to convert, in base 10. Must be 0+,
          *                            a positive integer. And you must pass the
          *                            number as a string if you want to convert a
-         *                            number that"s larger than what fits in your
-         *                            CPU"s integer size.
+         *                            number that's larger than what fits in your
+         *                            CPU's integer size.
          * @param (bool)       $padLeft Whether to pad with leading zeroes.
          *
-         * @throws \InvalidArgumentException If the input isn"t a valid integer.
+         * @throws \InvalidArgumentException If the input isn't a valid integer.
          *
          * @return string The binary bits as a string.
          */
@@ -173,7 +173,7 @@ class InstagramID{
 
                 // Now divide the whole base10 string by two, discarding decimals.
                 // NOTE: Division is unavoidable when converting decimal to binary,
-                // but at least it"s implemented in pure C thanks to the BC library.
+                // but at least it's implemented in pure C thanks to the BC library.
                 // An implementation of arbitrary-length division by 2 in just PHP
                 // was ~4x slower. Anyway, my old laptop can do ~1.6 million bcdiv()
                 // per second so this is no problem.
@@ -190,7 +190,7 @@ class InstagramID{
                     base2 = "0".repeat(padAmount) + base2
                 }
             } else {
-                base2 = base2.trimStart("0")
+                base2 = base2.trimStart('0')
             }
 
             return base2
@@ -221,7 +221,7 @@ class InstagramID{
          * @param (string) $base2 The binary bits as a string where each character is
          *                      either "1" or "0".
          *
-         * @throws \InvalidArgumentException If the input isn"t a binary string.
+         * @throws \InvalidArgumentException If the input isn't a binary string.
          *
          * @return string The decimal number as a string.
          */
@@ -254,7 +254,7 @@ class InstagramID{
                         bitValueTable[bitPosition] = bitValue
                     }
 
-                    // Now just add the bit"s value to the current total.
+                    // Now just add the bit's value to the current total.
                     base10 = bcadd(base10, bitValue.toString())
                 }
             }

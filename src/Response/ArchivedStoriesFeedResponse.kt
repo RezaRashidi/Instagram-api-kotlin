@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class ArchivedStoriesFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "items"                  => "Model.ArchivedStoriesFeedItem[]",
-        "num_results"            => "int",
-        "more_available"         => "bool",
-        "max_id"                 => "string",
+        'items'                  => 'Model.ArchivedStoriesFeedItem[]',
+        'num_results'            => 'int',
+        'more_available'         => 'bool',
+        'max_id'                 => 'string',
     ]
 }

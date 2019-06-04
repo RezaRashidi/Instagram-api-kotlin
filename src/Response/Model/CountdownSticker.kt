@@ -59,32 +59,32 @@ import InstagramAPI.AutoPropertyMapper
 class CountdownSticker : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "countdown_id"           => "string",
-        "end_ts"                 => "string",
-        "text"                   => "string",
+        'countdown_id'           => 'string',
+        'end_ts'                 => 'string',
+        'text'                   => 'string',
         /*
          * HTML color string such as "#812A2A".
          */
-        "text_color"             => "string",
+        'text_color'             => 'string',
         /*
          * HTML color string such as "#812A2A".
          */
-        "start_background_color" => "string",
+        'start_background_color' => 'string',
         /*
          * HTML color string such as "#812A2A".
          */
-        "end_background_color"   => "string",
+        'end_background_color'   => 'string',
         /*
          * HTML color string such as "#812A2A".
          */
-        "digit_color"            => "string",
+        'digit_color'            => 'string',
         /*
          * HTML color string such as "#812A2A".
          */
-        "digit_card_color"       => "string",
-        "following_enabled"      => "bool",
-        "is_owner"               => "bool",
-        "attribution"            => "",
-        "viewer_is_following"    => "bool",
+        'digit_card_color'       => 'string',
+        'following_enabled'      => 'bool',
+        'is_owner'               => 'bool',
+        'attribution'            => '',
+        'viewer_is_following'    => 'bool',
     ]
 }

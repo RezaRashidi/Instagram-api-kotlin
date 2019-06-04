@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class PresencesResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "user_presence" => "Model.UnpredictableKeys.PresenceUnpredictableContainer",
+        'user_presence' => 'Model.UnpredictableKeys.PresenceUnpredictableContainer',
     ]
 }

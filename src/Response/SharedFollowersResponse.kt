@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class SharedFollowersResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "users" => "Model.SharedFollower[]",
+        'users' => 'Model.SharedFollower[]',
     ]
 }

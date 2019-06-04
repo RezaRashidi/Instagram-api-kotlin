@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class BlockedReels : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "users"     => "User[]",
-        "page_size" => "",
-        "big_list"  => "",
+        'users'     => 'User[]',
+        'page_size' => '',
+        'big_list'  => '',
     ]
 }

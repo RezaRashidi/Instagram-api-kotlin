@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class SystemControl : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "upload_max_bytes"                     => "int",
-        "upload_time_period_sec"               => "int",
-        "upload_bytes_per_update"              => "int",
+        'upload_max_bytes'                     => 'int',
+        'upload_time_period_sec'               => 'int',
+        'upload_bytes_per_update'              => 'int',
     ]
 }

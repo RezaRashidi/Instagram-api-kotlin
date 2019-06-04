@@ -40,6 +40,6 @@ class BlockedReelsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         Model.BlockedReels::class, // Import property map.
-        "next_max_id" => "string",
+        'next_max_id' => 'string',
     ]
 }

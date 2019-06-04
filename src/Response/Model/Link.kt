@@ -35,11 +35,11 @@ import InstagramAPI.AutoPropertyMapper
 class Link : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "start"        => "int",
-        "end"          => "int",
-        "id"           => "string",
-        "type"         => "string",
-        "text"         => "string",
-        "link_context" => "LinkContext",
+        'start'        => 'int',
+        'end'          => 'int',
+        'id'           => 'string',
+        'type'         => 'string',
+        'text'         => 'string',
+        'link_context' => 'LinkContext',
     ]
 }

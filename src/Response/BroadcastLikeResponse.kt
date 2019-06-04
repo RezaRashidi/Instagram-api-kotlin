@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class BroadcastLikeResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "likes" => "",
+        'likes' => '',
     ]
 }

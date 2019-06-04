@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class ActiveFeedAdsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "feed_items"     => "Model.FeedItem[]",
-        "next_max_id"    => "string",
-        "more_available" => "bool",
+        'feed_items'     => 'Model.FeedItem[]',
+        'next_max_id'    => 'string',
+        'more_available' => 'bool',
     ]
 }

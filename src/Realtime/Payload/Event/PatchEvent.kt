@@ -35,10 +35,10 @@ import InstagramAPI.Realtime.Payload.RealtimeEvent
 class PatchEvent : RealtimeEvent
 {
     val JSON_PROPERTY_MAP = [
-        "data"          => "PatchEventOp[]",
-        "message_type"  => "int",
-        "seq_id"        => "int",
-        "lazy"          => "bool",
-        "num_endpoints" => "int",
+        'data'          => 'PatchEventOp[]',
+        'message_type'  => 'int',
+        'seq_id'        => 'int',
+        'lazy'          => 'bool',
+        'num_endpoints' => 'int',
     ]
 }

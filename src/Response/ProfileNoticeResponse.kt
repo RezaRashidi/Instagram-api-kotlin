@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class ProfileNoticeResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "has_change_password_megaphone" => "bool",
+        'has_change_password_megaphone' => 'bool',
     ]
 }

@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class FormerUsername : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "former_username"  => "string",
-        "change_timestamp" => "string",
+        'former_username'  => 'string',
+        'change_timestamp' => 'string',
     ]
 }

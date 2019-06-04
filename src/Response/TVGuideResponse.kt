@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class TVGuideResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "channels"   => "Model.TVChannel[]",
-        "my_channel" => "Model.TVChannel",
-        "badging"    => "Model.Badging",
-        "composer"   => "Model.Composer",
+        'channels'   => 'Model.TVChannel[]',
+        'my_channel' => 'Model.TVChannel',
+        'badging'    => 'Model.Badging',
+        'composer'   => 'Model.Composer',
     ]
 }

@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class TopLiveStatusResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "broadcast_status_items" => "Model.BroadcastStatusItem[]",
+        'broadcast_status_items' => 'Model.BroadcastStatusItem[]',
     ]
 }

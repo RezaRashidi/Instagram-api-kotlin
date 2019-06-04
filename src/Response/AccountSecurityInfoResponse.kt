@@ -47,11 +47,11 @@ import InstagramAPI.Response
 class AccountSecurityInfoResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "backup_codes"          => "",
-        "is_phone_confirmed"    => "",
-        "country_code"          => "int",
-        "phone_number"          => "string",
-        "is_two_factor_enabled" => "",
-        "national_number"       => "string", // Really int, but may be >32bit.
+        'backup_codes'          => '',
+        'is_phone_confirmed'    => '',
+        'country_code'          => 'int',
+        'phone_number'          => 'string',
+        'is_two_factor_enabled' => '',
+        'national_number'       => 'string', // Really int, but may be >32bit.
     ]
 }

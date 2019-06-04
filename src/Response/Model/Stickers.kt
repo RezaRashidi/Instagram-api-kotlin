@@ -43,13 +43,13 @@ import InstagramAPI.AutoPropertyMapper
 class Stickers : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "id"                     => "string",
-        "tray_image_width_ratio" => "",
-        "image_height"           => "",
-        "image_width_ratio"      => "",
-        "type"                   => "",
-        "image_width"            => "",
-        "name"                   => "",
-        "image_url"              => "string",
+        'id'                     => 'string',
+        'tray_image_width_ratio' => '',
+        'image_height'           => '',
+        'image_width_ratio'      => '',
+        'type'                   => '',
+        'image_width'            => '',
+        'name'                   => '',
+        'image_url'              => 'string',
     ]
 }

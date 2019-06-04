@@ -46,7 +46,7 @@ class RegionHintParser : ParserInterface
         $region)
     {
         if ($region === null) {
-            throw .RuntimeException("Incomplete region hint message.")
+            throw .RuntimeException('Incomplete region hint message.')
         }
 
         return Message(RegionHintHandler::MODULE, $region)

@@ -9,7 +9,7 @@ package InstagramAPI.Exception
  * perform very different tasks and have hundreds of different fun-specific
  * error messages (which may change at any time). Instead of us trying to handle
  * all of them (which would be slow and stupid), we throw them to the user as an
- * EndpointException, so that it"s up to the users to handle any specific error
+ * EndpointException, so that it's up to the users to handle any specific error
  * strings they want to catch in their own projects.
  *
  * Encapsulates ALL fun-call specific problems such as "User not found"

@@ -12,7 +12,7 @@ import InstagramAPI.Realtime.Payload.RealtimeEvent
 
 class LiveHandler : AbstractHandler : HandlerInterface
 {
-    val MODULE = "live"
+    val MODULE = 'live'
 
     /** {@inheritdoc} */
     public fun handleMessage(
@@ -20,10 +20,10 @@ class LiveHandler : AbstractHandler : HandlerInterface
     {
         $data = $message.getData()
 
-        if (isset($data["event"])) {
+        if (isset($data['event'])) {
             this._processEvent($data)
         } else {
-            throw HandlerException("Invalid message (event type is missing).")
+            throw HandlerException('Invalid message (event type is missing).')
         }
     }
 
@@ -37,13 +37,13 @@ class LiveHandler : AbstractHandler : HandlerInterface
     protected fun _processEvent(
         array $message)
     {
-        if ($message["event"] === RealtimeEvent::PATCH) {
+        if ($message['event'] === RealtimeEvent::PATCH) {
             $event = PatchEvent($message)
             foreach ($event.getData() as $op) {
                 this._handlePatchOp($op)
             }
         } else {
-            throw HandlerException(sprintf("Unknown event type "%s".", $message["event"]))
+            throw HandlerException(sprintf('Unknown event type "%s".', $message['event']))
         }
     }
 
@@ -59,13 +59,13 @@ class LiveHandler : AbstractHandler : HandlerInterface
     {
         switch ($op.getOp()) {
             case PatchEventOp::ADD:
-                $event = "live-started"
+                $event = 'live-started'
                 break
             case PatchEventOp::REMOVE:
-                $event = "live-stopped"
+                $event = 'live-stopped'
                 break
             default:
-                throw HandlerException(sprintf("Unsupported live broadcast op: "%s".", $op.getOp()))
+                throw HandlerException(sprintf('Unsupported live broadcast op: "%s".', $op.getOp()))
         }
         if (!this._hasListeners($event)) {
             return
@@ -73,7 +73,7 @@ class LiveHandler : AbstractHandler : HandlerInterface
 
         $json = HttpClient::api_body_decode($op.getValue())
         if (!is_array($json)) {
-            throw HandlerException(sprintf("Failed to decode live broadcast JSON: %s.", json_last_error_msg()))
+            throw HandlerException(sprintf('Failed to decode live broadcast JSON: %s.', json_last_error_msg()))
         }
 
         this._target.emit($event, [LiveBroadcast($json)])

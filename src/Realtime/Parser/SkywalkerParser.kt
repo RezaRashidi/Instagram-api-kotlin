@@ -17,9 +17,9 @@ class SkywalkerParser : ParserInterface
     val TOPIC_LIVE = 2
     val TOPIC_LIVEWITH = 3
 
-    val MODULE_DIRECT = "direct"
-    val MODULE_LIVE = "live"
-    val MODULE_LIVEWITH = "livewith"
+    val MODULE_DIRECT = 'direct'
+    val MODULE_LIVE = 'live'
+    val MODULE_LIVEWITH = 'livewith'
 
     val TOPIC_TO_MODULE_ENUM = [
         self::TOPIC_DIRECT   => self::MODULE_DIRECT,
@@ -65,16 +65,16 @@ class SkywalkerParser : ParserInterface
         $payload)
     {
         if ($topic === null || $payload === null) {
-            throw .RuntimeException("Incomplete Skywalker message.")
+            throw .RuntimeException('Incomplete Skywalker message.')
         }
 
         if (!array_key_exists($topic, self::TOPIC_TO_MODULE_ENUM)) {
-            throw .DomainException(sprintf("Unknown Skywalker topic "%d".", $topic))
+            throw .DomainException(sprintf('Unknown Skywalker topic "%d".', $topic))
         }
 
         $data = Client::api_body_decode($payload)
         if (!is_array($data)) {
-            throw .RuntimeException("Invalid Skywalker payload.")
+            throw .RuntimeException('Invalid Skywalker payload.')
         }
 
         return Message(self::TOPIC_TO_MODULE_ENUM[$topic], $data)

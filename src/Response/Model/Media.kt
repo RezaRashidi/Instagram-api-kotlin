@@ -31,10 +31,10 @@ import InstagramAPI.AutoPropertyMapper
 class Media : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "image"                            => "string",
-        "id"                               => "string",
-        "user"                             => "User",
-        "expiring_at"                      => "",
-        "comment_threading_enabled"        => "bool",
+        'image'                            => 'string',
+        'id'                               => 'string',
+        'user'                             => 'User',
+        'expiring_at'                      => '',
+        'comment_threading_enabled'        => 'bool',
     ]
 }

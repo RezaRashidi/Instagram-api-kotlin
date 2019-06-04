@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class SwitchBusinessProfileResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "social_context" => "",
+        'social_context' => '',
     ]
 }

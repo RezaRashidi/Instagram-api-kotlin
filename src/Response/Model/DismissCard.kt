@@ -39,12 +39,12 @@ import InstagramAPI.AutoPropertyMapper
 class DismissCard : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "card_id"        => "",
-        "image_url"      => "string",
-        "title"          => "",
-        "message"        => "",
-        "button_text"    => "",
-        "camera_target"  => "",
-        "face_filter_id" => "",
+        'card_id'        => '',
+        'image_url'      => 'string',
+        'title'          => '',
+        'message'        => '',
+        'button_text'    => '',
+        'camera_target'  => '',
+        'face_filter_id' => '',
     ]
 }

@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class BlockedMediaResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "media_ids" => "",
+        'media_ids' => '',
     ]
 }

@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class RewriteRule : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "matcher"    => "string",
-        "replacer"   => "string",
+        'matcher'    => 'string',
+        'replacer'   => 'string',
     ]
 }

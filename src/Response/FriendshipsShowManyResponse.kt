@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class FriendshipsShowManyResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "friendship_statuses" => "Model.UnpredictableKeys.FriendshipStatusUnpredictableContainer",
+        'friendship_statuses' => 'Model.UnpredictableKeys.FriendshipStatusUnpredictableContainer',
     ]
 }

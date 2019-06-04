@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class EligiblePromotions : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "edges"   => "Edges[]",
+        'edges'   => 'Edges[]',
     ]
 }

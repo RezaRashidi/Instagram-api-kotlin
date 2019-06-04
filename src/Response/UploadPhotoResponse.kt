@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class UploadPhotoResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "upload_id" => "string",
-        "media_id"  => "string",
+        'upload_id' => 'string',
+        'media_id'  => 'string',
     ]
 }

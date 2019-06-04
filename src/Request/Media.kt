@@ -17,7 +17,7 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Get detailed media information.
      *
-     * @param string $mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -33,9 +33,9 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Delete a media item.
      *
-     * @param string     $mediaId   The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string     $mediaId   The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string|int $mediaType The type of the media item you are deleting. One of: "PHOTO", "VIDEO"
-     *                              "CAROUSEL", or the raw value of the Item"s "getMediaType()" fun.
+     *                              "CAROUSEL", or the raw value of the Item's "getMediaType()" fun.
      *
      * @throws .InvalidArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
@@ -44,24 +44,24 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun delete(
         $mediaId,
-        $mediaType = "PHOTO")
+        $mediaType = 'PHOTO')
     {
         $mediaType = Utils::checkMediaType($mediaType)
 
         return this.ig.request("media/{$mediaId}/delete/")
-            .addParam("media_type", $mediaType)
-            .addPost("igtv_feed_preview", false)
-            .addPost("media_id", $mediaId)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_uuid", this.ig.uuid)
+            .addParam('media_type', $mediaType)
+            .addPost('igtv_feed_preview', false)
+            .addPost('media_id', $mediaId)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_uuid', this.ig.uuid)
             .getResponse(Response.MediaDeleteResponse())
     }
 
     /**
      * Edit media.
      *
-     * @param string     $mediaId     The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string     $mediaId     The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string     $captionText Caption to import for the media.
      * @param array|null $metadata    (optional) Associative array of optional metadata to edit:
      *                                "usertags" - special array with user tagging instructions,
@@ -69,7 +69,7 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
      *                                "location" - a Location model object to set the media location,
      *                                or boolean FALSE to remove any location from the media.
      * @param string|int $mediaType   The type of the media item you are editing. One of: "PHOTO", "VIDEO"
-     *                                "CAROUSEL", or the raw value of the Item"s "getMediaType()" fun.
+     *                                "CAROUSEL", or the raw value of the Item's "getMediaType()" fun.
      *
      * @throws .InvalidArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
@@ -81,49 +81,49 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun edit(
         $mediaId,
-        $captionText = "",
+        $captionText = '',
         array $metadata = null,
-        $mediaType = "PHOTO")
+        $mediaType = 'PHOTO')
     {
         $mediaType = Utils::checkMediaType($mediaType)
 
         $request = this.ig.request("media/{$mediaId}/edit_media/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("caption_text", $captionText)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('caption_text', $captionText)
 
-        if (isset($metadata["usertags"])) {
-            Utils::throwIfInvalidUsertags($metadata["usertags"])
-            $request.addPost("usertags", json_encode($metadata["usertags"]))
+        if (isset($metadata['usertags'])) {
+            Utils::throwIfInvalidUsertags($metadata['usertags'])
+            $request.addPost('usertags', json_encode($metadata['usertags']))
         }
 
-        if (isset($metadata["location"])) {
-            if ($metadata["location"] === false) {
+        if (isset($metadata['location'])) {
+            if ($metadata['location'] === false) {
                 // The user wants to remove the current location from the media.
-                $request.addPost("location", "{}")
+                $request.addPost('location', '{}')
             } else {
                 // The user wants to add/change the location of the media.
-                if (!$metadata["location"] instanceof Response.Model.Location) {
-                    throw .InvalidArgumentException("The "location" metadata value must be an instance of .InstagramAPI.Response.Model.Location.")
+                if (!$metadata['location'] instanceof Response.Model.Location) {
+                    throw .InvalidArgumentException('The "location" metadata value must be an instance of .InstagramAPI.Response.Model.Location.')
                 }
 
                 $request
-                    .addPost("location", Utils::buildMediaLocationJSON($metadata["location"]))
-                    .addPost("geotag_enabled", "1")
-                    .addPost("posting_latitude", $metadata["location"].getLat())
-                    .addPost("posting_longitude", $metadata["location"].getLng())
-                    .addPost("media_latitude", $metadata["location"].getLat())
-                    .addPost("media_longitude", $metadata["location"].getLng())
+                    .addPost('location', Utils::buildMediaLocationJSON($metadata['location']))
+                    .addPost('geotag_enabled', '1')
+                    .addPost('posting_latitude', $metadata['location'].getLat())
+                    .addPost('posting_longitude', $metadata['location'].getLng())
+                    .addPost('media_latitude', $metadata['location'].getLat())
+                    .addPost('media_longitude', $metadata['location'].getLng())
 
-                if ($mediaType === "CAROUSEL") { // Albums need special handling.
+                if ($mediaType === 'CAROUSEL') { // Albums need special handling.
                     $request
-                        .addPost("exif_latitude", 0.0)
-                        .addPost("exif_longitude", 0.0)
+                        .addPost('exif_latitude', 0.0)
+                        .addPost('exif_longitude', 0.0)
                 } else { // All other types of media import "av_" instead of "exif_".
                     $request
-                        .addPost("av_latitude", 0.0)
-                        .addPost("av_longitude", 0.0)
+                        .addPost('av_latitude', 0.0)
+                        .addPost('av_longitude', 0.0)
                 }
             }
         }
@@ -134,8 +134,8 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Like a media item.
      *
-     * @param string $mediaId   The media ID in Instagram"s internal format (ie "3482384834_43294").
-     * @param string $module    (optional) From which app module (page) you"re performing this action.
+     * @param string $mediaId   The media ID in Instagram's internal format (ie "3482384834_43294").
+     * @param string $module    (optional) From which app module (page) you're performing this action.
      * @param array  $extraData (optional) Depending on the module name, additional data is required.
      *
      * @throws .InvalidArgumentException
@@ -147,19 +147,19 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun like(
         $mediaId,
-        $module = "feed_timeline",
+        $module = 'feed_timeline',
         array $extraData = [])
     {
         $request = this.ig.request("media/{$mediaId}/like/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("media_id", $mediaId)
-            .addPost("radio_type", "wifi-none")
-            .addPost("module_name", $module)
-            .addPost("device_id", this.ig.device_id)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('media_id', $mediaId)
+            .addPost('radio_type', 'wifi-none')
+            .addPost('module_name', $module)
+            .addPost('device_id', this.ig.device_id)
 
-        this._parseLikeParameters("like", $request, $module, $extraData)
+        this._parseLikeParameters('like', $request, $module, $extraData)
 
         return $request.getResponse(Response.GenericResponse())
     }
@@ -167,8 +167,8 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Unlike a media item.
      *
-     * @param string $mediaId   The media ID in Instagram"s internal format (ie "3482384834_43294").
-     * @param string $module    (optional) From which app module (page) you"re performing this action.
+     * @param string $mediaId   The media ID in Instagram's internal format (ie "3482384834_43294").
+     * @param string $module    (optional) From which app module (page) you're performing this action.
      * @param array  $extraData (optional) Depending on the module name, additional data is required.
      *
      * @throws .InvalidArgumentException
@@ -180,18 +180,18 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun unlike(
         $mediaId,
-        $module = "feed_timeline",
+        $module = 'feed_timeline',
         array $extraData = [])
     {
         $request = this.ig.request("media/{$mediaId}/unlike/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("media_id", $mediaId)
-            .addPost("radio_type", "wifi-none")
-            .addPost("module_name", $module)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('media_id', $mediaId)
+            .addPost('radio_type', 'wifi-none')
+            .addPost('module_name', $module)
 
-        this._parseLikeParameters("unlike", $request, $module, $extraData)
+        this._parseLikeParameters('unlike', $request, $module, $extraData)
 
         return $request.getResponse(Response.GenericResponse())
     }
@@ -208,9 +208,9 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     public fun getLikedFeed(
         $maxId = null)
     {
-        $request = this.ig.request("feed/liked/")
+        $request = this.ig.request('feed/liked/')
         if ($maxId !== null) {
-            $request.addParam("max_id", $maxId)
+            $request.addParam('max_id', $maxId)
         }
 
         return $request.getResponse(Response.LikeFeedResponse())
@@ -219,7 +219,7 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Get list of users who liked a media item.
      *
-     * @param string $mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -234,20 +234,20 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Get a simplified, chronological list of users who liked a media item.
      *
-     * WARNING! DANGEROUS! Although this fun works, we don"t know
-     * whether it"s used by Instagram"s app right now. If it isn"t used by
+     * WARNING! DANGEROUS! Although this fun works, we don't know
+     * whether it's used by Instagram's app right now. If it isn't used by
      * the app, then you can easily get BANNED for using this fun!
      *
      * If you call this fun, you do that AT YOUR OWN RISK and you
      * risk losing your Instagram account! This notice will be removed if
      * the fun is safe to use. Otherwise this whole fun will
-     * be removed someday, if it wasn"t safe.
+     * be removed someday, if it wasn't safe.
      *
      * Only import this if you are OK with possibly losing your account!
      *
      * TODO: Research when/if the official app calls this fun.
      *
-     * @param string $mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -262,7 +262,7 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Enable comments for a media item.
      *
-     * @param string $mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -272,8 +272,8 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $mediaId)
     {
         return this.ig.request("media/{$mediaId}/enable_comments/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .setSignedPost(false)
             .getResponse(Response.GenericResponse())
     }
@@ -281,7 +281,7 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Disable comments for a media item.
      *
-     * @param string $mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -291,8 +291,8 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $mediaId)
     {
         return this.ig.request("media/{$mediaId}/disable_comments/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .setSignedPost(false)
             .getResponse(Response.GenericResponse())
     }
@@ -300,11 +300,11 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Post a comment on a media item.
      *
-     * @param string $mediaId        The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $mediaId        The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string $commentText    Your comment text.
      * @param string $replyCommentId (optional) The comment ID you are replying to, if this is a reply (ie "17895795823020906")
      *                               when replying, your $commentText MUST contain an @-mention at the start (ie "@theirusername Hello!").
-     * @param string $module         (optional) From which app module (page) you"re performing this action.
+     * @param string $module         (optional) From which app module (page) you're performing this action.
      *
      * @throws .InvalidArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
@@ -315,24 +315,24 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $mediaId,
         $commentText,
         $replyCommentId = null,
-        $module = "comments_feed_timeline")
+        $module = 'comments_feed_timeline')
     {
         $request = this.ig.request("media/{$mediaId}/comment/")
-            .addPost("user_breadcrumb", Utils::generateUserBreadcrumb(mb_strlen($commentText)))
-            .addPost("idempotence_token", Signatures::generateUUID(true))
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("comment_text", $commentText)
-            .addPost("containermodule", $module)
-            .addPost("radio_type", "wifi-none")
-            .addPost("device_id", this.ig.device_id)
+            .addPost('user_breadcrumb', Utils::generateUserBreadcrumb(mb_strlen($commentText)))
+            .addPost('idempotence_token', Signatures::generateUUID(true))
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('comment_text', $commentText)
+            .addPost('containermodule', $module)
+            .addPost('radio_type', 'wifi-none')
+            .addPost('device_id', this.ig.device_id)
 
         if ($replyCommentId !== null) {
-            if ($commentText[0] !== "@") {
-                throw .InvalidArgumentException("When replying to a comment, your text must begin with an @-mention to their username.")
+            if ($commentText[0] !== '@') {
+                throw .InvalidArgumentException('When replying to a comment, your text must begin with an @-mention to their username.')
             }
-            $request.addPost("replied_to_comment_id", $replyCommentId)
+            $request.addPost('replied_to_comment_id', $replyCommentId)
         }
 
         return $request.getResponse(Response.CommentResponse())
@@ -353,7 +353,7 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
      * "next_min_id" value. In that case, you can get newer comments (than the
      * target comment) by using THAT value and the "min_id" parameter instead.
      *
-     * @param string $mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param array  $options An associative array of optional parameters, including:
      *                        "max_id" - next "maximum ID" (get older comments, before this ID), used for backwards pagination
      *                        "min_id" - next "minimum ID" (get newer comments, after this ID), used for forwards pagination
@@ -369,27 +369,27 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         array $options = [])
     {
         $request = this.ig.request("media/{$mediaId}/comments/")
-            .addParam("can_support_threading", true)
+            .addParam('can_support_threading', true)
 
         // Pagination.
-        if (isset($options["min_id"]) && isset($options["max_id"])) {
-            throw .InvalidArgumentException("You can import either "min_id" or "max_id", but not both at the same time.")
+        if (isset($options['min_id']) && isset($options['max_id'])) {
+            throw .InvalidArgumentException('You can import either "min_id" or "max_id", but not both at the same time.')
         }
-        if (isset($options["min_id"])) {
-            $request.addParam("min_id", $options["min_id"])
+        if (isset($options['min_id'])) {
+            $request.addParam('min_id', $options['min_id'])
         }
-        if (isset($options["max_id"])) {
-            $request.addParam("max_id", $options["max_id"])
+        if (isset($options['max_id'])) {
+            $request.addParam('max_id', $options['max_id'])
         }
 
         // Request specific comment (does NOT work together with pagination!).
         // NOTE: If you try pagination params together with this param, then the
         // server will reject the request completely and give nothing back!
-        if (isset($options["target_comment_id"])) {
-            if (isset($options["min_id"]) || isset($options["max_id"])) {
-                throw .InvalidArgumentException("You cannot import the "target_comment_id" parameter together with the "min_id" or "max_id" parameters.")
+        if (isset($options['target_comment_id'])) {
+            if (isset($options['min_id']) || isset($options['max_id'])) {
+                throw .InvalidArgumentException('You cannot import the "target_comment_id" parameter together with the "min_id" or "max_id" parameters.')
             }
-            $request.addParam("target_comment_id", $options["target_comment_id"])
+            $request.addParam('target_comment_id', $options['target_comment_id'])
         }
 
         return $request.getResponse(Response.MediaCommentsResponse())
@@ -402,13 +402,13 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
      * calling this endpoint! In that case, the comment itself will have a
      * non-zero "child comment count" value, as well as some "preview comments".
      *
-     * If the number of preview comments doesn"t match the full "child comments"
+     * If the number of preview comments doesn't match the full "child comments"
      * count, then you are ready to call this endpoint to retrieve the rest of
      * them. Do NOT call it frivolously for comments that have no child comments
      * or where you already have all of them via the child comment previews!
      *
-     * @param string $mediaId   The media ID in Instagram"s internal format (ie "3482384834_43294").
-     * @param string $commentId The parent comment"s ID.
+     * @param string $mediaId   The media ID in Instagram's internal format (ie "3482384834_43294").
+     * @param string $commentId The parent comment's ID.
      * @param array  $options   An associative array of optional parameters, including:
      *                          "max_id" - next "maximum ID" (get older comments, before this ID), used for backwards pagination
      *                          "min_id" - next "minimum ID" (get newer comments, after this ID), used for forwards pagination.
@@ -425,14 +425,14 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     {
         $request = this.ig.request("media/{$mediaId}/comments/{$commentId}/inline_child_comments/")
 
-        if (isset($options["min_id"], $options["max_id"])) {
-            throw .InvalidArgumentException("You can import either "min_id" or "max_id", but not both at the same time.")
+        if (isset($options['min_id'], $options['max_id'])) {
+            throw .InvalidArgumentException('You can import either "min_id" or "max_id", but not both at the same time.')
         }
 
-        if (isset($options["max_id"])) {
-            $request.addParam("max_id", $options["max_id"])
-        } elseif (isset($options["min_id"])) {
-            $request.addParam("min_id", $options["min_id"])
+        if (isset($options['max_id'])) {
+            $request.addParam('max_id', $options['max_id'])
+        } elseif (isset($options['min_id'])) {
+            $request.addParam('min_id', $options['min_id'])
         }
 
         return $request.getResponse(Response.MediaCommentRepliesResponse())
@@ -441,8 +441,8 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Delete a comment.
      *
-     * @param string $mediaId   The media ID in Instagram"s internal format (ie "3482384834_43294").
-     * @param string $commentId The comment"s ID.
+     * @param string $mediaId   The media ID in Instagram's internal format (ie "3482384834_43294").
+     * @param string $commentId The comment's ID.
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -453,16 +453,16 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $commentId)
     {
         return this.ig.request("media/{$mediaId}/comment/{$commentId}/delete/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.DeleteCommentResponse())
     }
 
     /**
      * Delete multiple comments.
      *
-     * @param string          $mediaId    The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string          $mediaId    The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string|string[] $commentIds The IDs of one or more comments to delete.
      *
      * @throws .InstagramAPI.Exception.InstagramException
@@ -474,21 +474,21 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $commentIds)
     {
         if (is_array($commentIds)) {
-            $commentIds = implode(",", $commentIds)
+            $commentIds = implode(',', $commentIds)
         }
 
         return this.ig.request("media/{$mediaId}/comment/bulk_delete/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("comment_ids_to_delete", $commentIds)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('comment_ids_to_delete', $commentIds)
             .getResponse(Response.DeleteCommentResponse())
     }
 
     /**
      * Like a comment.
      *
-     * @param string $commentId The comment"s ID.
+     * @param string $commentId The comment's ID.
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -498,16 +498,16 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $commentId)
     {
         return this.ig.request("media/{$commentId}/comment_like/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.CommentLikeUnlikeResponse())
     }
 
     /**
      * Unlike a comment.
      *
-     * @param string $commentId The comment"s ID.
+     * @param string $commentId The comment's ID.
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -517,16 +517,16 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $commentId)
     {
         return this.ig.request("media/{$commentId}/comment_unlike/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.CommentLikeUnlikeResponse())
     }
 
     /**
      * Get list of users who liked a comment.
      *
-     * @param string $commentId The comment"s ID.
+     * @param string $commentId The comment's ID.
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -553,7 +553,7 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $commentIds)
     {
         if (is_array($commentIds)) {
-            $commentIds = implode(",", $commentIds)
+            $commentIds = implode(',', $commentIds)
         }
 
         return this.ig.request("language/bulk_translate/?comment_ids={$commentIds}")
@@ -575,18 +575,18 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     public fun validateURL(
         $url)
     {
-        return this.ig.request("media/validate_reel_url/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("url", $url)
+        return this.ig.request('media/validate_reel_url/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('url', $url)
             .getResponse(Response.ValidateURLResponse())
     }
 
     /**
      * Save a media item.
      *
-     * @param string $mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -596,16 +596,16 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $mediaId)
     {
         return this.ig.request("media/{$mediaId}/save/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.SaveAndUnsaveMedia())
     }
 
     /**
      * Unsave a media item.
      *
-     * @param string $mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -615,9 +615,9 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $mediaId)
     {
         return this.ig.request("media/{$mediaId}/unsave/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.SaveAndUnsaveMedia())
     }
 
@@ -633,9 +633,9 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
     public fun getSavedFeed(
         $maxId = null)
     {
-        $request = this.ig.request("feed/saved/")
+        $request = this.ig.request('feed/saved/')
         if ($maxId !== null) {
-            $request.addParam("max_id", $maxId)
+            $request.addParam('max_id', $maxId)
         }
 
         return $request.getResponse(Response.SavedFeedResponse())
@@ -650,14 +650,14 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getBlockedMedia()
     {
-        return this.ig.request("media/blocked/")
+        return this.ig.request('media/blocked/')
             .getResponse(Response.BlockedMediaResponse())
     }
 
     /**
      * Report media as spam.
      *
-     * @param string $mediaId    The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $mediaId    The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string $sourceName (optional) Source of the media.
      *
      * @throws .InstagramAPI.Exception.InstagramException
@@ -666,23 +666,23 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun report(
         $mediaId,
-        $sourceName = "feed_contextual_chain")
+        $sourceName = 'feed_contextual_chain')
     {
         return this.ig.request("media/{$mediaId}/flag_media/")
-            .addPost("media_id", $mediaId)
-            .addPost("source_name", $sourceName)
-            .addPost("reason_id", "1")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('media_id', $mediaId)
+            .addPost('source_name', $sourceName)
+            .addPost('reason_id', '1')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.GenericResponse())
     }
 
     /**
      * Report a media comment as spam.
      *
-     * @param string $mediaId   The media ID in Instagram"s internal format (ie "3482384834_43294").
-     * @param string $commentId The comment"s ID.
+     * @param string $mediaId   The media ID in Instagram's internal format (ie "3482384834_43294").
+     * @param string $commentId The comment's ID.
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -693,19 +693,19 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $commentId)
     {
         return this.ig.request("media/{$mediaId}/comment/{$commentId}/flag/")
-            .addPost("media_id", $mediaId)
-            .addPost("comment_id", $commentId)
-            .addPost("reason", "1")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('media_id', $mediaId)
+            .addPost('comment_id', $commentId)
+            .addPost('reason', '1')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.GenericResponse())
     }
 
     /**
      * Get media permalink.
      *
-     * @param string $mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
+     * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -715,7 +715,7 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $mediaId)
     {
         return this.ig.request("media/{$mediaId}/permalink/")
-            .addParam("share_to_app", "copy_link")
+            .addParam('share_to_app', 'copy_link')
             .getResponse(Response.PermalinkResponse())
     }
 
@@ -724,7 +724,7 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string  $type      What type of request this is (can be "like" or "unlike").
      * @param Request $request   The request to fill with the parsed data.
-     * @param string  $module    From which app module (page) you"re performing this action.
+     * @param string  $module    From which app module (page) you're performing this action.
      * @param array   $extraData Depending on the module name, additional data is required.
      *
      * @throws .InvalidArgumentException
@@ -735,64 +735,64 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
         $module,
         array $extraData)
     {
-        // Is this a "double-tap to like"? Note that Instagram doesn"t have
-        // "double-tap to unlike". So this can only be "1" if it"s a "like".
-        if ($type === "like" && isset($extraData["double_tap"]) && $extraData["double_tap"]) {
-            $request.addUnsignedPost("d", 1)
+        // Is this a "double-tap to like"? Note that Instagram doesn't have
+        // "double-tap to unlike". So this can only be "1" if it's a "like".
+        if ($type === 'like' && isset($extraData['double_tap']) && $extraData['double_tap']) {
+            $request.addUnsignedPost('d', 1)
         } else {
-            $request.addUnsignedPost("d", 0) // Must always be 0 for "unlike".
+            $request.addUnsignedPost('d', 0) // Must always be 0 for "unlike".
         }
 
         // Now parse the necessary parameters for the selected module.
         switch ($module) {
-        case "feed_contextual_post": // "Explore" tab.
-            if (isset($extraData["explore_source_token"])) {
+        case 'feed_contextual_post': // "Explore" tab.
+            if (isset($extraData['explore_source_token'])) {
                 // The explore media `Item::getExploreSourceToken()` value.
-                $request.addPost("explore_source_token", $extraData["explore_source_token"])
+                $request.addPost('explore_source_token', $extraData['explore_source_token'])
             } else {
-                throw .InvalidArgumentException(sprintf("Missing extra data for module "%s".", $module))
+                throw .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module))
             }
             break
-        case "profile": // LIST VIEW (when posts are shown vertically by the app
+        case 'profile': // LIST VIEW (when posts are shown vertically by the app
                         // one at a time (as in the Timeline tab)): Any media on
                         // a user profile (their timeline) in list view mode.
-        case "media_view_profile": // GRID VIEW (standard 3x3): Album (carousel)
+        case 'media_view_profile': // GRID VIEW (standard 3x3): Album (carousel)
                                    // on a user profile (their timeline).
-        case "video_view_profile": // GRID VIEW (standard 3x3): Video on a user
+        case 'video_view_profile': // GRID VIEW (standard 3x3): Video on a user
                                    // profile (their timeline).
-        case "photo_view_profile": // GRID VIEW (standard 3x3): Photo on a user
+        case 'photo_view_profile': // GRID VIEW (standard 3x3): Photo on a user
                                    // profile (their timeline).
-            if (isset($extraData["username"]) && isset($extraData["user_id"])) {
-                // Username and id of the media"s owner (the profile owner).
-                $request.addPost("username", $extraData["username"])
-                    .addPost("user_id", $extraData["user_id"])
+            if (isset($extraData['username']) && isset($extraData['user_id'])) {
+                // Username and id of the media's owner (the profile owner).
+                $request.addPost('username', $extraData['username'])
+                    .addPost('user_id', $extraData['user_id'])
             } else {
-                throw .InvalidArgumentException(sprintf("Missing extra data for module "%s".", $module))
+                throw .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module))
             }
             break
-        case "feed_contextual_hashtag": // "Hashtag" search result.
-            if (isset($extraData["hashtag"])) {
+        case 'feed_contextual_hashtag': // "Hashtag" search result.
+            if (isset($extraData['hashtag'])) {
                 // The hashtag where the app found this media.
-                Utils::throwIfInvalidHashtag($extraData["hashtag"])
-                $request.addPost("hashtag", $extraData["hashtag"])
+                Utils::throwIfInvalidHashtag($extraData['hashtag'])
+                $request.addPost('hashtag', $extraData['hashtag'])
             } else {
-                throw .InvalidArgumentException(sprintf("Missing extra data for module "%s".", $module))
+                throw .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module))
             }
             break
-        case "feed_contextual_location": // "Location" search result.
-            if (isset($extraData["location_id"])) {
+        case 'feed_contextual_location': // "Location" search result.
+            if (isset($extraData['location_id'])) {
                 // The location ID of this media.
-                $request.addPost("location_id", $extraData["location_id"])
+                $request.addPost('location_id', $extraData['location_id'])
             } else {
-                throw .InvalidArgumentException(sprintf("Missing extra data for module "%s".", $module))
+                throw .InvalidArgumentException(sprintf('Missing extra data for module "%s".', $module))
             }
             break
-        case "feed_timeline": // "Timeline" tab (the global Home-feed with all
+        case 'feed_timeline': // "Timeline" tab (the global Home-feed with all
                               // kinds of mixed news).
-        case "newsfeed": // "Followings Activity" feed tab. Used when
+        case 'newsfeed': // "Followings Activity" feed tab. Used when
                          // liking/unliking a post that we clicked on from a
-                         // single-activity "xyz liked abc"s post" entry.
-        case "feed_contextual_newsfeed_multi_media_liked":  // "Followings
+                         // single-activity "xyz liked abc's post" entry.
+        case 'feed_contextual_newsfeed_multi_media_liked':  // "Followings
                                                             // Activity" feed
                                                             // tab. Used when
                                                             // liking/unliking a
@@ -803,7 +803,7 @@ class Media(instagram:Instagram) : RequestCollection(instagram)
                                                             // posts" entry.
             break
         default:
-            throw .InvalidArgumentException(sprintf("Invalid module name. %s does not correspond to any of the valid module names.", $module))
+            throw .InvalidArgumentException(sprintf('Invalid module name. %s does not correspond to any of the valid module names.', $module))
         }
     }
 }

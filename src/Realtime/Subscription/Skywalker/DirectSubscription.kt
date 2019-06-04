@@ -6,8 +6,8 @@ import InstagramAPI.Realtime.Subscription.SkywalkerSubscription
 
 class DirectSubscription : SkywalkerSubscription
 {
-    val ID = "direct"
-    val TEMPLATE = "ig/u/v1/%s"
+    val ID = 'direct'
+    val TEMPLATE = 'ig/u/v1/%s'
 
     /** {@inheritdoc} */
     public fun getId()

@@ -44,7 +44,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     {
         $request = this.ig.request("users/{$userId}/info/")
         if ($module !== null) {
-            $request.addParam("from_module", $module)
+            $request.addParam('from_module', $module)
         }
 
         return $request.getResponse(Response.UserInfoResponse())
@@ -70,7 +70,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     {
         $request = this.ig.request("users/{$username}/usernameinfo/")
         if ($module !== null) {
-            $request.addParam("from_module", $module)
+            $request.addParam('from_module', $module)
         }
 
         return $request.getResponse(Response.UserInfoResponse())
@@ -113,7 +113,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     }
 
     /**
-     * Get other people"s recent activities related to you and your posts.
+     * Get other people's recent activities related to you and your posts.
      *
      * This feed has information about when people interact with you, such as
      * liking your posts, commenting on your posts, tagging you in photos or in
@@ -125,7 +125,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getRecentActivityInbox()
     {
-        return this.ig.request("news/inbox/")
+        return this.ig.request('news/inbox/')
             .getResponse(Response.ActivityNewsResponse())
     }
 
@@ -133,7 +133,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      * Get news feed with recent activities by accounts you follow.
      *
      * This feed has information about the people you follow, such as what posts
-     * they"ve liked or that they"ve started following other people.
+     * they've liked or that they've started following other people.
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
@@ -144,9 +144,9 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     public fun getFollowingRecentActivity(
         $maxId = null)
     {
-        $activity = this.ig.request("news/")
+        $activity = this.ig.request('news/')
         if ($maxId !== null) {
-            $activity.addParam("max_id", $maxId)
+            $activity.addParam('max_id', $maxId)
         }
 
         return $activity.getResponse(Response.FollowingRecentActivityResponse())
@@ -165,26 +165,26 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     public fun getBootstrapUsers()
     {
         $surfaces = [
-            "coefficient_direct_closed_friends_ranking",
-            "coefficient_direct_recipients_ranking_variant_2",
-            "coefficient_rank_recipient_user_suggestion",
-            "coefficient_ios_section_test_bootstrap_ranking",
-            "autocomplete_user_list",
+            'coefficient_direct_closed_friends_ranking',
+            'coefficient_direct_recipients_ranking_variant_2',
+            'coefficient_rank_recipient_user_suggestion',
+            'coefficient_ios_section_test_bootstrap_ranking',
+            'autocomplete_user_list',
         ]
 
         try {
-            $request = this.ig.request("scores/bootstrap/users/")
-                .addParam("surfaces", json_encode($surfaces))
+            $request = this.ig.request('scores/bootstrap/users/')
+                .addParam('surfaces', json_encode($surfaces))
 
             return $request.getResponse(Response.BootstrapUsersResponse())
         } catch (ThrottledException $e) {
-            // Throttling is so common that we"ll simply return NULL in that case.
+            // Throttling is so common that we'll simply return NULL in that case.
             return null
         }
     }
 
     /**
-     * Show a user"s friendship status with you.
+     * Show a user's friendship status with you.
      *
      * @param string $userId Numerical UserPK ID.
      *
@@ -199,7 +199,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     }
 
     /**
-     * Show multiple users" friendship status with you.
+     * Show multiple users' friendship status with you.
      *
      * @param string|string[] $userList List of numerical UserPK IDs.
      *
@@ -211,14 +211,14 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userList)
     {
         if (is_array($userList)) {
-            $userList = implode(",", $userList)
+            $userList = implode(',', $userList)
         }
 
-        return this.ig.request("friendships/show_many/")
+        return this.ig.request('friendships/show_many/')
             .setSignedPost(false)
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("user_ids", $userList)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('user_ids', $userList)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.FriendshipsShowManyResponse())
     }
 
@@ -231,7 +231,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getPendingFriendships()
     {
-        $request = this.ig.request("friendships/pending/")
+        $request = this.ig.request('friendships/pending/')
 
         return $request.getResponse(Response.FollowerAndFollowingResponse())
     }
@@ -249,11 +249,11 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/approve/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
-            .addPost("radio_type", "wifi-none")
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
+            .addPost('radio_type', 'wifi-none')
             .getResponse(Response.FriendshipResponse())
     }
 
@@ -261,7 +261,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      * Reject a friendship request.
      *
      * Note that the user can simply send you a request again, after your
-     * rejection. If they"re harassing you, import People::block() instead.
+     * rejection. If they're harassing you, import People::block() instead.
      *
      * @param string $userId Numerical UserPK ID.
      *
@@ -273,11 +273,11 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/ignore/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
-            .addPost("radio_type", "wifi-none")
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
+            .addPost('radio_type', 'wifi-none')
             .getResponse(Response.FriendshipResponse())
     }
 
@@ -294,11 +294,11 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/remove_follower/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
-            .addPost("radio_type", "wifi-none")
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
+            .addPost('radio_type', 'wifi-none')
             .getResponse(Response.FriendshipResponse())
     }
 
@@ -315,10 +315,10 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/mark_user_overage/{$userId}/feed/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
             .getResponse(Response.FriendshipResponse())
     }
 
@@ -346,13 +346,13 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     {
         Utils::throwIfInvalidRankToken($rankToken)
         $request = this.ig.request("friendships/{$userId}/following/")
-            .addParam("includes_hashtags", true)
-            .addParam("rank_token", $rankToken)
+            .addParam('includes_hashtags', true)
+            .addParam('rank_token', $rankToken)
         if ($searchQuery !== null) {
-            $request.addParam("query", $searchQuery)
+            $request.addParam('query', $searchQuery)
         }
         if ($maxId !== null) {
-            $request.addParam("max_id", $maxId)
+            $request.addParam('max_id', $maxId)
         }
 
         return $request.getResponse(Response.FollowerAndFollowingResponse())
@@ -382,12 +382,12 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     {
         Utils::throwIfInvalidRankToken($rankToken)
         $request = this.ig.request("friendships/{$userId}/followers/")
-            .addParam("rank_token", $rankToken)
+            .addParam('rank_token', $rankToken)
         if ($searchQuery !== null) {
-            $request.addParam("query", $searchQuery)
+            $request.addParam('query', $searchQuery)
         }
         if ($maxId !== null) {
-            $request.addParam("max_id", $maxId)
+            $request.addParam('max_id', $maxId)
         }
 
         return $request.getResponse(Response.FollowerAndFollowingResponse())
@@ -462,14 +462,14 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $rankToken = null)
     {
         // Do basic query validation.
-        if (!is_string($query) || $query === "") {
-            throw .InvalidArgumentException("Query must be a non-empty string.")
+        if (!is_string($query) || $query === '') {
+            throw .InvalidArgumentException('Query must be a non-empty string.')
         }
 
         $request = this._paginateWithExclusion(
-            this.ig.request("users/search/")
-                .addParam("q", $query)
-                .addParam("timezone_offset", date("Z")),
+            this.ig.request('users/search/')
+                .addParam('q', $query)
+                .addParam('timezone_offset', date('Z')),
             $excludeList,
             $rankToken
         )
@@ -479,10 +479,10 @@ class People(instagram:Instagram) : RequestCollection(instagram)
             $result = $request.getResponse(Response.SearchUserResponse())
         } catch (RequestHeadersTooLargeException $e) {
             $result = Response.SearchUserResponse([
-                "has_more"    => false,
-                "num_results" => 0,
-                "users"       => [],
-                "rank_token"  => $rankToken,
+                'has_more'    => false,
+                'num_results' => 0,
+                'users'       => [],
+                'rank_token'  => $rankToken,
             ])
         }
 
@@ -506,7 +506,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     }
 
     /**
-     * Get a business account"s former username(s).
+     * Get a business account's former username(s).
      *
      * @param string $userId Numerical UserPK ID.
      *
@@ -522,7 +522,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     }
 
     /**
-     * Get a business account"s shared follower base with similar accounts.
+     * Get a business account's shared follower base with similar accounts.
      *
      * @param string $userId Numerical UserPk ID.
      *
@@ -538,7 +538,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     }
 
     /**
-     * Get a business account"s active ads on feed.
+     * Get a business account's active ads on feed.
      *
      * @param string      $targetUserId Numerical UserPk ID.
      * @param string|null $maxId        Next "maximum ID", used for pagination.
@@ -551,11 +551,11 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $targetUserId,
         $maxId = null)
     {
-        return this._getActiveAds($targetUserId, "35", $maxId)
+        return this._getActiveAds($targetUserId, '35', $maxId)
     }
 
     /**
-     * Get a business account"s active ads on stories.
+     * Get a business account's active ads on stories.
      *
      * @param string      $targetUserId Numerical UserPk ID.
      * @param string|null $maxId        Next "maximum ID", used for pagination.
@@ -568,7 +568,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $targetUserId,
         $maxId = null)
     {
-        return this._getActiveAds($targetUserId, "49", $maxId)
+        return this._getActiveAds($targetUserId, '49', $maxId)
     }
 
     /**
@@ -588,26 +588,26 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $pageType,
         $maxId = null)
     {
-        $request = this.ig.request("ads/view_ads/")
+        $request = this.ig.request('ads/view_ads/')
             .setSignedPost(false)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("target_user_id", $targetUserId)
-            .addPost("page_type", $pageType)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('target_user_id', $targetUserId)
+            .addPost('page_type', $pageType)
         if ($maxId !== null) {
-            $request.addPost("next_max_id", $maxId)
+            $request.addPost('next_max_id', $maxId)
         }
-        $request.addPost("ig_user_id", this.ig.account_id)
+        $request.addPost('ig_user_id', this.ig.account_id)
 
         switch ($pageType) {
-            case "35":
+            case '35':
                 return $request.getResponse(Response.ActiveFeedAdsResponse())
                 break
-            case "49":
+            case '49':
                 return $request.getResponse(Response.ActiveReelAdsResponse())
                 break
             default:
-                throw .InvalidArgumentException("Invalid page type.")
+                throw .InvalidArgumentException('Invalid page type.')
         }
     }
 
@@ -629,17 +629,17 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun linkAddressBook(
         array $contacts,
-        $module = "find_friends_contacts")
+        $module = 'find_friends_contacts')
     {
-        return this.ig.request("address_book/link/")
+        return this.ig.request('address_book/link/')
             .setIsBodyCompressed(true)
             .setSignedPost(false)
-            .addPost("phone_id", this.ig.phone_id)
-            .addPost("module", $module)
-            .addPost("contacts", json_encode($contacts))
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("device_id", this.ig.device_id)
-            .addPost("_uuid", this.ig.uuid)
+            .addPost('phone_id', this.ig.phone_id)
+            .addPost('module', $module)
+            .addPost('contacts', json_encode($contacts))
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('device_id', this.ig.device_id)
+            .addPost('_uuid', this.ig.uuid)
             .getResponse(Response.LinkAddressBookResponse())
     }
 
@@ -652,15 +652,15 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun unlinkAddressBook()
     {
-        return this.ig.request("address_book/unlink/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+        return this.ig.request('address_book/unlink/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.UnlinkAddressBookResponse())
     }
 
     /**
-     * Discover people via Facebook"s algorithm.
+     * Discover people via Facebook's algorithm.
      *
      * This matches you with other people using multiple algorithms such as
      * "friends of friends", "location", "people using similar hashtags", etc.
@@ -674,16 +674,16 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     public fun discoverPeople(
         $maxId = null)
     {
-        $request = this.ig.request("discover/ayml/")
+        $request = this.ig.request('discover/ayml/')
             .setSignedPost(false)
-            .addPost("phone_id", this.ig.phone_id)
-            .addPost("module", "discover_people")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("paginate", true)
+            .addPost('phone_id', this.ig.phone_id)
+            .addPost('module', 'discover_people')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('paginate', true)
 
         if ($maxId !== null) {
-            $request.addPost("max_id", $maxId)
+            $request.addPost('max_id', $maxId)
         }
 
         return $request.getResponse(Response.DiscoverPeopleResponse())
@@ -701,8 +701,8 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     public fun getSuggestedUsers(
         $userId)
     {
-        return this.ig.request("discover/chaining/")
-            .addParam("target_id", $userId)
+        return this.ig.request('discover/chaining/')
+            .addParam('target_id', $userId)
             .getResponse(Response.SuggestedUsersResponse())
     }
 
@@ -719,15 +719,15 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getSuggestedUsersBadge()
     {
-        return this.ig.request("discover/profile_su_badge/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("module", "discover_people")
+        return this.ig.request('discover/profile_su_badge/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('module', 'discover_people')
             .getResponse(Response.SuggestedUsersBadgeResponse())
     }
 
     /**
-     * Hide suggested user, so that they won"t be suggested again.
+     * Hide suggested user, so that they won't be suggested again.
      *
      * You must provide the correct algorithm for the user you want to hide,
      * which can be seen in their "algorithm" value in People::discoverPeople().
@@ -748,7 +748,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string $userId    Numerical UserPK ID.
      * @param string $algorithm Which algorithm to hide the suggestion from
-     *                          must match that user"s "algorithm" value in
+     *                          must match that user's "algorithm" value in
      *                          funs like People::discoverPeople().
      *
      * @throws .InstagramAPI.Exception.InstagramException
@@ -759,11 +759,11 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId,
         $algorithm)
     {
-        return this.ig.request("discover/aysf_dismiss/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addParam("target_id", $userId)
-            .addParam("algorithm", $algorithm)
+        return this.ig.request('discover/aysf_dismiss/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addParam('target_id', $userId)
+            .addParam('algorithm', $algorithm)
             .getResponse(Response.SuggestedUsersResponse())
     }
 
@@ -780,12 +780,12 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/create/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
-            .addPost("radio_type", "wifi-none")
-            .addPost("device_id", this.ig.device_id)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
+            .addPost('radio_type', 'wifi-none')
+            .addPost('device_id', this.ig.device_id)
             .getResponse(Response.FriendshipResponse())
     }
 
@@ -802,11 +802,11 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/destroy/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
-            .addPost("radio_type", "wifi-none")
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
+            .addPost('radio_type', 'wifi-none')
             .getResponse(Response.FriendshipResponse())
     }
 
@@ -829,10 +829,10 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/favorite/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
             .getResponse(Response.GenericResponse())
     }
 
@@ -849,10 +849,10 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/unfavorite/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
             .getResponse(Response.GenericResponse())
     }
 
@@ -869,10 +869,10 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/favorite_for_stories/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
             .getResponse(Response.GenericResponse())
     }
 
@@ -889,10 +889,10 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/unfavorite_for_stories/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
             .getResponse(Response.GenericResponse())
     }
 
@@ -908,16 +908,16 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun report(
         $userId,
-        $sourceName = "profile")
+        $sourceName = 'profile')
     {
         return this.ig.request("users/{$userId}/flag_user/")
-            .addPost("reason_id", 1)
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
-            .addPost("source_name", $sourceName)
-            .addPost("is_spam", true)
+            .addPost('reason_id', 1)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
+            .addPost('source_name', $sourceName)
+            .addPost('is_spam', true)
             .getResponse(Response.GenericResponse())
     }
 
@@ -934,10 +934,10 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/block/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
             .getResponse(Response.FriendshipResponse())
     }
 
@@ -948,7 +948,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string $userId Numerical UserPK ID.
      * @param string $option Selection of what type of media are going to be muted.
-     *                       Available options: "story", "post" or "all".
+     *                       Available options: 'story', 'post' or 'all'.
      *
      * @throws .InvalidArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
@@ -959,7 +959,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId,
         $option)
     {
-        return this._muteOrUnmuteUserMedia($userId, $option, "friendships/mute_posts_or_story_from_follow/")
+        return this._muteOrUnmuteUserMedia($userId, $option, 'friendships/mute_posts_or_story_from_follow/')
     }
 
     /**
@@ -967,7 +967,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string $userId Numerical UserPK ID.
      * @param string $option Selection of what type of media are going to be muted.
-     *                       Available options: "story", "post" or "all".
+     *                       Available options: 'story', 'post' or 'all'.
      *
      * @throws .InvalidArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
@@ -978,7 +978,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId,
         $option)
     {
-        return this._muteOrUnmuteUserMedia($userId, $option, "friendships/unmute_posts_or_story_from_follow/")
+        return this._muteOrUnmuteUserMedia($userId, $option, 'friendships/unmute_posts_or_story_from_follow/')
     }
 
     /**
@@ -986,7 +986,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string $userId   Numerical UserPK ID.
      * @param string $option   Selection of what type of media are going to be muted.
-     *                         Available options: "story", "post" or "all".
+     *                         Available options: 'story', 'post' or 'all'.
      * @param string $endpoint API endpoint for muting/unmuting user media.
      *
      * @throws .InvalidArgumentException
@@ -1003,23 +1003,23 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $endpoint)
     {
         $request = this.ig.request($endpoint)
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
 
         switch ($option) {
-            case "story":
-                $request.addPost("target_reel_author_id", $userId)
+            case 'story':
+                $request.addPost('target_reel_author_id', $userId)
                 break
-            case "post":
-                $request.addPost("target_posts_author_id", $userId)
+            case 'post':
+                $request.addPost('target_posts_author_id', $userId)
                 break
-            case "all":
-                $request.addPost("target_reel_author_id", $userId)
-                $request.addPost("target_posts_author_id", $userId)
+            case 'all':
+                $request.addPost('target_reel_author_id', $userId)
+                $request.addPost('target_posts_author_id', $userId)
                 break
             default:
-                throw .InvalidArgumentException(sprintf(""%s" is not a valid muting option.", $option))
+                throw .InvalidArgumentException(sprintf('"%s" is not a valid muting option.', $option))
         }
 
         return $request.getResponse(Response.FriendshipResponse())
@@ -1038,10 +1038,10 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/unblock/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("user_id", $userId)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('user_id', $userId)
             .getResponse(Response.FriendshipResponse())
     }
 
@@ -1057,16 +1057,16 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     public fun getBlockedList(
         $maxId = null)
     {
-        $request = this.ig.request("users/blocked_list/")
+        $request = this.ig.request('users/blocked_list/')
         if ($maxId !== null) {
-            $request.addParam("max_id", $maxId)
+            $request.addParam('max_id', $maxId)
         }
 
         return $request.getResponse(Response.BlockedListResponse())
     }
 
     /**
-     * Block a user"s ability to see your stories.
+     * Block a user's ability to see your stories.
      *
      * @param string $userId Numerical UserPK ID.
      *
@@ -1080,10 +1080,10 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/block_friend_reel/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("source", "profile")
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('source', 'profile')
             .getResponse(Response.FriendshipResponse())
     }
 
@@ -1102,10 +1102,10 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/unblock_friend_reel/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("source", "profile")
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('source', 'profile')
             .getResponse(Response.FriendshipResponse())
     }
 
@@ -1118,15 +1118,15 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getBlockedStoryList()
     {
-        return this.ig.request("friendships/blocked_reels/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+        return this.ig.request('friendships/blocked_reels/')
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.BlockedReelsResponse())
     }
 
     /**
-     * Mute a friend"s stories, so that you no longer see their stories.
+     * Mute a friend's stories, so that you no longer see their stories.
      *
      * This hides them from your reels tray (the "latest stories" bar on the
      * homescreen of the app), but it does not block them from seeing *your*
@@ -1144,14 +1144,14 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/mute_friend_reel/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.FriendshipResponse())
     }
 
     /**
-     * Unmute a friend"s stories, so that you see their stories again.
+     * Unmute a friend's stories, so that you see their stories again.
      *
      * This does not unblock their ability to see *your* stories.
      *
@@ -1167,9 +1167,9 @@ class People(instagram:Instagram) : RequestCollection(instagram)
         $userId)
     {
         return this.ig.request("friendships/unmute_friend_reel/{$userId}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.FriendshipResponse())
     }
 
@@ -1182,7 +1182,7 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getCloseFriends()
     {
-        return this.ig.request("friendships/besties/")
+        return this.ig.request('friendships/besties/')
             .getResponse(Response.CloseFriendsResponse())
     }
 
@@ -1195,14 +1195,14 @@ class People(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getSuggestedCloseFriends()
     {
-        return this.ig.request("friendships/bestie_suggestions/")
+        return this.ig.request('friendships/bestie_suggestions/')
             .getResponse(Response.CloseFriendsResponse())
     }
 
     /**
      * Add or Remove users from your close friends list.
      *
-     * Note: You probably shouldn"t touch $module and $source as there is only one way to modify your close friends.
+     * Note: You probably shouldn't touch $module and $source as there is only one way to modify your close friends.
      *
      * @param array  $add    Users to add to your close friends list.
      * @param array  $remove Users to remove from your close friends list.
@@ -1216,18 +1216,18 @@ class People(instagram:Instagram) : RequestCollection(instagram)
     public fun setCloseFriends(
         array $add,
         array $remove,
-        $module = "favorites_home_list",
-        $source = "audience_manager")
+        $module = 'favorites_home_list',
+        $source = 'audience_manager')
     {
-        return this.ig.request("friendships/set_besties/")
+        return this.ig.request('friendships/set_besties/')
             .setSignedPost(true)
-            .addPost("module", $module)
-            .addPost("source", $source)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("remove", $remove)
-            .addPost("add", $add)
+            .addPost('module', $module)
+            .addPost('source', $source)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('remove', $remove)
+            .addPost('add', $add)
             .getResponse(Response.GenericResponse())
     }
 }

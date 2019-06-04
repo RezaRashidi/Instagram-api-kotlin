@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class IrisSubscribeAck : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "seq_id"        => "int",
-        "succeeded"     => "bool",
-        "error_type"    => "int",
-        "error_message" => "string",
+        'seq_id'        => 'int',
+        'succeeded'     => 'bool',
+        'error_type'    => 'int',
+        'error_message' => 'string',
     ]
 }

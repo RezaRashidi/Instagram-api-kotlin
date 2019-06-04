@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class LocationStoryResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "story"               => "Model.StoryTray",
+        'story'               => 'Model.StoryTray',
     ]
 }

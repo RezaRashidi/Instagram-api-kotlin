@@ -55,16 +55,16 @@ import InstagramAPI.AutoPropertyMapper
 class Headline : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "content_type"   => "",
-        "user"           => "User",
-        "user_id"        => "string",
-        "pk"             => "string",
-        "text"           => "string",
-        "type"           => "",
-        "created_at"     => "string",
-        "created_at_utc" => "string",
-        "media_id"       => "string",
-        "bit_flags"      => "int",
-        "status"         => "",
+        'content_type'   => '',
+        'user'           => 'User',
+        'user_id'        => 'string',
+        'pk'             => 'string',
+        'text'           => 'string',
+        'type'           => '',
+        'created_at'     => 'string',
+        'created_at_utc' => 'string',
+        'media_id'       => 'string',
+        'bit_flags'      => 'int',
+        'status'         => '',
     ]
 }

@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class LauncherSyncResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "configs"    => "",
+        'configs'    => '',
     ]
 }

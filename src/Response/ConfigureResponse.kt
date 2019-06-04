@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class ConfigureResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "upload_id"         => "string",
-        "media"             => "Model.Item",
-        "client_sidecar_id" => "string",
-        "message_metadata"  => "Model.DirectMessageMetadata[]",
+        'upload_id'         => 'string',
+        'media'             => 'Model.Item',
+        'client_sidecar_id' => 'string',
+        'message_metadata'  => 'Model.DirectMessageMetadata[]',
     ]
 }

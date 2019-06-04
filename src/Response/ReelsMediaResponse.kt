@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class ReelsMediaResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "reels_media" => "Model.Reel[]",
-        "reels"       => "Model.UnpredictableKeys.ReelUnpredictableContainer",
+        'reels_media' => 'Model.Reel[]',
+        'reels'       => 'Model.UnpredictableKeys.ReelUnpredictableContainer',
     ]
 }

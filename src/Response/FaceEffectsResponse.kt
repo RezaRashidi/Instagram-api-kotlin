@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class FaceEffectsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "sdk_version"    => "",
-        "effects"        => "Model.Effect[]",
-        "loading_effect" => "Model.Effect",
+        'sdk_version'    => '',
+        'effects'        => 'Model.Effect[]',
+        'loading_effect' => 'Model.Effect',
     ]
 }

@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class MediaShare : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "media" => "Item",
-        "text"  => "string",
+        'media' => 'Item',
+        'text'  => 'string',
     ]
 }

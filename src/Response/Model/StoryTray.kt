@@ -111,37 +111,37 @@ import InstagramAPI.AutoPropertyMapper
 class StoryTray : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "id"                   => "string",
-        "items"                => "Item[]",
-        "user"                 => "User",
-        "can_reply"            => "",
-        "expiring_at"          => "",
-        "seen_ranked_position" => "string",
+        'id'                   => 'string',
+        'items'                => 'Item[]',
+        'user'                 => 'User',
+        'can_reply'            => '',
+        'expiring_at'          => '',
+        'seen_ranked_position' => 'string',
         /*
          * The "taken_at" timestamp of the last story media you have seen for
-         * that user (the current tray"s user). Defaults to `0` (not seen).
+         * that user (the current tray's user). Defaults to `0` (not seen).
          */
-        "seen"                 => "string",
+        'seen'                 => 'string',
         /*
          * Unix "taken_at" timestamp of the newest item in their story reel.
          */
-        "latest_reel_media"      => "string",
-        "ranked_position"        => "string",
-        "is_nux"                 => "",
-        "show_nux_tooltip"       => "",
-        "muted"                  => "",
-        "prefetch_count"         => "int",
-        "location"               => "Location",
-        "source_token"           => "",
-        "owner"                  => "Owner",
-        "nux_id"                 => "string",
-        "dismiss_card"           => "DismissCard",
-        "can_reshare"            => "",
-        "has_besties_media"      => "bool",
-        "reel_type"              => "string",
-        "unique_integer_reel_id" => "string",
-        "cover_media"            => "CoverMedia",
-        "title"                  => "string",
-        "media_count"            => "int",
+        'latest_reel_media'      => 'string',
+        'ranked_position'        => 'string',
+        'is_nux'                 => '',
+        'show_nux_tooltip'       => '',
+        'muted'                  => '',
+        'prefetch_count'         => 'int',
+        'location'               => 'Location',
+        'source_token'           => '',
+        'owner'                  => 'Owner',
+        'nux_id'                 => 'string',
+        'dismiss_card'           => 'DismissCard',
+        'can_reshare'            => '',
+        'has_besties_media'      => 'bool',
+        'reel_type'              => 'string',
+        'unique_integer_reel_id' => 'string',
+        'cover_media'            => 'CoverMedia',
+        'title'                  => 'string',
+        'media_count'            => 'int',
     ]
 }

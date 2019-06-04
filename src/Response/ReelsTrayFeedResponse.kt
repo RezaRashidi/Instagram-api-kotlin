@@ -59,14 +59,14 @@ import InstagramAPI.Response
 class ReelsTrayFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "story_ranking_token"                  => "string",
-        "broadcasts"                           => "Model.Broadcast[]",
-        "tray"                                 => "Model.StoryTray[]",
-        "post_live"                            => "Model.PostLive",
-        "sticker_version"                      => "int",
-        "face_filter_nux_version"              => "int",
-        "stories_viewer_gestures_nux_eligible" => "bool",
-        "has_new_nux_story"                    => "bool",
-        "suggestions"                          => "Model.TraySuggestions[]",
+        'story_ranking_token'                  => 'string',
+        'broadcasts'                           => 'Model.Broadcast[]',
+        'tray'                                 => 'Model.StoryTray[]',
+        'post_live'                            => 'Model.PostLive',
+        'sticker_version'                      => 'int',
+        'face_filter_nux_version'              => 'int',
+        'stories_viewer_gestures_nux_eligible' => 'bool',
+        'has_new_nux_story'                    => 'bool',
+        'suggestions'                          => 'Model.TraySuggestions[]',
     ]
 }

@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class CommentTranslations : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "id"          => "string",
-        "translation" => "",
+        'id'          => 'string',
+        'translation' => '',
     ]
 }

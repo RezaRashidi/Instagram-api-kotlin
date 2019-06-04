@@ -51,15 +51,15 @@ import InstagramAPI.AutoPropertyMapper
 class FriendshipStatus : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "following"        => "bool",
-        "followed_by"      => "bool",
-        "incoming_request" => "bool",
-        "outgoing_request" => "bool",
-        "is_private"       => "bool",
-        "is_blocking_reel" => "bool",
-        "is_muting_reel"   => "bool",
-        "blocking"         => "bool",
-        "muting"           => "bool",
-        "is_bestie"        => "bool",
+        'following'        => 'bool',
+        'followed_by'      => 'bool',
+        'incoming_request' => 'bool',
+        'outgoing_request' => 'bool',
+        'is_private'       => 'bool',
+        'is_blocking_reel' => 'bool',
+        'is_muting_reel'   => 'bool',
+        'blocking'         => 'bool',
+        'muting'           => 'bool',
+        'is_bestie'        => 'bool',
     ]
 }

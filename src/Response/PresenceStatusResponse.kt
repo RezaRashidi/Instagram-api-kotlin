@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class PresenceStatusResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "disabled"                 => "bool",
-        "thread_presence_disabled" => "bool",
+        'disabled'                 => 'bool',
+        'thread_presence_disabled' => 'bool',
     ]
 }

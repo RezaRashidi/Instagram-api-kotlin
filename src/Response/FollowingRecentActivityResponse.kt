@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class FollowingRecentActivityResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "stories"                => "Model.Story[]",
-        "next_max_id"            => "string",
-        "auto_load_more_enabled" => "",
-        "megaphone"              => "",
+        'stories'                => 'Model.Story[]',
+        'next_max_id'            => 'string',
+        'auto_load_more_enabled' => '',
+        'megaphone'              => '',
     ]
 }

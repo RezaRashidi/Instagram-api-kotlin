@@ -71,17 +71,17 @@ import InstagramAPI.Response
 class MediaCommentsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "comments"                   => "Model.Comment[]",
-        "comment_count"              => "int",
-        "comment_likes_enabled"      => "bool",
-        "next_max_id"                => "string",
-        "next_min_id"                => "string",
-        "caption"                    => "Model.Caption",
-        "has_more_comments"          => "bool",
-        "caption_is_edited"          => "bool",
-        "preview_comments"           => "",
-        "has_more_headload_comments" => "bool",
-        "media_header_display"       => "string",
-        "threading_enabled"          => "bool",
+        'comments'                   => 'Model.Comment[]',
+        'comment_count'              => 'int',
+        'comment_likes_enabled'      => 'bool',
+        'next_max_id'                => 'string',
+        'next_min_id'                => 'string',
+        'caption'                    => 'Model.Caption',
+        'has_more_comments'          => 'bool',
+        'caption_is_edited'          => 'bool',
+        'preview_comments'           => '',
+        'has_more_headload_comments' => 'bool',
+        'media_header_display'       => 'string',
+        'threading_enabled'          => 'bool',
     ]
 }

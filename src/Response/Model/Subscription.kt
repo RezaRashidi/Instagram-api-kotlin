@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class Subscription : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "topic"    => "",
-        "url"      => "string",
-        "sequence" => "",
-        "auth"     => "",
+        'topic'    => '',
+        'url'      => 'string',
+        'sequence' => '',
+        'auth'     => '',
     ]
 }

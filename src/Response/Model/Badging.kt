@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class Badging : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "ids"   => "",
-        "items" => "",
+        'ids'   => '',
+        'items' => '',
     ]
 }

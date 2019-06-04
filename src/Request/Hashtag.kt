@@ -53,7 +53,7 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Get hashtags from a section.
      *
-     * Available tab sections: "top", "recent" or "places".
+     * Available tab sections: 'top', 'recent' or 'places'.
      *
      * @param string      $hashtag      The hashtag, not including the "#".
      * @param string      $rankToken    The feed UUID. You must import the same value for all pages of the feed.
@@ -78,28 +78,28 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
 
         $request = this.ig.request("tags/{$urlHashtag}/sections/")
             .setSignedPost(false)
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_csrftoken", this.ig.client.getToken())
-            .addPost("rank_token", $rankToken)
-            .addPost("include_persistent", true)
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_csrftoken', this.ig.client.getToken())
+            .addPost('rank_token', $rankToken)
+            .addPost('include_persistent', true)
 
         if ($tab !== null) {
-            if ($tab !== "top" && $tab !== "recent" && $tab !== "places" && $tab !== "discover") {
-                throw .InvalidArgumentException("Tab section must be ."top.", ."recent.", ."places." or ."discover.".")
+            if ($tab !== 'top' && $tab !== 'recent' && $tab !== 'places' && $tab !== 'discover') {
+                throw .InvalidArgumentException('Tab section must be .'top.', .'recent.', .'places.' or .'discover.'.')
             }
-            $request.addPost("tab", $tab)
+            $request.addPost('tab', $tab)
         } else {
-            $request.addPost("supported_tabs", "["top","recent","places","discover"]")
+            $request.addPost('supported_tabs', '["top","recent","places","discover"]')
         }
 
         if ($nextMediaIds !== null) {
-            if (!is_array($nextMediaIds) || !array_filter($nextMediaIds, "is_int")) {
-                throw .InvalidArgumentException("Next media IDs must be an Int[].")
+            if (!is_array($nextMediaIds) || !array_filter($nextMediaIds, 'is_int')) {
+                throw .InvalidArgumentException('Next media IDs must be an Int[].')
             }
-            $request.addPost("next_media_ids", json_encode($nextMediaIds))
+            $request.addPost('next_media_ids', json_encode($nextMediaIds))
         }
         if ($maxId !== null) {
-            $request.addPost("max_id", $maxId)
+            $request.addPost('max_id', $maxId)
         }
 
         return $request.getResponse(Response.TagFeedResponse())
@@ -113,7 +113,7 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
      * Note that you can get more than one "page" of hashtag search results by
      * excluding the numerical IDs of all tags from a previous search query.
      *
-     * Also note that the excludes must be done via Instagram"s internal,
+     * Also note that the excludes must be done via Instagram's internal,
      * numerical IDs for the tags, which you can get from this search-response.
      *
      * Lastly, be aware that they will never exclude any tag that perfectly
@@ -123,7 +123,7 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
      * @param string[]|int[] $excludeList Array of numerical hashtag IDs (ie "17841562498105353")
      *                                    to exclude from the response, allowing you to skip tags
      *                                    from a previous call to get more results.
-     * @param string|null    $rankToken   (When paginating) The rank token from the previous page"s response.
+     * @param string|null    $rankToken   (When paginating) The rank token from the previous page's response.
      *
      * @throws .InvalidArgumentException                  If invalid query or
      *                                                    trying to exclude too
@@ -141,14 +141,14 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
         $rankToken = null)
     {
         // Do basic query validation. Do NOT import throwIfInvalidHashtag here.
-        if (!is_string($query) || $query === "") {
-            throw .InvalidArgumentException("Query must be a non-empty string.")
+        if (!is_string($query) || $query === '') {
+            throw .InvalidArgumentException('Query must be a non-empty string.')
         }
 
         $request = this._paginateWithExclusion(
-            this.ig.request("tags/search/")
-                .addParam("q", $query)
-                .addParam("timezone_offset", date("Z")),
+            this.ig.request('tags/search/')
+                .addParam('q', $query)
+                .addParam('timezone_offset', date('Z')),
             $excludeList,
             $rankToken
         )
@@ -158,9 +158,9 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
             $result = $request.getResponse(Response.SearchTagResponse())
         } catch (RequestHeadersTooLargeException $e) {
             $result = Response.SearchTagResponse([
-                "has_more"   => false,
-                "results"    => [],
-                "rank_token" => $rankToken,
+                'has_more'   => false,
+                'results'    => [],
+                'rank_token' => $rankToken,
             ])
         }
 
@@ -183,9 +183,9 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
         Utils::throwIfInvalidHashtag($hashtag)
         $urlHashtag = urlencode($hashtag) // Necessary for non-English chars.
         return this.ig.request("tags/follow/{$urlHashtag}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.GenericResponse())
     }
 
@@ -205,9 +205,9 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
         Utils::throwIfInvalidHashtag($hashtag)
         $urlHashtag = urlencode($hashtag) // Necessary for non-English chars.
         return this.ig.request("tags/unfollow/{$urlHashtag}/")
-            .addPost("_uuid", this.ig.uuid)
-            .addPost("_uid", this.ig.account_id)
-            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost('_uuid', this.ig.uuid)
+            .addPost('_uid', this.ig.account_id)
+            .addPost('_csrftoken', this.ig.client.getToken())
             .getResponse(Response.GenericResponse())
     }
 
@@ -227,8 +227,8 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
         Utils::throwIfInvalidHashtag($hashtag)
         $urlHashtag = urlencode($hashtag) // Necessary for non-English chars.
         return this.ig.request("tags/{$urlHashtag}/related/")
-            .addParam("visited", "[{"id":"".$hashtag."","type":"hashtag"}]")
-            .addParam("related_types", "["hashtag"]")
+            .addParam('visited', '[{"id":"'.$hashtag.'","type":"hashtag"}]')
+            .addParam('related_types', '["hashtag"]')
             .getResponse(Response.TagRelatedResponse())
     }
 
@@ -256,9 +256,9 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
         Utils::throwIfInvalidRankToken($rankToken)
         $urlHashtag = urlencode($hashtag) // Necessary for non-English chars.
         $hashtagFeed = this.ig.request("feed/tag/{$urlHashtag}/")
-            .addParam("rank_token", $rankToken)
+            .addParam('rank_token', $rankToken)
         if ($maxId !== null) {
-            $hashtagFeed.addParam("max_id", $maxId)
+            $hashtagFeed.addParam('max_id', $maxId)
         }
 
         return $hashtagFeed.getResponse(Response.TagFeedResponse())
@@ -301,7 +301,7 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getFollowSuggestions()
     {
-        return this.ig.request("tags/suggested/")
+        return this.ig.request('tags/suggested/')
             .getResponse(Response.HashtagsResponse())
     }
 
@@ -309,18 +309,18 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
      * Mark TagFeedResponse story media items as seen.
      *
      * The "story" property of a `TagFeedResponse` only gives you a list of
-     * story media. It doesn"t actually mark any stories as "seen", so the
-     * user doesn"t know that you"ve seen their story. Actually marking the
+     * story media. It doesn't actually mark any stories as "seen", so the
+     * user doesn't know that you've seen their story. Actually marking the
      * story as "seen" is done via this endpoint instead. The official app
      * calls this endpoint periodically (with 1 or more items at a time)
      * while watching a story.
      *
-     * This tells the user that you"ve seen their story, and also helps
-     * Instagram know that it shouldn"t give you those seen stories again
+     * This tells the user that you've seen their story, and also helps
+     * Instagram know that it shouldn't give you those seen stories again
      * if you request the same hashtag feed multiple times.
      *
-     * Tip: You can pass in the whole "getItems()" array from the hashtag"s
-     * "story" property, to easily mark all of the TagFeedResponse"s story
+     * Tip: You can pass in the whole "getItems()" array from the hashtag's
+     * "story" property, to easily mark all of the TagFeedResponse's story
      * media items as seen.
      *
      * @param Response.TagFeedResponse $hashtagFeed The hashtag feed response
@@ -342,15 +342,15 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
         Response.TagFeedResponse $hashtagFeed,
         array $items)
     {
-        // Extract the Hashtag Story-Tray ID from the user"s hashtag response.
+        // Extract the Hashtag Story-Tray ID from the user's hashtag response.
         // NOTE: This can NEVER fail if the user has properly given us the exact
         // same hashtag response that they got the story items from!
-        $sourceId = ""
+        $sourceId = ''
         if ($hashtagFeed.getStory() instanceof Response.Model.StoryTray) {
             $sourceId = $hashtagFeed.getStory().getId()
         }
         if (!strlen($sourceId)) {
-            throw .InvalidArgumentException("Your provided TagFeedResponse is invalid and does not contain any Hashtag Story-Tray ID.")
+            throw .InvalidArgumentException('Your provided TagFeedResponse is invalid and does not contain any Hashtag Story-Tray ID.')
         }
 
         // Ensure they only gave us valid items for this hashtag response.
@@ -363,7 +363,7 @@ class Hashtag(instagram:Instagram) : RequestCollection(instagram)
             // NOTE: We only check Items here. Other data is rejected by Internal.
             if ($item instanceof Response.Model.Item && !isset($validIds[$item.getId()])) {
                 throw .InvalidArgumentException(sprintf(
-                    "The item with ID "%s" does not belong to this TagFeedResponse.",
+                    'The item with ID "%s" does not belong to this TagFeedResponse.',
                     $item.getId()
                 ))
             }

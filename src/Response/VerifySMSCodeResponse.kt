@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class VerifySMSCodeResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "verified"     => "bool",
-        "phone_number" => "string",
+        'verified'     => 'bool',
+        'phone_number' => 'string',
     ]
 }

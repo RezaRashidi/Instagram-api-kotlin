@@ -7,7 +7,7 @@ import InstagramAPI.Instagram
 
 class Auth : AuthInterface
 {
-    val AUTH_TYPE = "cookie_auth"
+    val AUTH_TYPE = 'cookie_auth'
 
     /**
      * @var Instagram
@@ -46,12 +46,12 @@ class Auth : AuthInterface
     /** {@inheritdoc} */
     public fun getPassword()
     {
-        $cookie = this._instagram.client.getCookie("sessionid", "i.instagram.com")
+        $cookie = this._instagram.client.getCookie('sessionid', 'i.instagram.com')
         if ($cookie !== null) {
-            return sprintf("%s=%s", $cookie.getName(), $cookie.getValue())
+            return sprintf('%s=%s', $cookie.getName(), $cookie.getValue())
         }
 
-        throw .RuntimeException("No session cookie was found.")
+        throw .RuntimeException('No session cookie was found.')
     }
 
     /** {@inheritdoc} */
@@ -63,12 +63,12 @@ class Auth : AuthInterface
     /** {@inheritdoc} */
     public fun getDeviceSecret()
     {
-        return ""
+        return ''
     }
 
     /** {@inheritdoc} */
     public fun __toString()
     {
-        return ""
+        return ''
     }
 }

@@ -43,10 +43,10 @@ import InstagramAPI.Response
 class PostLiveCommentsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "starting_offset"   => "",
-        "ending_offset"     => "",
-        "next_fetch_offset" => "",
-        "comments"          => "Model.LiveComment[]",
-        "pinned_comments"   => "Model.LiveComment[]",
+        'starting_offset'   => '',
+        'ending_offset'     => '',
+        'next_fetch_offset' => '',
+        'comments'          => 'Model.LiveComment[]',
+        'pinned_comments'   => 'Model.LiveComment[]',
     ]
 }

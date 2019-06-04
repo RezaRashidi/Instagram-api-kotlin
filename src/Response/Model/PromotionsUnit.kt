@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class PromotionsUnit : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "_summary_promotions2ubm1F" => "SummaryPromotions",
+        '_summary_promotions2ubm1F' => 'SummaryPromotions',
     ]
 }

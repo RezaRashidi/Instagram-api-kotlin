@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class BootstrapUsersResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "surfaces" => "Model.Surface[]",
-        "users"    => "Model.User[]",
+        'surfaces' => 'Model.Surface[]',
+        'users'    => 'Model.User[]',
     ]
 }

@@ -35,11 +35,11 @@ import InstagramAPI.AutoPropertyMapper
 class DirectInbox : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "has_older"             => "bool",
-        "unseen_count"          => "",
-        "unseen_count_ts"       => "", // Is a timestamp.
-        "blended_inbox_enabled" => "bool",
-        "oldest_cursor"         => "",
-        "threads"               => "DirectThread[]",
+        'has_older'             => 'bool',
+        'unseen_count'          => '',
+        'unseen_count_ts'       => '', // Is a timestamp.
+        'blended_inbox_enabled' => 'bool',
+        'oldest_cursor'         => '',
+        'threads'               => 'DirectThread[]',
     ]
 }

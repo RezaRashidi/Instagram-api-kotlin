@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class ContextualFilters : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "clause_type" => "string",
-        "filters"     => "",
-        "clauses"     => "",
+        'clause_type' => 'string',
+        'filters'     => '',
+        'clauses'     => '',
     ]
 }

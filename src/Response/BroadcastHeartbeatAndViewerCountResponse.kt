@@ -55,13 +55,13 @@ import InstagramAPI.Response
 class BroadcastHeartbeatAndViewerCountResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "broadcast_status"          => "string",
-        "viewer_count"              => "int",
-        "offset_to_video_start"     => "int",
-        "total_unique_viewer_count" => "int",
-        "is_top_live_eligible"      => "int",
-        "cobroadcaster_ids"         => "string[]",
-        "is_policy_violation"       => "int",
-        "policy_violation_reason"   => "string",
+        'broadcast_status'          => 'string',
+        'viewer_count'              => 'int',
+        'offset_to_video_start'     => 'int',
+        'total_unique_viewer_count' => 'int',
+        'is_top_live_eligible'      => 'int',
+        'cobroadcaster_ids'         => 'string[]',
+        'is_policy_violation'       => 'int',
+        'policy_violation_reason'   => 'string',
     ]
 }

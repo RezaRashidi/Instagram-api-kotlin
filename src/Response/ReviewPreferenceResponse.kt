@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class ReviewPreferenceResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "user" => "Model.User",
+        'user' => 'Model.User',
     ]
 }

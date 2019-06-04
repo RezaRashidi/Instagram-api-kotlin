@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class Explore : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "explanation"  => "",
-        "actor_id"     => "string",
-        "source_token" => "",
+        'explanation'  => '',
+        'actor_id'     => 'string',
+        'source_token' => '',
     ]
 }

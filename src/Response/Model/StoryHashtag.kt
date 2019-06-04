@@ -57,9 +57,9 @@ class StoryHashtag : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
         PropertyCollection.Sticker::class,
-        "hashtag"       => "Hashtag",
-        "attribution"   => "string",
-        "custom_title"  => "string",
-        "is_hidden"     => "int",
+        'hashtag'       => 'Hashtag',
+        'attribution'   => 'string',
+        'custom_title'  => 'string',
+        'is_hidden'     => 'int',
     ]
 }

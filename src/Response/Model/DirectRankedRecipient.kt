@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class DirectRankedRecipient : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "thread" => "DirectThread",
-        "user"   => "User",
+        'thread' => 'DirectThread',
+        'user'   => 'User',
     ]
 }

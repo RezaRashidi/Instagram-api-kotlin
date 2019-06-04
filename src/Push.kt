@@ -17,7 +17,7 @@ import React.EventLoop.LoopInterface
  *   Posts:
  *     - post - "USERNAME just shared a post."
  *       media?id=1111111111111111111_1111111111
- *     - first_post - "See NAME"s first Instagram post."
+ *     - first_post - "See NAME's first Instagram post."
  *       user?username=USERNAME
  *     - resurrected_user_post - "USERNAME posted for the first time in a while. Be the first to add a comment."
  *       media?id=1111111111111111111_1111111111
@@ -31,7 +31,7 @@ import React.EventLoop.LoopInterface
  *       media?id=1111111111111111111 <- Yep, no author ID here.
  *
  *   Stories:
- *     - first_reel_post - "See USERNAME"s first story on Instagram."
+ *     - first_reel_post - "See USERNAME's first story on Instagram."
  *       user?username=USERNAME&launch_reel=1
  *     - resurrected_reel_post - "USERNAME added to their story for the first time in a while."
  *       user?username=USERNAME&launch_reel=1
@@ -41,7 +41,7 @@ import React.EventLoop.LoopInterface
  *       user?username=USERNAME&launch_reel=1&media_id=1111111111111111111_1111111111&include_viewers=1
  *     - story_poll_close - "Your poll, "POLL" ends in an hour. Results so far: 2 YES, 1 NO"
  *       user?username=USERNAME&launch_reel=1&media_id=1111111111111111111_1111111111&include_viewers=1
- *     - story_producer_expire_media - "Your story has NUMBER views. Find out who"s seen it before it disappears."
+ *     - story_producer_expire_media - "Your story has NUMBER views. Find out who's seen it before it disappears."
  *       user?username=USERNAME&launch_reel=1
  *     - story_poll_result_share - "Your poll is almost over, and YES is winning. See and share the results."
  *       user?username=USERNAME&launch_reel=1&media_id=1111111111111111111_1111111111&include_viewers=1
@@ -73,9 +73,9 @@ import React.EventLoop.LoopInterface
  *     - mentioned_comment - "USERNAME mentioned you in a comment: TEXT..."
  *       media?id=1111111111111111111_1111111111
  *       comments_v2?media_id=1111111111111111111_1111111111
- *     - comment_on_tag - "USERNAME commented on a post you"re tagged in."
+ *     - comment_on_tag - "USERNAME commented on a post you're tagged in."
  *       media?id=1111111111111111111 <- Yep, no author ID here.
- *     - comment_subscribed - "USERNAME also commented on USERNAME"s post: "TEXT""
+ *     - comment_subscribed - "USERNAME also commented on USERNAME's post: "TEXT""
  *       comments_v2?media_id=1111111111111111111_1111111111&target_comment_id=11111111111111111
  *     - comment_subscribed_on_like - "USERNAME commented on a post you liked: TEXT"
  *       comments_v2?media_id=1111111111111111111_1111111111&target_comment_id=11111111111111111
@@ -85,7 +85,7 @@ import React.EventLoop.LoopInterface
  *   Likes:
  *     - like - "USERNAME liked your post."
  *       media?id=1111111111111111111_1111111111
- *     - like_on_tag - "USERNAME liked a post you"re tagged in."
+ *     - like_on_tag - "USERNAME liked a post you're tagged in."
  *       media?id=1111111111111111111_1111111111
  *     - comment_like - "USERNAME liked your comment: "TEXT...""
  *       media?id=1111111111111111111_1111111111&forced_preview_comment_id=11111111111111111
@@ -127,7 +127,7 @@ import React.EventLoop.LoopInterface
  *       news
  *     - report_updated - "Your support request from DATE was just updated."
  *       news
- *     - promote_account - "Check out today"s photo from TEXT."
+ *     - promote_account - "Check out today's photo from TEXT."
  *       user?username=USERNAME
  *     - unseen_notification_reminders
  *       news
@@ -136,7 +136,7 @@ import React.EventLoop.LoopInterface
  *     - silent_push - Some kind of service push that does nothing. Nothing important, I hope.
  *     - incoming - The event that catches all pushes. Useful for debugging and logging.
  *     - warning - An exception of severity "warning" occured.
- *     - error - An exception of severity "error" occurred. It"s not guaranteed that the Push client will continue to work.
+ *     - error - An exception of severity "error" occurred. It's not guaranteed that the Push client will continue to work.
  */
 class Push : EventEmitterInterface
 {
@@ -171,8 +171,8 @@ class Push : EventEmitterInterface
         Instagram $instagram,
         LoggerInterface $logger = null)
     {
-        if (PHP_SAPI !== "cli") {
-            throw .RuntimeException("The Push client can only run from the command line.")
+        if (PHP_SAPI !== 'cli') {
+            throw .RuntimeException('The Push client can only run from the command line.')
         }
 
         this._instagram = $instagram
@@ -195,8 +195,8 @@ class Push : EventEmitterInterface
         Notification $notification)
     {
         $collapseKey = $notification.getCollapseKey()
-        this._logger.info(sprintf("Received a push with collapse key "%s"", $collapseKey), [(string) $notification])
-        this.emit("incoming", [$notification])
+        this._logger.info(sprintf('Received a push with collapse key "%s"', $collapseKey), [(string) $notification])
+        this.emit('incoming', [$notification])
         if (!empty($collapseKey)) {
             this.emit($collapseKey, [$notification])
         }
@@ -217,51 +217,51 @@ class Push : EventEmitterInterface
             this._loop,
             this._logger
         )
-        $fbns.on("fbns_auth", fun ($authJson) {
+        $fbns.on('fbns_auth', fun ($authJson) {
             try {
                 this._fbnsAuth.update($authJson)
             } catch (.Exception $e) {
-                this._logger.error(sprintf("Failed to update FBNS auth: %s", $e.getMessage()), [$authJson])
+                this._logger.error(sprintf('Failed to update FBNS auth: %s', $e.getMessage()), [$authJson])
             }
         })
-        $fbns.on("fbns_token", fun ($token) {
+        $fbns.on('fbns_token', fun ($token) {
             // Refresh the "last token activity" timestamp.
             // The age of this timestamp helps us detect when the user
             // has stopped using the Push features due to inactivity.
             try {
-                this._instagram.settings.set("last_fbns_token", time())
+                this._instagram.settings.set('last_fbns_token', time())
             } catch (.Exception $e) {
-                this._logger.error(sprintf("Failed to write FBNS token timestamp: %s", $e.getMessage()))
+                this._logger.error(sprintf('Failed to write FBNS token timestamp: %s', $e.getMessage()))
             }
             // Read our old token. If an identical value exists, then we know
-            // that we"ve already registered that token during this session.
+            // that we've already registered that token during this session.
             try {
-                $oldToken = this._instagram.settings.get("fbns_token")
+                $oldToken = this._instagram.settings.get('fbns_token')
                 // Do nothing when the token is equal to the old one.
                 if ($token === $oldToken) {
                     return
                 }
             } catch (.Exception $e) {
-                this._logger.error(sprintf("Failed to read FBNS token: %s", $e.getMessage()))
+                this._logger.error(sprintf('Failed to read FBNS token: %s', $e.getMessage()))
             }
             // Register the token.
             try {
-                this._instagram.push.register("mqtt", $token)
+                this._instagram.push.register('mqtt', $token)
             } catch (.Exception $e) {
-                this.emit("error", [$e])
+                this.emit('error', [$e])
             }
             // Save the newly received token to the storage.
             // NOTE: We save it even if the registration failed, since we now
-            // got it from the server and assume they"ve given us a good one.
-            // However, it"ll always be re-validated during the general login()
+            // got it from the server and assume they've given us a good one.
+            // However, it'll always be re-validated during the general login()
             // flow, and will be cleared there if it fails to register there.
             try {
-                this._instagram.settings.set("fbns_token", $token)
+                this._instagram.settings.set('fbns_token', $token)
             } catch (.Exception $e) {
-                this._logger.error(sprintf("Failed to update FBNS token: %s", $e.getMessage()), [$token])
+                this._logger.error(sprintf('Failed to update FBNS token: %s', $e.getMessage()), [$token])
             }
         })
-        $fbns.on("push", fun (Notification $notification) {
+        $fbns.on('push', fun (Notification $notification) {
             this._onPush($notification)
         })
 

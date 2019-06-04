@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class ActionLog : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "bold"        => "Bold[]",
-        "description" => "",
+        'bold'        => 'Bold[]',
+        'description' => '',
     ]
 }

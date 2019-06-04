@@ -35,11 +35,11 @@ import InstagramAPI.AutoPropertyMapper
 class GraphData : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "__typename"    => "string",
-        "name"          => "string",
-        "user"          => "ShadowInstagramUser",
-        "error"         => "",
-        "catalog_items" => "CatalogData",
-        "me"            => "MeGraphData",
+        '__typename'    => 'string',
+        'name'          => 'string',
+        'user'          => 'ShadowInstagramUser',
+        'error'         => '',
+        'catalog_items' => 'CatalogData',
+        'me'            => 'MeGraphData',
     ]
 }

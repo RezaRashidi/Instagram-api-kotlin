@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class ThreadAction : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "user_id"    => "string",
-        "action_log" => ".InstagramAPI.Response.Model.ActionLog",
+        'user_id'    => 'string',
+        'action_log' => '.InstagramAPI.Response.Model.ActionLog',
     ]
 }

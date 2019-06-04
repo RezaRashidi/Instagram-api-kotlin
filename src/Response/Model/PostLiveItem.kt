@@ -51,15 +51,15 @@ import InstagramAPI.AutoPropertyMapper
 class PostLiveItem : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "pk"                     => "string",
-        "user"                   => "User",
-        "broadcasts"             => "Broadcast[]",
-        "peak_viewer_count"      => "int",
-        "last_seen_broadcast_ts" => "",
-        "can_reply"              => "",
-        "ranked_position"        => "",
-        "seen_ranked_position"   => "",
-        "muted"                  => "",
-        "can_reshare"            => "",
+        'pk'                     => 'string',
+        'user'                   => 'User',
+        'broadcasts'             => 'Broadcast[]',
+        'peak_viewer_count'      => 'int',
+        'last_seen_broadcast_ts' => '',
+        'can_reply'              => '',
+        'ranked_position'        => '',
+        'seen_ranked_position'   => '',
+        'muted'                  => '',
+        'can_reshare'            => '',
     ]
 }

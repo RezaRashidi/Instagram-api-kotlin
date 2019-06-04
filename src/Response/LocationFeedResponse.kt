@@ -43,10 +43,10 @@ import InstagramAPI.Response
 class LocationFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "sections"               => "Model.Section[]",
-        "next_page"              => "int",
-        "more_available"         => "bool",
-        "next_media_ids"         => "int[]",
-        "next_max_id"            => "string",
+        'sections'               => 'Model.Section[]',
+        'next_page'              => 'int',
+        'more_available'         => 'bool',
+        'next_media_ids'         => 'int[]',
+        'next_max_id'            => 'string',
     ]
 }
