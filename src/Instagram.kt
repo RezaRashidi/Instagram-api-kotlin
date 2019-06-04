@@ -1,15 +1,13 @@
 package InstagramAPI
-
-import InstagramAPI.Request.Account
-import InstagramAPI.Settings.StorageHandler
 import kotlin.system.exitProcess
+
 
 /**
 
  * @author Reza Rashidi
  * @author Saeed najafian
  */
-class Instagram : ExperimentsInterface {
+class Instagram : ExperimentsInterface  {
     /**
      * Experiments refresh interval in sec.
      *
@@ -293,8 +291,8 @@ class Instagram : ExperimentsInterface {
         this.usertag = InstagramAPI.Request.Usertag(this)
 
         // Configure the settings storage and network client.
-        val self = this
-        settings = InstagramAPI.Settings.Factory.createHandler( )
+        val self =this  //Todo: maybe this is not to copy of the class
+        settings = InstagramAPI.Settings.Factory.createHandler(storageConfig, mutableMapOf("onCloseUser" to {(self) -> }) )
         this.client = Client(this)
         this.experiments = []
     }
