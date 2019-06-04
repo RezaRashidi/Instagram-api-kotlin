@@ -5,7 +5,7 @@ package InstagramAPI.Response
 import InstagramAPI.Response
 
 /**
- * Used for generic API responses that don't contain any extra data.
+ * Used for generic API responses that don"t contain any extra data.
  *
  * @method mixed getMessage()
  * @method string getStatus()
@@ -22,6 +22,6 @@ import InstagramAPI.Response
  */
 class GenericResponse : Response
 {
-    // WARNING: Don't add any values here. Create responses.
+    // WARNING: Don"t add any values here. Create responses.
     val JSON_PROPERTY_MAP = []
 }

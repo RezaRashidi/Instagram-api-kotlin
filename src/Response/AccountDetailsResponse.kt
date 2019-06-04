@@ -43,10 +43,10 @@ import InstagramAPI.Response
 class AccountDetailsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'date_joined'                   => 'string',
-        'former_username_info'          => 'Model.FormerUsernameInfo',
-        'primary_country_info'          => 'Model.PrimaryCountryInfo',
-        'shared_follower_accounts_info' => 'Model.SharedFollowerAccountsInfo',
-        'ads_info'                      => 'Model.AdsInfo',
+        "date_joined"                   => "string",
+        "former_username_info"          => "Model.FormerUsernameInfo",
+        "primary_country_info"          => "Model.PrimaryCountryInfo",
+        "shared_follower_accounts_info" => "Model.SharedFollowerAccountsInfo",
+        "ads_info"                      => "Model.AdsInfo",
     ]
 }

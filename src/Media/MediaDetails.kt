@@ -138,11 +138,11 @@ abstract class MediaDetails
     }
 
     /**
-     * Verifies that a piece of media follows Instagram's rules.
+     * Verifies that a piece of media follows Instagram"s rules.
      *
      * @param ConstraintsInterface $constraints
      *
-     * @throws .InvalidArgumentException If Instagram won't allow this file.
+     * @throws .InvalidArgumentException If Instagram won"t allow this file.
      */
     public fun validate(
         ConstraintsInterface $constraints)
@@ -152,7 +152,7 @@ abstract class MediaDetails
         // Check rotation.
         if (this.hasSwappedAxes() || this.isVerticallyFlipped() || this.isHorizontallyFlipped()) {
             throw .InvalidArgumentException(sprintf(
-                'Instagram only accepts non-rotated media. Your file "%s" is either rotated or flipped or both.',
+                "Instagram only accepts non-rotated media. Your file "%s" is either rotated or flipped or both.",
                 $mediaFilename
             ))
         }
@@ -164,7 +164,7 @@ abstract class MediaDetails
         $maxAspectRatio = $constraints.getMaxAspectRatio()
         if ($aspectRatio < $minAspectRatio || $aspectRatio > $maxAspectRatio) {
             throw .InvalidArgumentException(sprintf(
-                'Instagram only accepts %s media with aspect ratios between %.3f and %.3f. Your file "%s" has a %.4f aspect ratio.',
+                "Instagram only accepts %s media with aspect ratios between %.3f and %.3f. Your file "%s" has a %.4f aspect ratio.",
                 $constraints.getTitle(), $minAspectRatio, $maxAspectRatio, $mediaFilename, $aspectRatio
             ))
         }

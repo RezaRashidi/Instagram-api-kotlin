@@ -7,8 +7,8 @@ import InstagramAPI.Signatures
 
 class ZeroProvisionSubscription : GraphQlSubscription
 {
-    val QUERY = '17913953740109069'
-    val ID = 'zero_provision'
+    val QUERY = "17913953740109069"
+    val ID = "zero_provision"
 
     /**
      * Constructor.
@@ -19,8 +19,8 @@ class ZeroProvisionSubscription : GraphQlSubscription
         $deviceId)
     {
         parent::__construct(self::QUERY, [
-            'client_subscription_id' => Signatures::generateUUID(),
-            'device_id'              => $deviceId,
+            "client_subscription_id" => Signatures::generateUUID(),
+            "device_id"              => $deviceId,
         ])
     }
 

@@ -43,13 +43,13 @@ import InstagramAPI.AutoPropertyMapper
 class DirectSendItemPayload : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'client_request_id' => 'string',
-        'client_context'    => 'string',
-        'message'           => 'string',
-        'item_id'           => 'string',
-        'timestamp'         => 'string',
-        'thread_id'         => 'string',
-        'canonical'         => 'bool',
-        'participant_ids'   => 'string[]',
+        "client_request_id" => "string",
+        "client_context"    => "string",
+        "message"           => "string",
+        "item_id"           => "string",
+        "timestamp"         => "string",
+        "thread_id"         => "string",
+        "canonical"         => "bool",
+        "participant_ids"   => "string[]",
     ]
 }

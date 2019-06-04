@@ -51,15 +51,15 @@ import InstagramAPI.AutoPropertyMapper
 class SharedFollower : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'pk'                            => 'string',
-        'username'                      => 'string',
-        'full_name'                     => 'string',
-        'is_private'                    => 'bool',
-        'profile_pic_url'               => 'string',
-        'profile_pic_id'                => 'string',
-        'is_verified'                   => 'bool',
-        'has_anonymous_profile_picture' => 'bool',
-        'reel_auto_archive'             => 'string',
-        'overlap_score'                 => 'string',
+        "pk"                            => "string",
+        "username"                      => "string",
+        "full_name"                     => "string",
+        "is_private"                    => "bool",
+        "profile_pic_url"               => "string",
+        "profile_pic_id"                => "string",
+        "is_verified"                   => "bool",
+        "has_anonymous_profile_picture" => "bool",
+        "reel_auto_archive"             => "string",
+        "overlap_score"                 => "string",
     ]
 }

@@ -31,9 +31,9 @@ class Surface : AutoPropertyMapper
          * Scores is an array of int/float numbers keyed by user id.
          * It determines how important each user is for sorting purposes.
          */
-        'scores'         => '',
-        'rank_token'     => 'string',
-        'ttl_secs'       => 'int',
-        'name'           => 'string',
+        "scores"         => "",
+        "rank_token"     => "string",
+        "ttl_secs"       => "int",
+        "name"           => "string",
     ]
 }

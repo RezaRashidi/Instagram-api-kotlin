@@ -87,24 +87,24 @@ import InstagramAPI.AutoPropertyMapper
 class Injected : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'label'                        => 'string',
-        'show_icon'                    => 'bool',
-        'hide_label'                   => 'string',
-        'invalidation'                 => '', // Only encountered as NULL.
-        'is_demo'                      => 'bool',
-        'view_tags'                    => '', // Only seen as [].
-        'is_holdout'                   => 'bool',
-        'tracking_token'               => 'string',
-        'show_ad_choices'              => 'bool',
-        'ad_title'                     => 'string',
-        'about_ad_params'              => 'string',
-        'direct_share'                 => 'bool',
-        'ad_id'                        => 'string',
-        'display_viewability_eligible' => 'bool',
-        'fb_page_url'                  => 'string',
-        'hide_reasons_v2'              => 'HideReason[]',
-        'hide_flow_type'               => 'int',
-        'cookies'                      => 'string[]',
-        'lead_gen_form_id'             => 'string',
+        "label"                        => "string",
+        "show_icon"                    => "bool",
+        "hide_label"                   => "string",
+        "invalidation"                 => "", // Only encountered as NULL.
+        "is_demo"                      => "bool",
+        "view_tags"                    => "", // Only seen as [].
+        "is_holdout"                   => "bool",
+        "tracking_token"               => "string",
+        "show_ad_choices"              => "bool",
+        "ad_title"                     => "string",
+        "about_ad_params"              => "string",
+        "direct_share"                 => "bool",
+        "ad_id"                        => "string",
+        "display_viewability_eligible" => "bool",
+        "fb_page_url"                  => "string",
+        "hide_reasons_v2"              => "HideReason[]",
+        "hide_flow_type"               => "int",
+        "cookies"                      => "string[]",
+        "lead_gen_form_id"             => "string",
     ]
 }

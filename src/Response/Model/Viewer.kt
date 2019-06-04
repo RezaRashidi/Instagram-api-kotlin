@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class Viewer : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'eligible_promotions'   => 'EligiblePromotions',
+        "eligible_promotions"   => "EligiblePromotions",
     ]
 }

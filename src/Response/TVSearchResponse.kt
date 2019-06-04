@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class TVSearchResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'results'       => 'Model.TVSearchResult[]',
-        'num_results'   => 'int',
-        'rank_token'    => 'string',
+        "results"       => "Model.TVSearchResult[]",
+        "num_results"   => "int",
+        "rank_token"    => "string",
     ]
 }

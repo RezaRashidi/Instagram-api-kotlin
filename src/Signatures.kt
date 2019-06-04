@@ -14,7 +14,7 @@ class Signatures
     public static fun generateSignature(
         $data)
     {
-        return hash_hmac('sha256', $data, Constants::IG_SIG_KEY)
+        return hash_hmac("sha256", $data, Constants::IG_SIG_KEY)
     }
 
     /**
@@ -27,7 +27,7 @@ class Signatures
     public static fun generateSignatureForPost(
         $data)
     {
-        return 'ig_sig_key_version='.Constants::SIG_KEY_VERSION.'&signed_body='.self::generateSignature($data).'.'.urlencode($data)
+        return "ig_sig_key_version=".Constants::SIG_KEY_VERSION."&signed_body=".self::generateSignature($data).".".urlencode($data)
     }
 
     /**
@@ -60,8 +60,8 @@ class Signatures
         // Reorder and convert data to JSON string.
         $data = json_encode((object) Utils::reorderByHashCode($data))
         // Sign data.
-        $result['ig_sig_key_version'] = Constants::SIG_KEY_VERSION
-        $result['signed_body'] = self::generateSignature($data).'.'.$data
+        $result["ig_sig_key_version"] = Constants::SIG_KEY_VERSION
+        $result["signed_body"] = self::generateSignature($data).".".$data
         // Return value must be reordered.
         return Utils::reorderByHashCode($result)
     }
@@ -69,9 +69,9 @@ class Signatures
     public static fun generateDeviceId()
     {
         // This has 10 million possible hash subdivisions per clock second.
-        $megaRandomHash = md5(number_format(microtime(true), 7, '', ''))
+        $megaRandomHash = md5(number_format(microtime(true), 7, "", ""))
 
-        return 'android-'.substr($megaRandomHash, 16)
+        return "android-".substr($megaRandomHash, 16)
     }
 
     /**
@@ -88,14 +88,14 @@ class Signatures
             return false
         }
 
-        return (bool) preg_match('#^[a-f.d]{8}-(?:[a-f.d]{4}-){3}[a-f.d]{12}$#D', $uuid)
+        return (bool) preg_match("#^[a-f.d]{8}-(?:[a-f.d]{4}-){3}[a-f.d]{12}$#D", $uuid)
     }
 
     public static fun generateUUID(
         $keepDashes = true)
     {
         $uuid = sprintf(
-            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            "%04x%04x-%04x-%04x-%04x-%04x%04x%04x",
             mt_rand(0, 0xffff),
             mt_rand(0, 0xffff),
             mt_rand(0, 0xffff),
@@ -106,6 +106,6 @@ class Signatures
             mt_rand(0, 0xffff)
         )
 
-        return $keepDashes ? $uuid : str_replace('-', '', $uuid)
+        return $keepDashes ? $uuid : str_replace("-", "", $uuid)
     }
 }

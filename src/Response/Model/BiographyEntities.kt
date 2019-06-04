@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class BiographyEntities : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'entities'   => '',
-        'raw_text'   => 'string',
-        'nux_type'   => 'string',
+        "entities"   => "",
+        "raw_text"   => "string",
+        "nux_type"   => "string",
     ]
 }

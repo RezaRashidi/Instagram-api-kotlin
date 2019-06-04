@@ -31,10 +31,10 @@ import InstagramAPI.AutoPropertyMapper
 class ExploreItemInfo : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'num_columns'       => 'int',
-        'total_num_columns' => 'int',
-        'aspect_ratio'      => 'int',
-        'autoplay'          => 'bool',
-        'destination_view'  => 'string',
+        "num_columns"       => "int",
+        "total_num_columns" => "int",
+        "aspect_ratio"      => "int",
+        "autoplay"          => "bool",
+        "destination_view"  => "string",
     ]
 }

@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class CloseFriends : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'sections'  => '',
-        'users'     => 'User[]',
-        'big_list'  => '',
-        'page_size' => '',
+        "sections"  => "",
+        "users"     => "User[]",
+        "big_list"  => "",
+        "page_size" => "",
     ]
 }

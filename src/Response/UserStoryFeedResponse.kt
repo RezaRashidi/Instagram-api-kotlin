@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class UserStoryFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'broadcast'      => 'Model.Broadcast',
-        'reel'           => 'Model.Reel',
-        'post_live_item' => 'Model.PostLiveItem',
+        "broadcast"      => "Model.Broadcast",
+        "reel"           => "Model.Reel",
+        "post_live_item" => "Model.PostLiveItem",
     ]
 }

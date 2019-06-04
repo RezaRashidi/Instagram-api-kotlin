@@ -31,13 +31,13 @@ import InstagramAPI.AutoPropertyMapper
 class MediaData : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'image_versions2' => 'Image_Versions2',
-        'original_width'  => 'int',
-        'original_height' => 'int',
+        "image_versions2" => "Image_Versions2",
+        "original_width"  => "int",
+        "original_height" => "int",
         /*
          * A number describing what type of media this is.
          */
-        'media_type'      => 'int',
-        'video_versions'  => 'VideoVersions[]',
+        "media_type"      => "int",
+        "video_versions"  => "VideoVersions[]",
     ]
 }

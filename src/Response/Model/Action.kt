@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class Action : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'title'             => 'Text',
-        'url'               => 'string',
-        'limit'             => 'int',
-        'dismiss_promotion' => 'bool',
+        "title"             => "Text",
+        "url"               => "string",
+        "limit"             => "int",
+        "dismiss_promotion" => "bool",
     ]
 }

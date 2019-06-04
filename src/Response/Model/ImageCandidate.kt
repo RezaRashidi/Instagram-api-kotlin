@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class ImageCandidate : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'url'    => 'string',
-        'width'  => 'int',
-        'height' => 'int',
+        "url"    => "string",
+        "width"  => "int",
+        "height" => "int",
     ]
 }

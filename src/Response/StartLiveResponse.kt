@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class StartLiveResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'media_id' => 'string',
+        "media_id" => "string",
     ]
 }

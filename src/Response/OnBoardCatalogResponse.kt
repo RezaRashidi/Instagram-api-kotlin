@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class OnBoardCatalogResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'shopping_onboarding_state'         => 'string',
-        'current_catalog_id'                => 'string',
-        'is_business_targeted_for_shopping' => 'bool',
+        "shopping_onboarding_state"         => "string",
+        "current_catalog_id"                => "string",
+        "is_business_targeted_for_shopping" => "bool",
     ]
 }

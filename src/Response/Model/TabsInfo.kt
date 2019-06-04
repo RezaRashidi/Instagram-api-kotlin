@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class TabsInfo : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'tabs'      => 'Tab[]',
-        'selected'  => 'string',
+        "tabs"      => "Tab[]",
+        "selected"  => "string",
     ]
 }

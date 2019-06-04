@@ -22,7 +22,7 @@ class MySQL : PDOStorage
     public fun __construct()
     {
         // Configure the name of this backend.
-        parent::__construct('MySQL')
+        parent::__construct("MySQL")
     }
 
     /**
@@ -33,10 +33,10 @@ class MySQL : PDOStorage
     protected fun _createPDO(
         array $locationConfig)
     {
-        $username = ($locationConfig['dbusername'] ? $locationConfig['dbusername'] : 'root')
-        $password = ($locationConfig['dbpassword'] ? $locationConfig['dbpassword'] : '')
-        $host = ($locationConfig['dbhost'] ? $locationConfig['dbhost'] : 'localhost')
-        $dbName = ($locationConfig['dbname'] ? $locationConfig['dbname'] : 'instagram')
+        $username = ($locationConfig["dbusername"] ? $locationConfig["dbusername"] : "root")
+        $password = ($locationConfig["dbpassword"] ? $locationConfig["dbpassword"] : "")
+        $host = ($locationConfig["dbhost"] ? $locationConfig["dbhost"] : "localhost")
+        $dbName = ($locationConfig["dbname"] ? $locationConfig["dbname"] : "instagram")
 
         return PDO("mysql:host={$host}dbname={$dbName}",
                        $username, $password)
@@ -55,7 +55,7 @@ class MySQL : PDOStorage
         // we MUST import their "utf8mb4" encoding instead. The "utf8mb4" storage
         // needs are identical for 1-3 byte characters, but supports 4 bytes!
         // See: https://dev.mysql.com/doc/refman/5.7/en/charset-unicode-utf8mb4.html
-        this._pdo.query("SET NAMES 'utf8mb4'").closeCursor()
+        this._pdo.query("SET NAMES "utf8mb4"").closeCursor()
     }
 
     /**
@@ -66,11 +66,11 @@ class MySQL : PDOStorage
     protected fun _autoCreateTable()
     {
         // Detect the name of the MySQL database that PDO is connected to.
-        $dbName = this._pdo.query('SELECT database()').fetchColumn()
+        $dbName = this._pdo.query("SELECT database()").fetchColumn()
 
         // Abort if we already have the necessary table.
-        $sth = this._pdo.prepare('SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = :tableSchema) AND (TABLE_NAME = :tableName)')
-        $sth.execute([':tableSchema' => $dbName, ':tableName' => this._dbTableName])
+        $sth = this._pdo.prepare("SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = :tableSchema) AND (TABLE_NAME = :tableName)")
+        $sth.execute([":tableSchema" => $dbName, ":tableName" => this._dbTableName])
         $result = $sth.fetchColumn()
         $sth.closeCursor()
         if ($result > 0) {
@@ -84,18 +84,18 @@ class MySQL : PDOStorage
         // Becaimport MySQL has a 767-byte max limit for efficient indexes, and
         // "utf8mb4" uses 4 bytes per character, which means that 191 characters
         // is the maximum safe amount (191 * 4 = 764)! We chose 150 as a nice
-        // number. Instagram's username limit is 30, so our limit is fine!
+        // number. Instagram"s username limit is 30, so our limit is fine!
         // NOTE: We import "utf8mb4_general_ci" which performs fast, general
         // sorting, since we have no need for language-aware "unicode" sorting.
         // NOTE: Lastly... note that our encoding only affects the "username"
         // column. All other columns are numbers, binary blobs, etc!
-        this._pdo.exec('CREATE TABLE `'.this._dbTableName.'` (
+        this._pdo.exec("CREATE TABLE `".this._dbTableName."` (
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(150) NOT NULL,
             settings MEDIUMBLOB NULL,
             cookies MEDIUMBLOB NULL,
             last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             UNIQUE KEY (username)
-        ) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB')
+        ) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB")
     }
 }

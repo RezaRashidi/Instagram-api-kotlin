@@ -62,23 +62,23 @@ import InstagramAPI.AutoPropertyMapper
  */
 class Product : AutoPropertyMapper
 {
-    val APPROVED = 'approved'
-    val PENDING = 'pending'
-    val REJECTED = 'rejected'
+    val APPROVED = "approved"
+    val PENDING = "pending"
+    val REJECTED = "rejected"
 
     val JSON_PROPERTY_MAP = [
-        'name'             => 'string',
-        'price'            => 'string',
-        'current_price'    => 'string',
-        'full_price'       => 'string',
-        'product_id'       => 'string',
-        'has_viewer_saved' => 'bool',
-        'description'      => 'string',
-        'main_image'       => 'ProductImage',
-        'thumbnail_image'  => 'ProductImage',
-        'product_images'   => 'ProductImage[]',
-        'external_url'     => 'string',
-        'checkout_style'   => 'string',
-        'review_status'    => 'string',
+        "name"             => "string",
+        "price"            => "string",
+        "current_price"    => "string",
+        "full_price"       => "string",
+        "product_id"       => "string",
+        "has_viewer_saved" => "bool",
+        "description"      => "string",
+        "main_image"       => "ProductImage",
+        "thumbnail_image"  => "ProductImage",
+        "product_images"   => "ProductImage[]",
+        "external_url"     => "string",
+        "checkout_style"   => "string",
+        "review_status"    => "string",
     ]
 }

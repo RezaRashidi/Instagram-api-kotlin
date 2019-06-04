@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class QueryResponse : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'shadow_instagram_user' => 'ShadowInstagramUser',
+        "shadow_instagram_user" => "ShadowInstagramUser",
     ]
 }

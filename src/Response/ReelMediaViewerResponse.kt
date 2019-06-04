@@ -51,12 +51,12 @@ import InstagramAPI.Response
 class ReelMediaViewerResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'users'                     => 'Model.User[]',
-        'next_max_id'               => 'string',
-        'user_count'                => 'int',
-        'total_viewer_count'        => 'int',
-        'screenshotter_user_ids'    => '',
-        'total_screenshot_count'    => 'int',
-        'updated_media'             => 'Model.Item',
+        "users"                     => "Model.User[]",
+        "next_max_id"               => "string",
+        "user_count"                => "int",
+        "total_viewer_count"        => "int",
+        "screenshotter_user_ids"    => "",
+        "total_screenshot_count"    => "int",
+        "updated_media"             => "Model.Item",
     ]
 }

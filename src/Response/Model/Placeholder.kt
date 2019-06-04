@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class Placeholder : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'is_linked' => 'bool',
-        'title'     => 'string',
-        'message'   => 'string',
+        "is_linked" => "bool",
+        "title"     => "string",
+        "message"   => "string",
     ]
 }

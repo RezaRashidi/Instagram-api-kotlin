@@ -1,6 +1,5 @@
 package InstagramAPI
 
-import jdk.nashorn.internal.objects.Global.__DIR__
 
 class Constants{
     // Core API Constants.
@@ -81,5 +80,5 @@ class Constants{
     val FEED_TV = 6
 
     // General Constants.
-    val SRC_DIR = __DIR__ // Absolute path to the "src" folder.
+    val SRC_DIR =System.getProperty("user.dir") + "\\src" // Absolute path to the "src" folder.
 }

@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class CreateHighlightResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'reel' => 'Model.Reel',
+        "reel" => "Model.Reel",
     ]
 }

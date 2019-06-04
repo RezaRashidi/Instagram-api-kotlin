@@ -497,7 +497,7 @@ package InstagramAPI.Response.Model
 class ChainingSuggestion : User
 {
     val JSON_PROPERTY_MAP = [
-       'chaining_info'                    => 'ChainingInfo',
-       'profile_chaining_secondary_label' => '',
+       "chaining_info"                    => "ChainingInfo",
+       "profile_chaining_secondary_label" => "",
    ]
 }

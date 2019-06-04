@@ -6,7 +6,7 @@ import InstagramAPI.Constants
 import InstagramAPI.Response
 
 /**
- * funs related to Instagram's "creative assets", such as stickers.
+ * funs related to Instagram"s "creative assets", such as stickers.
  */
 class Creative(instagram:Instagram) : RequestCollection(instagram)
 {
@@ -26,26 +26,26 @@ class Creative(instagram:Instagram) : RequestCollection(instagram)
      * @return .InstagramAPI.Response.StickerAssetsResponse
      */
     public fun getStickerAssets(
-        $stickerType = 'static_stickers',
+        $stickerType = "static_stickers",
         array $location = null)
     {
-        if ($stickerType != 'static_stickers') {
-            throw .InvalidArgumentException('You must provide a valid sticker type.')
+        if ($stickerType != "static_stickers") {
+            throw .InvalidArgumentException("You must provide a valid sticker type.")
         }
-        if ($location !== null && (!isset($location['lat'])
-                                    || !isset($location['lng'])
-                                    || !isset($location['horizontalAccuracy']))) {
-            throw .InvalidArgumentException('Your location array must contain keys for "lat", "lng" and "horizontalAccuracy".')
+        if ($location !== null && (!isset($location["lat"])
+                                    || !isset($location["lng"])
+                                    || !isset($location["horizontalAccuracy"]))) {
+            throw .InvalidArgumentException("Your location array must contain keys for "lat", "lng" and "horizontalAccuracy".")
         }
 
-        $request = this.ig.request('creatives/assets/')
-            .addPost('type', $stickerType)
+        $request = this.ig.request("creatives/assets/")
+            .addPost("type", $stickerType)
 
         if ($location !== null) {
             $request
-                .addPost('lat', $location['lat'])
-                .addPost('lng', $location['lng'])
-                .addPost('horizontalAccuracy', $location['horizontalAccuracy'])
+                .addPost("lat", $location["lat"])
+                .addPost("lng", $location["lng"])
+                .addPost("horizontalAccuracy", $location["horizontalAccuracy"])
         }
 
         return $request.getResponse(Response.StickerAssetsResponse())
@@ -63,11 +63,11 @@ class Creative(instagram:Instagram) : RequestCollection(instagram)
      */
     public fun getFaceModels()
     {
-        return this.ig.request('creatives/face_models/')
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('aml_facetracker_model_version', 12)
+        return this.ig.request("creatives/face_models/")
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("aml_facetracker_model_version", 12)
             .getResponse(Response.FaceModelsResponse())
     }
 
@@ -88,17 +88,17 @@ class Creative(instagram:Instagram) : RequestCollection(instagram)
     public fun getFaceEffects(
         array $location = null)
     {
-        $request = this.ig.request('creatives/face_effects/')
-            .addPost('_uuid', this.ig.uuid)
-            .addPost('_uid', this.ig.account_id)
-            .addPost('_csrftoken', this.ig.client.getToken())
-            .addPost('supported_capabilities_new', json_encode(Constants::SUPPORTED_CAPABILITIES))
+        $request = this.ig.request("creatives/face_effects/")
+            .addPost("_uuid", this.ig.uuid)
+            .addPost("_uid", this.ig.account_id)
+            .addPost("_csrftoken", this.ig.client.getToken())
+            .addPost("supported_capabilities_new", json_encode(Constants::SUPPORTED_CAPABILITIES))
 
         if ($location !== null) {
             $request
-                .addPost('lat', $location['lat'])
-                .addPost('lng', $location['lng'])
-                .addPost('horizontalAccuracy', $location['horizontalAccuracy'])
+                .addPost("lat", $location["lat"])
+                .addPost("lng", $location["lng"])
+                .addPost("horizontalAccuracy", $location["horizontalAccuracy"])
         }
 
         return $request.getResponse(Response.FaceEffectsResponse())

@@ -51,16 +51,16 @@ import InstagramAPI.AutoPropertyMapper
 class Token : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'carrier_name'                    => 'string',
-        'carrier_id'                      => 'int',
-        'ttl'                             => 'int',
-        'features'                        => '',
-        'request_time'                    => 'string',
-        'token_hash'                      => 'string',
-        'rewrite_rules'                   => 'RewriteRule[]',
-        'enabled_wallet_defs_keys'        => '',
-        'deadline'                        => 'string',
-        'zero_cms_fetch_interval_seconds' => 'int',
+        "carrier_name"                    => "string",
+        "carrier_id"                      => "int",
+        "ttl"                             => "int",
+        "features"                        => "",
+        "request_time"                    => "string",
+        "token_hash"                      => "string",
+        "rewrite_rules"                   => "RewriteRule[]",
+        "enabled_wallet_defs_keys"        => "",
+        "deadline"                        => "string",
+        "zero_cms_fetch_interval_seconds" => "int",
     ]
 
     val DEFAULT_TTL = 3600

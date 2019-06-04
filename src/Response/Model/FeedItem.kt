@@ -35,11 +35,11 @@ import InstagramAPI.AutoPropertyMapper
 class FeedItem : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'media_or_ad'            => 'Item',
-        'stories_netego'         => 'StoriesNetego',
-        'ad4ad'                  => 'Ad4ad',
-        'suggested_users'        => 'SuggestedUsers',
-        'end_of_feed_demarcator' => '',
-        'ad_link_type'           => 'int',
+        "media_or_ad"            => "Item",
+        "stories_netego"         => "StoriesNetego",
+        "ad4ad"                  => "Ad4ad",
+        "suggested_users"        => "SuggestedUsers",
+        "end_of_feed_demarcator" => "",
+        "ad_link_type"           => "int",
     ]
 }

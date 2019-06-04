@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class FaceModels : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'face_align_model'  => '',
-        'face_detect_model' => '',
-        'pdm_multires'      => '',
+        "face_align_model"  => "",
+        "face_detect_model" => "",
+        "pdm_multires"      => "",
     ]
 }

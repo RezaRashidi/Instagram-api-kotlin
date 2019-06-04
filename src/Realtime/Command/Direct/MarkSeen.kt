@@ -6,7 +6,7 @@ import InstagramAPI.Realtime.Command.DirectCommand
 
 final class MarkSeen : DirectCommand
 {
-    val ACTION = 'mark_seen'
+    val ACTION = "mark_seen"
 
     /**
      * Constructor.
@@ -24,7 +24,7 @@ final class MarkSeen : DirectCommand
     {
         parent::__construct(self::ACTION, $threadId, $options)
 
-        this._data['item_id'] = this._validateThreadItemId($threadItemId)
+        this._data["item_id"] = this._validateThreadItemId($threadItemId)
     }
 
     /** {@inheritdoc} */

@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class PostLiveViewerListResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'users'              => 'Model.User[]',
-        'next_max_id'        => '',
-        'total_viewer_count' => 'int',
+        "users"              => "Model.User[]",
+        "next_max_id"        => "",
+        "total_viewer_count" => "int",
     ]
 }

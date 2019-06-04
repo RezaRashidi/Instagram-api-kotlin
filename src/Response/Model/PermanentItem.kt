@@ -67,19 +67,19 @@ import InstagramAPI.AutoPropertyMapper
 class PermanentItem : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'item_id'          => 'string',
-        'user_id'          => 'string',
-        'timestamp'        => 'string',
-        'item_type'        => 'string',
-        'profile'          => 'User',
-        'text'             => 'string',
-        'location'         => 'Location',
-        'like'             => '',
-        'media'            => 'MediaData',
-        'link'             => 'Link',
-        'media_share'      => 'Item',
-        'reel_share'       => 'ReelShare',
-        'client_context'   => 'string',
-        'live_video_share' => 'LiveVideoShare',
+        "item_id"          => "string",
+        "user_id"          => "string",
+        "timestamp"        => "string",
+        "item_type"        => "string",
+        "profile"          => "User",
+        "text"             => "string",
+        "location"         => "Location",
+        "like"             => "",
+        "media"            => "MediaData",
+        "link"             => "Link",
+        "media_share"      => "Item",
+        "reel_share"       => "ReelShare",
+        "client_context"   => "string",
+        "live_video_share" => "LiveVideoShare",
     ]
 }

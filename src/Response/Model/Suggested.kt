@@ -31,10 +31,10 @@ import InstagramAPI.AutoPropertyMapper
 class Suggested : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'position'     => 'int',
-        'hashtag'      => 'Hashtag',
-        'user'         => 'User',
-        'place'        => 'LocationItem',
-        'client_time'  => '',
+        "position"     => "int",
+        "hashtag"      => "Hashtag",
+        "user"         => "User",
+        "place"        => "LocationItem",
+        "client_time"  => "",
     ]
 }

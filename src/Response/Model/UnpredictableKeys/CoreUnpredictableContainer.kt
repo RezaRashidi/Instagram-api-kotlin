@@ -15,13 +15,13 @@ import LazyJsonMapper.Exception.LazyJsonMapperException
  * The `getData()` fun retrieves all key-value pairs, converted to the
  * optional `$_type` (if one is set via a subclass). And `setData()` writes
  * the data back into the core LazyJsonMapper container. Most people will
- * not need to import the setter. It's just provided as an extra feature.
+ * not need to import the setter. It"s just provided as an extra feature.
  *
  * @author SteveJobzniak (https://github.com/SteveJobzniak)
  */
 class CoreUnpredictableContainer : AutoPropertyMapper
 {
-    // Let's disable direct access to this container via anything other than
+    // Let"s disable direct access to this container via anything other than
     // the funs that WE define ourselves! That way, people cannot use
     // virtual properties/funs to manipulate the core data storage.
     val ALLOW_VIRTUAL_PROPERTIES = false

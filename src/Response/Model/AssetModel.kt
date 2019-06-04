@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class AssetModel : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'asset_url' => 'string',
-        'id'        => 'string',
+        "asset_url" => "string",
+        "id"        => "string",
     ]
 }

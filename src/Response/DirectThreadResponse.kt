@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class DirectThreadResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'thread' => 'Model.DirectThread',
+        "thread" => "Model.DirectThread",
     ]
 }

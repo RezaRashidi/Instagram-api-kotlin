@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class FaceModelsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'face_models' => 'Model.FaceModels',
+        "face_models" => "Model.FaceModels",
     ]
 }

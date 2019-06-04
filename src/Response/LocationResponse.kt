@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class LocationResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'venues'     => 'Model.Location[]',
-        'request_id' => 'string',
+        "venues"     => "Model.Location[]",
+        "request_id" => "string",
     ]
 }

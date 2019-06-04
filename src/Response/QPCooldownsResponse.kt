@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class QPCooldownsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'global'    => 'int',
-        'default'   => 'int',
-        'surfaces'  => 'Model.QPSurface[]',
-        'slots'     => 'Model.Slot[]',
+        "global"    => "int",
+        "default"   => "int",
+        "surfaces"  => "Model.QPSurface[]",
+        "slots"     => "Model.Slot[]",
     ]
 }

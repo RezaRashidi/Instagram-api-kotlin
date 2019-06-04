@@ -63,18 +63,18 @@ import InstagramAPI.AutoPropertyMapper
 class UserCard : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'user'              => 'User',
-        'algorithm'         => 'string',
-        'social_context'    => 'string',
-        'caption'           => '',
-        'icon'              => '',
-        'media_ids'         => '',
-        'thumbnail_urls'    => '',
-        'large_urls'        => '',
-        'media_infos'       => '',
-        'value'             => 'float',
-        'is_new_suggestion' => 'bool',
-        'uuid'              => 'string',
-        'followed_by'       => 'bool',
+        "user"              => "User",
+        "algorithm"         => "string",
+        "social_context"    => "string",
+        "caption"           => "",
+        "icon"              => "",
+        "media_ids"         => "",
+        "thumbnail_urls"    => "",
+        "large_urls"        => "",
+        "media_infos"       => "",
+        "value"             => "float",
+        "is_new_suggestion" => "bool",
+        "uuid"              => "string",
+        "followed_by"       => "bool",
     ]
 }

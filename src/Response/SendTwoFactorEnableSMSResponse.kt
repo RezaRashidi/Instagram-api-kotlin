@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class SendTwoFactorEnableSMSResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'phone_verification_settings' => 'Model.PhoneVerificationSettings',
-        'obfuscated_phone_number'     => '',
+        "phone_verification_settings" => "Model.PhoneVerificationSettings",
+        "obfuscated_phone_number"     => "",
     ]
 }

@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class Stories : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'is_portrait' => '',
-        'tray'        => 'StoryTray[]',
-        'id'          => 'string',
-        'top_live'    => 'TopLive',
+        "is_portrait" => "",
+        "tray"        => "StoryTray[]",
+        "id"          => "string",
+        "top_live"    => "TopLive",
     ]
 }

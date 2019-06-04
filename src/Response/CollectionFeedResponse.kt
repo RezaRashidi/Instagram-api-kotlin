@@ -55,13 +55,13 @@ import InstagramAPI.Response
 class CollectionFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'collection_id'          => 'string',
-        'collection_name'        => 'string',
-        'items'                  => 'Model.SavedFeedItem[]',
-        'num_results'            => 'int',
-        'more_available'         => 'bool',
-        'auto_load_more_enabled' => 'bool',
-        'next_max_id'            => 'string',
-        'has_related_media'      => 'bool',
+        "collection_id"          => "string",
+        "collection_name"        => "string",
+        "items"                  => "Model.SavedFeedItem[]",
+        "num_results"            => "int",
+        "more_available"         => "bool",
+        "auto_load_more_enabled" => "bool",
+        "next_max_id"            => "string",
+        "has_related_media"      => "bool",
     ]
 }

@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class FriendshipResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'friendship_status' => 'Model.FriendshipStatus',
+        "friendship_status" => "Model.FriendshipStatus",
     ]
 }

@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class ReportExploreMediaResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'explore_report_status' => '',
+        "explore_report_status" => "",
     ]
 }

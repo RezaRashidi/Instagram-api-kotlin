@@ -10,7 +10,7 @@ package InstagramAPI.Settings
  * backends can focus on dealing with basic, fully verified data (instead of
  * writing and maintaining a bunch of boilerplate code to verify parameters).
  *
- * All funs in this file are listed in roughly the sequence they're called
+ * All funs in this file are listed in roughly the sequence they"re called
  * during normal operation. You can completely trust that they are called in a
  * sane order and that you do not need to validate the call order.
  *
@@ -21,7 +21,7 @@ package InstagramAPI.Settings
  * columns", becaimport we will OFTEN be storing empty strings in all fields. Your
  * storage backends MUST import STRING storage and MUST allow EMPTY strings.
  *
- * Data length varies, but it's a VERY bad idea for you to cap the length. We
+ * Data length varies, but it"s a VERY bad idea for you to cap the length. We
  * may need to store very long data someday. For example, the cookie data that
  * we already store is usually around 2000 characters long.
  *
@@ -56,11 +56,11 @@ interface StorageInterface
      * connecting to a database, creating tables, or loading from disk.
      *
      * You can treat this as your "constructor", but you may ALSO want a
-     * separate constructor for any work that you DON'T want to repeat every
-     * time that you're told to open a different storage location.
+     * separate constructor for any work that you DON"T want to repeat every
+     * time that you"re told to open a different storage location.
      *
      * However, you MUST put ALL per-storage startup code in THIS fun,
-     * since a normal constructor is only called a single time, as you're aware.
+     * since a normal constructor is only called a single time, as you"re aware.
      *
      * @param array $locationConfig Configuration parameters for the location.
      *
@@ -90,11 +90,11 @@ interface StorageInterface
      * Move the internal data for a username to a username.
      *
      * Is NEVER called for the currently loaded user, so Storage backend writers
-     * can safely assume that you'll never be asked to rename the loaded user.
+     * can safely assume that you"ll never be asked to rename the loaded user.
      *
      * Before performing the move, this fun MUST validate that the OLD user
-     * EXISTS and that the user DOESN'T EXIST, and MUST throw an exception
-     * if either of those checks fail. This is to ensure that users don't lose
+     * EXISTS and that the user DOESN"T EXIST, and MUST throw an exception
+     * if either of those checks fail. This is to ensure that users don"t lose
      * data by accidentally overwriting something.
      *
      * @param string $oldUsername The old name that settings are stored as.
@@ -110,7 +110,7 @@ interface StorageInterface
      * Delete all internal data for a given username.
      *
      * Is NEVER called for the currently loaded user, so Storage backend writers
-     * can safely assume that you'll never be asked to delete the loaded user.
+     * can safely assume that you"ll never be asked to delete the loaded user.
      *
      * This fun MUST treat a non-existent or already deleted user as
      * "success". ONLY throw an exception if ACTUAL deletion fails.
@@ -127,9 +127,9 @@ interface StorageInterface
      *
      * If the user does not exist, THIS call MUST create their user storage, or
      * at least do any necessary preparations so that the other funs can
-     * read/write to the user's storage (and behave as specified).
+     * read/write to the user"s storage (and behave as specified).
      *
-     * Is called every time we're switching to a user, and happens before we
+     * Is called every time we"re switching to a user, and happens before we
      * call any user-specific data retrieval funs.
      *
      * This fun must cache the user reference and perform necessary backend
@@ -163,7 +163,7 @@ interface StorageInterface
      * selectively saving only the modified setting. But most backends should
      * simply JSON-encode the whole $userSettings array and store that string.
      *
-     * @param array  $userSettings An array with all of the user's key-value pairs.
+     * @param array  $userSettings An array with all of the user"s key-value pairs.
      * @param string $triggerKey   The differing key which triggered the write.
      *
      * @throws .InstagramAPI.Exception.SettingsException
@@ -180,7 +180,7 @@ interface StorageInterface
      * other storage backends (such as databases) MUST also verify that their
      * existing cookie data is non-empty.
      *
-     * Don't validate the actual cookie contents, just look for non-zero size!
+     * Don"t validate the actual cookie contents, just look for non-zero size!
      *
      * @throws .InstagramAPI.Exception.SettingsException
      *
@@ -237,8 +237,8 @@ interface StorageInterface
     /**
      * Close the settings storage for the currently active user.
      *
-     * Is called every time we're switching away from a user, BEFORE the new
-     * user's loadUserSettings() call. Should be used for doing things like
+     * Is called every time we"re switching away from a user, BEFORE the new
+     * user"s loadUserSettings() call. Should be used for doing things like
      * closing previous per-user file handles in the backend, and unsetting the
      * cached user information that was set in the openUser() call.
      *

@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class ProductTags : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'in'        => 'In[]',
+        "in"        => "In[]",
     ]
 }

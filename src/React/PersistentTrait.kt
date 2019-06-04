@@ -23,7 +23,7 @@ trait PersistentTrait
     {
         if (this._reconnectTimer !== null) {
             if (this._reconnectTimer.isActive()) {
-                this.getLogger().info('Existing reconnect timer has been canceled.')
+                this.getLogger().info("Existing reconnect timer has been canceled.")
                 this._reconnectTimer.cancel()
             }
             this._reconnectTimer = null
@@ -49,7 +49,7 @@ trait PersistentTrait
                 this._reconnectInterval * 2
             )
         )
-        this.getLogger().info(sprintf('Setting up reconnect timer to %d seconds.', this._reconnectInterval))
+        this.getLogger().info(sprintf("Setting up reconnect timer to %d seconds.", this._reconnectInterval))
         this._reconnectTimer = this.getLoop().addTimer(this._reconnectInterval, fun () import ($callback) {
             /** @var PromiseInterface $promise */
             $promise = $callback()

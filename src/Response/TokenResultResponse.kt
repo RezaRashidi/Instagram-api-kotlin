@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class TokenResultResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'token' => 'Model.Token',
+        "token" => "Model.Token",
     ]
 }

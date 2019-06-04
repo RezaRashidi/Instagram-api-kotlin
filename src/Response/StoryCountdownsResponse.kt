@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class StoryCountdownsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'countdowns' => 'Model.CountdownSticker[]',
+        "countdowns" => "Model.CountdownSticker[]",
     ]
 }

@@ -6,7 +6,7 @@ import InstagramAPI.Realtime.Command.DirectCommand
 
 final class IndicateActivity : DirectCommand
 {
-    val ACTION = 'indicate_activity'
+    val ACTION = "indicate_activity"
 
     /**
      * Constructor.
@@ -24,7 +24,7 @@ final class IndicateActivity : DirectCommand
     {
         parent::__construct(self::ACTION, $threadId, $options)
 
-        this._data['activity_status'] = $status ? '1' : '0'
+        this._data["activity_status"] = $status ? "1" : "0"
     }
 
     /** {@inheritdoc} */

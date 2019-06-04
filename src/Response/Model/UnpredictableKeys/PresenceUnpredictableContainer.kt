@@ -7,5 +7,5 @@ package InstagramAPI.Response.Model.UnpredictableKeys
  */
 class PresenceUnpredictableContainer : CoreUnpredictableContainer
 {
-    protected $_type = '.InstagramAPI.Response.Model.UserPresence'
+    protected $_type = ".InstagramAPI.Response.Model.UserPresence"
 }
