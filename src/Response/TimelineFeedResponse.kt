@@ -75,19 +75,19 @@ import InstagramAPI.Response
 class TimelineFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'num_results'                    => 'int',
-        'client_gap_enforcer_matrix'     => '',
-        'is_direct_v2_enabled'           => 'bool',
-        'auto_load_more_enabled'         => 'bool',
-        'more_available'                 => 'bool',
-        'next_max_id'                    => 'string',
-        'pagination_info'                => '',
-        'feed_items'                     => 'Model.FeedItem[]',
-        'megaphone'                      => 'Model.FeedAysf',
-        'client_feed_changelist_applied' => 'bool',
-        'view_state_version'             => 'string',
-        'feed_pill_text'                 => 'string',
-        'client_gap_enforcer_matrix'     => '',
-        'client_session_id'              => 'string',
+        "num_results"                    => "int",
+        "client_gap_enforcer_matrix"     => "",
+        "is_direct_v2_enabled"           => "bool",
+        "auto_load_more_enabled"         => "bool",
+        "more_available"                 => "bool",
+        "next_max_id"                    => "string",
+        "pagination_info"                => "",
+        "feed_items"                     => "Model.FeedItem[]",
+        "megaphone"                      => "Model.FeedAysf",
+        "client_feed_changelist_applied" => "bool",
+        "view_state_version"             => "string",
+        "feed_pill_text"                 => "string",
+        "client_gap_enforcer_matrix"     => "",
+        "client_session_id"              => "string",
     ]
 }

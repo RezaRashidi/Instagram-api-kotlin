@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class FormerUsernameInfo : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'has_former_usernames' => 'bool',
+        "has_former_usernames" => "bool",
     ]
 }

@@ -31,10 +31,10 @@ import InstagramAPI.AutoPropertyMapper
 class Responder : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'response'            => 'string',
-        'has_shared_response' => 'bool',
-        'id'                  => 'string',
-        'user'                => 'User',
-        'ts'                  => 'int',
+        "response"            => "string",
+        "has_shared_response" => "bool",
+        "id"                  => "string",
+        "user"                => "User",
+        "ts"                  => "int",
     ]
 }

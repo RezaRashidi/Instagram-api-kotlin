@@ -6,7 +6,7 @@ import InstagramAPI.Realtime.Command.DirectCommand
 
 abstract class SendItem : DirectCommand
 {
-    val ACTION = 'send_item'
+    val ACTION = "send_item"
 
     /**
      * Constructor.
@@ -26,9 +26,9 @@ abstract class SendItem : DirectCommand
 
         // Handle action.
         if (!in_array($itemType, this._getSupportedItemTypes(), true)) {
-            throw .InvalidArgumentException(sprintf('"%s" is not a supported item type.', $itemType))
+            throw .InvalidArgumentException(sprintf(""%s" is not a supported item type.", $itemType))
         }
-        this._data['item_type'] = $itemType
+        this._data["item_type"] = $itemType
     }
 
     /** {@inheritdoc} */

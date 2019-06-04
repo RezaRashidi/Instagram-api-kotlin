@@ -31,10 +31,10 @@ import InstagramAPI.AutoPropertyMapper
 class ArchivedStoriesFeedItem : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'timestamp'             => 'string',
-        'media_count'           => 'int',
-        'id'                    => 'string',
-        'reel_type'             => 'string',
-        'latest_reel_media'     => 'string',
+        "timestamp"             => "string",
+        "media_count"           => "int",
+        "id"                    => "string",
+        "reel_type"             => "string",
+        "latest_reel_media"     => "string",
     ]
 }

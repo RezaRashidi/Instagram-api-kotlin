@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class SendConfirmEmailResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'title'          => '',
-        'is_email_legit' => '',
-        'body'           => '',
+        "title"          => "",
+        "is_email_legit" => "",
+        "body"           => "",
     ]
 }

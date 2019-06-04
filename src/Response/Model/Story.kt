@@ -31,10 +31,10 @@ import InstagramAPI.AutoPropertyMapper
 class Story : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'pk'         => 'string',
-        'counts'     => 'Counts',
-        'args'       => 'Args',
-        'type'       => 'int',
-        'story_type' => 'int',
+        "pk"         => "string",
+        "counts"     => "Counts",
+        "args"       => "Args",
+        "type"       => "int",
+        "story_type" => "int",
     ]
 }

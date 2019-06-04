@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class SavedFeedItem : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'media' => 'Item',
+        "media" => "Item",
     ]
 }

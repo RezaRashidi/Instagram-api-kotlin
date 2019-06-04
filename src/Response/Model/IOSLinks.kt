@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class IOSLinks : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'linkType'    => 'int',
-        'canvasDocId' => 'string',
+        "linkType"    => "int",
+        "canvasDocId" => "string",
     ]
 }

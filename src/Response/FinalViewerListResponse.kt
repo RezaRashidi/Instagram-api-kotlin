@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class FinalViewerListResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'users'                     => 'Model.User[]',
-        'total_unique_viewer_count' => 'int',
+        "users"                     => "Model.User[]",
+        "total_unique_viewer_count" => "int",
     ]
 }

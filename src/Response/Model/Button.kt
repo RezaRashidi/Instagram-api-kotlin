@@ -39,12 +39,12 @@ import InstagramAPI.AutoPropertyMapper
 class Button : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'text'             => 'string',
-        'url'              => 'string',
-        'action'           => '',
-        'background_color' => '',
-        'border_color'     => '',
-        'text_color'       => '',
-        'action_info'      => '',
+        "text"             => "string",
+        "url"              => "string",
+        "action"           => "",
+        "background_color" => "",
+        "border_color"     => "",
+        "text_color"       => "",
+        "action_info"      => "",
     ]
 }

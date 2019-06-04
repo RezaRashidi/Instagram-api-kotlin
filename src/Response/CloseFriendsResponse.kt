@@ -44,6 +44,6 @@ class CloseFriendsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         Model.CloseFriends::class, // Import property map.
-        'next_max_id' => 'string',
+        "next_max_id" => "string",
     ]
 }

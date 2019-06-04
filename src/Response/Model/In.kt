@@ -35,11 +35,11 @@ import InstagramAPI.AutoPropertyMapper
 class In : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'position'                   => 'float[]',
-        'user'                       => 'User',
-        'time_in_video'              => '',
-        'start_time_in_video_in_sec' => '',
-        'duration_in_video_in_sec'   => '',
-        'product'                    => 'Product',
+        "position"                   => "float[]",
+        "user"                       => "User",
+        "time_in_video"              => "",
+        "start_time_in_video_in_sec" => "",
+        "duration_in_video_in_sec"   => "",
+        "product"                    => "Product",
     ]
 }

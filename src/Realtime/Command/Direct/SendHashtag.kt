@@ -4,7 +4,7 @@ package InstagramAPI.Realtime.Command.Direct
 
 final class SendHashtag : ShareItem
 {
-    val TYPE = 'hashtag'
+    val TYPE = "hashtag"
 
     /**
      * Constructor.
@@ -23,20 +23,20 @@ final class SendHashtag : ShareItem
         parent::__construct($threadId, self::TYPE, $options)
 
         if (!is_string($hashtag)) {
-            throw .InvalidArgumentException('The hashtag must be a string.')
+            throw .InvalidArgumentException("The hashtag must be a string.")
         }
 
-        $hashtag = ltrim(trim($hashtag), '#')
-        if ($hashtag === '') {
-            throw .InvalidArgumentException('The hashtag must not be empty.')
+        $hashtag = ltrim(trim($hashtag), "#")
+        if ($hashtag === "") {
+            throw .InvalidArgumentException("The hashtag must not be empty.")
         }
 
-        if (strpos($hashtag, ' ') !== false) {
-            throw .InvalidArgumentException('The hashtag must be one word.')
+        if (strpos($hashtag, " ") !== false) {
+            throw .InvalidArgumentException("The hashtag must be one word.")
         }
 
-        this._data['hashtag'] = $hashtag
+        this._data["hashtag"] = $hashtag
         // Yeah, we need to send the hashtag twice.
-        this._data['item_id'] = $hashtag
+        this._data["item_id"] = $hashtag
     }
 }

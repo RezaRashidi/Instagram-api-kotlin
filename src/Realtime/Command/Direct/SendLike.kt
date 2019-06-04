@@ -4,7 +4,7 @@ package InstagramAPI.Realtime.Command.Direct
 
 final class SendLike : SendItem
 {
-    val TYPE = 'like'
+    val TYPE = "like"
 
     /**
      * Constructor.

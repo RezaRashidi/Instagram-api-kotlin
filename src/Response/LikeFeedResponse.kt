@@ -51,12 +51,12 @@ import InstagramAPI.Response
 class LikeFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'auto_load_more_enabled' => '',
-        'items'                  => 'Model.Item[]',
-        'more_available'         => '',
-        'patches'                => '',
-        'last_counted_at'        => '',
-        'num_results'            => 'int',
-        'next_max_id'            => 'string',
+        "auto_load_more_enabled" => "",
+        "items"                  => "Model.Item[]",
+        "more_available"         => "",
+        "patches"                => "",
+        "last_counted_at"        => "",
+        "num_results"            => "int",
+        "next_max_id"            => "string",
     ]
 }

@@ -101,16 +101,16 @@ class Notification
         if (isset($data.tt)) {
             this._tickerText = (string) $data.tt
         }
-        this._actionPath = ''
+        this._actionPath = ""
         this._actionParams = []
         if (isset($data.ig)) {
             this._igAction = (string) $data.ig
             $parts = parse_url(this._igAction)
-            if (isset($parts['path'])) {
-                this._actionPath = $parts['path']
+            if (isset($parts["path"])) {
+                this._actionPath = $parts["path"]
             }
-            if (isset($parts['query'])) {
-                parse_str($parts['query'], this._actionParams)
+            if (isset($parts["query"])) {
+                parse_str($parts["query"], this._actionParams)
             }
         }
         if (isset($data.collapse_key)) {

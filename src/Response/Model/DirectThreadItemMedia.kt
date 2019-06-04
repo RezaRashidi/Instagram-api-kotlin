@@ -39,10 +39,10 @@ class DirectThreadItemMedia : AutoPropertyMapper
          * against the `DirectThreadItemMedia::PHOTO` and
          * `DirectThreadItemMedia::VIDEO` constants!
          */
-        'media_type'      => 'int',
-        'image_versions2' => 'Image_Versions2',
-        'video_versions'  => 'VideoVersions[]',
-        'original_width'  => 'int',
-        'original_height' => 'int',
+        "media_type"      => "int",
+        "image_versions2" => "Image_Versions2",
+        "video_versions"  => "VideoVersions[]",
+        "original_width"  => "int",
+        "original_height" => "int",
     ]
 }

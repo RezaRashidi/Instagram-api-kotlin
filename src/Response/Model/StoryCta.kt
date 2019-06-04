@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class StoryCta : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'links'          => 'AndroidLinks[]',
+        "links"          => "AndroidLinks[]",
     ]
 }

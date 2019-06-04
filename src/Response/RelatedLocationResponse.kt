@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class RelatedLocationResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'related' => 'Model.Location[]',
+        "related" => "Model.Location[]",
     ]
 }

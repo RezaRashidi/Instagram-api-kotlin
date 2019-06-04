@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class ChainingInfo : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'sources' => 'string',
+        "sources" => "string",
     ]
 }

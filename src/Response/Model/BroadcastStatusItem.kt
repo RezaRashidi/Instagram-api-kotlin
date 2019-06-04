@@ -31,10 +31,10 @@ import InstagramAPI.AutoPropertyMapper
 class BroadcastStatusItem : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'broadcast_status'       => 'string',
-        'has_reduced_visibility' => 'bool',
-        'cover_frame_url'        => 'string',
-        'viewer_count'           => 'int',
-        'id'                     => 'string',
+        "broadcast_status"       => "string",
+        "has_reduced_visibility" => "bool",
+        "cover_frame_url"        => "string",
+        "viewer_count"           => "int",
+        "id"                     => "string",
     ]
 }

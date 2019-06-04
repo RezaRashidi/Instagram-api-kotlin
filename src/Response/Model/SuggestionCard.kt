@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class SuggestionCard : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'user_card'            => 'UserCard',
-        'upsell_ci_card'       => '',
-        'upsell_fbc_card'      => '',
+        "user_card"            => "UserCard",
+        "upsell_ci_card"       => "",
+        "upsell_fbc_card"      => "",
     ]
 }

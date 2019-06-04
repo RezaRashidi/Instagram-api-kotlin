@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class BlockedListResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'blocked_list' => 'Model.User[]',
-        'next_max_id'  => 'string',
-        'page_size'    => '',
+        "blocked_list" => "Model.User[]",
+        "next_max_id"  => "string",
+        "page_size"    => "",
     ]
 }

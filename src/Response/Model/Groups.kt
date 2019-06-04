@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class Groups : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'type'  => '',
-        'items' => 'Item[]',
+        "type"  => "",
+        "items" => "Item[]",
     ]
 }

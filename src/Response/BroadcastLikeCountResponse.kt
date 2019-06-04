@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class BroadcastLikeCountResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'like_ts'     => 'string',
-        'likes'       => 'int',
-        'burst_likes' => 'int',
-        'likers'      => 'Model.User[]',
+        "like_ts"     => "string",
+        "likes"       => "int",
+        "burst_likes" => "int",
+        "likers"      => "Model.User[]",
     ]
 }

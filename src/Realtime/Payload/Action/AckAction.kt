@@ -27,7 +27,7 @@ import InstagramAPI.Realtime.Payload.RealtimeAction
 class AckAction : RealtimeAction
 {
     val JSON_PROPERTY_MAP = [
-        'status_code' => '',
-        'payload'     => '.InstagramAPI.Response.Model.DirectSendItemPayload',
+        "status_code" => "",
+        "payload"     => ".InstagramAPI.Response.Model.DirectSendItemPayload",
     ]
 }

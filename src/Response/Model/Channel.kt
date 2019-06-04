@@ -39,12 +39,12 @@ import InstagramAPI.AutoPropertyMapper
 class Channel : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'channel_id'   => 'string',
-        'channel_type' => '',
-        'title'        => '',
-        'header'       => '',
-        'media_count'  => 'int',
-        'media'        => 'Item',
-        'context'      => '',
+        "channel_id"   => "string",
+        "channel_type" => "",
+        "title"        => "",
+        "header"       => "",
+        "media_count"  => "int",
+        "media"        => "Item",
+        "context"      => "",
     ]
 }

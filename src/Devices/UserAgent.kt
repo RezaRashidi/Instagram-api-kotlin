@@ -16,13 +16,13 @@ class UserAgent
      *
      * @var string
      */
-    val USER_AGENT_FORMAT = 'Instagram %s Android (%s/%s %s %s %s %s %s %s %s %s)'
+    val USER_AGENT_FORMAT = "Instagram %s Android (%s/%s %s %s %s %s %s %s %s %s)"
 
     /**
      * Generates a User Agent string from a DeviceInterface.
      *
      * @param string          $appVersion Instagram client app version.
-     * @param string          $userLocale The user's locale, such as "en_US".
+     * @param string          $userLocale The user"s locale, such as "en_US".
      * @param DeviceInterface $device
      *
      * @return string
@@ -35,7 +35,7 @@ class UserAgent
         // Build the appropriate "Manufacturer" or "Manufacturer/Brand" string.
         $manufacturerWithBrand = $device.getManufacturer()
         if ($device.getBrand() !== null) {
-            $manufacturerWithBrand .= '/'.$device.getBrand()
+            $manufacturerWithBrand .= "/".$device.getBrand()
         }
 
         // Generate the final User-Agent string.
@@ -65,18 +65,18 @@ class UserAgent
     protected static fun _escapeFbString(
         $string)
     {
-        $result = ''
+        $result = ""
         for ($i = 0 $i < strlen($string) ++$i) {
             $char = $string[$i]
-            if ($char === '&') {
-                $result .= '&amp'
-            } elseif ($char < ' ' || $char > '~') {
-                $result .= sprintf('&#%d', ord($char))
+            if ($char === "&") {
+                $result .= "&amp"
+            } elseif ($char < " " || $char > "~") {
+                $result .= sprintf("&#%d", ord($char))
             } else {
                 $result .= $char
             }
         }
-        $result = strtr($result, ['/' => '-', '' => '-'])
+        $result = strtr($result, ["/" => "-", "" => "-"])
 
         return $result
     }
@@ -87,7 +87,7 @@ class UserAgent
      * @param string          $appName     Application name.
      * @param string          $appVersion  Instagram client app version.
      * @param string          $versionCode Instagram client app version code.
-     * @param string          $userLocale  The user's locale, such as "en_US".
+     * @param string          $userLocale  The user"s locale, such as "en_US".
      * @param DeviceInterface $device
      *
      * @throws .InvalidArgumentException If the device parameter is invalid.
@@ -101,29 +101,29 @@ class UserAgent
         $userLocale,
         DeviceInterface $device)
     {
-        list($width, $height) = explode('x', $device.getResolution())
-        $density = round(str_replace('dpi', '', $device.getDPI()) / 160, 1)
+        list($width, $height) = explode("x", $device.getResolution())
+        $density = round(str_replace("dpi", "", $device.getDPI()) / 160, 1)
         $result = [
-            'FBAN' => $appName,
-            'FBAV' => $appVersion,
-            'FBBV' => $versionCode,
-            'FBDM' => sprintf('{density=%.1f,width=%d,height=%d}', $density, $width, $height),
-            'FBLC' => $userLocale,
-            'FBCR' => '', // We don't have cellular.
-            'FBMF' => self::_escapeFbString($device.getManufacturer()),
-            'FBBD' => self::_escapeFbString($device.getBrand() ? $device.getBrand() : $device.getManufacturer()),
-            'FBPN' => Constants::PACKAGE_NAME,
-            'FBDV' => self::_escapeFbString($device.getModel()),
-            'FBSV' => self::_escapeFbString($device.getAndroidRelease()),
-            'FBLR' => 0, // android.hardware.ram.low
-            'FBBK' => 1, // val (at least in 10.12.0).
-            'FBCA' => self::_escapeFbString(GoodDevices::CPU_ABI),
+            "FBAN" => $appName,
+            "FBAV" => $appVersion,
+            "FBBV" => $versionCode,
+            "FBDM" => sprintf("{density=%.1f,width=%d,height=%d}", $density, $width, $height),
+            "FBLC" => $userLocale,
+            "FBCR" => "", // We don"t have cellular.
+            "FBMF" => self::_escapeFbString($device.getManufacturer()),
+            "FBBD" => self::_escapeFbString($device.getBrand() ? $device.getBrand() : $device.getManufacturer()),
+            "FBPN" => Constants::PACKAGE_NAME,
+            "FBDV" => self::_escapeFbString($device.getModel()),
+            "FBSV" => self::_escapeFbString($device.getAndroidRelease()),
+            "FBLR" => 0, // android.hardware.ram.low
+            "FBBK" => 1, // val (at least in 10.12.0).
+            "FBCA" => self::_escapeFbString(GoodDevices::CPU_ABI),
         ]
         array_walk($result, fun (&$value, $key) {
-            $value = sprintf('%s/%s', $key, $value)
+            $value = sprintf("%s/%s", $key, $value)
         })
 
         // Trailing semicolon is essential.
-        return '['.implode('', $result).']'
+        return "[".implode("", $result)."]"
     }
 }

@@ -15,6 +15,6 @@ import InstagramAPI.AutoPropertyMapper
 class Megaphone : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'generic_megaphone' => 'GenericMegaphone',
+        "generic_megaphone" => "GenericMegaphone",
     ]
 }

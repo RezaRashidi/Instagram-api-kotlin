@@ -39,9 +39,9 @@ import InstagramAPI.Response
 class DiscoverPeopleResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'more_available'      => 'bool',
-        'max_id'              => 'string',
-        'suggested_users'     => 'Model.SuggestedUsers',
-        'new_suggested_users' => 'Model.SuggestedUsers',
+        "more_available"      => "bool",
+        "max_id"              => "string",
+        "suggested_users"     => "Model.SuggestedUsers",
+        "new_suggested_users" => "Model.SuggestedUsers",
     ]
 }

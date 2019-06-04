@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class CatalogData : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'page_info'          => 'PageInfo',
-        'edges'              => 'CatalogEdge[]',
+        "page_info"          => "PageInfo",
+        "edges"              => "CatalogEdge[]",
     ]
 }

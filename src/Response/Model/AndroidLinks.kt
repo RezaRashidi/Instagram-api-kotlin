@@ -51,15 +51,15 @@ import InstagramAPI.AutoPropertyMapper
 class AndroidLinks : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'linkType'          => 'int',
-        'webUri'            => 'string',
-        'androidClass'      => 'string',
-        'package'           => 'string',
-        'deeplinkUri'       => 'string',
-        'callToActionTitle' => 'string',
-        'redirectUri'       => 'string',
-        'igUserId'          => 'string',
-        'leadGenFormId'     => 'string',
-        'canvasDocId'       => 'string',
+        "linkType"          => "int",
+        "webUri"            => "string",
+        "androidClass"      => "string",
+        "package"           => "string",
+        "deeplinkUri"       => "string",
+        "callToActionTitle" => "string",
+        "redirectUri"       => "string",
+        "igUserId"          => "string",
+        "leadGenFormId"     => "string",
+        "canvasDocId"       => "string",
     ]
 }

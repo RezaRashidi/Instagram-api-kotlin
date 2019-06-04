@@ -665,7 +665,7 @@ package InstagramAPI.Response.Model
 class AymfItem : Item
 {
     val JSON_PROPERTY_MAP = [
-        'caption' => 'string',
-        'uuid'    => 'string',
+        "caption" => "string",
+        "uuid"    => "string",
     ]
 }

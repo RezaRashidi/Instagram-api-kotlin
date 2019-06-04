@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class DirectRecentRecipientsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'expiration_interval' => '',
-        'recent_recipients'   => '',
+        "expiration_interval" => "",
+        "recent_recipients"   => "",
     ]
 }

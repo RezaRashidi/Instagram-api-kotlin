@@ -8,7 +8,7 @@ import Psr.Http.Message.RequestInterface
  * Fake cookies middleware.
  *
  * This middleware sits between our class and Guzzle and gives us full access to
- * inject fake cookies into requests before speaking to Instagram's server.
+ * inject fake cookies into requests before speaking to Instagram"s server.
  * Thus allowing us to perfectly emulate unusual Instagram API queries.
  *
  * @author SteveJobzniak (https://github.com/SteveJobzniak)
@@ -16,7 +16,7 @@ import Psr.Http.Message.RequestInterface
 class FakeCookies
 {
     /**
-     * Injects fake cookies which aren't in our cookie jar.
+     * Injects fake cookies which aren"t in our cookie jar.
      *
      * Fake cookies are only injected while this array is non-empty.
      *
@@ -33,7 +33,7 @@ class FakeCookies
     }
 
     /**
-     * Removes all fake cookies so they won't be added to further requests.
+     * Removes all fake cookies so they won"t be added to further requests.
      */
     public fun clear()
     {
@@ -76,8 +76,8 @@ class FakeCookies
         // This overwrites any existing fake cookie with the same name, which is
         // intentional since the names of cookies must be unique.
         this._cookies[$name] = [
-            'value'     => $value,
-            'singleUse' => $singleUse,
+            "value"     => $value,
+            "singleUse" => $singleUse,
         ]
     }
 
@@ -120,13 +120,13 @@ class FakeCookies
 
             $finalCookies = []
 
-            // Extract all existing cookies in this request's "Cookie:" header.
-            if ($request.hasHeader('Cookie')) {
-                $cookieHeaders = $request.getHeader('Cookie')
+            // Extract all existing cookies in this request"s "Cookie:" header.
+            if ($request.hasHeader("Cookie")) {
+                $cookieHeaders = $request.getHeader("Cookie")
                 foreach ($cookieHeaders as $headerLine) {
-                    $theseCookies = explode(' ', $headerLine)
+                    $theseCookies = explode(" ", $headerLine)
                     foreach ($theseCookies as $cookieEntry) {
-                        $cookieParts = explode('=', $cookieEntry, 2)
+                        $cookieParts = explode("=", $cookieEntry, 2)
                         if (count($cookieParts) == 2) {
                             // We have the name and value of the cookie!
                             $finalCookies[$cookieParts[0]] = $cookieParts[1]
@@ -142,10 +142,10 @@ class FakeCookies
             // Inject all of our fake cookies, overwriting any name clashes.
             // NOTE: The name matching is CASE SENSITIVE!
             foreach ($fakeCookies as $name => $cookieInfo) {
-                $finalCookies[$name] = $cookieInfo['value']
+                $finalCookies[$name] = $cookieInfo["value"]
 
                 // Delete the cookie now if it was a single-import cookie.
-                if ($cookieInfo['singleUse']) {
+                if ($cookieInfo["singleUse"]) {
                     this.delete($name)
                 }
             }
@@ -157,14 +157,14 @@ class FakeCookies
                     // Cookies to re-import as-is, due to parsing error above.
                     $values[] = $name
                 } else {
-                    $values[] = $name.'='.$value
+                    $values[] = $name."=".$value
                 }
             }
 
             // Generate our new, semicolon-separated "Cookie:" header line.
             // NOTE: This completely replaces the old header. As intended.
-            $finalCookieHeader = implode(' ', $values)
-            $request = $request.withHeader('Cookie', $finalCookieHeader)
+            $finalCookieHeader = implode(" ", $values)
+            $request = $request.withHeader("Cookie", $finalCookieHeader)
 
             return $handler($request, $options)
         }

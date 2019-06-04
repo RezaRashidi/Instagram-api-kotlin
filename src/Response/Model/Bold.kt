@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class Bold : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'start' => '',
-        'end'   => '',
+        "start" => "",
+        "end"   => "",
     ]
 }

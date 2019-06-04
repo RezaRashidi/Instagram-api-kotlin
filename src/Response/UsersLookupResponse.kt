@@ -63,15 +63,15 @@ import InstagramAPI.Response
 class UsersLookupResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'user'            => 'Model.User',
-        'email_sent'      => 'bool',
-        'has_valid_phone' => 'bool',
-        'can_email_reset' => 'bool',
-        'can_sms_reset'   => 'bool',
-        'user_id'         => 'string',
-        'lookup_source'   => 'string',
-        'email'           => 'string',
-        'phone_number'    => 'string',
-        'corrected_input' => 'string',
+        "user"            => "Model.User",
+        "email_sent"      => "bool",
+        "has_valid_phone" => "bool",
+        "can_email_reset" => "bool",
+        "can_sms_reset"   => "bool",
+        "user_id"         => "string",
+        "lookup_source"   => "string",
+        "email"           => "string",
+        "phone_number"    => "string",
+        "corrected_input" => "string",
     ]
 }

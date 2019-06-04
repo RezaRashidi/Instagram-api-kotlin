@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class FacebookHiddenEntitiesResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'recent' => 'Model.HiddenEntities',
+        "recent" => "Model.HiddenEntities",
     ]
 }

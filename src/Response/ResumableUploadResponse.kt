@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class ResumableUploadResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'xsharing_nonces' => '',
-        'upload_id'       => 'int',
+        "xsharing_nonces" => "",
+        "upload_id"       => "int",
     ]
 }

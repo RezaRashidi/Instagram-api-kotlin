@@ -5,7 +5,7 @@ package InstagramAPI.Media.Constraints
 import InstagramAPI.Media.ConstraintsInterface
 
 /**
- * Instagram's story media constraints.
+ * Instagram"s story media constraints.
  */
 class StoryConstraints : ConstraintsInterface
 {
@@ -18,9 +18,9 @@ class StoryConstraints : ConstraintsInterface
      *
      * We have selected a photo/video story aspect range which supports all
      * story media aspects that are commonly used by the app: 0.56 - 0.67.
-     * (That's ~1080x1611 to ~1080x1928.)
+     * (That"s ~1080x1611 to ~1080x1928.)
      *
-     * However, if you're using our media processing classes, please note that
+     * However, if you"re using our media processing classes, please note that
      * they will target the "best story aspect ratio range" by default, and
      * that you must manually disable that constructor option in the class
      * to get this extended story aspect range, if you REALLY want it...
@@ -44,17 +44,17 @@ class StoryConstraints : ConstraintsInterface
      * The recommended story aspect ratio.
      *
      * This is exactly 9:16 ratio, meaning a standard widescreen phone viewed in
-     * portrait mode. It is the most common story ratio on Instagram, and it's
+     * portrait mode. It is the most common story ratio on Instagram, and it"s
      * the one that looks the best on most devices. All other ratios will look
      * "cropped" when viewed on 16:9 widescreen devices, since the app "zooms"
      * the story until it fills the screen without any black bars. So unless the
-     * story is exactly 16:9, it won't look great on 16:9 screens.
+     * story is exactly 16:9, it won"t look great on 16:9 screens.
      *
      * Every manufacturer uses 16:9 screens. Even Apple since the iPhone 5.
      *
      * Therefore, this will be the final target aspect ratio used EVERY time
      * that media destined for a story feed is outside of the allowed range!
-     * That's becaimport it doesn't make sense to let people target non-9:16 final
+     * That"s becaimport it doesn"t make sense to let people target non-9:16 final
      * story aspect ratios, since only 9:16 stories look good on most devices!
      *
      * @var float
@@ -90,7 +90,7 @@ class StoryConstraints : ConstraintsInterface
     /** {@inheritdoc} */
     public fun getTitle()
     {
-        return 'story'
+        return "story"
     }
 
     /** {@inheritdoc} */

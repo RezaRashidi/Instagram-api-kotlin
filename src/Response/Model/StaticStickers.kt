@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class StaticStickers : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'include_in_recent' => '',
-        'id'                => 'string',
-        'stickers'          => 'Stickers[]',
+        "include_in_recent" => "",
+        "id"                => "string",
+        "stickers"          => "Stickers[]",
     ]
 }

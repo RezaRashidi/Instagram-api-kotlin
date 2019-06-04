@@ -35,8 +35,8 @@ import InstagramAPI.Response
 class FBLocationResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'has_more'   => 'bool',
-        'items'      => 'Model.LocationItem[]',
-        'rank_token' => 'string',
+        "has_more"   => "bool",
+        "items"      => "Model.LocationItem[]",
+        "rank_token" => "string",
     ]
 }

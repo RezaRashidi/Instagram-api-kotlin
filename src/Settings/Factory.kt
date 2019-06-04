@@ -25,56 +25,59 @@ object Factory
      *
      * @return .InstagramAPI.Settings.StorageHandler
      */
-   fun createHandler(storageConfig:Map<String,String>, callbacks:Map<String,x:() -> Unit)
+   fun createHandler(
+        storageConfig:MutableMap<String,String>,
+        callbacks:MutableMap<String,()->Unit> = mutableMapOf()
+
     {
         // Resolve the storage backend choice if none provided in array.
-        if (!isset(storageConfig['storage'])) {
+        if (!(storageConfig["storage"])) {
             cmdOptions = self::getCmdOptions([
-                'settings_storage::',
+                "settings_storage::",
             ])
-            storage = self::getUserConfig('storage', storageConfig, cmdOptions)
+            storage = self::getUserConfig("storage", storageConfig, cmdOptions)
             if (storage === null) {
-                storage = 'file'
+                storage = "file"
             }
-            storageConfig = ['storage' => storage]
+            storageConfig = ["storage" => storage]
         }
 
-        // Determine the user's final storage configuration.
-        switch (storageConfig['storage']) {
-        case 'file':
+        // Determine the user"s final storage configuration.
+        switch (storageConfig["storage"]) {
+        case "file":
             // Look for allowed command-line values related to this backend.
             cmdOptions = self::getCmdOptions([
-                'settings_basefolder::',
+                "settings_basefolder::",
             ])
 
             // These settings are optional:
-            baseFolder = self::getUserConfig('basefolder', storageConfig, cmdOptions)
+            baseFolder = self::getUserConfig("basefolder", storageConfig, cmdOptions)
 
             // Generate the final storage location configuration.
             locationConfig = [
-                'basefolder' => baseFolder,
+                "basefolder" => baseFolder,
             ]
 
             storageInstance = Storage.File()
             break
-        case 'mysql':
+        case "mysql":
             // Look for allowed command-line values related to this backend.
             cmdOptions = self::getCmdOptions([
-                'settings_dbusername::',
-                'settings_dbpassword::',
-                'settings_dbhost::',
-                'settings_dbname::',
-                'settings_dbtablename::',
+                "settings_dbusername::",
+                "settings_dbpassword::",
+                "settings_dbhost::",
+                "settings_dbname::",
+                "settings_dbtablename::",
             ])
 
             // These settings are optional, and can be provided regardless of
             // connection method:
             locationConfig = [
-                'dbtablename' => self::getUserConfig('dbtablename', storageConfig, cmdOptions),
+                "dbtablename" => self::getUserConfig("dbtablename", storageConfig, cmdOptions),
             ]
 
             // These settings are required, but you only have to import one method:
-            if (isset(storageConfig['pdo'])) {
+            if (isset(storageConfig["pdo"])) {
                 // If "pdo" is set in the factory config, assume the user wants
                 // to re-import an existing PDO connection. In that case we ignore
                 // the username/password/host/name parameters and import their PDO.
@@ -84,32 +87,32 @@ object Factory
                 // If you want to re-import a PDO connection, you MUST accept the
                 // fact that WE NEED exceptions and UTF-8 in our PDO! If that is
                 // not acceptable to you then DO NOT re-import your own PDO object!
-                locationConfig['pdo'] = storageConfig['pdo']
+                locationConfig["pdo"] = storageConfig["pdo"]
             } else {
                 // Make a connection. Optional settings for it:
-                locationConfig['dbusername'] = self::getUserConfig('dbusername', storageConfig, cmdOptions)
-                locationConfig['dbpassword'] = self::getUserConfig('dbpassword', storageConfig, cmdOptions)
-                locationConfig['dbhost'] = self::getUserConfig('dbhost', storageConfig, cmdOptions)
-                locationConfig['dbname'] = self::getUserConfig('dbname', storageConfig, cmdOptions)
+                locationConfig["dbusername"] = self::getUserConfig("dbusername", storageConfig, cmdOptions)
+                locationConfig["dbpassword"] = self::getUserConfig("dbpassword", storageConfig, cmdOptions)
+                locationConfig["dbhost"] = self::getUserConfig("dbhost", storageConfig, cmdOptions)
+                locationConfig["dbname"] = self::getUserConfig("dbname", storageConfig, cmdOptions)
             }
 
             storageInstance = Storage.MySQL()
             break
-        case 'sqlite':
+        case "sqlite":
             // Look for allowed command-line values related to this backend.
             cmdOptions = self::getCmdOptions([
-                'settings_dbfilename::',
-                'settings_dbtablename::',
+                "settings_dbfilename::",
+                "settings_dbtablename::",
             ])
 
             // These settings are optional, and can be provided regardless of
             // connection method:
             locationConfig = [
-                'dbtablename' => self::getUserConfig('dbtablename', storageConfig, cmdOptions),
+                "dbtablename" => self::getUserConfig("dbtablename", storageConfig, cmdOptions),
             ]
 
             // These settings are required, but you only have to import one method:
-            if (isset(storageConfig['pdo'])) {
+            if (isset(storageConfig["pdo"])) {
                 // If "pdo" is set in the factory config, assume the user wants
                 // to re-import an existing PDO connection. In that case we ignore
                 // the SQLite filename/connection parameters and import their PDO.
@@ -119,77 +122,77 @@ object Factory
                 // If you want to re-import a PDO connection, you MUST accept the
                 // fact that WE NEED exceptions and UTF-8 in our PDO! If that is
                 // not acceptable to you then DO NOT re-import your own PDO object!
-                locationConfig['pdo'] = storageConfig['pdo']
+                locationConfig["pdo"] = storageConfig["pdo"]
             } else {
                 // Make a connection. Optional settings for it:
-                locationConfig['dbfilename'] = self::getUserConfig('dbfilename', storageConfig, cmdOptions)
+                locationConfig["dbfilename"] = self::getUserConfig("dbfilename", storageConfig, cmdOptions)
             }
 
             storageInstance = Storage.SQLite()
             break
-        case 'memcached':
+        case "memcached":
             // The memcached storage can only be configured via the factory
             // configuration array (not via command line or environment vars).
 
             // These settings are required, but you only have to import one method:
-            if (isset(storageConfig['memcached'])) {
-                // Re-import the user's own Memcached object.
+            if (isset(storageConfig["memcached"])) {
+                // Re-import the user"s own Memcached object.
                 locationConfig = [
-                    'memcached' => storageConfig['memcached'],
+                    "memcached" => storageConfig["memcached"],
                 ]
             } else {
                 // Make a connection. Optional settings for it:
                 locationConfig = [
                     // This ID will be passed to the .Memcached() constructor.
-                    // NOTE: Memcached's "persistent ID" feature makes Memcached
+                    // NOTE: Memcached"s "persistent ID" feature makes Memcached
                     // keep the settings even after you disconnect.
-                    'persistent_id' => (isset(storageConfig['persistent_id'])
-                                        ? storageConfig['persistent_id']
+                    "persistent_id" => (isset(storageConfig["persistent_id"])
+                                        ? storageConfig["persistent_id"]
                                         : null),
                     // Array which will be passed to .Memcached::setOptions().
-                    'memcached_options' => (isset(storageConfig['memcached_options'])
-                                            ? storageConfig['memcached_options']
+                    "memcached_options" => (isset(storageConfig["memcached_options"])
+                                            ? storageConfig["memcached_options"]
                                             : null),
                     // Array which will be passed to .Memcached::addServers().
                     // NOTE: Can contain one or multiple servers.
-                    'servers' => (isset(storageConfig['servers'])
-                                  ? storageConfig['servers']
+                    "servers" => (isset(storageConfig["servers"])
+                                  ? storageConfig["servers"]
                                   : null),
                     // SASL username and password to be used for SASL
                     // authentication with all of the Memcached servers.
-                    // NOTE: PHP's Memcached API doesn't support individual
+                    // NOTE: PHP"s Memcached API doesn"t support individual
                     // authentication credentials per-server, so these values
                     // apply to all of your servers if you import this feature!
-                    'sasl_username' => (isset(storageConfig['sasl_username'])
-                                        ? storageConfig['sasl_username']
+                    "sasl_username" => (isset(storageConfig["sasl_username"])
+                                        ? storageConfig["sasl_username"]
                                         : null),
-                    'sasl_password' => (isset(storageConfig['sasl_password'])
-                                        ? storageConfig['sasl_password']
+                    "sasl_password" => (isset(storageConfig["sasl_password"])
+                                        ? storageConfig["sasl_password"]
                                         : null),
                 ]
             }
 
             storageInstance = Storage.Memcached()
             break
-        case 'custom':
+        case "custom":
             // Custom storage classes can only be configured via the main array.
             // When using a custom class, you must provide a StorageInterface:
-            if (!isset(storageConfig['class'])
-                || !storageConfig['class'] instanceof StorageInterface) {
-                throw SettingsException('Invalid custom storage class.')
+            if (!isset(storageConfig["class"])
+                || !storageConfig["class"] instanceof StorageInterface) {
+                throw SettingsException("Invalid custom storage class.")
             }
 
             // Create a clean storage location configuration array.
             locationConfig = storageConfig
-            unset(locationConfig['storage'])
-            unset(locationConfig['class'])
+            unset(locationConfig["storage"])
+            unset(locationConfig["class"])
 
-            storageInstance = storageConfig['class']
+            storageInstance = storageConfig["class"]
             break
         default:
             throw SettingsException(sprintf(
-                'Unknown settings storage type "%s".',
-                storageConfig['storage']
+                "Unknown settings storage type "%s".",
+                storageConfig["storage"]
             ))
         }
 
@@ -211,7 +214,7 @@ object Factory
       fun getCmdOptions(
         array longOpts)
     {
-        cmdOptions = getopt('', longOpts)
+        cmdOptions = getopt("", longOpts)
         if (!is_array(cmdOptions)) {
             cmdOptions = []
         }
@@ -223,7 +226,7 @@ object Factory
      * Looks for the highest-priority result for a Storage config value.
      *
      * @param string settingName   The name of the setting.
-     * @param array  storageConfig The Factory's configuration array.
+     * @param array  storageConfig The Factory"s configuration array.
      * @param array  cmdOptions    All parsed command-line options.
      *
      * @return string|null The value if found, otherwise NULL.
@@ -242,7 +245,7 @@ object Factory
         // Environment variables have the second highest precedence.
         // NOTE: Settings provided via env must be UPPERCASED and have
         // a "SETTINGS_" prefix, for example "SETTINGS_STORAGE".
-        envValue = getenv('SETTINGS_'.strtoupper(settingName))
+        envValue = getenv("SETTINGS_".strtoupper(settingName))
         if (envValue !== false) {
             return envValue
         }
@@ -254,7 +257,7 @@ object Factory
             return storageConfig[settingName]
         }
 
-        // Couldn't find any user-provided value. Automatically returns null.
+        // Couldn"t find any user-provided value. Automatically returns null.
         // NOTE: Damn you StyleCI for not allowing "return null" for clarity.
     }
 }

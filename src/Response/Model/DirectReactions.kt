@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class DirectReactions : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'likes_count' => 'int',
-        'likes'       => 'DirectReaction[]',
+        "likes_count" => "int",
+        "likes"       => "DirectReaction[]",
     ]
 }

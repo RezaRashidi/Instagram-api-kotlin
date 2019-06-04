@@ -66,8 +66,8 @@ class Realtime : EventEmitterInterface
         LoopInterface $loop,
         LoggerInterface $logger = null)
     {
-        if (PHP_SAPI !== 'cli') {
-            throw .RuntimeException('The Realtime client can only run from the command line.')
+        if (PHP_SAPI !== "cli") {
+            throw .RuntimeException("The Realtime client can only run from the command line.")
         }
 
         this._instagram = $instagram
@@ -78,21 +78,21 @@ class Realtime : EventEmitterInterface
         }
 
         this._client = this._buildMqttClient()
-        this.on('region-hint', fun ($region) {
-            this._instagram.settings.set('datacenter', $region)
-            this._client.setAdditionalOption('datacenter', $region)
+        this.on("region-hint", fun ($region) {
+            this._instagram.settings.set("datacenter", $region)
+            this._client.setAdditionalOption("datacenter", $region)
         })
-        this.on('zero-provision', fun (ZeroProvisionEvent $event) {
+        this.on("zero-provision", fun (ZeroProvisionEvent $event) {
             if ($event.getZeroProvisionedTime() === null) {
                 return
             }
-            if ($event.getProductName() !== 'select') {
+            if ($event.getProductName() !== "select") {
                 return
             }
             // TODO check whether we already have a fresh token.
 
             this._instagram.client.zeroRating().reset()
-            this._instagram.internal.fetchZeroRatingToken('mqtt_token_push')
+            this._instagram.internal.fetchZeroRatingToken("mqtt_token_push")
         })
     }
 
@@ -104,8 +104,8 @@ class Realtime : EventEmitterInterface
     protected fun _buildMqttClient()
     {
         $additionalOptions = [
-            'datacenter'       => this._instagram.settings.get('datacenter'),
-            'disable_presence' => (bool) this._instagram.settings.get('presence_disabled'),
+            "datacenter"       => this._instagram.settings.get("datacenter"),
+            "disable_presence" => (bool) this._instagram.settings.get("presence_disabled"),
         ]
 
         return Realtime.Mqtt(
@@ -239,7 +239,7 @@ class Realtime : EventEmitterInterface
      * Share an existing media post to a given direct thread.
      *
      * @param string $threadId Thread ID.
-     * @param string $mediaId  The media ID in Instagram's internal format (ie "3482384834_43294").
+     * @param string $mediaId  The media ID in Instagram"s internal format (ie "3482384834_43294").
      * @param array  $options  An associative array of additional parameters, including:
      *                         "client_context" (optional) - predefined UUID used to prevent double-posting
      *                         "text" (optional) - text message.
@@ -271,7 +271,7 @@ class Realtime : EventEmitterInterface
      * Share an existing story to a given direct thread.
      *
      * @param string $threadId Thread ID.
-     * @param string $storyId  The story ID in Instagram's internal format (ie "3482384834_43294").
+     * @param string $storyId  The story ID in Instagram"s internal format (ie "3482384834_43294").
      * @param array  $options  An associative array of additional parameters, including:
      *                         "client_context" (optional) - predefined UUID used to prevent double-posting
      *                         "text" (optional) - text message.
@@ -338,7 +338,7 @@ class Realtime : EventEmitterInterface
      * funs such as Location::search().
      *
      * @param string $threadId   Thread ID.
-     * @param string $locationId Instagram's internal ID for the location.
+     * @param string $locationId Instagram"s internal ID for the location.
      * @param array  $options    An associative array of additional parameters, including:
      *                           "client_context" (optional) - predefined UUID used to prevent double-posting
      *                           "text" (optional) - text message.
@@ -490,6 +490,6 @@ class Realtime : EventEmitterInterface
      */
     protected fun _isRtcReshareEnabled()
     {
-        return this._instagram.isExperimentEnabled('ig_android_rtc_reshare', 'is_rtc_reshare_enabled')
+        return this._instagram.isExperimentEnabled("ig_android_rtc_reshare", "is_rtc_reshare_enabled")
     }
 }

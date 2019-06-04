@@ -35,11 +35,11 @@ import InstagramAPI.AutoPropertyMapper
 class Challenge : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'url'                 => 'string',
-        'api_path'            => '',
-        'hide_webview_header' => '',
-        'lock'                => '',
-        'logout'              => '',
-        'native_flow'         => '',
+        "url"                 => "string",
+        "api_path"            => "",
+        "hide_webview_header" => "",
+        "lock"                => "",
+        "logout"              => "",
+        "native_flow"         => "",
     ]
 }

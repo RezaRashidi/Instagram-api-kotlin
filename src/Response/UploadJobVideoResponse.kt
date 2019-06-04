@@ -31,7 +31,7 @@ import InstagramAPI.Response
 class UploadJobVideoResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'upload_id'         => 'string',
-        'video_upload_urls' => 'Model.VideoUploadUrl[]',
+        "upload_id"         => "string",
+        "video_upload_urls" => "Model.VideoUploadUrl[]",
     ]
 }

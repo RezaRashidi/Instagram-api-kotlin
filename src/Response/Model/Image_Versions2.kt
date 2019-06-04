@@ -19,7 +19,7 @@ import InstagramAPI.AutoPropertyMapper
 class Image_Versions2 : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'candidates'  => 'ImageCandidate[]',
-        'trace_token' => '',
+        "candidates"  => "ImageCandidate[]",
+        "trace_token" => "",
     ]
 }

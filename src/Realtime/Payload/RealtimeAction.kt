@@ -18,12 +18,12 @@ import InstagramAPI.AutoPropertyMapper
  */
 abstract class RealtimeAction : AutoPropertyMapper
 {
-    val ACK = 'item_ack'
-    val UNSEEN_COUNT = 'inbox_unseen_count'
-    val UNKNOWN = 'unknown'
+    val ACK = "item_ack"
+    val UNSEEN_COUNT = "inbox_unseen_count"
+    val UNKNOWN = "unknown"
 
     val JSON_PROPERTY_MAP = [
-        'status' => 'string',
-        'action' => 'string',
+        "status" => "string",
+        "action" => "string",
     ]
 }

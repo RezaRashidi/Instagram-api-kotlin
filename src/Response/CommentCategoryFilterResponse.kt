@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class CommentCategoryFilterResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'disabled' => '',
+        "disabled" => "",
     ]
 }

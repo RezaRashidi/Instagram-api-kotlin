@@ -35,11 +35,11 @@ import InstagramAPI.AutoPropertyMapper
 class Ad4ad : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'type'           => '',
-        'title'          => '',
-        'media'          => 'Item',
-        'footer'         => '',
-        'id'             => 'string',
-        'tracking_token' => 'string',
+        "type"           => "",
+        "title"          => "",
+        "media"          => "Item",
+        "footer"         => "",
+        "id"             => "string",
+        "tracking_token" => "string",
     ]
 }

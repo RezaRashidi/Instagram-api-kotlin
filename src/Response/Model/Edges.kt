@@ -23,8 +23,8 @@ import InstagramAPI.AutoPropertyMapper
 class Edges : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'priority'      => 'int',
-        'time_range'    => 'TimeRange',
-        'node'          => 'QPNode',
+        "priority"      => "int",
+        "time_range"    => "TimeRange",
+        "node"          => "QPNode",
     ]
 }

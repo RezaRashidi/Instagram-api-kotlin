@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class TranslateResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'comment_translations' => 'Model.CommentTranslations[]',
+        "comment_translations" => "Model.CommentTranslations[]",
     ]
 }

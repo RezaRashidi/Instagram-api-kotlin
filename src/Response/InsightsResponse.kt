@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class InsightsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'instagram_user' => 'Model.Insights',
+        "instagram_user" => "Model.Insights",
     ]
 }

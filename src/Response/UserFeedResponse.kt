@@ -47,11 +47,11 @@ import InstagramAPI.Response
 class UserFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'items'                  => 'Model.Item[]',
-        'num_results'            => 'int',
-        'more_available'         => 'bool',
-        'next_max_id'            => 'string',
-        'max_id'                 => 'string',
-        'auto_load_more_enabled' => 'bool',
+        "items"                  => "Model.Item[]",
+        "num_results"            => "int",
+        "more_available"         => "bool",
+        "next_max_id"            => "string",
+        "max_id"                 => "string",
+        "auto_load_more_enabled" => "bool",
     ]
 }

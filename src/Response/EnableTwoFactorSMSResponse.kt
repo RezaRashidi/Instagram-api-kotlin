@@ -27,6 +27,6 @@ import InstagramAPI.Response
 class EnableTwoFactorSMSResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'backup_codes' => '',
+        "backup_codes" => "",
     ]
 }

@@ -43,10 +43,10 @@ import InstagramAPI.Response
 class SavedFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'items'                  => 'Model.SavedFeedItem[]',
-        'more_available'         => '',
-        'next_max_id'            => 'string',
-        'auto_load_more_enabled' => '',
-        'num_results'            => 'int',
+        "items"                  => "Model.SavedFeedItem[]",
+        "more_available"         => "",
+        "next_max_id"            => "string",
+        "auto_load_more_enabled" => "",
+        "num_results"            => "int",
     ]
 }

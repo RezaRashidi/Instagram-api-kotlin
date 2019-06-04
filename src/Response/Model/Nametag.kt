@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class Nametag : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'mode'                 => 'int',
-        'gradient'             => 'int',
-        'emoji'                => 'string',
-        'selfie_sticker'       => 'int',
+        "mode"                 => "int",
+        "gradient"             => "int",
+        "emoji"                => "string",
+        "selfie_sticker"       => "int",
     ]
 }

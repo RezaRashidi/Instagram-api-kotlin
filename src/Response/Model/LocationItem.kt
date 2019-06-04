@@ -27,9 +27,9 @@ import InstagramAPI.AutoPropertyMapper
 class LocationItem : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        'media_bundles' => '',
-        'subtitle'      => '',
-        'location'      => 'Location',
-        'title'         => '',
+        "media_bundles" => "",
+        "subtitle"      => "",
+        "location"      => "Location",
+        "title"         => "",
     ]
 }

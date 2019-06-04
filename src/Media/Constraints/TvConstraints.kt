@@ -3,7 +3,7 @@
 package InstagramAPI.Media.Constraints
 
 /**
- * Instagram's Tv media constraints.
+ * Instagram"s Tv media constraints.
  */
 class TvConstraints : StoryConstraints
 {
@@ -54,7 +54,7 @@ class TvConstraints : StoryConstraints
     /** {@inheritdoc} */
     public fun getTitle()
     {
-        return 'TV'
+        return "TV"
     }
 
     /** {@inheritdoc} */

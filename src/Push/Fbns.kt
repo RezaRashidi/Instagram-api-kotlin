@@ -29,7 +29,7 @@ class Fbns : PersistentInterface, EventEmitterInterface
 
     val CONNECTION_TIMEOUT = 5
 
-    val DEFAULT_HOST = 'mqtt-mini.facebook.com'
+    val DEFAULT_HOST = "mqtt-mini.facebook.com"
     val DEFAULT_PORT = 443
 
     /** @var EventEmitterInterface */
@@ -95,43 +95,43 @@ class Fbns : PersistentInterface, EventEmitterInterface
 
         // Bind events.
         $client
-            .on('connect', fun (Lite.ConnectResponsePacket $responsePacket) {
+            .on("connect", fun (Lite.ConnectResponsePacket $responsePacket) {
                 // Update auth credentials.
                 $authJson = $responsePacket.getAuth()
                 if (strlen($authJson)) {
-                    this._logger.info('Received a non-empty auth.', [$authJson])
-                    this.emit('fbns_auth', [$authJson])
+                    this._logger.info("Received a non-empty auth.", [$authJson])
+                    this.emit("fbns_auth", [$authJson])
                 }
 
                 // Register an application.
                 this._client.register(Constants::PACKAGE_NAME, Constants::FACEBOOK_ANALYTICS_APPLICATION_ID)
             })
-            .on('disconnect', fun () {
+            .on("disconnect", fun () {
                 // Try to reconnect.
                 if (!this._reconnectInterval) {
                     this._connect()
                 }
             })
-            .on('register', fun (Register $message) {
+            .on("register", fun (Register $message) {
                 if (!empty($message.getError())) {
-                    this._target.emit('error', [.RuntimeException($message.getError())])
+                    this._target.emit("error", [.RuntimeException($message.getError())])
 
                     return
                 }
-                this._logger.info('Received a non-empty token.', [$message.getToken()])
-                this.emit('fbns_token', [$message.getToken()])
+                this._logger.info("Received a non-empty token.", [$message.getToken()])
+                this.emit("fbns_token", [$message.getToken()])
             })
-            .on('push', fun (PushMessage $message) {
+            .on("push", fun (PushMessage $message) {
                 $payload = $message.getPayload()
 
                 try {
                     $notification = Notification($payload)
                 } catch (.Exception $e) {
-                    this._logger.error(sprintf('Failed to decode push: %s', $e.getMessage()), [$payload])
+                    this._logger.error(sprintf("Failed to decode push: %s", $e.getMessage()), [$payload])
 
                     return
                 }
-                this.emit('push', [$notification])
+                this.emit("push", [$notification])
             })
 
         return $client
@@ -157,7 +157,7 @@ class Fbns : PersistentInterface, EventEmitterInterface
      */
     public fun start()
     {
-        this._logger.info('Starting FBNS client...')
+        this._logger.info("Starting FBNS client...")
         this._isActive = true
         this._reconnectInterval = 0
         this._connect()
@@ -168,7 +168,7 @@ class Fbns : PersistentInterface, EventEmitterInterface
      */
     public fun stop()
     {
-        this._logger.info('Stopping FBNS client...')
+        this._logger.info("Stopping FBNS client...")
         this._isActive = false
         this._cancelReconnectTimer()
         this._client.disconnect()

@@ -47,11 +47,11 @@ import InstagramAPI.Response
 class FollowerAndFollowingResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        'users'                             => 'Model.User[]',
-        'suggested_users'                   => 'Model.SuggestedUsers',
-        'truncate_follow_requests_at_index' => 'int',
-        'next_max_id'                       => 'string',
-        'page_size'                         => '',
-        'big_list'                          => '',
+        "users"                             => "Model.User[]",
+        "suggested_users"                   => "Model.SuggestedUsers",
+        "truncate_follow_requests_at_index" => "int",
+        "next_max_id"                       => "string",
+        "page_size"                         => "",
+        "big_list"                          => "",
     ]
 }

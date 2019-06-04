@@ -18,21 +18,21 @@ class File : StorageInterface
     val STORAGE_VERSION = 2
 
     /** @var string Format for settings filename. */
-    val SETTINGSFILE_NAME = '%s-settings.dat'
+    val SETTINGSFILE_NAME = "%s-settings.dat"
 
     /** @var string Format for cookie jar filename. */
-    val COOKIESFILE_NAME = '%s-cookies.dat'
+    val COOKIESFILE_NAME = "%s-cookies.dat"
 
     /** @var string The base folder for all storage files. */
     private $_baseFolder
 
-    /** @var string The folder for the current user's storage. */
+    /** @var string The folder for the current user"s storage. */
     private $_userFolder
 
-    /** @var string Path to the current user's settings file. */
+    /** @var string Path to the current user"s settings file. */
     private $_settingsFile
 
-    /** @var string Path to the current user's cookie jar file. */
+    /** @var string Path to the current user"s cookie jar file. */
     private $_cookiesFile
 
     /** @var string Current Instagram username that all settings belong to. */
@@ -47,10 +47,10 @@ class File : StorageInterface
         array $locationConfig)
     {
         // Determine which base folder to store all per-user data in.
-        $baseFolder = ((isset($locationConfig['basefolder'])
-                        && !empty($locationConfig['basefolder']))
-                       ? $locationConfig['basefolder']
-                       : Constants::SRC_DIR.'/../sessions')
+        $baseFolder = ((isset($locationConfig["basefolder"])
+                        && !empty($locationConfig["basefolder"]))
+                       ? $locationConfig["basefolder"]
+                       : Constants::SRC_DIR."/../sessions")
         // Create the base folder and normalize its path to a clean value.
         this._baseFolder = this._createFolder($baseFolder)
     }
@@ -63,10 +63,10 @@ class File : StorageInterface
     public fun hasUser(
         $username)
     {
-        // Check whether the user's settings-file exists.
+        // Check whether the user"s settings-file exists.
         $hasUser = this._generateUserPaths($username)
 
-        return is_file($hasUser['settingsFile']) ? true : false
+        return is_file($hasUser["settingsFile"]) ? true : false
     }
 
     /**
@@ -81,38 +81,38 @@ class File : StorageInterface
         // Verify the old and username parameters.
         $oldUser = this._generateUserPaths($oldUsername)
         $newUser = this._generateUserPaths($newUsername)
-        if (!is_dir($oldUser['userFolder'])) {
+        if (!is_dir($oldUser["userFolder"])) {
             throw SettingsException(sprintf(
-                'Cannot move non-existent user folder "%s".',
-                $oldUser['userFolder']
+                "Cannot move non-existent user folder "%s".",
+                $oldUser["userFolder"]
             ))
         }
-        if (is_dir($newUser['userFolder'])) {
+        if (is_dir($newUser["userFolder"])) {
             throw SettingsException(sprintf(
-                'Refusing to overwrite existing user folder "%s".',
-                $newUser['userFolder']
+                "Refusing to overwrite existing user folder "%s".",
+                $newUser["userFolder"]
             ))
         }
 
         // Create the destination folder and migrate all data.
-        this._createFolder($newUser['userFolder'])
-        if (is_file($oldUser['settingsFile'])
-            && !@rename($oldUser['settingsFile'], $newUser['settingsFile'])) {
+        this._createFolder($newUser["userFolder"])
+        if (is_file($oldUser["settingsFile"])
+            && !@rename($oldUser["settingsFile"], $newUser["settingsFile"])) {
             throw SettingsException(sprintf(
-                'Failed to move "%s" to "%s".',
-                $oldUser['settingsFile'], $newUser['settingsFile']
+                "Failed to move "%s" to "%s".",
+                $oldUser["settingsFile"], $newUser["settingsFile"]
             ))
         }
-        if (is_file($oldUser['cookiesFile'])
-            && !@rename($oldUser['cookiesFile'], $newUser['cookiesFile'])) {
+        if (is_file($oldUser["cookiesFile"])
+            && !@rename($oldUser["cookiesFile"], $newUser["cookiesFile"])) {
             throw SettingsException(sprintf(
-                'Failed to move "%s" to "%s".',
-                $oldUser['cookiesFile'], $newUser['cookiesFile']
+                "Failed to move "%s" to "%s".",
+                $oldUser["cookiesFile"], $newUser["cookiesFile"]
             ))
         }
 
         // Delete all files in the old folder, and the folder itself.
-        Utils::deleteTree($oldUser['userFolder'])
+        Utils::deleteTree($oldUser["userFolder"])
     }
 
     /**
@@ -125,7 +125,7 @@ class File : StorageInterface
     {
         // Delete all files in the user folder, and the folder itself.
         $delUser = this._generateUserPaths($username)
-        Utils::deleteTree($delUser['userFolder'])
+        Utils::deleteTree($delUser["userFolder"])
     }
 
     /**
@@ -138,9 +138,9 @@ class File : StorageInterface
     {
         this._username = $username
         $userPaths = this._generateUserPaths($username)
-        this._userFolder = $userPaths['userFolder']
-        this._settingsFile = $userPaths['settingsFile']
-        this._cookiesFile = $userPaths['cookiesFile']
+        this._userFolder = $userPaths["userFolder"]
+        this._settingsFile = $userPaths["settingsFile"]
+        this._cookiesFile = $userPaths["cookiesFile"]
         this._createFolder(this._userFolder)
     }
 
@@ -161,16 +161,16 @@ class File : StorageInterface
         $rawData = @file_get_contents(this._settingsFile)
         if ($rawData === false) {
             throw SettingsException(sprintf(
-                'Unable to read from settings file "%s".',
+                "Unable to read from settings file "%s".",
                 this._settingsFile
             ))
         }
 
         // Fetch the data version ("FILESTORAGEv#") header.
         $dataVersion = 1 // Assume migration from v1 if no version.
-        if (preg_match('/^FILESTORAGEv(.d+)/', $rawData, $matches)) {
+        if (preg_match("/^FILESTORAGEv(.d+)/", $rawData, $matches)) {
             $dataVersion = intval($matches[1])
-            $rawData = substr($rawData, strpos($rawData, '') + 1)
+            $rawData = substr($rawData, strpos($rawData, "") + 1)
         }
 
         // Decode the key-value pairs regardless of data-storage version.
@@ -189,7 +189,7 @@ class File : StorageInterface
         $triggerKey)
     {
         // Generate the storage version header.
-        $versionHeader = 'FILESTORAGEv'.self::STORAGE_VERSION.''
+        $versionHeader = "FILESTORAGEv".self::STORAGE_VERSION.""
 
         // Encode a binary representation of all settings.
         // VERSION 2 STORAGE FORMAT: JSON-encoded blob.
@@ -265,14 +265,14 @@ class File : StorageInterface
      */
     public fun closeLocation()
     {
-        // We don't need to disconnect from anything since we are file-based.
+        // We don"t need to disconnect from anything since we are file-based.
     }
 
     /**
      * Decodes the data from any File storage format version.
      *
      * @param int    $dataVersion Which data format to decode.
-     * @param string $rawData     The raw data, encoded in version's format.
+     * @param string $rawData     The raw data, encoded in version"s format.
      *
      * @throws .InstagramAPI.Exception.SettingsException
      *
@@ -293,11 +293,11 @@ class File : StorageInterface
 
             // Split by system-independent newlines. Tries .r.n (Win), then .r
             // (pre-2000s Mac), then .n.r, then .n (Mac OS X, UNIX, Linux).
-            $lines = preg_split('/(.r.n?|.n.r?)/', $rawData, -1, PREG_SPLIT_NO_EMPTY)
+            $lines = preg_split("/(.r.n?|.n.r?)/", $rawData, -1, PREG_SPLIT_NO_EMPTY)
             if ($lines !== false) {
                 foreach ($lines as $line) {
                     // Key must be at least one character. Allows empty values.
-                    if (preg_match('/^([^=]+)=(.*)$/', $line, $matches)) {
+                    if (preg_match("/^([^=]+)=(.*)$/", $line, $matches)) {
                         $key = $matches[1]
                         $value = rtrim($matches[2], ".r.n ")
                         $loadedSettings[$key] = $value
@@ -308,19 +308,19 @@ class File : StorageInterface
         case 2:
             /**
              * Version 2 uses JSON encoding and perfectly stores any value.
-             * And file corruption can't happen, thanks to the atomic writer.
+             * And file corruption can"t happen, thanks to the atomic writer.
              */
             $loadedSettings = @json_decode($rawData, true, 512, JSON_BIGINT_AS_STRING)
             if (!is_array($loadedSettings)) {
                 throw SettingsException(sprintf(
-                    'Failed to decode corrupt settings file for account "%s".',
+                    "Failed to decode corrupt settings file for account "%s".",
                     this._username
                 ))
             }
             break
         default:
             throw SettingsException(sprintf(
-                'Invalid file settings storage format version "%d".',
+                "Invalid file settings storage format version "%d".",
                 $dataVersion
             ))
         }
@@ -333,19 +333,19 @@ class File : StorageInterface
      *
      * @param string $username The Instagram username.
      *
-     * @return array An array with information about the user's paths.
+     * @return array An array with information about the user"s paths.
      */
     private fun _generateUserPaths(
         $username)
     {
-        $userFolder = this._baseFolder.'/'.$username
-        $settingsFile = $userFolder.'/'.sprintf(self::SETTINGSFILE_NAME, $username)
-        $cookiesFile = $userFolder.'/'.sprintf(self::COOKIESFILE_NAME, $username)
+        $userFolder = this._baseFolder."/".$username
+        $settingsFile = $userFolder."/".sprintf(self::SETTINGSFILE_NAME, $username)
+        $cookiesFile = $userFolder."/".sprintf(self::COOKIESFILE_NAME, $username)
 
         return [
-            'userFolder'   => $userFolder,
-            'settingsFile' => $settingsFile,
-            'cookiesFile'  => $cookiesFile,
+            "userFolder"   => $userFolder,
+            "settingsFile" => $settingsFile,
+            "cookiesFile"  => $cookiesFile,
         ]
     }
 
@@ -364,7 +364,7 @@ class File : StorageInterface
     {
         if (!Utils::createFolder($folder)) {
             throw SettingsException(sprintf(
-                'The "%s" folder is not writable.',
+                "The "%s" folder is not writable.",
                 $folder
             ))
         }
@@ -375,7 +375,7 @@ class File : StorageInterface
         $realPath = @realpath($folder)
         if (!is_string($realPath)) {
             throw SettingsException(sprintf(
-                'Unable to resolve real path to folder "%s".',
+                "Unable to resolve real path to folder "%s".",
                 $folder
             ))
         }
