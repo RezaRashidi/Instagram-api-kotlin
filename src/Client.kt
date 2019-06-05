@@ -42,7 +42,7 @@ class Client
      *
      * @var .InstagramAPI.Instagram
      */
-    protected $_parent
+    protected  va_parent
 
     /**
      * What user agent to identify our client as.
@@ -123,8 +123,7 @@ class Client
      *
      * @param .InstagramAPI.Instagram $parent
      */
-    public fun __construct(
-        $parent)
+    constructor(parent:Instagram):this
     {
         this._parent = $parent
 
