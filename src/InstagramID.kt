@@ -133,7 +133,7 @@ class InstagramID{
                 val base64 = InstagramID().BASE64URL_CHARMAP.indexOf(code[i])+1
 
                 // Convert it to 6 binary bits (left-padded if needed).
-                base2 += decbin(base64).toString().padStart(6, "0")
+                base2 += decbin(base64).toString().padStart(6, '0')
             }
             // Now just convert the base2 binary string to a base10 decimal string.
             return base2to10(base2)
@@ -190,7 +190,7 @@ class InstagramID{
                     base2 = "0".repeat(padAmount) + base2
                 }
             } else {
-                base2 = base2.trimStart("0")
+                base2 = base2.trimStart('0')
             }
 
             return base2
