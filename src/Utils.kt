@@ -4,6 +4,10 @@ import InstagramAPI.Media.Video.FFmpeg
 import InstagramAPI.Response.Model.Item
 import InstagramAPI.Response.Model.Location
 import java.util.*
+import javax.crypto.spec.SecretKeySpec
+import javax.crypto.Mac
+import javax.xml.bind.DatatypeConverter
+
 
 object Utils{
     /**
@@ -167,7 +171,7 @@ object Utils{
      * @return string
      */
     fun generateUserBreadcrumb(size: Int): String{
-        val key = "iN4\$aGr0m"
+        val key = "iN4$" + "aGr0m"
         val date = System.currentTimeMillis().toInt()
 
         // typing time
@@ -182,7 +186,10 @@ object Utils{
         // generate typing data
         val data = "$size $term $text_change_event_count $date"
 
-        return base64_encode(hash_hmac("sha256", data, key, true)) + ".n" + base64_encode(data) + ".n"
+        // base64_encode(hash_hmac('sha256', $data, $key, true)) => base64hashHmacSha256(key, data)
+        // base64_encode($data) => Base64.getEncoder().encodeToString(data.toByteArray())
+        val codedData: String = base64hashHmacSha256(key, data)
+        return codedData + ".n" + Base64.getEncoder().encodeToString(data.toByteArray()) + ".n"
     }
 
     /**
@@ -203,37 +210,34 @@ object Utils{
         }
 
         var sec = 0.0
-        foreach (array_reverse(explode(":", timeStr)) as offsetKey => v) {
+        for ((offsetKey, v) in array_reverse(explode(":", timeStr))) {
             if (offsetKey > 2) {
-                throw IllegalArgumentException("Invalid input $timeStr with too many components (max 3 is allowed "HH:MM:SS").")
+                throw IllegalArgumentException("Invalid input \"$timeStr\" with too many components (max 3 is allowed \"HH:MM:SS\").")
             }
 
             // Parse component (supports "01" or "01.123" (milli-precision)).
-            if (v === "" || !preg_match("/^.d+(?:...d+)?$/", v)) {
-                throw IllegalArgumentException("Invalid non-digit or empty component $v in time string $timeStr.")
+            if (v === "" || ! ("/^\\d+(?:\\.\\d+)?\$/".toRegex().matches(v)) ) {
+                throw IllegalArgumentException("Invalid non-digit or empty component \"$v\" in time string \"$timeStr\".")
             }
             if (offsetKey !== 0 && strpos(v, ".") !== false) {
-                throw IllegalArgumentException("Unexpected period in time component $v in time string $timeStr. Only the seconds-component supports milliseconds.")
+                throw IllegalArgumentException("Unexpected period in time component \"$v\" in time string \"$timeStr\". Only the seconds-component supports milliseconds.")
             }
 
             // Convert the value to float and cap minutes/seconds to 60 (but
             // allow any number of hours).
             var v = v as Float
-            var maxValue = offsetKey < 2 ? 60 : -1
-            if ($maxValue >= 0 && $v > $maxValue) {
-                throw IllegalArgumentException(sprintf(
-                    "Invalid time component "%d" (its allowed range is 0-%d) in time string "%s".",
-                    $v, $maxValue, $timeStr
-                ))
+            var maxValue = if(offsetKey < 2) 60 else -1
+            if (maxValue >= 0 && v > maxValue) {
+                throw IllegalArgumentException("Invalid time component \"${v.toUInt()}\" (its allowed range is 0-$maxValue) in time string \"$timeStr\".")
             }
 
             // Multiply the current component of the "01:02:03" string with the
             // power of its offset. Hour-offset will be 2, Minutes 1 and Secs 0
             // and "pow(60, 0)" will return 1 which is why seconds work too.
-            $sec += pow(60, offsetKey) * v
+            sec += pow(60, offsetKey) * v
         }
 
-        return $sec
+        return sec
     }
 
     /**
@@ -284,7 +288,7 @@ object Utils{
      */
     fun buildMediaLocationJSON(location: Location): String{
         if (!location instanceof Location) {
-            throw IllegalArgumentException("The location must be an instance of .InstagramAPI.Response.Model.Location.")
+            throw IllegalArgumentException("The location must be an instance of \\InstagramAPI\\Response\\Model\\Location.")
         }
 
         // Forbid locations that came from Location::searchFacebook() and
@@ -307,7 +311,7 @@ object Utils{
 
         // Attach the location ID via a dynamically generated key.
         // NOTE: This automatically generates a key such as "facebook_places_id".
-        var key = location.getExternalIdSource() + "_id"
+        val key = location.getExternalIdSource() + "_id"
         obj[key] = location.getExternalId()
 
         // Ensure that all keys are listed in the correct hash order.
@@ -363,7 +367,7 @@ object Utils{
         // Check for required keys.
         var requiredKeys = setOf("position", "user_id")
         var missingKeys = array_diff(requiredKeys, array_keys(userTag))
-        if (missingKeys !is empty) {
+        if (!(missingKeys.isEmpty())) {
             throw IllegalArgumentException(sprintf("Missing keys '%s' for user tag array.", implode("", "", missingKeys)))
         }
 
@@ -383,13 +387,13 @@ object Utils{
                 "position" ->{
                     try {
                         throwIfInvalidPosition(value)
-                    } catch (InvalidArgumentException e) {
-                        throw InvalidArgumentException(sprintf("Invalid user tag position: %s", e.getMessage()), e.getCode(), e)
+                    } catch (IllegalArgumentException e) {
+                        throw IllegalArgumentException(sprintf("Invalid user tag position: %s", e.getMessage()), e.getCode(), e)
                     }
                     break
                 }
                 else ->{
-                    throw IllegalArgumentException("Invalid key $key in user tag array.")
+                    throw IllegalArgumentException("Invalid key \"$key\" in user tag array.")
                 }
             }
         }
@@ -420,7 +424,7 @@ object Utils{
 
         for ((k,v) in usertags ) {
             if (!is_array(v)) {
-                throw IllegalArgumentException("Invalid usertags array. The value for key $k must be an array.")
+                throw IllegalArgumentException("Invalid usertags array. The value for key \"$k\" must be an array.")
             }
             // Skip the section if it"s empty.
             if (v.isEmpty()) {
@@ -447,12 +451,12 @@ object Utils{
                     // Check the array of userids to remove.
                     for (userId in v) {
                         if (!ctype_digit(userId) && (userId !is Int || userId < 0)) {
-                            throw InvalidArgumentException("Invalid user ID in usertags 'removed' array.")
+                            throw IllegalArgumentException("Invalid user ID in usertags \"removed\" array.")
                         }
                     }
                     break
                 }
-                else -> throw IllegalArgumentException("Invalid key $k in user tags array.")
+                else -> throw IllegalArgumentException("Invalid key \"$k\" in user tags array.")
             }
         }
     }
@@ -471,7 +475,7 @@ object Utils{
      * @throws IllegalArgumentException If any tags are invalid.
      */
     fun throwIfInvalidProductTags(productTags){
-        // NOTE: We can import "array" typehint, but it doesn"t give us enough freedom.
+        // NOTE: We can import "array" typehint, but it doesn't give us enough freedom.
         if (!is_array(productTags)) {
             throw IllegalArgumentException("Products tags must be an array.")
         }
@@ -482,7 +486,7 @@ object Utils{
 
         for ((k, v) in productTags) {
             if (!is_array(v)) {
-                throw IllegalArgumentException("Invalid product tags array. The value for key $k must be an array.")
+                throw IllegalArgumentException("Invalid product tags array. The value for key \"$k\" must be an array.")
             }
 
             // Skip the section if it"s empty.
@@ -512,13 +516,13 @@ object Utils{
                     // Check the array of product_id to remove.
                     for (productId in v) {
                         if (!ctype_digit(productId) && (productId !is Int || productId < 0)) {
-                            throw IllegalArgumentException("Invalid product ID in product tags 'removed' array.")
+                            throw IllegalArgumentException("Invalid product ID in product tags \"removed\" array.")
                         }
                     }
                     break
                 }
                 else ->
-                    throw IllegalArgumentException("Invalid key $k in product tags array.")
+                    throw IllegalArgumentException("Invalid key \"$k\" in product tags array.")
             }
         }
     }
@@ -536,16 +540,16 @@ object Utils{
      * @throws IllegalArgumentException If any tags are invalid.
      */
     fun throwIfInvalidProductTag(productTag){
-        // NOTE: We can import "array" typehint, but it doesn"t give us enough freedom.
+        // NOTE: We can import "array" typehint, but it doesn't give us enough freedom.
         if (!is_array(productTag)) {
             throw IllegalArgumentException("Product tag must be an array.")
         }
 
         // Check for required keys.
         var requiredKeys = ["position", "product_id"]
-        var missingKeys = array_diff($requiredKeys, array_keys($productTag))
+        var missingKeys = array_diff(requiredKeys, array_keys(productTag))
         if (!(missingKeys.isEmpty())) {
-            throw IllegalArgumentException(sprintf("Missing keys "%s" for product tag array.", implode("", "", $missingKeys)))
+            throw IllegalArgumentException(sprintf("Missing keys "%s" for product tag array.", implode("", "", missingKeys)))
         }
 
         // Verify this product tag entry, ensuring that the entry is format
@@ -569,7 +573,7 @@ object Utils{
                     }
                     break
                 }
-                else -> throw IllegalArgumentException("Invalid key $key in product tag array.")
+                else -> throw IllegalArgumentException("Invalid key \"$key\" in product tag array.")
             }
         }
     }
@@ -621,16 +625,13 @@ object Utils{
      * @throws IllegalArgumentException
      */
     fun throwIfInvalidHashtag(hashtag){
-        if (hashtag !is String || !strlen($hashtag)) {
+        if (hashtag !is String || !strlen(hashtag)) {
             throw IllegalArgumentException("Hashtag must be a non-empty string.")
         }
         // Perform an UTF-8 aware search for the illegal "#" symbol (anywhere).
         // NOTE: We must import mb_strpos() to support international tags.
         if (mb_strpos(hashtag, "#") !== false) {
-            throw IllegalArgumentException(sprintf(
-                "Hashtag "%s" is not allowed to contain the "#" character.",
-                hashtag
-            ))
+            throw IllegalArgumentException("Hashtag \"$hashtag\" is not allowed to contain the \"#\" character.")
         }
     }
 
@@ -643,7 +644,7 @@ object Utils{
      */
     fun throwIfInvalidRankToken(rankToken: String) {
         if (!Signatures::isValidUUID(rankToken)) {
-            throw IllegalArgumentException("$rankToken is not a valid rank token.")
+            throw IllegalArgumentException("\"$rankToken\" is not a valid rank token.")
         }
     }
 
@@ -655,41 +656,41 @@ object Utils{
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
     fun throwIfInvalidStoryPoll(storyPoll){
-        var requiredKeys = setOf<String>("question", "viewer_vote", "viewer_can_vote", "tallies", "is_sticker")
+        val requiredKeys = setOf("question", "viewer_vote", "viewer_can_vote", "tallies", "is_sticker")
 
-        if (count(storyPoll) !== 1) {
-            throw IllegalArgumentException(sprintf("Only one story poll is permitted. You added %d story polls.", count($storyPoll)))
+        if (storyPoll.count() !== 1) {
+            throw IllegalArgumentException("Only one story poll is permitted. You added ${storyPoll.count()} story polls.")
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["question" => 1, "viewer_vote" => 1, "viewer_can_vote" => 1, "tallies" => 1, "is_sticker" => 1], $storyPoll[0]))
+        var missingKeys = array_keys(array_diff_key(["question" => 1, "viewer_vote" => 1, "viewer_can_vote" => 1, "tallies" => 1, "is_sticker" => 1], storyPoll[0]))
         if (count(missingKeys)) {
-            throw IllegalArgumentException(sprintf("Missing keys "%s" for story poll array.", implode(", ", $missingKeys)))
+            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for story poll array.", implode(", ", missingKeys)))
         }
 
-        foreach ($storyPoll[0] as k => v) {
+        for ((k,v) in storyPoll[0]) {
             when (k) {
                 "question" -> {
                     if (v !is String) {
-                        throw IllegalArgumentException("Invalid value $v for story poll array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
                     break
                 }
                 "viewer_vote" -> {
                     if (v !== 0) {
-                        throw IllegalArgumentException("Invalid value $v for story poll array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
                     break
                 }
                 "viewer_can_vote" , "is_sticker" -> {
                     if (v !is Boolean && v !== true) {
-                        throw IllegalArgumentException("Invalid value $v for story poll array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
                     break
                 }
                 "tallies" -> {
                     if (v !is Aarray) {
-                        throw IllegalArgumentException("Invalid value $v for story poll array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
                     throwIfInvalidStoryPollTallies(v)
                     break
@@ -708,35 +709,35 @@ object Utils{
      */
     fun throwIfInvalidStorySlider(storySlider)
     {
-        var requiredKeys = setOf<String>("question", "viewer_vote", "viewer_can_vote", "slider_vote_average", "slider_vote_count", "emoji", "background_color", "text_color", "is_sticker")
+        var requiredKeys = setOf("question", "viewer_vote", "viewer_can_vote", "slider_vote_average", "slider_vote_count", "emoji", "background_color", "text_color", "is_sticker")
 
         if (count(storySlider) !== 1) {
-            throw IllegalArgumentException(sprintf("Only one story slider is permitted. You added %d story sliders.", count($storySlider)))
+            throw IllegalArgumentException("Only one story slider is permitted. You added ${storySlider.count()} story sliders.")
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["question" => 1, "viewer_vote" => 1, "viewer_can_vote" => 1, "slider_vote_average" => 1, "slider_vote_count" => 1, "emoji" => 1, "background_color" => 1, "text_color" => 1, "is_sticker" => 1], $storySlider[0]))
+        var missingKeys = array_keys(array_diff_key(["question" => 1, "viewer_vote" => 1, "viewer_can_vote" => 1, "slider_vote_average" => 1, "slider_vote_count" => 1, "emoji" => 1, "background_color" => 1, "text_color" => 1, "is_sticker" => 1], storySlider[0]))
         if (count(missingKeys)) {
-            throw IllegalArgumentException(sprintf("Missing keys "%s" for story slider array.", implode(", ", $missingKeys)))
+            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for story slider array.", implode(", ", missingKeys)))
         }
 
-        foreach ($storySlider[0] as $k => $v) {
+        for ((k, v) in storySlider[0]) {
             when (k) {
                 "question" -> {
                     if (v !is String) {
-                        throw IllegalArgumentException("Invalid value $v for story poll array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
                     break
                 }
                 "viewer_vote", "slider_vote_count", "slider_vote_average" -> {
                     if (v !== 0) {
-                        throw IllegalArgumentException("Invalid value $v for story poll array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
                     break
                 }
                 "background_color", "text_color" -> {
                     if (!preg_match("/^[0-9a-fA-F]{6}$/", substr(v, 1))) {
-                        throw IllegalArgumentException("Invalid value $v for story poll array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
                     break
                 }
@@ -746,20 +747,20 @@ object Utils{
                 }
                 "viewer_can_vote" -> {
                     if (v !is Boolean && v !== false) {
-                        throw IllegalArgumentException("Invalid value $v for story poll array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
                     break
                 }
                 "is_sticker" -> {
                     if (v !is Boolean && v !== false) {
-                        throw IllegalArgumentException("Invalid value $v for story poll array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
                     break
                 }
 
             }
         }
-        _throwIfInvalidStoryStickerPlacement(array_diff_key($storySlider[0], array_flip($requiredKeys)), "sliders")
+        _throwIfInvalidStoryStickerPlacement(array_diff_key(storySlider[0], array_flip(requiredKeys)), "sliders")
     }
 
     /**
@@ -770,66 +771,66 @@ object Utils{
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
     fun throwIfInvalidStoryQuestion(storyQuestion){
-        var requiredKeys = ["z", "viewer_can_interact", "background_color", "profile_pic_url", "question_type", "question", "text_color", "is_sticker"]
+        var requiredKeys = setOf("z", "viewer_can_interact", "background_color", "profile_pic_url", "question_type", "question", "text_color", "is_sticker")
 
-        if (count(storyQuestion) !== 1) {
-            throw IllegalArgumentException(sprintf("Only one story question is permitted. You added %d story questions.", count($storyQuestion)))
+        if (storyQuestion.count() !== 1) {
+            throw IllegalArgumentException("Only one story question is permitted. You added ${storyQuestion.count()} story questions.")
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["viewer_can_interact" => 1, "background_color" => 1, "profile_pic_url" => 1, "question_type" => 1, "question" => 1, "text_color" => 1, "is_sticker" => 1], $storyQuestion[0]))
+        var missingKeys = array_keys(array_diff_key(["viewer_can_interact" => 1, "background_color" => 1, "profile_pic_url" => 1, "question_type" => 1, "question" => 1, "text_color" => 1, "is_sticker" => 1], storyQuestion[0]))
         if (count(missingKeys)) {
-            throw IllegalArgumentException(sprintf("Missing keys "%s" for story question array.", implode(", ", $missingKeys)))
+            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for story question array.", implode(", ", missingKeys)))
         }
 
-        foreach (storyQuestion[0] as k => v) {
+        for ((k, v) in storyQuestion[0]) {
             when (k) {
-                "z": -> { // May be used for AR in the future, for now it"s always 0.
+                "z" -> { // May be used for AR in the future, for now it"s always 0.
                     if (v !== 0) {
-                        throw IllegalArgumentException("Invalid value $v for story question array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
                     break
                 }
                 "viewer_can_interact" -> {
                     if (v !is Boolean || v !== false) {
-                        throw IllegalArgumentException("Invalid value $v for story question array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
                     break
                 }
                 "background_color", "text_color" -> {
                     if (!preg_match("/^[0-9a-fA-F]{6}$/", substr(v, 1))) {
-                        throw IllegalArgumentException("Invalid value $v for story question array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
                     break
                 }
                 "question_type" -> {
                     // At this time only text questions are supported.
                     if (v !is String || v !== "text") {
-                        throw IllegalArgumentException("Invalid value $v for story question array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
                     break
                 }
                 "question" -> {
                     if (v !is String) {
-                        throw IllegalArgumentException("Invalid value $v for story question array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
                     break
                 }
                 "profile_pic_url" -> {
                     if (!hasValidWebURLSyntax(v)) {
-                        throw IllegalArgumentException("Invalid value $v for story question array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
                     break
                 }
                 "is_sticker" -> {
                     if (v !is Boolean && v !== true) {
-                        throw IllegalArgumentException("Invalid value $v for story question array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
                     break
                 }
             }
         }
-        _throwIfInvalidStoryStickerPlacement(array_diff_key($storyQuestion[0], array_flip($requiredKeys)), "questions")
+        _throwIfInvalidStoryStickerPlacement(array_diff_key(storyQuestion[0], array_flip(requiredKeys)), "questions")
     }
 
     /**
@@ -840,53 +841,53 @@ object Utils{
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
     fun throwIfInvalidStoryCountdown(storyCountdown){
-        var requiredKeys = ["z", "text", "text_color", "start_background_color", "end_background_color", "digit_color", "digit_card_color", "end_ts", "following_enabled", "is_sticker"]
+        var requiredKeys = setOf("z", "text", "text_color", "start_background_color", "end_background_color", "digit_color", "digit_card_color", "end_ts", "following_enabled", "is_sticker")
 
         if (count(storyCountdown) !== 1) {
-            throw IllegalArgumentException(sprintf("Only one story countdown is permitted. You added %d story countdowns.", count($storyCountdown)))
+            throw IllegalArgumentException("Only one story countdown is permitted. You added ${storyCountdown.count()} story countdowns.")
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["z" => 1, "text" => 1, "text_color" => 1, "start_background_color" => 1, "end_background_color" => 1, "digit_color" => 1, "digit_card_color" => 1, "end_ts" => 1, "following_enabled" => 1, "is_sticker" => 1], $storyCountdown[0]))
+        var missingKeys = array_keys(array_diff_key(["z" => 1, "text" => 1, "text_color" => 1, "start_background_color" => 1, "end_background_color" => 1, "digit_color" => 1, "digit_card_color" => 1, "end_ts" => 1, "following_enabled" => 1, "is_sticker" => 1], storyCountdown[0]))
         if (count(missingKeys)) {
-            throw IllegalArgumentException(sprintf("Missing keys "%s" for story countdown array.", implode(", ", $missingKeys)))
+            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for story countdown array.", implode(", ", missingKeys)))
         }
 
-        foreach ($storyCountdown[0] as $k => $v) {
+        for ((k, v)in storyCountdown[0]) {
             when (k) {
                 "z" -> { // May be used for AR in the future, for now it"s always 0.
                     if (v !== 0) {
-                        throw IllegalArgumentException("Invalid value $v for story countdown array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
                     break
                 }
                 "text" -> {
                     if (v !is String) {
-                        throw IllegalArgumentException("Invalid value $v for story countdown array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
                     break
                 }
                 "text_color", "start_background_color", "end_background_color", "digit_color", "digit_card_color" -> {
                     if (!preg_match("/^[0-9a-fA-F]{6}$/", substr(v, 1))) {
-                        throw IllegalArgumentException("Invalid value $v for story countdown array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
                     break
                 }
                 "end_ts" -> {
                     if (v !is Int) {
-                        throw IllegalArgumentException("Invalid value $v for story countdown array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
                     break
                 }
                 "following_enabled" -> {
                     if (v !is Boolean) {
-                        throw IllegalArgumentException("Invalid value $v for story countdown array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
                     break
                 }
                 "is_sticker" -> {
                     if (v !is Boolean && v !== true) {
-                        throw IllegalArgumentException("Invalid value $v for story countdown array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
                     break
                 }
@@ -903,8 +904,8 @@ object Utils{
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
     protected fun _throwIfInvalidStoryPollTallies(tallies){
-        var requiredKeys = ["text", "count", "font_size"]
-        if (count(tallies) !== 2) {
+        var requiredKeys = setOf("text", "count", "font_size")
+        if (tallies.count() !== 2) {
             throw IllegalArgumentException("Missing data for tallies.")
         }
 
@@ -912,28 +913,28 @@ object Utils{
             var missingKeys = array_keys(array_diff_key(["text" => 1, "count" => 1, "font_size" => 1], tallie))
 
             if (count(missingKeys)) {
-                throw IllegalArgumentException(sprintf("Missing keys "%s" for location array.", implode(", ", $missingKeys)))
+                throw IllegalArgumentException(sprintf("Missing keys \"%s\" for location array.", implode(", ", missingKeys)))
             }
             for ((k, v) in tallie) {
                 if (!in_array(k, requiredKeys, true)) {
-                    throw IllegalArgumentException("Invalid key $k for story poll tallies.")
+                    throw IllegalArgumentException("Invalid key \"$k\" for story poll tallies.")
                 }
                 when (k) {
                     "text" -> {
                         if (v !is String) {
-                            throw IllegalArgumentException("Invalid value $v for tallies array-key $k.")
+                            throw IllegalArgumentException("Invalid value \"$v\" for tallies array-key \"$k\".")
                         }
                         break
                     }
                     "count" -> {
                         if (v !== 0) {
-                            throw IllegalArgumentException("Invalid value $v for tallies array-key $k.")
+                            throw IllegalArgumentException("Invalid value \"$v\" for tallies array-key \"$k\".")
                         }
                         break
                     }
                     "font_size" -> {
                         if (v !is Float || (v < 17.5 || v > 35.0)) {
-                            throw IllegalArgumentException("Invalid value $v for tallies array-key $k.")
+                            throw IllegalArgumentException("Invalid value \"$v\" for tallies array-key \"$k\".")
                         }
                         break
                     }
@@ -955,15 +956,15 @@ object Utils{
         for (mention in storyMentions) {
             // Ensure that all keys exist.
             var missingKeys = array_keys(array_diff_key(["user_id" => 1], mention))
-            if (count($missingKeys)) {
-                throw IllegalArgumentException(sprintf("Missing keys "%s" for mention array.", implode(", ", $missingKeys)))
+            if (missingKeys.count()) {
+                throw IllegalArgumentException(sprintf("Missing keys \"%s\" for mention array.", implode(", ", missingKeys)))
             }
 
             for ((k, v) in mention ) {
                 when (k) {
                     "user_id" -> {
                         if (!ctype_digit(v) && (v !is Int || v < 0)) {
-                            throw IllegalArgumentException("Invalid value $v for story mention array-key $k.")
+                            throw IllegalArgumentException("Invalid value \"$v\" for story mention array-key \"$k\".")
                         }
                         break
                     }
@@ -981,24 +982,24 @@ object Utils{
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
     fun throwIfInvalidStoryLocationSticker(locationSticker){
-        var requiredKeys = ["location_id", "is_sticker"]
-        var missingKeys = array_keys(array_diff_key(["location_id" => 1, "is_sticker" => 1], $locationSticker))
+        var requiredKeys = setOf("location_id", "is_sticker")
+        var missingKeys = array_keys(array_diff_key(["location_id" => 1, "is_sticker" => 1], locationSticker))
 
-        if (count(missingKeys)) {
-            throw IllegalArgumentException(sprintf("Missing keys "%s" for location array.", implode(", ", $missingKeys)))
+        if (missingKeys.count()) {
+            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for location array.", implode(", ", missingKeys)))
         }
 
         for ((k, v) in locationSticker) {
             when (k) {
                 "location_id" -> {
                     if (v !is String && v !is Numeric) {
-                        throw IllegalArgumentException("Invalid value $v for location array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for location array-key \"$k\".")
                     }
                     break
                 }
                 "is_sticker" -> {
                     if (v !is Boolean) {
-                        throw IllegalArgumentException("Invalid value $v for hashtag array-key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for hashtag array-key \"$k\".")
                     }
                     break
                 }
@@ -1013,22 +1014,22 @@ object Utils{
      * @param (string) $captionText The caption for the story hashtag to verify.
      * @param (array[]) $hashtags    The array of all story hashtags.
      *
-     * @throws IllegalArgumentException If caption doesn"t contain any hashtag,
+     * @throws IllegalArgumentException If caption doesn't contain any hashtag,
      *                                   or if any tags are invalid.
      */
-    fun throwIfInvalidStoryHashtags(captionText, hashtags){
-        var requiredKeys = ["tag_name", "use_custom_title", "is_sticker"]
+    fun throwIfInvalidStoryHashtags(captionText: String, hashtags){
+        var requiredKeys = setOf("tag_name", "use_custom_title", "is_sticker")
 
         // Extract all hashtags from the caption using a UTF-8 aware regex.
-        if (!preg_match_all("/#(.w+[^.x00-.x7F]?+)/u", $captionText, $tagsInCaption)) {
+        if (!preg_match_all("/#(.w+[^.x00-.x7F]?+)/u", captionText, tagsInCaption)) {
             throw IllegalArgumentException("Invalid caption for hashtag.")
         }
 
         // Verify all provided hashtags.
         for (hashtag in hashtags ) {
-            var missingKeys = array_keys(array_diff_key(["tag_name" => 1, "use_custom_title" => 1, "is_sticker" => 1], $hashtag))
-            if (count(missingKeys)) {
-                throw IllegalArgumentException(sprintf("Missing keys "%s" for hashtag array.", implode(", ", $missingKeys)))
+            var missingKeys = array_keys(array_diff_key(["tag_name" => 1, "use_custom_title" => 1, "is_sticker" => 1], hashtag))
+            if (missingKeys.count()) {
+                throw IllegalArgumentException(sprintf("Missing keys \"%s\" for hashtag array.", implode(", ", missingKeys)))
             }
 
             for ((k, v) in hashtag) {
@@ -1039,19 +1040,19 @@ object Utils{
                         // Verify that this tag exists somewhere in the caption to check.
                         if (!in_array(v, tagsInCaption[1])) {
                             // NOTE: UTF-8 aware.
-                            throw IllegalArgumentException("Tag name $v does not exist in the caption text.")
+                            throw IllegalArgumentException("Tag name \"$v\" does not exist in the caption text.")
                         }
                         break
                     }
                     "use_custom_title" -> {
                         if (v !is Boolean) {
-                            throw IllegalArgumentException("Invalid value $v for hashtag array-key $k.")
+                            throw IllegalArgumentException("Invalid value \"$v\" for hashtag array-key \"$k\".")
                         }
                         break
                     }
                     "is_sticker" -> {
                         if (v !is Boolean) {
-                            throw IllegalArgumentException("Invalid value $v for hashtag array-key $k.")
+                            throw IllegalArgumentException("Invalid value \"$v\" for hashtag array-key \"$k\".")
                         }
                         break
                     }
@@ -1070,12 +1071,12 @@ object Utils{
      */
     fun throwIfInvalidAttachedMedia(attachedMedia){
         var attachedMedia = reset(attachedMedia)
-        var requiredKeys = ["media_id", "is_sticker"]
+        var requiredKeys = setOf("media_id", "is_sticker")
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["media_id" => 1, "is_sticker" => 1], $attachedMedia))
-        if (count(missingKeys)) {
-            throw IllegalArgumentException(sprintf("Missing keys "%s" for attached media.", implode(", ", $missingKeys)))
+        var missingKeys = array_keys(array_diff_key(["media_id" => 1, "is_sticker" => 1], attachedMedia))
+        if (missingKeys.count()) {
+            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for attached media.", implode(", ", missingKeys)))
         }
 
         if (attachedMedia["media_id"] !is String && attachedMedia["media_id"] !is Numeric) {
@@ -1103,23 +1104,23 @@ object Utils{
      * @throws IllegalArgumentException If storySticker is missing keys or has invalid values.
      */
     fun _throwIfInvalidStoryStickerPlacement(storySticker, type: String){
-        var requiredKeys = ["x", "y", "width", "height", "rotation"]
+        var requiredKeys = setOf("x", "y", "width", "height", "rotation")
 
         // Ensure that all required hashtag array keys exist.
-        var missingKeys = array_keys(array_diff_key(["x" => 1, "y" => 1, "width" => 1, "height" => 1, "rotation" => 0], $storySticker))
-        if (count(missingKeys)) {
-            throw IllegalArgumentException(sprintf("Missing keys "%s" for "%s".", implode(", ", $missingKeys), $type))
+        var missingKeys = array_keys(array_diff_key(["x" => 1, "y" => 1, "width" => 1, "height" => 1, "rotation" => 0], storySticker))
+        if (missingKeys.count()) {
+            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for \"%s\".", implode(", ", missingKeys), type))
         }
 
         // Check the individual array values.
         for ((k, v) in storySticker) {
             if (!in_array(k, requiredKeys, true)) {
-                throw IllegalArgumentException("Invalid key $k for $type.")
+                throw IllegalArgumentException("Invalid key \"$k\" for \"$type\".")
             }
             when (k) {
                 "x", "y", "width", "height", "rotation" -> {
                     if (v !is Float || v < 0.0 || v > 1.0) {
-                        throw IllegalArgumentException("Invalid value $v for $type key $k.")
+                        throw IllegalArgumentException("Invalid value \"$v\" for \"$type\" key \"$k\".")
                     }
                     break
                 }
@@ -1143,25 +1144,25 @@ object Utils{
                 mediaType = "PHOTO"
             } else if (mediaType == Item::VIDEO) {
                 mediaType = "VIDEO"
-            } else (mediaType == Item::CAROUSEL) {
-                mediaType = "CAROUSEL"
+            } else (mediaType == Item::ALBUM) {
+                mediaType = "ALBUM"
             }
         }
-        if (!in_array(mediaType, ["PHOTO", "VIDEO", "CAROUSEL"], true)) {
-            throw IllegalArgumentException("$mediaType is not a valid media type.")
+        if (!in_array(mediaType, ["PHOTO", "VIDEO", "ALBUM"], true)) {
+            throw IllegalArgumentException("\"$mediaType\" is not a valid media type.")
         }
 
         return mediaType
     }
 
-    fun formatBytes(bytes, precision = 2){
-        var units = ["B", "kB", "mB", "gB", "tB"]
+    fun formatBytes(bytes, precision: Int = 2){
+        var units = setOf("B", "kB", "mB", "gB", "tB")
 
-        $bytes = max($bytes, 0)
-        $pow = floor(($bytes ? log($bytes) : 0) / log(1024))
-        $pow = min($pow, count($units) - 1)
+        bytes = max(bytes, 0)
+        var pow = floor((bytes ? log(bytes) : 0) / log(1024))
+        pow = min(pow, units.count() - 1)
 
-        $bytes /= pow(1024, pow)
+        bytes = bytes / Math.pow(1024, pow)
 
         return round(bytes, precision)+""+units[pow]
     }
@@ -1191,7 +1192,7 @@ object Utils{
             colored_string += ".033["+ colours[colour] + "m"
         }
 
-        colored_string += string + ".033[0m"
+        colored_string += "$string.033[0m"
 
         return colored_string
     }
@@ -1255,11 +1256,11 @@ object Utils{
      *
      * @return bool TRUE if folder exists and is writable, otherwise FALSE.
      */
-    fun createFolder(folder: String){
+    fun createFolder(folder: String): Boolean{
         // Test write-permissions for the folder and create/fix if necessary.
-        if ((is_dir($folder) && is_writable($folder))
-            || (!is_dir($folder) && mkdir($folder, 0755, true))
-            || chmod($folder, 0755)) {
+        if ((is_dir(folder) && is_writable(folder))
+            || (!is_dir(folder) && mkdir(folder, 0755, true))
+            || chmod(folder, 0755)) {
             return true
         } else {
             return false
@@ -1276,27 +1277,27 @@ object Utils{
      */
     fun deleteTree(folder: String,keepRootFolder: Boolean = false): String{
         // Handle bad arguments.
-        if (folder.isEmpty() || !file_exists($folder)) {
+        if (folder.isEmpty() || !file_exists(folder)) {
             return true // No such file/folder exists.
         } else if (is_file(folder) || is_link(folder)) {
             return @unlink(folder) // Delete file/link.
         }
 
         // Delete all children.
-        $files = .RecursiveIteratorIterator(
-            .RecursiveDirectoryIterator($folder, .RecursiveDirectoryIterator::SKIP_DOTS),
-            .RecursiveIteratorIterator::CHILD_FIRST
+        var files = RecursiveIteratorIterator(
+            RecursiveDirectoryIterator(folder, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
         )
 
-        foreach ($files as $fileinfo) {
-            $action = ($fileinfo.isDir() ? "rmdir" : "unlink")
-            if (!@$action($fileinfo.getRealPath())) {
+        for (fileinfo in files) {
+            var action = if(fileinfo.isDir()) "rmdir" else "unlink"
+            if (!@action(fileinfo.getRealPath())) {
                 return false // Abort due to the failure.
             }
         }
 
         // Delete the root folder itself?
-        return !$keepRootFolder ? @rmdir($folder) : true
+        return if(!keepRootFolder) {return @rmdir(folder)} else {return true}
     }
 
     /**
@@ -1317,22 +1318,22 @@ object Utils{
      */
     fun atomicWrite(filename: String, data: String, atomicSuffix: String = "atomictmp"){
         // Perform an exclusive (locked) overwrite to a temporary file.
-        $filenameTmp = sprintf("%s.%s", $filename, $atomicSuffix)
-        $writeResult = @file_put_contents($filenameTmp, $data, LOCK_EX)
+        val filenameTmp = print("$filename.$atomicSuffix")
+        var writeResult = @file_put_contents(filenameTmp, data, LOCK_EX)
 
         // Only proceed if we wrote 100% of the data bytes to disk.
-        if ($writeResult !== false && $writeResult === strlen($data)) {
+        if (writeResult !== false && writeResult === strlen(data)) {
             // Now move the file to its real destination (replaces if exists).
-            $moveResult = @rename($filenameTmp, $filename)
-            if ($moveResult === true) {
+            var moveResult = @rename(filenameTmp, filename)
+            if (moveResult === true) {
                 // Successful write and move. Return number of bytes written.
-                return $writeResult
+                return writeResult
             }
         }
 
         // We"ve failed. Remove the temporary file if it exists.
-        if (is_file($filenameTmp)) {
-            @unlink($filenameTmp)
+        if (is_file(filenameTmp)) {
+            @unlink(filenameTmp)
         }
 
         return false // Failed.
@@ -1348,14 +1349,14 @@ object Utils{
      *
      * @return string
      */
-    fun createTempFile(outputDir: String, namePrefix: String = "TEMP"){
+    fun createTempFile(outputDir: String, namePrefix: String = "TEMP"): String{
         // Automatically generates a name like "INSTATEMP_" or "INSTAVID_" etc.
-        var finalPrefix = println("INSTA${namePrefix}_")
+        val finalPrefix = "INSTA${namePrefix}_"
 
         // Try to create the file (detects errors).
-        $tmpFile = @tempnam($outputDir, $finalPrefix)
+        var tmpFile = @tempnam(outputDir, finalPrefix)
         if (tmpFile !is String) {
-            throw RuntimeException("Unable to create temporary output file in $outputDir (with prefix $finalPrefix).")
+            throw RuntimeException("Unable to create temporary output file in \"$outputDir\" (with prefix \"$finalPrefix\").")
         }
 
         return tmpFile
@@ -1375,8 +1376,8 @@ object Utils{
      * @return bool TRUE on success or FALSE on failure.
      */
     fun safe_fclose(handle): Boolean{
-        if (is_resource($handle)) {
-            return fclose($handle)
+        if (is_resource(handle)) {
+            return fclose(handle)
         }
 
         return true
@@ -1407,7 +1408,7 @@ object Utils{
      * @return bool TRUE if valid web syntax, otherwise FALSE.
      */
     fun hasValidWebURLSyntax(url: String): Boolean{
-        return (bool) preg_match("/^https?:././[^.s../]+..[^.s../]{2}.S*$/iu", url)
+        return "/^https?:././[^.s../]+..[^.s../]{2}.S*$/iu".toRegex().matches(url)
     }
 
     /**
@@ -1446,4 +1447,42 @@ object Utils{
 
         return urls
     }
+}
+
+/*
+* adding code to this file
+*
+*
+* base64_encode(x) to Base64.getEncoder().encodeToString(x.toByteArray())
+* hash_hmac        to base64hashHmacSha256 (just one type)
+*
+* */
+
+
+// function to covert string to hash code (HmacSHA256 format) then convert it to base64 encode
+fun base64hashHmacSha256(key: String, message: String): String{
+    val hasher = Mac.getInstance("HmacSHA256")
+    hasher.init(SecretKeySpec(key.toByteArray(), "HmacSHA256"))
+
+    val hash = hasher.doFinal(message.toByteArray())
+
+    // to lowercase hexits
+    //return DatatypeConverter.printHexBinary(hash)
+    // to base64
+    return DatatypeConverter.printBase64Binary(hash)
+
+//    error on return keyword
+//    try {
+//        val hasher = Mac.getInstance("HmacSHA256")
+//        hasher.init(SecretKeySpec(key.toByteArray(), "HmacSHA256"))
+//
+//        val hash = hasher.doFinal(message.toByteArray())
+//
+//        // to lowercase hexits
+//        DatatypeConverter.printHexBinary(hash)
+//        // to base64
+//        return DatatypeConverter.printBase64Binary(hash)
+//    }
+//    catch (e: NoSuchAlgorithmException) {}
+//    catch (e: InvalidKeyException) {}
 }
