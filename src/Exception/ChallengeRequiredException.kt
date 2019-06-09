@@ -2,6 +2,6 @@
 
 package InstagramAPI.Exception
 
-class ChallengeRequiredException : RequestException
+class ChallengeRequiredException : RequestException()
 {
 }

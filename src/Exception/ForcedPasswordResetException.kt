@@ -2,6 +2,6 @@
 
 package InstagramAPI.Exception
 
-class ForcedPasswordResetException : RequestException
+class ForcedPasswordResetException : RequestException()
 {
 }

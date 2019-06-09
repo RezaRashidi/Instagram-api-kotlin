@@ -2,6 +2,6 @@
 
 package InstagramAPI.Exception
 
-class SentryBlockException : RequestException
+class SentryBlockException : RequestException()
 {
 }

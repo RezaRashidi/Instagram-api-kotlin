@@ -2,6 +2,9 @@
 
 package InstagramAPI.Exception
 
+import jdk.javadoc.internal.doclets.toolkit.util.DocPath.parent
+import InstagramAPI.Exception.RequestException as RequestException1
+
 /**
  * This exception re-wraps ALL networking/socket exceptions.
  *
@@ -25,30 +28,29 @@ package InstagramAPI.Exception
  * to get the original Guzzle exception instead, which has more networking
  * information, such as the failed HTTP request that was attempted.
  */
-class NetworkException : RequestException
+class NetworkException : RequestException1()
 {
     /** @var .Exception */
-    private $_guzzleException
+    private var _guzzleException:Exception?
 
     /**
      * Constructor.
      *
      * @param .Exception $guzzleException The original Guzzle exception.
      */
-    public fun __construct(
-        .Exception $guzzleException)
+    constructor( guzzleException :Exception)
     {
-        this._guzzleException = $guzzleException
+        this._guzzleException = guzzleException
 
         // Ensure that the message is nicely formatted and follows our standard.
-        $message = "Network: ".ServerMessageThrower::prettifyMessage(this._guzzleException.getMessage())
+        var message = "Network: "+ ServerMessageThrower.prettifyMessage(this._guzzleException.getMessage())
 
         // Construct with our custom message.
         // NOTE: We DON"T assign the guzzleException to "$previous", otherwise
         // the user would still see something like "Uncaught GuzzleHttp.Exception.
         // RequestException" and Guzzle"s stack trace, instead of "Uncaught
         // InstagramAPI.Exception.NetworkException" and OUR correct stack trace.
-        parent::__construct($message)
+       super(message) //todo::call core Exception  constructor
     }
 
     /**
@@ -56,7 +58,7 @@ class NetworkException : RequestException
      *
      * @return .Exception The original Guzzle exception.
      */
-    public fun getGuzzleException()
+     fun getGuzzleException()
     {
         return this._guzzleException
     }

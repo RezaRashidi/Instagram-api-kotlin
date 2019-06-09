@@ -2,6 +2,6 @@
 
 package InstagramAPI.Exception
 
-class FeedbackRequiredException : RequestException
+class FeedbackRequiredException : RequestException()
 {
 }

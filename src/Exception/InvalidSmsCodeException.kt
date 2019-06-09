@@ -2,6 +2,6 @@
 
 package InstagramAPI.Exception
 
-class InvalidSmsCodeException : RequestException
+class InvalidSmsCodeException : RequestException()
 {
 }

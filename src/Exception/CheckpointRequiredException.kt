@@ -2,6 +2,6 @@
 
 package InstagramAPI.Exception
 
-class CheckpointRequiredException : RequestException
+class CheckpointRequiredException : RequestException()
 {
 }

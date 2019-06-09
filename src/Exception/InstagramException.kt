@@ -9,23 +9,23 @@ import InstagramAPI.Response
  *
  * If you catch this exception, you KNOW it came from our Instagram-API library.
  */
-class InstagramException : .RuntimeException
+open class InstagramException //// TODO: implement RuntimeException on Kotlin
 {
     /**
      * The full response that triggered the exception, if available.
      *
      * @var Response|null
      */
-    private $_response = null
+    private var _response:InstagramAPI.Response? = null
 
     /**
      * Check whether the exception has a full server response.
      *
      * @return bool TRUE if a full response is available, otherwise FALSE.
      */
-    public fun hasResponse()
+     fun hasResponse():Boolean
     {
-        return this._response !== null ? true : false
+        return _response !== null
     }
 
     /**
@@ -35,7 +35,7 @@ class InstagramException : .RuntimeException
      *
      * @see InstagramException::hasResponse()
      */
-    public fun getResponse()
+     fun getResponse():InstagramAPI.Response?
     {
         return this._response
     }
@@ -45,9 +45,9 @@ class InstagramException : .RuntimeException
      *
      * @param Response|null $response The response value.
      */
-    public fun setResponse(
-        Response $response = null)
+     fun setResponse(
+         response:InstagramAPI.Response? = null)
     {
-        this._response = $response
+        this._response = response
     }
 }

@@ -2,6 +2,6 @@
 
 package InstagramAPI.Exception
 
-class AccountDisabledException : RequestException
+class AccountDisabledException : RequestException()
 {
 }

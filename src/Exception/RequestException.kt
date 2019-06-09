@@ -5,6 +5,6 @@ package InstagramAPI.Exception
 /**
  * All server-response API related exceptions must derive from this class.
  */
-class RequestException : InstagramException
+open class RequestException : InstagramException()
 {
 }

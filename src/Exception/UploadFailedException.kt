@@ -8,6 +8,6 @@ package InstagramAPI.Exception
  * However, this is not the only type of exception used for failed uploads/API
  * communication. There can also be lower-level Guzzle HTTP exceptions.
  */
-class UploadFailedException : RequestException
+class UploadFailedException : RequestException()
 {
 }

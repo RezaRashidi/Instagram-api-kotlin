@@ -2,6 +2,6 @@
 
 package InstagramAPI.Exception
 
-class IncorrectPasswordException : RequestException
+class IncorrectPasswordException : RequestException()
 {
 }

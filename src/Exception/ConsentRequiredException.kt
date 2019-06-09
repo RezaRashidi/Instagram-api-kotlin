@@ -2,6 +2,6 @@
 
 package InstagramAPI.Exception
 
-class ConsentRequiredException : RequestException
+class ConsentRequiredException : RequestException()
 {
 }
