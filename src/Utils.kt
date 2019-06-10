@@ -4,8 +4,8 @@ import InstagramAPI.Media.Video.FFmpeg
 import InstagramAPI.Response.Model.Item
 import InstagramAPI.Response.Model.Location
 import java.util.*
-import javax.crypto.spec.SecretKeySpec
 import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
 import javax.xml.bind.DatatypeConverter
 
 
@@ -219,7 +219,7 @@ object Utils{
             if (v === "" || ! ("/^\\d+(?:\\.\\d+)?\$/".toRegex().matches(v)) ) {
                 throw IllegalArgumentException("Invalid non-digit or empty component \"$v\" in time string \"$timeStr\".")
             }
-            if (offsetKey !== 0 && strpos(v, ".") !== false) {
+            if (offsetKey !== 0 && v.indexOf(".") !== false) {
                 throw IllegalArgumentException("Unexpected period in time component \"$v\" in time string \"$timeStr\". Only the seconds-component supports milliseconds.")
             }
 
@@ -234,10 +234,10 @@ object Utils{
             // Multiply the current component of the "01:02:03" string with the
             // power of its offset. Hour-offset will be 2, Minutes 1 and Secs 0
             // and "pow(60, 0)" will return 1 which is why seconds work too.
-            sec += pow(60, offsetKey) * v
+            sec += Math.pow(60.toDouble(), offsetKey) * v
         }
 
-        return sec
+        return sec.toFloat()
     }
 
     /**
@@ -257,15 +257,16 @@ object Utils{
         var wasNegative = false
         if (sec < 0) {
             wasNegative = true
-            sec = sec.absoluteValue
+            sec = Math.abs(sec)
         }
 
-        var result = sprintf(
-            "%02d:%02d:%06.3f", // "%06f" is becaimport it counts the whole string.
-            floor(sec / 3600),
-            floor(fmod(sec / 60, 60)),
-            fmod(sec, 60)
-        )
+        // "%02d:%02d:%06.3f"  // "%06f" is becaimport it counts the whole string.
+        val x1 = "%02.0f".format(Math.floor(sec.toDouble() / 3600))
+        val x2 = "%02.0f".format(Math.floor((sec.toDouble()/60).rem(60)))
+        val x3 = "%06.3f".format(sec.toDouble().rem(60))
+
+        var result = "$x1 : $x2 : $x3"
+
 
         if (wasNegative) {
             result = "-$result"
@@ -287,7 +288,7 @@ object Utils{
      * @return string The final JSON string ready to submit as an API parameter.
      */
     fun buildMediaLocationJSON(location: Location): String{
-        if (!location instanceof Location) {
+        if (location !is Location) {
             throw IllegalArgumentException("The location must be an instance of \\InstagramAPI\\Response\\Model\\Location.")
         }
 
@@ -302,11 +303,11 @@ object Utils{
 
         // Core location keys that always exist.
         var obj = mapOf<String,Objects>(
-            "name"            => location.getName(),
-            "lat"             => location.getLat(),
-            "lng"             => location.getLng(),
-            "address"         => location.getAddress(),
-            "external_source" => location.getExternalIdSource(),
+            "name"            to location.getName(),
+            "lat"             to location.getLat(),
+            "lng"             to location.getLng(),
+            "address"         to location.getAddress(),
+            "external_source" to location.getExternalIdSource()
         )
 
         // Attach the location ID via a dynamically generated key.
@@ -515,7 +516,7 @@ object Utils{
                 "removed" ->{
                     // Check the array of product_id to remove.
                     for (productId in v) {
-                        if (!ctype_digit(productId) && (productId !is Int || productId < 0)) {
+                        if ( !(productId.isDigit()) && ( productId !is Int || productId < 0) ) {
                             throw IllegalArgumentException("Invalid product ID in product tags \"removed\" array.")
                         }
                     }
@@ -1455,6 +1456,8 @@ object Utils{
 *
 * base64_encode(x) to Base64.getEncoder().encodeToString(x.toByteArray())
 * hash_hmac        to base64hashHmacSha256 (just one type)
+* floor()          to Math.floor
+* fmod()           to rem()
 *
 * */
 

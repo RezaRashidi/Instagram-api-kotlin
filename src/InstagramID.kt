@@ -130,7 +130,7 @@ class InstagramID{
 
             for(i in 0 until code.length){//Todo   review step of loop
                 // Find the base64 value of the current character.
-                val base64 = InstagramID().BASE64URL_CHARMAP.indexOf(code[i])+1
+                val base64 = InstagramID().BASE64URL_CHARMAP.indexOf(code[i])
 
                 // Convert it to 6 binary bits (left-padded if needed).
                 base2 += decbin(base64).toString().padStart(6, '0')
