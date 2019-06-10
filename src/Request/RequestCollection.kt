@@ -9,7 +9,7 @@ import InstagramAPI.Utils
  */
 open class RequestCollection() {
     /** @var Instagram The parent class instance we belong to. */
-    public lateinit  var ig:Instagram
+    lateinit  var ig:Instagram
 
     /**
      * Constructor.

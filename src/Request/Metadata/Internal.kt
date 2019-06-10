@@ -45,7 +45,7 @@ final class Internal
      *
      * @param string|null $uploadId
      */
-    public fun __construct(
+    fun __construct(
         $uploadId = null)
     {
         if ($uploadId !== null) {
@@ -59,7 +59,7 @@ final class Internal
     /**
      * @return PhotoDetails
      */
-    public fun getPhotoDetails()
+    fun getPhotoDetails()
     {
         return this._photoDetails
     }
@@ -67,7 +67,7 @@ final class Internal
     /**
      * @return VideoDetails
      */
-    public fun getVideoDetails()
+    fun getVideoDetails()
     {
         return this._videoDetails
     }
@@ -83,7 +83,7 @@ final class Internal
      *
      * @return VideoDetails
      */
-    public fun setVideoDetails(
+    fun setVideoDetails(
         $targetFeed,
         $videoFilename)
     {
@@ -109,7 +109,7 @@ final class Internal
      *
      * @return PhotoDetails
      */
-    public fun setPhotoDetails(
+    fun setPhotoDetails(
         $targetFeed,
         $photoFilename)
     {
@@ -127,7 +127,7 @@ final class Internal
     /**
      * @return string
      */
-    public fun getUploadId()
+    fun getUploadId()
     {
         return this._uploadId
     }
@@ -139,7 +139,7 @@ final class Internal
      *
      * @return VideoUploadUrl[]
      */
-    public fun setVideoUploadUrls(
+    fun setVideoUploadUrls(
         UploadJobVideoResponse $response)
     {
         this._videoUploadUrls = []
@@ -153,7 +153,7 @@ final class Internal
     /**
      * @return VideoUploadUrl[]
      */
-    public fun getVideoUploadUrls()
+    fun getVideoUploadUrls()
     {
         return this._videoUploadUrls
     }
@@ -161,7 +161,7 @@ final class Internal
     /**
      * @return UploadVideoResponse
      */
-    public fun getVideoUploadResponse()
+    fun getVideoUploadResponse()
     {
         return this._videoUploadResponse
     }
@@ -169,7 +169,7 @@ final class Internal
     /**
      * @param UploadVideoResponse $videoUploadResponse
      */
-    public fun setVideoUploadResponse(
+    fun setVideoUploadResponse(
         UploadVideoResponse $videoUploadResponse)
     {
         this._videoUploadResponse = $videoUploadResponse
@@ -178,7 +178,7 @@ final class Internal
     /**
      * @return UploadPhotoResponse
      */
-    public fun getPhotoUploadResponse()
+    fun getPhotoUploadResponse()
     {
         return this._photoUploadResponse
     }
@@ -186,7 +186,7 @@ final class Internal
     /**
      * @param UploadPhotoResponse $photoUploadResponse
      */
-    public fun setPhotoUploadResponse(
+    fun setPhotoUploadResponse(
         UploadPhotoResponse $photoUploadResponse)
     {
         this._photoUploadResponse = $photoUploadResponse
@@ -201,7 +201,7 @@ final class Internal
      *
      * @return self
      */
-    public fun setDirectRecipients(
+    fun setDirectRecipients(
         array $recipients)
     {
         if (isset($recipients["users"])) {
@@ -220,7 +220,7 @@ final class Internal
     /**
      * @return string
      */
-    public fun getDirectThreads()
+    fun getDirectThreads()
     {
         return this._directThreads
     }
@@ -228,7 +228,7 @@ final class Internal
     /**
      * @return string
      */
-    public fun getDirectUsers()
+    fun getDirectUsers()
     {
         return this._directUsers
     }
@@ -238,7 +238,7 @@ final class Internal
      *
      * @param bool $bestieMedia
      */
-    public fun setBestieMedia(
+    fun setBestieMedia(
         $bestieMedia)
     {
         this._bestieMedia = $bestieMedia
@@ -247,7 +247,7 @@ final class Internal
     /**
      * @return bool
      */
-    public fun isBestieMedia()
+    fun isBestieMedia()
     {
         return this._bestieMedia
     }

@@ -17,38 +17,38 @@ class Creative(instagram:Instagram) : RequestCollection(instagram)
      * top of story media. If you want to import any of them, you will have to
      * apply them MANUALLY via some external image/video editor or library!
      *
-     * @param string     $stickerType Type of sticker (currently only "static_stickers").
-     * @param array|null $location    (optional) Array containing lat, lng and horizontalAccuracy.
+     * @param string     stickerType Type of sticker (currently only "static_stickers").
+     * @param array|null location    (optional) Array containing lat, lng and horizontalAccuracy.
      *
      * @throws .InvalidArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.StickerAssetsResponse
      */
-    public fun getStickerAssets(
-        $stickerType = "static_stickers",
-        array $location = null)
+    fun getStickerAssets(
+        stickerType:String = "static_stickers",
+        array location = null)
     {
-        if ($stickerType != "static_stickers") {
+        if (stickerType != "static_stickers") {
             throw .InvalidArgumentException("You must provide a valid sticker type.")
         }
-        if ($location !== null && (!isset($location["lat"])
-                                    || !isset($location["lng"])
-                                    || !isset($location["horizontalAccuracy"]))) {
+        if (location !== null && (!isset(location["lat"])
+                                    || !isset(location["lng"])
+                                    || !isset(location["horizontalAccuracy"]))) {
             throw .InvalidArgumentException("Your location array must contain keys for "lat", "lng" and "horizontalAccuracy".")
         }
 
-        $request = this.ig.request("creatives/assets/")
-            .addPost("type", $stickerType)
+        request = this.ig.request("creatives/assets/")
+            .addPost("type", stickerType)
 
-        if ($location !== null) {
-            $request
-                .addPost("lat", $location["lat"])
-                .addPost("lng", $location["lng"])
-                .addPost("horizontalAccuracy", $location["horizontalAccuracy"])
+        if (location !== null) {
+            request
+                .addPost("lat", location["lat"])
+                .addPost("lng", location["lng"])
+                .addPost("horizontalAccuracy", location["horizontalAccuracy"])
         }
 
-        return $request.getResponse(Response.StickerAssetsResponse())
+        return request.getResponse(Response.StickerAssetsResponse())
     }
 
     /**
@@ -61,7 +61,7 @@ class Creative(instagram:Instagram) : RequestCollection(instagram)
      *
      * @return .InstagramAPI.Response.FaceModelsResponse
      */
-    public fun getFaceModels()
+    fun getFaceModels()
     {
         return this.ig.request("creatives/face_models/")
             .addPost("_uuid", this.ig.uuid)
@@ -79,28 +79,28 @@ class Creative(instagram:Instagram) : RequestCollection(instagram)
      * NOTE: The files are some strange binary format that only the Instagram
      * app understands. If anyone figures out the format, please contact us.
      *
-     * @param array|null $location (optional) Array containing lat, lng and horizontalAccuracy.
+     * @param array|null location (optional) Array containing lat, lng and horizontalAccuracy.
      *
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.FaceEffectsResponse
      */
-    public fun getFaceEffects(
-        array $location = null)
+    fun getFaceEffects(
+        array location = null)
     {
-        $request = this.ig.request("creatives/face_effects/")
+        request = this.ig.request("creatives/face_effects/")
             .addPost("_uuid", this.ig.uuid)
             .addPost("_uid", this.ig.account_id)
             .addPost("_csrftoken", this.ig.client.getToken())
             .addPost("supported_capabilities_new", json_encode(Constants::SUPPORTED_CAPABILITIES))
 
-        if ($location !== null) {
-            $request
-                .addPost("lat", $location["lat"])
-                .addPost("lng", $location["lng"])
-                .addPost("horizontalAccuracy", $location["horizontalAccuracy"])
+        if (location !== null) {
+            request
+                .addPost("lat", location["lat"])
+                .addPost("lng", location["lng"])
+                .addPost("horizontalAccuracy", location["horizontalAccuracy"])
         }
 
-        return $request.getResponse(Response.FaceEffectsResponse())
+        return request.getResponse(Response.FaceEffectsResponse())
     }
 }

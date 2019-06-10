@@ -440,7 +440,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @see Instagram.login() The login handler with a full description.
 	 */
-	protected fun _login(username: String, password: String, forceLogin: Boolean = false,
+	private fun _login(username: String, password: String, forceLogin: Boolean = false,
 	                     appRefreshInterval: Int = 1800) {
 		if (username.isBlank() || password.isBlank()) {
 			throw new.InvalidArgumentException("You must provide a username and password to _login().")
@@ -668,7 +668,7 @@ class Instagram : ExperimentsInterface {
 	 */
 	fun sendRecoverySMS(username: String) {
 		// Verify that they can import the recovery SMS option.
-		userLookup = this.userLookup(username)
+		val userLookup = this.userLookup(username)
 		if (!userLookup.getHasValidPhone() || !userLookup.getCanSmsReset()) {
 			throw new.InstagramAPI.Exception.InternalException(
 				"SMS recovery is not available, since your account lacks a verified phone number.")
@@ -689,7 +689,7 @@ class Instagram : ExperimentsInterface {
 	 * @throws .InvalidArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 */
-	protected fun setUser(username: String, password: String) {
+	private fun setUser(username: String, password: String) {
 		if (empty(username) || empty(password)) {
 			throw new.InvalidArgumentException("You must provide a username and password to setUser().")
 		}
@@ -800,7 +800,7 @@ class Instagram : ExperimentsInterface {
 	 * @throws .InvalidArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 */
-	protected fun _setUserWithoutPassword(username: String) {
+	private fun _setUserWithoutPassword(username: String) {
 		if (empty(username) || !is_string(username)) {
 			throw new.InvalidArgumentException("You must provide a username.")
 		}
@@ -826,7 +826,7 @@ class Instagram : ExperimentsInterface {
 	 * @throws .InvalidArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 */
-	protected fun _updateLoginState(response: Response.LoginResponse) {
+	private fun _updateLoginState(response: Response.LoginResponse) {
 		// This check is just protection against accidental bugs. It makes sure
 		// that we always call this fun with a *successful* login response!
 		if (!response instanceof Response.LoginResponse || !response.isOk()) {
@@ -844,7 +844,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 */
-	protected fun _sendPreLoginFlow() {
+	private fun _sendPreLoginFlow() {
 		// Reset zero rating rewrite rules.
 		this.client.zeroRating().reset()
 		// Calling this non-token API will put a csrftoken in our cookie
@@ -862,7 +862,7 @@ class Instagram : ExperimentsInterface {
 	/**
 	 * Registers available Push channels during the login flow.
 	 */
-	protected fun _registerPushChannels() {
+	private fun _registerPushChannels() {
 		// Forcibly remove the stored token value if >24 hours old.
 		// This prevents us from  valantly re-registering the user"s
 		// "useless" token if they have stopped using the Push features.
@@ -921,7 +921,7 @@ class Instagram : ExperimentsInterface {
 	 *                                                   flow attempt, otherwise
 	 *                                                   `NULL`.
 	 */
-	protected fun _sendLoginFlow(justLoggedIn: Boolean, appRefreshInterval: Int = 1800) {
+	private fun _sendLoginFlow(justLoggedIn: Boolean, appRefreshInterval: Int = 1800) {
 		if (!is_int(appRefreshInterval) || appRefreshInterval < 0) {
 			throw new.InvalidArgumentException("Instagram" s app state refresh interval must be a positive integer.")
 		}
