@@ -67,16 +67,16 @@ object Signatures {
 	/**
 	 * Checks whether supplied UUID is valid or not.
 	 *
-	 * @param string uuid UUID to check.
+	 * @param (string) uuid UUID to check.
 	 *
 	 * @return bool
 	 */
-	fun isValidUUID(uuid:String) {
-		if (!is_string(uuid)) {
+	fun isValidUUID(uuid:String): Boolean {
+		if (uuid !is String) {
 			return false
 		}
 
-		return (bool) preg_match ("#^[a-f.d]{8}-(?:[a-f.d]{4}-){3}[a-f.d]{12}#D", uuid)
+		return "#^[a-f\d]{8}-(?:[a-f\d]{4}-){3}[a-f\d]{12}#D".toRegex().matches(uuid)
 	}
 
 	fun generateUUID(keepDashes:Boolean = true):String {

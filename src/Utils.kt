@@ -7,6 +7,7 @@ import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import javax.xml.bind.DatatypeConverter
+import kotlin.collections.ArrayList
 
 
 object Utils{
@@ -127,8 +128,8 @@ object Utils{
      *
      * @return array
      */
-    fun reorderByHashCode(data){
-        var hashCodes = mutableListOf<String>()
+    fun reorderByHashCode(data: ArrayList){
+        var hashCodes = mutableMapOf<String,String>()
         for ((key,value) in data) {
             hashCodes[key] = hashCode(key)
         }
@@ -228,7 +229,7 @@ object Utils{
             var v = v as Float
             var maxValue = if(offsetKey < 2) 60 else -1
             if (maxValue >= 0 && v > maxValue) {
-                throw IllegalArgumentException("Invalid time component \"${v.toUInt()}\" (its allowed range is 0-$maxValue) in time string \"$timeStr\".")
+                throw IllegalArgumentException("Invalid time component \"${v.toInt()}\" (its allowed range is 0-$maxValue) in time string \"$timeStr\".")
             }
 
             // Multiply the current component of the "01:02:03" string with the
@@ -297,12 +298,12 @@ object Utils{
         // properties, and they don"t always contain all data we need. The
         // real application NEVER uses the "Facebook" endpoints for attaching
         // locations to media, and NEITHER SHOULD WE.
-        if (location.getFacebookPlacesId() !== null) {
+        if (location.getFacebookPlacesId() !== null) { // Todo : use method of object that doesn't exist
             throw IllegalArgumentException("You are not allowed to import Location model objects from the Facebook-based location search funs. They are not valid media locations!")
         }
 
         // Core location keys that always exist.
-        var obj = mapOf<String,Objects>(
+        var obj = mutableMapOf<String,Objects>(
             "name"            to location.getName(),
             "lat"             to location.getLat(),
             "lng"             to location.getLng(),
@@ -383,7 +384,6 @@ object Utils{
                     if (value < 0) {
                         throw IllegalArgumentException("User ID must be a positive integer.")
                     }
-                    break
                 }
                 "position" ->{
                     try {
@@ -391,7 +391,6 @@ object Utils{
                     } catch (IllegalArgumentException e) {
                         throw IllegalArgumentException(sprintf("Invalid user tag position: %s", e.getMessage()), e.getCode(), e)
                     }
-                    break
                 }
                 else ->{
                     throw IllegalArgumentException("Invalid key \"$key\" in user tag array.")
@@ -446,7 +445,6 @@ object Utils{
                             )
                         }
                     }
-                    break
                 }
                 "removed" ->{
                     // Check the array of userids to remove.
@@ -455,7 +453,6 @@ object Utils{
                             throw IllegalArgumentException("Invalid user ID in usertags \"removed\" array.")
                         }
                     }
-                    break
                 }
                 else -> throw IllegalArgumentException("Invalid key \"$k\" in user tags array.")
             }
@@ -511,7 +508,6 @@ object Utils{
                             )
                         }
                     }
-                    break
                 }
                 "removed" ->{
                     // Check the array of product_id to remove.
@@ -520,7 +516,6 @@ object Utils{
                             throw IllegalArgumentException("Invalid product ID in product tags \"removed\" array.")
                         }
                     }
-                    break
                 }
                 else ->
                     throw IllegalArgumentException("Invalid key \"$k\" in product tags array.")
@@ -550,7 +545,7 @@ object Utils{
         var requiredKeys = ["position", "product_id"]
         var missingKeys = array_diff(requiredKeys, array_keys(productTag))
         if (!(missingKeys.isEmpty())) {
-            throw IllegalArgumentException(sprintf("Missing keys "%s" for product tag array.", implode("", "", missingKeys)))
+            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for product tag array.", implode("", "", missingKeys)))
         }
 
         // Verify this product tag entry, ensuring that the entry is format
@@ -564,7 +559,6 @@ object Utils{
                     if (value < 0) {
                         throw IllegalArgumentException("Product ID must be a positive integer.")
                     }
-                    break
                 }
                 "position" -> {
                     try {
@@ -572,7 +566,6 @@ object Utils{
                     } catch (IllegalArgumentException $e) {
                         throw IllegalArgumentException(sprintf("Invalid product tag position: %s", $e.getMessage()), $e.getCode(), $e)
                     }
-                    break
                 }
                 else -> throw IllegalArgumentException("Invalid key \"$key\" in product tag array.")
             }
@@ -587,7 +580,7 @@ object Utils{
      * @throws IllegalArgumentException
      */
     fun throwIfInvalidPosition(position){
-        if (position !is Array<T>) {
+        if (position !is Array<String>) {
             throw IllegalArgumentException("Position must be an array.")
         }
 
@@ -644,7 +637,7 @@ object Utils{
      * @throws IllegalArgumentException
      */
     fun throwIfInvalidRankToken(rankToken: String) {
-        if (!Signatures::isValidUUID(rankToken)) {
+        if (!Signatures.isValidUUID(rankToken)) {
             throw IllegalArgumentException("\"$rankToken\" is not a valid rank token.")
         }
     }
@@ -675,26 +668,22 @@ object Utils{
                     if (v !is String) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
-                    break
                 }
                 "viewer_vote" -> {
                     if (v !== 0) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
-                    break
                 }
                 "viewer_can_vote" , "is_sticker" -> {
                     if (v !is Boolean && v !== true) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
-                    break
                 }
                 "tallies" -> {
                     if (v !is Aarray) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
                     throwIfInvalidStoryPollTallies(v)
-                    break
                 }
             }
         }
@@ -728,35 +717,29 @@ object Utils{
                     if (v !is String) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
-                    break
                 }
                 "viewer_vote", "slider_vote_count", "slider_vote_average" -> {
                     if (v !== 0) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
-                    break
                 }
                 "background_color", "text_color" -> {
                     if (!preg_match("/^[0-9a-fA-F]{6}$/", substr(v, 1))) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
-                    break
                 }
                 "emoji" -> {
                     //TODO REQUIRES EMOJI VALIDATION
-                    break
                 }
                 "viewer_can_vote" -> {
                     if (v !is Boolean && v !== false) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
-                    break
                 }
                 "is_sticker" -> {
                     if (v !is Boolean && v !== false) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
-                    break
                 }
 
             }
@@ -790,44 +773,37 @@ object Utils{
                     if (v !== 0) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
-                    break
                 }
                 "viewer_can_interact" -> {
                     if (v !is Boolean || v !== false) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
-                    break
                 }
                 "background_color", "text_color" -> {
                     if (!preg_match("/^[0-9a-fA-F]{6}$/", substr(v, 1))) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
-                    break
                 }
                 "question_type" -> {
                     // At this time only text questions are supported.
                     if (v !is String || v !== "text") {
                         throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
-                    break
                 }
                 "question" -> {
                     if (v !is String) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
-                    break
                 }
                 "profile_pic_url" -> {
                     if (!hasValidWebURLSyntax(v)) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
-                    break
                 }
                 "is_sticker" -> {
                     if (v !is Boolean && v !== true) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
-                    break
                 }
             }
         }
@@ -860,37 +836,31 @@ object Utils{
                     if (v !== 0) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
-                    break
                 }
                 "text" -> {
                     if (v !is String) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
-                    break
                 }
                 "text_color", "start_background_color", "end_background_color", "digit_color", "digit_card_color" -> {
                     if (!preg_match("/^[0-9a-fA-F]{6}$/", substr(v, 1))) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
-                    break
                 }
                 "end_ts" -> {
                     if (v !is Int) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
-                    break
                 }
                 "following_enabled" -> {
                     if (v !is Boolean) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
-                    break
                 }
                 "is_sticker" -> {
                     if (v !is Boolean && v !== true) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
-                    break
                 }
             }
         }
@@ -925,19 +895,16 @@ object Utils{
                         if (v !is String) {
                             throw IllegalArgumentException("Invalid value \"$v\" for tallies array-key \"$k\".")
                         }
-                        break
                     }
                     "count" -> {
                         if (v !== 0) {
                             throw IllegalArgumentException("Invalid value \"$v\" for tallies array-key \"$k\".")
                         }
-                        break
                     }
                     "font_size" -> {
                         if (v !is Float || (v < 17.5 || v > 35.0)) {
                             throw IllegalArgumentException("Invalid value \"$v\" for tallies array-key \"$k\".")
                         }
-                        break
                     }
                 }
             }
@@ -967,7 +934,6 @@ object Utils{
                         if (!ctype_digit(v) && (v !is Int || v < 0)) {
                             throw IllegalArgumentException("Invalid value \"$v\" for story mention array-key \"$k\".")
                         }
-                        break
                     }
                 }
             }
@@ -996,13 +962,11 @@ object Utils{
                     if (v !is String && v !is Numeric) {
                         throw IllegalArgumentException("Invalid value \"$v\" for location array-key \"$k\".")
                     }
-                    break
                 }
                 "is_sticker" -> {
                     if (v !is Boolean) {
                         throw IllegalArgumentException("Invalid value \"$v\" for hashtag array-key \"$k\".")
                     }
-                    break
                 }
             }
         }
@@ -1043,19 +1007,16 @@ object Utils{
                             // NOTE: UTF-8 aware.
                             throw IllegalArgumentException("Tag name \"$v\" does not exist in the caption text.")
                         }
-                        break
                     }
                     "use_custom_title" -> {
                         if (v !is Boolean) {
                             throw IllegalArgumentException("Invalid value \"$v\" for hashtag array-key \"$k\".")
                         }
-                        break
                     }
                     "is_sticker" -> {
                         if (v !is Boolean) {
                             throw IllegalArgumentException("Invalid value \"$v\" for hashtag array-key \"$k\".")
                         }
-                        break
                     }
                 }
             }
@@ -1123,7 +1084,6 @@ object Utils{
                     if (v !is Float || v < 0.0 || v > 1.0) {
                         throw IllegalArgumentException("Invalid value \"$v\" for \"$type\" key \"$k\".")
                     }
-                    break
                 }
             }
         }
@@ -1157,15 +1117,15 @@ object Utils{
     }
 
     fun formatBytes(bytes, precision: Int = 2){
-        var units = setOf("B", "kB", "mB", "gB", "tB")
+        val units = setOf("B", "kB", "mB", "gB", "tB")
 
-        bytes = max(bytes, 0)
-        var pow = floor((bytes ? log(bytes) : 0) / log(1024))
-        pow = min(pow, units.count() - 1)
+        bytes = Math.max(bytes, 0)
+        var pow = Math.floor( (bytes ? log(bytes) : 0)/log(1024) )
+        pow = Math.min(pow, units.count())
 
-        bytes = bytes / Math.pow(1024, pow)
+        bytes = bytes / Math.pow(1024.0, pow)
 
-        return round(bytes, precision)+""+units[pow]
+        return Math.round(bytes, precision)+""+units[pow]
     }
 
     fun colouredString(string: String,colour: String){
@@ -1199,7 +1159,7 @@ object Utils{
     }
 
     fun getFilterCode(filter){
-        var filters = mutableMapOf()
+        var filters = mutableListOf<String>()
         filters[0] = "Normal"
         filters[615] = "Lark"
         filters[614] = "Reyes"
@@ -1401,15 +1361,15 @@ object Utils{
      * "http://www.google.com foobar" is not a valid web URL since there"s a
      * space in it. But "https://bing.com" and "https://a.com/foo" are valid.
      * However, "http://a.abdabdbadbadbsa" is also seen as a valid URL, since
-     * the validation is pretty simple and doesn"t verify the TLDs (there are
+     * the validation is pretty simple and doesn't verify the TLDs (there are
      * too many now to catch them all and ones appear constantly).
      *
      * @param (string) $url
      *
      * @return bool TRUE if valid web syntax, otherwise FALSE.
      */
-    fun hasValidWebURLSyntax(url: String): Boolean{
-        return "/^https?:././[^.s../]+..[^.s../]{2}.S*$/iu".toRegex().matches(url)
+    fun hasValidWebURLSyntax(url: String): Boolean{// /^https?:\/\/[^\s.\/]+\.[^\s.\/]{2}\S*$/iu
+        return "/^https?:\\/\\/[^\\s.\\/]+\\.[^\\s.\\/]{2}\\S*\$/iu".toRegex().matches(url)
     }
 
     /**
