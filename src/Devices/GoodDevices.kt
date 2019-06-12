@@ -1,5 +1,3 @@
-
-
 package InstagramAPI.Devices
 
 /**
@@ -43,8 +41,8 @@ package InstagramAPI.Devices
  * The format is made via the android.os.Build library:
  * "Instagram %s Android (%s/%s %s %s %s/%s %s %s %s)
  * 1. Instagram VERSION.
- * 2. Android API VERSION (Build$VERSION.SDK_INT)
- * 3. Android VERSION (Build$VERSION.RELEASE)
+ * 2. Android API VERSION (BuildVERSION.SDK_INT)
+ * 3. Android VERSION (BuildVERSION.RELEASE)
  * 4. DPI.
  * 5. Display Resolution.
  * 6. MANUFACTURER.
@@ -88,103 +86,96 @@ package InstagramAPI.Devices
  * WE CAN VALIDATE ALL AGENTS TO SEE THAT YOU AREN"T ADDING AN INCORRECTLY
  * WRITTEN OR UNPOPULAR DEVICE AGENT WHICH WILL GET US BANNED BY INSTAGRAM!
  */
-class GoodDevices
-{
-    /**
-     * List of supported binary architectures for the device CPUs.
-     *
-     * NOTE TO COLLABORATORS: Currently all devices import the same 64-bit ARM list,
-     * but if future added devices have different CPU capabilities, this will need
-     * a rewrite to be able to specify different CPU_ABI values per-device. It"s
-     * very unlikely to happen, though, since we only add 64-bit CPU devices to the
-     * list. And there"s no real value to increasing ARM chip sizes beyond 64-bit
-     * since the physical address lines take up more space, and there are no real
-     * numerical benefits beyond 64-bit numbers. So we most likely won"t need
-     * any per-device values here.
-     *
-     * Also note that the list below is actually the two 32-bit ARM identifiers.
-     * That"s becaimport Instagram is querying the 32-bit CPU_ABI1 and CPU_ABI2
-     * constants, so the below is the correct CPU_ABI value on our 64-bit devices.
-     *
-     * @see https://developer.android.com/ndk/guides/abis.html
-     *
-     * @var string
-     */
-    val CPU_ABI = "armeabi-v7a:armeabi"
+object GoodDevices {
+	/**
+	 * List of supported binary architectures for the device CPUs.
+	 *
+	 * NOTE TO COLLABORATORS: Currently all devices import the same 64-bit ARM list,
+	 * but if future added devices have different CPU capabilities, this will need
+	 * a rewrite to be able to specify different CPU_ABI values per-device. It"s
+	 * very unlikely to happen, though, since we only add 64-bit CPU devices to the
+	 * list. And there"s no real value to increasing ARM chip sizes beyond 64-bit
+	 * since the physical address lines take up more space, and there are no real
+	 * numerical benefits beyond 64-bit numbers. So we most likely won"t need
+	 * any per-device values here.
+	 *
+	 * Also note that the list below is actually the two 32-bit ARM identifiers.
+	 * That"s becaimport Instagram is querying the 32-bit CPU_ABI1 and CPU_ABI2
+	 * constants, so the below is the correct CPU_ABI value on our 64-bit devices.
+	 *
+	 * @see https://developer.android.com/ndk/guides/abis.html
+	 *
+	 * @var string
+	 */
+	const val CPU_ABI = "armeabi-v7a:armeabi"
 
-    /*
-     * LAST-UPDATED: MARCH 2017.
-     */
-    val DEVICES = [
-        /* OnePlus 3T. Released: November 2016.
-         * https://www.amazon.com/OnePlus-A3010-64GB-Gunmetal-International/dp/B01N4H00V8
-         * https://www.handsetdetection.com/properties/devices/OnePlus/A3010
-         */
-        "24/7.0 380dpi 1080x1920 OnePlus ONEPLUS A3010 OnePlus3T qcom",
+	/*
+	 * LAST-UPDATED: MARCH 2017.
+	 */
+	private val DEVICES = arrayOf(
+		/* OnePlus 3T. Released: November 2016.
+		 * https://www.amazon.com/OnePlus-A3010-64GB-Gunmetal-International/dp/B01N4H00V8
+		 * https://www.handsetdetection.com/properties/devices/OnePlus/A3010
+		 */
+		"24/7.0 380dpi 1080x1920 OnePlus ONEPLUS A3010 OnePlus3T qcom",
 
-        /* LG G5. Released: April 2016.
-         * https://www.amazon.com/LG-Unlocked-Phone-Titan-Warranty/dp/B01DJE22C2
-         * https://www.handsetdetection.com/properties/devices/LG/RS988
-         */
-        "23/6.0.1 640dpi 1440x2392 LGE/lge RS988 h1 h1",
+		/* LG G5. Released: April 2016.
+		 * https://www.amazon.com/LG-Unlocked-Phone-Titan-Warranty/dp/B01DJE22C2
+		 * https://www.handsetdetection.com/properties/devices/LG/RS988
+		 */
+		"23/6.0.1 640dpi 1440x2392 LGE/lge RS988 h1 h1",
 
-        /* Huawei Mate 9 Pro. Released: January 2017.
-         * https://www.amazon.com/Huawei-Dual-Sim-Titanium-Unlocked-International/dp/B01N9O1L6N
-         * https://www.handsetdetection.com/properties/devices/Huawei/LON-L29
-         */
-        "24/7.0 640dpi 1440x2560 HUAWEI LON-L29 HWLON hi3660",
+		/* Huawei Mate 9 Pro. Released: January 2017.
+		 * https://www.amazon.com/Huawei-Dual-Sim-Titanium-Unlocked-International/dp/B01N9O1L6N
+		 * https://www.handsetdetection.com/properties/devices/Huawei/LON-L29
+		 */
+		"24/7.0 640dpi 1440x2560 HUAWEI LON-L29 HWLON hi3660",
 
-        /* ZTE Axon 7. Released: June 2016.
-         * https://www.frequencycheck.com/models/OMYDK/zte-axon-7-a2017u-dual-sim-lte-a-64gb
-         * https://www.handsetdetection.com/properties/devices/ZTE/A2017U
-         */
-        "23/6.0.1 640dpi 1440x2560 ZTE ZTE A2017U ailsa_ii qcom",
+		/* ZTE Axon 7. Released: June 2016.
+		 * https://www.frequencycheck.com/models/OMYDK/zte-axon-7-a2017u-dual-sim-lte-a-64gb
+		 * https://www.handsetdetection.com/properties/devices/ZTE/A2017U
+		 */
+		"23/6.0.1 640dpi 1440x2560 ZTE ZTE A2017U ailsa_ii qcom",
 
-        /* Samsung Galaxy S7 Edge SM-G935F. Released: March 2016.
-         * https://www.amazon.com/Samsung-SM-G935F-Factory-Unlocked-Smartphone/dp/B01C5OIINO
-         * https://www.handsetdetection.com/properties/devices/Samsung/SM-G935F
-         */
-        "23/6.0.1 640dpi 1440x2560 samsung SM-G935F hero2lte samsungexynos8890",
+		/* Samsung Galaxy S7 Edge SM-G935F. Released: March 2016.
+		 * https://www.amazon.com/Samsung-SM-G935F-Factory-Unlocked-Smartphone/dp/B01C5OIINO
+		 * https://www.handsetdetection.com/properties/devices/Samsung/SM-G935F
+		 */
+		"23/6.0.1 640dpi 1440x2560 samsung SM-G935F hero2lte samsungexynos8890",
 
-        /* Samsung Galaxy S7 SM-G930F. Released: March 2016.
-         * https://www.amazon.com/Samsung-SM-G930F-Factory-Unlocked-Smartphone/dp/B01J6MS6BC
-         * https://www.handsetdetection.com/properties/devices/Samsung/SM-G930F
-         */
-        "23/6.0.1 640dpi 1440x2560 samsung SM-G930F herolte samsungexynos8890",
-    ]
+		/* Samsung Galaxy S7 SM-G930F. Released: March 2016.
+		 * https://www.amazon.com/Samsung-SM-G930F-Factory-Unlocked-Smartphone/dp/B01J6MS6BC
+		 * https://www.handsetdetection.com/properties/devices/Samsung/SM-G930F
+		 */
+		"23/6.0.1 640dpi 1440x2560 samsung SM-G930F herolte samsungexynos8890" )
 
-    /**
-     * Retrieve the device string for a random good device.
-     *
-     * @return string
-     */
-    public static fun getRandomGoodDevice()
-    {
-        $randomIdx = array_rand(self::DEVICES, 1)
+	/**
+	 * Retrieve the device string for a random good device.
+	 *
+	 * @return string
+	 */
+	fun getRandomGoodDevice():String {
+		return DEVICES.random()
+	}
 
-        return self::DEVICES[$randomIdx]
-    }
+	/**
+	 * Retrieve all good devices.
+	 *
+	 * @return string[]
+	 */
 
-    /**
-     * Retrieve all good devices.
-     *
-     * @return string[]
-     */
-    public static fun getAllGoodDevices()
-    {
-        return self::DEVICES
-    }
+	fun getAllGoodDevices():Array<String> {
+		return DEVICES
+	}
 
-    /**
-     * Checks whether a device string is one of the good devices.
-     *
-     * @param string $deviceString
-     *
-     * @return bool
-     */
-    public static fun isGoodDevice(
-        $deviceString)
-    {
-        return in_array($deviceString, self::DEVICES, true)
-    }
+	/**
+	 * Checks whether a device string is one of the good devices.
+	 *
+	 * @param string deviceString
+	 *
+	 * @return bool
+	 */
+	fun isGoodDevice(deviceString:String):Boolean {
+		return (deviceString in DEVICES)
+	}
 }

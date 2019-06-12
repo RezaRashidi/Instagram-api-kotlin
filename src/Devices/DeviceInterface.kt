@@ -1,93 +1,89 @@
-
-
 package InstagramAPI.Devices
 
-interface DeviceInterface
-{
-    /**
-     * Get the device identity string.
-     *
-     * @return string
-     */
-    public fun getDeviceString()
+interface DeviceInterface {
+	/**
+	 * Get the device identity string.
+	 *
+	 * @return string
+	 */
+	fun getDeviceString():String
 
-    /**
-     * Get the HTTP user-agent string.
-     *
-     * @return string
-     */
-    public fun getUserAgent()
+	/**
+	 * Get the HTTP user-agent string.
+	 *
+	 * @return string
+	 */
+	fun getUserAgent():String
 
-    /**
-     * Get the Facebook user-agent string.
-     *
-     * @param string $appName Application name.
-     *
-     * @return string
-     */
-    public fun getFbUserAgent(
-        $appName)
+	/**
+	 * Get the Facebook user-agent string.
+	 *
+	 * @param string appName Application name.
+	 *
+	 * @return string
+	 */
+	fun getFbUserAgent(appName:String):String
 
-    /**
-     * Get the Android SDK/API version.
-     *
-     * @return string
-     */
-    public fun getAndroidVersion()
+	/**
+	 * Get the Android SDK/API version.
+	 *
+	 * @return string
+	 */
+	fun getAndroidVersion():String
 
-    /**
-     * Get the Android release version.
-     *
-     * @return string
-     */
-    public fun getAndroidRelease()
+	/**
+	 * Get the Android release version.
+	 *
+	 * @return string
+	 */
+	fun getAndroidRelease():String
 
-    /**
-     * Get the display DPI (with "dpi" suffix).
-     *
-     * @return string
-     */
-    public fun getDPI()
+	/**
+	 * Get the display DPI (with "dpi" suffix).
+	 *
+	 * @return string
+	 */
+	fun getDPI():String
 
-    /**
-     * Get the display resolution (width x height).
-     *
-     * @return string
-     */
-    public fun getResolution()
+	/**
+	 * Get the display resolution (width x height).
+	 *
+	 * @return string
+	 */
+	fun getResolution():String
 
-    /**
-     * Get the manufacturer.
-     *
-     * @return string
-     */
-    public fun getManufacturer()
+	/**
+	 * Get the manufacturer.
+	 *
+	 * @return string
+	 */
+	fun getManufacturer():String
 
-    /**
-     * Get the brand (optional).
-     *
-     * @return string|null
-     */
-    public fun getBrand()
+	/**
+	 * Get the brand (optional).
+	 *
+	 * @return string|null
+	 */
+	fun getBrand():String?
 
-    /**
-     * Get the hardware model.
-     *
-     * @return string
-     */
-    public fun getModel()
+	/**
+	 * Get the hardware model.
+	 *
+	 * @return string
+	 */
+	fun getModel():String
 
-    /**
-     * Get the hardware device code.
-     *
-     * @return string
-     */
-    public fun getDevice()
+	/**
+	 * Get the hardware device code.
+	 *
+	 * @return string
+	 */
+	fun getDevice():String
 
-    /**
-     * Get the hardware CPU code.
-     *
-     * @return string
-     */
-    public fun getCPU()
+	/**
+	 * Get the hardware CPU code.
+	 *
+	 * @return string
+	 */
+	fun getCPU():String
 }

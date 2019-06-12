@@ -1,7 +1,7 @@
 package InstagramAPI
 
 
-class Constants{
+object Constants{
     // Core API Constants.
     val API_URLS = mapOf(
         "1" to "https://i.instagram.com/api/v1/",
