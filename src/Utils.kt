@@ -7,7 +7,6 @@ import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import javax.xml.bind.DatatypeConverter
-import kotlin.collections.ArrayList
 
 
 object Utils{
@@ -108,7 +107,7 @@ object Utils{
         var result: Long = 0
         //for ($i = 0, $len = strlen($string) $i < $len ++$i)
         for (i in 0 until string.length){   //Todo check loop step
-            result = (-result + (result << 5) + string[i].toInt()) & 0xFFFFFFFF
+            result = (-result + (result.shl(5)) + string[i].toInt()) and 0xFFFFFFFF
         }
         if (PHP_INT_SIZE > 4) {
             if (result > 0x7FFFFFFF) {
@@ -128,8 +127,8 @@ object Utils{
      *
      * @return array
      */
-    fun reorderByHashCode(data: ArrayList){
-        var hashCodes = mutableMapOf<String,String>()
+    fun reorderByHashCode(data: Map<String, String>){
+        val hashCodes = mutableMapOf<String,String>()
         for ((key,value) in data) {
             hashCodes[key] = hashCode(key)
         }
@@ -211,7 +210,7 @@ object Utils{
         }
 
         var sec = 0.0
-        for ((offsetKey, v) in array_reverse(explode(":", timeStr))) {
+        for ((offsetKey, v) in (timeStr.split(":")).reversed() ) {
             if (offsetKey > 2) {
                 throw IllegalArgumentException("Invalid input \"$timeStr\" with too many components (max 3 is allowed \"HH:MM:SS\").")
             }
@@ -250,7 +249,8 @@ object Utils{
      *
      * @return string The time formatted as `HH:MM:SS.###` (`###` is millis).
      */
-    fun hmsTimeFromSeconds(sec): String{
+    fun hmsTimeFromSeconds(sece: Float): String{
+        var sec = sece
         if (sec !is Int && sec !is Float) {
             throw IllegalArgumentException("Seconds must be a number.")
         }
@@ -362,15 +362,15 @@ object Utils{
      */
     fun throwIfInvalidUserTag(userTag){
         // NOTE: We can import "array" type hint, but it doesn't give us enough freedom.
-        if (userTag !is Array)) {
+        if (userTag !is Array) {
             throw IllegalArgumentException("User tag must be an array.")
         }
 
         // Check for required keys.
         var requiredKeys = setOf("position", "user_id")
-        var missingKeys = array_diff(requiredKeys, array_keys(userTag))
+        var missingKeys = array_diff(requiredKeys, userTag.keys)
         if (!(missingKeys.isEmpty())) {
-            throw IllegalArgumentException(sprintf("Missing keys '%s' for user tag array.", implode("", "", missingKeys)))
+            throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = "\", \"")}\" for user tag array.")
         }
 
         // Verify this product tag entry, ensuring that the entry is format
@@ -543,9 +543,9 @@ object Utils{
 
         // Check for required keys.
         var requiredKeys = ["position", "product_id"]
-        var missingKeys = array_diff(requiredKeys, array_keys(productTag))
+        var missingKeys = array_diff(requiredKeys, productTag.keys)
         if (!(missingKeys.isEmpty())) {
-            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for product tag array.", implode("", "", missingKeys)))
+            throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = "\", \"")}\" for product tag array.")
         }
 
         // Verify this product tag entry, ensuring that the entry is format
@@ -618,13 +618,13 @@ object Utils{
      *
      * @throws IllegalArgumentException
      */
-    fun throwIfInvalidHashtag(hashtag){
-        if (hashtag !is String || !strlen(hashtag)) {
+    fun throwIfInvalidHashtag(hashtag: String){
+        if (hashtag !is String || hashtag.isNotEmpty()) {
             throw IllegalArgumentException("Hashtag must be a non-empty string.")
         }
         // Perform an UTF-8 aware search for the illegal "#" symbol (anywhere).
         // NOTE: We must import mb_strpos() to support international tags.
-        if (mb_strpos(hashtag, "#") !== false) {
+        if (hashtag.contains("#")) {
             throw IllegalArgumentException("Hashtag \"$hashtag\" is not allowed to contain the \"#\" character.")
         }
     }
@@ -649,7 +649,7 @@ object Utils{
      *
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
-    fun throwIfInvalidStoryPoll(storyPoll){
+    fun throwIfInvalidStoryPoll(storyPoll: Map<String, String>){
         val requiredKeys = setOf("question", "viewer_vote", "viewer_can_vote", "tallies", "is_sticker")
 
         if (storyPoll.count() !== 1) {
@@ -657,9 +657,9 @@ object Utils{
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["question" => 1, "viewer_vote" => 1, "viewer_can_vote" => 1, "tallies" => 1, "is_sticker" => 1], storyPoll[0]))
-        if (count(missingKeys)) {
-            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for story poll array.", implode(", ", missingKeys)))
+        var missingKeys = array_keys(array_diff_key(["question" to 1, "viewer_vote" to 1, "viewer_can_vote" to 1, "tallies" to 1, "is_sticker" to 1], storyPoll[0]))
+        if (missingKeys.count()) {
+            throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for story poll array.")
         }
 
         for ((k,v) in storyPoll[0]) {
@@ -683,11 +683,11 @@ object Utils{
                     if (v !is Aarray) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
-                    throwIfInvalidStoryPollTallies(v)
+                    _throwIfInvalidStoryPollTallies(v)
                 }
             }
         }
-        throwIfInvalidStoryStickerPlacement(array_diff_key(storyPoll[0], array_flip(requiredKeys)), "polls")
+        _throwIfInvalidStoryStickerPlacement(array_diff_key(storyPoll[0], array_flip(requiredKeys)), "polls")
     }
 
     /**
@@ -701,14 +701,14 @@ object Utils{
     {
         var requiredKeys = setOf("question", "viewer_vote", "viewer_can_vote", "slider_vote_average", "slider_vote_count", "emoji", "background_color", "text_color", "is_sticker")
 
-        if (count(storySlider) !== 1) {
+        if (storySlider.count() !== 1) {
             throw IllegalArgumentException("Only one story slider is permitted. You added ${storySlider.count()} story sliders.")
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["question" => 1, "viewer_vote" => 1, "viewer_can_vote" => 1, "slider_vote_average" => 1, "slider_vote_count" => 1, "emoji" => 1, "background_color" => 1, "text_color" => 1, "is_sticker" => 1], storySlider[0]))
-        if (count(missingKeys)) {
-            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for story slider array.", implode(", ", missingKeys)))
+        var missingKeys = array_keys(array_diff_key(["question" to 1, "viewer_vote" to 1, "viewer_can_vote" to 1, "slider_vote_average" to 1, "slider_vote_count" to 1, "emoji" to 1, "background_color" to 1, "text_color" to 1, "is_sticker" to 1], storySlider[0]))
+        if (missingKeys.count()) {
+            throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for story slider array.")
         }
 
         for ((k, v) in storySlider[0]) {
@@ -724,7 +724,7 @@ object Utils{
                     }
                 }
                 "background_color", "text_color" -> {
-                    if (!preg_match("/^[0-9a-fA-F]{6}$/", substr(v, 1))) {
+                    if (!( "/^[0-9a-fA-F]{6}$/".toRegex().matches( v.substring(1) ) )) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story poll array-key \"$k\".")
                     }
                 }
@@ -762,9 +762,9 @@ object Utils{
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["viewer_can_interact" => 1, "background_color" => 1, "profile_pic_url" => 1, "question_type" => 1, "question" => 1, "text_color" => 1, "is_sticker" => 1], storyQuestion[0]))
-        if (count(missingKeys)) {
-            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for story question array.", implode(", ", missingKeys)))
+        var missingKeys = array_keys(array_diff_key(["viewer_can_interact" to 1, "background_color" to 1, "profile_pic_url" to 1, "question_type" to 1, "question" to 1, "text_color" to 1, "is_sticker" to 1], storyQuestion[0]))
+        if (missingKeys.count()) {
+            throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for story question array.")
         }
 
         for ((k, v) in storyQuestion[0]) {
@@ -780,7 +780,7 @@ object Utils{
                     }
                 }
                 "background_color", "text_color" -> {
-                    if (!preg_match("/^[0-9a-fA-F]{6}$/", substr(v, 1))) {
+                    if (!( "/^[0-9a-fA-F]{6}$/".toRegex().matches( v.substring(1) ) )) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story question array-key \"$k\".")
                     }
                 }
@@ -820,14 +820,14 @@ object Utils{
     fun throwIfInvalidStoryCountdown(storyCountdown){
         var requiredKeys = setOf("z", "text", "text_color", "start_background_color", "end_background_color", "digit_color", "digit_card_color", "end_ts", "following_enabled", "is_sticker")
 
-        if (count(storyCountdown) !== 1) {
+        if (storyCountdown.count() !== 1) {
             throw IllegalArgumentException("Only one story countdown is permitted. You added ${storyCountdown.count()} story countdowns.")
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["z" => 1, "text" => 1, "text_color" => 1, "start_background_color" => 1, "end_background_color" => 1, "digit_color" => 1, "digit_card_color" => 1, "end_ts" => 1, "following_enabled" => 1, "is_sticker" => 1], storyCountdown[0]))
-        if (count(missingKeys)) {
-            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for story countdown array.", implode(", ", missingKeys)))
+        var missingKeys = array_keys(array_diff_key(["z" to 1, "text" to 1, "text_color" to 1, "start_background_color" to 1, "end_background_color" to 1, "digit_color" to 1, "digit_card_color" to 1, "end_ts" to 1, "following_enabled" to 1, "is_sticker" to 1], storyCountdown[0]))
+        if (missingKeys.count()) {
+            throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for story countdown array.")
         }
 
         for ((k, v)in storyCountdown[0]) {
@@ -843,7 +843,7 @@ object Utils{
                     }
                 }
                 "text_color", "start_background_color", "end_background_color", "digit_color", "digit_card_color" -> {
-                    if (!preg_match("/^[0-9a-fA-F]{6}$/", substr(v, 1))) {
+                    if (!( "/^[0-9a-fA-F]{6}$/".toRegex().matches( v.substring(1) ) )) {
                         throw IllegalArgumentException("Invalid value \"$v\" for story countdown array-key \"$k\".")
                     }
                 }
@@ -881,10 +881,10 @@ object Utils{
         }
 
         for (tallie in tallies) {
-            var missingKeys = array_keys(array_diff_key(["text" => 1, "count" => 1, "font_size" => 1], tallie))
+            var missingKeys = array_keys(array_diff_key(["text" to 1, "count" to 1, "font_size" to 1], tallie))
 
-            if (count(missingKeys)) {
-                throw IllegalArgumentException(sprintf("Missing keys \"%s\" for location array.", implode(", ", missingKeys)))
+            if (missingKeys.count()) {
+                throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for location array.")
             }
             for ((k, v) in tallie) {
                 if (!in_array(k, requiredKeys, true)) {
@@ -923,9 +923,9 @@ object Utils{
 
         for (mention in storyMentions) {
             // Ensure that all keys exist.
-            var missingKeys = array_keys(array_diff_key(["user_id" => 1], mention))
+            var missingKeys = array_keys(array_diff_key(["user_id" to 1], mention))
             if (missingKeys.count()) {
-                throw IllegalArgumentException(sprintf("Missing keys \"%s\" for mention array.", implode(", ", missingKeys)))
+                throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for mention array.")
             }
 
             for ((k, v) in mention ) {
@@ -950,10 +950,10 @@ object Utils{
      */
     fun throwIfInvalidStoryLocationSticker(locationSticker){
         var requiredKeys = setOf("location_id", "is_sticker")
-        var missingKeys = array_keys(array_diff_key(["location_id" => 1, "is_sticker" => 1], locationSticker))
+        var missingKeys = array_keys(array_diff_key(["location_id" to 1, "is_sticker" to 1], locationSticker))
 
         if (missingKeys.count()) {
-            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for location array.", implode(", ", missingKeys)))
+            throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for location array.")
         }
 
         for ((k, v) in locationSticker) {
@@ -992,9 +992,9 @@ object Utils{
 
         // Verify all provided hashtags.
         for (hashtag in hashtags ) {
-            var missingKeys = array_keys(array_diff_key(["tag_name" => 1, "use_custom_title" => 1, "is_sticker" => 1], hashtag))
+            var missingKeys = array_keys(array_diff_key(["tag_name" to 1, "use_custom_title" to 1, "is_sticker" to 1], hashtag))
             if (missingKeys.count()) {
-                throw IllegalArgumentException(sprintf("Missing keys \"%s\" for hashtag array.", implode(", ", missingKeys)))
+                throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for hashtag array.")
             }
 
             for ((k, v) in hashtag) {
@@ -1036,9 +1036,9 @@ object Utils{
         var requiredKeys = setOf("media_id", "is_sticker")
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["media_id" => 1, "is_sticker" => 1], attachedMedia))
+        var missingKeys = array_keys(array_diff_key(["media_id" to 1, "is_sticker" to 1], attachedMedia))
         if (missingKeys.count()) {
-            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for attached media.", implode(", ", missingKeys)))
+            throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for attached media.")
         }
 
         if (attachedMedia["media_id"] !is String && attachedMedia["media_id"] !is Numeric) {
@@ -1069,9 +1069,9 @@ object Utils{
         var requiredKeys = setOf("x", "y", "width", "height", "rotation")
 
         // Ensure that all required hashtag array keys exist.
-        var missingKeys = array_keys(array_diff_key(["x" => 1, "y" => 1, "width" => 1, "height" => 1, "rotation" => 0], storySticker))
+        var missingKeys = array_keys(array_diff_key(["x" to 1, "y" to 1, "width" to 1, "height" to 1, "rotation" to 0], storySticker))
         if (missingKeys.count()) {
-            throw IllegalArgumentException(sprintf("Missing keys \"%s\" for \"%s\".", implode(", ", missingKeys), type))
+            throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for \"$type\".")
         }
 
         // Check the individual array values.
@@ -1105,11 +1105,11 @@ object Utils{
                 mediaType = "PHOTO"
             } else if (mediaType == Item::VIDEO) {
                 mediaType = "VIDEO"
-            } else (mediaType == Item::ALBUM) {
-                mediaType = "ALBUM"
+            } else (mediaType == Item::CAROUSEL) {
+                mediaType = "CAROUSEL"
             }
         }
-        if (!in_array(mediaType, ["PHOTO", "VIDEO", "ALBUM"], true)) {
+        if (!in_array(mediaType, ["PHOTO", "VIDEO", "CAROUSEL"], true)) {
             throw IllegalArgumentException("\"$mediaType\" is not a valid media type.")
         }
 
@@ -1120,7 +1120,7 @@ object Utils{
         val units = setOf("B", "kB", "mB", "gB", "tB")
 
         bytes = Math.max(bytes, 0)
-        var pow = Math.floor( (bytes ? log(bytes) : 0)/log(1024) )
+        var pow = Math.floor( (if (bytes) log(bytes) else 0)/log(1024) )
         pow = Math.min(pow, units.count())
 
         bytes = bytes / Math.pow(1024.0, pow)
@@ -1158,7 +1158,7 @@ object Utils{
         return colored_string
     }
 
-    fun getFilterCode(filter){
+    fun getFilterCode(filter: String): Int{
         var filters = mutableListOf<String>()
         filters[0] = "Normal"
         filters[615] = "Lark"
@@ -1418,6 +1418,13 @@ object Utils{
 * hash_hmac        to base64hashHmacSha256 (just one type)
 * floor()          to Math.floor
 * fmod()           to rem()
+* implode()        to .joinToString()
+* substr()         to .substring()
+* <<               to .shl()  : Bitwise Operators
+* array_keys()     to .keys
+*
+*
+*
 *
 * */
 
