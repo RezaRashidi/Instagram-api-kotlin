@@ -404,7 +404,7 @@ class Instagram : ExperimentsInterface {
 	 *                                          want to set it to an even LOWER value
 	 *                                          than the default 30 minutes!
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.LoginResponse|null A login response if a
@@ -413,9 +413,9 @@ class Instagram : ExperimentsInterface {
 	 *                                                   `NULL` if an existing
 	 *                                                   session is resumed.
 	 */
-	fun login(username: String, password: String, appRefreshInterval: Int = 1800) {
+	fun login(username: String, password: String, appRefreshInterval: Int = 1800):InstagramAPI.Response.LoginResponse? {
 		if (username.isBlank() || password.isBlank()) {
-			throw InvalidArgumentException("You must provide a username and password to login().")
+			throw IllegalArgumentException("You must provide a username and password to login().")
 		}
 
 		return _login(username, password, false, appRefreshInterval)
@@ -433,7 +433,7 @@ class Instagram : ExperimentsInterface {
 	 *                                          previous session.
 	 * @param int    appRefreshInterval
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.LoginResponse|null
@@ -441,9 +441,9 @@ class Instagram : ExperimentsInterface {
 	 * @see Instagram.login() The login handler with a full description.
 	 */
 	private fun _login(username: String, password: String, forceLogin: Boolean = false,
-	                     appRefreshInterval: Int = 1800) {
+	                     appRefreshInterval: Int = 1800):InstagramAPI.Response.LoginResponse? {
 		if (username.isBlank() || password.isBlank()) {
-			throw new.InvalidArgumentException("You must provide a username and password to _login().")
+			throw IllegalArgumentException("You must provide a username and password to _login().")
 		}
 
 		// Switch the currently active user/pass if the details are different.
@@ -508,7 +508,7 @@ class Instagram : ExperimentsInterface {
 	 * @param int    usernameHandler     Your Instagram username, used when logging in
 	 *                                    with an email using Two Factor login.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.LoginResponse
@@ -517,14 +517,14 @@ class Instagram : ExperimentsInterface {
 	                         verificationMethod: String = "1", appRefreshInterval: Int = 1800,
 	                         usernameHandler: Boolean = null) {
 		if (empty(username) || empty(password)) {
-			throw new.InvalidArgumentException("You must provide a username and password to finishTwoFactorLogin().")
+			throw new. IllegalArgumentException("You must provide a username and password to finishTwoFactorLogin().")
 		}
 		if (empty(verificationCode) || empty(twoFactorIdentifier)) {
-			throw new.InvalidArgumentException(
+			throw new. IllegalArgumentException(
 				"You must provide a verification code and two-factor identifier to finishTwoFactorLogin().")
 		}
 		if (!in_array(verificationMethod, ["1", "2", "3"], true)) {
-			throw new.InvalidArgumentException("You must provide a valid verification method value.")
+			throw new. IllegalArgumentException("You must provide a valid verification method value.")
 		}
 
 		// Switch the currently active user/pass if the details are different.
@@ -576,10 +576,10 @@ class Instagram : ExperimentsInterface {
 	 */
 	fun sendTwoFactorLoginSMS(username: String, password: String, twoFactorIdentifier: String) {
 		if (empty(username) || empty(password)) {
-			throw new.InvalidArgumentException("You must provide a username and password to sendTwoFactorLoginSMS().")
+			throw new. IllegalArgumentException("You must provide a username and password to sendTwoFactorLoginSMS().")
 		}
 		if (empty(twoFactorIdentifier)) {
-			throw new.InvalidArgumentException("You must provide a two-factor identifier to sendTwoFactorLoginSMS().")
+			throw new. IllegalArgumentException("You must provide a two-factor identifier to sendTwoFactorLoginSMS().")
 		}
 
 		// Switch the currently active user/pass if the details are different.
@@ -686,12 +686,12 @@ class Instagram : ExperimentsInterface {
 	 * @param string username Your Instagram username.
 	 * @param string password Your Instagram password.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 */
 	private fun setUser(username: String, password: String) {
 		if (empty(username) || empty(password)) {
-			throw new.InvalidArgumentException("You must provide a username and password to setUser().")
+			throw new. IllegalArgumentException("You must provide a username and password to setUser().")
 		}
 
 		// Load all settings from the storage and mark as current user.
@@ -797,12 +797,12 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @param string username Your Instagram username.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 */
 	private fun _setUserWithoutPassword(username: String) {
 		if (empty(username) || !is_string(username)) {
-			throw new.InvalidArgumentException("You must provide a username.")
+			throw new. IllegalArgumentException("You must provide a username.")
 		}
 
 		// Switch the currently active user/pass if the username is different.
@@ -823,14 +823,14 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @param Response.LoginResponse response The login response.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 */
 	private fun _updateLoginState(response: Response.LoginResponse) {
 		// This check is just protection against accidental bugs. It makes sure
 		// that we always call this fun with a *successful* login response!
 		if (!response instanceof Response.LoginResponse || !response.isOk()) {
-			throw new.InvalidArgumentException("Invalid login response provided to _updateLoginState().")
+			throw new. IllegalArgumentException("Invalid login response provided to _updateLoginState().")
 		}
 
 		this.isMaybeLoggedIn = true
@@ -912,7 +912,7 @@ class Instagram : ExperimentsInterface {
 	 * @param int  appRefreshInterval See `login()` for description of this
 	 *                                 parameter.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.LoginResponse|null A login response if a
@@ -923,10 +923,10 @@ class Instagram : ExperimentsInterface {
 	 */
 	private fun _sendLoginFlow(justLoggedIn: Boolean, appRefreshInterval: Int = 1800) {
 		if (!is_int(appRefreshInterval) || appRefreshInterval < 0) {
-			throw new.InvalidArgumentException("Instagram" s app state refresh interval must be a positive integer.")
+			throw new. IllegalArgumentException("Instagram" s app state refresh interval must be a positive integer.")
 		}
 		if (appRefreshInterval > 21600) {
-			throw new.InvalidArgumentException("Instagram" s app state refresh interval is NOT allowed to be higher than
+			throw new. IllegalArgumentException("Instagram" s app state refresh interval is NOT allowed to be higher than
 			                                   6 hours, and the lower the better!")
 		}
 

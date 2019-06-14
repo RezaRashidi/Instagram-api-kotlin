@@ -17,13 +17,13 @@ class IrisSubscribe : CommandInterface
      *
      * @param int $sequenceId
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      */
     public fun __construct(
         $sequenceId)
     {
         if ($sequenceId === self::INVALID_SEQUENCE_ID) {
-            throw .InvalidArgumentException("Invalid Iris sequence identifier.")
+            throw . IllegalArgumentException("Invalid Iris sequence identifier.")
         }
         this._sequenceId = $sequenceId
     }

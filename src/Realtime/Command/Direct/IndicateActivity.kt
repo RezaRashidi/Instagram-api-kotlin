@@ -15,7 +15,7 @@ final class IndicateActivity : DirectCommand
      * @param bool   $status
      * @param array  $options
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      */
     public fun __construct(
         $threadId,

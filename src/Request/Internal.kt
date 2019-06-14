@@ -55,7 +55,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param InternalMetadata|null internalMetadata (optional) Internal library-generated metadata object.
 	 * @param array                 externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 * @throws .InstagramAPI.Exception.UploadFailedException
 	 *
@@ -67,7 +67,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	                      externalMetadata = []) {
 		// Make sure we only allow these particular feeds for this fun.
 		if (targetFeed !== Constants::FEED_TIMELINE && targetFeed !== Constants::FEED_STORY && targetFeed !== Constants::FEED_DIRECT_STORY) {
-			throw.InvalidArgumentException(sprintf("Bad target feed " % s".", targetFeed))
+			throw. IllegalArgumentException(sprintf("Bad target feed " % s".", targetFeed))
 		}
 
 		// Validate and prepare internal metadata object.
@@ -80,7 +80,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 				internalMetadata.setPhotoDetails(targetFeed, photoFilename)
 			}
 		} catch (.Exception e) {
-			throw.InvalidArgumentException(sprintf("Failed to get photo details: %s", e.getMessage()), e.getCode(), e)
+			throw. IllegalArgumentException(sprintf("Failed to get photo details: %s", e.getMessage()), e.getCode(), e)
 		}
 
 		// Perform the upload.
@@ -98,19 +98,19 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int              targetFeed       One of the FEED_X constants.
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 * @throws .InstagramAPI.Exception.UploadFailedException
 	 */
 	fun uploadPhotoData(targetFeed:Int, InternalMetadata internalMetadata) {
 		// Make sure we disallow some feeds for this fun.
 		if (targetFeed === Constants::FEED_DIRECT) {
-			throw.InvalidArgumentException(sprintf("Bad target feed " % s".", targetFeed))
+			throw. IllegalArgumentException(sprintf("Bad target feed " % s".", targetFeed))
 		}
 
 		// Make sure we have photo details.
 		if (internalMetadata.getPhotoDetails() === null) {
-			throw.InvalidArgumentException("Photo details are missing from the internal metadata.")
+			throw. IllegalArgumentException("Photo details are missing from the internal metadata.")
 		}
 
 		try {
@@ -144,7 +144,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object.
 	 * @param array            externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.ConfigureResponse
@@ -160,7 +160,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			endpoint = "media/configure_to_story/"
 			break
 			default:
-			throw.InvalidArgumentException(sprintf("Bad target feed " % s".", targetFeed))
+			throw. IllegalArgumentException(sprintf("Bad target feed " % s".", targetFeed))
 		}
 
 		// Available external metadata parameters:
@@ -328,7 +328,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 				request.addPost("location", Utils::buildMediaLocationJSON(location))
 			}
 			if (targetFeed === Constants::FEED_STORY && locationSticker === null) {
-				throw.InvalidArgumentException("You must provide a location_sticker together with your story location.")
+				throw. IllegalArgumentException("You must provide a location_sticker together with your story location.")
 			}
 			request.addPost("geotag_enabled", "1").addPost("posting_latitude", location.getLat())
 				.addPost("posting_longitude", location.getLng()).addPost("media_latitude", location.getLat())
@@ -347,7 +347,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string                videoFilename    The video filename.
 	 * @param InternalMetadata|null internalMetadata (optional) Internal library-generated metadata object.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
 	 *
@@ -363,7 +363,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 				internalMetadata.setVideoDetails(targetFeed, videoFilename)
 			}
 		} catch (.Exception e) {
-			throw.InvalidArgumentException(sprintf("Failed to get photo details: %s", e.getMessage()), e.getCode(), e)
+			throw. IllegalArgumentException(sprintf("Failed to get photo details: %s", e.getMessage()), e.getCode(), e)
 		}
 
 		try {
@@ -400,7 +400,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param InternalMetadata|null internalMetadata (optional) Internal library-generated metadata object.
 	 * @param array                 externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
 	 *
@@ -412,7 +412,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	                      externalMetadata = []) {
 		// Make sure we only allow these particular feeds for this fun.
 		if (targetFeed !== Constants::FEED_TIMELINE && targetFeed !== Constants::FEED_STORY && targetFeed !== Constants::FEED_DIRECT_STORY && targetFeed !== Constants::FEED_TV) {
-			throw.InvalidArgumentException(sprintf("Bad target feed " % s".", targetFeed))
+			throw. IllegalArgumentException(sprintf("Bad target feed " % s".", targetFeed))
 		}
 
 		// Attempt to upload the video.
@@ -449,13 +449,13 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object.
 	 * @param array            externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 * @throws .InstagramAPI.Exception.UploadFailedException
 	 */
 	fun uploadVideoThumbnail(targetFeed:Int,  internalMetadata:InternalMetadata, array externalMetadata = []) {
 		if (internalMetadata.getVideoDetails() === null) {
-			throw.InvalidArgumentException("Video details are missing from the internal metadata.")
+			throw. IllegalArgumentException("Video details are missing from the internal metadata.")
 		}
 
 		try {
@@ -515,7 +515,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object.
 	 * @param array            externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.ConfigureResponse
@@ -534,7 +534,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			endpoint = "media/configure_to_igtv/"
 			break
 			default:
-			throw.InvalidArgumentException(sprintf("Bad target feed " % s".", targetFeed))
+			throw. IllegalArgumentException(sprintf("Bad target feed " % s".", targetFeed))
 		}
 
 		// Available external metadata parameters:
@@ -675,7 +675,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			break
 			case Constants ::FEED_TV:
 			if (title === null) {
-				throw.InvalidArgumentException("You must provide a title for the media.")
+				throw. IllegalArgumentException("You must provide a title for the media.")
 			}
 			request.addPost("title", title).addPost("caption", captionText)
 			break
@@ -699,7 +699,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 				request.addPost("location", Utils::buildMediaLocationJSON(location))
 			}
 			if (targetFeed === Constants::FEED_STORY && locationSticker === null) {
-				throw.InvalidArgumentException("You must provide a location_sticker together with your story location.")
+				throw. IllegalArgumentException("You must provide a location_sticker together with your story location.")
 			}
 			request.addPost("geotag_enabled", "1").addPost("posting_latitude", location.getLat())
 				.addPost("posting_longitude", location.getLng()).addPost("media_latitude", location.getLat())
@@ -725,7 +725,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array            externalMetadata (optional) User-provided metadata key-value pairs
 	 *                                           for the album itself (its caption, location, etc).
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.ConfigureResponse
@@ -1170,7 +1170,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *                                        object as the source ID.
 	 * @param string                module   Module where the story was found.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.MediaSeenResponse
@@ -1186,7 +1186,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		seenAt = maxSeenAt - (3 * count(items)) // Start seenAt in the past.
 		foreach(items as item) {
 			if (!item instanceof Response.Model.Item) {
-				throw.InvalidArgumentException(
+				throw. IllegalArgumentException(
 					"All story items must be instances of .InstagramAPI.Response.Model.Item.")
 			}
 
@@ -1230,7 +1230,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param callable configurator Configurator fun.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
 	 * @throws .InstagramAPI.Exception.InstagramException
@@ -1324,7 +1324,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param Request      uploadTemplate
 	 * @param bool         skipGet
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
 	 * @throws .InstagramAPI.Exception.InstagramException
@@ -1399,7 +1399,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int              targetFeed       One of the FEED_X constants.
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
@@ -1427,7 +1427,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int              targetFeed       One of the FEED_X constants.
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
 	 * @throws .InstagramAPI.Exception.InstagramException
@@ -1525,7 +1525,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int              targetFeed       One of the FEED_X constants.
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
 	 * @throws .InstagramAPI.Exception.InstagramException
@@ -1702,7 +1702,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object.
 	 *
 	 * @throws .Exception
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
 	 * @throws .InstagramAPI.Exception.InstagramException
@@ -1778,7 +1778,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int              targetFeed       One of the FEED_X constants.
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
 	 * @throws .InstagramAPI.Exception.InstagramException
@@ -2118,7 +2118,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param int targetFeed One of the FEED_X constants.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 *
 	 * @return int
 	 */
@@ -2138,7 +2138,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			duration = 100
 			break
 			default:
-			throw.InvalidArgumentException("Unsupported feed {targetFeed}.")
+			throw. IllegalArgumentException("Unsupported feed {targetFeed}.")
 		}
 
 		return (int) duration

@@ -16,6 +16,6 @@ package InstagramAPI.Exception
  * and so on. To see what happened, simply getMessage() on this exception, or
  * import hasResponse() and getResponse() to get the full server response.
  */
-class EndpointException : RequestException()
+open class EndpointException : RequestException()
 {
 }

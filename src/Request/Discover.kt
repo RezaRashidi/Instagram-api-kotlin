@@ -65,7 +65,7 @@ class Discover(instagram: Instagram) : RequestCollection(instagram) {
 	 *                                 "users", "places", "tags".
 	 * @param string|null rankToken   (When paginating) The rank token from the previous page"s response.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.FBSearchResponse
@@ -78,7 +78,7 @@ class Discover(instagram: Instagram) : RequestCollection(instagram) {
 		null) {
 		// Do basic query validation.
 		if (!is_string(query) || query === "") {
-			throw.InvalidArgumentException("Query must be a non-empty string.")
+			throw. IllegalArgumentException("Query must be a non-empty string.")
 		}
 		request = this._paginateWithMultiExclusion(
 			this.ig.request("fbsearch/topsearch_flat/").addParam("context", "blended").addParam("query",
@@ -117,7 +117,7 @@ class Discover(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun getSuggestedSearches(type:String) {
 		if (!in_array(type, ["blended", "users", "hashtags", "places"], true)) {
-			throw.InvalidArgumentException(sprintf("Unknown search type: %s.", type))
+			throw. IllegalArgumentException(sprintf("Unknown search type: %s.", type))
 		}
 
 		return this.ig.request("fbsearch/suggested_searches/").addParam("type", type)

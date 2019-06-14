@@ -31,7 +31,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|int mediaType The type of the media item you are deleting. One of: "PHOTO", "VIDEO"
 	 *                              "CAROUSEL", or the raw value of the Item"s "getMediaType()" fun.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.MediaDeleteResponse
@@ -58,7 +58,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|int mediaType   The type of the media item you are editing. One of: "PHOTO", "VIDEO"
 	 *                                "CAROUSEL", or the raw value of the Item"s "getMediaType()" fun.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.EditMediaResponse
@@ -85,7 +85,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 			} else {
 				// The user wants to add/change the location of the media.
 				if (!metadata["location"] instanceof Response.Model.Location) {
-					throw.InvalidArgumentException(
+					throw. IllegalArgumentException(
 						"The " location " metadata value must be an instance of .InstagramAPI.Response.Model.Location.")
 				}
 
@@ -113,7 +113,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string module    (optional) From which app module (page) you"re performing this action.
 	 * @param array  extraData (optional) Depending on the module name, additional data is required.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.GenericResponse
@@ -139,7 +139,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string module    (optional) From which app module (page) you"re performing this action.
 	 * @param array  extraData (optional) Depending on the module name, additional data is required.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.GenericResponse
@@ -252,7 +252,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *                               when replying, your commentText MUST contain an @-mention at the start (ie "@theirusername Hello!").
 	 * @param string module         (optional) From which app module (page) you"re performing this action.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.CommentResponse
@@ -267,7 +267,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 
 		if (replyCommentId !== null) {
 			if (commentText[0] !== "@") {
-				throw.InvalidArgumentException(
+				throw. IllegalArgumentException(
 					"When replying to a comment, your text must begin with an @-mention to their username.")
 			}
 			request.addPost("replied_to_comment_id", replyCommentId)
@@ -297,7 +297,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *                        "min_id" - next "minimum ID" (get newer comments, after this ID), used for forwards pagination
 	 *                        "target_comment_id" - used by comment Push notifications to retrieve the page with the specific comment.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.MediaCommentsResponse
@@ -307,7 +307,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 
 		// Pagination.
 		if (isset(options["min_id"]) && isset(options["max_id"])) {
-			throw.InvalidArgumentException(
+			throw. IllegalArgumentException(
 				"You can import either " min_id " or " max_id ", but not both at the same time.")
 		}
 		if (isset(options["min_id"])) {
@@ -322,7 +322,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 		// server will reject the request completely and give nothing back!
 		if (isset(options["target_comment_id"])) {
 			if (isset(options["min_id"]) || isset(options["max_id"])) {
-				throw.InvalidArgumentException(
+				throw. IllegalArgumentException(
 					"You cannot import the " target_comment_id " parameter together with the " min_id " or " max_id " parameters.")
 			}
 			request.addParam("target_comment_id", options["target_comment_id"])
@@ -349,7 +349,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *                          "max_id" - next "maximum ID" (get older comments, before this ID), used for backwards pagination
 	 *                          "min_id" - next "minimum ID" (get newer comments, after this ID), used for forwards pagination.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.MediaCommentRepliesResponse
@@ -358,7 +358,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 		request = this.ig.request("media/{mediaId}/comments/{commentId}/inline_child_comments/")
 
 		if (isset(options["min_id"], options["max_id"])) {
-			throw.InvalidArgumentException(
+			throw. IllegalArgumentException(
 				"You can import either " min_id " or " max_id ", but not both at the same time.")
 		}
 
@@ -603,7 +603,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string  module    From which app module (page) you"re performing this action.
 	 * @param array   extraData Depending on the module name, additional data is required.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 */
 	protected fun _parseLikeParameters(type:String,  request:Request, module:String, array extraData) {
 		// Is this a "double-tap to like"? Note that Instagram doesn"t have
@@ -621,7 +621,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 				// The explore media `Item.getExploreSourceToken()` value.
 				request.addPost("explore_source_token", extraData["explore_source_token"])
 			} else {
-				throw.InvalidArgumentException(sprintf("Missing extra data for module " % s".", module))
+				throw. IllegalArgumentException(sprintf("Missing extra data for module " % s".", module))
 			}
 			break
 			case "profile": // LIST VIEW (when posts are shown vertically by the app
@@ -637,7 +637,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 				// Username and id of the media"s owner (the profile owner).
 				request.addPost("username", extraData["username"]).addPost("user_id", extraData["user_id"])
 			} else {
-				throw.InvalidArgumentException(sprintf("Missing extra data for module " % s".", module))
+				throw. IllegalArgumentException(sprintf("Missing extra data for module " % s".", module))
 			}
 			break
 			case "feed_contextual_hashtag": // "Hashtag" search result.
@@ -646,7 +646,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 				Utils.throwIfInvalidHashtag(extraData["hashtag"])
 				request.addPost("hashtag", extraData["hashtag"])
 			} else {
-				throw.InvalidArgumentException(sprintf("Missing extra data for module " % s".", module))
+				throw. IllegalArgumentException(sprintf("Missing extra data for module " % s".", module))
 			}
 			break
 			case "feed_contextual_location": // "Location" search result.
@@ -654,7 +654,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 				// The location ID of this media.
 				request.addPost("location_id", extraData["location_id"])
 			} else {
-				throw.InvalidArgumentException(sprintf("Missing extra data for module " % s".", module))
+				throw. IllegalArgumentException(sprintf("Missing extra data for module " % s".", module))
 			}
 			break
 			case "feed_timeline": // "Timeline" tab (the global Home-feed with all
@@ -673,7 +673,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 			// posts" entry.
 			break
 			default:
-			throw.InvalidArgumentException(
+			throw. IllegalArgumentException(
 				sprintf("Invalid module name. %s does not correspond to any of the valid module names.", module))
 		}
 	}

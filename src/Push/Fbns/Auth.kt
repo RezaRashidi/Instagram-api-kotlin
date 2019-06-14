@@ -77,7 +77,7 @@ class Auth : AuthInterface
      *
      * @param string $auth
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      */
     public fun update(
         $auth)

@@ -7,7 +7,7 @@ import LazyJsonMapper.LazyJsonMapper
  *
  * Configures important core settings for the property mapping process.
  */
-class AutoPropertyMapper : LazyJsonMapper
+ open class AutoPropertyMapper : LazyJsonMapper
 {
     /** @var bool */
     val ALLOW_VIRTUAL_PROPERTIES = false

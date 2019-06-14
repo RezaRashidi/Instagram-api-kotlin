@@ -15,7 +15,7 @@ class Push(instagram:Instagram) : RequestCollection(instagram)
      * @param string pushChannel The channel you want to register, it can be mqtt or gcm.
      * @param string token       The token used to register to the push channel.
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.PushRegisterResponse
@@ -26,7 +26,7 @@ class Push(instagram:Instagram) : RequestCollection(instagram)
     {
         // Make sure we only allow these for push channels.
         if (pushChannel != "mqtt" && pushChannel != "gcm") {
-            throw .InvalidArgumentException(sprintf("Bad push channel "%s".", pushChannel))
+            throw . IllegalArgumentException(sprintf("Bad push channel "%s".", pushChannel))
         }
 
         request = this.ig.request("push/register/")

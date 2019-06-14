@@ -15,7 +15,7 @@ final class MarkSeen : DirectCommand
      * @param string $threadItemId
      * @param array  $options
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      */
     public fun __construct(
         $threadId,

@@ -14,7 +14,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string hashtag The hashtag, not including the "#".
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.TagInfoResponse
@@ -30,7 +30,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string hashtag The hashtag, not including the "#".
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.TagsStoryResponse
@@ -52,7 +52,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int[]|null  nextMediaIds Used for pagination.
 	 * @param string|null maxId        Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.TagFeedResponse
@@ -67,7 +67,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 
 		if (tab !== null) {
 			if (tab !== "top" && tab !== "recent" && tab !== "places" && tab !== "discover") {
-				throw.InvalidArgumentException("Tab section must be ." top .", ." recent .", ." places .
+				throw. IllegalArgumentException("Tab section must be ." top .", ." recent .", ." places .
 				                               " or ." discover .".")
 			}
 			request.addPost("tab", tab)
@@ -77,7 +77,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 
 		if (nextMediaIds !== null) {
 			if (!is_array(nextMediaIds) || !array_filter(nextMediaIds, "is_int")) {
-				throw.InvalidArgumentException("Next media IDs must be an Int[].")
+				throw. IllegalArgumentException("Next media IDs must be an Int[].")
 			}
 			request.addPost("next_media_ids", json_encode(nextMediaIds))
 		}
@@ -108,7 +108,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 *                                    from a previous call to get more results.
 	 * @param string|null    rankToken   (When paginating) The rank token from the previous page"s response.
 	 *
-	 * @throws .InvalidArgumentException                  If invalid query or
+	 * @throws . IllegalArgumentException                  If invalid query or
 	 *                                                    trying to exclude too
 	 *                                                    many hashtags.
 	 * @throws .InstagramAPI.Exception.InstagramException
@@ -121,7 +121,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	fun search(query:String, array excludeList = [], rankToken:String? = null) {
 		// Do basic query validation. Do NOT import throwIfInvalidHashtag here.
 		if (!is_string(query) || query === "") {
-			throw.InvalidArgumentException("Query must be a non-empty string.")
+			throw. IllegalArgumentException("Query must be a non-empty string.")
 		}
 
 		request = this._paginateWithExclusion(
@@ -146,7 +146,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string hashtag The hashtag, not including the "#".
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.TagRelatedResponse
@@ -164,7 +164,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string hashtag The hashtag, not including the "#".
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.TagRelatedResponse
@@ -182,7 +182,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string hashtag The hashtag, not including the "#".
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.TagRelatedResponse
@@ -202,7 +202,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string      rankToken The feed UUID. You must import the same value for all pages of the feed.
 	 * @param string|null maxId     Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.TagFeedResponse
@@ -282,7 +282,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param Response.Model.Item[]    items       Array of one or more story
 	 *                                              media Items.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.MediaSeenResponse
@@ -301,7 +301,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 			sourceId = hashtagFeed.getStory().getId()
 		}
 		if (!strlen(sourceId)) {
-			throw.InvalidArgumentException(
+			throw. IllegalArgumentException(
 				"Your provided TagFeedResponse is invalid and does not contain any Hashtag Story-Tray ID.")
 		}
 
@@ -314,7 +314,7 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 		foreach(items as item) {
 			// NOTE: We only check Items here. Other data is rejected by Internal.
 			if (item instanceof Response.Model.Item && !isset(validIds[item.getId()])) {
-				throw.InvalidArgumentException(
+				throw. IllegalArgumentException(
 					sprintf("The item with ID " % s" does not belong to this TagFeedResponse.", item.getId()))
 			}
 		}

@@ -15,7 +15,7 @@ final class SendPost : ShareItem
      * @param string $mediaId
      * @param array  $options
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      */
     public fun __construct(
         $threadId,
@@ -25,7 +25,7 @@ final class SendPost : ShareItem
         parent::__construct($threadId, self::TYPE, $options)
 
         if (!preg_match(self::MEDIA_REGEXP, $mediaId)) {
-            throw .InvalidArgumentException(sprintf(""%s" is not a valid media ID.", $mediaId))
+            throw . IllegalArgumentException(sprintf(""%s" is not a valid media ID.", $mediaId))
         }
         this._data["media_id"] = (string) $mediaId
     }

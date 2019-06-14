@@ -15,7 +15,7 @@ abstract class SendItem : DirectCommand
      * @param string $itemType
      * @param array  $options
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      */
     public fun __construct(
         $threadId,
@@ -26,7 +26,7 @@ abstract class SendItem : DirectCommand
 
         // Handle action.
         if (!in_array($itemType, this._getSupportedItemTypes(), true)) {
-            throw .InvalidArgumentException(sprintf(""%s" is not a supported item type.", $itemType))
+            throw . IllegalArgumentException(sprintf(""%s" is not a supported item type.", $itemType))
         }
         this._data["item_type"] = $itemType
     }

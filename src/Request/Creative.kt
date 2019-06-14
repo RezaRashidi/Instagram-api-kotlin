@@ -20,7 +20,7 @@ class Creative(instagram:Instagram) : RequestCollection(instagram)
      * @param string     stickerType Type of sticker (currently only "static_stickers").
      * @param array|null location    (optional) Array containing lat, lng and horizontalAccuracy.
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.StickerAssetsResponse
@@ -30,12 +30,12 @@ class Creative(instagram:Instagram) : RequestCollection(instagram)
         array location = null)
     {
         if (stickerType != "static_stickers") {
-            throw .InvalidArgumentException("You must provide a valid sticker type.")
+            throw . IllegalArgumentException("You must provide a valid sticker type.")
         }
         if (location !== null && (!isset(location["lat"])
                                     || !isset(location["lng"])
                                     || !isset(location["horizontalAccuracy"]))) {
-            throw .InvalidArgumentException("Your location array must contain keys for "lat", "lng" and "horizontalAccuracy".")
+            throw . IllegalArgumentException("Your location array must contain keys for "lat", "lng" and "horizontalAccuracy".")
         }
 
         request = this.ig.request("creatives/assets/")

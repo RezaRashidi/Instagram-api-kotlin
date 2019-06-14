@@ -20,7 +20,7 @@ abstract class DirectCommand : CommandInterface
      * @param string $threadId
      * @param array  $options
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      */
     public fun __construct(
         $action,
@@ -31,7 +31,7 @@ abstract class DirectCommand : CommandInterface
 
         // Handle action.
         if (!in_array($action, this._getSupportedActions(), true)) {
-            throw .InvalidArgumentException(sprintf(""%s" is not a supported action.", $action))
+            throw . IllegalArgumentException(sprintf(""%s" is not a supported action.", $action))
         }
         this._data["action"] = $action
 
@@ -42,7 +42,7 @@ abstract class DirectCommand : CommandInterface
             if (!isset($options["client_context"])) {
                 this._data["client_context"] = Signatures::generateUUID()
             } elseif (!Signatures::isValidUUID($options["client_context"])) {
-                throw .InvalidArgumentException(sprintf(""%s" is not a valid UUID.", $options["client_context"]))
+                throw . IllegalArgumentException(sprintf(""%s" is not a valid UUID.", $options["client_context"]))
             } else {
                 this._data["client_context"] = $options["client_context"]
             }
@@ -103,7 +103,7 @@ abstract class DirectCommand : CommandInterface
      *
      * @param string $threadId
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      *
      * @return string
      */
@@ -111,7 +111,7 @@ abstract class DirectCommand : CommandInterface
         $threadId)
     {
         if (!ctype_digit($threadId) && (!is_int($threadId) || $threadId < 0)) {
-            throw .InvalidArgumentException(sprintf(""%s" is not a valid thread identifier.", $threadId))
+            throw . IllegalArgumentException(sprintf(""%s" is not a valid thread identifier.", $threadId))
         }
 
         return (string) $threadId
@@ -122,7 +122,7 @@ abstract class DirectCommand : CommandInterface
      *
      * @param string $threadItemId
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      *
      * @return string
      */
@@ -130,7 +130,7 @@ abstract class DirectCommand : CommandInterface
         $threadItemId)
     {
         if (!ctype_digit($threadItemId) && (!is_int($threadItemId) || $threadItemId < 0)) {
-            throw .InvalidArgumentException(sprintf(""%s" is not a valid thread item identifier.", $threadItemId))
+            throw . IllegalArgumentException(sprintf(""%s" is not a valid thread item identifier.", $threadItemId))
         }
 
         return (string) $threadItemId

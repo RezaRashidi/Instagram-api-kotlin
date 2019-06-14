@@ -21,7 +21,7 @@ import RuntimeException
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class Response : AutoPropertyMapper
+open class Response : AutoPropertyMapper()
 {
     /** @var string */
     val STATUS_OK = "ok"

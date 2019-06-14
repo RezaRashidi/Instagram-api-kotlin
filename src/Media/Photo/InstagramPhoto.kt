@@ -35,7 +35,7 @@ class InstagramPhoto : InstagramMedia
      * @param string $inputFile Path to an input file.
      * @param array  $options   An associative array of optional parameters.
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      *
      * @see InstagramMedia::__construct() description for the list of parameters.
      */

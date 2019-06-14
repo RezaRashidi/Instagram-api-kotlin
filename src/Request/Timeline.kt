@@ -23,7 +23,7 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      * @param string photoFilename    The photo filename.
      * @param array  externalMetadata (optional) User-provided metadata key-value pairs.
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      * @throws .RuntimeException
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -44,7 +44,7 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      * @param string videoFilename    The video filename.
      * @param array  externalMetadata (optional) User-provided metadata key-value pairs.
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
      *
@@ -74,7 +74,7 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      * @param array externalMetadata (optional) User-provided metadata key-value pairs
      *                                for the album itself (its caption, location, etc).
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      * @throws .RuntimeException
      * @throws .InstagramAPI.Exception.InstagramException
      * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
@@ -88,10 +88,10 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
         array externalMetadata = [])
     {
         if (empty(media)) {
-            throw .InvalidArgumentException("List of media to upload can"t be empty.")
+            throw . IllegalArgumentException("List of media to upload can"t be empty.")
         }
         if (count(media) < 2 || count(media) > 10) {
-            throw .InvalidArgumentException(sprintf(
+            throw . IllegalArgumentException(sprintf(
                 "Instagram requires that albums contain 2-10 items. You tried to submit %d.",
                 count(media)
             ))
@@ -102,7 +102,7 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
         // valid and lets us avoid wasting time uploading totally invalid albums!
         foreach (media as key => item) {
             if (!isset(item["file"]) || !isset(item["type"])) {
-                throw .InvalidArgumentException(sprintf(
+                throw . IllegalArgumentException(sprintf(
                     "Media at index "%s" does not have the required "file" and "type" keys.",
                     key
                 ))
@@ -127,7 +127,7 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
                 itemInternalMetadata.setVideoDetails(Constants::FEED_TIMELINE_ALBUM, item["file"])
                 break
             default:
-                throw .InvalidArgumentException(sprintf("Unsupported album media type "%s".", item["type"]))
+                throw . IllegalArgumentException(sprintf("Unsupported album media type "%s".", item["type"]))
             }
 
             media[key]["internalMetadata"] = itemInternalMetadata
@@ -373,7 +373,7 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      * @param bool   onlyMe  If true, archives your media so that it"s only visible to you.
      *                        Otherwise, if false, makes the media to everyone again.
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.ArchiveMediaResponse

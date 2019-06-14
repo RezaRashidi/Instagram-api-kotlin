@@ -92,20 +92,20 @@ class PhotoDetails : MediaDetails
      *
      * @param string $filename Path to the photo file.
      *
-     * @throws .InvalidArgumentException If the photo file is missing or invalid.
+     * @throws . IllegalArgumentException If the photo file is missing or invalid.
      */
     public fun __construct(
         $filename)
     {
         // Check if input file exists.
         if (empty($filename) || !is_file($filename)) {
-            throw .InvalidArgumentException(sprintf("The photo file "%s" does not exist on disk.", $filename))
+            throw . IllegalArgumentException(sprintf("The photo file "%s" does not exist on disk.", $filename))
         }
 
         // Determine photo file size and throw when the file is empty.
         $filesize = filesize($filename)
         if ($filesize < 1) {
-            throw .InvalidArgumentException(sprintf(
+            throw . IllegalArgumentException(sprintf(
                 "The photo file "%s" is empty.",
                 $filename
             ))
@@ -114,7 +114,7 @@ class PhotoDetails : MediaDetails
         // Get image details.
         $result = @getimagesize($filename)
         if ($result === false) {
-            throw .InvalidArgumentException(sprintf("The photo file "%s" is not a valid image.", $filename))
+            throw . IllegalArgumentException(sprintf("The photo file "%s" is not a valid image.", $filename))
         }
         list($width, $height, this._type) = $result
 
@@ -138,13 +138,13 @@ class PhotoDetails : MediaDetails
         // NOTE: It is confirmed that Instagram only accepts JPEG files.
         $type = this.getType()
         if ($type !== IMAGETYPE_JPEG) {
-            throw .InvalidArgumentException(sprintf("The photo file "%s" is not a JPEG file.", $mediaFilename))
+            throw . IllegalArgumentException(sprintf("The photo file "%s" is not a JPEG file.", $mediaFilename))
         }
 
         $width = this.getWidth()
         // Validate photo resolution. Instagram allows between 320px-1080px width.
         if ($width < self::MIN_WIDTH || $width > self::MAX_WIDTH) {
-            throw .InvalidArgumentException(sprintf(
+            throw . IllegalArgumentException(sprintf(
                 "Instagram only accepts photos that are between %d and %d pixels wide. Your file "%s" is %d pixels wide.",
                 self::MIN_WIDTH, self::MAX_WIDTH, $mediaFilename, $width
             ))

@@ -13,7 +13,7 @@ final class SendLocation : ShareItem
      * @param string $locationId
      * @param array  $options
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      */
     public fun __construct(
         $threadId,
@@ -23,7 +23,7 @@ final class SendLocation : ShareItem
         parent::__construct($threadId, self::TYPE, $options)
 
         if (!ctype_digit($locationId) && (!is_int($locationId) || $locationId < 0)) {
-            throw .InvalidArgumentException(sprintf(""%s" is not a valid location ID.", $locationId))
+            throw . IllegalArgumentException(sprintf(""%s" is not a valid location ID.", $locationId))
         }
         this._data["venue_id"] = (string) $locationId
         // Yeah, we need to send the location ID twice.

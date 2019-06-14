@@ -91,7 +91,7 @@ class Collection(instagram: Instagram) : RequestCollection(instagram) {
 	 *                             string[] "add_media",
 	 *                             string "module_name" (optional).
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.EditCollectionResponse
@@ -113,7 +113,7 @@ class Collection(instagram: Instagram) : RequestCollection(instagram) {
 			}
 		}
 		if (empty(postData)) {
-			throw.InvalidArgumentException("You must provide a name or at least one media ID.")
+			throw. IllegalArgumentException("You must provide a name or at least one media ID.")
 		}
 		request = this.ig.request("collections/{collectionId}/edit/").addPost("_uuid", this.ig.uuid)
 			.addPost("_uid", this.ig.account_id).addPost("_csrftoken", this.ig.client.getToken())

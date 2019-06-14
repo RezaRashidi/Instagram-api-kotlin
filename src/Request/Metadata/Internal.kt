@@ -78,7 +78,7 @@ final class Internal
      * @param int    $targetFeed    One of the FEED_X constants.
      * @param string $videoFilename
      *
-     * @throws .InvalidArgumentException If the video file is missing or invalid, or Instagram won"t allow this video.
+     * @throws . IllegalArgumentException If the video file is missing or invalid, or Instagram won"t allow this video.
      * @throws .RuntimeException         In case of various processing errors.
      *
      * @return VideoDetails
@@ -104,7 +104,7 @@ final class Internal
      * @param int    $targetFeed    One of the FEED_X constants.
      * @param string $photoFilename
      *
-     * @throws .InvalidArgumentException If the photo file is missing or invalid, or Instagram won"t allow this photo.
+     * @throws . IllegalArgumentException If the photo file is missing or invalid, or Instagram won"t allow this photo.
      * @throws .RuntimeException         In case of various processing errors.
      *
      * @return PhotoDetails
@@ -197,7 +197,7 @@ final class Internal
      *
      * @param array $recipients
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      *
      * @return self
      */
@@ -211,7 +211,7 @@ final class Internal
             this._directUsers = "[]"
             this._directThreads = $recipients["thread"]
         } else {
-            throw .InvalidArgumentException("Please provide at least one recipient.")
+            throw . IllegalArgumentException("Please provide at least one recipient.")
         }
 
         return this

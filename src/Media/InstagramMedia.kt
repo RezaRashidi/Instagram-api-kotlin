@@ -189,7 +189,7 @@ abstract class InstagramMedia
      * @param array  $options   An associative array of optional parameters.
      *                          See constructor description.
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      */
     public fun __construct(
         $inputFile,
@@ -214,28 +214,28 @@ abstract class InstagramMedia
 
         // Input file.
         if (!is_file($inputFile)) {
-            throw .InvalidArgumentException(sprintf("Input file "%s" doesn."t exist.", $inputFile))
+            throw . IllegalArgumentException(sprintf("Input file "%s" doesn."t exist.", $inputFile))
         }
         this._inputFile = $inputFile
 
         // Horizontal crop focus.
         if ($horCropFocus !== null && (!is_int($horCropFocus) || $horCropFocus < -50 || $horCropFocus > 50)) {
-            throw .InvalidArgumentException("Horizontal crop focus must be between -50 and 50.")
+            throw . IllegalArgumentException("Horizontal crop focus must be between -50 and 50.")
         }
         this._horCropFocus = $horCropFocus
 
         // Vertical crop focus.
         if ($verCropFocus !== null && (!is_int($verCropFocus) || $verCropFocus < -50 || $verCropFocus > 50)) {
-            throw .InvalidArgumentException("Vertical crop focus must be between -50 and 50.")
+            throw . IllegalArgumentException("Vertical crop focus must be between -50 and 50.")
         }
         this._verCropFocus = $verCropFocus
 
         // Minimum and maximum aspect ratio range.
         if ($minAspectRatio !== null && !is_float($minAspectRatio)) {
-            throw .InvalidArgumentException("Minimum aspect ratio must be a floating point number.")
+            throw . IllegalArgumentException("Minimum aspect ratio must be a floating point number.")
         }
         if ($maxAspectRatio !== null && !is_float($maxAspectRatio)) {
-            throw .InvalidArgumentException("Maximum aspect ratio must be a floating point number.")
+            throw . IllegalArgumentException("Maximum aspect ratio must be a floating point number.")
         }
 
         // Does the user want to override (force) the final "target aspect ratio" choice?
@@ -243,7 +243,7 @@ abstract class InstagramMedia
         this._hasUserForceTargetAspectRatio = false
         if ($userForceTargetAspectRatio !== null) {
             if (!is_float($userForceTargetAspectRatio) && !is_int($userForceTargetAspectRatio)) {
-                throw .InvalidArgumentException("Custom target aspect ratio must be a float or integer.")
+                throw . IllegalArgumentException("Custom target aspect ratio must be a float or integer.")
             }
             $userForceTargetAspectRatio = (float) $userForceTargetAspectRatio
             this._hasUserForceTargetAspectRatio = true
@@ -279,31 +279,31 @@ abstract class InstagramMedia
 
             // Select allowed aspect ratio range based on defaults and user input.
             if ($minAspectRatio !== null && ($minAspectRatio < $allowedMinRatio || $minAspectRatio > $allowedMaxRatio)) {
-                throw .InvalidArgumentException(sprintf("Minimum aspect ratio must be between %.3f and %.3f.",
+                throw . IllegalArgumentException(sprintf("Minimum aspect ratio must be between %.3f and %.3f.",
                     $allowedMinRatio, $allowedMaxRatio))
             }
             if ($minAspectRatio === null) {
                 $minAspectRatio = $allowedMinRatio
             }
             if ($maxAspectRatio !== null && ($maxAspectRatio < $allowedMinRatio || $maxAspectRatio > $allowedMaxRatio)) {
-                throw .InvalidArgumentException(sprintf("Maximum aspect ratio must be between %.3f and %.3f.",
+                throw . IllegalArgumentException(sprintf("Maximum aspect ratio must be between %.3f and %.3f.",
                     $allowedMinRatio, $allowedMaxRatio))
             }
             if ($maxAspectRatio === null) {
                 $maxAspectRatio = $allowedMaxRatio
             }
             if ($minAspectRatio !== null && $maxAspectRatio !== null && $minAspectRatio > $maxAspectRatio) {
-                throw .InvalidArgumentException("Maximum aspect ratio must be greater than or equal to minimum.")
+                throw . IllegalArgumentException("Maximum aspect ratio must be greater than or equal to minimum.")
             }
 
             // Validate custom target aspect ratio legality if provided by user.
             if (this._hasUserForceTargetAspectRatio) {
                 if ($minAspectRatio !== null && this._forceTargetAspectRatio < $minAspectRatio) {
-                    throw .InvalidArgumentException(sprintf("Custom target aspect ratio (%.5f) must be greater than or equal to the minimum aspect ratio (%.5f).",
+                    throw . IllegalArgumentException(sprintf("Custom target aspect ratio (%.5f) must be greater than or equal to the minimum aspect ratio (%.5f).",
                                                                 this._forceTargetAspectRatio, $minAspectRatio))
                 }
                 if ($maxAspectRatio !== null && this._forceTargetAspectRatio > $maxAspectRatio) {
-                    throw .InvalidArgumentException(sprintf("Custom target aspect ratio (%.5f) must be lesser than or equal to the maximum aspect ratio (%.5f).",
+                    throw . IllegalArgumentException(sprintf("Custom target aspect ratio (%.5f) must be lesser than or equal to the maximum aspect ratio (%.5f).",
                                                                 this._forceTargetAspectRatio, $maxAspectRatio))
                 }
             }
@@ -316,7 +316,7 @@ abstract class InstagramMedia
 
         // Background color.
         if ($bgColor !== null && (!is_array($bgColor) || count($bgColor) !== 3 || !isset($bgColor[0]) || !isset($bgColor[1]) || !isset($bgColor[2]))) {
-            throw .InvalidArgumentException("The background color must be a 3-element array [R, G, B].")
+            throw . IllegalArgumentException("The background color must be a 3-element array [R, G, B].")
         } elseif ($bgColor === null) {
             $bgColor = [255, 255, 255] // White.
         }
@@ -324,7 +324,7 @@ abstract class InstagramMedia
 
         // Media operation.
         if ($operation !== self::CROP && $operation !== self::EXPAND) {
-            throw .InvalidArgumentException("The operation must be one of the class constants CROP or EXPAND.")
+            throw . IllegalArgumentException("The operation must be one of the class constants CROP or EXPAND.")
         }
         this._operation = $operation
 
@@ -335,7 +335,7 @@ abstract class InstagramMedia
                        : sys_get_temp_dir()
         }
         if (!is_dir($tmpPath) || !is_writable($tmpPath)) {
-            throw .InvalidArgumentException(sprintf("Directory %s does not exist or is not writable.", $tmpPath))
+            throw . IllegalArgumentException(sprintf("Directory %s does not exist or is not writable.", $tmpPath))
         }
         this._tmpPath = realpath($tmpPath)
     }

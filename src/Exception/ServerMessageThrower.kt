@@ -3,6 +3,7 @@
 package InstagramAPI.Exception
 
 import InstagramAPI.Response
+import com.sun.org.apache.xml.internal.serializer.utils.Utils.messages
 import Psr.Http.Message.ResponseInterface as HttpResponseInterface
 
 /**
@@ -10,7 +11,7 @@ import Psr.Http.Message.ResponseInterface as HttpResponseInterface
  *
  * @author SteveJobzniak (https://github.com/SteveJobzniak)
  */
-class ServerMessageThrower
+object ServerMessageThrower
 {
     /**
      * Map from server messages to various exceptions.
@@ -36,7 +37,7 @@ class ServerMessageThrower
      *
      * @var array
      */
-    val EXCEPTION_MAP = mapOf<String,Array<String>>(
+    val EXCEPTION_MAP = mapOf(
         /*
          * WARNING: We MUST be sure to list these exception messages in an order
          * which guarantees that they will be properly detected without being
@@ -111,15 +112,15 @@ class ServerMessageThrower
      *
      * @throws InstagramException The appropriate exception.
      */
-    public static fun autoThrow(
-        prefixString:String?,
-        serverMessage:String?,
-         serverResponse:InstagramAPI.Response? = null,
-         httpResponse:HttpResponseInterface? = null)
+    fun autoThrow(
+            prefixString:String?,
+            serverMessage:String?,
+            serverResponse: Response? = null,
+            httpResponse:HttpResponseInterface? = null)
     {
         // We will analyze both the `message` AND `error_type` (if available).
-        messages = [serverMessage]
-        serverErrorType = null
+        val messages = arrayOf(serverMessage)
+         var serverErrorType = null
         if (serverResponse !== null) {
             // We are reading a property that isn"t defined in the class
             // property map, so we must import "has" first, to ensure it exists.
@@ -213,7 +214,7 @@ class ServerMessageThrower
      *
      * @return string The cleaned-up message.
      */
-    public static fun prettifyMessage(
+    fun prettifyMessage(
         message:String)
     {
         // Some messages already have punctuation, and others need it. Prettify

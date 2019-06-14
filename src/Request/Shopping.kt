@@ -75,7 +75,7 @@ class Shopping(instagram:Instagram) : RequestCollection(instagram)
     {
         if (offset !== null) {
             if (offset % 20 !== 0) {
-                throw .InvalidArgumentException("Offset must be multiple of 20.")
+                throw . IllegalArgumentException("Offset must be multiple of 20.")
             }
             offset = [
                 "offset" => offset,

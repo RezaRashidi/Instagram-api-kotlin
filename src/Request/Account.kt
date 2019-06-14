@@ -40,7 +40,7 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string biography Biography text. import "" for nothing.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.UserInfoResponse
@@ -49,7 +49,7 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun setBiography(biography:String) {
 		if (strlen(biography) > 150) {
-			throw.InvalidArgumentException("Please provide a 0 to 150 character string as biography.")
+			throw. IllegalArgumentException("Please provide a 0 to 150 character string as biography.")
 		}
 
 		return this.ig.request("accounts/set_biography/").addPost("raw_text", biography).addPost("_uuid", this.ig.uuid)
@@ -110,7 +110,7 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string photoFilename The photo filename.
 	 *
-	 * @throws .InvalidArgumentException
+	 * @throws . IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.UserInfoResponse

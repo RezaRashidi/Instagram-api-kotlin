@@ -124,34 +124,34 @@ import InstagramAPI.Response
  * @method this unsetUsername()
  * @method this unset_Messages()
  */
-class LoginResponse : Response
+class LoginResponse : Response()
 {
-    val JSON_PROPERTY_MAP = [
-        "username"                      => "string",
-        "has_anonymous_profile_picture" => "bool",
-        "profile_pic_url"               => "string",
-        "profile_pic_id"                => "string",
-        "full_name"                     => "string",
-        "pk"                            => "string",
-        "is_private"                    => "bool",
-        "is_verified"                   => "bool",
-        "allowed_commenter_type"        => "string",
-        "reel_auto_archive"             => "string",
-        "allow_contacts_sync"           => "bool",
-        "phone_number"                  => "string",
-        "country_code"                  => "int",
-        "national_number"               => "int",
-        "error_title"                   => "", // On wrong pass.
-        "error_type"                    => "", // On wrong pass.
-        "buttons"                       => "", // On wrong pass.
-        "invalid_credentials"           => "", // On wrong pass.
-        "logged_in_user"                => "Model.User",
-        "two_factor_required"           => "",
-        "phone_verification_settings"   => "Model.PhoneVerificationSettings",
-        "two_factor_info"               => "Model.TwoFactorInfo",
-        "checkpoint_url"                => "string",
-        "lock"                          => "",
-        "help_url"                      => "string",
-        "challenge"                     => "Model.Challenge",
-    ]
+    val JSON_PROPERTY_MAP = mapOf<String,String>(
+        "username"                      to "string",
+        "has_anonymous_profile_picture" to "bool",
+        "profile_pic_url"               to "string",
+        "profile_pic_id"                to "string",
+        "full_name"                     to "string",
+        "pk"                            to "string",
+        "is_private"                    to "bool",
+        "is_verified"                   to "bool",
+        "allowed_commenter_type"        to "string",
+        "reel_auto_archive"             to "string",
+        "allow_contacts_sync"           to "bool",
+        "phone_number"                  to "string",
+        "country_code"                  to "int",
+        "national_number"               to "int",
+        "error_title"                   to "", // On wrong pass.
+        "error_type"                    to "", // On wrong pass.
+        "buttons"                       to "", // On wrong pass.
+        "invalid_credentials"           to "", // On wrong pass.
+        "logged_in_user"                to "Model.User",
+        "two_factor_required"           to "",
+        "phone_verification_settings"   to "Model.PhoneVerificationSettings",
+        "two_factor_info"               to "Model.TwoFactorInfo",
+        "checkpoint_url"                to "string",
+        "lock"                          to "",
+        "help_url"                      to "string",
+        "challenge"                     to "Model.Challenge"
+    )
 }

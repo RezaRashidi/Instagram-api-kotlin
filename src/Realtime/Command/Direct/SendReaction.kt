@@ -20,7 +20,7 @@ final class SendReaction : SendItem
      * @param string $status
      * @param array  $options
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      */
     public fun __construct(
         $threadId,
@@ -37,13 +37,13 @@ final class SendReaction : SendItem
 
         // Handle reaction type.
         if (!in_array($reaction, this._getSupportedReactions(), true)) {
-            throw .InvalidArgumentException(sprintf(""%s" is not a supported reaction.", $reaction))
+            throw . IllegalArgumentException(sprintf(""%s" is not a supported reaction.", $reaction))
         }
         this._data["reaction_type"] = $reaction
 
         // Handle reaction status.
         if (!in_array($status, this._getSupportedStatuses(), true)) {
-            throw .InvalidArgumentException(sprintf(""%s" is not a supported reaction status.", $status))
+            throw . IllegalArgumentException(sprintf(""%s" is not a supported reaction status.", $status))
         }
         this._data["reaction_status"] = $status
     }

@@ -13,7 +13,7 @@ final class SendText : SendItem
      * @param string $text
      * @param array  $options
      *
-     * @throws .InvalidArgumentException
+     * @throws . IllegalArgumentException
      */
     public fun __construct(
         $threadId,
@@ -23,11 +23,11 @@ final class SendText : SendItem
         parent::__construct($threadId, self::TYPE, $options)
 
         if (!is_string($text)) {
-            throw .InvalidArgumentException("The text must be a string.")
+            throw . IllegalArgumentException("The text must be a string.")
         }
 
         if ($text === "") {
-            throw .InvalidArgumentException("The text can not be empty.")
+            throw . IllegalArgumentException("The text can not be empty.")
         }
         this._data["text"] = $text
     }

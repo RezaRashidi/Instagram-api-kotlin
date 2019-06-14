@@ -122,7 +122,7 @@ class VideoDetails : MediaDetails
      *
      * @param string $filename Path to the video file.
      *
-     * @throws .InvalidArgumentException If the video file is missing or invalid.
+     * @throws . IllegalArgumentException If the video file is missing or invalid.
      * @throws .RuntimeException         If FFmpeg isn"t working properly.
      */
     public fun __construct(
@@ -130,13 +130,13 @@ class VideoDetails : MediaDetails
     {
         // Check if input file exists.
         if (empty($filename) || !is_file($filename)) {
-            throw .InvalidArgumentException(sprintf("The video file "%s" does not exist on disk.", $filename))
+            throw . IllegalArgumentException(sprintf("The video file "%s" does not exist on disk.", $filename))
         }
 
         // Determine video file size and throw when the file is empty.
         $filesize = filesize($filename)
         if ($filesize < 1) {
-            throw .InvalidArgumentException(sprintf(
+            throw . IllegalArgumentException(sprintf(
                 "The video "%s" is empty.",
                 $filename
             ))
@@ -237,7 +237,7 @@ class VideoDetails : MediaDetails
 
         // Make sure we have found at least one video stream.
         if (this._videoCodec === null) {
-            throw .InvalidArgumentException(sprintf(
+            throw . IllegalArgumentException(sprintf(
                 "Instagram requires video with at least one video stream. Your file "%s" doesn."t have any.",
                 $mediaFilename
             ))
@@ -245,7 +245,7 @@ class VideoDetails : MediaDetails
 
         // Check the video stream. We should have at least one.
         if (this._videoCodec !== "h264") {
-            throw .InvalidArgumentException(sprintf(
+            throw . IllegalArgumentException(sprintf(
                 "Instagram only accepts videos encoded with the H.264 video codec. Your file "%s" has "%s".",
                 $mediaFilename, this._videoCodec
             ))
@@ -253,7 +253,7 @@ class VideoDetails : MediaDetails
 
         // Check the audio stream (if available).
         if (this._audioCodec !== null && this._audioCodec !== "aac") {
-            throw .InvalidArgumentException(sprintf(
+            throw . IllegalArgumentException(sprintf(
                 "Instagram only accepts videos encoded with the AAC audio codec. Your file "%s" has "%s".",
                 $mediaFilename, this._audioCodec
             ))
@@ -261,7 +261,7 @@ class VideoDetails : MediaDetails
 
         // Check the container format.
         if (strpos(this._container, "mp4") === false) {
-            throw .InvalidArgumentException(sprintf(
+            throw . IllegalArgumentException(sprintf(
                 "Instagram only accepts videos packed into MP4 containers. Your file "%s" has "%s".",
                 $mediaFilename, this._container
             ))
@@ -276,7 +276,7 @@ class VideoDetails : MediaDetails
         // If users want to upload bigger videos, they MUST resize locally first!
         $width = this.getWidth()
         if ($width < self::MIN_WIDTH || $width > self::MAX_WIDTH) {
-            throw .InvalidArgumentException(sprintf(
+            throw . IllegalArgumentException(sprintf(
                 "Instagram only accepts videos that are between %d and %d pixels wide. Your file "%s" is %d pixels wide.",
                 self::MIN_WIDTH, self::MAX_WIDTH, $mediaFilename, $width
             ))
@@ -289,7 +289,7 @@ class VideoDetails : MediaDetails
         $minDuration = $constraints.getMinDuration()
         $maxDuration = $constraints.getMaxDuration()
         if ($duration < $minDuration || $duration > $maxDuration) {
-            throw .InvalidArgumentException(sprintf(
+            throw . IllegalArgumentException(sprintf(
                 "Instagram only accepts %s videos that are between %.3f and %.3f seconds long. Your video "%s" is %.3f seconds long.",
                 $constraints.getTitle(), $minDuration, $maxDuration, $mediaFilename, $duration
             ))

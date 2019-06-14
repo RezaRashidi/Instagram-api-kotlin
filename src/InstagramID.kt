@@ -6,7 +6,7 @@ import kotlin.math.pow
 * adding summery of change in this file
 *
 * change foreach from php to kotlin,
-* change InvalidArgumentException to IllegalArgumentException,
+* change  IllegalArgumentException to IllegalArgumentException,
 * change !is_string(x) to x !is string : type casting,
 * convert static function to kotlin code with companion object,
 * change strlen()     to .length,
@@ -69,7 +69,7 @@ class InstagramID{
          *                       it"s larger than the size of an integer, which MOST
          *                       Instagram IDs are!
          *
-         * @throws \InvalidArgumentException If bad parameters are provided.
+         * @throws \ IllegalArgumentException If bad parameters are provided.
          *
          * @return string The shortcode.
          */
@@ -116,7 +116,7 @@ class InstagramID{
          *
          * @param (string) $code The shortcode.
          *
-         * @throws \InvalidArgumentException If bad parameters are provided.
+         * @throws \ IllegalArgumentException If bad parameters are provided.
          *
          * @return string The numeric ID.
          */
@@ -150,7 +150,7 @@ class InstagramID{
          *                            CPU"s integer size.
          * @param (bool)       $padLeft Whether to pad with leading zeroes.
          *
-         * @throws \InvalidArgumentException If the input isn"t a valid integer.
+         * @throws \ IllegalArgumentException If the input isn"t a valid integer.
          *
          * @return string The binary bits as a string.
          */
@@ -221,7 +221,7 @@ class InstagramID{
          * @param (string) $base2 The binary bits as a string where each character is
          *                      either "1" or "0".
          *
-         * @throws \InvalidArgumentException If the input isn"t a binary string.
+         * @throws \ IllegalArgumentException If the input isn"t a binary string.
          *
          * @return string The decimal number as a string.
          */
