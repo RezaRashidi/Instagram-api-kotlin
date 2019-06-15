@@ -55,14 +55,14 @@ class Highlight(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null coverMediaId One media ID in Instagram"s internal format (ie "3482384834_43294").
 	 * @param string      module
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.CreateHighlightResponse
 	 */
 	fun create(array mediaIds, title:String = "Highlights", coverMediaId:String? = null, module:String = "self_profile") {
 		if (empty(mediaIds)) {
-			throw. IllegalArgumentException("You must provide at least one media ID.")
+			throw IllegalArgumentException("You must provide at least one media ID.")
 		}
 		if (coverMediaId === null) {
 			coverMediaId = reset(mediaIds)
@@ -70,7 +70,7 @@ class Highlight(instagram: Instagram) : RequestCollection(instagram) {
 		if (title === null || title === "") {
 			title = "Highlights"
 		} elseif (mb_strlen(title, "utf8") > 16) {
-			throw. IllegalArgumentException("Title must be between 1 and 16 characters.")
+			throw IllegalArgumentException("Title must be between 1 and 16 characters.")
 		}
 
 		cover = ["media_id"  => coverMediaId,
@@ -91,19 +91,19 @@ class Highlight(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array  params          User-provided highlight key-value pairs. string "title", string "cover_media_id", string[] "add_media", string[] "remove_media".
 	 * @param string module          (optional) From which app module (page) you"re performing this action.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.HighlightFeedResponse
 	 */
 	fun edit(highlightReelId:String, array params, module:String = "self_profile") {
 		if (!isset(params["cover_media_id"])) {
-			throw. IllegalArgumentException("You must provide one media ID for the cover.")
+			throw IllegalArgumentException("You must provide one media ID for the cover.")
 		}
 		if (!isset(params["title"])) {
 			params["title"] = "Highlights"
 		} elseif (mb_strlen(params["title"], "utf8") > 16) {
-			throw. IllegalArgumentException("Title length must be between 1 and 16 characters.")
+			throw IllegalArgumentException("Title length must be between 1 and 16 characters.")
 		}
 		if (!isset(params["add_media"]) || !is_array(params["add_media"])) {
 			params["add_media"] = []

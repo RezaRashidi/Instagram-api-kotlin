@@ -62,21 +62,21 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param array threads One or more thread identifiers.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.GenericResponse
 	 */
 	fun approvePendingThreads(array threads) {
 		if (!count(threads)) {
-			throw. IllegalArgumentException("Please provide at least one thread to approve.")
+			throw IllegalArgumentException("Please provide at least one thread to approve.")
 		}
 		// Validate threads.
 		foreach(threads as & thread) {
 			if (!is_scalar(thread)) {
-				throw. IllegalArgumentException("Thread identifier must be scalar.")
+				throw IllegalArgumentException("Thread identifier must be scalar.")
 			} else if (!(thread.toIntOrNull() && thread > 0) && (thread !is Int || thread < 0)) {
-				throw. IllegalArgumentException(sprintf("" % s" is not a valid thread identifier.", thread))
+				throw IllegalArgumentException(sprintf("" % s" is not a valid thread identifier.", thread))
 			}
 			thread = (string) thread
 		}
@@ -99,21 +99,21 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param array threads One or more thread identifiers.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.GenericResponse
 	 */
 	fun declinePendingThreads(array threads) {
 		if (!count(threads)) {
-			throw. IllegalArgumentException("Please provide at least one thread to decline.")
+			throw IllegalArgumentException("Please provide at least one thread to decline.")
 		}
 		// Validate threads.
 		foreach(threads as & thread) {
 			if (!is_scalar(thread)) {
-				throw. IllegalArgumentException("Thread identifier must be scalar.")
+				throw IllegalArgumentException("Thread identifier must be scalar.")
 			} else if (!(thread.toIntOrNull() && thread > 0) && (thread !is Int || thread < 0)) {
-				throw. IllegalArgumentException(sprintf("" % s" is not a valid thread identifier.", thread))
+				throw IllegalArgumentException(sprintf("" % s" is not a valid thread identifier.", thread))
 			}
 			thread = (string) thread
 		}
@@ -189,21 +189,21 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string[]|int[] users Array of numerical UserPK IDs.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectThreadResponse
 	 */
 	fun getThreadByParticipants(array users) {
 		if (!count(users)) {
-			throw. IllegalArgumentException("Please provide at least one participant.")
+			throw IllegalArgumentException("Please provide at least one participant.")
 		}
 		foreach(users as user) {
 			if (!is_scalar(user)) {
-				throw. IllegalArgumentException("User identifier must be scalar.")
+				throw IllegalArgumentException("User identifier must be scalar.")
 			}
 			if (!(user.toIntOrNull() && user > 0) && (user !is Int || user < 0)) {
-				throw. IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", user))
+				throw IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", user))
 			}
 		}
 		request = this.ig.request("direct_v2/threads/get_by_participants/")
@@ -310,20 +310,20 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string[]|int[] userIds     Array of numerical UserPK IDs.
 	 * @param string         threadTitle Name of the group thread.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectCreateGroupThreadResponse
 	 */
 	fun createGroupThread(array userIds, threadTitle:String) {
 		if (count(userIds) < 2) {
-			throw. IllegalArgumentException("You must invite at least 2 users to create a group.")
+			throw IllegalArgumentException("You must invite at least 2 users to create a group.")
 		}
 		foreach(userIds as & user) {
 			if (!is_scalar(user)) {
-				throw. IllegalArgumentException("User identifier must be scalar.")
+				throw IllegalArgumentException("User identifier must be scalar.")
 			} else if (!(user.toIntOrNull() && user > 0) && (user !is Int || user < 0)) {
-				throw. IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", user))
+				throw IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", user))
 			}
 			user = (string) user
 		}
@@ -341,20 +341,20 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string         threadId Thread ID.
 	 * @param string[]|int[] users    Array of numerical UserPK IDs.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectThreadResponse
 	 */
 	fun addUsersToThread(threadId:String, array users) {
 		if (!count(users)) {
-			throw. IllegalArgumentException("Please provide at least one user.")
+			throw IllegalArgumentException("Please provide at least one user.")
 		}
 		foreach(users as & user) {
 			if (!is_scalar(user)) {
-				throw. IllegalArgumentException("User identifier must be scalar.")
+				throw IllegalArgumentException("User identifier must be scalar.")
 			} else if (!(user.toIntOrNull() && user > 0) && (user !is Int || user < 0)) {
-				throw. IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", user))
+				throw IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", user))
 			}
 			user = (string) user
 		}
@@ -404,14 +404,14 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array  options    An associative array of optional parameters, including:
 	 *                           "client_context" - predefined UUID used to prevent double-posting.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendText(array recipients, text:String, array options = []) {
 		if (!strlen(text)) {
-			throw. IllegalArgumentException("Text can not be empty.")
+			throw IllegalArgumentException("Text can not be empty.")
 		}
 
 		urls = Utils::extractURLs(text)
@@ -444,7 +444,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "client_context" (optional) - predefined UUID used to prevent double-posting
 	 *                           "text" (optional) - text message.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemsResponse
@@ -453,13 +453,13 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun sendPost(array recipients, mediaI:Stringd, array options = []) {
 		if (!preg_match("#^.d+_.d+#D", mediaId)) {
-			throw. IllegalArgumentException(sprintf("" % s" is not a valid media ID.", mediaId))
+			throw IllegalArgumentException(sprintf("" % s" is not a valid media ID.", mediaId))
 		}
 		if (!isset(options["media_type"])) {
-			throw. IllegalArgumentException("Please provide media_type in options.")
+			throw IllegalArgumentException("Please provide media_type in options.")
 		}
 		if (options["media_type"] !== "photo" && options["media_type"] !== "video") {
-			throw. IllegalArgumentException(sprintf("" % s" is not a valid media_type.", options["media_type"]))
+			throw IllegalArgumentException(sprintf("" % s" is not a valid media_type.", options["media_type"]))
 		}
 
 		return this._sendDirectItems("media_share", recipients, array_merge(options, ["media_id" => mediaId,
@@ -477,14 +477,14 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array  options       An associative array of optional parameters, including:
 	 *                              "client_context" - predefined UUID used to prevent double-posting.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendPhoto(array recipients, photoFilename:String, array options = []) {
 		if (!is_file(photoFilename) || !is_readable(photoFilename)) {
-			throw. IllegalArgumentException(sprintf("File " % s" is not available for reading.", photoFilename))
+			throw IllegalArgumentException(sprintf("File " % s" is not available for reading.", photoFilename))
 		}
 
 		return this._sendDirectItem("photo", recipients, array_merge(options, ["filepath" => photoFilename,
@@ -501,7 +501,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string photoFilename    The photo filename.
 	 * @param array  externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
@@ -528,7 +528,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array  options       An associative array of optional parameters, including:
 	 *                              "client_context" - predefined UUID used to prevent double-posting.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
@@ -581,7 +581,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string videoFilename    The video filename.
 	 * @param array  externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
@@ -628,14 +628,14 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "client_context" - predefined UUID used to prevent double-posting
 	 *                           "text" - text message.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendHashtag(array recipients, hashtag:String, array options = []) {
 		if (!strlen(hashtag)) {
-			throw. IllegalArgumentException("Hashtag can not be empty.")
+			throw IllegalArgumentException("Hashtag can not be empty.")
 		}
 
 		return this._sendDirectItem("hashtag", recipients, array_merge(options, ["hashtag" => hashtag,
@@ -657,7 +657,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "client_context" - predefined UUID used to prevent double-posting
 	 *                           "text" - text message.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemResponse
@@ -666,7 +666,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun sendLocation(array recipients, locationId:String, array options = []) {
 		if (!(locationId.toIntOrNull() && locationId > 0) && (locationId !is Int || locationId < 0)) {
-			throw. IllegalArgumentException(sprintf("" % s" is not a valid location ID.", locationId))
+			throw IllegalArgumentException(sprintf("" % s" is not a valid location ID.", locationId))
 		}
 
 		return this._sendDirectItem("location", recipients, array_merge(options, ["venue_id" => locationId,
@@ -685,14 +685,14 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "client_context" - predefined UUID used to prevent double-posting
 	 *                           "text" - text message.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendProfile(array recipients, userId:String, array options = []) {
 		if (!(userId.toIntOrNull() && userId > 0) && (userId !is Int || userId < 0)) {
-			throw. IllegalArgumentException(sprintf("" % s" is not a valid numerical UserPK ID.", userId))
+			throw IllegalArgumentException(sprintf("" % s" is not a valid numerical UserPK ID.", userId))
 		}
 
 		return this._sendDirectItem("profile", recipients, array_merge(options, ["profile_user_id" => userId,
@@ -708,7 +708,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array  options      An associative array of optional parameters, including:
 	 *                             "client_context" - predefined UUID used to prevent double-posting.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemResponse
@@ -734,7 +734,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "client_context" - predefined UUID used to prevent double-posting
 	 *                           "text" - text message.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemsResponse
@@ -743,20 +743,20 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun sendStory(array recipients, storyId:String, reelId:String? = null, array options = []) {
 		if (!preg_match("#^.d+_.d+#D", storyId)) {
-			throw. IllegalArgumentException(sprintf("" % s" is not a valid story ID.", storyId))
+			throw IllegalArgumentException(sprintf("" % s" is not a valid story ID.", storyId))
 		}
 		if (reelId !== null) {
 			if (!preg_match("#^highlight:.d+#D", reelId)) {
-				throw. IllegalArgumentException(sprintf("" % s" is not a valid reel ID.", reelId))
+				throw IllegalArgumentException(sprintf("" % s" is not a valid reel ID.", reelId))
 			}
 			options = array_merge(options, ["reel_id" => reelId,
 			])
 		}
 		if (!isset(options["media_type"])) {
-			throw. IllegalArgumentException("Please provide media_type in options.")
+			throw IllegalArgumentException("Please provide media_type in options.")
 		}
 		if (options["media_type"] !== "photo" && options["media_type"] !== "video") {
-			throw. IllegalArgumentException(sprintf("" % s" is not a valid media_type.", options["media_type"]))
+			throw IllegalArgumentException(sprintf("" % s" is not a valid media_type.", options["media_type"]))
 		}
 
 		return this._sendDirectItems("story_share", recipients, array_merge(options, ["story_media_id" => storyId,
@@ -777,7 +777,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array  options     An associative array of optional parameters, including:
 	 *                            "client_context" - predefined UUID used to prevent double-posting.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return Response.DirectSendItemResponse
@@ -796,7 +796,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array  options      An associative array of optional parameters, including:
 	 *                             "client_context" - predefined UUID used to prevent double-posting.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemResponse
@@ -847,7 +847,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string          threadId      Thread ID.
 	 * @param string|string[] threadItemIds One or more thread item IDs.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.GenericResponse
@@ -856,7 +856,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		if (!is_array(threadItemIds)) {
 			threadItemIds = [threadItemIds]
 		} else if (!count(threadItemIds)) {
-			throw. IllegalArgumentException("Please provide at least one thread item ID.")
+			throw IllegalArgumentException("Please provide at least one thread item ID.")
 		}
 
 		return this.ig.request("direct_v2/visual_threads/{threadId}/item_seen/")
@@ -873,7 +873,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string          threadId      Thread ID.
 	 * @param string|string[] threadItemIds One or more thread item IDs.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.GenericResponse
@@ -882,7 +882,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		if (!is_array(threadItemIds)) {
 			threadItemIds = [threadItemIds]
 		} else if (!count(threadItemIds)) {
-			throw. IllegalArgumentException("Please provide at least one thread item ID.")
+			throw IllegalArgumentException("Please provide at least one thread item ID.")
 		}
 
 		return this.ig.request("direct_v2/visual_threads/{threadId}/item_replayed/")
@@ -900,7 +900,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                          instead, provide "thread" with the thread ID.
 	 * @param bool  useQuotes  Whether to put IDs into quotes.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 *
 	 * @return array
 	 */
@@ -909,13 +909,13 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		// users
 		if (isset(recipients["users"])) {
 			if (!is_array(recipients["users"])) {
-				throw. IllegalArgumentException("" users " must be an array.")
+				throw IllegalArgumentException("" users " must be an array.")
 			}
 			foreach(recipients["users"] as userId) {
 				if (!is_scalar(userId)) {
-					throw. IllegalArgumentException("User identifier must be scalar.")
+					throw IllegalArgumentException("User identifier must be scalar.")
 				} else if (!(userId.toIntOrNull() && userId > 0) && (userId !is Int || userId < 0)) {
-					throw. IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", userId))
+					throw IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", userId))
 				}
 			}
 			// Although this is an array of groups, you will get "Only one group is supported." error
@@ -926,10 +926,10 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		// thread
 		if (isset(recipients["thread"])) {
 			if (!is_scalar(recipients["thread"])) {
-				throw. IllegalArgumentException("Thread identifier must be scalar.")
+				throw IllegalArgumentException("Thread identifier must be scalar.")
 			} else if (!(recipients["thread"].toIntOrNull() && recipients["thread"] > 0) && (
 			recipients["thread"] !is Int || recipients["thread"] < 0)) {
-				throw. IllegalArgumentException(
+				throw IllegalArgumentException(
 					sprintf("" % s" is not a valid thread identifier.", recipients["thread"]))
 			}
 			// Although this is an array, you will get "Need to specify thread ID or recipient users." error
@@ -943,9 +943,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			}
 		}
 		if (!count(result)) {
-			throw. IllegalArgumentException("Please provide at least one recipient.")
+			throw IllegalArgumentException("Please provide at least one recipient.")
 		} else if (isset(result["thread"]) && isset(result["users"])) {
-			throw. IllegalArgumentException("You can not mix " users " with " thread ".")
+			throw IllegalArgumentException("You can not mix " users " with " thread ".")
 		}
 
 		return result
@@ -971,7 +971,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "links" uses "client_context", "link_text" and "link_urls".
 	 *                           "live" uses "client_context" and "text".
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemResponse
@@ -986,7 +986,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			request = this.ig.request("direct_v2/threads/broadcast/text/")
 			// Check and set text.
 			if (!isset(options["text"])) {
-				throw. IllegalArgumentException("No text message provided.")
+				throw IllegalArgumentException("No text message provided.")
 			}
 			request.addPost("text", options["text"])
 			break
@@ -997,7 +997,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			request = this.ig.request("direct_v2/threads/broadcast/hashtag/")
 			// Check and set hashtag.
 			if (!isset(options["hashtag"])) {
-				throw. IllegalArgumentException("No hashtag provided.")
+				throw IllegalArgumentException("No hashtag provided.")
 			}
 			request.addPost("hashtag", options["hashtag"])
 			// Set text if provided.
@@ -1009,7 +1009,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			request = this.ig.request("direct_v2/threads/broadcast/location/")
 			// Check and set venue_id.
 			if (!isset(options["venue_id"])) {
-				throw. IllegalArgumentException("No venue_id provided.")
+				throw IllegalArgumentException("No venue_id provided.")
 			}
 			request.addPost("venue_id", options["venue_id"])
 			// Set text if provided.
@@ -1021,7 +1021,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			request = this.ig.request("direct_v2/threads/broadcast/profile/")
 			// Check and set profile_user_id.
 			if (!isset(options["profile_user_id"])) {
-				throw. IllegalArgumentException("No profile_user_id provided.")
+				throw IllegalArgumentException("No profile_user_id provided.")
 			}
 			request.addPost("profile_user_id", options["profile_user_id"])
 			// Set text if provided.
@@ -1033,7 +1033,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			request = this.ig.request("direct_v2/threads/broadcast/upload_photo/")
 			// Check and set filepath.
 			if (!isset(options["filepath"])) {
-				throw. IllegalArgumentException("No filepath provided.")
+				throw IllegalArgumentException("No filepath provided.")
 			}
 			request.addFile("photo", options["filepath"], "direct_temp_photo_".Utils::generateUploadId().".jpg")
 			break
@@ -1041,7 +1041,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			request = this.ig.request("direct_v2/threads/broadcast/configure_video/")
 			// Check and set upload_id.
 			if (!isset(options["upload_id"])) {
-				throw. IllegalArgumentException("No upload_id provided.")
+				throw IllegalArgumentException("No upload_id provided.")
 			}
 			request.addPost("upload_id", options["upload_id"])
 			// Set video_result if provided.
@@ -1053,12 +1053,12 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			request = this.ig.request("direct_v2/threads/broadcast/link/")
 			// Check and set link_urls.
 			if (!isset(options["link_urls"])) {
-				throw. IllegalArgumentException("No link_urls provided.")
+				throw IllegalArgumentException("No link_urls provided.")
 			}
 			request.addPost("link_urls", options["link_urls"])
 			// Check and set link_text.
 			if (!isset(options["link_text"])) {
-				throw. IllegalArgumentException("No link_text provided.")
+				throw IllegalArgumentException("No link_text provided.")
 			}
 			request.addPost("link_text", options["link_text"])
 			break
@@ -1066,22 +1066,22 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			request = this.ig.request("direct_v2/threads/broadcast/reaction/")
 			// Check and set reaction_type.
 			if (!isset(options["reaction_type"])) {
-				throw. IllegalArgumentException("No reaction_type provided.")
+				throw IllegalArgumentException("No reaction_type provided.")
 			}
 			request.addPost("reaction_type", options["reaction_type"])
 			// Check and set reaction_status.
 			if (!isset(options["reaction_status"])) {
-				throw. IllegalArgumentException("No reaction_status provided.")
+				throw IllegalArgumentException("No reaction_status provided.")
 			}
 			request.addPost("reaction_status", options["reaction_status"])
 			// Check and set item_id.
 			if (!isset(options["item_id"])) {
-				throw. IllegalArgumentException("No item_id provided.")
+				throw IllegalArgumentException("No item_id provided.")
 			}
 			request.addPost("item_id", options["item_id"])
 			// Check and set node_type.
 			if (!isset(options["node_type"])) {
-				throw. IllegalArgumentException("No node_type provided.")
+				throw IllegalArgumentException("No node_type provided.")
 			}
 			request.addPost("node_type", options["node_type"])
 			break
@@ -1089,7 +1089,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			request = this.ig.request("direct_v2/threads/broadcast/live_viewer_invite/")
 			// Check and set broadcast id.
 			if (!isset(options["broadcast_id"])) {
-				throw. IllegalArgumentException("No broadcast_id provided.")
+				throw IllegalArgumentException("No broadcast_id provided.")
 			}
 			request.addPost("broadcast_id", options["broadcast_id"])
 			// Set text if provided.
@@ -1098,7 +1098,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			}
 			break
 			default:
-			throw. IllegalArgumentException("Unsupported _sendDirectItem() type.")
+			throw IllegalArgumentException("Unsupported _sendDirectItem() type.")
 		}
 
 		// Add recipients.
@@ -1108,7 +1108,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		} else if (isset(recipients["thread"])) {
 			request.addPost("thread_ids", recipients["thread"])
 		} else {
-			throw. IllegalArgumentException("Please provide at least one recipient.")
+			throw IllegalArgumentException("Please provide at least one recipient.")
 		}
 
 		// Handle client_context.
@@ -1117,7 +1117,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			// make a single post per direct-discussion thread.
 			options["client_context"] = Signatures::generateUUID(true)
 		} else if (!Signatures::isValidUUID(options["client_context"])) {
-			throw. IllegalArgumentException(sprintf("" % s" is not a valid UUID.", options["client_context"]))
+			throw IllegalArgumentException(sprintf("" % s" is not a valid UUID.", options["client_context"]))
 		}
 
 		// Add some additional data if signed post.
@@ -1143,7 +1143,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "media_share" uses "client_context", "media_id", "media_type" and "text"
 	 *                           "story_share" uses "client_context", "story_media_id", "media_type" and "text".
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemsResponse
@@ -1158,7 +1158,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			request = this.ig.request("direct_v2/threads/broadcast/media_share/")
 			// Check and set media_id.
 			if (!isset(options["media_id"])) {
-				throw. IllegalArgumentException("No media_id provided.")
+				throw IllegalArgumentException("No media_id provided.")
 			}
 			request.addPost("media_id", options["media_id"])
 			// Set text if provided.
@@ -1177,7 +1177,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			request = this.ig.request("direct_v2/threads/broadcast/story_share/")
 			// Check and set story_media_id.
 			if (!isset(options["story_media_id"])) {
-				throw. IllegalArgumentException("No story_media_id provided.")
+				throw IllegalArgumentException("No story_media_id provided.")
 			}
 			request.addPost("story_media_id", options["story_media_id"])
 			// Set text if provided.
@@ -1196,7 +1196,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			}
 			break
 			default:
-			throw. IllegalArgumentException("Unsupported _sendDirectItems() type.")
+			throw IllegalArgumentException("Unsupported _sendDirectItems() type.")
 		}
 
 		// Add recipients.
@@ -1206,7 +1206,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		} else if (isset(recipients["thread"])) {
 			request.addPost("thread_ids", recipients["thread"])
 		} else {
-			throw. IllegalArgumentException("Please provide at least one recipient.")
+			throw IllegalArgumentException("Please provide at least one recipient.")
 		}
 
 		// Handle client_context.
@@ -1215,7 +1215,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			// make a single post per direct-discussion thread.
 			options["client_context"] = Signatures::generateUUID(true)
 		} else if (!Signatures::isValidUUID(options["client_context"])) {
-			throw. IllegalArgumentException(sprintf("" % s" is not a valid UUID.", options["client_context"]))
+			throw IllegalArgumentException(sprintf("" % s" is not a valid UUID.", options["client_context"]))
 		}
 
 		// Add some additional data if signed post.
@@ -1239,20 +1239,20 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array  options        An associative array of optional parameters, including:
 	 *                               "client_context" - predefined UUID used to prevent double-posting.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.DirectSendItemResponse
 	 */
 	protected fun _handleReaction(threadId:String, threadItemId:String, reactionType:String, reactionStatus:String, array options = []) {
 		if (!(threadId.toIntOrNull() && threadId > 0) && (threadId !is Int || threadId < 0)) {
-			throw. IllegalArgumentException(sprintf("" % s" is not a valid thread ID.", threadId))
+			throw IllegalArgumentException(sprintf("" % s" is not a valid thread ID.", threadId))
 		}
 		if (!(threadItemId.toIntOrNull() && threadItemId > 0) && (threadItemId !is Int || threadItemId < 0)) {
-			throw. IllegalArgumentException(sprintf("" % s" is not a valid thread item ID.", threadItemId))
+			throw IllegalArgumentException(sprintf("" % s" is not a valid thread item ID.", threadItemId))
 		}
 		if (!in_array(reactionType, ["like"], true)) {
-			throw. IllegalArgumentException(sprintf("" % s" is not a supported reaction type.", reactionType))
+			throw IllegalArgumentException(sprintf("" % s" is not a supported reaction type.", reactionType))
 		}
 
 		return this._sendDirectItem("reaction", ["thread" => threadId], array_merge(options, [

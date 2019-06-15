@@ -336,14 +336,14 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 * @param int    likeCount   Number of likes ("hearts") to send (optional).
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.BroadcastLikeResponse
 	 */
 	fun like(broadcastId:String, likeCount:Int = 1) {
 		if (likeCount < 1 || likeCount > 6) {
-			throw. IllegalArgumentException("Like count must be a number from 1 to 6.")
+			throw IllegalArgumentException("Like count must be a number from 1 to 6.")
 		}
 
 		return this.ig.request("live/{broadcastId}/like/").addPost("_uuid", this.ig.uuid)
@@ -390,7 +390,7 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int previewWidth  (optional) Width.
 	 * @param int previewHeight (optional) Height.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.CreateLiveResponse

@@ -276,7 +276,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null searchQuery Limit the userlist to ones matching the query.
 	 * @param string|null maxId       Next "maximum ID", used for pagination.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.FollowerAndFollowingResponse
@@ -306,7 +306,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null searchQuery Limit the userlist to ones matching the query.
 	 * @param string|null maxId       Next "maximum ID", used for pagination.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.FollowerAndFollowingResponse
@@ -372,7 +372,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *                                    from a previous call to get more results.
 	 * @param string|null    rankToken   A rank token from a first call response.
 	 *
-	 * @throws . IllegalArgumentException                  If invalid query or
+	 * @throws  IllegalArgumentException                  If invalid query or
 	 *                                                    trying to exclude too
 	 *                                                    many user IDs.
 	 * @throws .InstagramAPI.Exception.InstagramException
@@ -385,7 +385,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	fun search(query, array excludeList = [], rankToken = null) {
 		// Do basic query validation.
 		if (!is_string(query) || query === "") {
-			throw. IllegalArgumentException("Query must be a non-empty string.")
+			throw IllegalArgumentException("Query must be a non-empty string.")
 		}
 
 		request = this._paginateWithExclusion(
@@ -481,7 +481,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string      pageType     Content-type id(?) of the ad. 35 is feed ads and 49 is story ads.
 	 * @param string|null maxId        Next "maximum ID", used for pagination.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return Response
@@ -502,7 +502,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 			return request.getResponse(Response.ActiveReelAdsResponse())
 			break
 			default:
-			throw. IllegalArgumentException("Invalid page type.")
+			throw IllegalArgumentException("Invalid page type.")
 		}
 	}
 
@@ -770,7 +770,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string option Selection of what type of media are going to be muted.
 	 *                       Available options: "story", "post" or "all".
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.FriendshipResponse
@@ -786,7 +786,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string option Selection of what type of media are going to be muted.
 	 *                       Available options: "story", "post" or "all".
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.FriendshipResponse
@@ -803,7 +803,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *                         Available options: "story", "post" or "all".
 	 * @param string endpoint API endpoint for muting/unmuting user media.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.FriendshipResponse
@@ -827,7 +827,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 			request.addPost("target_posts_author_id", userId)
 			break
 			default:
-			throw. IllegalArgumentException(sprintf("" % s" is not a valid muting option.", option))
+			throw IllegalArgumentException(sprintf("" % s" is not a valid muting option.", option))
 		}
 
 		return request.getResponse(Response.FriendshipResponse())

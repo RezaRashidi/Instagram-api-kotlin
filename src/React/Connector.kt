@@ -76,7 +76,7 @@ class Connector : ConnectorInterface
      * @param array       $secureContext
      * @param string|null $proxyAddress
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      *
      * @return ConnectorInterface
      */
@@ -105,7 +105,7 @@ class Connector : ConnectorInterface
      * @param string $host        Host.
      * @param mixed  $proxyConfig Proxy config.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      *
      * @return string|null
      *
@@ -127,7 +127,7 @@ class Connector : ConnectorInterface
 
         // HTTP proxies do not have CONNECT method.
         if (!isset($proxyConfig["https"])) {
-            throw . IllegalArgumentException("No proxy with CONNECT method found.")
+            throw  IllegalArgumentException("No proxy with CONNECT method found.")
         }
 
         // Check exceptions.
@@ -143,7 +143,7 @@ class Connector : ConnectorInterface
      *
      * @param mixed $config
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .RuntimeException
      *
      * @return array
@@ -171,7 +171,7 @@ class Connector : ConnectorInterface
 
             return $context
         } else {
-            throw . IllegalArgumentException("Invalid verify request option.")
+            throw  IllegalArgumentException("Invalid verify request option.")
         }
         $context["verify_peer"] = true
         $context["verify_peer_name"] = true
@@ -187,7 +187,7 @@ class Connector : ConnectorInterface
      * @param string             $proxyAddress
      * @param array              $secureContext
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      *
      * @return ConnectorInterface
      */
@@ -215,7 +215,7 @@ class Connector : ConnectorInterface
                 $connector = HttpConnectProxy($proxyAddress, SecureConnector($connector, this._loop, $secureContext))
                 break
             default:
-                throw . IllegalArgumentException(sprintf("Unsupported proxy scheme: "%s".", $scheme))
+                throw  IllegalArgumentException(sprintf("Unsupported proxy scheme: "%s".", $scheme))
         }
 
         return $connector

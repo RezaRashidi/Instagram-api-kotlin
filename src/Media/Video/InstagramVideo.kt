@@ -25,7 +25,7 @@ class InstagramVideo : InstagramMedia
      * @param array       $options   An associative array of optional parameters.
      * @param FFmpeg|null $ffmpeg    Custom FFmpeg wrapper.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .RuntimeException
      *
      * @see InstagramMedia::__construct() description for the list of parameters.

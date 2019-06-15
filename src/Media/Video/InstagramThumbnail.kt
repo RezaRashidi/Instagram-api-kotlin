@@ -20,7 +20,7 @@ class InstagramThumbnail : InstagramVideo
      * @param array       $options   An associative array of optional parameters.
      * @param FFmpeg|null $ffmpeg    Custom FFmpeg wrapper.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .RuntimeException
      *
      * @see InstagramMedia::__construct() description for the list of parameters.
@@ -65,7 +65,7 @@ class InstagramThumbnail : InstagramVideo
             this._thumbnailTimestamp = this._details.getDuration()
         }
         if (this._thumbnailTimestamp < 0.0) {
-            throw . IllegalArgumentException("Thumbnail timestamp must be a positive number.")
+            throw  IllegalArgumentException("Thumbnail timestamp must be a positive number.")
         }
     }
 

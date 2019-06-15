@@ -20,7 +20,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param string photoFilename    The photo filename.
      * @param array  externalMetadata (optional) User-provided metadata key-value pairs.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .RuntimeException
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -41,7 +41,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param string photoFilename    The photo filename.
      * @param array  externalMetadata (optional) User-provided metadata key-value pairs.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .RuntimeException
      * @throws .InstagramAPI.Exception.InstagramException
      *
@@ -66,7 +66,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param string videoFilename    The video filename.
      * @param array  externalMetadata (optional) User-provided metadata key-value pairs.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .RuntimeException
      * @throws .InstagramAPI.Exception.InstagramException
      * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
@@ -88,7 +88,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param string videoFilename    The video filename.
      * @param array  externalMetadata (optional) User-provided metadata key-value pairs.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .RuntimeException
      * @throws .InstagramAPI.Exception.InstagramException
      * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
@@ -275,7 +275,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param string pollId       The poll ID in Instagram"s internal format (ie "17956159684032257").
      * @param int    votingOption Value that represents the voting option of the voter. 0 for the first option, 1 for the second option.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.ReelMediaViewerResponse
@@ -286,7 +286,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         votingOption)
     {
         if ((votingOption !== 0) && (votingOption !== 1)) {
-            throw . IllegalArgumentException("You must provide a valid value for voting option.")
+            throw  IllegalArgumentException("You must provide a valid value for voting option.")
         }
 
         return this.ig.request("media/{storyId}/{pollId}/story_poll_vote/")
@@ -308,7 +308,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param string sliderId     The slider ID in Instagram"s internal format (ie "17956159684032257").
      * @param float  votingOption Value that represents the voting option of the voter. Should be a float from 0 to 1 (ie "0.25").
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.ReelMediaViewerResponse
@@ -319,7 +319,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         votingOption)
     {
         if (votingOption < 0 || votingOption > 1) {
-            throw . IllegalArgumentException("You must provide a valid value from 0 to 1 for voting option.")
+            throw  IllegalArgumentException("You must provide a valid value from 0 to 1 for voting option.")
         }
 
         return this.ig.request("media/{storyId}/{sliderId}/story_slider_vote/")
@@ -342,7 +342,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param int         votingOption Value that represents the voting option of the voter. 0 for the first option, 1 for the second option.
      * @param string|null maxId        Next "maximum ID", used for pagination.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.StoryPollVotersResponse
@@ -354,7 +354,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         maxId = null)
     {
         if ((votingOption !== 0) && (votingOption !== 1)) {
-            throw . IllegalArgumentException("You must provide a valid value for voting option.")
+            throw  IllegalArgumentException("You must provide a valid value for voting option.")
         }
 
         request = this.ig.request("media/{storyId}/{pollId}/story_poll_voters/")
@@ -489,7 +489,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param Response.Model.Item[] items Array of one or more story media Items.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.MediaSeenResponse
@@ -532,7 +532,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *                                       archive once it has disappeared from your story feed. Valid values
      *                                       "on" and "off".
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.ReelSettingsResponse
@@ -543,7 +543,7 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
         autoArchive = null)
     {
         if (!in_array(messagePrefs, ["anyone", "following", "off"])) {
-            throw . IllegalArgumentException("You must provide a valid message preference value.")
+            throw  IllegalArgumentException("You must provide a valid message preference value.")
         }
 
         request = this.ig.request("users/set_reel_settings/")
@@ -554,14 +554,14 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
 
         if (allowStoryReshare !== null) {
             if (!is_bool(allowStoryReshare)) {
-                throw . IllegalArgumentException("You must provide a valid value for allowing story reshare.")
+                throw  IllegalArgumentException("You must provide a valid value for allowing story reshare.")
             }
             request.addPost("allow_story_reshare", allowStoryReshare)
         }
 
         if (autoArchive !== null) {
             if (!in_array(autoArchive, ["on", "off"])) {
-                throw . IllegalArgumentException("You must provide a valid value for auto archive.")
+                throw  IllegalArgumentException("You must provide a valid value for auto archive.")
             }
             request.addPost("reel_auto_archive", autoArchive)
         }

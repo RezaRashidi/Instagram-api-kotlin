@@ -15,7 +15,7 @@ final class SendStory : ShareItem
      * @param string $storyId
      * @param array  $options
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      */
     public fun __construct(
         $threadId,
@@ -25,7 +25,7 @@ final class SendStory : ShareItem
         parent::__construct($threadId, self::TYPE, $options)
 
         if (!preg_match(self::STORY_REGEXP, $storyId)) {
-            throw . IllegalArgumentException(sprintf(""%s" is not a valid story ID.", $storyId))
+            throw  IllegalArgumentException(sprintf(""%s" is not a valid story ID.", $storyId))
         }
         this._data["item_id"] = (string) $storyId
     }

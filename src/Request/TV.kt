@@ -34,7 +34,7 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      * @param string      id    ID used to filter channels.
      * @param string|null maxId Next "maximum ID", used for pagination.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.TVChannelsResponse
@@ -45,7 +45,7 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
     {
         if (!in_array(id, ["for_you", "chrono_following", "popular", "continue_watching"])
         && !preg_match("/^user_[1-9].d*/", id)) {
-            throw . IllegalArgumentException("Invalid ID type.")
+            throw  IllegalArgumentException("Invalid ID type.")
         }
 
         request = this.ig.request("igtv/channel/")
@@ -67,7 +67,7 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      * @param string videoFilename    The video filename.
      * @param array  externalMetadata (optional) User-provided metadata key-value pairs.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .RuntimeException
      * @throws .InstagramAPI.Exception.InstagramException
      * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
@@ -113,7 +113,7 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      * @param int    viewProgress    Video view progress in seconds.
      * @param mixed  gridImpressions TODO No info yet.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.GenericResponse
@@ -124,7 +124,7 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
         gridImpressions = [])
     {
         if (!(viewProgress.toIntOrNull() && viewProgress > 0) && (viewProgress !is Int || viewProgress < 0)) {
-            throw . IllegalArgumentException("View progress must be a positive integer.")
+            throw  IllegalArgumentException("View progress must be a positive integer.")
         }
 
         seenState = json_encode([

@@ -51,7 +51,7 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 *                                    from a previous call to get more results.
 	 * @param string|null    rankToken   (When paginating) The rank token from the previous page"s response.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.FBLocationResponse
@@ -62,7 +62,7 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	fun findPlaces(query:String, array excludeList = [], rankToken:String? = null) {
 		// Do basic query validation. Do NOT import throwIfInvalidHashtag here.
 		if (!is_string(query) || query === null) {
-			throw. IllegalArgumentException("Query must be a non-empty string.")
+			throw IllegalArgumentException("Query must be a non-empty string.")
 		}
 		location = this._paginateWithExclusion(
 			this.ig.request("fbsearch/places/").addParam("timezone_offset", date("Z")).addParam("query", query),
@@ -95,7 +95,7 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 *                                    from a previous call to get more results.
 	 * @param string|null    rankToken   (When paginating) The rank token from the previous page"s response.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.FBLocationResponse
@@ -160,7 +160,7 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int|null    nextPage     Used for pagination.
 	 * @param string|null maxId        Next "maximum ID", used for pagination.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.LocationFeedResponse
@@ -172,7 +172,7 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 		null, maxId:Int? = null) {
 		Utils.throwIfInvalidRankToken(rankToken)
 		if (tab !== "ranked" && tab !== "recent") {
-			throw. IllegalArgumentException("The provided section tab is invalid.")
+			throw IllegalArgumentException("The provided section tab is invalid.")
 		}
 
 		locationFeed =
@@ -182,7 +182,7 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 
 		if (nextMediaIds !== null) {
 			if (!is_array(nextMediaIds) || !array_filter(nextMediaIds, "is_int")) {
-				throw. IllegalArgumentException("Next media IDs must be an Int[].")
+				throw IllegalArgumentException("Next media IDs must be an Int[].")
 			}
 			locationFeed.addPost("next_media_ids", json_encode(nextMediaIds))
 		}
@@ -204,7 +204,7 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string locationId The internal ID of a location (from a field
 	 *                           such as "pk", "external_id" or "facebook_places_id").
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.LocationStoryResponse
@@ -239,7 +239,7 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param Response.Model.Item[]          items        Array of one or more
 	 *                                                     story media Items.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 *
 	 * @return .InstagramAPI.Response.MediaSeenResponse
@@ -258,7 +258,7 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 			sourceId = locationFeed.getStory().getId()
 		}
 		if (!strlen(sourceId)) {
-			throw. IllegalArgumentException(
+			throw IllegalArgumentException(
 				"Your provided LocationStoryResponse is invalid and does not contain any Location Story-Tray ID.")
 		}
 
@@ -271,7 +271,7 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 		foreach(items as item) {
 			// NOTE: We only check Items here. Other data is rejected by Internal.
 			if (item instanceof Response.Model.Item && !isset(validIds[item.getId()])) {
-				throw. IllegalArgumentException(
+				throw IllegalArgumentException(
 					sprintf("The item with ID " % s" does not belong to this LocationStoryResponse.", item.getId()))
 			}
 		}

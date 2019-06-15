@@ -30,7 +30,7 @@ open class RequestCollection() {
      * @param string|null rankToken   The rank token from the previous page"s response.
      * @param int         limit       Limit the number of results per page.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      *
      * @return Request
      */
@@ -45,7 +45,7 @@ open class RequestCollection() {
         }
 
         if (rankToken === null) {
-            throw . IllegalArgumentException("You must supply the rank token for the pagination.")
+            throw  IllegalArgumentException("You must supply the rank token for the pagination.")
         }
         Utils::throwIfInvalidRankToken(rankToken)
 
@@ -65,7 +65,7 @@ open class RequestCollection() {
      * @param string|null rankToken   The rank token from the previous page"s response.
      * @param int         limit       Limit the number of results per page.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      *
      * @return Request
      */
@@ -80,7 +80,7 @@ open class RequestCollection() {
         }
 
         if (rankToken === null) {
-            throw . IllegalArgumentException("You must supply the rank token for the pagination.")
+            throw  IllegalArgumentException("You must supply the rank token for the pagination.")
         }
         Utils::throwIfInvalidRankToken(rankToken)
 

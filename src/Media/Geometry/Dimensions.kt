@@ -75,7 +75,7 @@ class Dimensions
      * @param float|int $newScale     The scale factor to apply.
      * @param string    $roundingFunc One of `round` (default), `floor` or `ceil`.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      *
      * @return self
      */
@@ -84,10 +84,10 @@ class Dimensions
         $roundingFunc = "round")
     {
         if (!is_float($newScale) && !is_int($newScale)) {
-            throw . IllegalArgumentException("The scale must be a float or integer.")
+            throw  IllegalArgumentException("The scale must be a float or integer.")
         }
         if ($roundingFunc !== "round" && $roundingFunc !== "floor" && $roundingFunc !== "ceil") {
-            throw . IllegalArgumentException(sprintf("Invalid rounding fun "%s".", $roundingFunc))
+            throw  IllegalArgumentException(sprintf("Invalid rounding fun "%s".", $roundingFunc))
         }
 
         $newWidth = (int) $roundingFunc($newScale * this._width)

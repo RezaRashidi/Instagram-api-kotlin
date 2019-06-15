@@ -12,7 +12,7 @@ final class SendLike : SendItem
      * @param string $threadId
      * @param array  $options
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      */
     public fun __construct(
         $threadId,

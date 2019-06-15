@@ -17,7 +17,7 @@ class Usertag(instagram:Instagram) : RequestCollection(instagram)
      * @param float[] position    Position relative to image where the tag should sit. Example: [0.4890625,0.6140625]
      * @param string  captionText Caption to import for the media.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.EditMediaResponse
@@ -45,7 +45,7 @@ class Usertag(instagram:Instagram) : RequestCollection(instagram)
      * @param string userId      Numerical UserPK ID.
      * @param string captionText Caption to import for the media.
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      * @throws .InstagramAPI.Exception.InstagramException
      *
      * @return .InstagramAPI.Response.EditMediaResponse

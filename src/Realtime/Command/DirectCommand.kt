@@ -21,7 +21,7 @@ abstract class DirectCommand : CommandInterface
      * @param string $threadId
      * @param array  $options
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      */
     public fun __construct(
         $action,
@@ -32,7 +32,7 @@ abstract class DirectCommand : CommandInterface
 
         // Handle action.
         if (!in_array($action, this._getSupportedActions(), true)) {
-            throw . IllegalArgumentException(sprintf(""%s" is not a supported action.", $action))
+            throw  IllegalArgumentException(sprintf(""%s" is not a supported action.", $action))
         }
         this._data["action"] = $action
 
@@ -43,7 +43,7 @@ abstract class DirectCommand : CommandInterface
             if (!isset($options["client_context"])) {
                 this._data["client_context"] = Signatures::generateUUID()
             } elseif (!Signatures::isValidUUID($options["client_context"])) {
-                throw . IllegalArgumentException(sprintf(""%s" is not a valid UUID.", $options["client_context"]))
+                throw  IllegalArgumentException(sprintf(""%s" is not a valid UUID.", $options["client_context"]))
             } else {
                 this._data["client_context"] = $options["client_context"]
             }
@@ -104,13 +104,13 @@ abstract class DirectCommand : CommandInterface
      *
      * @param (string) $threadId
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      *
      * @return string
      */
     protected fun _validateThreadId(threadId: String): String {
         if (!(threadId.toIntOrNull() && threadId  > 0) && (threadId !is Int || threadId < 0)) {
-            throw . IllegalArgumentException(sprintf(""%s" is not a valid thread identifier.", $threadId))
+            throw  IllegalArgumentException(sprintf(""%s" is not a valid thread identifier.", $threadId))
         }
 
         return threadId
@@ -121,13 +121,13 @@ abstract class DirectCommand : CommandInterface
      *
      * @param (string) $threadItemId
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      *
      * @return string
      */
     protected fun _validateThreadItemId(threadItemId: String): String {
         if (!(threadItemId.toIntOrNull() && threadItemId > 0) && (threadItemId!is Int || threadItemId < 0)) {
-            throw . IllegalArgumentException(sprintf(""%s" is not a valid thread item identifier.", $threadItemId))
+            throw  IllegalArgumentException(sprintf(""%s" is not a valid thread item identifier.", $threadItemId))
         }
 
         return threadItemId

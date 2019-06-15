@@ -13,7 +13,7 @@ final class SendHashtag : ShareItem
      * @param string $hashtag
      * @param array  $options
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      */
     public fun __construct(
         $threadId,
@@ -23,16 +23,16 @@ final class SendHashtag : ShareItem
         parent::__construct($threadId, self::TYPE, $options)
 
         if (!is_string($hashtag)) {
-            throw . IllegalArgumentException("The hashtag must be a string.")
+            throw  IllegalArgumentException("The hashtag must be a string.")
         }
 
         $hashtag = ltrim(trim($hashtag), "#")
         if ($hashtag === "") {
-            throw . IllegalArgumentException("The hashtag must not be empty.")
+            throw  IllegalArgumentException("The hashtag must not be empty.")
         }
 
         if (strpos($hashtag, " ") !== false) {
-            throw . IllegalArgumentException("The hashtag must be one word.")
+            throw  IllegalArgumentException("The hashtag must be one word.")
         }
 
         this._data["hashtag"] = $hashtag

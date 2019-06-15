@@ -287,7 +287,7 @@ class Client
      *
      * This allows custom Settings storages to retrieve all cookies for saving.
      *
-     * @throws . IllegalArgumentException If the JSON cannot be encoded.
+     * @throws  IllegalArgumentException If the JSON cannot be encoded.
      *
      * @return string
      */
@@ -316,7 +316,7 @@ class Client
      * it during some important fun calls such as login/logout. Client also
      * automatically calls it when enough time has elapsed since last save.
      *
-     * @throws . IllegalArgumentException                 If the JSON cannot be encoded.
+     * @throws  IllegalArgumentException                 If the JSON cannot be encoded.
      * @throws .InstagramAPI.Exception.SettingsException
      */
     public fun saveCookieJar()

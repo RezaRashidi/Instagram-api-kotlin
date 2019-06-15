@@ -20,7 +20,7 @@ abstract class ShareItem : SendItem
 
         if (isset($options["text"])) {
             if (!is_string($options["text"])) {
-                throw . IllegalArgumentException("The text must be a string.")
+                throw  IllegalArgumentException("The text must be a string.")
             }
             this._data["text"] = $options["text"]
         } else {

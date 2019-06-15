@@ -74,7 +74,7 @@ object UserAgent {
 	 * @param string          userLocale  The user"s locale, such as "en_US".
 	 * @param DeviceInterface device
 	 *
-	 * @throws . IllegalArgumentException If the device parameter is invalid.
+	 * @throws  IllegalArgumentException If the device parameter is invalid.
 	 *
 	 * @return string
 	 */

@@ -13,13 +13,13 @@ final class SendProfile : ShareItem
      * @param (string) $userId
      * @param array  $options
      *
-     * @throws . IllegalArgumentException
+     * @throws  IllegalArgumentException
      */
     fun __construct( threadId, userId, array options = []){
         parent::__construct(threadId, self::TYPE, options)
 
         if (!(userId.toIntOrNull() && userId > 0) && (userId !is Int || userId < 0)) {
-            throw . IllegalArgumentException(sprintf(""%s" is not a valid numerical UserPK ID.", $userId))
+            throw  IllegalArgumentException(sprintf(""%s" is not a valid numerical UserPK ID.", $userId))
         }
         this._data["profile_user_id"] = (string) $userId
         // Yeah, we need to send the user ID twice.

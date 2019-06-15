@@ -193,13 +193,13 @@ class Request {
 	 *
 	 * @param int apiVersion
 	 *
-	 * @throws . IllegalArgumentException In case of unsupported API version.
+	 * @throws  IllegalArgumentException In case of unsupported API version.
 	 *
 	 * @return self
 	 */
 	fun setVersion(apiVersion:Int) {
 		if (!array_key_exists(apiVersion, Constants::API_URLS)) {
-			throw. IllegalArgumentException(sprintf("" % d" is not a supported API version.", apiVersion))
+			throw IllegalArgumentException(sprintf("" % d" is not a supported API version.", apiVersion))
 		}
 		this._apiVersion = apiVersion
 
@@ -270,17 +270,17 @@ class Request {
 	 * @param string|null filename Filename to import in Content-Disposition header.
 	 * @param array       headers  An associative array of headers.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 *
 	 * @return self
 	 */
 	fun addFile(key:String, filepath:String, filename:String? = null, array headers = []) {
 		// Validate
 		if (!is_file(filepath)) {
-			throw. IllegalArgumentException(sprintf("File " % s" does not exist.", filepath))
+			throw IllegalArgumentException(sprintf("File " % s" does not exist.", filepath))
 		}
 		if (!is_readable(filepath)) {
-			throw. IllegalArgumentException(sprintf("File " % s" is not readable.", filepath))
+			throw IllegalArgumentException(sprintf("File " % s" is not readable.", filepath))
 		}
 		// Inherit value from filepath, if not supplied.
 		if (filename === null) {
@@ -481,7 +481,7 @@ class Request {
 	 *
 	 * @param array file
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 *
 	 * @return StreamInterface
@@ -497,7 +497,7 @@ class Request {
 			this._handles[] = handle
 			result = stream_for(handle) // Throws.
 		} else {
-			throw. IllegalArgumentException("No data for stream creation.")
+			throw IllegalArgumentException("No data for stream creation.")
 		}
 
 		return result
@@ -506,7 +506,7 @@ class Request {
 	/**
 	 * Convert the request"s data into its HTTP POST multipart body contents.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 *
 	 * @return MultipartStream
@@ -561,7 +561,7 @@ class Request {
 	/**
 	 * Convert the request"s data into its HTTP POST urlencoded body contents.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 *
 	 * @return Stream
 	 */
@@ -575,7 +575,7 @@ class Request {
 	/**
 	 * Convert the request"s data into its HTTP POST body contents.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 *
 	 * @return StreamInterface|null The body stream if POST request otherwise NULL if GET request.
@@ -614,7 +614,7 @@ class Request {
 	/**
 	 * Build HTTP request object.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 *
 	 * @return HttpRequest
@@ -664,7 +664,7 @@ class Request {
 	/**
 	 * Perform the request and get its raw HTTP response.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws InstagramException
 	 *
@@ -695,7 +695,7 @@ class Request {
 	/**
 	 * Return the raw HTTP response body.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws InstagramException
 	 *
@@ -725,7 +725,7 @@ class Request {
 	 *
 	 * @param bool assoc When FALSE, decode to object instead of associative array.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws InstagramException
 	 *
@@ -742,7 +742,7 @@ class Request {
 	 *
 	 * @param Response responseObject An instance of a class object whose properties to fill with the response.
 	 *
-	 * @throws . IllegalArgumentException
+	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws InstagramException
 	 *
