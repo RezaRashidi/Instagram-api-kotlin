@@ -4,6 +4,7 @@ package InstagramAPI.Realtime.Command
 
 import InstagramAPI.Realtime.CommandInterface
 import InstagramAPI.Realtime.Mqtt
+import InstagramAPI.Response.Model.In
 import InstagramAPI.Signatures
 
 abstract class DirectCommand : CommandInterface
@@ -101,39 +102,35 @@ abstract class DirectCommand : CommandInterface
     /**
      * Validate given thread identifier.
      *
-     * @param string $threadId
+     * @param (string) $threadId
      *
      * @throws . IllegalArgumentException
      *
      * @return string
      */
-    protected fun _validateThreadId(
-        $threadId)
-    {
-        if (!ctype_digit($threadId) && (!is_int($threadId) || $threadId < 0)) {
+    protected fun _validateThreadId(threadId: String): String {
+        if (!(threadId.toIntOrNull() && threadId  > 0) && (threadId !is Int || threadId < 0)) {
             throw . IllegalArgumentException(sprintf(""%s" is not a valid thread identifier.", $threadId))
         }
 
-        return (string) $threadId
+        return threadId
     }
 
     /**
      * Validate given thread item identifier.
      *
-     * @param string $threadItemId
+     * @param (string) $threadItemId
      *
      * @throws . IllegalArgumentException
      *
      * @return string
      */
-    protected fun _validateThreadItemId(
-        $threadItemId)
-    {
-        if (!ctype_digit($threadItemId) && (!is_int($threadItemId) || $threadItemId < 0)) {
+    protected fun _validateThreadItemId(threadItemId: String): String {
+        if (!(threadItemId.toIntOrNull() && threadItemId > 0) && (threadItemId!is Int || threadItemId < 0)) {
             throw . IllegalArgumentException(sprintf(""%s" is not a valid thread item identifier.", $threadItemId))
         }
 
-        return (string) $threadItemId
+        return threadItemId
     }
 
     /**
@@ -169,23 +166,22 @@ abstract class DirectCommand : CommandInterface
      *
      * @return array
      */
-    protected fun _getFieldsWeights()
-    {
-        return [
-            "thread_id"       => 10,
-            "item_type"       => 15,
-            "text"            => 20,
-            "client_context"  => 25,
-            "activity_status" => 30,
-            "reaction_type"   => 35,
-            "reaction_status" => 40,
-            "item_id"         => 45,
-            "node_type"       => 50,
-            "action"          => 55,
-            "profile_user_id" => 60,
-            "hashtag"         => 65,
-            "venue_id"        => 70,
-            "media_id"        => 75,
-        ]
+    protected fun _getFieldsWeights() {
+        return mapOf(
+            "thread_id"       to 10,
+            "item_type"       to 15,
+            "text"            to 20,
+            "client_context"  to 25,
+            "activity_status" to 30,
+            "reaction_type"   to 35,
+            "reaction_status" to 40,
+            "item_id"         to 45,
+            "node_type"       to 50,
+            "action"          to 55,
+            "profile_user_id" to 60,
+            "hashtag"         to 65,
+            "venue_id"        to 70,
+            "media_id"        to 75,
+        )
     }
 }

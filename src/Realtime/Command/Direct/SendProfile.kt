@@ -9,20 +9,16 @@ final class SendProfile : ShareItem
     /**
      * Constructor.
      *
-     * @param string $threadId
-     * @param string $userId
+     * @param (string) $threadId
+     * @param (string) $userId
      * @param array  $options
      *
      * @throws . IllegalArgumentException
      */
-    public fun __construct(
-        $threadId,
-        $userId,
-        array $options = [])
-    {
-        parent::__construct($threadId, self::TYPE, $options)
+    fun __construct( threadId, userId, array options = []){
+        parent::__construct(threadId, self::TYPE, options)
 
-        if (!ctype_digit($userId) && (!is_int($userId) || $userId < 0)) {
+        if (!(userId.toIntOrNull() && userId > 0) && (userId !is Int || userId < 0)) {
             throw . IllegalArgumentException(sprintf(""%s" is not a valid numerical UserPK ID.", $userId))
         }
         this._data["profile_user_id"] = (string) $userId

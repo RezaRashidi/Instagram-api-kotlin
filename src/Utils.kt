@@ -378,7 +378,7 @@ object Utils{
         for ((key, value) in userTag) {
             when (key) {
                 "user_id" ->{
-                    if (value !is Int && !ctype_digit(value)) {
+                    if (value !is Int && !(value.toIntOrNull() && value > 0)) {
                         throw IllegalArgumentException("User ID must be an integer.")
                     }
                     if (value < 0) {
@@ -449,7 +449,7 @@ object Utils{
                 "removed" ->{
                     // Check the array of userids to remove.
                     for (userId in v) {
-                        if (!ctype_digit(userId) && (userId !is Int || userId < 0)) {
+                        if (!(userId.toIntOrNull() && userId > 0) && (userId !is Int || userId < 0)) {
                             throw IllegalArgumentException("Invalid user ID in usertags \"removed\" array.")
                         }
                     }
@@ -553,7 +553,7 @@ object Utils{
         for ((key, value) in productTag) {
             when (key) {
                 "product_id" -> {
-                    if (value!is Int && !ctype_digit(value)) {
+                    if (value!is Int && !(value.toIntOrNull() && value > 0)) {
                         throw IllegalArgumentException("Product ID must be an integer.")
                     }
                     if (value < 0) {
@@ -931,7 +931,7 @@ object Utils{
             for ((k, v) in mention ) {
                 when (k) {
                     "user_id" -> {
-                        if (!ctype_digit(v) && (v !is Int || v < 0)) {
+                        if (!(v.toIntOrNull() && v > 0) && (v !is Int || v < 0)) {
                             throw IllegalArgumentException("Invalid value \"$v\" for story mention array-key \"$k\".")
                         }
                     }
@@ -959,7 +959,7 @@ object Utils{
         for ((k, v) in locationSticker) {
             when (k) {
                 "location_id" -> {
-                    if (v !is String && v !is Numeric) {
+                    if (v !is String && !numericCheck(v.toString())) {
                         throw IllegalArgumentException("Invalid value \"$v\" for location array-key \"$k\".")
                     }
                 }
@@ -1041,7 +1041,7 @@ object Utils{
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for attached media.")
         }
 
-        if (attachedMedia["media_id"] !is String && attachedMedia["media_id"] !is Numeric) {
+        if (attachedMedia["media_id"] !is String && !numericCheck(attachedMedia["media_id"].toString())) {
             throw IllegalArgumentException("Invalid value ${attachedMedia["media_id"]} for media_id.")
         }
 
@@ -1100,7 +1100,7 @@ object Utils{
      * @return string The verified final type either "PHOTO", "VIDEO" or "CAROUSEL".
      */
     fun checkMediaType(mediaType): String{
-        if (ctype_digit(mediaType) || mediaType is Int) {
+        if ((mediaType.toIntOrNull() && mediaType > 0) || mediaType is Int) {
             if (mediaType == Item::PHOTO) {
                 mediaType = "PHOTO"
             } else if (mediaType == Item::VIDEO) {
@@ -1224,8 +1224,8 @@ object Utils{
             || chmod(folder, 0755)) {
             return true
         } else {
-            return false
         }
+        return false
     }
 
     /**
@@ -1422,8 +1422,8 @@ object Utils{
 * substr()         to .substring()
 * <<               to .shl()  : Bitwise Operators
 * array_keys()     to .keys
-*
-*
+* is_numeric()     to numericCheck()  : function write
+* ctype_digit(x)   to x.toIntOrNull() and x > 0
 *
 *
 * */
@@ -1456,3 +1456,12 @@ fun base64hashHmacSha256(key: String, message: String): String{
 //    catch (e: NoSuchAlgorithmException) {}
 //    catch (e: InvalidKeyException) {}
 }
+
+// check string is a numeric : given value can be int, float, hex etc
+fun numericCheck(input: String): Boolean =
+    try {
+        input.toDouble()
+        true
+    } catch(e: NumberFormatException) {
+        false
+    }

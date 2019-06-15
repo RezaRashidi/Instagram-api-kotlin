@@ -75,7 +75,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		foreach(threads as & thread) {
 			if (!is_scalar(thread)) {
 				throw. IllegalArgumentException("Thread identifier must be scalar.")
-			} elseif (!ctype_digit(thread) && (!is_int(thread) || thread < 0)) {
+			} else if (!(thread.toIntOrNull() && thread > 0) && (thread !is Int || thread < 0)) {
 				throw. IllegalArgumentException(sprintf("" % s" is not a valid thread identifier.", thread))
 			}
 			thread = (string) thread
@@ -112,7 +112,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		foreach(threads as & thread) {
 			if (!is_scalar(thread)) {
 				throw. IllegalArgumentException("Thread identifier must be scalar.")
-			} elseif (!ctype_digit(thread) && (!is_int(thread) || thread < 0)) {
+			} else if (!(thread.toIntOrNull() && thread > 0) && (thread !is Int || thread < 0)) {
 				throw. IllegalArgumentException(sprintf("" % s" is not a valid thread identifier.", thread))
 			}
 			thread = (string) thread
@@ -202,7 +202,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			if (!is_scalar(user)) {
 				throw. IllegalArgumentException("User identifier must be scalar.")
 			}
-			if (!ctype_digit(user) && (!is_int(user) || user < 0)) {
+			if (!(user.toIntOrNull() && user > 0) && (user !is Int || user < 0)) {
 				throw. IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", user))
 			}
 		}
@@ -322,7 +322,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		foreach(userIds as & user) {
 			if (!is_scalar(user)) {
 				throw. IllegalArgumentException("User identifier must be scalar.")
-			} elseif (!ctype_digit(user) && (!is_int(user) || user < 0)) {
+			} else if (!(user.toIntOrNull() && user > 0) && (user !is Int || user < 0)) {
 				throw. IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", user))
 			}
 			user = (string) user
@@ -353,7 +353,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		foreach(users as & user) {
 			if (!is_scalar(user)) {
 				throw. IllegalArgumentException("User identifier must be scalar.")
-			} elseif (!ctype_digit(user) && (!is_int(user) || user < 0)) {
+			} else if (!(user.toIntOrNull() && user > 0) && (user !is Int || user < 0)) {
 				throw. IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", user))
 			}
 			user = (string) user
@@ -665,7 +665,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @see Location::search()
 	 */
 	fun sendLocation(array recipients, locationId:String, array options = []) {
-		if (!ctype_digit(locationId) && (!is_int(locationId) || locationId < 0)) {
+		if (!(locationId.toIntOrNull() && locationId > 0) && (locationId !is Int || locationId < 0)) {
 			throw. IllegalArgumentException(sprintf("" % s" is not a valid location ID.", locationId))
 		}
 
@@ -691,7 +691,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendProfile(array recipients, userId:String, array options = []) {
-		if (!ctype_digit(userId) && (!is_int(userId) || userId < 0)) {
+		if (!(userId.toIntOrNull() && userId > 0) && (userId !is Int || userId < 0)) {
 			throw. IllegalArgumentException(sprintf("" % s" is not a valid numerical UserPK ID.", userId))
 		}
 
@@ -855,7 +855,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	fun markVisualItemsSeen(threadId:String, threadItemIds) {
 		if (!is_array(threadItemIds)) {
 			threadItemIds = [threadItemIds]
-		} elseif (!count(threadItemIds)) {
+		} else if (!count(threadItemIds)) {
 			throw. IllegalArgumentException("Please provide at least one thread item ID.")
 		}
 
@@ -881,7 +881,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	fun markVisualItemsReplayed(threadId:String, threadItemIds) {
 		if (!is_array(threadItemIds)) {
 			threadItemIds = [threadItemIds]
-		} elseif (!count(threadItemIds)) {
+		} else if (!count(threadItemIds)) {
 			throw. IllegalArgumentException("Please provide at least one thread item ID.")
 		}
 
@@ -914,7 +914,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			foreach(recipients["users"] as userId) {
 				if (!is_scalar(userId)) {
 					throw. IllegalArgumentException("User identifier must be scalar.")
-				} elseif (!ctype_digit(userId) && (!is_int(userId) || userId < 0)) {
+				} else if (!(userId.toIntOrNull() && userId > 0) && (userId !is Int || userId < 0)) {
 					throw. IllegalArgumentException(sprintf("" % s" is not a valid user identifier.", userId))
 				}
 			}
@@ -927,8 +927,8 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		if (isset(recipients["thread"])) {
 			if (!is_scalar(recipients["thread"])) {
 				throw. IllegalArgumentException("Thread identifier must be scalar.")
-			} elseif (!ctype_digit(recipients["thread"]) && (!is_int(
-				recipients["thread"]) || recipients["thread"] < 0)) {
+			} else if (!(recipients["thread"].toIntOrNull() && recipients["thread"] > 0) && (
+			recipients["thread"] !is Int || recipients["thread"] < 0)) {
 				throw. IllegalArgumentException(
 					sprintf("" % s" is not a valid thread identifier.", recipients["thread"]))
 			}
@@ -944,7 +944,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		}
 		if (!count(result)) {
 			throw. IllegalArgumentException("Please provide at least one recipient.")
-		} elseif (isset(result["thread"]) && isset(result["users"])) {
+		} else if (isset(result["thread"]) && isset(result["users"])) {
 			throw. IllegalArgumentException("You can not mix " users " with " thread ".")
 		}
 
@@ -1105,7 +1105,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		recipients = this._prepareRecipients(recipients, false)
 		if (isset(recipients["users"])) {
 			request.addPost("recipient_users", recipients["users"])
-		} elseif (isset(recipients["thread"])) {
+		} else if (isset(recipients["thread"])) {
 			request.addPost("thread_ids", recipients["thread"])
 		} else {
 			throw. IllegalArgumentException("Please provide at least one recipient.")
@@ -1116,7 +1116,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			// WARNING: Must be random every time otherwise we can only
 			// make a single post per direct-discussion thread.
 			options["client_context"] = Signatures::generateUUID(true)
-		} elseif (!Signatures::isValidUUID(options["client_context"])) {
+		} else if (!Signatures::isValidUUID(options["client_context"])) {
 			throw. IllegalArgumentException(sprintf("" % s" is not a valid UUID.", options["client_context"]))
 		}
 
@@ -1203,7 +1203,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		recipients = this._prepareRecipients(recipients, false)
 		if (isset(recipients["users"])) {
 			request.addPost("recipient_users", recipients["users"])
-		} elseif (isset(recipients["thread"])) {
+		} else if (isset(recipients["thread"])) {
 			request.addPost("thread_ids", recipients["thread"])
 		} else {
 			throw. IllegalArgumentException("Please provide at least one recipient.")
@@ -1214,7 +1214,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			// WARNING: Must be random every time otherwise we can only
 			// make a single post per direct-discussion thread.
 			options["client_context"] = Signatures::generateUUID(true)
-		} elseif (!Signatures::isValidUUID(options["client_context"])) {
+		} else if (!Signatures::isValidUUID(options["client_context"])) {
 			throw. IllegalArgumentException(sprintf("" % s" is not a valid UUID.", options["client_context"]))
 		}
 
@@ -1245,10 +1245,10 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.DirectSendItemResponse
 	 */
 	protected fun _handleReaction(threadId:String, threadItemId:String, reactionType:String, reactionStatus:String, array options = []) {
-		if (!ctype_digit(threadId) && (!is_int(threadId) || threadId < 0)) {
+		if (!(threadId.toIntOrNull() && threadId > 0) && (threadId !is Int || threadId < 0)) {
 			throw. IllegalArgumentException(sprintf("" % s" is not a valid thread ID.", threadId))
 		}
-		if (!ctype_digit(threadItemId) && (!is_int(threadItemId) || threadItemId < 0)) {
+		if (!(threadItemId.toIntOrNull() && threadItemId > 0) && (threadItemId !is Int || threadItemId < 0)) {
 			throw. IllegalArgumentException(sprintf("" % s" is not a valid thread item ID.", threadItemId))
 		}
 		if (!in_array(reactionType, ["like"], true)) {

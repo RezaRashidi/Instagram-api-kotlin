@@ -123,7 +123,7 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
         viewProgress = 0,
         gridImpressions = [])
     {
-        if (!ctype_digit(viewProgress) && (!is_int(viewProgress) || viewProgress < 0)) {
+        if (!(viewProgress.toIntOrNull() && viewProgress > 0) && (viewProgress !is Int || viewProgress < 0)) {
             throw . IllegalArgumentException("View progress must be a positive integer.")
         }
 

@@ -514,27 +514,27 @@ class Request {
 	private fun _getMultipartBody() {
 		// Here is a tricky part: all form data (including files) must be ordered by hash code.
 		// So we are creating an index for building POST data.
-		index = Utils::reorderByHashCode(array_merge(this._posts, this._files))
+		val index = Utils.reorderByHashCode(array_merge(_posts, _files))
 		// Build multipart elements using created index.
-		elements = []
-		foreach(index as key => value) {
-			if (!isset(this._files[key])) {
-				element = ["name"     => key,
-				"contents" => value,
-				]
+		val elements = Map<String, Any>()
+		val element  = Map<String, Any>()
+		var file: List<String>
+		for((key, value) in index) {
+			if (!isset(_files[key])) {
+				element.put("name" to key)
+				element.put("contents" to value)
 			} else {
-				file = this._files[key]
-				element = ["name"     => key,
-				"contents" => this._getStreamForFile(file), // Throws.
-				"filename" => isset(file["filename"]) ? file["filename"] : null,
-				"headers"  => isset(file["headers"]) ? file["headers"] : [],
-				]
+				file = _files[key]
+				element.put("name" to key)
+				element.put("contents" to _getStreamForFile(file))// Throws.
+				element.put("filename" to if( isset(file["filename"]) ) file["filename"] else null)
+				element.put("headers"  to if( isset(file["headers"])  ) file["headers"] else [])
 			}
 			elements[] = element
 		}
 
 		return MultipartStream( // Throws.
-			elements, Utils::generateMultipartBoundary())
+			elements, Utils.generateMultipartBoundary())
 	}
 
 	/**

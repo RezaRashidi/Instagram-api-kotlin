@@ -9,24 +9,21 @@ final class SendLocation : ShareItem
     /**
      * Constructor.
      *
-     * @param string $threadId
-     * @param string $locationId
+     * @param (string) $threadId
+     * @param (string) $locationId
      * @param array  $options
      *
      * @throws . IllegalArgumentException
      */
-    public fun __construct(
-        $threadId,
-        $locationId,
-        array $options = [])
+    fun __construct(threadId: String, locationId: String, array options = [])
     {
-        parent::__construct($threadId, self::TYPE, $options)
+        parent::__construct(threadId, self::TYPE, options)
 
-        if (!ctype_digit($locationId) && (!is_int($locationId) || $locationId < 0)) {
+        if (!(locationId.toIntOrNull() && locationId > 0) && (locationId !is Int || locationId < 0)) {
             throw . IllegalArgumentException(sprintf(""%s" is not a valid location ID.", $locationId))
         }
-        this._data["venue_id"] = (string) $locationId
+        this._data["venue_id"] = (string) locationId
         // Yeah, we need to send the location ID twice.
-        this._data["item_id"] = (string) $locationId
+        this._data["item_id"] = (string) locationId
     }
 }
