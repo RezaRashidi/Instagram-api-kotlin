@@ -9,7 +9,7 @@ import InstagramAPI.Response
  *
  * If you catch this exception, you KNOW it came from our Instagram-API library.
  */
-open class InstagramException //// TODO: implement RuntimeException on Kotlin
+open class InstagramException:Throwable() //// TODO: implement RuntimeException on Kotlin
 {
     /**
      * The full response that triggered the exception, if available.

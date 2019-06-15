@@ -484,7 +484,7 @@ class Instagram : ExperimentsInterface {
 
 		// Attempt to resume an existing session, or full re-login if necessary.
 		// NOTE: The "return" here gives a LoginResponse in case of re-login.
-		return this._sendLoginFlow(false, appRefreshInterval)
+		return _sendLoginFlow(false, appRefreshInterval)
 	}
 
 	/**
@@ -515,16 +515,16 @@ class Instagram : ExperimentsInterface {
 	 */
 	fun finishTwoFactorLogin(username: String, password: String, twoFactorIdentifier: String, verificationCode: String,
 	                         verificationMethod: String = "1", appRefreshInterval: Int = 1800,
-	                         usernameHandler: Boolean = null) {
-		if (empty(username) || empty(password)) {
-			throw new IllegalArgumentException("You must provide a username and password to finishTwoFactorLogin().")
+	                         usernameHandler: Boolean = null):InstagramAPI.Response.LoginResponse {
+		if (username.isBlank() || password.isBlank()) {
+			throw  IllegalArgumentException("You must provide a username and password to finishTwoFactorLogin().")
 		}
-		if (empty(verificationCode) || empty(twoFactorIdentifier)) {
-			throw new IllegalArgumentException(
+		if (verificationCode.isBlank() || twoFactorIdentifier.isBlank() ) {
+			throw  IllegalArgumentException(
 				"You must provide a verification code and two-factor identifier to finishTwoFactorLogin().")
 		}
 		if (!in_array(verificationMethod, ["1", "2", "3"], true)) {
-			throw new IllegalArgumentException("You must provide a valid verification method value.")
+			throw  IllegalArgumentException("You must provide a valid verification method value.")
 		}
 
 		// Switch the currently active user/pass if the details are different.
@@ -537,7 +537,7 @@ class Instagram : ExperimentsInterface {
 			this.setUser(username, password)
 		}
 
-		username = (usernameHandler !== null) ? usernameHandler : username
+		username = if(usernameHandler !== null)  usernameHandler else username
 
 		// Remove all whitespace from the verification code.
 		verificationCode = preg_replace("/.s+/", "", verificationCode)
@@ -574,12 +574,12 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @return .InstagramAPI.Response.TwoFactorLoginSMSResponse
 	 */
-	fun sendTwoFactorLoginSMS(username: String, password: String, twoFactorIdentifier: String) {
-		if (empty(username) || empty(password)) {
-			throw new IllegalArgumentException("You must provide a username and password to sendTwoFactorLoginSMS().")
+	fun sendTwoFactorLoginSMS(username: String, password: String, twoFactorIdentifier: String):InstagramAPI.Response.TwoFactorLoginSMSResponse {
+		if (username.isBlank() || password.isBlank()) {
+			throw IllegalArgumentException("You must provide a username and password to sendTwoFactorLoginSMS().")
 		}
-		if (empty(twoFactorIdentifier)) {
-			throw new IllegalArgumentException("You must provide a two-factor identifier to sendTwoFactorLoginSMS().")
+		if (twoFactorIdentifier.isBlank()) {
+			throw IllegalArgumentException("You must provide a two-factor identifier to sendTwoFactorLoginSMS().")
 		}
 
 		// Switch the currently active user/pass if the details are different.
@@ -615,7 +615,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @return .InstagramAPI.Response.UsersLookupResponse
 	 */
-	fun userLookup(username: String) {
+	fun userLookup(username: String):InstagramAPI.Response.UsersLookupResponse {
 		// Set active user (without pwd), and create database entry if user.
 		this._setUserWithoutPassword(username)
 
@@ -639,7 +639,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @return .InstagramAPI.Response.RecoveryResponse
 	 */
-	fun sendRecoveryEmail(username: String) {
+	fun sendRecoveryEmail(username: String):InstagramAPI.Response.RecoveryResponse {
 		// Verify that they can import the recovery email option.
 		userLookup = this.userLookup(username)
 		if (!userLookup.getCanEmailReset()) {
@@ -666,7 +666,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @return .InstagramAPI.Response.RecoveryResponse
 	 */
-	fun sendRecoverySMS(username: String) {
+	fun sendRecoverySMS(username: String):InstagramAPI.Response.RecoveryResponse {
 		// Verify that they can import the recovery SMS option.
 		val userLookup = this.userLookup(username)
 		if (!userLookup.getHasValidPhone() || !userLookup.getCanSmsReset()) {
@@ -690,8 +690,8 @@ class Instagram : ExperimentsInterface {
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 */
 	private fun setUser(username: String, password: String) {
-		if (empty(username) || empty(password)) {
-			throw new IllegalArgumentException("You must provide a username and password to setUser().")
+		if (username.isBlank() || password.isBlank()) {
+			throw  IllegalArgumentException("You must provide a username and password to setUser().")
 		}
 
 		// Load all settings from the storage and mark as current user.
@@ -800,9 +800,9 @@ class Instagram : ExperimentsInterface {
 	 * @throws  IllegalArgumentException
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 */
-	private fun _setUserWithoutPassword(username: String) {
-		if (empty(username) || !is_string(username)) {
-			throw new IllegalArgumentException("You must provide a username.")
+	private fun _setUserWithoutPassword(username: String?) {
+		if (username.isNullOrBlank()) {
+			throw  IllegalArgumentException("You must provide a username.")
 		}
 
 		// Switch the currently active user/pass if the username is different.
@@ -830,7 +830,7 @@ class Instagram : ExperimentsInterface {
 		// This check is just protection against accidental bugs. It makes sure
 		// that we always call this fun with a *successful* login response!
 		if (!response instanceof Response.LoginResponse || !response.isOk()) {
-			throw new IllegalArgumentException("Invalid login response provided to _updateLoginState().")
+			throw IllegalArgumentException("Invalid login response provided to _updateLoginState().")
 		}
 
 		this.isMaybeLoggedIn = true
@@ -898,7 +898,7 @@ class Instagram : ExperimentsInterface {
 		} catch ( e) {
 			try {
 				this.settings.set("fbns_token", "")
-			} catch (.Exception e) {
+			} catch ( e:Exception) {
 			// Ignore storage errors.
 		}
 		}
@@ -921,13 +921,13 @@ class Instagram : ExperimentsInterface {
 	 *                                                   flow attempt, otherwise
 	 *                                                   `NULL`.
 	 */
-	private fun _sendLoginFlow(justLoggedIn: Boolean, appRefreshInterval: Int = 1800) {
-		if (!is_int(appRefreshInterval) || appRefreshInterval < 0) {
-			throw new IllegalArgumentException("Instagram" s app state refresh interval must be a positive integer.")
+	private fun _sendLoginFlow(justLoggedIn: Boolean, appRefreshInterval: Int = 1800):InstagramAPI.Response
+	.LoginResponse? {
+		if ( appRefreshInterval < 0) {
+			throw IllegalArgumentException("Instagram's app state refresh interval must be a positive integer.")
 		}
 		if (appRefreshInterval > 21600) {
-			throw new IllegalArgumentException("Instagram" s app state refresh interval is NOT allowed to be higher than
-			                                   6 hours, and the lower the better!")
+			throw IllegalArgumentException("Instagram's app state refresh interval is NOT allowed to be higher than 6 hours, and the lower the better!")
 		}
 
 		// SUPER IMPORTANT:
@@ -983,8 +983,8 @@ class Instagram : ExperimentsInterface {
 			this.internal.getQPFetch()
 			this.internal.getFacebookOTA()
 		} else {
-			lastLoginTime = this.settings.get("last_login")
-			isSessionExpired = lastLoginTime === null || (time() - lastLoginTime) > appRefreshInterval
+			var lastLoginTime = this.settings.get("last_login")
+			var isSessionExpired = lastLoginTime === null || (time() - lastLoginTime) > appRefreshInterval
 
 			// Act like a real logged in app client refreshing its news timeline.
 			// This also lets us detect if we"re still logged in with a valid session.
@@ -995,7 +995,7 @@ class Instagram : ExperimentsInterface {
 			} catch ( e:InstagramAPI.Exception.LoginRequiredException) {
 				// If our session cookies are expired, we were now told to login,
 				// so handle that by running a forced relogin in that case!
-				return this._login(this.username, this.password, true, appRefreshInterval)
+				return this._login(username, password, true, appRefreshInterval)
 			}
 
 			// Perform the "user has returned to their already-logged in app,
@@ -1058,7 +1058,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @see Instagram.login()
 	 */
-	fun logout() {
+	fun logout():InstagramAPI.Response.LogoutResponse {
 		response = this.request("accounts/logout/").setSignedPost(false).addPost("phone_id", this.phone_id)
 			.addPost("_csrftoken", this.client.getToken()).addPost("guid", this.uuid)
 			.addPost("device_id", this.device_id).addPost("_uuid", this.uuid).getResponse(Response.LogoutResponse())
@@ -1080,7 +1080,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @return bool
 	 */
-	fun isExperimentEnabled(experiment: String, param: String, default: Boolean = false) {
+	fun isExperimentEnabled(experiment: String, param: String, default: Boolean = false):Boolean {
 		return isset(this.experiments[experiment][param])
 		? in_array(this.experiments[experiment][param], ["enabled", "true", "1"])
 		: default
@@ -1095,7 +1095,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @return mixed
 	 */
-	fun getExperimentParam(experiment: String, param: String, default: Any? = null) {
+	fun getExperimentParam(experiment: String, param: String, default: Any? = null):Any {
 		return isset(this.experiments[experiment][param])
 		? this.experiments[experiment][param]
 		: default
@@ -1111,7 +1111,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @return .InstagramAPI.Request
 	 */
-	fun request(url: String) {
+	fun request(url: String):InstagramAPI.Request {
 		return Request(this, url)
 	}
 }
