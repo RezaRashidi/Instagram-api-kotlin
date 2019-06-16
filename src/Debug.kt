@@ -2,66 +2,55 @@
 
 package InstagramAPI
 
-class Debug
+object Debug
 {
-    public static fun printRequest(
-        $method,
-        $endpoint)
-    {
+    fun printRequest(method: String, endpoint: String){
         if (PHP_SAPI === "cli") {
-            $method = Utils::colouredString("{$method}:  ", "light_blue")
+            method = Utils.colouredString("{$method}:  ", "light_blue")
         } else {
-            $method = $method.":  "
+            method += ":  "
         }
-        echo $method.$endpoint.".n"
+        print(method + endpoint + "\n")
     }
 
-    public static fun printUpload(
-        $uploadBytes)
-    {
-        if (PHP_SAPI === "cli") {
-            $dat = Utils::colouredString("→ ".$uploadBytes, "yellow")
+    fun printUpload(uploadBytes: Int?){
+        val dat = if (PHP_SAPI === "cli") {
+            Utils.colouredString("→ $uploadBytes", "yellow")
         } else {
-            $dat = "→ ".$uploadBytes
+            "→ $uploadBytes"
         }
-        echo $dat.".n"
+        print("$dat.n")
     }
 
-    public static fun printHttpCode(
-        $httpCode,
-        $bytes)
-    {
+    fun printHttpCode(httpCode, bytes: Int){
         if (PHP_SAPI === "cli") {
-            echo Utils::colouredString("← {$httpCode} .t {$bytes}", "green").".n"
+            print( Utils.colouredString("← {$httpCode} .t {$bytes}", "green") + ".n" )
         } else {
-            echo "← {$httpCode} .t {$bytes}.n"
+            print("← {$httpCode} .t {$bytes}.n")
         }
     }
 
-    public static fun printResponse(
-        $response,
-        $truncated = false)
-    {
-        if (PHP_SAPI === "cli") {
-            $res = Utils::colouredString("RESPONSE: ", "cyan")
+    fun printResponse(response: String, truncated: Boolean = false){
+        val res = if (PHP_SAPI === "cli") {
+            Utils.colouredString("RESPONSE: ", "cyan")
         } else {
-            $res = "RESPONSE: "
+            "RESPONSE: "
         }
-        if ($truncated && strlen($response) > 1000) {
-            $response = substr($response, 0, 1000)."..."
+        if (truncated && response.length > 1000) {
+            response = response.substring(0, 1000) + "..."
         }
-        echo $res.$response.".n.n"
+        print("$res$response.n.n")
     }
 
-    public static fun printPostData(
-        $post)
-    {
-        $gzip = mb_strpos($post, ".x1f".".x8b".".x08", 0, "US-ASCII") === 0
-        if (PHP_SAPI === "cli") {
-            $dat = Utils::colouredString(($gzip ? "DECODED " : "")."DATA: ", "yellow")
+    fun printPostData(post: String){
+        // todo : character with hex
+        //mb_strpos($post, "\x1f"."\x8b"."\x08", 0, 'US-ASCII') === 0
+        val gzip = post.indexOf("\x1f" + "\x8b" + "\x08", 0) === 0
+        val dat = if (PHP_SAPI === "cli") {
+            Utils.colouredString((if (gzip)"DECODED " else "") + "DATA: ", "yellow")
         } else {
-            $dat = "DATA: "
+            "DATA: "
         }
-        echo $dat.urldecode(($gzip ? zlib_decode($post) : $post)).".n"
+        print( dat + urldecode( if(gzip) zlib_decode(post) else post ) + ".n" )
     }
 }

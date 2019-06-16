@@ -388,7 +388,7 @@ object Utils{
                 "position" ->{
                     try {
                         throwIfInvalidPosition(value)
-                    } catch (IllegalArgumentException e) {
+                    } catch (e: IllegalArgumentException) {
                         throw IllegalArgumentException(sprintf("Invalid user tag position: %s", e.getMessage()), e.getCode(), e)
                     }
                 }
@@ -437,7 +437,7 @@ object Utils{
                     for ((idx, userTag) in v) {
                         try {
                             throwIfInvalidUserTag(userTag)
-                        } catch (IllegalArgumentException $e) {
+                        } catch (e: IllegalArgumentException) {
                             throw IllegalArgumentException(
                                 sprintf("Invalid usertag at index "%d": %s", $idx, $e.getMessage()),
                                 e.getCode(),
@@ -500,7 +500,7 @@ object Utils{
                     for ((idx, productTag) in v) {
                         try {
                             throwIfInvalidProductTag(productTag)
-                        } catch (IllegalArgumentException $e) {
+                        } catch (e: IllegalArgumentException) {
                             throw IllegalArgumentException(
                                 sprintf("Invalid product tag at index "%d": %s", $idx, $e.getMessage()),
                                 $e.getCode(),
@@ -542,7 +542,7 @@ object Utils{
         }
 
         // Check for required keys.
-        var requiredKeys = ["position", "product_id"]
+        val requiredKeys = arrayOf("position", "product_id")
         var missingKeys = array_diff(requiredKeys, productTag.keys)
         if (!(missingKeys.isEmpty())) {
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = "\", \"")}\" for product tag array.")
@@ -563,7 +563,7 @@ object Utils{
                 "position" -> {
                     try {
                         throwIfInvalidPosition(value)
-                    } catch (IllegalArgumentException $e) {
+                    } catch (e: IllegalArgumentException) {
                         throw IllegalArgumentException(sprintf("Invalid product tag position: %s", $e.getMessage()), $e.getCode(), $e)
                     }
                 }
@@ -584,7 +584,7 @@ object Utils{
             throw IllegalArgumentException("Position must be an array.")
         }
 
-        if (!isset(position[0])) {
+        if (!position[0].isBlank()) {
             throw IllegalArgumentException("X coordinate is required.")
         }
         val x = position[0]
@@ -595,7 +595,7 @@ object Utils{
             throw IllegalArgumentException("X coordinate must be a float between 0.0 and 1.0.")
         }
 
-        if (!isset(position[1])) {
+        if (!position[1].isBlank()) {
             throw IllegalArgumentException("Y coordinate is required.")
         }
         val y = position[1]
@@ -1116,40 +1116,41 @@ object Utils{
         return mediaType
     }
 
-    fun formatBytes(bytes, precision: Int = 2){
-        val units = setOf("B", "kB", "mB", "gB", "tB")
+    fun formatBytes(bytess: Int, precision: Int = 2){
+        val units = arrayListOf("B", "kB", "mB", "gB", "tB")
 
-        bytes = Math.max(bytes, 0)
-        var pow = Math.floor( (if (bytes) log(bytes) else 0)/log(1024) )
-        pow = Math.min(pow, units.count())
+        var bytes = Math.max(bytess, 0)
+        var pow = Math.floor( (if (bytes !== null) Math.log(bytes.toDouble()) else 0.0) / Math.log(1024.toDouble()) )
+        pow = Math.min(pow, units.count().toDouble())
 
-        bytes = bytes / Math.pow(1024.0, pow)
+        bytes /= Math.pow(1024.toDouble(), pow).toInt()
 
-        return Math.round(bytes, precision)+""+units[pow]
+        return Math.round(bytes, precision) + "" + units[pow.toInt()]
     }
 
-    fun colouredString(string: String,colour: String){
-        var colours = mutableMapOf<String,String>()
-        colours["black"] = "030"
-        colours["dark_gray"] = "130"
-        colours["blue"] = "034"
-        colours["light_blue"] = "134"
-        colours["green"] = "032"
-        colours["light_green"] = "132"
-        colours["cyan"] = "036"
-        colours["light_cyan"] = "136"
-        colours["red"] = "031"
-        colours["light_red"] = "131"
-        colours["purple"] = "035"
-        colours["light_purple"] = "135"
-        colours["brown"] = "033"
-        colours["yellow"] = "133"
-        colours["light_gray"] = "037"
-        colours["white"] = "137"
+    fun colouredString(string: String, colour: String): String{
+        val colours = mutableMapOf (
+            "black"        to "030",
+            "dark_gray"    to "130",
+            "blue"         to "034",
+            "light_blue"   to "134",
+            "green"        to "032",
+            "light_green"  to "132",
+            "cyan"         to "036",
+            "light_cyan"   to "136",
+            "red"          to "031",
+            "light_red"    to "131",
+            "purple"       to "035",
+            "light_purple" to "135",
+            "brown"        to "033",
+            "yellow"       to "133",
+            "light_gray"   to "037",
+            "white"        to "137"
+        )
 
         var colored_string = ""
 
-        if (isset(colours[colour])) {
+        if (colours[colour]!!.isBlank()) {
             colored_string += ".033["+ colours[colour] + "m"
         }
 
@@ -1159,55 +1160,56 @@ object Utils{
     }
 
     fun getFilterCode(filter: String): Int{
-        var filters = mutableListOf<String>()
-        filters[0] = "Normal"
-        filters[615] = "Lark"
-        filters[614] = "Reyes"
-        filters[613] = "Juno"
-        filters[612] = "Aden"
-        filters[608] = "Perpetua"
-        filters[603] = "Ludwig"
-        filters[605] = "Slumber"
-        filters[616] = "Crema"
-        filters[24] = "Amaro"
-        filters[17] = "Mayfair"
-        filters[23] = "Rise"
-        filters[26] = "Hudson"
-        filters[25] = "Valencia"
-        filters[1] = "X-Pro II"
-        filters[27] = "Sierra"
-        filters[28] = "Willow"
-        filters[2] = "Lo-Fi"
-        filters[3] = "Earlybird"
-        filters[22] = "Brannan"
-        filters[10] = "Inkwell"
-        filters[21] = "Hefe"
-        filters[15] = "Nashville"
-        filters[18] = "Sutro"
-        filters[19] = "Toaster"
-        filters[20] = "Walden"
-        filters[14] = "1977"
-        filters[16] = "Kelvin"
-        filters[-2] = "OES"
-        filters[-1] = "YUV"
-        filters[109] = "Stinson"
-        filters[106] = "Vesper"
-        filters[112] = "Clarendon"
-        filters[118] = "Maven"
-        filters[114] = "Gingham"
-        filters[107] = "Ginza"
-        filters[113] = "Skyline"
-        filters[105] = "Dogpatch"
-        filters[115] = "Brooklyn"
-        filters[111] = "Moon"
-        filters[117] = "Helena"
-        filters[116] = "Ashby"
-        filters[108] = "Charmes"
-        filters[640] = "BrightContrast"
-        filters[642] = "CrazyColor"
-        filters[643] = "SubtleColor"
+        val filters = mutableMapOf(
+        0   to "Normal",
+        615 to "Lark",
+        614 to "Reyes",
+        613 to "Juno",
+        612 to "Aden",
+        608 to "Perpetua",
+        603 to "Ludwig",
+        605 to "Slumber",
+        616 to "Crema",
+        24  to "Amaro",
+        17  to "Mayfair",
+        23  to "Rise",
+        26  to "Hudson",
+        25  to "Valencia",
+        1   to "X-Pro II",
+        27  to "Sierra",
+        28  to "Willow",
+        2   to "Lo-Fi",
+        3   to "Earlybird",
+        22  to "Brannan",
+        10  to "Inkwell",
+        21  to "Hefe",
+        15  to "Nashville",
+        18  to "Sutro",
+        19  to "Toaster",
+        20  to "Walden",
+        14  to "1977",
+        16  to "Kelvin",
+        -2  to "OES",
+        -1  to "YUV",
+        109 to "Stinson",
+        106 to "Vesper",
+        112 to "Clarendon",
+        118 to "Maven",
+        114 to "Gingham",
+        107 to "Ginza",
+        113 to "Skyline",
+        105 to "Dogpatch",
+        115 to "Brooklyn",
+        111 to "Moon",
+        117 to "Helena",
+        116 to "Ashby",
+        108 to "Charmes",
+        640 to "BrightContrast",
+        642 to "CrazyColor",
+        643 to "SubtleColor"
+        )
 
-        return array_search(filter, filters)
+        return arraySearch(filters, filter)
     }
 
     /**
@@ -1465,3 +1467,9 @@ fun numericCheck(input: String): Boolean =
     } catch(e: NumberFormatException) {
         false
     }
+
+fun arraySearch (map: Map<Int, String>, str: String): Int {
+    var m = 0
+    map.forEach{ (k, v) -> if (v == str) m = k ;return@forEach }
+    return m
+}
