@@ -3,14 +3,6 @@ package InstagramAPI.Request
 import GuzzleHttp.Psr7.LimitStream
 import GuzzleHttp.Psr7.Stream
 import InstagramAPI.Constants
-import InstagramAPI.Exception.CheckpointRequiredException
-import InstagramAPI.Exception.ConsentRequiredException
-import InstagramAPI.Exception.FeedbackRequiredException
-import InstagramAPI.Exception.InstagramException
-import InstagramAPI.Exception.LoginRequiredException
-import InstagramAPI.Exception.NetworkException
-import InstagramAPI.Exception.SettingsException
-import InstagramAPI.Exception.ThrottledException
 import InstagramAPI.Exception.UploadFailedException
 import InstagramAPI.Media.MediaDetails
 import InstagramAPI.Media.Video.FFmpeg
@@ -1710,43 +1702,45 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.GenericResponse
 	 */
 	protected fun _uploadSegmentedVideo(targetFeed:Int,  internalMetadata:InternalMetadata) {
-		videoDetails = internalMetadata.getVideoDetails()
+		var videoDetails = internalMetadata.getVideoDetails()
 
 		// We must split the video into segments before running any requests.
-		segments = this._splitVideoIntoSegments(targetFeed, videoDetails)
+		var segments = _splitVideoIntoSegments(targetFeed, videoDetails)
 
-		uploadParams = this._getVideoUploadParams(targetFeed, internalMetadata)
-		uploadParams = Utils::reorderByHashCode(uploadParams)
+		var uploadParams = _getVideoUploadParams(targetFeed, internalMetadata)
+		uploadParams = Utils.reorderByHashCode(uploadParams)
 
 		// This request gives us a stream identifier.
-		startRequest = Request(this.ig, sprintf("https://i.instagram.com/rupload_igvideo/%s?segmented=true&phase=start",
-		                                        Signatures::generateUUID()))
-		startRequest.setAddDefaultHeaders(false).addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
+		var startRequest = Request(this.ig, "https://i.instagram.com/rupload_igvideo/${Signatures.generateUUID()}?segmented=true&phase=start")
+		startRequest.setAddDefaultHeaders(false)
+			.addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
 			// Dirty hack to make a POST request.
 			.setBody(stream_for())
 		/** @var Response.SegmentedStartResponse startResponse */
-		startResponse = startRequest.getResponse(Response.SegmentedStartResponse())
-		streamId = startResponse.getStreamId()
+		var startResponse = startRequest.getResponse(Response.SegmentedStartResponse())
+		var streamId = startResponse.getStreamId()
 
 		// Upload the segments.
 		try {
-			offset = 0
+			var offset = 0
 			// Yep, no UUID here like in other resumable uploaders. Seems like a bug.
-			waterfallId = Utils::generateUploadId()
-			foreach(segments as segment) {
-				endpoint = sprintf("https://i.instagram.com/rupload_igvideo/%s-%d-%d?segmented=true&phase=transfer",
-				                   md5(segment.getFilename()), 0, segment.getFilesize())
+			var waterfallId = Utils.generateUploadId()
+			for(segment in segments) {
+				var endpoint = "https://i.instagram.com/rupload_igvideo/${md5(segment.getFilename())}-0-${segment.getFilesize().toInt()}?segmented=true&phase=transfer"
 
-				offsetTemplate = Request(this.ig, endpoint)
-				offsetTemplate.setAddDefaultHeaders(false).addHeader("Segment-Start-Offset", offset)
+				var offsetTemplate = Request(this.ig, endpoint)
+				offsetTemplate.setAddDefaultHeaders(false)
+					.addHeader("Segment-Start-Offset", offset)
 					// 1 => Audio, 2 => Video, 3 => Mixed.
-					.addHeader("Segment-Type", segment.getAudioCodec() !== null ? 1 : 2)
-				.addHeader("Stream-Id", streamId).addHeader("X_FB_VIDEO_WATERFALL_ID", waterfallId)
-				.addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
+					.addHeader("Segment-Type", if (segment.getAudioCodec() !== null) 1 else 2)
+					.addHeader("Stream-Id", streamId)
+					.addHeader("X_FB_VIDEO_WATERFALL_ID", waterfallId)
+					.addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
 
-				uploadTemplate = clone offsetTemplate uploadTemplate.addHeader("X-Entity-Type", "video/mp4").addHeader(
-						"X-Entity-Name", basename(parse_url(endpoint, PHP_URL_PATH))).addHeader("X-Entity-Length",
-				                                                                                segment.getFilesize())
+				var uploadTemplate = clone offsetTemplate uploadTemplate
+					.addHeader("X-Entity-Type", "video/mp4")
+					.addHeader("X-Entity-Name", basename(parse_url(endpoint, PHP_URL_PATH)))
+					.addHeader("X-Entity-Length",segment.getFilesize())
 
 				this._uploadResumableMedia(segment, offsetTemplate, uploadTemplate, false)
 				// Offset seems to be used just for ordering the segments.
@@ -1754,22 +1748,20 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			}
 		} finally {
 			// Remove the segments, becaimport we don"t need them anymore.
-			foreach(segments as segment) {
+			for(segment in segments) {
 				@unlink(segment.getFilename())
 			}
 		}
 
 		// Finalize the upload.
-		endRequest = Request(this.ig, sprintf("https://i.instagram.com/rupload_igvideo/%s?segmented=true&phase=end",
-		                                      Signatures::generateUUID()))
-		endRequest.setAddDefaultHeaders(false).addHeader("Stream-Id", streamId)
+		var endRequest = Request(this.ig, "https://i.instagram.com/rupload_igvideo/${Signatures.generateUUID()}?segmented=true&phase=end")
+		endRequest.setAddDefaultHeaders(false)
+			.addHeader("Stream-Id", streamId)
 			.addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
 			// Dirty hack to make a POST request.
 			.setBody(stream_for())
-		/** @var Response.GenericResponse result */
-		result = endRequest.getResponse(Response.GenericResponse())
 
-		return result
+		return endRequest.getResponse(Response.GenericResponse())
 	}
 
 	/**
@@ -1786,34 +1778,31 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.GenericResponse
 	 */
 	protected fun _uploadResumableVideo(targetFeed:Int,  internalMetadata:InternalMetadata) {
-		rurCookie = this.ig.client.getCookie("rur", "i.instagram.com")
+		var rurCookie = this.ig.client.getCookie("rur", "i.instagram.com")
 		if (rurCookie === null || rurCookie.getValue() === "") {
-			throw.RuntimeException("Unable to find the necessary " rur " cookie for uploading video.")
+			throw RuntimeException("Unable to find the necessary \"rur\" cookie for uploading video.")
 		}
 
-		videoDetails = internalMetadata.getVideoDetails()
+		var videoDetails = internalMetadata.getVideoDetails()
 
-		endpoint =
-			sprintf("https://i.instagram.com/rupload_igvideo/%s_%d_%d?target=%s", internalMetadata.getUploadId(), 0,
-			        Utils::hashCode(videoDetails.getFilename()), rurCookie.getValue())
+		val endpoint = "https://i.instagram.com/rupload_igvideo/${internalMetadata.getUploadId()}_0_${Utils.hashCode(videoDetails.getFilename())}?target=${rurCookie.getValue()}"
 
-		uploadParams = this._getVideoUploadParams(targetFeed, internalMetadata)
-		uploadParams = Utils::reorderByHashCode(uploadParams)
+		var uploadParams = this._getVideoUploadParams(targetFeed, internalMetadata)
+		uploadParams = Utils.reorderByHashCode(uploadParams)
 
-		offsetTemplate = Request(this.ig, endpoint)
-		offsetTemplate.setAddDefaultHeaders(false).addHeader("X_FB_VIDEO_WATERFALL_ID", Signatures::generateUUID(true))
+		var offsetTemplate = Request(this.ig, endpoint)
+		offsetTemplate.setAddDefaultHeaders(false)
+			.addHeader("X_FB_VIDEO_WATERFALL_ID", Signatures.generateUUID(true))
 			.addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
 
-		uploadTemplate =
-			clone offsetTemplate uploadTemplate.addHeader("X-Entity-Type", "video/mp4").addHeader("X-Entity-Name",
-			                                                                                      basename(parse_url(
-				                                                                                      endpoint,
-				                                                                                      PHP_URL_PATH))).addHeader(
-					"X-Entity-Length", videoDetails.getFilesize())
+		var uploadTemplate =
+			clone offsetTemplate uploadTemplate
+				.addHeader("X-Entity-Type", "video/mp4")
+				.addHeader("X-Entity-Name", basename(parse_url(endpoint,PHP_URL_PATH)))
+				.addHeader("X-Entity-Length", videoDetails.getFilesize())
 
 		return this._uploadResumableMedia(videoDetails, offsetTemplate, uploadTemplate,
-		                                  this.ig.isExperimentEnabled("ig_android_skip_get_fbupload_universe",
-		                                                              "video_skip_get"))
+		                                  this.ig.isExperimentEnabled("ig_android_skip_get_fbupload_universe","video_skip_get"))
 	}
 
 	/**
@@ -1824,64 +1813,57 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return bool
 	 */
-	protected fun _useSegmentedVideoUploader(targetFeed:Int,  internalMetadata:InternalMetadata) {
+	protected fun _useSegmentedVideoUploader(targetFeed:Int,  internalMetadata:InternalMetadata): Boolean {
 		// No segmentation for album video.
-		if (targetFeed === Constants::FEED_TIMELINE_ALBUM) {
+		if (targetFeed === Constants.FEED_TIMELINE_ALBUM) {
 			return false
 		}
 
 		// ffmpeg is required for video segmentation.
 		try {
-			FFmpeg::factory()
-		} catch (.Exception e) {
+			FFmpeg.factory()
+		} catch (e: Exception) {
 			return false
 		}
 
 		// There is no need to segment short videos.
-		switch(targetFeed) {
-			case Constants ::FEED_TIMELINE:
-			minDuration = (int) this.ig.getExperimentParam("ig_android_video_segmented_upload_universe",
-			// NOTE: This typo is intentional. Instagram named it that way.
-			                                               "segment_duration_threashold_feed", 10)
-			break
-			case Constants ::FEED_STORY:
-			case Constants ::FEED_DIRECT_STORY:
-			minDuration = (int) this.ig.getExperimentParam("ig_android_video_segmented_upload_universe",
-			// NOTE: This typo is intentional. Instagram named it that way.
-			                                               "segment_duration_threashold_story_raven", 0)
-			break
-			case Constants ::FEED_TV:
-			minDuration = 150
-			break
-			default:
-			minDuration = 31536000 // 1 year.
+		val minDuration = when(targetFeed) {
+			Constants.FEED_TIMELINE -> {
+				(int) this.ig.getExperimentParam(
+					"ig_android_video_segmented_upload_universe",
+					// NOTE: This typo is intentional. Instagram named it that way.
+					"segment_duration_threashold_feed", 10
+				)
+			}
+
+			Constants.FEED_STORY, Constants.FEED_DIRECT_STORY -> {
+				(int) this.ig.getExperimentParam(
+					"ig_android_video_segmented_upload_universe",
+					// NOTE: This typo is intentional. Instagram named it that way.
+					"segment_duration_threashold_story_raven", 0
+				)
+			}
+
+			Constants.FEED_TV -> 150
+
+			else -> 31536000 // 1 year.
 		}
-		if ((int) internalMetadata . getVideoDetails ().getDuration() < minDuration) {
+
+		if ((int) internalMetadata.getVideoDetails().getDuration() < minDuration) {
 			return false
 		}
 
 		// Check experiments for the target feed.
-		switch(targetFeed) {
-			case Constants ::FEED_TIMELINE:
-			result =
-				this.ig.isExperimentEnabled("ig_android_video_segmented_upload_universe", "segment_enabled_feed", true)
-			break
-			case Constants ::FEED_DIRECT:
-			result = this.ig.isExperimentEnabled("ig_android_direct_video_segmented_upload_universe",
-			                                     "is_enabled_segment_direct")
-			break
-			case Constants ::FEED_STORY:
-			case Constants ::FEED_DIRECT_STORY:
-			result = this.ig.isExperimentEnabled("ig_android_reel_raven_video_segmented_upload_universe",
-			                                     "segment_enabled_story_raven")
-			break
-			case Constants ::FEED_TV:
-			result = true
-			break
-			default:
-			result =
-				this.ig.isExperimentEnabled("ig_android_video_segmented_upload_universe", "segment_enabled_unknown",
-				                            true)
+		val result = when(targetFeed) {
+			Constants.FEED_TIMELINE -> ig.isExperimentEnabled("ig_android_video_segmented_upload_universe", "segment_enabled_feed", true)
+
+			Constants.FEED_DIRECT -> ig.isExperimentEnabled("ig_android_direct_video_segmented_upload_universe","is_enabled_segment_direct")
+
+			Constants.FEED_STORY, Constants.FEED_DIRECT_STORY -> ig.isExperimentEnabled("ig_android_reel_raven_video_segmented_upload_universe","segment_enabled_story_raven")
+
+			Constants.FEED_TV -> true
+
+			else -> this.ig.isExperimentEnabled("ig_android_video_segmented_upload_universe", "segment_enabled_unknown",true)
 		}
 
 		return result
@@ -1895,37 +1877,37 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return bool
 	 */
-	protected fun _useResumableVideoUploader(targetFeed:Int,  internalMetadata:InternalMetadata) {
-		switch(targetFeed) {
-			case Constants ::FEED_TIMELINE_ALBUM:
-			result = this.ig.isExperimentEnabled("ig_android_fbupload_sidecar_video_universe",
-			                                     "is_enabled_fbupload_sidecar_video")
-			break
-			case Constants ::FEED_TIMELINE:
-			result = this.ig.isExperimentEnabled("ig_android_upload_reliability_universe",
-			                                     "is_enabled_fbupload_followers_share")
-			break
-			case Constants ::FEED_DIRECT:
-			result = this.ig.isExperimentEnabled("ig_android_upload_reliability_universe",
-			                                     "is_enabled_fbupload_direct_share")
-			break
-			case Constants ::FEED_STORY:
-			result =
-				this.ig.isExperimentEnabled("ig_android_upload_reliability_universe", "is_enabled_fbupload_reel_share")
-			break
-			case Constants ::FEED_DIRECT_STORY:
-			result =
-				this.ig.isExperimentEnabled("ig_android_upload_reliability_universe", "is_enabled_fbupload_story_share")
-			break
-			case Constants ::FEED_TV:
-			result = true
-			break
-			default:
-			result =
-				this.ig.isExperimentEnabled("ig_android_upload_reliability_universe", "is_enabled_fbupload_unknown")
-		}
+	protected fun _useResumableVideoUploader(targetFeed:Int,  internalMetadata:InternalMetadata): Boolean{
+		return when(targetFeed) {
+			Constants.FEED_TIMELINE_ALBUM -> ig.isExperimentEnabled(
+				"ig_android_fbupload_sidecar_video_universe",
+				"is_enabled_fbupload_sidecar_video"
+			)
 
-		return result
+			Constants.FEED_TIMELINE -> ig.isExperimentEnabled(
+				"ig_android_upload_reliability_universe",
+				"is_enabled_fbupload_followers_share"
+			)
+
+			Constants.FEED_DIRECT -> ig.isExperimentEnabled(
+				"ig_android_upload_reliability_universe",
+				"is_enabled_fbupload_direct_share"
+			)
+
+			Constants.FEED_STORY -> ig.isExperimentEnabled(
+				"ig_android_upload_reliability_universe",
+				"is_enabled_fbupload_reel_share"
+			)
+
+			Constants.FEED_DIRECT_STORY -> ig.isExperimentEnabled(
+				"ig_android_upload_reliability_universe",
+				"is_enabled_fbupload_story_share"
+			)
+
+			Constants.FEED_TV -> true
+
+			else -> ig.isExperimentEnabled("ig_android_upload_reliability_universe", "is_enabled_fbupload_unknown")
+		}
 	}
 
 	/**
@@ -1933,13 +1915,13 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return array
 	 */
-	protected fun _getRetryContext() {
-		return [
+	protected fun _getRetryContext(): MutableMap<String, Int> {
+		return mutableMapOf(
 			// TODO increment it with every fail.
-			"num_step_auto_retry"   => 0,
-		"num_reupload"          => 0,
-		"num_step_manual_retry" => 0,
-		]
+			"num_step_auto_retry"   to 0,
+			"num_reupload"          to 0,
+			"num_step_manual_retry" to 0
+		)
 	}
 
 	/**
@@ -1952,20 +1934,18 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	protected fun _getPhotoUploadParams(targetFeed:Int,  internalMetadata:InternalMetadata) {
 		// Common params.
-		result = ["upload_id"         => (string) internalMetadata.getUploadId(),
-		"retry_context"     => json_encode(this._getRetryContext()),
-		"image_compression" => "{"lib_name":"moz","lib_version":"3.1.m","quality":"87"}",
-		"xsharing_user_ids" => json_encode([]),
-		"media_type"        => internalMetadata.getVideoDetails() !== null
-		? (string) Response . Model . Item ::VIDEO
-		: (string) Response . Model . Item ::PHOTO,
-		]
+		var result = mutableMapOf<String, Any>(
+			"upload_id"         to (string) internalMetadata.getUploadId(),
+			"retry_context"     to json_encode(this._getRetryContext()),
+			"image_compression" to "{\"lib_name\":\"moz\",\"lib_version\":\"3.1.m\",\"quality\":\"87\"}",
+			"xsharing_user_ids" to json_encode([]),
+			"media_type"        to if (internalMetadata.getVideoDetails() !== null) {
+				(string) Response.Model.Item.VIDEO
+				}else {(string) Response.Model.Item.PHOTO}
+		)
 		// Target feed"s specific params.
-		switch(targetFeed) {
-			case Constants ::FEED_TIMELINE_ALBUM:
-			result["is_sidecar"] = "1"
-			break
-			default:
+		when(targetFeed) {
+			Constants.FEED_TIMELINE_ALBUM -> result["is_sidecar"] = "1"
 		}
 
 		return result
@@ -1980,38 +1960,30 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return array
 	 */
 	protected fun _getVideoUploadParams(targetFeed:Int,  internalMetadata:InternalMetadata) {
-		videoDetails = internalMetadata.getVideoDetails()
+		var videoDetails = internalMetadata.getVideoDetails()
 		// Common params.
-		result = ["upload_id"                => (string) internalMetadata.getUploadId(),
-		"retry_context"            => json_encode(this._getRetryContext()),
-		"xsharing_user_ids"        => json_encode([]),
-		"upload_media_height"      => (string) videoDetails.getHeight(),
-		"upload_media_width"       => (string) videoDetails.getWidth(),
-		"upload_media_duration_ms" => (string) videoDetails.getDurationInMsec(),
-		"media_type"               => (string) Response.Model.Item::VIDEO,
-		// TODO select with targetFeed (?)
-		"potential_share_types"    => json_encode(["not supported type"]),
-		]
+		var result = mutableMapOf<String, Any>(
+			"upload_id"                to (string) internalMetadata.getUploadId(),
+			"retry_context"            to json_encode(this._getRetryContext()),
+			"xsharing_user_ids"        to json_encode([]),
+			"upload_media_height"      to (string) videoDetails.getHeight(),
+			"upload_media_width"       to (string) videoDetails.getWidth(),
+			"upload_media_duration_ms" to (string) videoDetails.getDurationInMsec(),
+			"media_type"               to (string) Response.Model.Item.VIDEO,
+			// TODO select with targetFeed (?)
+			"potential_share_types"    to json_encode(["not supported type"])
+		)
 		// Target feed"s specific params.
-		switch(targetFeed) {
-			case Constants ::FEED_TIMELINE_ALBUM:
-			result["is_sidecar"] = "1"
-			break
-			case Constants ::FEED_DIRECT:
-			result["direct_v2"] = "1"
-			result["rotate"] = "0"
-			result["hflip"] = "false"
-			break
-			case Constants ::FEED_STORY:
-			result["for_album"] = "1"
-			break
-			case Constants ::FEED_DIRECT_STORY:
-			result["for_direct_story"] = "1"
-			break
-			case Constants ::FEED_TV:
-			result["is_igtv_video"] = "1"
-			break
-			default:
+		when(targetFeed) {
+			Constants.FEED_TIMELINE_ALBUM -> result["is_sidecar"] = "1"
+			Constants.FEED_DIRECT -> {
+				result["direct_v2"] = "1"
+				result["rotate"] = "0"
+				result["hflip"] = "false"
+			}
+			Constants.FEED_STORY 		-> result["for_album"] = "1"
+			Constants.FEED_DIRECT_STORY -> result["for_direct_story"] = "1"
+			Constants.FEED_TV 			-> result["is_igtv_video"] = "1"
 		}
 
 		return result
@@ -2027,7 +1999,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	protected fun _findSegments(outputDirectory:String, prefix:String) {
 		// Video segments will be uploaded before the audio one.
-		result = glob("{outputDirectory}/{prefix}.video.*.mp4")
+		var result = glob("{$outputDirectory}/{$prefix}.video.*.mp4")
 
 		// Audio always goes into one segment, so we can import is_file() here.
 		audioTrack = "{outputDirectory}/{prefix}.audio.mp4"
@@ -2053,36 +2025,34 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	protected fun _splitVideoIntoSegments(targetFeed:Int,  videoDetails:VideoDetails,  ffmpeg:FFmpeg? = null,
 	                                      outputDirectory:String? = null) {
 		if (ffmpeg === null) {
-			ffmpeg = FFmpeg::factory()
+			ffmpeg = FFmpeg.factory()
 		}
 		if (outputDirectory === null) {
-			outputDirectory = Utils::defaultTmpPath === null ? sys_get_temp_dir() : Utils::defaultTmpPath
+			outputDirectory = if (Utils.defaultTmpPath === null) sys_get_temp_dir() else Utils.defaultTmpPath
 		}
 		// Check whether the output directory is valid.
-		targetDirectory = realpath(outputDirectory)
+		var targetDirectory = realpath(outputDirectory)
 		if (targetDirectory === false || !is_dir(targetDirectory) || !is_writable(targetDirectory)) {
-			throw.RuntimeException(sprintf("Directory " % s" is missing or is not writable.", outputDirectory))
+			throw RuntimeException("Directory \"$outputDirectory\" is missing or is not writable.")
 		}
 
-		prefix = sha1(videoDetails.getFilename().uniqid("", true))
+		var prefix = sha1(videoDetails.getFilename().uniqid("", true))
 
 		try {
 			// Split the video stream into a multiple segments by time.
-			ffmpeg.run(sprintf("-i %s -c:v copy -an -dn -sn -f segment -segment_time %d -segment_format mp4 %s",
-			                   Args::escape(videoDetails.getFilename()), this._getTargetSegmentDuration(targetFeed),
-			                   Args::escape(
-				                   sprintf("%s%s%s.video.%%03d.mp4", outputDirectory, DIRECTORY_SEPARATOR, prefix))))
+			ffmpeg.run("-i ${Args.escape(videoDetails.getFilename())} -c:v " +
+					"copy -an -dn -sn -f segment -segment_time ${_getTargetSegmentDuration(targetFeed)} -segment_format mp4 " +
+					"${Args.escape("$outputDirectory$DIRECTORY_SEPARATOR$prefix.video.%%03d.mp4")}")
 
 			if (videoDetails.getAudioCodec() !== null) {
 				// Save the audio stream in one segment.
-				ffmpeg.run(sprintf("-i %s -c:a copy -vn -dn -sn -f mp4 %s", Args::escape(videoDetails.getFilename()),
-				                   Args::escape(
-					                   sprintf("%s%s%s.audio.mp4", outputDirectory, DIRECTORY_SEPARATOR, prefix))))
+				ffmpeg.run("-i ${Args.escape(videoDetails.getFilename())} -c:a copy -vn -dn -sn -f mp4 " +
+						"${Args.escape("$outputDirectory$DIRECTORY_SEPARATOR$prefix.audio.mp4")}")
 			}
-		} catch (.RuntimeException e) {
+		} catch (e: RuntimeException) {
 			// Find and remove all segments (if any).
-			files = this._findSegments(outputDirectory, prefix)
-			foreach(files as file) {
+			var files = _findSegments(outputDirectory, prefix)
+			for(file in files) {
 				@unlink(file)
 			}
 			// Re-throw the exception.
@@ -2090,20 +2060,20 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		}
 
 		// Collect segments.
-		files = this._findSegments(outputDirectory, prefix)
+		files = _findSegments(outputDirectory, prefix)
 		if (empty(files)) {
-			throw.RuntimeException("Something went wrong while splitting the video into segments.")
+			throw RuntimeException("Something went wrong while splitting the video into segments.")
 		}
-		result = []
+		var result = []
 
 		try {
 			// Wrap them into VideoDetails.
-			foreach(files as file) {
+			for(file in files) {
 				result[] = VideoDetails(file)
 			}
-		} catch (.Exception e) {
+		} catch (e: Exception) {
 			// Cleanup when something went wrong.
-			foreach(files as file) {
+			for(file in files) {
 				@unlink(file)
 			}
 
@@ -2122,25 +2092,26 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return int
 	 */
-	protected fun _getTargetSegmentDuration(targetFeed:Int) {
-		switch(targetFeed) {
-			case Constants ::FEED_TIMELINE:
-			duration =
-				this.ig.getExperimentParam("ig_android_video_segmented_upload_universe", "target_segment_duration_feed",
-				                           5)
-			break
-			case Constants ::FEED_STORY:
-			case Constants ::FEED_DIRECT_STORY:
-			duration = this.ig.getExperimentParam("ig_android_video_segmented_upload_universe",
-			                                      "target_segment_duration_story_raven", 2)
-			break
-			case Constants ::FEED_TV:
-			duration = 100
-			break
-			default:
-			throw IllegalArgumentException("Unsupported feed {targetFeed}.")
+	protected fun _getTargetSegmentDuration(targetFeed: Int): Int {
+		val duration = when(targetFeed) {
+			Constants.FEED_TIMELINE -> {
+				this.ig.getExperimentParam("ig_android_video_segmented_upload_universe",
+					"target_segment_duration_feed",5)
+			}
+			Constants.FEED_STORY, Constants.FEED_DIRECT_STORY -> {
+				this.ig.getExperimentParam(
+					"ig_android_video_segmented_upload_universe",
+					"target_segment_duration_story_raven", 2
+				)
+			}
+			Constants.FEED_TV -> {
+				100
+			}
+			else -> {
+				throw IllegalArgumentException("Unsupported feed {targetFeed}.")
+			}
 		}
 
-		return (int) duration
+		return duration.toInt()
 	}
 }

@@ -13,7 +13,7 @@ object Debug
         print(method + endpoint + "\n")
     }
 
-    fun printUpload(uploadBytes: Int?){
+    fun printUpload(uploadBytes: String){
         val dat = if (PHP_SAPI === "cli") {
             Utils.colouredString("→ $uploadBytes", "yellow")
         } else {
@@ -22,7 +22,7 @@ object Debug
         print("$dat.n")
     }
 
-    fun printHttpCode(httpCode, bytes: Int){
+    fun printHttpCode(httpCode, bytes: String){
         if (PHP_SAPI === "cli") {
             print( Utils.colouredString("← {$httpCode} .t {$bytes}", "green") + ".n" )
         } else {

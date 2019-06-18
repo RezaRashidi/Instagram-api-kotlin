@@ -418,12 +418,10 @@ class Client
         }
 
         // Display the number of bytes received from the response, and status code.
-        var bytes: Int = if (response.hasHeader("x-encoded-content-length")) {
-            Utils.formatBytes( response.getHeaderLine("x-encoded-content-length").toInt())
-        } else if (response.hasHeader("Content-Length")) {
-            Utils.formatBytes(response.getHeaderLine("Content-Length").toInt())
-        } else {
-            0
+        val bytes = when {
+            response.hasHeader("x-encoded-content-length") -> Utils.formatBytes( response.getHeaderLine("x-encoded-content-length").toInt() )
+            response.hasHeader("Content-Length")           -> Utils.formatBytes( response.getHeaderLine("Content-Length").toInt() )
+            else -> 0.toString()
         }
         Debug.printHttpCode(response.getStatusCode(), bytes)
 

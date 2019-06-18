@@ -4,6 +4,7 @@ import InstagramAPI.Exception.RequestHeadersTooLargeException
 import InstagramAPI.Response
 import InstagramAPI.Signatures
 import InstagramAPI.Utils
+import java.net.URLEncoder
 
 /**
  * funs related to finding and exploring hashtags.
@@ -21,8 +22,8 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun getInfo(hashtag:String) {
 		Utils.throwIfInvalidHashtag(hashtag)
-		urlHashtag = urlencode(hashtag) // Necessary for non-English chars.
-		return this.ig.request("tags/{urlHashtag}/info/").getResponse(Response.TagInfoResponse())
+		val urlHashtag = URLEncoder.encode(hashtag,"UTF-8") // Necessary for non-English chars.
+		return this.ig.request("tags/{$urlHashtag}/info/").getResponse(Response.TagInfoResponse())
 	}
 
 	/**
@@ -37,8 +38,8 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun getStory(hashtag:String) {
 		Utils.throwIfInvalidHashtag(hashtag)
-		urlHashtag = urlencode(hashtag) // Necessary for non-English chars.
-		return this.ig.request("tags/{urlHashtag}/story/").getResponse(Response.TagsStoryResponse())
+		val urlHashtag = URLEncoder.encode(hashtag, "UTF-8") // Necessary for non-English chars.
+		return this.ig.request("tags/{$urlHashtag}/story/").getResponse(Response.TagsStoryResponse())
 	}
 
 	/**
@@ -59,20 +60,22 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun getSection(hashtag:String, rankToken:String, tab:String? = null, nextMediaIds:Int? = null, maxId:String = null) {
 		Utils.throwIfInvalidHashtag(hashtag)
-		urlHashtag = urlencode(hashtag) // Necessary for non-English chars.
+		val urlHashtag = URLEncoder.encode(hashtag, "UTF-8") // Necessary for non-English chars.
 
-		request = this.ig.request("tags/{urlHashtag}/sections/").setSignedPost(false).addPost("_uuid", this.ig.uuid)
-			.addPost("_csrftoken", this.ig.client.getToken()).addPost("rank_token", rankToken)
+		var request = this.ig.request("tags/{$urlHashtag}/sections/")
+			.setSignedPost(false)
+			.addPost("_uuid", this.ig.uuid)
+			.addPost("_csrftoken", this.ig.client.getToken())
+			.addPost("rank_token", rankToken)
 			.addPost("include_persistent", true)
 
 		if (tab !== null) {
 			if (tab !== "top" && tab !== "recent" && tab !== "places" && tab !== "discover") {
-				throw IllegalArgumentException("Tab section must be ." top .", ." recent .", ." places .
-				                               " or ." discover .".")
+				throw IllegalArgumentException("Tab section must be 'top', 'recent', 'places' or 'discover'.")
 			}
 			request.addPost("tab", tab)
 		} else {
-			request.addPost("supported_tabs", "[" top "," recent "," places "," discover "]")
+			request.addPost("supported_tabs", "[\"top\",\"recent\",\"places\",\"discover\"]")
 		}
 
 		if (nextMediaIds !== null) {
@@ -120,22 +123,27 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun search(query:String, array excludeList = [], rankToken:String? = null) {
 		// Do basic query validation. Do NOT import throwIfInvalidHashtag here.
-		if (!is_string(query) || query === "") {
+		if (query !is String || query === "") {
 			throw IllegalArgumentException("Query must be a non-empty string.")
 		}
 
-		request = this._paginateWithExclusion(
-			this.ig.request("tags/search/").addParam("q", query).addParam("timezone_offset", date("Z")), excludeList,
-			rankToken)
+		var request = this._paginateWithExclusion(
+			this.ig.request("tags/search/")
+				.addParam("q", query)
+				.addParam("timezone_offset", date("Z")),
+			excludeList,
+			rankToken
+		)
 
 		try {
 			/** @var Response.SearchTagResponse result */
-			result = request.getResponse(Response.SearchTagResponse())
-		} catch (RequestHeadersTooLargeException e) {
-			result = Response.SearchTagResponse(["has_more"   => false,
-			"results"    => [],
-			"rank_token" => rankToken,
-			])
+			var result = request.getResponse(Response.SearchTagResponse())
+		} catch (e: RequestHeadersTooLargeException) {
+			var result = Response.SearchTagResponse(mapOf(
+				"has_more"   to false,
+				"results"    to [],
+				"rank_token" to rankToken
+			))
 		}
 
 		return result
@@ -153,9 +161,11 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun follow(hashtag:String) {
 		Utils.throwIfInvalidHashtag(hashtag)
-		urlHashtag = urlencode(hashtag) // Necessary for non-English chars.
-		return this.ig.request("tags/follow/{urlHashtag}/").addPost("_uuid", this.ig.uuid)
-			.addPost("_uid", this.ig.account_id).addPost("_csrftoken", this.ig.client.getToken())
+		var urlHashtag = URLEncoder.encode(hashtag, "UTF-8") // Necessary for non-English chars.
+		return this.ig.request("tags/follow/{$urlHashtag}/")
+			.addPost("_uuid", this.ig.uuid)
+			.addPost("_uid", this.ig.account_id)
+			.addPost("_csrftoken", this.ig.client.getToken())
 			.getResponse(Response.GenericResponse())
 	}
 
@@ -171,9 +181,11 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun unfollow(hashtag:String) {
 		Utils.throwIfInvalidHashtag(hashtag)
-		urlHashtag = urlencode(hashtag) // Necessary for non-English chars.
-		return this.ig.request("tags/unfollow/{urlHashtag}/").addPost("_uuid", this.ig.uuid)
-			.addPost("_uid", this.ig.account_id).addPost("_csrftoken", this.ig.client.getToken())
+		var urlHashtag = URLEncoder.encode(hashtag, "UTF-8") // Necessary for non-English chars.
+		return this.ig.request("tags/unfollow/{$urlHashtag}/")
+			.addPost("_uuid", this.ig.uuid)
+			.addPost("_uid", this.ig.account_id)
+			.addPost("_csrftoken", this.ig.client.getToken())
 			.getResponse(Response.GenericResponse())
 	}
 
@@ -189,10 +201,11 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun getRelated(hashtag:String) {
 		Utils.throwIfInvalidHashtag(hashtag)
-		urlHashtag = urlencode(hashtag) // Necessary for non-English chars.
-		return this.ig.request("tags/{urlHashtag}/related/")
-			.addParam("visited", "[{" id ":"".hashtag.""," type ":" hashtag "}]")
-			.addParam("related_types", "[" hashtag "]").getResponse(Response.TagRelatedResponse())
+		var urlHashtag = URLEncoder.encode(hashtag, "UTF-8") // Necessary for non-English chars.
+		return this.ig.request("tags/{$urlHashtag}/related/")
+			.addParam("visited", "[{\"id\":\"$hashtag\",\"type\":\"hashtag\"}]")
+			.addParam("related_types", "[\" hashtag \"]")
+			.getResponse(Response.TagRelatedResponse())
 	}
 
 	/**
@@ -213,8 +226,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	fun getFeed(hashtag:String, rankToken:String, maxId:String? = null) {
 		Utils.throwIfInvalidHashtag(hashtag)
 		Utils.throwIfInvalidRankToken(rankToken)
-		urlHashtag = urlencode(hashtag) // Necessary for non-English chars.
-		hashtagFeed = this.ig.request("feed/tag/{urlHashtag}/").addParam("rank_token", rankToken)
+		var urlHashtag = URLEncoder.encode(hashtag, "UTF-8") // Necessary for non-English chars.
+		var hashtagFeed = this.ig.request("feed/tag/{$urlHashtag}/")
+			.addParam("rank_token", rankToken)
 		if (maxId !== null) {
 			hashtagFeed.addParam("max_id", maxId)
 		}
@@ -261,8 +275,8 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * Mark TagFeedResponse story media items as seen.
 	 *
 	 * The "story" property of a `TagFeedResponse` only gives you a list of
-	 * story media. It doesn"t actually mark any stories as "seen", so the
-	 * user doesn"t know that you"ve seen their story. Actually marking the
+	 * story media. It doesn't actually mark any stories as "seen", so the
+	 * user doesn't know that you"ve seen their story. Actually marking the
 	 * story as "seen" is done via this endpoint instead. The official app
 	 * calls this endpoint periodically (with 1 or more items at a time)
 	 * while watching a story.
@@ -290,13 +304,11 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @see Story.markMediaSeen()
 	 * @see Location.markStoryMediaSeen()
 	 */
-	fun markStoryMediaSeen(Response.TagFeedResponse hashtagFeed,
-	array items)
-	{
+	fun markStoryMediaSeen(hashtagFeed: Response.TagFeedResponse, items: array){
 		// Extract the Hashtag Story-Tray ID from the user"s hashtag response.
 		// NOTE: This can NEVER fail if the user has properly given us the exact
 		// same hashtag response that they got the story items from!
-		sourceId = ""
+		var sourceId = ""
 		if (hashtagFeed.getStory() instanceof Response.Model.StoryTray) {
 			sourceId = hashtagFeed.getStory().getId()
 		}
@@ -307,15 +319,15 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 
 		// Ensure they only gave us valid items for this hashtag response.
 		// NOTE: We validate since people cannot be trusted to import their brain.
-		validIds = []
-		foreach(hashtagFeed.getStory().getItems() as item) {
+		var validIds = []
+		for(item in hashtagFeed.getStory().getItems()) {
 			validIds[item.getId()] = true
 		}
-		foreach(items as item) {
+		for(item in items) {
 			// NOTE: We only check Items here. Other data is rejected by Internal.
-			if (item instanceof Response.Model.Item && !isset(validIds[item.getId()])) {
+			if (item instanceof Response.Model.Item && !(validIds[item.getId()].isBlank())) {
 				throw IllegalArgumentException(
-					sprintf("The item with ID " % s" does not belong to this TagFeedResponse.", item.getId()))
+					"The item with ID \"${item.getId()}\" does not belong to this TagFeedResponse.")
 			}
 		}
 
@@ -323,3 +335,10 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 		return this.ig.internal.markStoryMediaSeen(items, sourceId)
 	}
 }
+
+/*
+* adding code to this file
+*
+* urlencode() to URLEncoder.encode("_x_","UTF-8")
+*
+* */

@@ -70,7 +70,7 @@ object Utils{
         var result: String?
         if (!useNano) {
             while (true) {  // Todo : Time issue -> microtime(true) = System.currentTimeMillis() / 1000
-                result = number_format(Math.round(System.currentTimeMillis().toDouble()), 0, '', '')
+                result = number_format(Math.round(System.currentTimeMillis().toDouble()), 0, "", "")
                 if (_lastUploadId !== null && result === _lastUploadId) {
                     // NOTE: Fast machines can process files too quick (< 0.001
                     // sec), which leads to identical upload IDs, which leads to
@@ -84,7 +84,7 @@ object Utils{
             }
         } else {
             // Emulate System.nanoTime().
-            result = number_format(System.currentTimeMillis() / 1000 - strtotime("Last Monday"), 6, '', '')
+            result = number_format(System.currentTimeMillis() / 1000 - strtotime("Last Monday"), 6, "", "")
             // Append nanoseconds.
             result += (1..999).random().toString().padStart(3, '0')
         }
@@ -1116,16 +1116,16 @@ object Utils{
         return mediaType
     }
 
-    fun formatBytes(bytess: Int, precision: Int = 2){
+    fun formatBytes(bytess: Int, precision: Int = 2): String {
         val units = arrayListOf("B", "kB", "mB", "gB", "tB")
 
-        var bytes = Math.max(bytess, 0)
-        var pow = Math.floor( (if (bytes !== null) Math.log(bytes.toDouble()) else 0.0) / Math.log(1024.toDouble()) )
+        var bytes = Math.max(bytess, 0).toDouble()
+        var pow = Math.floor( (if (bytes !== null) Math.log(bytes) else 0.0) / Math.log(1024.toDouble()) )
         pow = Math.min(pow, units.count().toDouble())
 
-        bytes /= Math.pow(1024.toDouble(), pow).toInt()
+        bytes /= Math.pow(1024.toDouble(), pow)
 
-        return Math.round(bytes, precision) + "" + units[pow.toInt()]
+        return "%.${precision}f".format(bytes) + "" + units[pow.toInt()]
     }
 
     fun colouredString(string: String, colour: String): String{

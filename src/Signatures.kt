@@ -1,5 +1,12 @@
 package InstagramAPI
 
+import java.io.UnsupportedEncodingException
+import java.net.URLEncoder
+import java.security.MessageDigest
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
+import javax.xml.bind.DatatypeConverter
+
 object Signatures {
 	/**
 	 * Generate a keyed hash value using the HMAC method.
@@ -9,7 +16,7 @@ object Signatures {
 	 * @return string
 	 */
 	fun generateSignature(data:String): String {
-		return hash_hmac("sha256", data, Constants.IG_SIG_KEY)
+		return hmacSHA256(Constants.IG_SIG_KEY, data)
 	}
 
 	/**
@@ -21,9 +28,9 @@ object Signatures {
 	 */
 	fun generateSignatureForPost(data:String): String{
 		return "ig_sig_key_version=" + Constants.SIG_KEY_VERSION + "&signed_body=" + generateSignature(
-			data) + "." + urlencode(data)
+			data) + "." + URLEncoder.encode(data,"UTF-8")
 	}
-`
+
 	/**
 	 * Generate signed array.
 	 *
@@ -36,7 +43,7 @@ object Signatures {
 		val result = mutableMapOf<String, String>()
 		// Exclude some params from signed body.
 		for (key in exclude) {
-			if (isset(data[key])) {
+			if (data[key].isBlank()) {
 				result[key] = data[key]
 				unset(data[key])
 			}
@@ -59,7 +66,7 @@ object Signatures {
 
 	fun generateDeviceId(): String {
 		// This has 10 million possible hash subdivisions per clock second.
-		var megaRandomHash = md5( number_format( System.currentTimeMillis() / 1000 , 7, "", "") )
+		val megaRandomHash = md5( number_format( System.currentTimeMillis() / 1000 , 7, "", "") )
 
 		return "android-" + megaRandomHash.substring(16)
 	}
@@ -80,14 +87,50 @@ object Signatures {
 	}
 
 	fun generateUUID(keepDashes:Boolean = true): String {
-		val uuid = sprintf("%04x%04x-%04x-%04x-%04x-%04x%04x%04x", mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff),
-				mt_rand(0, 0x0fff) | 0x4000,
-				mt_rand(0, 0x3fff) | 0x8000,
-				mt_rand(0, 0xffff),
-				mt_rand(0, 0xffff),
-				mt_rand(0, 0xffff)
-			)
+		val s1 = String.format("%04X", (0..0xffff).random())
+		val s2 = String.format("%04X", (0..0xffff).random())
+		val s3 = String.format("%04X", (0..0xffff).random())
+		val s4 = String.format("%04X", (0..0x0fff).random() or 0x4000)
+		val s5 = String.format("%04X", (0..0x3fff).random() or 0x8000)
+		val s6 = String.format("%04X", (0..0xffff).random())
+		val s7 = String.format("%04X", (0..0xffff).random())
+		val s8 = String.format("%04X", (0..0xffff).random())
+		val uuid = "$s1$s2-$s3-$s4-$s5-$s6$s7$s8".toLowerCase()
 
 		return if (keepDashes) uuid else uuid.replace("-", "")
 	}
+}
+
+/*
+* adding code to this file
+*
+* hash_hmac(SHA256)  to hmacSHA256()
+*
+* */
+
+// build fun to hash string with key in HmacSHA256 method
+fun hmacSHA256(key: String, message: String): String {
+	val hasher = Mac.getInstance("HmacSHA256")
+	hasher.init(SecretKeySpec(key.toByteArray(), "HmacSHA256"))
+
+	val hash = hasher.doFinal(message.toByteArray())
+
+	// to lowercase hexits
+	return DatatypeConverter.printHexBinary(hash).toLowerCase()
+}
+
+// build fun to hash string in md5 method
+fun md5(message: String): String? {
+	try {
+		val md = MessageDigest.getInstance("MD5")
+		val array = md.digest(message.toByteArray())
+		val sb = StringBuffer()
+		for (i in array.indices) {
+			sb.append(Integer.toHexString(array[i].toInt() and 0xFF or 0x100).substring(1, 3))
+		}
+		return sb.toString()
+	} catch (e: java.security.NoSuchAlgorithmException) {
+	} catch (ex: UnsupportedEncodingException) {
+	}
+	return null
 }
