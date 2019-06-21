@@ -1,12 +1,14 @@
 package InstagramAPI
 
 import InstagramAPI.Media.Video.FFmpeg
+import InstagramAPI.Response.Model.In
 import InstagramAPI.Response.Model.Item
 import InstagramAPI.Response.Model.Location
 import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import javax.xml.bind.DatatypeConverter
+import kotlin.math.*
 
 
 object Utils{
@@ -70,21 +72,22 @@ object Utils{
         var result: String?
         if (!useNano) {
             while (true) {  // Todo : Time issue -> microtime(true) = System.currentTimeMillis() / 1000
-                result = number_format(Math.round(System.currentTimeMillis().toDouble()), 0, "", "")
-                if (_lastUploadId !== null && result === _lastUploadId) {
-                    // NOTE: Fast machines can process files too quick (< 0.001
-                    // sec), which leads to identical upload IDs, which leads to
-                    // "500 Oops, an error occurred" errors. So we sleep 0.001
-                    // sec to guarantee different upload IDs per each call.
-                    usleep(1000)
-                } else { // OK!
-                    _lastUploadId = result
-                    break
-                }
+                result = System.nanoTime().toString()
+                _lastUploadId = result
+//                if (_lastUploadId !== null && result === _lastUploadId) {
+//                    // NOTE: Fast machines can process files too quick (< 0.001
+//                    // sec), which leads to identical upload IDs, which leads to
+//                    // "500 Oops, an error occurred" errors. So we sleep 0.001
+//                    // sec to guarantee different upload IDs per each call.
+//                    // usleep(1000)
+//                } else { // OK!
+//                    _lastUploadId = result
+//                    break
+//                }
             }
         } else {
             // Emulate System.nanoTime().
-            result = number_format(System.currentTimeMillis() / 1000 - strtotime("Last Monday"), 6, "", "")
+            result = System.nanoTime().toString()
             // Append nanoseconds.
             result += (1..999).random().toString().padStart(3, '0')
         }
@@ -109,13 +112,14 @@ object Utils{
         for (i in 0 until string.length){   //Todo check loop step
             result = (-result + (result.shl(5)) + string[i].toInt()) and 0xFFFFFFFF
         }
-        if (PHP_INT_SIZE > 4) {
-            if (result > 0x7FFFFFFF) {
-                result -= 0x100000000
-            } else if (result < -0x80000000) {
-                result += 0x100000000
-            }
-        }
+//        if (PHP_INT_SIZE > 4) {
+//
+//            if (result > 0x7FFFFFFF) {
+//                result -= 0x100000000
+//            } else if (result < -0x80000000) {
+//                result += 0x100000000
+//            }
+//        }
 
         return result.toInt()
     }
@@ -127,22 +131,25 @@ object Utils{
      *
      * @return array
      */
-    fun reorderByHashCode(data: Map<String, String>){
-        val hashCodes = mutableMapOf<String,String>()
+    fun reorderByHashCode(data: Map<String, String>): Map<String, String>{
+        val hashCodes = mutableMapOf<String, Int>()
         for ((key,value) in data) {
             hashCodes[key] = hashCode(key)
         }
 
-        uksort(data, fun (a, b) import (hashCodes) {
-            var a = hashCodes[a]
-            var b = hashCodes[b]
-            if (a < b) {
-                return -1
-            } else if (a > b) {
-                return 1
-            } else {
-                return 0
-            }
+//        uksort(data, fun (a, b) import (hashCodes) {
+//            var a = hashCodes[a]
+//            var b = hashCodes[b]
+//            if (a < b) {
+//                return -1
+//            } else if (a > b) {
+//                return 1
+//            } else {
+//                return 0
+//            }
+//        })
+        data.toSortedMap(compareBy {
+            hashCodes[it]
         })
 
         return data
@@ -178,7 +185,7 @@ object Utils{
         val term = (2..3).random() * 1000 + size * (15..20).random() * 100
 
         // android EditText change event occur count
-        var text_change_event_count = Math.round((size / (2..3).random()).toDouble()).toInt()
+        var text_change_event_count = ((size / (2..3).random()).toDouble()).roundToInt()
         if (text_change_event_count == 0) {
             text_change_event_count = 1
         }
@@ -258,12 +265,12 @@ object Utils{
         var wasNegative = false
         if (sec < 0) {
             wasNegative = true
-            sec = Math.abs(sec)
+            sec = abs(sec)
         }
 
         // "%02d:%02d:%06.3f"  // "%06f" is becaimport it counts the whole string.
-        val x1 = "%02.0f".format(Math.floor(sec.toDouble() / 3600))
-        val x2 = "%02.0f".format(Math.floor((sec.toDouble()/60).rem(60)))
+        val x1 = "%02.0f".format(floor(sec.toDouble() / 3600))
+        val x2 = "%02.0f".format(floor((sec.toDouble()/60).rem(60)))
         val x3 = "%06.3f".format(sec.toDouble().rem(60))
 
         var result = "$x1 : $x2 : $x3"
@@ -472,7 +479,7 @@ object Utils{
      *
      * @throws IllegalArgumentException If any tags are invalid.
      */
-    fun throwIfInvalidProductTags(productTags){
+    fun throwIfInvalidProductTags(productTags){ //todo : array second argument
         // NOTE: We can import "array" typehint, but it doesn't give us enough freedom.
         if (!is_array(productTags)) {
             throw IllegalArgumentException("Products tags must be an array.")
@@ -584,7 +591,7 @@ object Utils{
             throw IllegalArgumentException("Position must be an array.")
         }
 
-        if (!position[0].isBlank()) {
+        if (position[0].isBlank()) {
             throw IllegalArgumentException("X coordinate is required.")
         }
         val x = position[0]
@@ -595,7 +602,7 @@ object Utils{
             throw IllegalArgumentException("X coordinate must be a float between 0.0 and 1.0.")
         }
 
-        if (!position[1].isBlank()) {
+        if (position[1].isBlank()) {
             throw IllegalArgumentException("Y coordinate is required.")
         }
         val y = position[1]
@@ -662,7 +669,7 @@ object Utils{
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for story poll array.")
         }
 
-        for ((k,v) in storyPoll[0]) {
+        for ((k,v) in storyPoll[0]) { // todo : one index is array ?
             when (k) {
                 "question" -> {
                     if (v !is String) {
@@ -1099,14 +1106,14 @@ object Utils{
      *
      * @return string The verified final type either "PHOTO", "VIDEO" or "CAROUSEL".
      */
-    fun checkMediaType(mediaType): String{
+    fun checkMediaType(mediaTypeRE): String{
+        var mediaType = mediaTypeRE
         if ((mediaType.toIntOrNull() && mediaType > 0) || mediaType is Int) {
-            if (mediaType == Item::PHOTO) {
-                mediaType = "PHOTO"
-            } else if (mediaType == Item::VIDEO) {
-                mediaType = "VIDEO"
-            } else (mediaType == Item::CAROUSEL) {
-                mediaType = "CAROUSEL"
+            mediaType = when (mediaType) {
+                Item.PHOTO -> "PHOTO"
+                Item.VIDEO -> "VIDEO"
+                Item.CAROUSEL -> "CAROUSEL"
+                else -> ""
             }
         }
         if (!in_array(mediaType, ["PHOTO", "VIDEO", "CAROUSEL"], true)) {
@@ -1119,11 +1126,11 @@ object Utils{
     fun formatBytes(bytess: Int, precision: Int = 2): String {
         val units = arrayListOf("B", "kB", "mB", "gB", "tB")
 
-        var bytes = Math.max(bytess, 0).toDouble()
-        var pow = Math.floor( (if (bytes !== null) Math.log(bytes) else 0.0) / Math.log(1024.toDouble()) )
-        pow = Math.min(pow, units.count().toDouble())
+        var bytes = max(bytess, 0).toDouble()
+        var pow = floor( (if (bytes !== null) Math.log(bytes) else 0.0) / Math.log(1024.toDouble()) )
+        pow = min(pow, units.count().toDouble())
 
-        bytes /= Math.pow(1024.toDouble(), pow)
+        bytes /= 1024.toDouble().pow(pow)
 
         return "%.${precision}f".format(bytes) + "" + units[pow.toInt()]
     }
@@ -1150,7 +1157,7 @@ object Utils{
 
         var colored_string = ""
 
-        if (colours[colour]!!.isBlank()) {
+        if (!(colours[colour]!!.isBlank())) {
             colored_string += ".033["+ colours[colour] + "m"
         }
 
@@ -1392,18 +1399,18 @@ object Utils{
             // app so that our link-detection acts *exactly* like the real app!
             // NOTE: Here is the "to PHP regex" conversion algorithm we used:
             // https://github.com/mgp25/Instagram-API/issues/1445#issuecomment-318921867
-            "/((?:(http|https|Http|Https|rtsp|Rtsp):././(?:(?:[a-zA-Z0-9$.-._...+.!.*.".(.).,..?.&.=]|(?:.%[a-fA-F0-9]{2})){1,64}(?:.:(?:[a-zA-Z0-9$.-._...+.!.*.".(.).,..?.&.=]|(?:.%[a-fA-F0-9]{2})){1,25})?.@)?)?((?:(?:[a-zA-Z0-9.x{00A0}-.x{D7FF}.x{F900}-.x{FDCF}.x{FDF0}-.x{FFEF}._][a-zA-Z0-9.x{00A0}-.x{D7FF}.x{F900}-.x{FDCF}.x{FDF0}-.x{FFEF}._.-]{0,64}..)+(?:(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])|(?:biz|b[abdefghijmnorstvwyz])|(?:cat|com|coop|c[acdfghiklmnoruvxyz])|d[ejkmoz]|(?:edu|e[cegrstu])|f[ijkmor]|(?:gov|g[abdefghilmnpqrstuwy])|h[kmnrtu]|(?:info|int|i[delmnoqrst])|(?:jobs|j[emop])|k[eghimnprwyz]|l[abcikrstuvy]|(?:mil|mobi|museum|m[acdeghklmnopqrstuvwxyz])|(?:name|net|n[acefgilopruz])|(?:org|om)|(?:pro|p[aefghklmnrstwy])|qa|r[eosuw]|s[abcdeghijklmnortuvyz]|(?:tel|travel|t[cdfghjklmnoprtvwz])|u[agksyz]|v[aceginu]|w[fs]|(?:.x{03B4}.x{03BF}.x{03BA}.x{03B9}.x{03BC}.x{03AE}|.x{0438}.x{0441}.x{043F}.x{044B}.x{0442}.x{0430}.x{043D}.x{0438}.x{0435}|.x{0440}.x{0444}|.x{0441}.x{0440}.x{0431}|.x{05D8}.x{05E2}.x{05E1}.x{05D8}|.x{0622}.x{0632}.x{0645}.x{0627}.x{06CC}.x{0634}.x{06CC}|.x{0625}.x{062E}.x{062A}.x{0628}.x{0627}.x{0631}|.x{0627}.x{0644}.x{0627}.x{0631}.x{062F}.x{0646}|.x{0627}.x{0644}.x{062C}.x{0632}.x{0627}.x{0626}.x{0631}|.x{0627}.x{0644}.x{0633}.x{0639}.x{0648}.x{062F}.x{064A}.x{0629}|.x{0627}.x{0644}.x{0645}.x{063A}.x{0631}.x{0628}|.x{0627}.x{0645}.x{0627}.x{0631}.x{0627}.x{062A}|.x{0628}.x{06BE}.x{0627}.x{0631}.x{062A}|.x{062A}.x{0648}.x{0646}.x{0633}|.x{0633}.x{0648}.x{0631}.x{064A}.x{0629}|.x{0641}.x{0644}.x{0633}.x{0637}.x{064A}.x{0646}|.x{0642}.x{0637}.x{0631}|.x{0645}.x{0635}.x{0631}|.x{092A}.x{0930}.x{0940}.x{0915}.x{094D}.x{0937}.x{093E}|.x{092D}.x{093E}.x{0930}.x{0924}|.x{09AD}.x{09BE}.x{09B0}.x{09A4}|.x{0A2D}.x{0A3E}.x{0A30}.x{0A24}|.x{0AAD}.x{0ABE}.x{0AB0}.x{0AA4}|.x{0B87}.x{0BA8}.x{0BCD}.x{0BA4}.x{0BBF}.x{0BAF}.x{0BBE}|.x{0B87}.x{0BB2}.x{0B99}.x{0BCD}.x{0B95}.x{0BC8}|.x{0B9A}.x{0BBF}.x{0B99}.x{0BCD}.x{0B95}.x{0BAA}.x{0BCD}.x{0BAA}.x{0BC2}.x{0BB0}.x{0BCD}|.x{0BAA}.x{0BB0}.x{0BBF}.x{0B9F}.x{0BCD}.x{0B9A}.x{0BC8}|.x{0C2D}.x{0C3E}.x{0C30}.x{0C24}.x{0C4D}|.x{0DBD}.x{0D82}.x{0D9A}.x{0DCF}|.x{0E44}.x{0E17}.x{0E22}|.x{30C6}.x{30B9}.x{30C8}|.x{4E2D}.x{56FD}|.x{4E2D}.x{570B}|.x{53F0}.x{6E7E}|.x{53F0}.x{7063}|.x{65B0}.x{52A0}.x{5761}|.x{6D4B}.x{8BD5}|.x{6E2C}.x{8A66}|.x{9999}.x{6E2F}|.x{D14C}.x{C2A4}.x{D2B8}|.x{D55C}.x{AD6D}|xn.-.-0zwm56d|xn.-.-11b5bs3a9aj6g|xn.-.-3e0b707e|xn.-.-45brj9c|xn.-.-80akhbyknj4f|xn.-.-90a3ac|xn.-.-9t4b11yi5a|xn.-.-clchc0ea0b2g2a9gcd|xn.-.-deba0ad|xn.-.-fiqs8s|xn.-.-fiqz9s|xn.-.-fpcrj9c3d|xn.-.-fzc2c9e2c|xn.-.-g6w251d|xn.-.-gecrj9c|xn.-.-h2brj9c|xn.-.-hgbk6aj7f53bba|xn.-.-hlcj6aya9esc7a|xn.-.-j6w193g|xn.-.-jxalpdlp|xn.-.-kgbechtv|xn.-.-kprw13d|xn.-.-kpry57d|xn.-.-lgbbat1ad8j|xn.-.-mgbaam7a8h|xn.-.-mgbayh7gpa|xn.-.-mgbbh1a71e|xn.-.-mgbc0a9azcg|xn.-.-mgberp4a5d4ar|xn.-.-o3cw4h|xn.-.-ogbpf8fl|xn.-.-p1ai|xn.-.-pgbs0dh|xn.-.-s9brj9c|xn.-.-wgbh1c|xn.-.-wgbl6a|xn.-.-xkc2al3hye2a|xn.-.-xkc2dl3a5ee0h|xn.-.-yfro4i67o|xn.-.-ygbi2ammx|xn.-.-zckzah|xxx)|y[et]|z[amw]))|(?:(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])..(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)..(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)..(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])))(?:.:.d{1,5})?)(./(?:(?:[a-zA-Z0-9.x{00A0}-.x{D7FF}.x{F900}-.x{FDCF}.x{FDF0}-.x{FFEF}../.?.:.@.&.=.#.~.-...+.!.*.".(.).,._])|(?:.%[a-fA-F0-9]{2}))*)?(?:.b|$)/iu",
+            "/((?:(http|https|Http|Https|rtsp|Rtsp):\/\/(?:(?:[a-zA-Z0-9$\-\_\.\+\!\*'\(\)\,\;\?\&\=]|(?:\%[a-fA-F0-9]{2})){1,64}(?:\:(?:[a-zA-Z0-9$\-\_\.\+\!\*'\(\)\,\;\?\&\=]|(?:\%[a-fA-F0-9]{2})){1,25})?\@)?)?((?:(?:[a-zA-Z0-9\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}\_][a-zA-Z0-9\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}\_\-]{0,64}\.)+(?:(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])|(?:biz|b[abdefghijmnorstvwyz])|(?:cat|com|coop|c[acdfghiklmnoruvxyz])|d[ejkmoz]|(?:edu|e[cegrstu])|f[ijkmor]|(?:gov|g[abdefghilmnpqrstuwy])|h[kmnrtu]|(?:info|int|i[delmnoqrst])|(?:jobs|j[emop])|k[eghimnprwyz]|l[abcikrstuvy]|(?:mil|mobi|museum|m[acdeghklmnopqrstuvwxyz])|(?:name|net|n[acefgilopruz])|(?:org|om)|(?:pro|p[aefghklmnrstwy])|qa|r[eosuw]|s[abcdeghijklmnortuvyz]|(?:tel|travel|t[cdfghjklmnoprtvwz])|u[agksyz]|v[aceginu]|w[fs]|(?:\x{03B4}\x{03BF}\x{03BA}\x{03B9}\x{03BC}\x{03AE}|\x{0438}\x{0441}\x{043F}\x{044B}\x{0442}\x{0430}\x{043D}\x{0438}\x{0435}|\x{0440}\x{0444}|\x{0441}\x{0440}\x{0431}|\x{05D8}\x{05E2}\x{05E1}\x{05D8}|\x{0622}\x{0632}\x{0645}\x{0627}\x{06CC}\x{0634}\x{06CC}|\x{0625}\x{062E}\x{062A}\x{0628}\x{0627}\x{0631}|\x{0627}\x{0644}\x{0627}\x{0631}\x{062F}\x{0646}|\x{0627}\x{0644}\x{062C}\x{0632}\x{0627}\x{0626}\x{0631}|\x{0627}\x{0644}\x{0633}\x{0639}\x{0648}\x{062F}\x{064A}\x{0629}|\x{0627}\x{0644}\x{0645}\x{063A}\x{0631}\x{0628}|\x{0627}\x{0645}\x{0627}\x{0631}\x{0627}\x{062A}|\x{0628}\x{06BE}\x{0627}\x{0631}\x{062A}|\x{062A}\x{0648}\x{0646}\x{0633}|\x{0633}\x{0648}\x{0631}\x{064A}\x{0629}|\x{0641}\x{0644}\x{0633}\x{0637}\x{064A}\x{0646}|\x{0642}\x{0637}\x{0631}|\x{0645}\x{0635}\x{0631}|\x{092A}\x{0930}\x{0940}\x{0915}\x{094D}\x{0937}\x{093E}|\x{092D}\x{093E}\x{0930}\x{0924}|\x{09AD}\x{09BE}\x{09B0}\x{09A4}|\x{0A2D}\x{0A3E}\x{0A30}\x{0A24}|\x{0AAD}\x{0ABE}\x{0AB0}\x{0AA4}|\x{0B87}\x{0BA8}\x{0BCD}\x{0BA4}\x{0BBF}\x{0BAF}\x{0BBE}|\x{0B87}\x{0BB2}\x{0B99}\x{0BCD}\x{0B95}\x{0BC8}|\x{0B9A}\x{0BBF}\x{0B99}\x{0BCD}\x{0B95}\x{0BAA}\x{0BCD}\x{0BAA}\x{0BC2}\x{0BB0}\x{0BCD}|\x{0BAA}\x{0BB0}\x{0BBF}\x{0B9F}\x{0BCD}\x{0B9A}\x{0BC8}|\x{0C2D}\x{0C3E}\x{0C30}\x{0C24}\x{0C4D}|\x{0DBD}\x{0D82}\x{0D9A}\x{0DCF}|\x{0E44}\x{0E17}\x{0E22}|\x{30C6}\x{30B9}\x{30C8}|\x{4E2D}\x{56FD}|\x{4E2D}\x{570B}|\x{53F0}\x{6E7E}|\x{53F0}\x{7063}|\x{65B0}\x{52A0}\x{5761}|\x{6D4B}\x{8BD5}|\x{6E2C}\x{8A66}|\x{9999}\x{6E2F}|\x{D14C}\x{C2A4}\x{D2B8}|\x{D55C}\x{AD6D}|xn\-\-0zwm56d|xn\-\-11b5bs3a9aj6g|xn\-\-3e0b707e|xn\-\-45brj9c|xn\-\-80akhbyknj4f|xn\-\-90a3ac|xn\-\-9t4b11yi5a|xn\-\-clchc0ea0b2g2a9gcd|xn\-\-deba0ad|xn\-\-fiqs8s|xn\-\-fiqz9s|xn\-\-fpcrj9c3d|xn\-\-fzc2c9e2c|xn\-\-g6w251d|xn\-\-gecrj9c|xn\-\-h2brj9c|xn\-\-hgbk6aj7f53bba|xn\-\-hlcj6aya9esc7a|xn\-\-j6w193g|xn\-\-jxalpdlp|xn\-\-kgbechtv|xn\-\-kprw13d|xn\-\-kpry57d|xn\-\-lgbbat1ad8j|xn\-\-mgbaam7a8h|xn\-\-mgbayh7gpa|xn\-\-mgbbh1a71e|xn\-\-mgbc0a9azcg|xn\-\-mgberp4a5d4ar|xn\-\-o3cw4h|xn\-\-ogbpf8fl|xn\-\-p1ai|xn\-\-pgbs0dh|xn\-\-s9brj9c|xn\-\-wgbh1c|xn\-\-wgbl6a|xn\-\-xkc2al3hye2a|xn\-\-xkc2dl3a5ee0h|xn\-\-yfro4i67o|xn\-\-ygbi2ammx|xn\-\-zckzah|xxx)|y[et]|z[amw]))|(?:(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])))(?:\:\d{1,5})?)(\/(?:(?:[a-zA-Z0-9\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}\;\/\?\:\@\&\=\#\~\-\.\+\!\*'\(\)\,\_])|(?:\%[a-fA-F0-9]{2}))*)?(?:\b|$)/iu",
             text,
             var matches,
             PREG_SET_ORDER
         ) !== false) {
             for (match in matches) {
                 urls = (
-                    "fullUrl"  => match[0], // "https://foo:bar@www.bing.com/?foo=#test"
-                    "baseUrl"  => match[1], // "https://foo:bar@www.bing.com"
-                    "protocol" => match[2], // "https" (empty if no protocol)
-                    "domain"   => match[3], // "www.bing.com"
-                    "path"     => isset($match[4]) ? $match[4] : "", // "/?foo=#test"
+                    "fullUrl"  to match[0], // "https://foo:bar@www.bing.com/?foo=#test"
+                    "baseUrl"  to match[1], // "https://foo:bar@www.bing.com"
+                    "protocol" to match[2], // "https" (empty if no protocol)
+                    "domain"   to match[3], // "www.bing.com"
+                    "path"     to if(!match[4].isBlank()) match[4] else "" // "/?foo=#test"
                 )
             }
         }

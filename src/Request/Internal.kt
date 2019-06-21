@@ -53,25 +53,25 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return .InstagramAPI.Response.ConfigureResponse
 	 *
-	 * @see Internal::configureSinglePhoto() for available metadata fields.
+	 * @see Internal.configureSinglePhoto() for available metadata fields.
 	 */
-	fun uploadSinglePhoto(targetFeed:Int, photoFilename:String, InternalMetadata internalMetadata = null, array
-	                      externalMetadata = []) {
+	fun uploadSinglePhoto(targetFeed:Int, photoFilename:String, internalMetadataRE: InternalMetadata = null, array externalMetadata = []) {
 		// Make sure we only allow these particular feeds for this fun.
-		if (targetFeed !== Constants::FEED_TIMELINE && targetFeed !== Constants::FEED_STORY && targetFeed !== Constants::FEED_DIRECT_STORY) {
-			throw IllegalArgumentException(sprintf("Bad target feed " % s".", targetFeed))
+		if (targetFeed !== Constants.FEED_TIMELINE && targetFeed !== Constants.FEED_STORY && targetFeed !== Constants.FEED_DIRECT_STORY) {
+			throw IllegalArgumentException("Bad target feed \"$targetFeed\".")
 		}
 
+		var internalMetadata = internalMetadataRE
 		// Validate and prepare internal metadata object.
 		if (internalMetadata === null) {
-			internalMetadata = InternalMetadata(Utils::generateUploadId(true))
+			internalMetadata = InternalMetadata(Utils.generateUploadId(true))
 		}
 
 		try {
 			if (internalMetadata.getPhotoDetails() === null) {
 				internalMetadata.setPhotoDetails(targetFeed, photoFilename)
 			}
-		} catch (.Exception e) {
+		} catch (e: Exception) {
 			throw IllegalArgumentException(sprintf("Failed to get photo details: %s", e.getMessage()), e.getCode(), e)
 		}
 
@@ -79,9 +79,8 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		this.uploadPhotoData(targetFeed, internalMetadata)
 
 		// Configure the uploaded image and attach it to our timeline/story.
-		configure = this.configureSinglePhoto(targetFeed, internalMetadata, externalMetadata)
 
-		return configure
+		return configureSinglePhoto(targetFeed, internalMetadata, externalMetadata)
 	}
 
 	/**
@@ -94,10 +93,10 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 * @throws .InstagramAPI.Exception.UploadFailedException
 	 */
-	fun uploadPhotoData(targetFeed:Int, InternalMetadata internalMetadata) {
+	fun uploadPhotoData(targetFeed:Int, internalMetadata: InternalMetadata) {
 		// Make sure we disallow some feeds for this fun.
-		if (targetFeed === Constants::FEED_DIRECT) {
-			throw IllegalArgumentException(sprintf("Bad target feed " % s".", targetFeed))
+		if (targetFeed === Constants.FEED_DIRECT) {
+			throw IllegalArgumentException("Bad target feed \"$targetFeed\".")
 		}
 
 		// Make sure we have photo details.
@@ -107,19 +106,17 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 
 		try {
 			// Upload photo file with one of our photo uploaders.
-			if (this._useResumablePhotoUploader(targetFeed, internalMetadata)) {
-				this._uploadResumablePhoto(targetFeed, internalMetadata)
+			if (_useResumablePhotoUploader(targetFeed, internalMetadata)) {
+				_uploadResumablePhoto(targetFeed, internalMetadata)
 			} else {
-				internalMetadata.setPhotoUploadResponse(this._uploadPhotoInOnePiece(targetFeed, internalMetadata))
+				internalMetadata.setPhotoUploadResponse(_uploadPhotoInOnePiece(targetFeed, internalMetadata))
 			}
-		} catch (InstagramException e) {
+		} catch (e: InstagramException) {
 			// Pass Instagram"s error as is.
 			throw e
-		} catch (.Exception e) {
+		} catch (e: Exception) {
 			// Wrap runtime errors.
-			throw UploadFailedException(
-				sprintf("Upload of " % s" failed: %s", internalMetadata.getPhotoDetails().getBasename(),
-				        e.getMessage()), e.getCode(), e)
+			throw UploadFailedException(sprintf("Upload of \"%s\" failed: %s", internalMetadata.getPhotoDetails().getBasename(),e.getMessage()), e.getCode(), e)
 		}
 	}
 
@@ -141,195 +138,192 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return .InstagramAPI.Response.ConfigureResponse
 	 */
-	fun configureSinglePhoto(targetFeed:Int, InternalMetadata internalMetadata, array externalMetadata = []) {
+	fun configureSinglePhoto(targetFeed:Int, internalMetadata: InternalMetadata  array externalMetadata = []) {
 		// Determine the target endpoint for the photo.
-		switch(targetFeed) {
-			case Constants ::FEED_TIMELINE:
-			endpoint = "media/configure/"
-			break
-			case Constants ::FEED_DIRECT_STORY:
-			case Constants ::FEED_STORY:
-			endpoint = "media/configure_to_story/"
-			break
-			default:
-			throw IllegalArgumentException(sprintf("Bad target feed " % s".", targetFeed))
+		var endpoint = when(targetFeed) {
+			Constants.FEED_TIMELINE ->"media/configure/"
+			Constants.FEED_DIRECT_STORY, Constants.FEED_STORY -> "media/configure_to_story/"
+			else -> throw IllegalArgumentException("Bad target feed \"$targetFeed\".")
 		}
 
 		// Available external metadata parameters:
 		/** @var string Caption to import for the media. */
-		captionText = isset(externalMetadata["caption"]) ? externalMetadata["caption"] : ""
+		var captionText = if (!externalMetadata["caption"].isBlank()) externalMetadata["caption"] else ""
 		/** @var string Accesibility caption to import for the media. */
-		altText = isset(
-			externalMetadata["custom_accessibility_caption"]) ? externalMetadata["custom_accessibility_caption"] : null
+		var altText = if (!externalMetadata["custom_accessibility_caption"].isBlank()) externalMetadata["custom_accessibility_caption"] else null
 		/** @var Response.Model.Location|null A Location object describing where
 		 * the media was taken. */
-		location = (isset(externalMetadata["location"])) ? externalMetadata["location"] : null
+		var location = if (!externalMetadata["location"].isBlank()) externalMetadata["location"] else null
 		/** @var array|null Array of story location sticker instructions. ONLY
 		 * USED FOR STORY MEDIA! */
-		locationSticker = (isset(
-			externalMetadata["location_sticker"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["location_sticker"] : null
+		var locationSticker = if (!externalMetadata["location_sticker"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["location_sticker"] else null
 		/** @var array|null Array of usertagging instructions, in the format
 		 * [["position"=>[0.5,0.5], "user_id"=>"123"], ...]. ONLY FOR TIMELINE PHOTOS! */
-		usertags = (isset(
-			externalMetadata["usertags"]) && targetFeed == Constants::FEED_TIMELINE) ? externalMetadata["usertags"] : null
+		var usertags = if (!externalMetadata["usertags"].isBlank()&& targetFeed == Constants.FEED_TIMELINE) externalMetadata["usertags"] else null
 		/** @var string|null Link to attach to the media. ONLY USED FOR STORY MEDIA,
 		 * AND YOU MUST HAVE A BUSINESS INSTAGRAM ACCOUNT TO POST A STORY LINK! */
-		link =
-			(isset(externalMetadata["link"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["link"] : null
+		var link = if (!externalMetadata["link"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["link"] else null
 		/** @var void Photo filter. THIS DOES NOTHING! All real filters are done in the mobile app. */
 		// filter = isset(externalMetadata["filter"]) ? externalMetadata["filter"] : null
-		filter = null // COMMENTED OUT SO USERS UNDERSTAND THEY CAN"T import THIS!
+		var filter = null // COMMENTED OUT SO USERS UNDERSTAND THEY CAN"T import THIS!
 		/** @var array Hashtags to import for the media. ONLY STORY MEDIA! */
-		hashtags = (isset(
-			externalMetadata["hashtags"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["hashtags"] : null
+		var hashtags = if (!externalMetadata["hashtags"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["hashtags"] else null
 		/** @var array Mentions to import for the media. ONLY STORY MEDIA! */
-		storyMentions = (isset(
-			externalMetadata["story_mentions"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["story_mentions"] : null
+		var storyMentions = if (!externalMetadata["story_mentions"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_mentions"] else null
 		/** @var array Story poll to import for the media. ONLY STORY MEDIA! */
-		storyPoll = (isset(
-			externalMetadata["story_polls"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["story_polls"] : null
+		var storyPoll = if (!externalMetadata["story_polls"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_polls"] else null
 		/** @var array Story slider to import for the media. ONLY STORY MEDIA! */
-		storySlider = (isset(
-			externalMetadata["story_sliders"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["story_sliders"] : null
+		var storySlider = if (!externalMetadata["story_sliders"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_sliders"] else null
 		/** @var array Story question to import for the media. ONLY STORY MEDIA */
-		storyQuestion = (isset(
-			externalMetadata["story_questions"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["story_questions"] : null
+		var storyQuestion = if (!externalMetadata["story_questions"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_questions"] else null
 		/** @var array Story countdown to import for the media. ONLY STORY MEDIA */
-		storyCountdown = (isset(
-			externalMetadata["story_countdowns"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["story_countdowns"] : null
+		var storyCountdown = if (!externalMetadata["story_countdowns"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_countdowns"] else null
 		/** @var array Attached media used to share media to story feed. ONLY STORY MEDIA! */
-		attachedMedia = (isset(
-			externalMetadata["attached_media"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["attached_media"] : null
+		var attachedMedia = if (!externalMetadata["attached_media"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["attached_media"] else null
 		/** @var array Product Tags to import for the media. ONLY FOR TIMELINE PHOTOS! */
-		productTags = (isset(
-			externalMetadata["product_tags"]) && targetFeed == Constants::FEED_TIMELINE) ? externalMetadata["product_tags"] : null
+		var productTags = if (!externalMetadata["product_tags"].isBlank() && targetFeed == Constants.FEED_TIMELINE) externalMetadata["product_tags"] else null
 
 		// Fix very bad external user-metadata values.
-		if (!is_string(captionText)) {
+		if (captionText !is String) {
 			captionText = ""
 		}
 
 		// Critically important internal library-generated metadata parameters:
 		/** @var string The ID of the entry to configure. */
-		uploadId = internalMetadata.getUploadId()
+		var uploadId = internalMetadata.getUploadId()
 		/** @var int Width of the photo. */
-		photoWidth = internalMetadata.getPhotoDetails().getWidth()
+		var photoWidth = internalMetadata.getPhotoDetails().getWidth()
 		/** @var int Height of the photo. */
-		photoHeight = internalMetadata.getPhotoDetails().getHeight()
+		var photoHeight = internalMetadata.getPhotoDetails().getHeight()
 
 		// Build the request...
-		request = this.ig.request(endpoint).addPost("_csrftoken", this.ig.client.getToken()).addPost("_uid",
-		                                                                                             this.ig.account_id).addPost(
-				"_uuid", this.ig.uuid).addPost("edits", ["crop_original_size"    =>[photoWidth, photoHeight],
-		"crop_zoom"             => 1,
-		"crop_center"           => [0.0, -0.0],
-		])
-		.addPost("device", ["manufacturer"      => this.ig.device.getManufacturer(),
-		"model"             => this.ig.device.getModel(),
-		"android_version"   => this.ig.device.getAndroidVersion(),
-		"android_release"   => this.ig.device.getAndroidRelease(),
-		])
-		.addPost("extra", ["source_width"  => photoWidth,
-		"source_height" => photoHeight,
-		])
+		var request = this.ig.request(endpoint)
+				.addPost("_csrftoken", this.ig.client.getToken())
+				.addPost("_uid",this.ig.account_id)
+				.addPost("_uuid", this.ig.uuid)
+				.addPost("edits", mapOf(
+						"crop_original_size"    to listOf(photoWidth, photoHeight),
+						"crop_zoom"             to 1,
+						"crop_center"           to listOf(0.0, -0.0)
+				))
+				.addPost("device", mapOf(
+					"manufacturer"      to this.ig.device.getManufacturer(),
+					"model"             to this.ig.device.getModel(),
+					"android_version"   to this.ig.device.getAndroidVersion(),
+					"android_release"   to this.ig.device.getAndroidRelease()
+				))
+				.addPost("extra", mapOf<String, Double>(
+					"source_width"  to photoWidth,
+					"source_height" to photoHeight
+				))
 
-		switch(targetFeed) {
-			case Constants ::FEED_TIMELINE:
-			date = date("Y:m:d H:i:s")
-			request.addParam("timezone_offset", date("Z")).addPost("date_time_original", date)
-				.addPost("date_time_digitalized", date).addPost("caption", captionText).addPost("source_type", "4")
-				.addPost("media_folder", "Camera").addPost("upload_id", uploadId)
+		when(targetFeed) {
+			Constants.FEED_TIMELINE -> {
+				var date = date("Y:m:d H:i:s")
+				request.addParam("timezone_offset", date("Z"))
+					.addPost("date_time_original", date)
+					.addPost("date_time_digitalized", date)
+					.addPost("caption", captionText)
+					.addPost("source_type", "4")
+					.addPost("media_folder", "Camera")
+					.addPost("upload_id", uploadId)
 
-			if (usertags !== null) {
-				Utils::throwIfInvalidUsertags(usertags)
-				request.addPost("usertags", json_encode(usertags))
-			}
-			if (productTags !== null) {
-				Utils::throwIfInvalidProductTags(productTags)
-				request.addPost("product_tags", json_encode(productTags))
-			}
-			if (altText !== null) {
-				request.addPost("custom_accessibility_caption", altText)
-			}
-			break
-			case Constants ::FEED_STORY:
-			if (internalMetadata.isBestieMedia()) {
-				request.addPost("audience", "besties")
+				if (usertags !== null) {
+					Utils.throwIfInvalidUsertags(usertags)
+					request.addPost("usertags", json_encode(usertags))
+				}
+				if (productTags !== null) {
+					Utils.throwIfInvalidProductTags(productTags)
+					request.addPost("product_tags", json_encode(productTags))
+				}
+				if (altText !== null) {
+					request.addPost("custom_accessibility_caption", altText)
+				}
 			}
 
-			request.addPost("client_shared_at", (string) time ()).addPost("source_type", "3")
-				.addPost("configure_mode", "1").addPost("client_timestamp", (string)(time() - mt_rand(3, 10)))
-				.addPost("upload_id", uploadId)
+			Constants.FEED_STORY -> {
+				if (internalMetadata.isBestieMedia()) {
+					request.addPost("audience", "besties")
+				}
 
-			if (is_string(link) && Utils::hasValidWebURLSyntax(link)) {
-				story_cta = "[{" links ":[{" linkType ": 1, " webUri ":".json_encode(
-					link).", " androidClass ": "", "package": "", "deeplinkUri": "", "callToActionTitle": "", "redirectUri": null, "leadGenFormId": "", "igUserId": "", "appInstallObjectiveInvalidationBehavior": null}]}]"
-				request.addPost("story_cta", story_cta)
+				request.addPost("client_shared_at", (string) time ())
+					.addPost("source_type", "3")
+					.addPost("configure_mode", "1")
+					.addPost("client_timestamp", (string)(time() - (3..10).random()))
+					.addPost("upload_id", uploadId)
+
+				if (link is String && Utils.hasValidWebURLSyntax(link)) {
+					var story_cta = "[{\"links\":[{\"linkType\": 1, \"webUri\":" + json_encode(link) + ", \"androidClass\": \"\", \"package\": \"\", \"deeplinkUri\": \"\", \"callToActionTitle\": \"\", \"redirectUri\": null, \"leadGenFormId\": \"\", \"igUserId\": \"\", \"appInstallObjectiveInvalidationBehavior\": null}]}]"
+					request.addPost("story_cta", story_cta)
+				}
+				if (hashtags !== null && captionText !== "") {
+					Utils.throwIfInvalidStoryHashtags(captionText, hashtags)
+					request.addPost("story_hashtags", json_encode(hashtags))
+						.addPost("caption", captionText)
+						.addPost("mas_opt_in", "NOT_PROMPTED")
+				}
+				if (locationSticker !== null && location !== null) {
+					Utils.throwIfInvalidStoryLocationSticker(locationSticker)
+					request.addPost("story_locations", json_encode([locationSticker]))
+						.addPost("mas_opt_in", "NOT_PROMPTED")
+				}
+				if (storyMentions !== null && captionText !== "") {
+					Utils.throwIfInvalidStoryMentions(storyMentions)
+					request.addPost("reel_mentions", json_encode(storyMentions))
+						.addPost("caption", captionText.replace(" ", "+") + "+")
+						.addPost("mas_opt_in", "NOT_PROMPTED")
+				}
+				if (storyPoll !== null) {
+					Utils.throwIfInvalidStoryPoll(storyPoll)
+					request.addPost("story_polls", json_encode(storyPoll))
+						.addPost("internal_features", "polling_sticker")
+						.addPost("mas_opt_in", "NOT_PROMPTED")
+				}
+				if (storySlider !== null) {
+					Utils.throwIfInvalidStorySlider(storySlider)
+					request.addPost("story_sliders", json_encode(storySlider))
+						.addPost("story_sticker_ids", "emoji_slider_" + storySlider[0]["emoji"])
+				}
+				if (storyQuestion !== null) {
+					Utils.throwIfInvalidStoryQuestion(storyQuestion)
+					request.addPost("story_questions", json_encode(storyQuestion))
+						.addPost("story_sticker_ids", "question_sticker_ama")
+				}
+				if (storyCountdown !== null) {
+					Utils.throwIfInvalidStoryCountdown(storyCountdown)
+					request.addPost("story_countdowns", json_encode(storyCountdown))
+						.addPost("story_sticker_ids", "countdown_sticker_time")
+				}
+				if (attachedMedia !== null) {
+					Utils.throwIfInvalidAttachedMedia(attachedMedia)
+					request.addPost("attached_media", json_encode(attachedMedia))
+						.addPost("story_sticker_ids", "media_simple_" + reset(attachedMedia)["media_id"])
+				}
 			}
-			if (hashtags !== null && captionText !== "") {
-				Utils::throwIfInvalidStoryHashtags(captionText, hashtags)
-				request.addPost("story_hashtags", json_encode(hashtags)).addPost("caption", captionText)
-					.addPost("mas_opt_in", "NOT_PROMPTED")
+			Constants.FEED_DIRECT_STORY -> {
+				request.addPost("recipient_users", internalMetadata.getDirectUsers())
+					.addPost("thread_ids", internalMetadata.getDirectThreads())
+					.addPost("client_shared_at", (string) time ()).addPost("source_type", "3")
+					.addPost("configure_mode", "2").addPost("client_timestamp", (string)(time() - (3..10).random()))
+					.addPost("upload_id", uploadId)
 			}
-			if (locationSticker !== null && location !== null) {
-				Utils::throwIfInvalidStoryLocationSticker(locationSticker)
-				request.addPost("story_locations", json_encode([locationSticker])).addPost("mas_opt_in", "NOT_PROMPTED")
-			}
-			if (storyMentions !== null && captionText !== "") {
-				Utils::throwIfInvalidStoryMentions(storyMentions)
-				request.addPost("reel_mentions", json_encode(storyMentions))
-					.addPost("caption", str_replace(" ", "+", captionText)."+").addPost("mas_opt_in", "NOT_PROMPTED")
-			}
-			if (storyPoll !== null) {
-				Utils::throwIfInvalidStoryPoll(storyPoll)
-				request.addPost("story_polls", json_encode(storyPoll)).addPost("internal_features", "polling_sticker")
-					.addPost("mas_opt_in", "NOT_PROMPTED")
-			}
-			if (storySlider !== null) {
-				Utils::throwIfInvalidStorySlider(storySlider)
-				request.addPost("story_sliders", json_encode(storySlider))
-					.addPost("story_sticker_ids", "emoji_slider_".storySlider[0]["emoji"])
-			}
-			if (storyQuestion !== null) {
-				Utils::throwIfInvalidStoryQuestion(storyQuestion)
-				request.addPost("story_questions", json_encode(storyQuestion))
-					.addPost("story_sticker_ids", "question_sticker_ama")
-			}
-			if (storyCountdown !== null) {
-				Utils::throwIfInvalidStoryCountdown(storyCountdown)
-				request.addPost("story_countdowns", json_encode(storyCountdown))
-					.addPost("story_sticker_ids", "countdown_sticker_time")
-			}
-			if (attachedMedia !== null) {
-				Utils::throwIfInvalidAttachedMedia(attachedMedia)
-				request.addPost("attached_media", json_encode(attachedMedia))
-					.addPost("story_sticker_ids", "media_simple_".reset(attachedMedia)["media_id"])
-			}
-			break
-			case Constants ::FEED_DIRECT_STORY:
-			request.addPost("recipient_users", internalMetadata.getDirectUsers())
-				.addPost("thread_ids", internalMetadata.getDirectThreads())
-				.addPost("client_shared_at", (string) time ()).addPost("source_type", "3")
-				.addPost("configure_mode", "2").addPost("client_timestamp", (string)(time() - mt_rand(3, 10)))
-				.addPost("upload_id", uploadId)
-			break
 		}
 
 		if (location instanceof Response.Model.Location) {
-			if (targetFeed === Constants::FEED_TIMELINE) {
-				request.addPost("location", Utils::buildMediaLocationJSON(location))
+			if (targetFeed === Constants.FEED_TIMELINE) {
+				request.addPost("location", Utils.buildMediaLocationJSON(location))
 			}
-			if (targetFeed === Constants::FEED_STORY && locationSticker === null) {
+			if (targetFeed === Constants.FEED_STORY && locationSticker === null) {
 				throw IllegalArgumentException("You must provide a location_sticker together with your story location.")
 			}
-			request.addPost("geotag_enabled", "1").addPost("posting_latitude", location.getLat())
-				.addPost("posting_longitude", location.getLng()).addPost("media_latitude", location.getLat())
+			request.addPost("geotag_enabled", "1")
+				.addPost("posting_latitude", location.getLat())
+				.addPost("posting_longitude", location.getLng())
+				.addPost("media_latitude", location.getLat())
 				.addPost("media_longitude", location.getLng())
 		}
 
-		configure = request.getResponse(Response.ConfigureResponse())
-
-		return configure
+		return request.getResponse(Response.ConfigureResponse())
 	}
 
 	/**
@@ -354,29 +348,28 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			if (internalMetadata.getVideoDetails() === null) {
 				internalMetadata.setVideoDetails(targetFeed, videoFilename)
 			}
-		} catch (.Exception e) {
+		} catch (e: Exception) {
 			throw IllegalArgumentException(sprintf("Failed to get photo details: %s", e.getMessage()), e.getCode(), e)
 		}
 
 		try {
-			if (this._useSegmentedVideoUploader(targetFeed, internalMetadata)) {
-				this._uploadSegmentedVideo(targetFeed, internalMetadata)
-			} elseif (this._useResumableVideoUploader(targetFeed, internalMetadata)) {
-				this._uploadResumableVideo(targetFeed, internalMetadata)
-			} else {
-				// Request parameters for uploading a video.
-				internalMetadata.setVideoUploadUrls(this._requestVideoUploadURL(targetFeed, internalMetadata))
+			when {
+				_useSegmentedVideoUploader(targetFeed, internalMetadata) -> _uploadSegmentedVideo(targetFeed, internalMetadata)
+				_useResumableVideoUploader(targetFeed, internalMetadata) -> _uploadResumableVideo(targetFeed, internalMetadata)
+				else -> {
+					// Request parameters for uploading a video.
+					internalMetadata.setVideoUploadUrls(_requestVideoUploadURL(targetFeed, internalMetadata))
 
-				// Attempt to upload the video data.
-				internalMetadata.setVideoUploadResponse(this._uploadVideoChunks(targetFeed, internalMetadata))
+					// Attempt to upload the video data.
+					internalMetadata.setVideoUploadResponse(_uploadVideoChunks(targetFeed, internalMetadata))
+				}
 			}
-		} catch (InstagramException e) {
+		} catch (e: InstagramException) {
 			// Pass Instagram"s error as is.
 			throw e
-		} catch (.Exception e) {
+		} catch (e: Exception) {
 			// Wrap runtime errors.
-			throw UploadFailedException(sprintf("Upload of " % s" failed: %s", basename(videoFilename), e.getMessage()),
-			                            e.getCode(), e)
+			throw UploadFailedException(sprintf("Upload of " % s" failed: %s", basename(videoFilename), e.getMessage()),e.getCode(), e)
 		}
 
 		return internalMetadata
@@ -398,13 +391,12 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return .InstagramAPI.Response.ConfigureResponse
 	 *
-	 * @see Internal::configureSingleVideo() for available metadata fields.
+	 * @see Internal.configureSingleVideo() for available metadata fields.
 	 */
-	fun uploadSingleVideo(targetFeed:Int, videoFilename:String,  internalMetadata:InternalMetadata? = null, array
-	                      externalMetadata = []) {
+	fun uploadSingleVideo(targetFeed:Int, videoFilename:String,  internalMetadata:InternalMetadata? = null, array externalMetadata = []) {
 		// Make sure we only allow these particular feeds for this fun.
-		if (targetFeed !== Constants::FEED_TIMELINE && targetFeed !== Constants::FEED_STORY && targetFeed !== Constants::FEED_DIRECT_STORY && targetFeed !== Constants::FEED_TV) {
-			throw IllegalArgumentException(sprintf("Bad target feed " % s".", targetFeed))
+		if (targetFeed !== Constants.FEED_TIMELINE && targetFeed !== Constants.FEED_STORY && targetFeed !== Constants.FEED_DIRECT_STORY && targetFeed !== Constants.FEED_TV) {
+			throw IllegalArgumentException(sprintf("Bad target feed \"$targetFeed\".")
 		}
 
 		// Attempt to upload the video.
@@ -416,16 +408,15 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		// Configure the uploaded video and attach it to our timeline/story.
 		try {
 			/** @var .InstagramAPI.Response.ConfigureResponse configure */
-			configure =
-				this.ig.internal.configureWithRetries(fun() import (targetFeed, internalMetadata, externalMetadata) {
+			var configure = this.ig.internal.configureWithRetries(fun() import (targetFeed, internalMetadata, externalMetadata) {
 					// Attempt to configure video parameters.
-					return this.configureSingleVideo(targetFeed, internalMetadata, externalMetadata)
+					return configureSingleVideo(targetFeed, internalMetadata, externalMetadata)
 				}
 			)
-		} catch (InstagramException e) {
+		} catch (e: InstagramException) {
 			// Pass Instagram"s error as is.
 			throw e
-		} catch (.Exception e) {
+		} catch (e: Exception) {
 			// Wrap runtime errors.
 			throw UploadFailedException(sprintf("Upload of " % s" failed: %s", basename(videoFilename), e.getMessage()),
 			                            e.getCode(), e)
@@ -452,18 +443,18 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 
 		try {
 			// Automatically crop&resize the thumbnail to Instagram"s requirements.
-			options = ["targetFeed" => targetFeed]
-			if (isset(externalMetadata["thumbnail_timestamp"])) {
+			var options = mutableMapOf("targetFeed" to targetFeed)
+			if (!externalMetadata["thumbnail_timestamp"].isBlank()) {
 				options["thumbnailTimestamp"] = externalMetadata["thumbnail_timestamp"]
 			}
-			videoThumbnail = InstagramThumbnail(internalMetadata.getVideoDetails().getFilename(), options)
+			var videoThumbnail = InstagramThumbnail(internalMetadata.getVideoDetails().getFilename(), options)
 			// Validate and upload the thumbnail.
 			internalMetadata.setPhotoDetails(targetFeed, videoThumbnail.getFile())
-			this.uploadPhotoData(targetFeed, internalMetadata)
-		} catch (InstagramException e) {
+			uploadPhotoData(targetFeed, internalMetadata)
+		} catch (e: InstagramException) {
 			// Pass Instagram"s error as is.
 			throw e
-		} catch (.Exception e) {
+		} catch (e: Exception) {
 			// Wrap runtime errors.
 			throw UploadFailedException(sprintf("Upload of video thumbnail failed: %s", e.getMessage()), e.getCode(), e)
 		}
@@ -480,18 +471,17 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.UploadJobVideoResponse
 	 */
 	protected fun _requestVideoUploadURL(:Int,  internalMetadata:InternalMetadata) {
-		request = this.ig.request("upload/video/").setSignedPost(false).addPost("_csrftoken", this.ig.client.getToken())
+		request = this.ig.request("upload/video/").setSignedPost(false)
+			.addPost("_csrftoken", this.ig.client.getToken())
 			.addPost("_uuid", this.ig.uuid)
 
-		foreach(this._getVideoUploadParams(targetFeed, internalMetadata) as key => value) {
+		for((key to value) in _getVideoUploadParams(targetFeed, internalMetadata)) {
 			request.addPost(key, value)
 		}
 
 		// Perform the "pre-upload" API request.
 		/** @var Response.UploadJobVideoResponse response */
-		response = request.getResponse(Response.UploadJobVideoResponse())
-
-		return response
+		return request.getResponse(Response.UploadJobVideoResponse())
 	}
 
 	/**
@@ -514,64 +504,56 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun configureSingleVideo(targetFeed:Int,  internalMetadata:InternalMetadata, array externalMetadata = []) {
 		// Determine the target endpoint for the video.
-		switch(targetFeed) {
-			case Constants ::FEED_TIMELINE:
-			endpoint = "media/configure/"
-			break
-			case Constants ::FEED_DIRECT_STORY:
-			case Constants ::FEED_STORY:
-			endpoint = "media/configure_to_story/"
-			break
-			case Constants ::FEED_TV:
-			endpoint = "media/configure_to_igtv/"
-			break
-			default:
-			throw IllegalArgumentException(sprintf("Bad target feed " % s".", targetFeed))
+		var endpoint = when(targetFeed) {
+			Constants.FEED_TIMELINE -> "media/configure/"
+			Constants.FEED_DIRECT_STORY, Constants.FEED_STORY -> "media/configure_to_story/"
+			Constants.FEED_TV -> "media/configure_to_igtv/"
+			else -> throw IllegalArgumentException("Bad target feed \"$targetFeed\".")
 		}
 
 		// Available external metadata parameters:
 		/** @var string Caption to import for the media. */
-		captionText = isset(externalMetadata["caption"]) ? externalMetadata["caption"] : ""
+		var captionText = if( isset(externalMetadata["caption"]) ) externalMetadata["caption"] else ""
 		/** @var string[]|null Array of numerical UserPK IDs of people tagged in
 		 * your video. ONLY USED IN STORY VIDEOS! TODO: Actually, it"s not even
 		 * implemented for stories. */
 		usertags = (isset(
-			externalMetadata["usertags"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["usertags"] : null
+			externalMetadata["usertags"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["usertags"] : null
 		/** @var Response.Model.Location|null A Location object describing where
 		 * the media was taken. */
 		location = (isset(externalMetadata["location"])) ? externalMetadata["location"] : null
 		/** @var array|null Array of story location sticker instructions. ONLY
 		 * USED FOR STORY MEDIA! */
 		locationSticker = (isset(
-			externalMetadata["location_sticker"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["location_sticker"] : null
+			externalMetadata["location_sticker"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["location_sticker"] : null
 		/** @var string|null Link to attach to the media. ONLY USED FOR STORY MEDIA,
 		 * AND YOU MUST HAVE A BUSINESS INSTAGRAM ACCOUNT TO POST A STORY LINK! */
 		link =
-			(isset(externalMetadata["link"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["link"] : null
+			(isset(externalMetadata["link"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["link"] : null
 		/** @var array Hashtags to import for the media. ONLY STORY MEDIA! */
 		hashtags = (isset(
-			externalMetadata["hashtags"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["hashtags"] : null
+			externalMetadata["hashtags"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["hashtags"] : null
 		/** @var array Mentions to import for the media. ONLY STORY MEDIA! */
 		storyMentions = (isset(
-			externalMetadata["story_mentions"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["story_mentions"] : null
+			externalMetadata["story_mentions"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["story_mentions"] : null
 		/** @var array Story poll to import for the media. ONLY STORY MEDIA! */
 		storyPoll = (isset(
-			externalMetadata["story_polls"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["story_polls"] : null
+			externalMetadata["story_polls"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["story_polls"] : null
 		/** @var array Attached media used to share media to story feed. ONLY STORY MEDIA! */
 		storySlider = (isset(
-			externalMetadata["story_sliders"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["story_sliders"] : null
+			externalMetadata["story_sliders"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["story_sliders"] : null
 		/** @var array Story question to import for the media. ONLY STORY MEDIA */
 		storyQuestion = (isset(
-			externalMetadata["story_questions"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["story_questions"] : null
+			externalMetadata["story_questions"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["story_questions"] : null
 		/** @var array Story countdown to import for the media. ONLY STORY MEDIA */
 		storyCountdown = (isset(
-			externalMetadata["story_countdowns"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["story_countdowns"] : null
+			externalMetadata["story_countdowns"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["story_countdowns"] : null
 		/** @var array Attached media used to share media to story feed. ONLY STORY MEDIA! */
 		attachedMedia = (isset(
-			externalMetadata["attached_media"]) && targetFeed == Constants::FEED_STORY) ? externalMetadata["attached_media"] : null
+			externalMetadata["attached_media"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["attached_media"] : null
 		/** @var array Title of the media uploaded to your channel. ONLY TV MEDIA! */
 		title =
-			(isset(externalMetadata["title"]) && targetFeed == Constants::FEED_TV) ? externalMetadata["title"] : null
+			(isset(externalMetadata["title"]) && targetFeed == Constants.FEED_TV) ? externalMetadata["title"] : null
 
 		// Fix very bad external user-metadata values.
 		if (!is_string(captionText)) {
@@ -583,7 +565,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 
 		// Build the request...
 		request = this.ig.request(endpoint).addParam("video", 1).addPost("supported_capabilities_new", json_encode(
-				Constants::SUPPORTED_CAPABILITIES)).addPost("video_result",
+				Constants.SUPPORTED_CAPABILITIES)).addPost("video_result",
 		                                                    internalMetadata.getVideoUploadResponse() !== null ?(
 			string) internalMetadata . getVideoUploadResponse ().getResult() : "")
 		.addPost("upload_id", uploadId).addPost("poster_frame_index", 0)
@@ -601,10 +583,10 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			.addPost("_uid", this.ig.account_id)
 
 		switch(targetFeed) {
-			case Constants ::FEED_TIMELINE:
+			case Constants.FEED_TIMELINE:
 			request.addPost("caption", captionText)
 			break
-			case Constants ::FEED_STORY:
+			case Constants.FEED_STORY:
 			if (internalMetadata.isBestieMedia()) {
 				request.addPost("audience", "besties")
 			}
@@ -613,59 +595,59 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 				.addPost("story_media_creation_date", time() - mt_rand(10, 20))
 				.addPost("client_shared_at", time() - mt_rand(3, 10)).addPost("client_timestamp", time())
 
-			if (is_string(link) && Utils::hasValidWebURLSyntax(link)) {
+			if (is_string(link) && Utils.hasValidWebURLSyntax(link)) {
 				story_cta = "[{" links ":[{" linkType ": 1, " webUri ":".json_encode(
 					link).", " androidClass ": "", "package": "", "deeplinkUri": "", "callToActionTitle": "", "redirectUri": null, "leadGenFormId": "", "igUserId": "", "appInstallObjectiveInvalidationBehavior": null}]}]"
 				request.addPost("story_cta", story_cta)
 			}
 			if (hashtags !== null && captionText !== "") {
-				Utils::throwIfInvalidStoryHashtags(captionText, hashtags)
+				Utils.throwIfInvalidStoryHashtags(captionText, hashtags)
 				request.addPost("story_hashtags", json_encode(hashtags)).addPost("caption", captionText)
 					.addPost("mas_opt_in", "NOT_PROMPTED")
 			}
 			if (locationSticker !== null && location !== null) {
-				Utils::throwIfInvalidStoryLocationSticker(locationSticker)
+				Utils.throwIfInvalidStoryLocationSticker(locationSticker)
 				request.addPost("story_locations", json_encode([locationSticker])).addPost("mas_opt_in", "NOT_PROMPTED")
 			}
 			if (storyMentions !== null && captionText !== "") {
-				Utils::throwIfInvalidStoryMentions(storyMentions)
+				Utils.throwIfInvalidStoryMentions(storyMentions)
 				request.addPost("reel_mentions", json_encode(storyMentions))
 					.addPost("caption", str_replace(" ", "+", captionText)."+").addPost("mas_opt_in", "NOT_PROMPTED")
 			}
 			if (storyPoll !== null) {
-				Utils::throwIfInvalidStoryPoll(storyPoll)
+				Utils.throwIfInvalidStoryPoll(storyPoll)
 				request.addPost("story_polls", json_encode(storyPoll)).addPost("internal_features", "polling_sticker")
 					.addPost("mas_opt_in", "NOT_PROMPTED")
 			}
 			if (storySlider !== null) {
-				Utils::throwIfInvalidStorySlider(storySlider)
+				Utils.throwIfInvalidStorySlider(storySlider)
 				request.addPost("story_sliders", json_encode(storySlider))
 					.addPost("story_sticker_ids", "emoji_slider_".storySlider[0]["emoji"])
 			}
 			if (storyQuestion !== null) {
-				Utils::throwIfInvalidStoryQuestion(storyQuestion)
+				Utils.throwIfInvalidStoryQuestion(storyQuestion)
 				request.addPost("story_questions", json_encode(storyQuestion))
 					.addPost("story_sticker_ids", "question_sticker_ama")
 			}
 			if (storyCountdown !== null) {
-				Utils::throwIfInvalidStoryCountdown(storyCountdown)
+				Utils.throwIfInvalidStoryCountdown(storyCountdown)
 				request.addPost("story_countdowns", json_encode(storyCountdown))
 					.addPost("story_sticker_ids", "countdown_sticker_time")
 			}
 			if (attachedMedia !== null) {
-				Utils::throwIfInvalidAttachedMedia(attachedMedia)
+				Utils.throwIfInvalidAttachedMedia(attachedMedia)
 				request.addPost("attached_media", json_encode(attachedMedia))
 					.addPost("story_sticker_ids", "media_simple_".reset(attachedMedia)["media_id"])
 			}
 			break
-			case Constants ::FEED_DIRECT_STORY:
+			case Constants.FEED_DIRECT_STORY:
 			request.addPost("configure_mode", 2) // 2 - DIRECT_STORY_SHARE
 				.addPost("recipient_users", internalMetadata.getDirectUsers())
 				.addPost("thread_ids", internalMetadata.getDirectThreads())
 				.addPost("story_media_creation_date", time() - mt_rand(10, 20))
 				.addPost("client_shared_at", time() - mt_rand(3, 10)).addPost("client_timestamp", time())
 			break
-			case Constants ::FEED_TV:
+			case Constants.FEED_TV:
 			if (title === null) {
 				throw IllegalArgumentException("You must provide a title for the media.")
 			}
@@ -673,7 +655,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			break
 		}
 
-		if (targetFeed == Constants::FEED_STORY) {
+		if (targetFeed == Constants.FEED_STORY) {
 			request.addPost("story_media_creation_date", time())
 			if (usertags !== null) {
 				// Reel Mention example:
@@ -687,10 +669,10 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		}
 
 		if (location instanceof Response.Model.Location) {
-			if (targetFeed === Constants::FEED_TIMELINE) {
-				request.addPost("location", Utils::buildMediaLocationJSON(location))
+			if (targetFeed === Constants.FEED_TIMELINE) {
+				request.addPost("location", Utils.buildMediaLocationJSON(location))
 			}
-			if (targetFeed === Constants::FEED_STORY && locationSticker === null) {
+			if (targetFeed === Constants.FEED_STORY && locationSticker === null) {
 				throw IllegalArgumentException("You must provide a location_sticker together with your story location.")
 			}
 			request.addPost("geotag_enabled", "1").addPost("posting_latitude", location.getLat())
@@ -710,7 +692,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * IT DO ANYTHING ELSE, TO AVOID ADDING BUGGY AND UNMAINTAINABLE SPIDERWEB
 	 * CODE!
 	 *
-	 * @param array            media            Extended media array coming from Timeline::uploadAlbum(),
+	 * @param array            media            Extended media array coming from Timeline.uploadAlbum(),
 	 *                                           containing the user"s per-file metadata,
 	 *                                           and internally generated per-file metadata.
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object for the album itself.
@@ -767,7 +749,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 				]
 
 				if (isset(item["usertags"])) {
-					// NOTE: These usertags were validated in Timeline::uploadAlbum.
+					// NOTE: These usertags were validated in Timeline.uploadAlbum.
 					photoConfig["usertags"] = json_encode(["in" => item ["usertags"]])
 				}
 
@@ -799,7 +781,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 				]
 
 				if (isset(item["usertags"])) {
-					// NOTE: These usertags were validated in Timeline::uploadAlbum.
+					// NOTE: These usertags were validated in Timeline.uploadAlbum.
 					videoConfig["usertags"] = json_encode(["in" => item ["usertags"]])
 				}
 
@@ -815,7 +797,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			.addPost("children_metadata", childrenMetadata)
 
 		if (location instanceof Response.Model.Location) {
-			request.addPost("location", Utils::buildMediaLocationJSON(location)).addPost("geotag_enabled", "1")
+			request.addPost("location", Utils.buildMediaLocationJSON(location)).addPost("geotag_enabled", "1")
 				.addPost("posting_latitude", location.getLat()).addPost("posting_longitude", location.getLng())
 				.addPost("media_latitude", location.getLat()).addPost("media_longitude", location.getLng())
 				.addPost("exif_latitude", 0.0).addPost("exif_longitude", 0.0)
@@ -874,7 +856,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun syncDeviceFeatures(prelogin:Boolean = false) {
 		request = this.ig.request("qe/sync/").addHeader("X-DEVICE-ID", this.ig.uuid).addPost("id", this.ig.uuid)
-			.addPost("experiments", Constants::LOGIN_EXPERIMENTS)
+			.addPost("experiments", Constants.LOGIN_EXPERIMENTS)
 		if (prelogin) {
 			request.setNeedsAuth(false)
 		} else {
@@ -895,7 +877,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	fun syncUserFeatures() {
 		result = this.ig.request("qe/sync/").addHeader("X-DEVICE-ID", this.ig.uuid).addPost("_uuid", this.ig.uuid)
 			.addPost("_uid", this.ig.account_id).addPost("_csrftoken", this.ig.client.getToken())
-			.addPost("id", this.ig.account_id).addPost("experiments", Constants::EXPERIMENTS)
+			.addPost("id", this.ig.account_id).addPost("experiments", Constants.EXPERIMENTS)
 			.getResponse(Response.SyncResponse())
 
 		// Save the updated experiments for this user.
@@ -1049,7 +1031,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		return this.ig.request("megaphone/log/").setSignedPost(false).addPost("type", "feed_aysf")
 			.addPost("action", "seen").addPost("reason", "").addPost("_uuid", this.ig.uuid)
 			.addPost("device_id", this.ig.device_id).addPost("_csrftoken", this.ig.client.getToken())
-			.addPost("uuid", md5(time())).getResponse(Response.MegaphoneLogResponse())
+			.addPost("uuid", time().md5()).getResponse(Response.MegaphoneLogResponse())
 	}
 
 	/**
@@ -1075,12 +1057,12 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.FacebookOTAResponse
 	 */
 	fun getFacebookOTA() {
-		return this.ig.request("facebook_ota/").addParam("fields", Constants::FACEBOOK_OTA_FIELDS)
+		return this.ig.request("facebook_ota/").addParam("fields", Constants.FACEBOOK_OTA_FIELDS)
 			.addParam("custom_user_id", this.ig.account_id)
-			.addParam("signed_body", Signatures::generateSignature("").".")
-			.addParam("ig_sig_key_version", Constants::SIG_KEY_VERSION)
-			.addParam("version_code", Constants::VERSION_CODE).addParam("version_name", Constants::IG_VERSION)
-			.addParam("custom_app_id", Constants::FACEBOOK_ORCA_APPLICATION_ID)
+			.addParam("signed_body", Signatures.generateSignature("").".")
+			.addParam("ig_sig_key_version", Constants.SIG_KEY_VERSION)
+			.addParam("version_code", Constants.VERSION_CODE).addParam("version_name", Constants.IG_VERSION)
+			.addParam("custom_app_id", Constants.FACEBOOK_ORCA_APPLICATION_ID)
 			.addParam("custom_device_id", this.ig.uuid).getResponse(Response.FacebookOTAResponse())
 	}
 
@@ -1130,7 +1112,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		return this.ig.request("qp/batch_fetch/").addPost("vc_policy", "default").addPost("_csrftoken",
 		                                                                                  this.ig.client.getToken()).addPost(
 				"_uid", this.ig.account_id).addPost("_uuid", this.ig.uuid).addPost("surfaces_to_queries", json_encode(
-				[Constants::SURFACE_PARAM[0] => query, Constants::SURFACE_PARAM[1] => query,
+				[Constants.SURFACE_PARAM[0] => query, Constants.SURFACE_PARAM[1] => query,
 		]
 		))
 		.addPost("version", 1).addPost("scale", 2).getResponse(Response.FetchQPDataResponse())
@@ -1145,8 +1127,8 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun getQPCooldowns() {
 		return this.ig.request("qp/get_cooldowns/")
-			.addParam("signed_body", Signatures::generateSignature(json_encode((object)[]).".{}"))
-			.addParam("ig_sig_key_version", Constants::SIG_KEY_VERSION).getResponse(Response.QPCooldownsResponse())
+			.addParam("signed_body", Signatures.generateSignature(json_encode((object)[]).".{}"))
+			.addParam("ig_sig_key_version", Constants.SIG_KEY_VERSION).getResponse(Response.QPCooldownsResponse())
 	}
 
 	/**
@@ -1167,9 +1149,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return .InstagramAPI.Response.MediaSeenResponse
 	 *
-	 * @see Story::markMediaSeen()
-	 * @see Location::markStoryMediaSeen()
-	 * @see Hashtag::markStoryMediaSeen()
+	 * @see Story.markMediaSeen()
+	 * @see Location.markStoryMediaSeen()
+	 * @see Hashtag.markStoryMediaSeen()
 	 */
 	fun markStoryMediaSeen(array items, sourceId:String? = null, module:String = "feed_timeline") {
 		// Build the list of seen media, with human randomization of seen-time.
@@ -1234,7 +1216,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		lastError = null
 		while (true) {
 			// Check for max retry-limit, and throw if we exceeded it.
-			if (++attempt > self::MAX_CONFIGURE_RETRIES) {
+			if (++attempt > self.MAX_CONFIGURE_RETRIES) {
 				if (lastError === null) {
 					throw.RuntimeException("All configuration retries have failed.")
 				}
@@ -1340,7 +1322,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			attempt = 0
 			while (true) {
 				// Check for max retry-limit, and throw if we exceeded it.
-				if (++attempt > self::MAX_RESUMABLE_RETRIES) {
+				if (++attempt > self.MAX_RESUMABLE_RETRIES) {
 					throw.RuntimeException("All retries have failed.")
 				}
 
@@ -1363,26 +1345,26 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 					response = uploadRequest.getResponse(Response.ResumableUploadResponse())
 
 					return response
-				} catch (ThrottledException e) {
+				} catch (e: ThrottledException) {
 					throw e
-				} catch (LoginRequiredException e) {
+				} catch (e: LoginRequiredException) {
 					throw e
-				} catch (FeedbackRequiredException e) {
+				} catch (e: FeedbackRequiredException) {
 					throw e
-				} catch (ConsentRequiredException e) {
+				} catch (e: ConsentRequiredException) {
 					throw e
-				} catch (CheckpointRequiredException e) {
+				} catch (e: CheckpointRequiredException) {
 					throw e
-				} catch (.Exception e) {
+				} catch (e: Exception) {
 					// Ignore everything else.
 				}
 			}
 		} finally {
-			Utils::safe_fclose(handle)
+			Utils.safe_fclose(handle)
 		}
 
 		// We are never supposed to get here!
-		throw.LogicException("Something went wrong during media upload.")
+		throw LogicException("Something went wrong during media upload.")
 	}
 
 	/**
@@ -1402,7 +1384,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		request = this.ig.request("upload/photo/").setSignedPost(false).addPost("_uuid", this.ig.uuid)
 			.addPost("_csrftoken", this.ig.client.getToken())
 			.addFile("photo", internalMetadata.getPhotoDetails().getFilename(),
-			         "pending_media_".Utils::generateUploadId().".jpg")
+			         "pending_media_".Utils.generateUploadId().".jpg")
 
 		foreach(this._getPhotoUploadParams(targetFeed, internalMetadata) as key => value) {
 			request.addPost(key, value)
@@ -1430,13 +1412,13 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		photoDetails = internalMetadata.getPhotoDetails()
 
 		endpoint = sprintf("https://i.instagram.com/rupload_igphoto/%s_%d_%d", internalMetadata.getUploadId(), 0,
-		                   Utils::hashCode(photoDetails.getFilename()))
+		                   Utils.hashCode(photoDetails.getFilename()))
 
 		uploadParams = this._getPhotoUploadParams(targetFeed, internalMetadata)
-		uploadParams = Utils::reorderByHashCode(uploadParams)
+		uploadParams = Utils.reorderByHashCode(uploadParams)
 
 		offsetTemplate = Request(this.ig, endpoint)
-		offsetTemplate.setAddDefaultHeaders(false).addHeader("X_FB_PHOTO_WATERFALL_ID", Signatures::generateUUID(true))
+		offsetTemplate.setAddDefaultHeaders(false).addHeader("X_FB_PHOTO_WATERFALL_ID", Signatures.generateUUID(true))
 			.addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
 
 		uploadTemplate =
@@ -1461,7 +1443,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	protected fun _useResumablePhotoUploader(targetFeed:Int,  internalMetadata:InternalMetadata) {
 		switch(targetFeed) {
-			case Constants ::FEED_TIMELINE_ALBUM:
+			case Constants.FEED_TIMELINE_ALBUM:
 			result = this.ig.isExperimentEnabled("ig_android_sidecar_photo_fbupload_universe",
 			                                     "is_enabled_fbupload_sidecar_photo")
 			break
@@ -1532,7 +1514,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		// request, otherwise the server will reply with a "StagedUpload not
 		// found" error when the final chunk has been uploaded.
 		sessionIDCookie = null
-		if (targetFeed === Constants::FEED_TIMELINE_ALBUM) {
+		if (targetFeed === Constants.FEED_TIMELINE_ALBUM) {
 			foundCookie = this.ig.client.getCookie("sessionid", "i.instagram.com")
 			if (foundCookie !== null) {
 				sessionIDCookie = foundCookie.getValue()
@@ -1552,10 +1534,10 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		// Init state.
 		length = internalMetadata.getVideoDetails().getFilesize()
 		uploadId = internalMetadata.getUploadId()
-		sessionId = sprintf("%s-%d", uploadId, Utils::hashCode(videoFilename))
+		sessionId = sprintf("%s-%d", uploadId, Utils.hashCode(videoFilename))
 		uploadUrl = array_shift(uploadUrls)
 		offset = 0
-		chunk = min(length, self::MIN_CHUNK_SIZE)
+		chunk = min(length, self.MIN_CHUNK_SIZE)
 		attempt = 0
 
 		// Open file handle.
@@ -1569,7 +1551,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			stream = Stream(handle)
 			while (true) {
 				// Check for this server"s max retry-limit, and switch server?
-				if (++attempt > self::MAX_CHUNK_RETRIES) {
+				if (++attempt > self.MAX_CHUNK_RETRIES) {
 					uploadUrl = null
 				}
 
@@ -1583,7 +1565,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 					// Reset state.
 					attempt = 1 // As if "++attempt" had ran once, above.
 					offset = 0
-					chunk = min(length, self::MIN_CHUNK_SIZE)
+					chunk = min(length, self.MIN_CHUNK_SIZE)
 				}
 
 				// Prepare request.
@@ -1596,7 +1578,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 
 				// When uploading videos to albums, we must fake-inject the
 				// "sessionid" cookie (the official app fake-injects it too).
-				if (targetFeed === Constants::FEED_TIMELINE_ALBUM && sessionIDCookie !== null) {
+				if (targetFeed === Constants.FEED_TIMELINE_ALBUM && sessionIDCookie !== null) {
 					// We"ll add it with the default options ("single use")
 					// so the fake cookie is only added to THIS request.
 					this.ig.client.fakeCookies().add("sessionid", sessionIDCookie)
@@ -1615,7 +1597,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 				// Determine chunk size based on upload duration.
 				newChunkSize = (int)(chunk / (microtime(true) - start) * 5)
 				// Ensure that the chunk size is in valid range.
-				newChunkSize = min(self::MAX_CHUNK_SIZE, max(self::MIN_CHUNK_SIZE, newChunkSize))
+				newChunkSize = min(self.MAX_CHUNK_SIZE, max(self.MIN_CHUNK_SIZE, newChunkSize))
 
 				result = null
 
@@ -1680,7 +1662,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			}
 		} finally {
 			// Guaranteed to release handle even if something bad happens above!
-			Utils::safe_fclose(handle)
+			Utils.safe_fclose(handle)
 		}
 
 		// We are never supposed to get here!
@@ -1726,7 +1708,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			// Yep, no UUID here like in other resumable uploaders. Seems like a bug.
 			var waterfallId = Utils.generateUploadId()
 			for(segment in segments) {
-				var endpoint = "https://i.instagram.com/rupload_igvideo/${md5(segment.getFilename())}-0-${segment.getFilesize().toInt()}?segmented=true&phase=transfer"
+				var endpoint = "https://i.instagram.com/rupload_igvideo/${(segment.getFilename()).md5()}-0-${segment.getFilesize().toInt()}?segmented=true&phase=transfer"
 
 				var offsetTemplate = Request(this.ig, endpoint)
 				offsetTemplate.setAddDefaultHeaders(false)

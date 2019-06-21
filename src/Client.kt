@@ -118,6 +118,8 @@ class Client
      */
     private _resetConnection
 
+    private lateinit var _parent:Instagram
+
     /**
      * Constructor.
      *
@@ -125,11 +127,11 @@ class Client
      */
     constructor(parent:Instagram):this
     {
-        this._parent = parent
+         _parent = parent
 
         // Defaults.
-        this._verifySSL = true
-        this._proxy = null
+        var _verifySSL = true
+        var _proxy = null
 
         // Create a default handler stack with Guzzle"s auto-selected "best
         // possible transfer handler for the user"s system", and with all of
@@ -172,7 +174,7 @@ class Client
      */
     fun updateFromCurrentSettings(resetCookieJar: Boolean = false){
         // Update our internal client state from the user"s settings.
-        this._userAgent = this._parent.device.getUserAgent()
+        this._userAgent = _parent.device.getUserAgent()
         this.loadCookieJar(resetCookieJar)
 
         // Verify that the jar contains a non-expired csrftoken for the API
@@ -181,7 +183,7 @@ class Client
         // these checks succeed, the cookie may still not be valid. It"s just a
         // preliminary check to detect definitely-invalid session cookies!
         if (this.getToken() === null) {
-            this._parent.isMaybeLoggedIn = false
+            _parent.isMaybeLoggedIn = false
         }
 
         // Load rewrite rules (if any).
@@ -704,13 +706,14 @@ class Client
     {
         // Perform the API request and retrieve the raw HTTP response body.
         var guzzleResponse = this._guzzleRequest(request, guzzleOptions)
+        var uploadedBody: String?
 
         // Debugging (must be shown before possible decoding error).
-        if (this._parent.debug && (!(libraryOptions["noDebug"]).isBlank() || !libraryOptions["noDebug"])) {
+        if (this._parent.debug && (libraryOptions["noDebug"].isBlank() || !libraryOptions["noDebug"])) {
             // Determine whether we should display the contents of the UPLOADED body.
-            if ((libraryOptions["debugUploadedBody"].isBlank()) && libraryOptions["debugUploadedBody"]) {
-                var uploadedBody = request.getBody().toString()
-                if (!(uploadedBody.length)) {
+            if (!(libraryOptions["debugUploadedBody"].isBlank()) && libraryOptions["debugUploadedBody"]) {
+                uploadedBody = request.getBody().toString()
+                if (uploadedBody.isEmpty()) {
                     uploadedBody = null
                 }
             } else {
@@ -718,7 +721,7 @@ class Client
             }
 
             // Determine whether we should display the size of the UPLOADED body.
-            var uploadedBytes = if (libraryOptions["debugUploadedBytes"].isBlank() && libraryOptions["debugUploadedBytes"]) {
+            var uploadedBytes = if (!(libraryOptions["debugUploadedBytes"].isBlank()) && libraryOptions["debugUploadedBytes"]) {
                 // Calculate the uploaded bytes by looking at request"s body size, if it exists.
                 request.getBody().getSize()
             } else {
