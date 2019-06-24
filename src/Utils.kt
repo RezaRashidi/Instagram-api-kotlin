@@ -341,7 +341,7 @@ object Utils{
      *
      * @return string|bool Name of the library if present, otherwise FALSE.
      */
-    fun checkFFPROBE(){
+    fun checkFFPROBE(): String{
         // We only resolve this once per session and then cache the result.
         if (ffprobeBin === null) {
             @exec("ffprobe -version 2>&1", output, statusCode)

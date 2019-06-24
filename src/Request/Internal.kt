@@ -14,6 +14,7 @@ import InstagramAPI.Response
 import InstagramAPI.Signatures
 import InstagramAPI.Utils
 import Winbox.Args
+import kotlin.math.*
 import fun GuzzleHttp.Psr7.stream_for
 
 /**
@@ -150,38 +151,38 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		/** @var string Caption to import for the media. */
 		var captionText = if (!externalMetadata["caption"].isBlank()) externalMetadata["caption"] else ""
 		/** @var string Accesibility caption to import for the media. */
-		var altText = if (!externalMetadata["custom_accessibility_caption"].isBlank()) externalMetadata["custom_accessibility_caption"] else null
+        val altText = if (!externalMetadata["custom_accessibility_caption"].isBlank()) externalMetadata["custom_accessibility_caption"] else null
 		/** @var Response.Model.Location|null A Location object describing where
 		 * the media was taken. */
-		var location = if (!externalMetadata["location"].isBlank()) externalMetadata["location"] else null
+        val location = if (!externalMetadata["location"].isBlank()) externalMetadata["location"] else null
 		/** @var array|null Array of story location sticker instructions. ONLY
 		 * USED FOR STORY MEDIA! */
-		var locationSticker = if (!externalMetadata["location_sticker"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["location_sticker"] else null
+        val locationSticker = if (!externalMetadata["location_sticker"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["location_sticker"] else null
 		/** @var array|null Array of usertagging instructions, in the format
 		 * [["position"=>[0.5,0.5], "user_id"=>"123"], ...]. ONLY FOR TIMELINE PHOTOS! */
-		var usertags = if (!externalMetadata["usertags"].isBlank()&& targetFeed == Constants.FEED_TIMELINE) externalMetadata["usertags"] else null
+        val usertags = if (!externalMetadata["usertags"].isBlank()&& targetFeed == Constants.FEED_TIMELINE) externalMetadata["usertags"] else null
 		/** @var string|null Link to attach to the media. ONLY USED FOR STORY MEDIA,
 		 * AND YOU MUST HAVE A BUSINESS INSTAGRAM ACCOUNT TO POST A STORY LINK! */
-		var link = if (!externalMetadata["link"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["link"] else null
+        val link = if (!externalMetadata["link"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["link"] else null
 		/** @var void Photo filter. THIS DOES NOTHING! All real filters are done in the mobile app. */
 		// filter = isset(externalMetadata["filter"]) ? externalMetadata["filter"] : null
 		var filter = null // COMMENTED OUT SO USERS UNDERSTAND THEY CAN"T import THIS!
 		/** @var array Hashtags to import for the media. ONLY STORY MEDIA! */
-		var hashtags = if (!externalMetadata["hashtags"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["hashtags"] else null
+        val hashtags = if (!externalMetadata["hashtags"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["hashtags"] else null
 		/** @var array Mentions to import for the media. ONLY STORY MEDIA! */
-		var storyMentions = if (!externalMetadata["story_mentions"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_mentions"] else null
+        val storyMentions = if (!externalMetadata["story_mentions"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_mentions"] else null
 		/** @var array Story poll to import for the media. ONLY STORY MEDIA! */
-		var storyPoll = if (!externalMetadata["story_polls"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_polls"] else null
+        val storyPoll = if (!externalMetadata["story_polls"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_polls"] else null
 		/** @var array Story slider to import for the media. ONLY STORY MEDIA! */
-		var storySlider = if (!externalMetadata["story_sliders"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_sliders"] else null
+        val storySlider = if (!externalMetadata["story_sliders"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_sliders"] else null
 		/** @var array Story question to import for the media. ONLY STORY MEDIA */
-		var storyQuestion = if (!externalMetadata["story_questions"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_questions"] else null
+        val storyQuestion = if (!externalMetadata["story_questions"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_questions"] else null
 		/** @var array Story countdown to import for the media. ONLY STORY MEDIA */
-		var storyCountdown = if (!externalMetadata["story_countdowns"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_countdowns"] else null
+        val storyCountdown = if (!externalMetadata["story_countdowns"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_countdowns"] else null
 		/** @var array Attached media used to share media to story feed. ONLY STORY MEDIA! */
-		var attachedMedia = if (!externalMetadata["attached_media"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["attached_media"] else null
+        val attachedMedia = if (!externalMetadata["attached_media"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["attached_media"] else null
 		/** @var array Product Tags to import for the media. ONLY FOR TIMELINE PHOTOS! */
-		var productTags = if (!externalMetadata["product_tags"].isBlank() && targetFeed == Constants.FEED_TIMELINE) externalMetadata["product_tags"] else null
+        val productTags = if (!externalMetadata["product_tags"].isBlank() && targetFeed == Constants.FEED_TIMELINE) externalMetadata["product_tags"] else null
 
 		// Fix very bad external user-metadata values.
 		if (captionText !is String) {
@@ -396,19 +397,19 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	fun uploadSingleVideo(targetFeed:Int, videoFilename:String,  internalMetadata:InternalMetadata? = null, array externalMetadata = []) {
 		// Make sure we only allow these particular feeds for this fun.
 		if (targetFeed !== Constants.FEED_TIMELINE && targetFeed !== Constants.FEED_STORY && targetFeed !== Constants.FEED_DIRECT_STORY && targetFeed !== Constants.FEED_TV) {
-			throw IllegalArgumentException(sprintf("Bad target feed \"$targetFeed\".")
+			throw IllegalArgumentException("Bad target feed \"$targetFeed\".")
 		}
 
 		// Attempt to upload the video.
-		internalMetadata = this.uploadVideo(targetFeed, videoFilename, internalMetadata)
+		internalMetadata = uploadVideo(targetFeed, videoFilename, internalMetadata)
 
 		// Attempt to upload the thumbnail, associated with our video"s ID.
-		this.uploadVideoThumbnail(targetFeed, internalMetadata, externalMetadata)
+		uploadVideoThumbnail(targetFeed, internalMetadata, externalMetadata)
 
 		// Configure the uploaded video and attach it to our timeline/story.
 		try {
 			/** @var .InstagramAPI.Response.ConfigureResponse configure */
-			var configure = this.ig.internal.configureWithRetries(fun() import (targetFeed, internalMetadata, externalMetadata) {
+			var configure = ig.internal.configureWithRetries(fun() import (targetFeed, internalMetadata, externalMetadata) {
 					// Attempt to configure video parameters.
 					return configureSingleVideo(targetFeed, internalMetadata, externalMetadata)
 				}
@@ -471,9 +472,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.UploadJobVideoResponse
 	 */
 	protected fun _requestVideoUploadURL(:Int,  internalMetadata:InternalMetadata) {
-		request = this.ig.request("upload/video/").setSignedPost(false)
-			.addPost("_csrftoken", this.ig.client.getToken())
-			.addPost("_uuid", this.ig.uuid)
+		request = ig.request("upload/video/").setSignedPost(false)
+			.addPost("_csrftoken", ig.client.getToken())
+			.addPost("_uuid", ig.uuid)
 
 		for((key to value) in _getVideoUploadParams(targetFeed, internalMetadata)) {
 			request.addPost(key, value)
@@ -504,7 +505,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun configureSingleVideo(targetFeed:Int,  internalMetadata:InternalMetadata, array externalMetadata = []) {
 		// Determine the target endpoint for the video.
-		var endpoint = when(targetFeed) {
+		val endpoint = when(targetFeed) {
 			Constants.FEED_TIMELINE -> "media/configure/"
 			Constants.FEED_DIRECT_STORY, Constants.FEED_STORY -> "media/configure_to_story/"
 			Constants.FEED_TV -> "media/configure_to_igtv/"
@@ -513,146 +514,143 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 
 		// Available external metadata parameters:
 		/** @var string Caption to import for the media. */
-		var captionText = if( isset(externalMetadata["caption"]) ) externalMetadata["caption"] else ""
+		var captionText = if( !externalMetadata["caption"].isBlank() ) externalMetadata["caption"] else ""
 		/** @var string[]|null Array of numerical UserPK IDs of people tagged in
 		 * your video. ONLY USED IN STORY VIDEOS! TODO: Actually, it"s not even
 		 * implemented for stories. */
-		usertags = (isset(
-			externalMetadata["usertags"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["usertags"] : null
+        val usertags = if(!externalMetadata["usertags"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["usertags"] else null
 		/** @var Response.Model.Location|null A Location object describing where
 		 * the media was taken. */
-		location = (isset(externalMetadata["location"])) ? externalMetadata["location"] : null
+		val location = if(!externalMetadata["location"].isBlank()) externalMetadata["location"] else null
 		/** @var array|null Array of story location sticker instructions. ONLY
 		 * USED FOR STORY MEDIA! */
-		locationSticker = (isset(
-			externalMetadata["location_sticker"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["location_sticker"] : null
+		val locationSticker = if(!externalMetadata["location_sticker"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["location_sticker"] else null
 		/** @var string|null Link to attach to the media. ONLY USED FOR STORY MEDIA,
 		 * AND YOU MUST HAVE A BUSINESS INSTAGRAM ACCOUNT TO POST A STORY LINK! */
-		link =
-			(isset(externalMetadata["link"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["link"] : null
+		val link = if(!externalMetadata["link"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["link"] else null
 		/** @var array Hashtags to import for the media. ONLY STORY MEDIA! */
-		hashtags = (isset(
-			externalMetadata["hashtags"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["hashtags"] : null
+		val hashtags = if(!externalMetadata["hashtags"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["hashtags"] else null
 		/** @var array Mentions to import for the media. ONLY STORY MEDIA! */
-		storyMentions = (isset(
-			externalMetadata["story_mentions"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["story_mentions"] : null
+		val storyMentions = if(!externalMetadata["story_mentions"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_mentions"] else null
 		/** @var array Story poll to import for the media. ONLY STORY MEDIA! */
-		storyPoll = (isset(
-			externalMetadata["story_polls"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["story_polls"] : null
+		val storyPoll = if(!externalMetadata["story_polls"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_polls"] else null
 		/** @var array Attached media used to share media to story feed. ONLY STORY MEDIA! */
-		storySlider = (isset(
-			externalMetadata["story_sliders"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["story_sliders"] : null
+		val storySlider = if(!externalMetadata["story_sliders"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_sliders"] else null
 		/** @var array Story question to import for the media. ONLY STORY MEDIA */
-		storyQuestion = (isset(
-			externalMetadata["story_questions"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["story_questions"] : null
+		val storyQuestion = if(!externalMetadata["story_questions"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_questions"] else null
 		/** @var array Story countdown to import for the media. ONLY STORY MEDIA */
-		storyCountdown = (isset(
-			externalMetadata["story_countdowns"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["story_countdowns"] : null
+		val storyCountdown = if(!externalMetadata["story_countdowns"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["story_countdowns"] else null
 		/** @var array Attached media used to share media to story feed. ONLY STORY MEDIA! */
-		attachedMedia = (isset(
-			externalMetadata["attached_media"]) && targetFeed == Constants.FEED_STORY) ? externalMetadata["attached_media"] : null
+		val attachedMedia = if(!externalMetadata["attached_media"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["attached_media"] else null
 		/** @var array Title of the media uploaded to your channel. ONLY TV MEDIA! */
-		title =
-			(isset(externalMetadata["title"]) && targetFeed == Constants.FEED_TV) ? externalMetadata["title"] : null
+		val title = if(!externalMetadata["title"] && targetFeed == Constants.FEED_TV) externalMetadata["title"] else null
 
 		// Fix very bad external user-metadata values.
-		if (!is_string(captionText)) {
+		if (captionText !is String) {
 			captionText = ""
 		}
 
-		uploadId = internalMetadata.getUploadId()
-		videoDetails = internalMetadata.getVideoDetails()
+		val uploadId = internalMetadata.getUploadId()
+		val videoDetails = internalMetadata.getVideoDetails()
 
 		// Build the request...
-		request = this.ig.request(endpoint).addParam("video", 1).addPost("supported_capabilities_new", json_encode(
-				Constants.SUPPORTED_CAPABILITIES)).addPost("video_result",
-		                                                    internalMetadata.getVideoUploadResponse() !== null ?(
-			string) internalMetadata . getVideoUploadResponse ().getResult() : "")
-		.addPost("upload_id", uploadId).addPost("poster_frame_index", 0)
+		val request = ig.request(endpoint)
+            .addParam("video", 1)
+            .addPost("supported_capabilities_new", json_encode(Constants.SUPPORTED_CAPABILITIES))
+            .addPost("video_result",if(internalMetadata.getVideoUploadResponse() !== null) internalMetadata.getVideoUploadResponse().getResult().toString() else "")
+		    .addPost("upload_id", uploadId).addPost("poster_frame_index", 0)
 			.addPost("length", round(videoDetails.getDuration(), 1))
 			.addPost("audio_muted", videoDetails.getAudioCodec() === null).addPost("filter_type", 0)
-			.addPost("source_type", 4).addPost("device", ["manufacturer"      => this.ig.device.getManufacturer(),
-		"model"             => this.ig.device.getModel(),
-		"android_version"   => this.ig.device.getAndroidVersion(),
-		"android_release"   => this.ig.device.getAndroidRelease(),
-		])
-		.addPost("extra", ["source_width"  => videoDetails . getWidth (),
-		"source_height" => videoDetails.getHeight(),
-		])
-		.addPost("_csrftoken", this.ig.client.getToken()).addPost("_uuid", this.ig.uuid)
-			.addPost("_uid", this.ig.account_id)
+			.addPost("source_type", 4)
+            .addPost("device", mapOf(
+                "manufacturer"      to ig.device.getManufacturer(),
+                "model"             to ig.device.getModel(),
+                "android_version"   to ig.device.getAndroidVersion(),
+                "android_release"   to ig.device.getAndroidRelease()
+            ))
+		    .addPost("extra", mapOf(
+                "source_width"  to videoDetails.getWidth(),
+                "source_height" to videoDetails.getHeight()
+            ))
+            .addPost("_csrftoken", ig.client.getToken())
+            .addPost("_uuid", ig.uuid)
+            .addPost("_uid", ig.account_id)
 
-		switch(targetFeed) {
-			case Constants.FEED_TIMELINE:
-			request.addPost("caption", captionText)
-			break
-			case Constants.FEED_STORY:
-			if (internalMetadata.isBestieMedia()) {
-				request.addPost("audience", "besties")
-			}
+		when(targetFeed) {
+			Constants.FEED_TIMELINE -> request.addPost("caption", captionText)
+			Constants.FEED_STORY -> {
+                if (internalMetadata.isBestieMedia()) {
+                    request.addPost("audience", "besties")
+                }
 
-			request.addPost("configure_mode", 1) // 1 - REEL_SHARE
-				.addPost("story_media_creation_date", time() - mt_rand(10, 20))
-				.addPost("client_shared_at", time() - mt_rand(3, 10)).addPost("client_timestamp", time())
+                request.addPost("configure_mode", 1) // 1 - REEL_SHARE
+                    .addPost("story_media_creation_date", time() - (10..20).random())
+                    .addPost("client_shared_at", time() - (3..10).random())
+                    .addPost("client_timestamp", time())
 
-			if (is_string(link) && Utils.hasValidWebURLSyntax(link)) {
-				story_cta = "[{" links ":[{" linkType ": 1, " webUri ":".json_encode(
-					link).", " androidClass ": "", "package": "", "deeplinkUri": "", "callToActionTitle": "", "redirectUri": null, "leadGenFormId": "", "igUserId": "", "appInstallObjectiveInvalidationBehavior": null}]}]"
-				request.addPost("story_cta", story_cta)
-			}
-			if (hashtags !== null && captionText !== "") {
-				Utils.throwIfInvalidStoryHashtags(captionText, hashtags)
-				request.addPost("story_hashtags", json_encode(hashtags)).addPost("caption", captionText)
-					.addPost("mas_opt_in", "NOT_PROMPTED")
-			}
-			if (locationSticker !== null && location !== null) {
-				Utils.throwIfInvalidStoryLocationSticker(locationSticker)
-				request.addPost("story_locations", json_encode([locationSticker])).addPost("mas_opt_in", "NOT_PROMPTED")
-			}
-			if (storyMentions !== null && captionText !== "") {
-				Utils.throwIfInvalidStoryMentions(storyMentions)
-				request.addPost("reel_mentions", json_encode(storyMentions))
-					.addPost("caption", str_replace(" ", "+", captionText)."+").addPost("mas_opt_in", "NOT_PROMPTED")
-			}
-			if (storyPoll !== null) {
-				Utils.throwIfInvalidStoryPoll(storyPoll)
-				request.addPost("story_polls", json_encode(storyPoll)).addPost("internal_features", "polling_sticker")
-					.addPost("mas_opt_in", "NOT_PROMPTED")
-			}
-			if (storySlider !== null) {
-				Utils.throwIfInvalidStorySlider(storySlider)
-				request.addPost("story_sliders", json_encode(storySlider))
-					.addPost("story_sticker_ids", "emoji_slider_".storySlider[0]["emoji"])
-			}
-			if (storyQuestion !== null) {
-				Utils.throwIfInvalidStoryQuestion(storyQuestion)
-				request.addPost("story_questions", json_encode(storyQuestion))
-					.addPost("story_sticker_ids", "question_sticker_ama")
-			}
-			if (storyCountdown !== null) {
-				Utils.throwIfInvalidStoryCountdown(storyCountdown)
-				request.addPost("story_countdowns", json_encode(storyCountdown))
-					.addPost("story_sticker_ids", "countdown_sticker_time")
-			}
-			if (attachedMedia !== null) {
-				Utils.throwIfInvalidAttachedMedia(attachedMedia)
-				request.addPost("attached_media", json_encode(attachedMedia))
-					.addPost("story_sticker_ids", "media_simple_".reset(attachedMedia)["media_id"])
-			}
-			break
-			case Constants.FEED_DIRECT_STORY:
-			request.addPost("configure_mode", 2) // 2 - DIRECT_STORY_SHARE
-				.addPost("recipient_users", internalMetadata.getDirectUsers())
-				.addPost("thread_ids", internalMetadata.getDirectThreads())
-				.addPost("story_media_creation_date", time() - mt_rand(10, 20))
-				.addPost("client_shared_at", time() - mt_rand(3, 10)).addPost("client_timestamp", time())
-			break
-			case Constants.FEED_TV:
-			if (title === null) {
-				throw IllegalArgumentException("You must provide a title for the media.")
-			}
-			request.addPost("title", title).addPost("caption", captionText)
-			break
+                if (link is String && Utils.hasValidWebURLSyntax(link)) {
+                    var story_cta = "[{\"links\":[{\"linkType\": 1, \"webUri\":" + json_encode(link) + ", \"androidClass\": \"\", \"package\": \"\", \"deeplinkUri\": \"\", \"callToActionTitle\": \"\", \"redirectUri\": null, \"leadGenFormId\": \"\", \"igUserId\": \"\", \"appInstallObjectiveInvalidationBehavior\": null}]}]"
+                    request.addPost("story_cta", story_cta)
+                }
+                if (hashtags !== null && captionText !== "") {
+                    Utils.throwIfInvalidStoryHashtags(captionText, hashtags)
+                    request.addPost("story_hashtags", json_encode(hashtags))
+                        .addPost("caption", captionText)
+                        .addPost("mas_opt_in", "NOT_PROMPTED")
+                }
+                if (locationSticker !== null && location !== null) {
+                    Utils.throwIfInvalidStoryLocationSticker(locationSticker)
+                    request.addPost("story_locations", json_encode([locationSticker]))
+                        .addPost("mas_opt_in", "NOT_PROMPTED")
+                }
+                if (storyMentions !== null && captionText !== "") {
+                    Utils.throwIfInvalidStoryMentions(storyMentions)
+                    request.addPost("reel_mentions", json_encode(storyMentions))
+                        .addPost("caption", str_replace(" ", "+", captionText) + "+")
+                        .addPost("mas_opt_in", "NOT_PROMPTED")
+                }
+                if (storyPoll !== null) {
+                    Utils.throwIfInvalidStoryPoll(storyPoll)
+                    request.addPost("story_polls", json_encode(storyPoll))
+                        .addPost("internal_features", "polling_sticker")
+                        .addPost("mas_opt_in", "NOT_PROMPTED")
+                }
+                if (storySlider !== null) {
+                    Utils.throwIfInvalidStorySlider(storySlider)
+                    request.addPost("story_sliders", json_encode(storySlider))
+                        .addPost("story_sticker_ids", "emoji_slider_" + storySlider[0]["emoji"])
+                }
+                if (storyQuestion !== null) {
+                    Utils.throwIfInvalidStoryQuestion(storyQuestion)
+                    request.addPost("story_questions", json_encode(storyQuestion))
+                        .addPost("story_sticker_ids", "question_sticker_ama")
+                }
+                if (storyCountdown !== null) {
+                    Utils.throwIfInvalidStoryCountdown(storyCountdown)
+                    request.addPost("story_countdowns", json_encode(storyCountdown))
+                        .addPost("story_sticker_ids", "countdown_sticker_time")
+                }
+                if (attachedMedia !== null) {
+                    Utils.throwIfInvalidAttachedMedia(attachedMedia)
+                    request.addPost("attached_media", json_encode(attachedMedia))
+                        .addPost("story_sticker_ids", "media_simple_".reset(attachedMedia)["media_id"])
+                }
+            }
+			Constants.FEED_DIRECT_STORY -> {
+                request.addPost("configure_mode", 2) // 2 - DIRECT_STORY_SHARE
+                    .addPost("recipient_users", internalMetadata.getDirectUsers())
+                    .addPost("thread_ids", internalMetadata.getDirectThreads())
+                    .addPost("story_media_creation_date", time() - (10..20).random())
+                    .addPost("client_shared_at", time() - (3..10).random())
+                    .addPost("client_timestamp", time())
+            }
+			Constants.FEED_TV -> {
+                if (title === null) {
+                    throw IllegalArgumentException("You must provide a title for the media.")
+                }
+                request.addPost("title", title)
+                    .addPost("caption", captionText)
+            }
 		}
 
 		if (targetFeed == Constants.FEED_STORY) {
@@ -705,107 +703,113 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.ConfigureResponse
 	 */
 	fun configureTimelineAlbum(array media,  internalMetadata:InternalMetadata, array externalMetadata = []) {
-		endpoint = "media/configure_sidecar/"
+		val endpoint = "media/configure_sidecar/"
 
-		albumUploadId = internalMetadata.getUploadId()
+		val albumUploadId = internalMetadata.getUploadId()
 
 		// Available external metadata parameters:
 		/** @var string Caption to import for the album. */
-		captionText = isset(externalMetadata["caption"]) ? externalMetadata["caption"] : ""
+		var captionText = if(!externalMetadata["caption"].isBlank()) externalMetadata["caption"] else ""
 		/** @var Response.Model.Location|null A Location object describing where
 		 * the album was taken. */
-		location = isset(externalMetadata["location"]) ? externalMetadata["location"] : null
+		val location = if(externalMetadata["location"].isBlank()) externalMetadata["location"] else null
 
 		// Fix very bad external user-metadata values.
-		if (!is_string(captionText)) {
+		if (captionText !is String) {
 			captionText = ""
 		}
 
 		// Build the album"s per-children metadata.
-		date = date("Y:m:d H:i:s")
-		childrenMetadata = []
-		foreach(media as item) {
+		var date = date("Y:m:d H:i:s")
+		var childrenMetadata = []
+		for(item in media) {
 			/** @var InternalMetadata itemInternalMetadata */
-			itemInternalMetadata = item["internalMetadata"]
+			var itemInternalMetadata = item["internalMetadata"]
 			// Get all of the common, INTERNAL per-file metadata.
-			uploadId = itemInternalMetadata.getUploadId()
+			var uploadId = itemInternalMetadata.getUploadId()
 
-			switch(item["type"]) {
-				case "photo":
-				// Build this item"s configuration.
-				photoConfig = ["date_time_original"  => date,
-				"scene_type"          => 1,
-				"disable_comments"    => false,
-				"upload_id"           => uploadId,
-				"source_type"         => 0,
-				"scene_capture_type"  => "standard",
-				"date_time_digitized" => date,
-				"geotag_enabled"      => false,
-				"camera_position"     => "back",
-				"edits"               => [
-				"filter_strength" => 1,
-				"filter_name"     => "IGNormalFilter",
-				],
-				]
+			when(item["type"]) {
+				"photo" -> {
+					// Build this item"s configuration.
+					val photoConfig = mutableMapOf(
+						"date_time_original"  to date,
+						"scene_type"          to 1,
+						"disable_comments"    to false,
+						"upload_id"           to uploadId,
+						"source_type"         to 0,
+						"scene_capture_type"  to "standard",
+						"date_time_digitized" to date,
+						"geotag_enabled"      to false,
+						"camera_position"     to "back",
+						"edits"               to mapOf(
+							"filter_strength" to 1,
+							"filter_name"     to "IGNormalFilter"
+						)
+					)
 
-				if (isset(item["usertags"])) {
-					// NOTE: These usertags were validated in Timeline.uploadAlbum.
-					photoConfig["usertags"] = json_encode(["in" => item ["usertags"]])
+					if (!item["usertags"].isBlank()) {
+						// NOTE: These usertags were validated in Timeline.uploadAlbum.
+						photoConfig["usertags"] = json_encode(["in" to item ["usertags"]])
+					}
+
+					childrenMetadata[] = photoConfig
 				}
+				"video" -> {
+					// Get all of the INTERNAL per-VIDEO metadata.
+					val videoDetails = itemInternalMetadata.getVideoDetails()
 
-				childrenMetadata[] = photoConfig
-				break
-				case "video":
-				// Get all of the INTERNAL per-VIDEO metadata.
-				videoDetails = itemInternalMetadata.getVideoDetails()
+					// Build this item"s configuration.
+					val videoConfig = mutableMapOf(
+						"length"              to videoDetails.getDuration().roundToInt(),
+						"date_time_original"  to date,
+						"scene_type"          to 1,
+						"poster_frame_index"  to 0,
+						"trim_type"           to 0,
+						"disable_comments"    to false,
+						"upload_id"           to uploadId,
+						"source_type"         to "library",
+						"geotag_enabled"      to false,
+						"edits"               to mapOf(
+							"length"          to videoDetails.getDuration().roundToInt(),
+							"cinema"          to "unsupported",
+							"original_length" to videoDetails.getDuration().roundToInt(),
+							"source_type"     to "library",
+							"start_time"      to 0,
+							"camera_position" to "unknown",
+							"trim_type"       to 0
+						)
+					)
 
-				// Build this item"s configuration.
-				videoConfig = ["length"              => round(videoDetails.getDuration(), 1),
-				"date_time_original"  => date,
-				"scene_type"          => 1,
-				"poster_frame_index"  => 0,
-				"trim_type"           => 0,
-				"disable_comments"    => false,
-				"upload_id"           => uploadId,
-				"source_type"         => "library",
-				"geotag_enabled"      => false,
-				"edits"               => [
-				"length"          => round(videoDetails.getDuration(), 1),
-				"cinema"          => "unsupported",
-				"original_length" => round(videoDetails.getDuration(), 1),
-				"source_type"     => "library",
-				"start_time"      => 0,
-				"camera_position" => "unknown",
-				"trim_type"       => 0,
-				],
-				]
+					if (!item["usertags"].isBlank()) {
+						// NOTE: These usertags were validated in Timeline.uploadAlbum.
+						videoConfig["usertags"] = json_encode(["in" to item ["usertags"]])
+					}
 
-				if (isset(item["usertags"])) {
-					// NOTE: These usertags were validated in Timeline.uploadAlbum.
-					videoConfig["usertags"] = json_encode(["in" => item ["usertags"]])
+					childrenMetadata[] = videoConfig
 				}
-
-				childrenMetadata[] = videoConfig
-				break
 			}
 		}
 
 		// Build the request...
-		request = this.ig.request(endpoint).addPost("_csrftoken", this.ig.client.getToken())
-			.addPost("_uid", this.ig.account_id).addPost("_uuid", this.ig.uuid)
-			.addPost("client_sidecar_id", albumUploadId).addPost("caption", captionText)
+		val request = ig.request(endpoint)
+			.addPost("_csrftoken", ig.client.getToken())
+			.addPost("_uid", ig.account_id)
+			.addPost("_uuid", ig.uuid)
+			.addPost("client_sidecar_id", albumUploadId)
+			.addPost("caption", captionText)
 			.addPost("children_metadata", childrenMetadata)
 
 		if (location instanceof Response.Model.Location) {
-			request.addPost("location", Utils.buildMediaLocationJSON(location)).addPost("geotag_enabled", "1")
-				.addPost("posting_latitude", location.getLat()).addPost("posting_longitude", location.getLng())
-				.addPost("media_latitude", location.getLat()).addPost("media_longitude", location.getLng())
+			request.addPost("location", Utils.buildMediaLocationJSON(location))
+				.addPost("geotag_enabled", "1")
+				.addPost("posting_latitude", location.getLat())
+				.addPost("posting_longitude", location.getLng())
+				.addPost("media_latitude", location.getLat())
+				.addPost("media_longitude", location.getLng())
 				.addPost("exif_latitude", 0.0).addPost("exif_longitude", 0.0)
 		}
 
-		configure = request.getResponse(Response.ConfigureResponse())
-
-		return configure
+		return request.getResponse(Response.ConfigureResponse())
 	}
 
 	/**
@@ -817,21 +821,21 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	protected fun _saveExperiments( syncResponse:Response.SyncResponse)
 	{
-		experiments = []
-		foreach(syncResponse.getExperiments() as experiment) {
-			group = experiment.getName()
-			params = experiment.getParams()
+		var experiments = []
+		for(experiment in syncResponse.getExperiments()) {
+			val group = experiment.getName()
+			val params = experiment.getParams()
 
 			if (group === null || params === null) {
 				continue
 			}
 
-			if (!isset(experiments[group])) {
+			if (experiments[group].isBlank()) {
 				experiments[group] = []
 			}
 
-			foreach(params as param) {
-				paramName = param.getName()
+			for(param in params) {
+				val paramName = param.getName()
 				if (paramName === null) {
 					continue
 				}
@@ -841,8 +845,8 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		}
 
 		// Save the experiments and the last time we refreshed them.
-		this.ig.experiments = this.ig.settings.setExperiments(experiments)
-		this.ig.settings.set("last_experiments", time())
+		ig.experiments = ig.settings.setExperiments(experiments)
+		ig.settings.set("last_experiments", time())
 	}
 
 	/**
@@ -855,13 +859,16 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.SyncResponse
 	 */
 	fun syncDeviceFeatures(prelogin:Boolean = false) {
-		request = this.ig.request("qe/sync/").addHeader("X-DEVICE-ID", this.ig.uuid).addPost("id", this.ig.uuid)
+		var request = ig.request("qe/sync/")
+			.addHeader("X-DEVICE-ID", ig.uuid)
+			.addPost("id", ig.uuid)
 			.addPost("experiments", Constants.LOGIN_EXPERIMENTS)
 		if (prelogin) {
 			request.setNeedsAuth(false)
 		} else {
-			request.addPost("_uuid", this.ig.uuid).addPost("_uid", this.ig.account_id)
-				.addPost("_csrftoken", this.ig.client.getToken())
+			request.addPost("_uuid", ig.uuid)
+				.addPost("_uid", ig.account_id)
+				.addPost("_csrftoken", ig.client.getToken())
 		}
 
 		return request.getResponse(Response.SyncResponse())
@@ -875,13 +882,17 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.SyncResponse
 	 */
 	fun syncUserFeatures() {
-		result = this.ig.request("qe/sync/").addHeader("X-DEVICE-ID", this.ig.uuid).addPost("_uuid", this.ig.uuid)
-			.addPost("_uid", this.ig.account_id).addPost("_csrftoken", this.ig.client.getToken())
-			.addPost("id", this.ig.account_id).addPost("experiments", Constants.EXPERIMENTS)
+		var result = ig.request("qe/sync/")
+			.addHeader("X-DEVICE-ID", ig.uuid)
+			.addPost("_uuid", ig.uuid)
+			.addPost("_uid", ig.account_id)
+			.addPost("_csrftoken", ig.client.getToken())
+			.addPost("id", ig.account_id)
+			.addPost("experiments", Constants.EXPERIMENTS)
 			.getResponse(Response.SyncResponse())
 
 		// Save the updated experiments for this user.
-		this._saveExperiments(result)
+		_saveExperiments(result)
 
 		return result
 	}
@@ -896,13 +907,16 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.LauncherSyncResponse
 	 */
 	fun sendLauncherSync(prelogin:Boolean) {
-		request = this.ig.request("launcher/sync/").addPost("_csrftoken", this.ig.client.getToken()).addPost("configs",
-		                                                                                                     "ig_android_felix_release_players,ig_user_mismatch_soft_error,ig_android_os_version_blocking_config,ig_android_carrier_signals_killswitch,fizz_ig_android,ig_mi_block_expired_events,ig_android_killswitch_perm_direct_ssim,ig_fbns_blocked")
+		var request = ig.request("launcher/sync/")
+			.addPost("_csrftoken", ig.client.getToken())
+			.addPost("configs","ig_android_felix_release_players,ig_user_mismatch_soft_error,ig_android_os_version_blocking_config,ig_android_carrier_signals_killswitch,fizz_ig_android,ig_mi_block_expired_events,ig_android_killswitch_perm_direct_ssim,ig_fbns_blocked")
 		if (prelogin) {
-			request.setNeedsAuth(false).addPost("id", this.ig.uuid)
+			request.setNeedsAuth(false).addPost("id", ig.uuid)
 		} else {
-			request.addPost("id", this.ig.account_id).addPost("_uuid", this.ig.uuid).addPost("_uid", this.ig.account_id)
-				.addPost("_csrftoken", this.ig.client.getToken())
+			request.addPost("id", ig.account_id)
+				.addPost("_uuid", ig.uuid)
+				.addPost("_uid", ig.account_id)
+				.addPost("_csrftoken", ig.client.getToken())
 		}
 
 		return request.getResponse(Response.LauncherSyncResponse())
@@ -916,8 +930,10 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.GenericResponse
 	 */
 	fun logAttribution() {
-		return this.ig.request("attribution/log_attribution/").setNeedsAuth(false)
-			.addPost("adid", this.ig.advertising_id).getResponse(Response.GenericResponse())
+		return ig.request("attribution/log_attribution/")
+			.setNeedsAuth(false)
+			.addPost("adid", ig.advertising_id)
+			.getResponse(Response.GenericResponse())
 	}
 
 	/**
@@ -928,9 +944,12 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.GenericResponse
 	 */
 	fun logResurrectAttribution() {
-		return this.ig.request("attribution/log_resurrect_attribution/").addPost("adid", this.ig.advertising_id)
-			.addPost("_uuid", this.ig.uuid).addPost("_uid", this.ig.account_id)
-			.addPost("_csrftoken", this.ig.client.getToken()).getResponse(Response.GenericResponse())
+		return ig.request("attribution/log_resurrect_attribution/")
+			.addPost("adid", ig.advertising_id)
+			.addPost("_uuid", ig.uuid)
+			.addPost("_uid", ig.account_id)
+			.addPost("_csrftoken", ig.client.getToken())
+			.getResponse(Response.GenericResponse())
 	}
 
 	/**
@@ -944,10 +963,12 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.MsisdnHeaderResponse
 	 */
 	fun readMsisdnHeader(usage:String, subnoKey:String? = null) {
-		request =
-			this.ig.request("accounts/read_msisdn_header/").setNeedsAuth(false).addHeader("X-DEVICE-ID", this.ig.uuid)
+		var request = ig.request("accounts/read_msisdn_header/")
+			.setNeedsAuth(false)
+			.addHeader("X-DEVICE-ID", ig.uuid)
 				// UUID is used as device_id intentionally.
-				.addPost("device_id", this.ig.uuid).addPost("mobile_subno_usage", usage)
+			.addPost("device_id", ig.uuid)
+			.addPost("mobile_subno_usage", usage)
 		if (subnoKey !== null) {
 			request.addPost("subno_key", subnoKey)
 		}
@@ -967,10 +988,12 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @since 10.24.0 app version.
 	 */
 	fun bootstrapMsisdnHeader(usage:String = "ig_select_app") {
-		request = this.ig.request("accounts/msisdn_header_bootstrap/").setNeedsAuth(false)
+		request = this.ig.request("accounts/msisdn_header_bootstrap/")
+			.setNeedsAuth(false)
 			.addPost("mobile_subno_usage", usage)
 			// UUID is used as device_id intentionally.
-			.addPost("device_id", this.ig.uuid).addPost("_csrftoken", this.ig.client.getToken())
+			.addPost("device_id", ig.uuid)
+			.addPost("_csrftoken", ig.client.getToken())
 
 		return request.getResponse(Response.MsisdnHeaderResponse())
 	}
@@ -984,17 +1007,17 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			return
 		}
 
-		rules = []
-		foreach(token.getRewriteRules() as rule) {
+		var rules = []
+		for(rule in token.getRewriteRules()) {
 			rules[rule.getMatcher()] = rule.getReplacer()
 		}
-		this.ig.client.zeroRating().update(rules)
+		ig.client.zeroRating().update(rules)
 
 		try {
-			this.ig.settings.setRewriteRules(rules)
-			this.ig.settings.set("zr_token", token.getTokenHash())
-			this.ig.settings.set("zr_expires", token.expiresAt())
-		} catch (SettingsException e) {
+			ig.settings.setRewriteRules(rules)
+			ig.settings.set("zr_token", token.getTokenHash())
+			ig.settings.set("zr_expires", token.expiresAt())
+		} catch (e: SettingsException) {
 			// Ignore storage errors.
 		}
 	}
@@ -1009,13 +1032,16 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.TokenResultResponse
 	 */
 	fun fetchZeroRatingToken(reason:String = "token_expired") {
-		request = this.ig.request("zr/token/result/").setNeedsAuth(false).addParam("custom_device_id", this.ig.uuid)
-			.addParam("device_id", this.ig.device_id).addParam("fetch_reason", reason)
-			.addParam("token_hash", (string) this.ig.settings.get("zr_token"))
+		val request = ig.request("zr/token/result/")
+			.setNeedsAuth(false)
+			.addParam("custom_device_id", ig.uuid)
+			.addParam("device_id", ig.device_id)
+			.addParam("fetch_reason", reason)
+			.addParam("token_hash", ig.settings.get("zr_token").toString())
 
 		/** @var Response.TokenResultResponse result */
-		result = request.getResponse(Response.TokenResultResponse())
-		this._saveZeroRatingToken(result.getToken())
+		val result = request.getResponse(Response.TokenResultResponse())
+		_saveZeroRatingToken(result.getToken())
 
 		return result
 	}
@@ -1028,10 +1054,16 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.MegaphoneLogResponse
 	 */
 	fun getMegaphoneLog() {
-		return this.ig.request("megaphone/log/").setSignedPost(false).addPost("type", "feed_aysf")
-			.addPost("action", "seen").addPost("reason", "").addPost("_uuid", this.ig.uuid)
-			.addPost("device_id", this.ig.device_id).addPost("_csrftoken", this.ig.client.getToken())
-			.addPost("uuid", time().md5()).getResponse(Response.MegaphoneLogResponse())
+		return ig.request("megaphone/log/")
+			.setSignedPost(false)
+			.addPost("type", "feed_aysf")
+			.addPost("action", "seen")
+			.addPost("reason", "")
+			.addPost("_uuid", ig.uuid)
+			.addPost("device_id", ig.device_id)
+			.addPost("_csrftoken", ig.client.getToken())
+			.addPost("uuid", time().md5())
+			.getResponse(Response.MegaphoneLogResponse())
 	}
 
 	/**
@@ -1045,7 +1077,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.FacebookHiddenEntitiesResponse
 	 */
 	fun getFacebookHiddenSearchEntities() {
-		return this.ig.request("fbsearch/get_hidden_search_entities/")
+		return ig.request("fbsearch/get_hidden_search_entities/")
 			.getResponse(Response.FacebookHiddenEntitiesResponse())
 	}
 
@@ -1057,13 +1089,15 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.FacebookOTAResponse
 	 */
 	fun getFacebookOTA() {
-		return this.ig.request("facebook_ota/").addParam("fields", Constants.FACEBOOK_OTA_FIELDS)
-			.addParam("custom_user_id", this.ig.account_id)
-			.addParam("signed_body", Signatures.generateSignature("").".")
+		return ig.request("facebook_ota/").addParam("fields", Constants.FACEBOOK_OTA_FIELDS)
+			.addParam("custom_user_id", ig.account_id)
+			.addParam("signed_body", Signatures.generateSignature("") + ".")
 			.addParam("ig_sig_key_version", Constants.SIG_KEY_VERSION)
-			.addParam("version_code", Constants.VERSION_CODE).addParam("version_name", Constants.IG_VERSION)
+			.addParam("version_code", Constants.VERSION_CODE)
+			.addParam("version_name", Constants.IG_VERSION)
 			.addParam("custom_app_id", Constants.FACEBOOK_ORCA_APPLICATION_ID)
-			.addParam("custom_device_id", this.ig.uuid).getResponse(Response.FacebookOTAResponse())
+			.addParam("custom_device_id", ig.uuid)
+			.getResponse(Response.FacebookOTAResponse())
 	}
 
 	/**
@@ -1076,7 +1110,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @see https://github.com/facebookincubator/profilo
 	 */
 	fun getLoomFetchConfig() {
-		return this.ig.request("loom/fetch_config/").getResponse(Response.LoomFetchConfigResponse())
+		return ig.request("loom/fetch_config/").getResponse(Response.LoomFetchConfigResponse())
 	}
 
 	/**
@@ -1090,7 +1124,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.ProfileNoticeResponse
 	 */
 	fun getProfileNotice() {
-		return this.ig.request("users/profile_notice/").getResponse(Response.ProfileNoticeResponse())
+		return ig.request("users/profile_notice/").getResponse(Response.ProfileNoticeResponse())
 	}
 
 	/**
@@ -1106,16 +1140,17 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.FetchQPDataResponse
 	 */
 	fun getQPFetch() {
-		query =
-			"viewer() {eligible_promotions.surface_nux_id(<surface>).external_gating_permitted_qps(<external_gating_permitted_qps>).supports_client_filters(true) {edges {priority,time_range {start,end},node {id,promotion_id,max_impressions,triggers,contextual_filters {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}},clauses {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}},clauses {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}},clauses {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}}}}}},template {name,parameters {name,required,bool_value,string_value,color_value,}},creatives {title {text},content {text},footer {text},social_context {text},primary_action{title {text},url,limit,dismiss_promotion},secondary_action{title {text},url,limit,dismiss_promotion},dismiss_action{title {text},url,limit,dismiss_promotion},image.scale(<scale>) {uri,width,height}}}}}}"
+		var query = "viewer() {eligible_promotions.surface_nux_id(<surface>).external_gating_permitted_qps(<external_gating_permitted_qps>).supports_client_filters(true) {edges {priority,time_range {start,end},node {id,promotion_id,max_impressions,triggers,contextual_filters {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}},clauses {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}},clauses {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}},clauses {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}}}}}},template {name,parameters {name,required,bool_value,string_value,color_value,}},creatives {title {text},content {text},footer {text},social_context {text},primary_action{title {text},url,limit,dismiss_promotion},secondary_action{title {text},url,limit,dismiss_promotion},dismiss_action{title {text},url,limit,dismiss_promotion},image.scale(<scale>) {uri,width,height}}}}}}"
 
-		return this.ig.request("qp/batch_fetch/").addPost("vc_policy", "default").addPost("_csrftoken",
-		                                                                                  this.ig.client.getToken()).addPost(
-				"_uid", this.ig.account_id).addPost("_uuid", this.ig.uuid).addPost("surfaces_to_queries", json_encode(
-				[Constants.SURFACE_PARAM[0] => query, Constants.SURFACE_PARAM[1] => query,
-		]
-		))
-		.addPost("version", 1).addPost("scale", 2).getResponse(Response.FetchQPDataResponse())
+		return ig.request("qp/batch_fetch/")
+			.addPost("vc_policy", "default")
+			.addPost("_csrftoken", ig.client.getToken())
+			.addPost("_uid", ig.account_id)
+			.addPost("_uuid", ig.uuid)
+			.addPost("surfaces_to_queries", json_encode([Constants.SURFACE_PARAM[0] => query, Constants.SURFACE_PARAM[1] => query]))
+			.addPost("version", 1)
+			.addPost("scale", 2)
+			.getResponse(Response.FetchQPDataResponse())
 	}
 
 	/**
@@ -1126,9 +1161,10 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.QPCooldownsResponse
 	 */
 	fun getQPCooldowns() {
-		return this.ig.request("qp/get_cooldowns/")
-			.addParam("signed_body", Signatures.generateSignature(json_encode((object)[]).".{}"))
-			.addParam("ig_sig_key_version", Constants.SIG_KEY_VERSION).getResponse(Response.QPCooldownsResponse())
+		return ig.request("qp/get_cooldowns/")
+			.addParam("signed_body", Signatures.generateSignature(json_encode((object)[]) + ".{}"))
+			.addParam("ig_sig_key_version", Constants.SIG_KEY_VERSION)
+			.getResponse(Response.QPCooldownsResponse())
 	}
 
 	/**
@@ -1155,18 +1191,17 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	fun markStoryMediaSeen(array items, sourceId:String? = null, module:String = "feed_timeline") {
 		// Build the list of seen media, with human randomization of seen-time.
-		reels = []
-		maxSeenAt = time() // Get current global UTC timestamp.
-		seenAt = maxSeenAt - (3 * count(items)) // Start seenAt in the past.
-		foreach(items as item) {
+		var reels = []
+		val maxSeenAt = System.currentTimeMillis() / 1000L // Get current global UTC timestamp.
+		var seenAt = maxSeenAt - (3 * items.count()) // Start seenAt in the past.
+		for(item in items) {
 			if (!item instanceof Response.Model.Item) {
-				throw IllegalArgumentException(
-					"All story items must be instances of .InstagramAPI.Response.Model.Item.")
+				throw IllegalArgumentException("All story items must be instances of .InstagramAPI.Response.Model.Item.")
 			}
 
 			// Raise "seenAt" if it"s somehow older than the item"s "takenAt".
 			// NOTE: Can only happen if you see a story instantly when posted.
-			itemTakenAt = item.getTakenAt()
+			val itemTakenAt = item.getTakenAt()
 			if (seenAt < itemTakenAt) {
 				seenAt = itemTakenAt + 2
 			}
@@ -1178,25 +1213,35 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 
 			// Determine the source ID for this item. This is where the item was
 			// seen from, such as a UserID or a Location-StoryTray ID.
-			itemSourceId = (sourceId === null ? item.getUser().getPk() : sourceId)
+			val itemSourceId = if(sourceId === null) item.getUser().getPk() else sourceId
 
 			// Key Format: "mediaPk_userPk_sourceId".
 			// NOTE: In case of seeing stories on a user"s profile, their
 			// userPk is used as the sourceId, as "mediaPk_userPk_userPk".
-			reelId = item.getId()."_".itemSourceId
+			val reelId = item.getId() + "_" + itemSourceId
 
 			// Value Format: ["mediaTakenAt_seenAt"] (array with single string).
-			reels[reelId] = [itemTakenAt."_".seenAt]
+			reels[reelId] = arrayOf<String>(itemTakenAt + "_" + seenAt)
 
 			// Randomly add 1-3 seconds to next seenAt timestamp, to act human.
-			seenAt += rand(1, 3)
+			seenAt = seenAt + (1..3).random()
 		}
 
-		return this.ig.request("media/seen/").setVersion(2).addPost("_uuid", this.ig.uuid)
-			.addPost("_uid", this.ig.account_id).addPost("_csrftoken", this.ig.client.getToken())
-			.addPost("container_module", module).addPost("reels", reels).addPost("reel_media_skipped", [])
-			.addPost("live_vods", []).addPost("live_vods_skipped", []).addPost("nuxes", []).addPost("nuxes_skipped", [])
-			.addParam("reel", 1).addParam("live_vod", 0).getResponse(Response.MediaSeenResponse())
+		return ig.request("media/seen/")
+			.setVersion(2)
+			.addPost("_uuid", ig.uuid)
+			.addPost("_uid", ig.account_id)
+			.addPost("_csrftoken", ig.client.getToken())
+			.addPost("container_module", module)
+			.addPost("reels", reels)
+			.addPost("reel_media_skipped", [])
+			.addPost("live_vods", [])
+			.addPost("live_vods_skipped", [])
+			.addPost("nuxes", [])
+			.addPost("nuxes_skipped", [])
+			.addParam("reel", 1)
+			.addParam("live_vod", 0)
+			.getResponse(Response.MediaSeenResponse())
 	}
 
 	/**
@@ -1211,40 +1256,40 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return Response
 	 */
-	fun configureWithRetries(callable configurator) {
-		attempt = 0
-		lastError = null
+	fun configureWithRetries(configurator: callable) {
+		var attempt = 0
+		var lastError = null
 		while (true) {
 			// Check for max retry-limit, and throw if we exceeded it.
 			if (++attempt > self.MAX_CONFIGURE_RETRIES) {
 				if (lastError === null) {
-					throw.RuntimeException("All configuration retries have failed.")
+					throw RuntimeException("All configuration retries have failed.")
 				}
 
-				throw.RuntimeException(sprintf("All configuration retries have failed. Last error: %s", lastError))
+				throw RuntimeException("All configuration retries have failed. Last error: $lastError")
 			}
 
-			result = null
+			var result = null
 
 			try {
 				/** @var Response result */
 				result = configurator()
-			} catch (ThrottledException e) {
+			} catch (e: ThrottledException) {
 				throw e
-			} catch (LoginRequiredException e) {
+			} catch (e: LoginRequiredException) {
 				throw e
-			} catch (FeedbackRequiredException e) {
+			} catch (e: FeedbackRequiredException) {
 				throw e
-			} catch (ConsentRequiredException e) {
+			} catch (ConsentRequiredException) {
 				throw e
-			} catch (CheckpointRequiredException e) {
+			} catch (e: CheckpointRequiredException) {
 				throw e
-			} catch (InstagramException e) {
+			} catch (e: InstagramException) {
 				if (e.hasResponse()) {
 					result = e.getResponse()
 				}
 				lastError = e
-			} catch (.Exception e) {
+			} catch (e: Exception) {
 				lastError = e
 				// Ignore everything else.
 			}
@@ -1255,39 +1300,35 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 				continue
 			}
 
-			httpResponse = result.getHttpResponse()
-			delay = 1
-			switch(httpResponse.getStatusCode()) {
-				case 200:
-				// Instagram uses "ok" status for this error, so we need to check it first:
-				// {"message": "media_needs_reupload", "error_title": "staged_position_not_found", "status": "ok"}
-				if (strtolower(result.getMessage()) === "media_needs_reupload") {
-					throw.RuntimeException(sprintf("You need to reupload the media (%s).",
-						// We are reading a property that isn"t defined in the class
-						// property map, so we must import "has" first, to ensure it exists.
-						                           (result.hasErrorTitle() && is_string(result.getErrorTitle())
-						                           ? result . getErrorTitle ()
-					                       : "unknown error")
-					))
-				} elseif (result.isOk()) {
-					return result
+			var httpResponse = result.getHttpResponse()
+			var delay = 1
+			when(httpResponse.getStatusCode()) {
+				200 -> {
+					// Instagram uses "ok" status for this error, so we need to check it first:
+					// {"message": "media_needs_reupload", "error_title": "staged_position_not_found", "status": "ok"}
+					if ((result.getMessage()).toLowerCase() === "media_needs_reupload") {
+						throw RuntimeException("You need to reupload the media (${if(result.hasErrorTitle() && result.getErrorTitle() is String) result.getErrorTitle() else "unknown error"})."
+								// We are reading a property that isn"t defined in the class
+								// property map, so we must import "has" first, to ensure it exists.
+						)
+					} else if (result.isOk()) {
+						return result
+					}
+					// Continue to the next attempt.
 				}
-				// Continue to the next attempt.
-				break
-				case 202:
-				// We are reading a property that isn"t defined in the class
-				// property map, so we must import "has" first, to ensure it exists.
-				if (result.hasCooldownTimeInSeconds() && result.getCooldownTimeInSeconds() !== null) {
-					delay = max((int) result . getCooldownTimeInSeconds (), 1)
+				202 -> {
+					// We are reading a property that isn"t defined in the class
+					// property map, so we must import "has" first, to ensure it exists.
+					if (result.hasCooldownTimeInSeconds() && result.getCooldownTimeInSeconds() !== null) {
+						delay = max(result.getCooldownTimeInSeconds().toInt(), 1)
+					}
 				}
-				break
-				default:
 			}
 			sleep(delay)
 		}
 
 		// We are never supposed to get here!
-		throw.LogicException("Something went wrong during configuration.")
+		throw LogicException("Something went wrong during configuration.")
 	}
 
 	/**
@@ -1308,43 +1349,44 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	protected fun _uploadResumableMedia( mediaDetails:MediaDetails,  offsetTemplate:Request,  uploadTemplate:Request,
 	                                    skipGet:Boolean) {
 		// Open file handle.
-		handle = fopen(mediaDetails.getFilename(), "rb")
+		var handle = fopen(mediaDetails.getFilename(), "rb")
 		if (handle === false) {
-			throw.RuntimeException("Failed to open media file for reading.")
+			throw RuntimeException("Failed to open media file for reading.")
 		}
 
 		try {
-			length = mediaDetails.getFilesize()
+			val length = mediaDetails.getFilesize()
 
 			// Create a stream for the opened file handle.
-			stream = Stream(handle, ["size" => length])
+			val stream = Stream(handle, ["size" => length])
 
-			attempt = 0
+			var attempt = 0
 			while (true) {
 				// Check for max retry-limit, and throw if we exceeded it.
 				if (++attempt > self.MAX_RESUMABLE_RETRIES) {
-					throw.RuntimeException("All retries have failed.")
+					throw RuntimeException("All retries have failed.")
 				}
 
 				try {
+					var offset
 					if (attempt === 1 && skipGet) {
 						// It is obvious that the first attempt is always at 0, so we can skip a request.
 						offset = 0
 					} else {
 						// Get current offset.
-						offsetRequest = clone offsetTemplate
-								/** @var Response.ResumableOffsetResponse offsetResponse */
-								offsetResponse = offsetRequest.getResponse(Response.ResumableOffsetResponse())
+						val offsetRequest = clone offsetTemplate
+						/** @var Response.ResumableOffsetResponse offsetResponse */
+						val offsetResponse = offsetRequest.getResponse(Response.ResumableOffsetResponse())
 						offset = offsetResponse.getOffset()
 					}
 
 					// Resume upload from given offset.
-					uploadRequest = clone uploadTemplate uploadRequest.addHeader("Offset", offset).setBody(
-							LimitStream(stream, length - offset, offset))
+					val uploadRequest = clone uploadTemplate uploadRequest
+						.addHeader("Offset", offset)
+						.setBody(LimitStream(stream, length - offset, offset))
 					/** @var Response.ResumableUploadResponse response */
-					response = uploadRequest.getResponse(Response.ResumableUploadResponse())
+					return uploadRequest.getResponse(Response.ResumableUploadResponse())
 
-					return response
 				} catch (e: ThrottledException) {
 					throw e
 				} catch (e: LoginRequiredException) {
@@ -1381,18 +1423,17 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	protected fun _uploadPhotoInOnePiece(targetFeed:Int,  internalMetadata:InternalMetadata) {
 		// Prepare payload for the upload request.
-		request = this.ig.request("upload/photo/").setSignedPost(false).addPost("_uuid", this.ig.uuid)
-			.addPost("_csrftoken", this.ig.client.getToken())
-			.addFile("photo", internalMetadata.getPhotoDetails().getFilename(),
-			         "pending_media_".Utils.generateUploadId().".jpg")
+		request = ig.request("upload/photo/")
+			.setSignedPost(false)
+			.addPost("_uuid", ig.uuid)
+			.addPost("_csrftoken", ig.client.getToken())
+			.addFile("photo", internalMetadata.getPhotoDetails().getFilename(),"pending_media_" + Utils.generateUploadId() + ".jpg")
 
-		foreach(this._getPhotoUploadParams(targetFeed, internalMetadata) as key => value) {
+		for((key, value) in _getPhotoUploadParams(targetFeed, internalMetadata)) {
 			request.addPost(key, value)
 		}
-		/** @var Response.UploadPhotoResponse response */
-		response = request.getResponse(Response.UploadPhotoResponse())
 
-		return response
+		return request.getResponse(Response.UploadPhotoResponse())
 	}
 
 	/**
@@ -1409,28 +1450,24 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.GenericResponse
 	 */
 	protected fun _uploadResumablePhoto(targetFeed:Int,  internalMetadata:InternalMetadata) {
-		photoDetails = internalMetadata.getPhotoDetails()
+		val photoDetails = internalMetadata.getPhotoDetails()
 
-		endpoint = sprintf("https://i.instagram.com/rupload_igphoto/%s_%d_%d", internalMetadata.getUploadId(), 0,
-		                   Utils.hashCode(photoDetails.getFilename()))
+		val endpoint = "https://i.instagram.com/rupload_igphoto/${internalMetadata.getUploadId().toInt()}_0_${Utils.hashCode(photoDetails.getFilename()).toInt()}"
 
-		uploadParams = this._getPhotoUploadParams(targetFeed, internalMetadata)
+		var uploadParams = _getPhotoUploadParams(targetFeed, internalMetadata)
 		uploadParams = Utils.reorderByHashCode(uploadParams)
 
-		offsetTemplate = Request(this.ig, endpoint)
-		offsetTemplate.setAddDefaultHeaders(false).addHeader("X_FB_PHOTO_WATERFALL_ID", Signatures.generateUUID(true))
+		val offsetTemplate = Request(ig, endpoint)
+		offsetTemplate.setAddDefaultHeaders(false)
+			.addHeader("X_FB_PHOTO_WATERFALL_ID", Signatures.generateUUID(true))
 			.addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
 
-		uploadTemplate =
-			clone offsetTemplate uploadTemplate.addHeader("X-Entity-Type", "image/jpeg").addHeader("X-Entity-Name",
-			                                                                                       basename(parse_url(
-				                                                                                       endpoint,
-				                                                                                       PHP_URL_PATH))).addHeader(
-					"X-Entity-Length", photoDetails.getFilesize())
+		val uploadTemplate = clone offsetTemplate uploadTemplate
+			.addHeader("X-Entity-Type", "image/jpeg")
+			.addHeader("X-Entity-Name",basename(parse_url(endpoint,PHP_URL_PATH)))
+			.addHeader("X-Entity-Length", photoDetails.getFilesize())
 
-		return this._uploadResumableMedia(photoDetails, offsetTemplate, uploadTemplate,
-		                                  this.ig.isExperimentEnabled("ig_android_skip_get_fbupload_photo_universe",
-		                                                              "photo_skip_get"))
+		return _uploadResumableMedia(photoDetails, offsetTemplate, uploadTemplate,ig.isExperimentEnabled("ig_android_skip_get_fbupload_photo_universe","photo_skip_get"))
 	}
 
 	/**
@@ -1441,17 +1478,13 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return bool
 	 */
-	protected fun _useResumablePhotoUploader(targetFeed:Int,  internalMetadata:InternalMetadata) {
-		switch(targetFeed) {
-			case Constants.FEED_TIMELINE_ALBUM:
-			result = this.ig.isExperimentEnabled("ig_android_sidecar_photo_fbupload_universe",
-			                                     "is_enabled_fbupload_sidecar_photo")
-			break
-			default:
-			result = this.ig.isExperimentEnabled("ig_android_photo_fbupload_universe", "is_enabled_fbupload_photo")
-		}
+	protected fun _useResumablePhotoUploader(targetFeed:Int,  internalMetadata:InternalMetadata): Boolean {
 
-		return result
+		return when(targetFeed) {
+			Constants.FEED_TIMELINE_ALBUM -> ig.isExperimentEnabled("ig_android_sidecar_photo_fbupload_universe",
+			                                     "is_enabled_fbupload_sidecar_photo")
+			else -> ig.isExperimentEnabled("ig_android_photo_fbupload_universe", "is_enabled_fbupload_photo")
+		}
 	}
 
 	/**
@@ -1463,12 +1496,12 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	protected fun _getFirstMissingRange(ranges:String) {
 		preg_match_all("/(?<start>.d+)-(?<end>.d+)./(?<total>.d+)/", ranges, matches, PREG_SET_ORDER)
-		if (!count(matches)) {
+		if (!matches.count()) {
 			return
 		}
-		pairs = []
-		length = 0
-		foreach(matches as match) {
+		val pairs = listOf<Int>()
+		var length = 0
+		for(match in matches) {
 			pairs[] = [match["start"], match["end"]]
 			length = match["total"]
 		}
@@ -1476,15 +1509,14 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		usort(pairs, fun(array pair1, array pair2) {
 			return pair1[0] - pair2[0]
 		})
-		first = pairs[0]
-		second = count(pairs) > 1 ? pairs[1] : null
-		if (first[0] == 0) {
-			result = [first[1] + 1, (second === null ? length : second[0])-1]
-		} else {
-			result = [0, first[0] - 1]
-		}
+		val first = pairs[0]
+		val second = if(pairs.count() > 1) pairs[1] else null
 
-		return result
+		return if (first[0] == 0) {
+			listOf( first[1] + 1, (if (second === null) length else second[0])-1 )
+		} else {
+			listOf(0, first[0] - 1)
+		}
 	}
 
 	/**
@@ -1507,51 +1539,50 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.UploadVideoResponse
 	 */
 	protected fun _uploadVideoChunks(targetFeed:Int,  internalMetadata:InternalMetadata) {
-		videoFilename = internalMetadata.getVideoDetails().getFilename()
+		val videoFilename = internalMetadata.getVideoDetails().getFilename()
 
 		// To support video uploads to albums, we MUST fake-inject the
 		// "sessionid" cookie from "i.instagram" into our "upload.instagram"
 		// request, otherwise the server will reply with a "StagedUpload not
 		// found" error when the final chunk has been uploaded.
-		sessionIDCookie = null
+		var sessionIDCookie = null
 		if (targetFeed === Constants.FEED_TIMELINE_ALBUM) {
-			foundCookie = this.ig.client.getCookie("sessionid", "i.instagram.com")
+			val foundCookie = ig.client.getCookie("sessionid", "i.instagram.com")
 			if (foundCookie !== null) {
 				sessionIDCookie = foundCookie.getValue()
 			}
 			if (sessionIDCookie === null || sessionIDCookie === "") { // Verify value.
-				throw.RuntimeException(
-					"Unable to find the necessary SessionID cookie for uploading video album chunks.")
+				throw RuntimeException("Unable to find the necessary SessionID cookie for uploading video album chunks.")
 			}
 		}
 
 		// Verify the upload URLs.
-		uploadUrls = internalMetadata.getVideoUploadUrls()
+		val uploadUrls = internalMetadata.getVideoUploadUrls()
 		if (!is_array(uploadUrls) || !count(uploadUrls)) {
-			throw.RuntimeException("No video upload URLs found.")
+			throw RuntimeException("No video upload URLs found.")
 		}
 
 		// Init state.
-		length = internalMetadata.getVideoDetails().getFilesize()
-		uploadId = internalMetadata.getUploadId()
-		sessionId = sprintf("%s-%d", uploadId, Utils.hashCode(videoFilename))
-		uploadUrl = array_shift(uploadUrls)
-		offset = 0
-		chunk = min(length, self.MIN_CHUNK_SIZE)
-		attempt = 0
+		val length = internalMetadata.getVideoDetails().getFilesize()
+		val uploadId = internalMetadata.getUploadId()
+		val sessionId = "$uploadId-${Utils.hashCode(videoFilename)}"
+		var uploadUrl = array_shift(uploadUrls)
+		var offset = 0
+		var chunk = Math.min(length, MIN_CHUNK_SIZE)
+		var attempt = 0
 
 		// Open file handle.
-		handle = fopen(videoFilename, "rb")
+		val handle = fopen(videoFilename, "rb")
 		if (handle === false) {
-			throw.RuntimeException("Failed to open file for reading.")
+			throw RuntimeException("Failed to open file for reading.")
 		}
 
 		try {
 			// Create a stream for the opened file handle.
-			stream = Stream(handle)
+			var stream = Stream(handle)
 			while (true) {
 				// Check for this server"s max retry-limit, and switch server?
-				if (++attempt > self.MAX_CHUNK_RETRIES) {
+				if (++attempt > MAX_CHUNK_RETRIES) {
 					uploadUrl = null
 				}
 
@@ -1560,104 +1591,102 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 					uploadUrl = array_shift(uploadUrls)
 					// Fail if there are no upload URLs left.
 					if (uploadUrl === null) {
-						throw.RuntimeException("There are no more upload URLs.")
+						throw RuntimeException("There are no more upload URLs.")
 					}
 					// Reset state.
 					attempt = 1 // As if "++attempt" had ran once, above.
 					offset = 0
-					chunk = min(length, self.MIN_CHUNK_SIZE)
+					chunk = Math.min(length, MIN_CHUNK_SIZE)
 				}
 
 				// Prepare request.
-				request = Request(this.ig, uploadUrl.getUrl())
-				request.setAddDefaultHeaders(false).addHeader("Content-Type", "application/octet-stream")
+				val request = Request(ig, uploadUrl.getUrl())
+				request.setAddDefaultHeaders(false)
+					.addHeader("Content-Type", "application/octet-stream")
 					.addHeader("Session-ID", sessionId)
-					.addHeader("Content-Disposition", "attachment filename=" video . mov "")
-					.addHeader("Content-Range", "bytes ".offset."-".(offset + chunk - 1)."/".length)
-					.addHeader("job", uploadUrl.getJob()).setBody(LimitStream(stream, chunk, offset))
+					.addHeader("Content-Disposition", "attachment; filename=\"video.mov\"")
+					.addHeader("Content-Range", "bytes " + offset + "-" + (offset + chunk - 1) + "/" + length)
+					.addHeader("job", uploadUrl.getJob())
+					.setBody(LimitStream(stream, chunk, offset))
 
 				// When uploading videos to albums, we must fake-inject the
 				// "sessionid" cookie (the official app fake-injects it too).
 				if (targetFeed === Constants.FEED_TIMELINE_ALBUM && sessionIDCookie !== null) {
 					// We"ll add it with the default options ("single use")
 					// so the fake cookie is only added to THIS request.
-					this.ig.client.fakeCookies().add("sessionid", sessionIDCookie)
+					ig.client.fakeCookies().add("sessionid", sessionIDCookie)
 				}
 
 				// Perform the upload of the current chunk.
-				start = microtime(true)
+				val start = System.nanoTime()
 
 				try {
-					httpResponse = request.getHttpResponse()
+					var httpResponse = request.getHttpResponse()
 				} catch (NetworkException e) {
 					// Ignore network exceptions.
 					continue
 				}
 
 				// Determine chunk size based on upload duration.
-				newChunkSize = (int)(chunk / (microtime(true) - start) * 5)
+				var newChunkSize = (chunk /( System.nanoTime() - start) * 5).toInt()
 				// Ensure that the chunk size is in valid range.
-				newChunkSize = min(self.MAX_CHUNK_SIZE, max(self.MIN_CHUNK_SIZE, newChunkSize))
+				newChunkSize = min(MAX_CHUNK_SIZE, max(MIN_CHUNK_SIZE, newChunkSize))
 
-				result = null
+				var result = null
 
 				try {
 					/** @var Response.UploadVideoResponse result */
 					result = request.getResponse(Response.UploadVideoResponse())
-				} catch (CheckpointRequiredException e) {
+				} catch (e: CheckpointRequiredException) {
 					throw e
-				} catch (LoginRequiredException e) {
+				} catch (e: LoginRequiredException) {
 					throw e
-				} catch (FeedbackRequiredException e) {
+				} catch (e: FeedbackRequiredException) {
 					throw e
-				} catch (ConsentRequiredException e) {
+				} catch (e: ConsentRequiredException) {
 					throw e
-				} catch (.Exception e) {
+				} catch (e: Exception) {
 					// Ignore everything else.
 				}
 
 				// Process the server response...
-				switch(httpResponse.getStatusCode()) {
-					case 200:
-					// All chunks are uploaded, but if we don"t have a
-					// response-result now then we must retry a server.
-					if (result === null) {
-						uploadUrl = null
-						break
-					}
+				when(httpResponse.getStatusCode()) {
+					200 -> {
+						// All chunks are uploaded, but if we don"t have a
+						// response-result now then we must retry a server.
+						if (result === null) {
+							uploadUrl = null
+							break
+						}
 
-					// SUCCESS! :-)
-					return result
-					case 201:
-					// The server has given us a regular reply. We expect it
-					// to be a range-reply, such as "0-3912399/23929393".
-					// Their server often drops chunks during peak hours,
-					// and in that case the first range may not start at
-					// zero, or there may be gaps or multiple ranges, such
-					// as "0-4076155/8152310,6114234-8152309/8152310". We"ll
-					// handle that by re-uploading whatever they"ve dropped.
-					if (!httpResponse.hasHeader("Range")) {
-						uploadUrl = null
-						break
+						// SUCCESS! :-)
+						return result
 					}
-					range = this._getFirstMissingRange(httpResponse.getHeaderLine("Range"))
-					if (range !== null) {
-						offset = range[0]
-						chunk = min(newChunkSize, range[1] - range[0] + 1)
-					} else {
-						chunk = min(newChunkSize, length - offset)
-					}
+					201 -> {
+						// The server has given us a regular reply. We expect it
+						// to be a range-reply, such as "0-3912399/23929393".
+						// Their server often drops chunks during peak hours,
+						// and in that case the first range may not start at
+						// zero, or there may be gaps or multiple ranges, such
+						// as "0-4076155/8152310,6114234-8152309/8152310". We"ll
+						// handle that by re-uploading whatever they"ve dropped.
+						if (!httpResponse.hasHeader("Range")) {
+							uploadUrl = null
+							break
+						}
+						val range = _getFirstMissingRange(httpResponse.getHeaderLine("Range"))
+						if (range !== null) {
+							offset = range[0]
+							chunk = min(newChunkSize, range[1] - range[0] + 1)
+						} else {
+							chunk = min(newChunkSize, length - offset)
+						}
 
-					// Reset attempts count on successful upload.
-					attempt = 0
-					break
-					case 400:
-					case 403:
-					case 511:
-					throw.RuntimeException(
-						sprintf("Instagram." s server returned HTTP status "%d".", httpResponse . getStatusCode ()))
-					case 422:
-					throw.RuntimeException("Instagram." s server says that the video is corrupt.") default :
+						// Reset attempts count on successful upload.
+						attempt = 0
+					}
+					400, 403, 511 -> throw RuntimeException("Instagram's server returned HTTP status \"${httpResponse.getStatusCode().toInt()}\".")
+					422 -> throw RuntimeException("Instagram's server says that the video is corrupt.")
 				}
 			}
 		} finally {
@@ -1666,7 +1695,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		}
 
 		// We are never supposed to get here!
-		throw.LogicException("Something went wrong during video upload.")
+		throw LogicException("Something went wrong during video upload.")
 	}
 
 	/**
@@ -1684,33 +1713,33 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.GenericResponse
 	 */
 	protected fun _uploadSegmentedVideo(targetFeed:Int,  internalMetadata:InternalMetadata) {
-		var videoDetails = internalMetadata.getVideoDetails()
+		val videoDetails = internalMetadata.getVideoDetails()
 
 		// We must split the video into segments before running any requests.
-		var segments = _splitVideoIntoSegments(targetFeed, videoDetails)
+		val segments = _splitVideoIntoSegments(targetFeed, videoDetails)
 
 		var uploadParams = _getVideoUploadParams(targetFeed, internalMetadata)
 		uploadParams = Utils.reorderByHashCode(uploadParams)
 
 		// This request gives us a stream identifier.
-		var startRequest = Request(this.ig, "https://i.instagram.com/rupload_igvideo/${Signatures.generateUUID()}?segmented=true&phase=start")
+		val startRequest = Request(ig, "https://i.instagram.com/rupload_igvideo/${Signatures.generateUUID()}?segmented=true&phase=start")
 		startRequest.setAddDefaultHeaders(false)
 			.addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
 			// Dirty hack to make a POST request.
 			.setBody(stream_for())
 		/** @var Response.SegmentedStartResponse startResponse */
-		var startResponse = startRequest.getResponse(Response.SegmentedStartResponse())
-		var streamId = startResponse.getStreamId()
+		val startResponse = startRequest.getResponse(Response.SegmentedStartResponse())
+		val streamId = startResponse.getStreamId()
 
 		// Upload the segments.
 		try {
 			var offset = 0
 			// Yep, no UUID here like in other resumable uploaders. Seems like a bug.
-			var waterfallId = Utils.generateUploadId()
+			val waterfallId = Utils.generateUploadId()
 			for(segment in segments) {
-				var endpoint = "https://i.instagram.com/rupload_igvideo/${(segment.getFilename()).md5()}-0-${segment.getFilesize().toInt()}?segmented=true&phase=transfer"
+				val endpoint = "https://i.instagram.com/rupload_igvideo/${(segment.getFilename()).md5()}-0-${segment.getFilesize().toInt()}?segmented=true&phase=transfer"
 
-				var offsetTemplate = Request(this.ig, endpoint)
+				val offsetTemplate = Request(ig, endpoint)
 				offsetTemplate.setAddDefaultHeaders(false)
 					.addHeader("Segment-Start-Offset", offset)
 					// 1 => Audio, 2 => Video, 3 => Mixed.
@@ -1719,7 +1748,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 					.addHeader("X_FB_VIDEO_WATERFALL_ID", waterfallId)
 					.addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
 
-				var uploadTemplate = clone offsetTemplate uploadTemplate
+				val uploadTemplate = clone offsetTemplate uploadTemplate
 					.addHeader("X-Entity-Type", "video/mp4")
 					.addHeader("X-Entity-Name", basename(parse_url(endpoint, PHP_URL_PATH)))
 					.addHeader("X-Entity-Length",segment.getFilesize())
@@ -1736,7 +1765,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		}
 
 		// Finalize the upload.
-		var endRequest = Request(this.ig, "https://i.instagram.com/rupload_igvideo/${Signatures.generateUUID()}?segmented=true&phase=end")
+		val endRequest = Request(ig, "https://i.instagram.com/rupload_igvideo/${Signatures.generateUUID()}?segmented=true&phase=end")
 		endRequest.setAddDefaultHeaders(false)
 			.addHeader("Stream-Id", streamId)
 			.addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
@@ -1760,31 +1789,31 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.GenericResponse
 	 */
 	protected fun _uploadResumableVideo(targetFeed:Int,  internalMetadata:InternalMetadata) {
-		var rurCookie = this.ig.client.getCookie("rur", "i.instagram.com")
+		val rurCookie = ig.client.getCookie("rur", "i.instagram.com")
 		if (rurCookie === null || rurCookie.getValue() === "") {
 			throw RuntimeException("Unable to find the necessary \"rur\" cookie for uploading video.")
 		}
 
-		var videoDetails = internalMetadata.getVideoDetails()
+		val videoDetails = internalMetadata.getVideoDetails()
 
 		val endpoint = "https://i.instagram.com/rupload_igvideo/${internalMetadata.getUploadId()}_0_${Utils.hashCode(videoDetails.getFilename())}?target=${rurCookie.getValue()}"
 
 		var uploadParams = this._getVideoUploadParams(targetFeed, internalMetadata)
 		uploadParams = Utils.reorderByHashCode(uploadParams)
 
-		var offsetTemplate = Request(this.ig, endpoint)
+		val offsetTemplate = Request(ig, endpoint)
 		offsetTemplate.setAddDefaultHeaders(false)
 			.addHeader("X_FB_VIDEO_WATERFALL_ID", Signatures.generateUUID(true))
 			.addHeader("X-Instagram-Rupload-Params", json_encode(uploadParams))
 
-		var uploadTemplate =
+		val uploadTemplate =
 			clone offsetTemplate uploadTemplate
 				.addHeader("X-Entity-Type", "video/mp4")
 				.addHeader("X-Entity-Name", basename(parse_url(endpoint,PHP_URL_PATH)))
 				.addHeader("X-Entity-Length", videoDetails.getFilesize())
 
-		return this._uploadResumableMedia(videoDetails, offsetTemplate, uploadTemplate,
-		                                  this.ig.isExperimentEnabled("ig_android_skip_get_fbupload_universe","video_skip_get"))
+		return _uploadResumableMedia(videoDetails, offsetTemplate, uploadTemplate,
+		                                  ig.isExperimentEnabled("ig_android_skip_get_fbupload_universe","video_skip_get"))
 	}
 
 	/**
@@ -1811,19 +1840,19 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		// There is no need to segment short videos.
 		val minDuration = when(targetFeed) {
 			Constants.FEED_TIMELINE -> {
-				(int) this.ig.getExperimentParam(
+				ig.getExperimentParam(
 					"ig_android_video_segmented_upload_universe",
 					// NOTE: This typo is intentional. Instagram named it that way.
 					"segment_duration_threashold_feed", 10
-				)
+				).toInt()
 			}
 
 			Constants.FEED_STORY, Constants.FEED_DIRECT_STORY -> {
-				(int) this.ig.getExperimentParam(
+				ig.getExperimentParam(
 					"ig_android_video_segmented_upload_universe",
 					// NOTE: This typo is intentional. Instagram named it that way.
 					"segment_duration_threashold_story_raven", 0
-				)
+				).toInt()
 			}
 
 			Constants.FEED_TV -> 150
@@ -1831,12 +1860,13 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			else -> 31536000 // 1 year.
 		}
 
-		if ((int) internalMetadata.getVideoDetails().getDuration() < minDuration) {
+		if (internalMetadata.getVideoDetails().getDuration().toInt() < minDuration) {
 			return false
 		}
 
 		// Check experiments for the target feed.
-		val result = when(targetFeed) {
+
+		return when(targetFeed) {
 			Constants.FEED_TIMELINE -> ig.isExperimentEnabled("ig_android_video_segmented_upload_universe", "segment_enabled_feed", true)
 
 			Constants.FEED_DIRECT -> ig.isExperimentEnabled("ig_android_direct_video_segmented_upload_universe","is_enabled_segment_direct")
@@ -1845,10 +1875,8 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 
 			Constants.FEED_TV -> true
 
-			else -> this.ig.isExperimentEnabled("ig_android_video_segmented_upload_universe", "segment_enabled_unknown",true)
+			else -> ig.isExperimentEnabled("ig_android_video_segmented_upload_universe", "segment_enabled_unknown",true)
 		}
-
-		return result
 	}
 
 	/**
@@ -1914,16 +1942,16 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return array
 	 */
-	protected fun _getPhotoUploadParams(targetFeed:Int,  internalMetadata:InternalMetadata) {
+	protected fun _getPhotoUploadParams(targetFeed:Int,  internalMetadata:InternalMetadata): MutableMap<String, String> {
 		// Common params.
-		var result = mutableMapOf<String, Any>(
-			"upload_id"         to (string) internalMetadata.getUploadId(),
-			"retry_context"     to json_encode(this._getRetryContext()),
+		val result = mutableMapOf(
+			"upload_id"         to internalMetadata.getUploadId().toString(),
+			"retry_context"     to json_encode(_getRetryContext()),
 			"image_compression" to "{\"lib_name\":\"moz\",\"lib_version\":\"3.1.m\",\"quality\":\"87\"}",
 			"xsharing_user_ids" to json_encode([]),
 			"media_type"        to if (internalMetadata.getVideoDetails() !== null) {
-				(string) Response.Model.Item.VIDEO
-				}else {(string) Response.Model.Item.PHOTO}
+				Response.Model.Item.VIDEO.toString()
+				}else {Response.Model.Item.PHOTO.toString()}
 		)
 		// Target feed"s specific params.
 		when(targetFeed) {
@@ -1941,17 +1969,17 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return array
 	 */
-	protected fun _getVideoUploadParams(targetFeed:Int,  internalMetadata:InternalMetadata) {
-		var videoDetails = internalMetadata.getVideoDetails()
+	protected fun _getVideoUploadParams(targetFeed:Int,  internalMetadata:InternalMetadata): MutableMap<String, String> {
+		val videoDetails = internalMetadata.getVideoDetails()
 		// Common params.
-		var result = mutableMapOf<String, Any>(
-			"upload_id"                to (string) internalMetadata.getUploadId(),
+		val result = mutableMapOf<String, Any>(
+			"upload_id"                to internalMetadata.getUploadId().toString(),
 			"retry_context"            to json_encode(this._getRetryContext()),
 			"xsharing_user_ids"        to json_encode([]),
-			"upload_media_height"      to (string) videoDetails.getHeight(),
-			"upload_media_width"       to (string) videoDetails.getWidth(),
-			"upload_media_duration_ms" to (string) videoDetails.getDurationInMsec(),
-			"media_type"               to (string) Response.Model.Item.VIDEO,
+			"upload_media_height"      to videoDetails.getHeight().toString(),
+			"upload_media_width"       to videoDetails.getWidth().toString(),
+			"upload_media_duration_ms" to videoDetails.getDurationInMsec().toString(),
+			"media_type"               to Response.Model.Item.VIDEO.toString(),
 			// TODO select with targetFeed (?)
 			"potential_share_types"    to json_encode(["not supported type"])
 		)
@@ -1981,10 +2009,10 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	protected fun _findSegments(outputDirectory:String, prefix:String) {
 		// Video segments will be uploaded before the audio one.
-		var result = glob("{$outputDirectory}/{$prefix}.video.*.mp4")
+		val result = glob("{$outputDirectory}/{$prefix}.video.*.mp4")
 
 		// Audio always goes into one segment, so we can import is_file() here.
-		audioTrack = "{outputDirectory}/{prefix}.audio.mp4"
+		val audioTrack = "{outputDirectory}/{prefix}.audio.mp4"
 		if (is_file(audioTrack)) {
 			result[] = audioTrack
 		}
@@ -2004,8 +2032,10 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return VideoDetails[]
 	 */
-	protected fun _splitVideoIntoSegments(targetFeed:Int,  videoDetails:VideoDetails,  ffmpeg:FFmpeg? = null,
-	                                      outputDirectory:String? = null) {
+	protected fun _splitVideoIntoSegments(targetFeed: Int,  videoDetails: VideoDetails,  ffmpegRE: FFmpeg? = null,
+	                                      outputDirectoryRE: String? = null) {
+		var ffmpeg = ffmpegRE
+		var outputDirectory = outputDirectoryRE
 		if (ffmpeg === null) {
 			ffmpeg = FFmpeg.factory()
 		}
@@ -2013,12 +2043,12 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			outputDirectory = if (Utils.defaultTmpPath === null) sys_get_temp_dir() else Utils.defaultTmpPath
 		}
 		// Check whether the output directory is valid.
-		var targetDirectory = realpath(outputDirectory)
+		val targetDirectory = realpath(outputDirectory)
 		if (targetDirectory === false || !is_dir(targetDirectory) || !is_writable(targetDirectory)) {
 			throw RuntimeException("Directory \"$outputDirectory\" is missing or is not writable.")
 		}
 
-		var prefix = sha1(videoDetails.getFilename().uniqid("", true))
+		val prefix = sha1(videoDetails.getFilename().uniqid("", true))
 
 		try {
 			// Split the video stream into a multiple segments by time.
@@ -2042,7 +2072,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		}
 
 		// Collect segments.
-		files = _findSegments(outputDirectory, prefix)
+		val files = _findSegments(outputDirectory, prefix)
 		if (empty(files)) {
 			throw RuntimeException("Something went wrong while splitting the video into segments.")
 		}
@@ -2077,11 +2107,11 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	protected fun _getTargetSegmentDuration(targetFeed: Int): Int {
 		val duration = when(targetFeed) {
 			Constants.FEED_TIMELINE -> {
-				this.ig.getExperimentParam("ig_android_video_segmented_upload_universe",
+				ig.getExperimentParam("ig_android_video_segmented_upload_universe",
 					"target_segment_duration_feed",5)
 			}
 			Constants.FEED_STORY, Constants.FEED_DIRECT_STORY -> {
-				this.ig.getExperimentParam(
+				ig.getExperimentParam(
 					"ig_android_video_segmented_upload_universe",
 					"target_segment_duration_story_raven", 2
 				)

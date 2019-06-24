@@ -12,6 +12,8 @@ import InstagramAPI.Exception.ServerMessageThrower
 import InstagramAPI.Middleware.FakeCookies
 import InstagramAPI.Middleware.ZeroRating
 import LazyJsonMapper.Exception.LazyJsonMapperException
+import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
+import okhttp3.CookieJar
 import Psr.Http.Message.RequestInterface as HttpRequestInterface
 import Psr.Http.Message.ResponseInterface as HttpResponseInterface
 import fun GuzzleHttp.Psr7.modify_request
@@ -42,14 +44,14 @@ class Client
      *
      * @var .InstagramAPI.Instagram
      */
-    protected  va_parent
+    protected var _parent: Instagram
 
     /**
      * What user agent to identify our client as.
      *
      * @var string
      */
-    protected _userAgent
+    protected var _userAgent: String
 
     /**
      * The SSL certificate verification behavior of requests.
@@ -58,7 +60,7 @@ class Client
      *
      * @var bool|string
      */
-    protected _verifySSL
+    protected var _verifySSL
 
     /**
      * Proxy to import for all requests. Optional.
@@ -67,7 +69,7 @@ class Client
      *
      * @var string|array|null
      */
-    protected _proxy
+    protected var _proxy
 
     /**
      * Network interface override to use.
@@ -79,27 +81,27 @@ class Client
      *
      * @var string|null
      */
-    protected _outputInterface
+    protected var _outputInterface: String?
 
     /**
      * @var .GuzzleHttp.Client
      */
-    private _guzzleClient
+    private var _guzzleClient: GuzzleHttp.Client
 
     /**
      * @var .InstagramAPI.Middleware.FakeCookies
      */
-    private _fakeCookies
+    private var _fakeCookies: FakeCookies
 
     /**
      * @var .InstagramAPI.Middleware.ZeroRating
      */
-    private _zeroRating
+    private var _zeroRating: ZeroRating
 
     /**
      * @var .GuzzleHttp.Cookie.CookieJar
      */
-    private _cookieJar
+    private var _cookieJar: GuzzleHttp.Cookie.CookieJar
 
     /**
      * The timestamp of when we last saved our cookie jar to disk.
@@ -109,16 +111,18 @@ class Client
      *
      * @var int
      */
-    private _cookieJarLastSaved
+    private var _cookieJarLastSaved: Int
 
     /**
      * The flag to force cURL to reopen a fresh connection.
      *
      * @var bool
      */
-    private _resetConnection
+    private var _resetConnection: Boolean
 
-    private lateinit var _parent:Instagram
+//    private var _parent: Instagram
+//    private var _verifySSL: Instagram
+
 
     /**
      * Constructor.
@@ -127,40 +131,42 @@ class Client
      */
     constructor(parent:Instagram):this
     {
-         _parent = parent
+        _parent = parent
 
         // Defaults.
-        var _verifySSL = true
-        var _proxy = null
+        _verifySSL = true
+        _proxy = null
 
         // Create a default handler stack with Guzzle"s auto-selected "best
         // possible transfer handler for the user"s system", and with all of
         // Guzzle"s default middleware (cookie jar support, etc).
-        $stack = HandlerStack::create()
+        var stack = HandlerStack.create()
 
         // Create our cookies middleware and add it to the stack.
-        this._fakeCookies = FakeCookies()
-        $stack.push(this._fakeCookies, "fake_cookies")
+        _fakeCookies = FakeCookies()
+        stack.push(_fakeCookies, "fake_cookies")
 
-        this._zeroRating = ZeroRating()
-        $stack.push(this._zeroRating, "zero_rewrite")
+        _zeroRating = ZeroRating()
+        stack.push(_zeroRating, "zero_rewrite")
 
         // Default request options (immutable after client creation).
-        this._guzzleClient = GuzzleClient([
-            "handler"         => $stack, // Our middleware is now injected.
-            "allow_redirects" => [
-                "max" => 8, // Allow up to eight redirects (that"s plenty).
-            ],
-            "connect_timeout" => 30.0, // Give up trying to connect after 30s.
-            "decode_content"  => true, // Decode gzip/deflate/etc HTTP responses.
-            "timeout"         => 240.0, // Maximum per-request time (seconds).
-            // Tells Guzzle to stop throwing exceptions on non-"2xx" HTTP codes,
-            // thus ensuring that it only triggers exceptions on socket errors!
-            // We"ll instead MANUALLY be throwing on certain other HTTP codes.
-            "http_errors"     => false,
-        ])
+        _guzzleClient = GuzzleClient(
+            mapOf(
+                "handler"         to stack, // Our middleware is now injected.
+                "allow_redirects" to (
+                            "max" to 8 // Allow up to eight redirects (that"s plenty).
+                        ),
+                "connect_timeout" to 30.0, // Give up trying to connect after 30s.
+                "decode_content"  to true, // Decode gzip/deflate/etc HTTP responses.
+                "timeout"         to 240.0, // Maximum per-request time (seconds).
+                // Tells Guzzle to stop throwing exceptions on non-"2xx" HTTP codes,
+                // thus ensuring that it only triggers exceptions on socket errors!
+                // We"ll instead MANUALLY be throwing on certain other HTTP codes.
+                "http_errors"     to false
+            )
+        )
 
-        this._resetConnection = false
+        _resetConnection = false
     }
 
     /**
@@ -174,8 +180,8 @@ class Client
      */
     fun updateFromCurrentSettings(resetCookieJar: Boolean = false){
         // Update our internal client state from the user"s settings.
-        this._userAgent = _parent.device.getUserAgent()
-        this.loadCookieJar(resetCookieJar)
+        _userAgent = _parent.device.getUserAgent()
+        loadCookieJar(resetCookieJar)
 
         // Verify that the jar contains a non-expired csrftoken for the API
         // domain. Instagram gives us a 1-year csrftoken whenever we log in.
@@ -187,7 +193,7 @@ class Client
         }
 
         // Load rewrite rules (if any).
-        this.zeroRating().update(this._parent.settings.getRewriteRules())
+        zeroRating().update(_parent.settings.getRewriteRules())
     }
 
     /**
@@ -199,15 +205,15 @@ class Client
      */
     fun loadCookieJar(resetCookieJar: Boolean = false){
         // Mark any previous cookie jar for garbage collection.
-        this._cookieJar = null
+        _cookieJar = null
 
         // Delete all current cookies from the storage if this is a reset.
         if (resetCookieJar) {
-            this._parent.settings.setCookies("")
+            _parent.settings.setCookies("")
         }
 
         // Get all cookies for the currently active user.
-        var cookieData = this._parent.settings.getCookies()
+        var cookieData = _parent.settings.getCookies()
 
         // Attempt to restore the cookies, otherwise create a new, empty jar.
         var restoredCookies = if(cookieData is String) @json_decode(cookieData, true) else null
@@ -216,11 +222,11 @@ class Client
         }
 
         // Memory-based cookie jar which must be manually saved later.
-        this._cookieJar = CookieJar(false, restoredCookies)
+        _cookieJar = CookieJar(false, restoredCookies)
 
         // Reset the "last saved" timestamp to the current time to prevent
         // auto-saving the cookies again immediately after this jar is loaded.
-        this._cookieJarLastSaved = time()
+        _cookieJarLastSaved = time()
     }
 
     /**
@@ -233,8 +239,8 @@ class Client
      *
      * @return string|null The token if found and non-expired, otherwise NULL.
      */
-    fun getToken(){
-        var cookie = this.getCookie("csrftoken", "i.instagram.com")
+    fun getToken(): String? {
+        val cookie = getCookie("csrftoken", "i.instagram.com")
         if (cookie === null || cookie.getValue() === "") {
             return null
         }
@@ -253,7 +259,7 @@ class Client
      */
     fun getCookie( name: String, domain: String ?= null, path: String ?= null){
         var foundCookie = null
-        if (this._cookieJar instanceof CookieJar) {
+        if (_cookieJar instanceof CookieJar) {
             /** @var SetCookie $cookie */
             for (cookie in this._cookieJar.getIterator()) {
                 if (cookie.getName() === name
@@ -285,17 +291,16 @@ class Client
      * @return string
      */
     fun getCookieJarAsJSON(): String{
-        if (!this._cookieJar instanceof CookieJar) {
+        if (!_cookieJar instanceof CookieJar) {
             return "[]"
         }
 
         // Gets ALL cookies from the jar, even temporary session-based cookies.
-        var cookies = this._cookieJar.toArray()
+        val cookies = _cookieJar.toArray()
 
         // Throws if data can"t be encoded as JSON (will never happen).
-        var jsonStr = .GuzzleHttp.json_encode(cookies)
 
-        return jsonStr
+        return GuzzleHttp.json_encode(cookies)
     }
 
     /**
@@ -313,11 +318,11 @@ class Client
      */
     fun saveCookieJar(){
         // Tell the settings storage to persist the latest cookies.
-        var newCookies = this.getCookieJarAsJSON()
-        this._parent.settings.setCookies(newCookies)
+        val newCookies = getCookieJarAsJSON()
+        _parent.settings.setCookies(newCookies)
 
         // Reset the "last saved" timestamp to the current time.
-        this._cookieJarLastSaved = time()
+        _cookieJarLastSaved = time()
     }
 
     /**
@@ -332,7 +337,7 @@ class Client
      */
     fun setVerifySSL(state: String ?= null)
     {
-        this._verifySSL = state
+        _verifySSL = state
     }
 
     /**
@@ -341,7 +346,7 @@ class Client
      * @return bool|string
      */
     fun getVerifySSL(){
-        return this._verifySSL
+        return _verifySSL
     }
 
     /**
@@ -353,8 +358,8 @@ class Client
      *                                 Guzzle format, or NULL to disable proxying.
      */
     fun setProxy(value){
-        this._proxy = value
-        this._resetConnection = true
+        _proxy = value
+        _resetConnection = true
     }
 
     /**
@@ -363,7 +368,7 @@ class Client
      * @return string|array|null
      */
     fun getProxy(){
-        return this._proxy
+        return _proxy
     }
 
     /**
@@ -377,9 +382,9 @@ class Client
      * @param string|null $value Interface name, IP address or hostname, or NULL to
      *                           disable override and let Guzzle import any interface.
      */
-    fun setOutputInterface(value){
-        this._outputInterface = value
-        this._resetConnection = true
+    fun setOutputInterface(value: String?){
+        _outputInterface = value
+        _resetConnection = true
     }
 
     /**
@@ -387,8 +392,8 @@ class Client
      *
      * @return string|null
      */
-    fun getOutputInterface(){
-        return this._outputInterface
+    fun getOutputInterface(): String?{
+        return _outputInterface
     }
 
     /**
@@ -403,7 +408,7 @@ class Client
      * @param (HttpResponseInterface)$response      The Guzzle response object from the request.
      * @param (string)               $responseBody  The actual text-body reply from the server.
      */
-    protected fun _printDebug(method: String, url: String, uploadedBody: String, uploadedBytes: Int?,
+    protected fun _printDebug(method: String, url: String, uploadedBody: String?, uploadedBytes: Int?,
         response: HttpResponseInterface, responseBody: String){
         Debug.printRequest(method, url)
 
@@ -428,7 +433,7 @@ class Client
         Debug.printHttpCode(response.getStatusCode(), bytes)
 
         // Display the actual API response body.
-        Debug.printResponse(responseBody, this._parent.truncatedDebug)
+        Debug.printResponse(responseBody, _parent.truncatedDebug)
     }
 
     /**
@@ -444,10 +449,10 @@ class Client
      *
      * @throws InstagramException In case of invalid or failed API response.
      */
-    fun mapServerResponse(responseObject: Response, rawResponse, httpResponse: HttpResponseInterface ){
+    fun mapServerResponse(responseObject: Response, rawResponse: String, httpResponse: HttpResponseInterface ){
         // Attempt to decode the raw JSON to an array.
         // Important: Special JSON decoder which handles 64-bit numbers!
-        var jsonArray = this.api_body_decode(rawResponse, true)
+        var jsonArray = api_body_decode(rawResponse, true)
 
         // If the server response is not an array, it means that JSON decoding
         // failed or some other bad thing happened. So analyze the HTTP status
@@ -477,7 +482,7 @@ class Client
             // definitions, or if they can"t be mapped as defined in the class
             // property map. But we"ll ignore missing properties in our custom
             // UnpredictableKeys containers, since those ALWAYS lack keys. -)
-            if (this._parent.apiDeveloperDebug) {
+            if (_parent.apiDeveloperDebug) {
                 // Perform manual analysis (so that we can intercept its analysis result).
                 var analysis = responseObject.exportClassAnalysis() // Never throws.
 
@@ -557,7 +562,7 @@ class Client
                 // ensures that users with various retry-algorithms won"t hammer
                 // their server. When this flag is false, ALL further attempts
                 // at AUTHENTICATED requests will be aborted by our library.
-                this._parent.isMaybeLoggedIn = false
+                _parent.isMaybeLoggedIn = false
 
                 throw e // Re-throw.
             }
@@ -577,9 +582,9 @@ class Client
      */
     protected fun _buildGuzzleOptions(array guzzleOptions = []){
         val criticalOptions = mapOf(
-            "cookies" to (if(this._cookieJar instanceof CookieJar) this._cookieJar else false),
-            "verify"  to this._verifySSL,
-            "proxy"   to (if(this._proxy !== null) this._proxy else null)
+            "cookies" to (if(_cookieJar instanceof CookieJar) _cookieJar else false),
+            "verify"  to _verifySSL,
+            "proxy"   to (if(_proxy !== null) _proxy else null)
         )
 
         // Critical options always overwrite identical keys in regular opts.
@@ -595,12 +600,12 @@ class Client
 
         // Add their network interface override if they want it.
         // This option MUST be non-empty if set, otherwise it breaks cURL.
-        if (this._outputInterface is String && this._outputInterface !== "") {
-            finalOptions["curl"][CURLOPT_INTERFACE] = this._outputInterface
+        if (_outputInterface is String && _outputInterface !== "") {
+            finalOptions["curl"][CURLOPT_INTERFACE] = _outputInterface
         }
-        if (this._resetConnection) {
+        if (_resetConnection) {
             finalOptions["curl"][CURLOPT_FRESH_CONNECT] = true
-            this._resetConnection = false
+            _resetConnection = false
         }
 
         return finalOptions
@@ -630,16 +635,13 @@ class Client
      *
      * @return HttpResponseInterface
      */
-    protected fun _guzzleRequest(
-        HttpRequestInterface request,
-        array guzzleOptions = [])
-    {
+    protected fun _guzzleRequest( request: HttpRequestInterface, array guzzleOptions = []){
         // Add critically important options for authenticating the request.
-        var guzzleOptions = this._buildGuzzleOptions(guzzleOptions)
+        val guzzleOptions = _buildGuzzleOptions(guzzleOptions)
 
         // Attempt the request. Will throw in case of socket errors!
         try {
-            var response = this._guzzleClient.send(request, guzzleOptions)
+            var response = _guzzleClient.send(request, guzzleOptions)
         } catch (e: Exception) {
             // Re-wrap Guzzle"s exception using our own NetworkException.
             throw InstagramAPI.Exception.NetworkException(e)
@@ -647,13 +649,11 @@ class Client
 
         // Detect very serious HTTP status codes in the response.
         var httpCode = response.getStatusCode()
+        // "429 Too Many Requests"
+        // "431 Request Header Fields Too Large"
         when (httpCode) {
-            429 -> { // "429 Too Many Requests"
-                throw InstagramAPI.Exception.ThrottledException("Throttled by Instagram becaimport of too many API requests.")
-            }
-            431 -> { // "431 Request Header Fields Too Large"
-                throw InstagramAPI.Exception.RequestHeadersTooLargeException("The request start-line and/or headers are too large to process.")
-            }
+            429 -> throw InstagramAPI.Exception.ThrottledException("Throttled by Instagram becaimport of too many API requests.")
+            431 -> throw InstagramAPI.Exception.RequestHeadersTooLargeException("The request start-line and/or headers are too large to process.")
             // WARNING: Do NOT detect 404 and other higher-level HTTP errors here,
             // since we catch those later during steps like mapServerResponse()
             // and autoThrow. This is a warning to future contributors!
@@ -661,8 +661,8 @@ class Client
 
         // We"ll periodically auto-save our cookies at certain intervals. This
         // complements the "onCloseUser" and "login()/logout()" force-saving.
-        if ((time() - this._cookieJarLastSaved) > self::COOKIE_AUTOSAVE_INTERVAL) {
-            this.saveCookieJar()
+        if ((time() - _cookieJarLastSaved) > COOKIE_AUTOSAVE_INTERVAL) {
+            saveCookieJar()
         }
 
         // The response may still have serious but "valid response" errors, such
@@ -699,17 +699,14 @@ class Client
      *
      * @return HttpResponseInterface
      */
-    protected fun _apiRequest(
-        HttpRequestInterface request,
-        array guzzleOptions = [],
-        array libraryOptions = [])
+    protected fun _apiRequest(request: HttpRequestInterface, array guzzleOptions = [], array libraryOptions = [])
     {
         // Perform the API request and retrieve the raw HTTP response body.
-        var guzzleResponse = this._guzzleRequest(request, guzzleOptions)
+        val guzzleResponse = _guzzleRequest(request, guzzleOptions)
         var uploadedBody: String?
 
         // Debugging (must be shown before possible decoding error).
-        if (this._parent.debug && (libraryOptions["noDebug"].isBlank() || !libraryOptions["noDebug"])) {
+        if (_parent.debug!! && (libraryOptions["noDebug"].isBlank() || !libraryOptions["noDebug"])) {
             // Determine whether we should display the contents of the UPLOADED body.
             if (!(libraryOptions["debugUploadedBody"].isBlank()) && libraryOptions["debugUploadedBody"]) {
                 uploadedBody = request.getBody().toString()
@@ -721,16 +718,16 @@ class Client
             }
 
             // Determine whether we should display the size of the UPLOADED body.
-            var uploadedBytes = if (!(libraryOptions["debugUploadedBytes"].isBlank()) && libraryOptions["debugUploadedBytes"]) {
+            val uploadedBytes = if (!(libraryOptions["debugUploadedBytes"].isBlank()) && libraryOptions["debugUploadedBytes"]) {
                 // Calculate the uploaded bytes by looking at request"s body size, if it exists.
                 request.getBody().getSize()
             } else {
                 null // Don"t display.
             }
 
-            this._printDebug(
+            _printDebug(
                 request.getMethod(),
-                this._zeroRating.rewrite( request.getUri().toString() ),
+                _zeroRating.rewrite( request.getUri() ).toString(),
                 uploadedBody,
                 uploadedBytes,
                 guzzleResponse,
@@ -751,14 +748,11 @@ class Client
      *
      * @return HttpResponseInterface
      */
-    fun api(
-        HttpRequestInterface request,
-        array guzzleOptions = [])
-    {
+    fun api( requestRE: HttpRequestInterface, array guzzleOptions = []){
         // Set up headers that are required for every request.
-        var request = modify_request(request, (
+        val request = modify_request(requestRE, (
             "set_headers" to (
-                "User-Agent"       to this._userAgent,
+                "User-Agent"       to _userAgent,
                 // Keep the API"s HTTPS connection alive in Guzzle for future
                 // re-use, to greatly speed up all further queries after this.
                 "Connection"       to "Keep-Alive",
@@ -770,11 +764,11 @@ class Client
         ))
 
         // Check the Content-Type header for debugging.
-        var contentType = request.getHeader("Content-Type")
-        var isFormData = contentType.count() && reset(contentType) === Constants.CONTENT_TYPE
+        val contentType = request.getHeader("Content-Type")
+        val isFormData = contentType.count() && reset(contentType) === Constants.CONTENT_TYPE
 
         // Perform the API request.
-        var response = this._apiRequest(request, guzzleOptions, (
+        val response = _apiRequest(request, guzzleOptions, (
             "debugUploadedBody"  to isFormData,
             "debugUploadedBytes" to !isFormData
         ))
@@ -806,8 +800,8 @@ class Client
      *
      * @return FakeCookies
      */
-    fun fakeCookies(){
-        return this._fakeCookies
+    fun fakeCookies(): FakeCookies {
+        return _fakeCookies
     }
 
     /**
@@ -815,7 +809,7 @@ class Client
      *
      * @return ZeroRating
      */
-    fun zeroRating(){
-        return this._zeroRating
+    fun zeroRating(): ZeroRating {
+        return _zeroRating
     }
 }

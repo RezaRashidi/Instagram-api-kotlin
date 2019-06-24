@@ -7,6 +7,7 @@ import InstagramAPI.Exception.InstagramException
 import InstagramAPI.Exception.LoginRequiredException
 import Psr.Http.Message.ResponseInterface as HttpResponseInterface
 import Psr.Http.Message.StreamInterface
+import com.sun.deploy.net.HttpRequest
 import fun GuzzleHttp.Psr7.stream_for
 
 /**
@@ -32,7 +33,7 @@ class Request {
 	 *
 	 * @var string
 	 */
-	private var _url: String
+	private lateinit var _url: String
 
 
 	/**
@@ -40,21 +41,22 @@ class Request {
 	 *
 	 * @var array
 	 */
-	private var _params
+	private lateinit var _params: MutableMap<String, Any>
+
 
 	/**
 	 * An array of POST params.
 	 *
 	 * @var array
 	 */
-	private var _posts
+	private lateinit var _posts: MutableMap<String, Any>
 
 	/**
 	 * An array of POST params keys to exclude from signed body.
 	 *
 	 * @var string[]
 	 */
-	private var _excludeSigned
+	private lateinit var _excludeSigned: MutableList<String>
 
 	/**
 	 * Raw request body.
@@ -68,21 +70,21 @@ class Request {
 	 *
 	 * @var array
 	 */
-	private var _files
+	private lateinit var _files: MutableMap<String, Any>
 
 	/**
 	 * An array of HTTP headers to add to the request.
 	 *
 	 * @var string[]
 	 */
-	private var _headers
+	private lateinit var _headers: MutableMap<String, String>
 
 	/**
 	 * Whether to add the default headers.
 	 *
 	 * @var bool
 	 */
-	private var _defaultHeaders: Boolean? = null
+	private var _defaultHeaders: Boolean = true
 
 	/**
 	 * Whether this API call needs authorization.
@@ -91,7 +93,7 @@ class Request {
 	 *
 	 * @var bool
 	 */
-	private var _needsAuth: Boolean? = null
+	private var _needsAuth: Boolean = true
 
 	/**
 	 * Whether this API call needs signing of the POST data.
@@ -100,7 +102,7 @@ class Request {
 	 *
 	 * @var bool
 	 */
-	private var _signedPost: Boolean? = null
+	private var _signedPost: Boolean = true
 
 	/**
 	 * Whether this API call needs signing of the GET params.
@@ -109,7 +111,7 @@ class Request {
 	 *
 	 * @var bool
 	 */
-	private var _signedGet: Boolean? = null
+	private var _signedGet: Boolean = false
 
 	/**
 	 * Whether this API endpoint responds with multiple JSON objects.
@@ -118,7 +120,7 @@ class Request {
 	 *
 	 * @var bool
 	 */
-	private var _isMultiResponse: Boolean? = null
+	private var _isMultiResponse: Boolean = false
 
 	/**
 	 * Whether this API call needs gz-compressing of the POST data.
@@ -127,7 +129,7 @@ class Request {
 	 *
 	 * @var bool
 	 */
-	private var _isBodyCompressed: Boolean? = null
+	private var _isBodyCompressed: Boolean = false
 
 	/**
 	 * Opened file handles.
@@ -148,7 +150,7 @@ class Request {
 	 *
 	 * @var HttpResponseInterface
 	 */
-	private var _httpResponse
+	private lateinit var _httpResponse: HttpResponseInterface
 
 
 	/**
@@ -157,27 +159,25 @@ class Request {
 	 * @param Instagram parent
 	 * @param string    url
 	 */
-	fun __construct( parent:InstagramAPI.Instagram,
-	url:String)
-	{
-		this._parent = parent
-		this._url = url
+	fun __construct( parent:Instagram, url:String){
+		_parent = parent
+		_url = url
 
 		// Set defaults.
-		this._apiVersion = 1
-		this._headers = []
-		this._params = []
-		this._posts = []
-		this._files = []
+		_apiVersion = 1
+		_headers = mutableMapOf()
+		_params = mutableMapOf()
+		_posts = mutableMapOf()
+		_files = mutableMapOf()
 		this._handles = []
 		this._guzzleOptions = []
-		this._needsAuth = true
-		this._signedPost = true
-		this._signedGet = false
-		this._isMultiResponse = false
-		this._isBodyCompressed = false
-		this._excludeSigned = []
-		this._defaultHeaders = true
+		_needsAuth = true
+		_signedPost = true
+		_signedGet = false
+		_isMultiResponse = false
+		_isBodyCompressed = false
+		_excludeSigned = mutableListOf()
+		_defaultHeaders = true
 	}
 
 	/**
@@ -185,7 +185,7 @@ class Request {
 	 */
 	fun __destruct() {
 		// Ensure that all opened handles are closed.
-		this._closeHandles()
+		_closeHandles()
 	}
 
 	/**
@@ -198,10 +198,10 @@ class Request {
 	 * @return self
 	 */
 	fun setVersion(apiVersion:Int) {
-		if (!array_key_exists(apiVersion, Constants::API_URLS)) {
-			throw IllegalArgumentException(sprintf("" % d" is not a supported API version.", apiVersion))
+		if (!array_key_exists(apiVersion, Constants.API_URLS)) {
+			throw IllegalArgumentException("\"$apiVersion\" is not a supported API version.")
 		}
-		this._apiVersion = apiVersion
+		_apiVersion = apiVersion
 
 		return this
 	}
@@ -215,12 +215,12 @@ class Request {
 	 * @return self
 	 */
 	fun addParam(key:String, value:Any) {
-		if (value === true) {
-			value = "true"
-		} elseif (value === false) {
-			value = "false"
+		val valueFa = if (value === true) {
+			 "true"
+		} else {
+			"false"
 		}
-		this._params[key] = value
+		_params[key] = valueFa
 
 		return this
 	}
@@ -234,12 +234,12 @@ class Request {
 	 * @return self
 	 */
 	fun addPost(key:String, value:Any) {
-		if (value === true) {
-			value = "true"
-		} elseif (value === false) {
-			value = "false"
+		val valueFa = if (value === true) {
+			"true"
+		} else {
+			"false"
 		}
-		this._posts[key] = value
+		_posts[key] = valueFa
 
 		return this
 	}
@@ -256,8 +256,8 @@ class Request {
 	 * @return self
 	 */
 	fun addUnsignedPost(key:String, value:Any) {
-		this.addPost(key, value)
-		this._excludeSigned[] = key
+		addPost(key, value)
+		_excludeSigned.add(key)
 
 		return this
 	}
@@ -277,10 +277,10 @@ class Request {
 	fun addFile(key:String, filepath:String, filename:String? = null, array headers = []) {
 		// Validate
 		if (!is_file(filepath)) {
-			throw IllegalArgumentException(sprintf("File " % s" does not exist.", filepath))
+			throw IllegalArgumentException("File \"$filepath\" does not exist.")
 		}
 		if (!is_readable(filepath)) {
-			throw IllegalArgumentException(sprintf("File " % s" is not readable.", filepath))
+			throw IllegalArgumentException("File \"$filepath\" is not readable.")
 		}
 		// Inherit value from filepath, if not supplied.
 		if (filename === null) {
@@ -288,13 +288,15 @@ class Request {
 		}
 		filename = basename(filename)
 		// Default headers.
-		headers = headers + ["Content-Type"              => "application/octet-stream",
-		"Content-Transfer-Encoding" => "binary",
-		]
-		this._files[key] = ["filepath" => filepath,
-		"filename" => filename,
-		"headers"  => headers,
-		]
+		headers = headers + mapOf(
+			"Content-Type"              to "application/octet-stream",
+			"Content-Transfer-Encoding" to "binary"
+		)
+		_files[key] = mapOf(
+			"filepath" to filepath,
+			"filename" to filename,
+			"headers"  to headers
+		)
 
 		return this
 	}
@@ -312,13 +314,15 @@ class Request {
 	fun addFileData(key: String, data: String, filename: String, array headers = []) {
 		filename = basename(filename)
 		// Default headers.
-		headers = headers + ["Content-Type"              => "application/octet-stream",
-		"Content-Transfer-Encoding" => "binary",
-		]
-		this._files[key] = ["contents" => data,
-		"filename" => filename,
-		"headers"  => headers,
-		]
+		headers = headers + mapOf(
+			"Content-Type"              to "application/octet-stream",
+			"Content-Transfer-Encoding" to "binary"
+		)
+		_files[key] = mapOf(
+			"contents" to data,
+			"filename" to filename,
+			"headers"  to headers
+		)
 
 		return this
 	}
@@ -341,7 +345,7 @@ class Request {
 	 * @return self
 	 */
 	fun addHeader(key: String, value: String) {
-		this._headers[key] = value
+		_headers[key] = value
 
 		return this
 	}
@@ -352,15 +356,15 @@ class Request {
 	 * @return self
 	 */
 	private fun _addDefaultHeaders() {
-		if (this._defaultHeaders) {
-			this._headers["X-IG-App-ID"] = Constants::FACEBOOK_ANALYTICS_APPLICATION_ID
-			this._headers["X-IG-Capabilities"] = Constants::X_IG_Capabilities
-			this._headers["X-IG-Connection-Type"] = Constants::X_IG_Connection_Type
-			this._headers["X-IG-Connection-Speed"] = mt_rand(1000, 3700)."kbps"
+		if (_defaultHeaders) {
+			_headers["X-IG-App-ID"] = Constants.FACEBOOK_ANALYTICS_APPLICATION_ID
+			_headers["X-IG-Capabilities"] = Constants.X_IG_Capabilities
+			_headers["X-IG-Connection-Type"] = Constants.X_IG_Connection_Type
+			_headers["X-IG-Connection-Speed"] = (1000..3700).random().toString() + "kbps"
 			// TODO: IMPLEMENT PROPER CALCULATION OF THESE HEADERS.
-			this._headers["X-IG-Bandwidth-Speed-KBPS"] = "-1.000"
-			this._headers["X-IG-Bandwidth-TotalBytes-B"] = "0"
-			this._headers["X-IG-Bandwidth-TotalTime-MS"] = "0"
+			_headers["X-IG-Bandwidth-Speed-KBPS"] = "-1.000"
+			_headers["X-IG-Bandwidth-TotalBytes-B"] = "0"
+			_headers["X-IG-Bandwidth-TotalTime-MS"] = "0"
 		}
 
 		return this
@@ -374,7 +378,7 @@ class Request {
 	 * @return self
 	 */
 	fun setAddDefaultHeaders(flag:Boolean) {
-		this._defaultHeaders = flag
+		_defaultHeaders = flag
 
 		return this
 	}
@@ -387,7 +391,7 @@ class Request {
 	 * @return self
 	 */
 	fun setGuzzleOptions(array guzzleOptions) {
-		this._guzzleOptions = guzzleOptions
+		_guzzleOptions = guzzleOptions
 
 		return this
 	}
@@ -400,7 +404,7 @@ class Request {
 	 * @return self
 	 */
 	fun setBody( stream : StreamInterface) {
-		this._body = stream
+		_body = stream
 
 		return this
 	}
@@ -413,7 +417,7 @@ class Request {
 	 * @return self
 	 */
 	fun setNeedsAuth(needsAuth:Boolean) {
-		this._needsAuth = needsAuth
+		_needsAuth = needsAuth
 
 		return this
 	}
@@ -425,8 +429,8 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setSignedPost(signedPost = true) {
-		this._signedPost = signedPost
+	fun setSignedPost(signedPost: Boolean = true) {
+		_signedPost = signedPost
 
 		return this
 	}
@@ -438,8 +442,8 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setSignedGet(signedGet = false) {
-		this._signedGet = signedGet
+	fun setSignedGet(signedGet: Boolean = false) {
+		_signedGet = signedGet
 
 		return this
 	}
@@ -451,8 +455,8 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setIsMultiResponse(flag = false) {
-		this._isMultiResponse = flag
+	fun setIsMultiResponse(flag: Boolean = false) {
+		_isMultiResponse = flag
 
 		return this
 	}
@@ -464,13 +468,13 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setIsBodyCompressed(isBodyCompressed = false) {
-		this._isBodyCompressed = isBodyCompressed
+	fun setIsBodyCompressed(isBodyCompressed: Boolean = false) {
+		_isBodyCompressed = isBodyCompressed
 
 		if (isBodyCompressed === true) {
-			this._headers["Content-Encoding"] = "gzip"
-		} elseif (isset(this._headers["Content-Encoding"]) && this._headers["Content-Encoding"] === "gzip") {
-			unset(this._headers["Content-Encoding"])
+			_headers["Content-Encoding"] = "gzip"
+		} else if (!(_headers["Content-Encoding"]!!.isBlank()) && _headers["Content-Encoding"] === "gzip") {
+			unset(_headers["Content-Encoding"])
 		}
 
 		return this
@@ -487,12 +491,13 @@ class Request {
 	 * @return StreamInterface
 	 */
 	private fun _getStreamForFile(array file) {
-		if (isset(file["contents"])) {
+		var result
+		if (!(file["contents"].isBlank())) {
 			result = stream_for(file["contents"]) // Throws.
-		} elseif (isset(file["filepath"])) {
-			handle = fopen(file["filepath"], "rb")
+		} else if (!(file["filepath"].isBlank())) {
+			var handle = fopen(file["filepath"], "rb")
 			if (handle === false) {
-				throw.RuntimeException(sprintf("Could not open file " % s" for reading.", file["filepath"]))
+				throw RuntimeException("Could not open file \"${file["filepath"]}\" for reading.")
 			}
 			this._handles[] = handle
 			result = stream_for(handle) // Throws.
@@ -541,14 +546,14 @@ class Request {
 	 * Close opened file handles.
 	 */
 	private fun _closeHandles() {
-		if (!is_array(this._handles) || !count(this._handles)) {
+		if (!is_array(_handles) || !count(_handles)) {
 			return
 		}
 
-		foreach(this._handles as handle) {
-			Utils::safe_fclose(handle)
+		for(handle in _handles) {
+			Utils.safe_fclose(handle)
 		}
-		this._resetHandles()
+		_resetHandles()
 	}
 
 	/**
@@ -566,10 +571,10 @@ class Request {
 	 * @return Stream
 	 */
 	private fun _getUrlencodedBody() {
-		this._headers["Content-Type"] = Constants::CONTENT_TYPE
+		_headers["Content-Type"] = Constants.CONTENT_TYPE
 
 		return stream_for( // Throws.
-			http_build_query(Utils::reorderByHashCode(this._posts)))
+			http_build_query(Utils.reorderByHashCode(_posts)))
 	}
 
 	/**
@@ -582,30 +587,30 @@ class Request {
 	 */
 	private fun _getRequestBody() {
 		// Check and return raw body stream if set.
-		if (this._body !== null) {
-			if (this._isBodyCompressed) {
-				return stream_for(zlib_encode((string) this._body, ZLIB_ENCODING_GZIP))
+		if (_body !== null) {
+			if (_isBodyCompressed) {
+				return stream_for(zlib_encode(_body.toString(), ZLIB_ENCODING_GZIP))
 			}
 
-			return this._body
+			return _body
 		}
 		// We have no POST data and no files.
 		if (!count(this._posts) && !count(this._files)) {
 			return
 		}
 		// Sign POST data if needed.
-		if (this._signedPost) {
-			this._posts = Signatures::signData(this._posts, this._excludeSigned)
+		if (_signedPost) {
+			_posts = Signatures.signData(_posts, _excludeSigned)
 		}
 		// Switch between multipart (at least one file) or urlencoded body.
-		if (!count(this._files)) {
-			result = this._getUrlencodedBody() // Throws.
+		val result = if (!count(_files)) {
+			_getUrlencodedBody() // Throws.
 		} else {
-			result = this._getMultipartBody() // Throws.
+			_getMultipartBody() // Throws.
 		}
 
-		if (this._isBodyCompressed) {
-			return stream_for(zlib_encode((string) result, ZLIB_ENCODING_GZIP))
+		if (_isBodyCompressed) {
+			return stream_for(zlib_encode(result.toString(), ZLIB_ENCODING_GZIP))
 		}
 
 		return result
@@ -620,29 +625,29 @@ class Request {
 	 * @return HttpRequest
 	 */
 	private fun _buildHttpRequest() {
-		endpoint = this._url
+		var endpoint = _url
 		// Determine the URI to import (it"s either relative to API, or a full URI).
 		if (strncmp(endpoint, "http:", 5) !== 0 && strncmp(endpoint, "https:", 6) !== 0) {
-			endpoint = Constants::API_URLS[this._apiVersion].endpoint
+			endpoint = Constants.API_URLS[_apiVersion.toString()] + endpoint
 		}
 		// Check signed request params flag.
-		if (this._signedGet) {
-			this._params = Signatures::signData(this._params)
+		if (_signedGet) {
+			_params = Signatures.signData(_params)
 		}
 		// Generate the final endpoint URL, by adding any custom query params.
-		if (count(this._params)) {
-			endpoint = endpoint.(strpos(endpoint, "?") === false ? "?" : "&")
-			.http_build_query(Utils::reorderByHashCode(this._params))
+		if (_params.count() > 0) {
+			endpoint += (if (endpoint.indexOf("?")) === false "?" else "&")
+			 + http_build_query(Utils.reorderByHashCode(_params))
 		}
 		// Add default headers (if enabled).
-		this._addDefaultHeaders()
+		_addDefaultHeaders()
 		/** @var StreamInterface|null postData The POST body stream is NULL if GET request instead. */
-		postData = this._getRequestBody() // Throws.
+		val postData = _getRequestBody() // Throws.
 		// Determine request method.
-		method = postData !== null ? "POST" : "GET"
+		val method = if(postData !== null) "POST" else "GET"
 		// Build HTTP request object.
 		return HttpRequest( // Throws (they didn"t document that properly).
-			method, endpoint, this._headers, postData)
+			method, endpoint, _headers, postData)
 	}
 
 	/**
@@ -656,7 +661,7 @@ class Request {
 	private fun _throwIfNotLoggedIn() {
 		// Check the cached login state. May not reflect what will happen on the
 		// server. But it"s the best we can check without trying the actual request!
-		if (!this._parent.isMaybeLoggedIn) {
+		if (!_parent.isMaybeLoggedIn) {
 			throw LoginRequiredException("User not logged in. Please call login() and then try again.")
 		}
 	}
@@ -672,8 +677,8 @@ class Request {
 	 */
 	fun getHttpResponse() {
 		// Prevent request from sending multiple times.
-		if (this._httpResponse === null) {
-			if (this._needsAuth) {
+		if (_httpResponse === null) {
+			if (_needsAuth) {
 				// Throw if this requires authentication and we"re not logged in.
 				this._throwIfNotLoggedIn()
 			}
@@ -681,15 +686,15 @@ class Request {
 			this._resetHandles()
 
 			try {
-				this._httpResponse = this._parent.client.api( // Throws.
-					this._buildHttpRequest(), // Throws.
-					this._guzzleOptions)
+				_httpResponse = _parent.client.api( // Throws.
+					_buildHttpRequest(), // Throws.
+					_guzzleOptions)
 			} finally {
-				this._closeHandles()
+				_closeHandles()
 			}
 		}
 
-		return this._httpResponse
+		return _httpResponse
 	}
 
 	/**
@@ -701,9 +706,9 @@ class Request {
 	 *
 	 * @return string
 	 */
-	fun getRawResponse() {
-		httpResponse = this.getHttpResponse() // Throws.
-		body = (string) httpResponse . getBody ()
+	fun getRawResponse(): String {
+		val httpResponse = getHttpResponse() // Throws.
+		var body = httpResponse.getBody().toString()
 
 		// Handle API endpoints that respond with multiple JSON objects.
 		// NOTE: We simply merge all JSON objects into a single object. This
@@ -711,8 +716,8 @@ class Request {
 		// objects never contain literal newline characters (http://json.org).
 		// And if we get any duplicate properties, then PHP will simply select
 		// the latest value for that property (ex: a:1,a:2 is treated as a:2).
-		if (this._isMultiResponse) {
-			body = str_replace("}.r.n{", ",", body)
+		if (_isMultiResponse) {
+			body = body.replace("}.r.n{", ",")
 		}
 
 		return body
@@ -733,7 +738,7 @@ class Request {
 	 */
 	fun getDecodedResponse(assoc:Boolean = true) {
 		// Important: Special JSON decoder.
-		return Client::api_body_decode(this.getRawResponse(), // Throws.
+		return Client.api_body_decode(getRawResponse(), // Throws.
 		                               assoc)
 	}
 
@@ -748,11 +753,11 @@ class Request {
 	 *
 	 * @return Response The provided responseObject with all JSON properties filled.
 	 */
-	fun getResponse(Response responseObject) {
+	fun getResponse(responseObject: Response) {
 		// Check for API response success and put its response in the object.
-		this._parent.client.mapServerResponse( // Throws.
-			responseObject, this.getRawResponse(), // Throws.
-			this.getHttpResponse() // Throws.
+		_parent.client.mapServerResponse( // Throws.
+			responseObject, getRawResponse(), // Throws.
+			getHttpResponse() // Throws.
 		)
 
 		return responseObject
