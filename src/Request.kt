@@ -159,7 +159,7 @@ class Request {
 	 * @param Instagram parent
 	 * @param string    url
 	 */
-	fun __construct( parent:Instagram, url:String){
+	constructor( parent:Instagram, url:String){
 		_parent = parent
 		_url = url
 
@@ -169,8 +169,8 @@ class Request {
 		_params = mutableMapOf()
 		_posts = mutableMapOf()
 		_files = mutableMapOf()
-		this._handles = []
-		this._guzzleOptions = []
+		_handles = []
+		_guzzleOptions = []
 		_needsAuth = true
 		_signedPost = true
 		_signedGet = false
@@ -197,7 +197,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setVersion(apiVersion:Int) {
+	fun setVersion(apiVersion:Int) :Request{
 		if (!array_key_exists(apiVersion, Constants.API_URLS)) {
 			throw IllegalArgumentException("\"$apiVersion\" is not a supported API version.")
 		}
@@ -214,7 +214,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun addParam(key:String, value:Any) {
+	fun addParam(key:String, value:Any):Request {
 		val valueFa = if (value === true) {
 			 "true"
 		} else {
@@ -233,7 +233,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun addPost(key:String, value:Any) {
+	fun addPost(key:String, value:Any):Request {
 		val valueFa = if (value === true) {
 			"true"
 		} else {
@@ -255,7 +255,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun addUnsignedPost(key:String, value:Any) {
+	fun addUnsignedPost(key:String, value:Any):Request {
 		addPost(key, value)
 		_excludeSigned.add(key)
 
@@ -274,7 +274,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun addFile(key:String, filepath:String, filename:String? = null, array headers = []) {
+	fun addFile(key:String, filepath:String, filename:String? = null, array headers = []) :Request{
 		// Validate
 		if (!is_file(filepath)) {
 			throw IllegalArgumentException("File \"$filepath\" does not exist.")
@@ -311,7 +311,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun addFileData(key: String, data: String, filename: String, array headers = []) {
+	fun addFileData(key: String, data: String, filename: String, array headers = []):Request {
 		filename = basename(filename)
 		// Default headers.
 		headers = headers + mapOf(
@@ -344,7 +344,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun addHeader(key: String, value: String) {
+	fun addHeader(key: String, value: String):Request {
 		_headers[key] = value
 
 		return this
@@ -355,7 +355,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	private fun _addDefaultHeaders() {
+	private fun _addDefaultHeaders():Request {
 		if (_defaultHeaders) {
 			_headers["X-IG-App-ID"] = Constants.FACEBOOK_ANALYTICS_APPLICATION_ID
 			_headers["X-IG-Capabilities"] = Constants.X_IG_Capabilities
@@ -377,7 +377,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setAddDefaultHeaders(flag:Boolean) {
+	fun setAddDefaultHeaders(flag:Boolean) :Request{
 		_defaultHeaders = flag
 
 		return this
@@ -390,7 +390,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setGuzzleOptions(array guzzleOptions) {
+	fun setGuzzleOptions(array guzzleOptions) :Request{
 		_guzzleOptions = guzzleOptions
 
 		return this
@@ -403,7 +403,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setBody( stream : StreamInterface) {
+	fun setBody( stream : StreamInterface):Request {
 		_body = stream
 
 		return this
@@ -416,7 +416,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setNeedsAuth(needsAuth:Boolean) {
+	fun setNeedsAuth(needsAuth:Boolean):Request {
 		_needsAuth = needsAuth
 
 		return this
@@ -429,7 +429,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setSignedPost(signedPost: Boolean = true) {
+	fun setSignedPost(signedPost: Boolean = true):Request {
 		_signedPost = signedPost
 
 		return this
@@ -442,7 +442,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setSignedGet(signedGet: Boolean = false) {
+	fun setSignedGet(signedGet: Boolean = false):Request {
 		_signedGet = signedGet
 
 		return this
@@ -455,7 +455,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setIsMultiResponse(flag: Boolean = false) {
+	fun setIsMultiResponse(flag: Boolean = false) :Request{
 		_isMultiResponse = flag
 
 		return this
@@ -468,7 +468,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setIsBodyCompressed(isBodyCompressed: Boolean = false) {
+	fun setIsBodyCompressed(isBodyCompressed: Boolean = false) :Request{
 		_isBodyCompressed = isBodyCompressed
 
 		if (isBodyCompressed === true) {
@@ -499,7 +499,7 @@ class Request {
 			if (handle === false) {
 				throw RuntimeException("Could not open file \"${file["filepath"]}\" for reading.")
 			}
-			this._handles[] = handle
+			_handles[] = handle
 			result = stream_for(handle) // Throws.
 		} else {
 			throw IllegalArgumentException("No data for stream creation.")
@@ -560,7 +560,7 @@ class Request {
 	 * Reset opened handles array.
 	 */
 	private fun _resetHandles() {
-		this._handles = []
+		_handles = []
 	}
 
 	/**
@@ -595,7 +595,7 @@ class Request {
 			return _body
 		}
 		// We have no POST data and no files.
-		if (!count(this._posts) && !count(this._files)) {
+		if (!count(_posts) && !count(_files)) {
 			return
 		}
 		// Sign POST data if needed.
@@ -680,10 +680,10 @@ class Request {
 		if (_httpResponse === null) {
 			if (_needsAuth) {
 				// Throw if this requires authentication and we"re not logged in.
-				this._throwIfNotLoggedIn()
+				_throwIfNotLoggedIn()
 			}
 
-			this._resetHandles()
+			_resetHandles()
 
 			try {
 				_httpResponse = _parent.client.api( // Throws.
@@ -753,7 +753,7 @@ class Request {
 	 *
 	 * @return Response The provided responseObject with all JSON properties filled.
 	 */
-	fun getResponse(responseObject: Response) {
+	fun getResponse(responseObject: Response):responseObject {
 		// Check for API response success and put its response in the object.
 		_parent.client.mapServerResponse( // Throws.
 			responseObject, getRawResponse(), // Throws.

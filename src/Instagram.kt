@@ -227,7 +227,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @throws .InstagramAPI.Exception.InstagramException
 	 */
-	fun constructor(debug: Boolean = false, truncatedDebug: Boolean = false,
+	fun constructor(  debug: Boolean = false, truncatedDebug: Boolean = false,
 	                storageConfig: MutableMap<String, String> = mutableMapOf()) {
 		// Disable incorrect web usage by default. People should never embed
 		// this application emulator library directly in a web page, or they
@@ -267,37 +267,38 @@ class Instagram : ExperimentsInterface {
 //        }
 
 		// Debugging options.
-		this.debug = debug
-		this.truncatedDebug = truncatedDebug
+
+//		debug = debug
+//		truncatedDebug = truncatedDebug
 
 		// Load all fun collections.
 
-		this.account = Account(this)
-		this.business = InstagramAPI.Request.Business(this)
-		this.collection = InstagramAPI.Request.Collection(this)
-		this.creative = InstagramAPI.Request.Creative(this)
-		this.direct = InstagramAPI.Request.Direct(this)
-		this.discover = InstagramAPI.Request.Discover(this)
-		this.hashtag = InstagramAPI.Request.Hashtag(this)
-		this.highlight = InstagramAPI.Request.Highlight(this)
-		this.tv = InstagramAPI.Request.TV(this)
-		this.internal = InstagramAPI.Request.Internal(this)
-		this.live = InstagramAPI.Request.Live(this)
-		this.location = InstagramAPI.Request.Location(this)
-		this.media = InstagramAPI.Request.Media(this)
-		this.people = InstagramAPI.Request.People(this)
-		this.push = InstagramAPI.Request.Push(this)
-		this.shopping = InstagramAPI.Request.Shopping(this)
-		this.story = InstagramAPI.Request.Story(this)
-		this.timeline = InstagramAPI.Request.Timeline(this)
-		this.usertag = InstagramAPI.Request.Usertag(this)
+		account = Account(this)
+		business = InstagramAPI.Request.Business(this)
+		collection = InstagramAPI.Request.Collection(this)
+		creative = InstagramAPI.Request.Creative(this)
+		direct = InstagramAPI.Request.Direct(this)
+		discover = InstagramAPI.Request.Discover(this)
+		hashtag = InstagramAPI.Request.Hashtag(this)
+		highlight = InstagramAPI.Request.Highlight(this)
+		tv = InstagramAPI.Request.TV(this)
+		internal = InstagramAPI.Request.Internal(this)
+		live = InstagramAPI.Request.Live(this)
+		location = InstagramAPI.Request.Location(this)
+		media = InstagramAPI.Request.Media(this)
+		people = InstagramAPI.Request.People(this)
+		push = InstagramAPI.Request.Push(this)
+		shopping = InstagramAPI.Request.Shopping(this)
+		story = InstagramAPI.Request.Story(this)
+		timeline = InstagramAPI.Request.Timeline(this)
+		usertag = InstagramAPI.Request.Usertag(this)
 
 		// Configure the settings storage and network client.
 		val self = this  //Todo: maybe this is not to copy of the class
 		settings = InstagramAPI.Settings.Factory.createHandler(storageConfig, mutableMapOf(
 			"onCloseUser" to { self.client.saveCookieJar() }))
-		this.client = Client(this)
-		///this.experiments = mutableMapOf<String,String>()
+		client = Client(this)
+		///experiments = mutableMapOf<String,String>()
 	}
 
 	/**
@@ -311,7 +312,7 @@ class Instagram : ExperimentsInterface {
 	 *                           a custom CA bundle file.
 	 */
 	fun setVerifySSL(state: String) {
-		this.client.setVerifySSL(state)
+		client.setVerifySSL(state)
 	}
 
 	/**
@@ -447,8 +448,8 @@ class Instagram : ExperimentsInterface {
 		}
 
 		// Switch the currently active user/pass if the details are different.
-		if (this.username !== username || this.password !== password) {
-			this.setUser(username, password)
+		if (username !== username || password !== password) {
+			setUser(username, password)
 		}
 
 		// Perform a full relogin if necessary.
@@ -456,11 +457,11 @@ class Instagram : ExperimentsInterface {
 			_sendPreLoginFlow()
 
 			try {
-				response = request("accounts/login/").setNeedsAuth(false)
-					.addPost("country_codes", "[{" country_code ":"1"," source ":[" default "," sim "]}]")
-					.addPost("phone_id", phone_id).addPost("_csrftoken", this.client.getToken())
-					.addPost("username", this.username).addPost("adid", this.advertising_id).addPost("guid", this.uuid)
-					.addPost("device_id", this.device_id).addPost("password", this.password)
+				var response = request("accounts/login/").setNeedsAuth(false)
+					.addPost("country_codes", "[{\"country_code\":\"1\",\"source\":[\"default\",\"sim\"]}]")
+					.addPost("phone_id", phone_id).addPost("_csrftoken", client.getToken())
+					.addPost("username", username).addPost("adid", advertising_id).addPost("guid", uuid)
+					.addPost("device_id", device_id).addPost("password", password)
 					.addPost("google_tokens", "[]").addPost("login_attempt_count", 0)
 					.getResponse(Response.LoginResponse())
 			} catch (e: InstagramAPI.Exception.InstagramException) {
@@ -474,9 +475,9 @@ class Instagram : ExperimentsInterface {
 				}
 			}
 
-			this._updateLoginState(response)
+			_updateLoginState(response)
 
-			this._sendLoginFlow(true, appRefreshInterval)
+			_sendLoginFlow(true, appRefreshInterval)
 
 			// Full (re-)login successfully completed. Return server response.
 			return response
@@ -533,8 +534,8 @@ class Instagram : ExperimentsInterface {
 		// library directly into a webpage, so they can `finishTwoFactorLogin()`
 		// on their second page load without having to begin any `login()`
 		// call (since they did that in their previous webpage"s library calls).
-		if (this.username !== username || this.password !== password) {
-			this.setUser(username, password)
+		if (username !== username || password !== password) {
+			setUser(username, password)
 		}
 
 		username = if(usernameHandler !== null)  usernameHandler else username
@@ -542,16 +543,16 @@ class Instagram : ExperimentsInterface {
 		// Remove all whitespace from the verification code.
 		verificationCode = preg_replace("/.s+/", "", verificationCode)
 
-		response = this.request("accounts/two_factor_login/").setNeedsAuth(false)
+		response = request("accounts/two_factor_login/").setNeedsAuth(false)
 			// 1 - SMS, 2 - Backup codes, 3 - TOTP, 0 - ??
 			.addPost("verification_method", verificationMethod).addPost("verification_code", verificationCode)
-			.addPost("two_factor_identifier", twoFactorIdentifier).addPost("_csrftoken", this.client.getToken())
-			.addPost("username", this.username).addPost("device_id", this.device_id).addPost("guid", this.uuid)
+			.addPost("two_factor_identifier", twoFactorIdentifier).addPost("_csrftoken", client.getToken())
+			.addPost("username", username).addPost("device_id", device_id).addPost("guid", uuid)
 			.getResponse(Response.LoginResponse())
 
-		this._updateLoginState(response)
+		_updateLoginState(response)
 
-		this._sendLoginFlow(true, appRefreshInterval)
+		_sendLoginFlow(true, appRefreshInterval)
 
 		return response
 	}
@@ -588,14 +589,14 @@ class Instagram : ExperimentsInterface {
 		// library directly into a webpage, so they can `sendTwoFactorLoginSMS()`
 		// on their second page load without having to begin any `login()`
 		// call (since they did that in their previous webpage"s library calls).
-		if (this.username !== username || this.password !== password) {
-			this.setUser(username, password)
+		if (username !== username || password !== password) {
+			setUser(username, password)
 		}
 
-		return this.request("accounts/send_two_factor_login_sms/").setNeedsAuth(false)
+		return request("accounts/send_two_factor_login_sms/").setNeedsAuth(false)
 			.addPost("two_factor_identifier", twoFactorIdentifier).addPost("username", username)
-			.addPost("device_id", this.device_id).addPost("guid", this.uuid)
-			.addPost("_csrftoken", this.client.getToken()).getResponse(Response.TwoFactorLoginSMSResponse())
+			.addPost("device_id", device_id).addPost("guid", uuid)
+			.addPost("_csrftoken", client.getToken()).getResponse(Response.TwoFactorLoginSMSResponse())
 	}
 
 	/**
@@ -617,11 +618,11 @@ class Instagram : ExperimentsInterface {
 	 */
 	fun userLookup(username: String):InstagramAPI.Response.UsersLookupResponse {
 		// Set active user (without pwd), and create database entry if user.
-		this._setUserWithoutPassword(username)
+		_setUserWithoutPassword(username)
 
-		return this.request("users/lookup/").setNeedsAuth(false).addPost("q", username)
-			.addPost("directly_sign_in", true).addPost("username", username).addPost("device_id", this.device_id)
-			.addPost("guid", this.uuid).addPost("_csrftoken", this.client.getToken())
+		return request("users/lookup/").setNeedsAuth(false).addPost("q", username)
+			.addPost("directly_sign_in", true).addPost("username", username).addPost("device_id", device_id)
+			.addPost("guid", uuid).addPost("_csrftoken", client.getToken())
 			.getResponse(Response.UsersLookupResponse())
 	}
 
@@ -641,15 +642,15 @@ class Instagram : ExperimentsInterface {
 	 */
 	fun sendRecoveryEmail(username: String):InstagramAPI.Response.RecoveryResponse {
 		// Verify that they can import the recovery email option.
-		userLookup = this.userLookup(username)
+		userLookup = userLookup(username)
 		if (!userLookup.getCanEmailReset()) {
 			throw new.InstagramAPI.Exception.InternalException(
 				"Email recovery is not available, since your account lacks a verified email address.")
 		}
 
-		return this.request("accounts/send_recovery_flow_email/").setNeedsAuth(false).addPost("query", username)
-			.addPost("adid", this.advertising_id).addPost("device_id", this.device_id).addPost("guid", this.uuid)
-			.addPost("_csrftoken", this.client.getToken()).getResponse(Response.RecoveryResponse())
+		return request("accounts/send_recovery_flow_email/").setNeedsAuth(false).addPost("query", username)
+			.addPost("adid", advertising_id).addPost("device_id", device_id).addPost("guid", uuid)
+			.addPost("_csrftoken", client.getToken()).getResponse(Response.RecoveryResponse())
 	}
 
 	/**
@@ -668,14 +669,14 @@ class Instagram : ExperimentsInterface {
 	 */
 	fun sendRecoverySMS(username: String):InstagramAPI.Response.RecoveryResponse {
 		// Verify that they can import the recovery SMS option.
-		val userLookup = this.userLookup(username)
+		val userLookup = userLookup(username)
 		if (!userLookup.getHasValidPhone() || !userLookup.getCanSmsReset()) {
 			throw new.InstagramAPI.Exception.InternalException(
 				"SMS recovery is not available, since your account lacks a verified phone number.")
 		}
 
-		return this.request("users/lookup_phone/").setNeedsAuth(false).addPost("query", username)
-			.addPost("_csrftoken", this.client.getToken()).getResponse(Response.RecoveryResponse())
+		return request("users/lookup_phone/").setNeedsAuth(false).addPost("query", username)
+			.addPost("_csrftoken", client.getToken()).getResponse(Response.RecoveryResponse())
 	}
 
 	/**
@@ -695,17 +696,17 @@ class Instagram : ExperimentsInterface {
 		}
 
 		// Load all settings from the storage and mark as current user.
-		this.settings.setActiveUser(username)
+		settings.setActiveUser(username)
 
 		// Generate the user"s device instance, which will be created from the
 		// user"s last-used device IF they"ve got a valid, good one stored.
 		// But if they"ve got a BAD/none, this will create a brand-device.
-		savedDeviceString = this.settings.get("devicestring")
-		this.device =
+		savedDeviceString = settings.get("devicestring")
+		device =
 			Devices.Device(valants.IG_VERSION, valants.VERSION_CODE, valants.USER_AGENT_LOCALE, savedDeviceString)
 
 		// Get active device string so that we can compare it to any saved one.
-		deviceString = this.device.getDeviceString()
+		deviceString = device.getDeviceString()
 
 		// Generate a brand-device fingerprint if the device wasn"t reused
 		// from settings, OR if any of the stored fingerprints are missing.
@@ -714,26 +715,26 @@ class Instagram : ExperimentsInterface {
 		// WARNING TO CONTRIBUTORS: Only add parameter-checks here if they
 		// are CRITICALLY important to the particular device. We don"t want to
 		// frivolously force the users to generate device IDs  valantly.
-		resetCookieJar = false
+		var resetCookieJar = false
 		if (deviceString !== savedDeviceString // Brand device, or missing
-			|| empty(this.settings.get("uuid")) // one of the critically...
-			|| empty(this.settings.get("phone_id")) // ...important device...
-			|| empty(this.settings.get("device_id"))
+			|| empty(settings.get("uuid")) // one of the critically...
+			|| empty(settings.get("phone_id")) // ...important device...
+			|| empty(settings.get("device_id"))
 		) { // ...parameters.
 			// Erase all previously stored device-specific settings and cookies.
-			this.settings.eraseDeviceSettings()
+			settings.eraseDeviceSettings()
 
 			// Save the chosen device string to settings.
-			this.settings.set("devicestring", deviceString)
+			settings.set("devicestring", deviceString)
 
 			// Generate hardware fingerprints for the device.
-			this.settings.set("device_id", Signatures.generateDeviceId())
-			this.settings.set("phone_id", Signatures.generateUUID(true))
-			this.settings.set("uuid", Signatures.generateUUID(true))
+			settings.set("device_id", Signatures.generateDeviceId())
+			settings.set("phone_id", Signatures.generateUUID(true))
+			settings.set("uuid", Signatures.generateUUID(true))
 
 			// Erase any stored account ID, to ensure that we detect ourselves
 			// as logged-out. This will force a relogin from the device.
-			this.settings.set("account_id", "")
+			settings.set("account_id", "")
 
 			// We"ll also need to throw out all previous cookies.
 			resetCookieJar = true
@@ -744,37 +745,37 @@ class Instagram : ExperimentsInterface {
 		// example, this is good for parameters that Instagram introduces
 		// over time, since those can be added one-by-one over time here without
 		// needing to wipe/reset the whole device.
-		if (empty(this.settings.get("advertising_id"))) {
-			this.settings.set("advertising_id", Signatures.generateUUID(true))
+		if (empty(settings.get("advertising_id"))) {
+			settings.set("advertising_id", Signatures.generateUUID(true))
 		}
-		if (empty(this.settings.get("session_id"))) {
-			this.settings.set("session_id", Signatures.generateUUID(true))
+		if (empty(settings.get("session_id"))) {
+			settings.set("session_id", Signatures.generateUUID(true))
 		}
 
 		// Store various important parameters for easy access.
-		this.username = username
-		this.password = password
-		this.uuid = this.settings.get("uuid")
-		this.advertising_id = this.settings.get("advertising_id")
-		this.device_id = this.settings.get("device_id")
-		this.phone_id = this.settings.get("phone_id")
-		this.session_id = this.settings.get("session_id")
-		this.experiments = this.settings.getExperiments()
+		username = username
+		password = password
+		uuid = settings.get("uuid")
+		advertising_id = settings.get("advertising_id")
+		device_id = settings.get("device_id")
+		phone_id = settings.get("phone_id")
+		session_id = settings.get("session_id")
+		experiments = settings.getExperiments()
 
 		// Load the previous session details if we"re possibly logged in.
-		if (!resetCookieJar && this.settings.isMaybeLoggedIn()) {
-			this.isMaybeLoggedIn = true
-			this.account_id = this.settings.get("account_id")
+		if (!resetCookieJar && settings.isMaybeLoggedIn()) {
+			isMaybeLoggedIn = true
+			account_id = settings.get("account_id")
 		} else {
-			this.isMaybeLoggedIn = false
-			this.account_id = null
+			isMaybeLoggedIn = false
+			account_id = null
 		}
 
 		// Configures Client for current user AND updates isMaybeLoggedIn state
 		// if it fails to load the expected cookies from the user"s jar.
 		// Must be done last here, so that isMaybeLoggedIn is properly updated!
 		// NOTE: If we generated a device we start a cookie jar.
-		this.client.updateFromCurrentSettings(resetCookieJar)
+		client.updateFromCurrentSettings(resetCookieJar)
 	}
 
 	/**
@@ -813,8 +814,8 @@ class Instagram : ExperimentsInterface {
 		// We CANNOT import an empty string since `setUser()` will not allow that!
 		// NOTE: If the user tries to look up themselves WHILE they are logged
 		// in, we"ll correctly NOT call `setUser()` since they"re already set.
-		if (this.username !== username) {
-			this.setUser(username, "NOPASSWORD")
+		if (username !== username) {
+			setUser(username, "NOPASSWORD")
 		}
 	}
 
@@ -833,10 +834,10 @@ class Instagram : ExperimentsInterface {
 			throw IllegalArgumentException("Invalid login response provided to _updateLoginState().")
 		}
 
-		this.isMaybeLoggedIn = true
-		this.account_id = response.getLoggedInUser().getPk()
-		this.settings.set("account_id", this.account_id)
-		this.settings.set("last_login", time())
+		isMaybeLoggedIn = true
+		account_id = response.getLoggedInUser().getPk()
+		settings.set("account_id", account_id)
+		settings.set("last_login", time())
 	}
 
 	/**
@@ -846,17 +847,17 @@ class Instagram : ExperimentsInterface {
 	 */
 	private fun _sendPreLoginFlow() {
 		// Reset zero rating rewrite rules.
-		this.client.zeroRating().reset()
+		client.zeroRating().reset()
 		// Calling this non-token API will put a csrftoken in our cookie
 		// jar. We must do this before any funs that require a token.
-		this.internal.readMsisdnHeader("ig_select_app")
-		this.internal.syncDeviceFeatures(true)
-		this.internal.sendLauncherSync(true)
-		this.internal.logAttribution()
+		internal.readMsisdnHeader("ig_select_app")
+		internal.syncDeviceFeatures(true)
+		internal.sendLauncherSync(true)
+		internal.logAttribution()
 		// We must fetch token here, becaimport it updates rewrite rules.
-		this.internal.fetchZeroRatingToken()
+		internal.fetchZeroRatingToken()
 		// It must be at the end, becaimport it"s called when a user taps on login input.
-		this.account.setContactPointPrefill("prefill")
+		account.setContactPointPrefill("prefill")
 	}
 
 	/**
@@ -867,13 +868,13 @@ class Instagram : ExperimentsInterface {
 		// This prevents us from  valantly re-registering the user"s
 		// "useless" token if they have stopped using the Push features.
 		try {
-			lastFbnsToken = (int) this.settings.get("last_fbns_token")
+			lastFbnsToken = (int) settings.get("last_fbns_token")
 		} catch ( e) {
 			lastFbnsToken = null
 		}
 		if (!lastFbnsToken || lastFbnsToken < strtotime("-24 hours")) {
 			try {
-				this.settings.set("fbns_token", "")
+				settings.set("fbns_token", "")
 			} catch ( e) {
 				// Ignore storage errors.
 			}
@@ -883,7 +884,7 @@ class Instagram : ExperimentsInterface {
 
 		// Read our token from the storage.
 		try {
-			fbnsToken = this.settings.get("fbns_token")
+			fbnsToken = settings.get("fbns_token")
 		} catch ( e) {
 			fbnsToken = null
 		}
@@ -894,10 +895,10 @@ class Instagram : ExperimentsInterface {
 		// Register our last token since we had a fresh (age <24 hours) one,
 		// or clear our stored token if we fail to register it again.
 		try {
-			this.push.register("mqtt", fbnsToken)
+			push.register("mqtt", fbnsToken)
 		} catch ( e) {
 			try {
-				this.settings.set("fbns_token", "")
+				settings.set("fbns_token", "")
 			} catch ( e:Exception) {
 			// Ignore storage errors.
 		}
@@ -951,96 +952,96 @@ class Instagram : ExperimentsInterface {
 		// You have been warned.
 		if (justLoggedIn) {
 			// Reset zero rating rewrite rules.
-			this.client.zeroRating().reset()
+			client.zeroRating().reset()
 			// Perform the "user has just done a full login" API flow.
-			this.internal.sendLauncherSync(false)
-			this.internal.syncUserFeatures()
-			this.timeline.getTimelineFeed(null, ["recovered_from_crash" => true])
-			this.story.getReelsTrayFeed()
-			this.discover.getSuggestedSearches("users")
-			this.discover.getRecentSearches()
-			this.discover.getSuggestedSearches("blended")
-			//this.story.getReelsMediaFeed()
+			internal.sendLauncherSync(false)
+			internal.syncUserFeatures()
+			timeline.getTimelineFeed(null, ["recovered_from_crash" => true])
+			story.getReelsTrayFeed()
+			discover.getSuggestedSearches("users")
+			discover.getRecentSearches()
+			discover.getSuggestedSearches("blended")
+			//story.getReelsMediaFeed()
 			// We must fetch token here, becaimport it updates rewrite rules.
-			this.internal.fetchZeroRatingToken()
-			this._registerPushChannels()
-			this.direct.getRankedRecipients("reshare", true)
-			this.direct.getRankedRecipients("raven", true)
-			this.direct.getInbox()
-			//this.internal.logResurrectAttribution()
-			this.direct.getPresences()
-			this.people.getRecentActivityInbox()
-			if (this.getExperimentParam("ig_android_loom_universe", "cpu_sampling_rate_ms", 0) > 0) {
-				this.internal.getLoomFetchConfig()
+			internal.fetchZeroRatingToken()
+			_registerPushChannels()
+			direct.getRankedRecipients("reshare", true)
+			direct.getRankedRecipients("raven", true)
+			direct.getInbox()
+			//internal.logResurrectAttribution()
+			direct.getPresences()
+			people.getRecentActivityInbox()
+			if (getExperimentParam("ig_android_loom_universe", "cpu_sampling_rate_ms", 0) > 0) {
+				internal.getLoomFetchConfig()
 			}
-			this.internal.getProfileNotice()
-			this.media.getBlockedMedia()
-			//this.account.getProcessContactPointSignals()
-			this.people.getBootstrapUsers()
-			//this.internal.getQPCooldowns()
-			this.discover.getExploreFeed(null, true)
-			//this.internal.getMegaphoneLog()
-			this.internal.getQPFetch()
-			this.internal.getFacebookOTA()
+			internal.getProfileNotice()
+			media.getBlockedMedia()
+			//account.getProcessContactPointSignals()
+			people.getBootstrapUsers()
+			//internal.getQPCooldowns()
+			discover.getExploreFeed(null, true)
+			//internal.getMegaphoneLog()
+			internal.getQPFetch()
+			internal.getFacebookOTA()
 		} else {
-			var lastLoginTime = this.settings.get("last_login")
+			var lastLoginTime = settings.get("last_login")
 			var isSessionExpired = lastLoginTime === null || (time() - lastLoginTime) > appRefreshInterval
 
 			// Act like a real logged in app client refreshing its news timeline.
 			// This also lets us detect if we"re still logged in with a valid session.
 			try {
-				this.timeline.getTimelineFeed(null,
+				timeline.getTimelineFeed(null,
 				                              ["is_pull_to_refresh" => isSessionExpired ? null : mt_rand(1, 3) < 3,
 				])
 			} catch ( e:InstagramAPI.Exception.LoginRequiredException) {
 				// If our session cookies are expired, we were now told to login,
 				// so handle that by running a forced relogin in that case!
-				return this._login(username, password, true, appRefreshInterval)
+				return _login(username, password, true, appRefreshInterval)
 			}
 
 			// Perform the "user has returned to their already-logged in app,
 			// so refresh all feeds to check for news" API flow.
 			if (isSessionExpired) {
-				this.settings.set("last_login", time())
+				settings.set("last_login", time())
 
 				// Generate and save a application session ID.
-				this.session_id = Signatures.generateUUID(true)
-				this.settings.set("session_id", this.session_id)
+				session_id = Signatures.generateUUID(true)
+				settings.set("session_id", session_id)
 
 				// Do the rest of the "user is re-opening the app" API flow...
-				this.people.getBootstrapUsers()
-				this.story.getReelsTrayFeed()
-				this.direct.getRankedRecipients("reshare", true)
-				this.direct.getRankedRecipients("raven", true)
-				this._registerPushChannels()
-				//this.internal.getMegaphoneLog()
-				this.direct.getInbox()
-				this.direct.getPresences()
-				this.people.getRecentActivityInbox()
-				this.internal.getProfileNotice()
-				this.discover.getExploreFeed()
+				people.getBootstrapUsers()
+				story.getReelsTrayFeed()
+				direct.getRankedRecipients("reshare", true)
+				direct.getRankedRecipients("raven", true)
+				_registerPushChannels()
+				//internal.getMegaphoneLog()
+				direct.getInbox()
+				direct.getPresences()
+				people.getRecentActivityInbox()
+				internal.getProfileNotice()
+				discover.getExploreFeed()
 			}
 
 			// Users normally resume their sessions, meaning that their
 			// experiments never get synced and updated. So sync periodically.
-			lastExperimentsTime = this.settings.get("last_experiments")
+			lastExperimentsTime = settings.get("last_experiments")
 			if (lastExperimentsTime === null || (time() - lastExperimentsTime) > self.EXPERIMENTS_REFRESH) {
-				this.internal.syncUserFeatures()
-				this.internal.syncDeviceFeatures()
+				internal.syncUserFeatures()
+				internal.syncDeviceFeatures()
 			}
 
 			// Update zero rating token when it has been expired.
-			expired = time() - (int) this.settings.get("zr_expires")
+			expired = time() - (int) settings.get("zr_expires")
 			if (expired > 0) {
-				this.client.zeroRating().reset()
-				this.internal.fetchZeroRatingToken(expired > 7200 ? "token_stale" : "token_expired")
+				client.zeroRating().reset()
+				internal.fetchZeroRatingToken(expired > 7200 ? "token_stale" : "token_expired")
 			}
 		}
 
 		// We"ve now performed a login or resumed a session. Forcibly write our
 		// cookies to the storage, to ensure that the storage doesn"t miss them
 		// in case something bad happens to PHP after this moment.
-		this.client.saveCookieJar()
+		client.saveCookieJar()
 	}
 
 	/**
@@ -1059,9 +1060,9 @@ class Instagram : ExperimentsInterface {
 	 * @see Instagram.login()
 	 */
 	fun logout():InstagramAPI.Response.LogoutResponse {
-		response = this.request("accounts/logout/").setSignedPost(false).addPost("phone_id", this.phone_id)
-			.addPost("_csrftoken", this.client.getToken()).addPost("guid", this.uuid)
-			.addPost("device_id", this.device_id).addPost("_uuid", this.uuid).getResponse(Response.LogoutResponse())
+		response = request("accounts/logout/").setSignedPost(false).addPost("phone_id", phone_id)
+			.addPost("_csrftoken", client.getToken()).addPost("guid", uuid)
+			.addPost("device_id", device_id).addPost("_uuid", uuid).getResponse(Response.LogoutResponse())
 
 		// We"ve now logged out. Forcibly write our cookies to the storage, to
 		// ensure that the storage doesn"t miss them in case something bad
@@ -1081,8 +1082,8 @@ class Instagram : ExperimentsInterface {
 	 * @return bool
 	 */
 	fun isExperimentEnabled(experiment: String, param: String, default: Boolean = false):Boolean {
-		return isset(this.experiments[experiment][param])
-		? in_array(this.experiments[experiment][param], ["enabled", "true", "1"])
+		return isset(experiments[experiment][param])
+		? in_array(experiments[experiment][param], ["enabled", "true", "1"])
 		: default
 	}
 
@@ -1096,8 +1097,8 @@ class Instagram : ExperimentsInterface {
 	 * @return mixed
 	 */
 	fun getExperimentParam(experiment: String, param: String, default: Any? = null):Any {
-		return isset(this.experiments[experiment][param])
-		? this.experiments[experiment][param]
+		return isset(experiments[experiment][param])
+		? experiments[experiment][param]
 		: default
 	}
 
