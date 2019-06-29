@@ -5,37 +5,33 @@ package InstagramAPI.Media.Constraints
 /**
  * Instagram"s direct messaging general media constraints.
  */
-class DirectConstraints : TimelineConstraints
-{
+class DirectConstraints : TimelineConstraints() {
     /**
      * Minimum allowed video duration.
      *
      * @var float
      */
-    val MIN_DURATION = 0.1
+    val MIN_DURATION: Float = 0.1f
 
     /**
      * Maximum allowed video duration.
      *
      * @var float
      */
-    val MAX_DURATION = 15.0
+    val MAX_DURATION: Float = 15.0f
 
     /** {@inheritdoc} */
-    public fun getTitle()
-    {
+    fun getTitle(): String {
         return "direct"
     }
 
     /** {@inheritdoc} */
-    public fun getMinDuration()
-    {
-        return self::MIN_DURATION
+    fun getMinDuration(): Float {
+        return MIN_DURATION
     }
 
     /** {@inheritdoc} */
-    public fun getMaxDuration()
-    {
-        return self::MAX_DURATION
+    fun getMaxDuration(): Float {
+        return MAX_DURATION
     }
 }

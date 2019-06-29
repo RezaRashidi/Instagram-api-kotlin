@@ -2,16 +2,15 @@
 
 package InstagramAPI.Media.Geometry
 
-class Dimensions
-{
+class Dimensions{
     /** @var int */
-    protected $_width
+    protected var _width: Int
 
     /** @var int */
-    protected $_height
+    protected var _height: Int
 
     /** @var float */
-    protected $_aspectRatio
+    protected var _aspectRatio: Float
 
     /**
      * Constructor.
@@ -19,14 +18,11 @@ class Dimensions
      * @param int $width
      * @param int $height
      */
-    public fun __construct(
-        $width,
-        $height)
-    {
-        this._width = (int) $width
-        this._height = (int) $height
+    fun __construct( width: Int, height: Int){
+        _width = width
+        _height = height
         // NOTE: MUST `float`-cast to FORCE float even when dividing EQUAL ints.
-        this._aspectRatio = (float) (this._width / this._height)
+        _aspectRatio = (_width / _height).toFloat()
     }
 
     /**
@@ -34,9 +30,8 @@ class Dimensions
      *
      * @return int
      */
-    public fun getWidth()
-    {
-        return this._width
+    fun getWidth(): Int{
+        return _width
     }
 
     /**
@@ -44,9 +39,8 @@ class Dimensions
      *
      * @return int
      */
-    public fun getHeight()
-    {
-        return this._height
+    fun getHeight(): Int{
+        return _height
     }
 
     /**
@@ -54,9 +48,8 @@ class Dimensions
      *
      * @return float
      */
-    public fun getAspectRatio()
-    {
-        return this._aspectRatio
+    fun getAspectRatio(): Float{
+        return _aspectRatio
     }
 
     /**
@@ -64,9 +57,8 @@ class Dimensions
      *
      * @return self
      */
-    public fun withSwappedAxes()
-    {
-        return self(this._height, this._width)
+    fun withSwappedAxes(){
+        return self(_height, _width)
     }
 
     /**
@@ -79,20 +71,17 @@ class Dimensions
      *
      * @return self
      */
-    public fun withRescaling(
-        $newScale = 1.0,
-        $roundingFunc = "round")
-    {
-        if (!is_float($newScale) && !is_int($newScale)) {
-            throw  IllegalArgumentException("The scale must be a float or integer.")
+    fun withRescaling( newScale: Float = 1.0f, roundingFunc: String = "round"){
+        if (newScale !is Float) {
+            throw IllegalArgumentException("The scale must be a float or integer.")
         }
-        if ($roundingFunc !== "round" && $roundingFunc !== "floor" && $roundingFunc !== "ceil") {
-            throw  IllegalArgumentException(sprintf("Invalid rounding fun "%s".", $roundingFunc))
+        if (roundingFunc !== "round" && roundingFunc !== "floor" && roundingFunc !== "ceil") {
+            throw IllegalArgumentException("Invalid rounding fun \"$roundingFunc\".")
         }
 
-        $newWidth = (int) $roundingFunc($newScale * this._width)
-        $newHeight = (int) $roundingFunc($newScale * this._height)
+        val newWidth  = roundingFunc(newScale * _width).toInt()
+        val newHeight = roundingFunc(newScale * _height).toInt()
 
-        return self($newWidth, $newHeight)
+        return self(newWidth, newHeight)
     }
 }

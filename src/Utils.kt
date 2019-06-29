@@ -258,7 +258,7 @@ object Utils{
      */
     fun hmsTimeFromSeconds(sece: Float): String{
         var sec = sece
-        if (sec !is Int && sec !is Float) {
+        if (sec !is Float) {
             throw IllegalArgumentException("Seconds must be a number.")
         }
 

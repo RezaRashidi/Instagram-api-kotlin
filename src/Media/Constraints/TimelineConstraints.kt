@@ -18,7 +18,7 @@ class TimelineConstraints : ConstraintsInterface
      *
      * @see https://help.instagram.com/1469029763400082
      */
-    val MIN_RATIO = 0.8
+    val MIN_RATIO: Float = 0.8f
 
     /**
      * Highest allowed general media aspect ratio (1.91:1, meaning landscape).
@@ -27,7 +27,7 @@ class TimelineConstraints : ConstraintsInterface
      *
      * @var float
      */
-    val MAX_RATIO = 1.91
+    val MAX_RATIO: Float = 1.91f
 
     /**
      * The recommended aspect ratio for timeline media.
@@ -36,7 +36,7 @@ class TimelineConstraints : ConstraintsInterface
      *
      * @var float
      */
-    val RECOMMENDED_RATIO = 1.0
+    val RECOMMENDED_RATIO: Float = 1.0f
 
     /**
      * The deviation for the recommended aspect ratio.
@@ -45,7 +45,7 @@ class TimelineConstraints : ConstraintsInterface
      *
      * @var float
      */
-    val RECOMMENDED_RATIO_DEVIATION = 0.0
+    val RECOMMENDED_RATIO_DEVIATION: Float = 0.0f
 
     /**
      * Minimum allowed video duration.
@@ -54,7 +54,7 @@ class TimelineConstraints : ConstraintsInterface
      *
      * @see https://help.instagram.com/270963803047681
      */
-    val MIN_DURATION = 3.0
+    val MIN_DURATION: Float = 3.0f
 
     /**
      * Maximum allowed video duration.
@@ -63,53 +63,45 @@ class TimelineConstraints : ConstraintsInterface
      *
      * @see https://help.instagram.com/270963803047681
      */
-    val MAX_DURATION = 60.0
+    val MAX_DURATION: Float = 60.0f
 
     /** {@inheritdoc} */
-    public fun getTitle()
-    {
+    fun getTitle(): String {
         return "timeline"
     }
 
     /** {@inheritdoc} */
-    public fun getMinAspectRatio()
-    {
-        return self::MIN_RATIO
+    fun getMinAspectRatio(): Float {
+        return MIN_RATIO
     }
 
     /** {@inheritdoc} */
-    public fun getMaxAspectRatio()
-    {
-        return self::MAX_RATIO
+    fun getMaxAspectRatio(): Float {
+        return MAX_RATIO
     }
 
     /** {@inheritdoc} */
-    public fun getRecommendedRatio()
-    {
-        return self::RECOMMENDED_RATIO
+    fun getRecommendedRatio(): Float {
+        return RECOMMENDED_RATIO
     }
 
     /** {@inheritdoc} */
-    public fun getRecommendedRatioDeviation()
-    {
-        return self::RECOMMENDED_RATIO_DEVIATION
+    fun getRecommendedRatioDeviation(): Float {
+        return RECOMMENDED_RATIO_DEVIATION
     }
 
     /** {@inheritdoc} */
-    public fun useRecommendedRatioByDefault()
-    {
+    fun useRecommendedRatioByDefault(): Boolean {
         return false
     }
 
     /** {@inheritdoc} */
-    public fun getMinDuration()
-    {
-        return self::MIN_DURATION
+    fun getMinDuration(): Float {
+        return MIN_DURATION
     }
 
     /** {@inheritdoc} */
-    public fun getMaxDuration()
-    {
-        return self::MAX_DURATION
+    fun getMaxDuration(): Float {
+        return MAX_DURATION
     }
 }

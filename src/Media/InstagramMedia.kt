@@ -6,6 +6,7 @@ import InstagramAPI.Constants
 import InstagramAPI.Media.Constraints.ConstraintsFactory
 import InstagramAPI.Media.Geometry.Dimensions
 import InstagramAPI.Media.Geometry.Rectangle
+import kotlin.math.*
 
 /**
  * Automatically prepares a media file according to Instagram"s rules.
@@ -50,56 +51,58 @@ abstract class InstagramMedia
      *
      * @var string|null
      */
-    public static $defaultTmpPath = null
+    companion object{
+        var defaultTmpPath: String? = null
+    }
 
     /** @var bool Whether to output debugging info during calculation steps. */
-    protected $_debug
+    protected var _debug: Boolean
 
     /** @var string Input file path. */
-    protected $_inputFile
+    protected lateinit var _inputFile: String
 
     /** @var float|null Minimum allowed aspect ratio. */
-    protected $_minAspectRatio
+    protected var _minAspectRatio: Float?
 
     /** @var float|null Maximum allowed aspect ratio. */
-    protected $_maxAspectRatio
+    protected var _maxAspectRatio: Float?
 
     /** @var float Whether to allow the aspect ratio (during processing) to
      * deviate slightly from the min/max targets. See constructor for info. */
-    protected $_allowNewAspectDeviation
+    protected var _allowNewAspectDeviation: Float
 
     /** @var int Crop focus position (-50 .. 50) when cropping horizontally. */
-    protected $_horCropFocus
+    protected var _horCropFocus: Int
 
     /** @var int Crop focus position (-50 .. 50) when cropping vertically. */
-    protected $_verCropFocus
+    protected var _verCropFocus: Int
 
     /** @var array Background color [R, G, B] for the final media. */
-    protected $_bgColor
+    protected lateinit var _bgColor: MutableList<Int>
 
     /** @var int Operation to perform on the media. */
-    protected $_operation
+    protected var _operation: Int
 
     /** @var string Path to a tmp directory. */
-    protected $_tmpPath
+    protected lateinit var _tmpPath: String
 
     /** @var ConstraintsInterface Target feed"s specific constraints. */
-    protected $_constraints
+    protected lateinit var _constraints: ConstraintsInterfac
 
     /** @var string Output file path. */
-    protected $_outputFile
+    protected lateinit var _outputFile: String
 
     /** @var MediaDetails The media details for our input file. */
-    protected $_details
+    protected lateinit var _details: MediaDetails
 
     /** @var float|null Optional forced aspect ratio target to apply in case of
      * input being outside allowed min/max range (OR if the input deviates too
      * much from this target, in case this target ratio was user-provided). */
-    protected $_forceTargetAspectRatio
+    protected var _forceTargetAspectRatio: Float?
 
     /** @var bool Whether the user specified the "forced target ratio"
      * themselves, which means we should be VERY strict about applying it. */
-    protected $_hasUserForceTargetAspectRatio
+    protected var _hasUserForceTargetAspectRatio: Boolean
 
     /**
      * Constructor.
@@ -191,161 +194,151 @@ abstract class InstagramMedia
      *
      * @throws  IllegalArgumentException
      */
-    public fun __construct(
-        $inputFile,
-        array $options = [])
-    {
+    fun __construct( inputFile: String, array options = []){
         // Assign variables for all options, to avoid bulky code repetition.
-        $targetFeed = isset($options["targetFeed"]) ? $options["targetFeed"] : Constants::FEED_TIMELINE
-        $horCropFocus = isset($options["horCropFocus"]) ? $options["horCropFocus"] : null
-        $verCropFocus = isset($options["verCropFocus"]) ? $options["verCropFocus"] : null
-        $minAspectRatio = isset($options["minAspectRatio"]) ? $options["minAspectRatio"] : null
-        $maxAspectRatio = isset($options["maxAspectRatio"]) ? $options["maxAspectRatio"] : null
-        $userForceTargetAspectRatio = isset($options["forceAspectRatio"]) ? $options["forceAspectRatio"] : null
-        $useRecommendedRatio = isset($options["useRecommendedRatio"]) ? (bool) $options["useRecommendedRatio"] : null
-        $allowNewAspectDeviation = isset($options["allowNewAspectDeviation"]) ? (bool) $options["allowNewAspectDeviation"] : false
-        $bgColor = isset($options["bgColor"]) ? $options["bgColor"] : null
-        $operation = isset($options["operation"]) ? $options["operation"] : self::CROP
-        $tmpPath = isset($options["tmpPath"]) ? (string) $options["tmpPath"] : null
-        $debug = isset($options["debug"]) ? $options["debug"] : false
+        var targetFeed: Int        = if(!(options["targetFeed"].isBlank())) options["targetFeed"] else Constants.FEED_TIMELINE
+        var horCropFocus: Int?     = if( !(options["horCropFocus"].isBlank()) ) options["horCropFocus"] else null
+        var verCropFocus: Int?     = if( !(options["verCropFocus"])) options["verCropFocus"] else null
+        var minAspectRatio: Float? = if( !(options["minAspectRatio"].isBlank()) ) options["minAspectRatio"] else null
+        var maxAspectRatio: Float? = if( !(options["maxAspectRatio"].isBlank()) ) options["maxAspectRatio"] else null
+        var userForceTargetAspectRatio= if( !(options["forceAspectRatio"].isBlank()) ) options["forceAspectRatio"] else null
+        var useRecommendedRatio: Boolean?      = if( !(options["useRecommendedRatio"].isBlank()) ) options["useRecommendedRatio"].toBoolean() else null
+        var allowNewAspectDeviation: Boolean   = if( !(options["allowNewAspectDeviation"].isBlank())) options["allowNewAspectDeviation"].toBoolean() else false
+        var bgColor: MutableList<Int>          = if( !(options["bgColor"].isBlank())) options["bgColor"] else null
+        var operation: Int         = if( !(options["operation"].isBlank())) options["operation"] else CROP
+        var tmpPath: String?       = if( !(options["tmpPath"].isBlank())) options["tmpPath"].toString() else null
+        val debug: Boolean         = if( !(options["debug"].isBlank())) options["debug"] else false
 
         // Debugging.
-        this._debug = $debug === true
+        _debug = debug === true
 
         // Input file.
-        if (!is_file($inputFile)) {
-            throw  IllegalArgumentException(sprintf("Input file "%s" doesn."t exist.", $inputFile))
+        if (!is_file(inputFile)) {
+            throw IllegalArgumentException("Input file \"$inputFile\" doesn't exist.")
         }
-        this._inputFile = $inputFile
+        _inputFile = inputFile
 
         // Horizontal crop focus.
-        if ($horCropFocus !== null && (!is_int($horCropFocus) || $horCropFocus < -50 || $horCropFocus > 50)) {
-            throw  IllegalArgumentException("Horizontal crop focus must be between -50 and 50.")
+        if (horCropFocus !== null && (horCropFocus !is Int || horCropFocus < -50 || horCropFocus > 50)) {
+            throw IllegalArgumentException("Horizontal crop focus must be between -50 and 50.")
         }
-        this._horCropFocus = $horCropFocus
+        _horCropFocus = horCropFocus!!
 
         // Vertical crop focus.
-        if ($verCropFocus !== null && (!is_int($verCropFocus) || $verCropFocus < -50 || $verCropFocus > 50)) {
-            throw  IllegalArgumentException("Vertical crop focus must be between -50 and 50.")
+        if (verCropFocus !== null && (verCropFocus !is Int || verCropFocus < -50 || verCropFocus > 50)) {
+            throw IllegalArgumentException("Vertical crop focus must be between -50 and 50.")
         }
-        this._verCropFocus = $verCropFocus
+        _verCropFocus = verCropFocus!!
 
         // Minimum and maximum aspect ratio range.
-        if ($minAspectRatio !== null && !is_float($minAspectRatio)) {
-            throw  IllegalArgumentException("Minimum aspect ratio must be a floating point number.")
+        if (minAspectRatio !== null && minAspectRatio !is Float) {
+            throw IllegalArgumentException("Minimum aspect ratio must be a floating point number.")
         }
-        if ($maxAspectRatio !== null && !is_float($maxAspectRatio)) {
-            throw  IllegalArgumentException("Maximum aspect ratio must be a floating point number.")
+        if (maxAspectRatio !== null && maxAspectRatio !is Float) {
+            throw IllegalArgumentException("Maximum aspect ratio must be a floating point number.")
         }
 
         // Does the user want to override (force) the final "target aspect ratio" choice?
         // NOTE: This will be used to override `this._forceTargetAspectRatio`.
-        this._hasUserForceTargetAspectRatio = false
-        if ($userForceTargetAspectRatio !== null) {
-            if (!is_float($userForceTargetAspectRatio) && !is_int($userForceTargetAspectRatio)) {
-                throw  IllegalArgumentException("Custom target aspect ratio must be a float or integer.")
+        _hasUserForceTargetAspectRatio = false
+        if (userForceTargetAspectRatio !== null) {
+            if (userForceTargetAspectRatio !is Float && userForceTargetAspectRatio !is Int) {
+                throw IllegalArgumentException("Custom target aspect ratio must be a float or integer.")
             }
-            $userForceTargetAspectRatio = (float) $userForceTargetAspectRatio
-            this._hasUserForceTargetAspectRatio = true
-            $useRecommendedRatio = false // We forcibly disable this too, to avoid risk of future bugs.
+            userForceTargetAspectRatio = userForceTargetAspectRatio as Float
+            _hasUserForceTargetAspectRatio = true
+            useRecommendedRatio = false // We forcibly disable this too, to avoid risk of future bugs.
         }
 
         // Create constraints and determine whether to import "recommended target aspect ratio" (if one is available for feed).
-        this._constraints = ConstraintsFactory::createFor($targetFeed)
-        if (!this._hasUserForceTargetAspectRatio && $useRecommendedRatio === null) {
+        _constraints = ConstraintsFactory.createFor(targetFeed)
+        if (!_hasUserForceTargetAspectRatio && useRecommendedRatio === null) {
             // No value is provided, so let"s guess it.
-            if ($minAspectRatio !== null || $maxAspectRatio !== null) {
+            if (minAspectRatio !== null || maxAspectRatio !== null) {
                 // If we have at least one custom ratio, we must not import recommended ratio.
-                $useRecommendedRatio = false
+                useRecommendedRatio = false
             } else {
                 // import the recommended value from constraints (either on or off, depending on which target feed).
-                $useRecommendedRatio = this._constraints.useRecommendedRatioByDefault()
+                useRecommendedRatio = _constraints.useRecommendedRatioByDefault()
             }
         }
 
         // Determine the legal min/max aspect ratios for the target feed.
-        if (!this._hasUserForceTargetAspectRatio && $useRecommendedRatio === true) {
-            this._forceTargetAspectRatio = this._constraints.getRecommendedRatio()
-            $deviation = this._constraints.getRecommendedRatioDeviation()
-            $minAspectRatio = this._forceTargetAspectRatio - $deviation
-            $maxAspectRatio = this._forceTargetAspectRatio + $deviation
+        if (!_hasUserForceTargetAspectRatio && useRecommendedRatio === true) {
+            _forceTargetAspectRatio = _constraints.getRecommendedRatio()
+            var deviation = _constraints.getRecommendedRatioDeviation()
+            minAspectRatio = _forceTargetAspectRatio - deviation
+            maxAspectRatio = _forceTargetAspectRatio + deviation
         } else {
             // If the user hasn"t specified a custom target aspect ratio, this
             // "force" value will remain NULL (and the target ratio will be
             // auto-calculated by the canvas generation algorithms instead).
-            this._forceTargetAspectRatio = $userForceTargetAspectRatio
-            $allowedMinRatio = this._constraints.getMinAspectRatio()
-            $allowedMaxRatio = this._constraints.getMaxAspectRatio()
+            _forceTargetAspectRatio = userForceTargetAspectRatio
+            var allowedMinRatio = _constraints.getMinAspectRatio()
+            var allowedMaxRatio = _constraints.getMaxAspectRatio()
 
             // Select allowed aspect ratio range based on defaults and user input.
-            if ($minAspectRatio !== null && ($minAspectRatio < $allowedMinRatio || $minAspectRatio > $allowedMaxRatio)) {
-                throw  IllegalArgumentException(sprintf("Minimum aspect ratio must be between %.3f and %.3f.",
-                    $allowedMinRatio, $allowedMaxRatio))
+            if (minAspectRatio !== null && (allowedMinRatio > minAspectRatio || allowedMaxRatio < minAspectRatio)) {
+                throw IllegalArgumentException("Minimum aspect ratio must be between ${"%.3f".format(allowedMinRatio)} and ${"%.3f".format(allowedMaxRatio)}.")
             }
-            if ($minAspectRatio === null) {
-                $minAspectRatio = $allowedMinRatio
+            if (minAspectRatio === null) {
+                minAspectRatio = allowedMinRatio
             }
-            if ($maxAspectRatio !== null && ($maxAspectRatio < $allowedMinRatio || $maxAspectRatio > $allowedMaxRatio)) {
-                throw  IllegalArgumentException(sprintf("Maximum aspect ratio must be between %.3f and %.3f.",
-                    $allowedMinRatio, $allowedMaxRatio))
+            if (maxAspectRatio !== null && (allowedMinRatio > maxAspectRatio || allowedMaxRatio < maxAspectRatio)) {
+                throw IllegalArgumentException("Maximum aspect ratio must be between ${"%.3f".format(allowedMinRatio)} and ${"%.3f".format(allowedMaxRatio)}.")
             }
-            if ($maxAspectRatio === null) {
-                $maxAspectRatio = $allowedMaxRatio
+            if (maxAspectRatio === null) {
+                maxAspectRatio = allowedMaxRatio
             }
-            if ($minAspectRatio !== null && $maxAspectRatio !== null && $minAspectRatio > $maxAspectRatio) {
+            if (minAspectRatio !== null && maxAspectRatio !== null && minAspectRatio > maxAspectRatio) {
                 throw  IllegalArgumentException("Maximum aspect ratio must be greater than or equal to minimum.")
             }
 
             // Validate custom target aspect ratio legality if provided by user.
-            if (this._hasUserForceTargetAspectRatio) {
-                if ($minAspectRatio !== null && this._forceTargetAspectRatio < $minAspectRatio) {
-                    throw  IllegalArgumentException(sprintf("Custom target aspect ratio (%.5f) must be greater than or equal to the minimum aspect ratio (%.5f).",
-                                                                this._forceTargetAspectRatio, $minAspectRatio))
+            if (_hasUserForceTargetAspectRatio) {
+                if (minAspectRatio !== null && _forceTargetAspectRatio!! < minAspectRatio) {
+                    throw IllegalArgumentException("Custom target aspect ratio (${"%.5f".format(_forceTargetAspectRatio)}) must be greater than or equal to the minimum aspect ratio (${"%.5f".format(minAspectRatio)}).")
                 }
-                if ($maxAspectRatio !== null && this._forceTargetAspectRatio > $maxAspectRatio) {
-                    throw  IllegalArgumentException(sprintf("Custom target aspect ratio (%.5f) must be lesser than or equal to the maximum aspect ratio (%.5f).",
-                                                                this._forceTargetAspectRatio, $maxAspectRatio))
+                if (maxAspectRatio !== null && _forceTargetAspectRatio!! > maxAspectRatio) {
+                    throw IllegalArgumentException("Custom target aspect ratio (${"%.5f".format(_forceTargetAspectRatio)}) must be lesser than or equal to the maximum aspect ratio (${"%.5f".format(maxAspectRatio)}).")
                 }
             }
         }
-        this._minAspectRatio = $minAspectRatio
-        this._maxAspectRatio = $maxAspectRatio
+        _minAspectRatio = minAspectRatio
+        _maxAspectRatio = maxAspectRatio
 
         // Allow the aspect ratio of the final, canvas to deviate slightly from the min/max range?
-        this._allowNewAspectDeviation = $allowNewAspectDeviation
+        _allowNewAspectDeviation = allowNewAspectDeviation
 
         // Background color.
-        if ($bgColor !== null && (!is_array($bgColor) || count($bgColor) !== 3 || !isset($bgColor[0]) || !isset($bgColor[1]) || !isset($bgColor[2]))) {
+        if ( bgColor !== null && ( bgColor !is Array || bgColor.count() !== 3 || bgColor[0].isBlank() || bgColor[1].isBlank() || bgColor[2].isBlank() ) ) {
             throw  IllegalArgumentException("The background color must be a 3-element array [R, G, B].")
-        } elseif ($bgColor === null) {
-            $bgColor = [255, 255, 255] // White.
+        } else if (bgColor === null) {
+            bgColor = mutableListOf(255, 255, 255) // White.
         }
-        this._bgColor = $bgColor
+        _bgColor = bgColor
 
         // Media operation.
-        if ($operation !== self::CROP && $operation !== self::EXPAND) {
+        if (operation !== CROP && operation !== EXPAND) {
             throw  IllegalArgumentException("The operation must be one of the class constants CROP or EXPAND.")
         }
-        this._operation = $operation
+        _operation = operation
 
         // Temporary directory path.
-        if ($tmpPath === null) {
-            $tmpPath = self::$defaultTmpPath !== null
-                       ? self::$defaultTmpPath
-                       : sys_get_temp_dir()
+        if (tmpPath === null) {
+            tmpPath = if(defaultTmpPath !== null) defaultTmpPath else sys_get_temp_dir()
         }
-        if (!is_dir($tmpPath) || !is_writable($tmpPath)) {
-            throw  IllegalArgumentException(sprintf("Directory %s does not exist or is not writable.", $tmpPath))
+        if (!is_dir(tmpPath) || !is_writable(tmpPath)) {
+            throw IllegalArgumentException("Directory $tmpPath does not exist or is not writable.")
         }
-        this._tmpPath = realpath($tmpPath)
+        _tmpPath = realpath(tmpPath)
     }
 
     /**
      * Destructor.
      */
-    public fun __destruct()
-    {
-        this.deleteFile()
+    fun __destruct(){
+        deleteFile()
     }
 
     /**
@@ -361,13 +354,12 @@ abstract class InstagramMedia
      *
      * @return bool
      */
-    public fun deleteFile()
-    {
+    fun deleteFile(): Boolean{
         // Only delete if outputfile exists and isn"t the same as input file.
-        if (this._outputFile !== null && this._outputFile !== this._inputFile && is_file(this._outputFile)) {
-            $result = @unlink(this._outputFile)
-            this._outputFile = null // Reset so getFile() will work again.
-            return $result
+        if (_outputFile !== null && _outputFile !== _inputFile && is_file(_outputFile)) {
+            val result = @unlink(_outputFile)
+            _outputFile = null // Reset so getFile() will work again.
+            return result
         }
 
         return true
@@ -392,13 +384,12 @@ abstract class InstagramMedia
      *
      * @see InstagramMedia::_shouldProcess() The criteria that determines processing.
      */
-    public fun getFile()
-    {
-        if (this._outputFile === null) {
-            this._outputFile = this._shouldProcess() ? this._process() : this._inputFile
+    fun getFile(): String{
+        if (_outputFile === null) {
+            _outputFile = if( _shouldProcess() ) _process() else _inputFile
         }
 
-        return this._outputFile
+        return _outputFile
     }
 
     /**
@@ -406,38 +397,37 @@ abstract class InstagramMedia
      *
      * @return bool
      */
-    protected fun _shouldProcess()
-    {
-        $inputAspectRatio = this._details.getAspectRatio()
+    protected fun _shouldProcess(): Boolean{
+        val inputAspectRatio = _details.getAspectRatio()
 
         // Process if aspect ratio < minimum allowed.
-        if (this._minAspectRatio !== null && $inputAspectRatio < this._minAspectRatio) {
+        if (_minAspectRatio !== null && inputAspectRatio < _minAspectRatio!!) {
             return true
         }
 
         // Process if aspect ratio > maximum allowed.
-        if (this._maxAspectRatio !== null && $inputAspectRatio > this._maxAspectRatio) {
+        if (_maxAspectRatio !== null && inputAspectRatio > _maxAspectRatio!!) {
             return true
         }
 
         // Process if USER provided the custom aspect ratio target and input deviates too much.
-        if (this._hasUserForceTargetAspectRatio) {
-            if (this._forceTargetAspectRatio == 1.0) {
+        if (_hasUserForceTargetAspectRatio) {
+            if (_forceTargetAspectRatio == 1.0f) {
                 // User wants a SQUARE canvas, which can ALWAYS be achieved (by
                 // making both sides equal). Process input if not EXACTLY square.
                 // WARNING: Comparison here and above MUST import `!=` (NOT strict
                 // `!==`) to support both int(1) and float(1.0) values!
-                if ($inputAspectRatio != 1.0) {
+                if (inputAspectRatio != 1.0f) {
                     return true
                 }
             } else {
                 // User wants a non-square canvas, which is almost always
                 // IMPOSSIBLE to achieve perfectly. Only process if input
                 // deviates too much from the desired target.
-                $acceptableDeviation = 0.003 // Allow a very narrow range around the user"s target.
-                $acceptableMinAspectRatio = this._forceTargetAspectRatio - $acceptableDeviation
-                $acceptableMaxAspectRatio = this._forceTargetAspectRatio + $acceptableDeviation
-                if ($inputAspectRatio < $acceptableMinAspectRatio || $inputAspectRatio > $acceptableMaxAspectRatio) {
+                val acceptableDeviation = 0.003 // Allow a very narrow range around the user"s target.
+                val acceptableMinAspectRatio = _forceTargetAspectRatio - acceptableDeviation
+                val acceptableMaxAspectRatio = _forceTargetAspectRatio + acceptableDeviation
+                if (inputAspectRatio < acceptableMinAspectRatio || inputAspectRatio > acceptableMaxAspectRatio) {
                     return true
                 }
             }
@@ -447,12 +437,11 @@ abstract class InstagramMedia
         // NOTE: Nobody is allowed to call `isMod2CanvasRequired()` here. That
         // isn"t its purpose. Whether a final Mod2 canvas is required for actual
         // resizing has NOTHING to do with whether the input file is ok.
-        try {
-            this._details.validate(this._constraints)
-
-            return false
-        } catch (.Exception $e) {
-            return true
+        return try {
+            _details.validate(_constraints)
+            false
+        } catch (e: Exception) {
+            true
         }
     }
 
@@ -471,7 +460,7 @@ abstract class InstagramMedia
      *
      * @return bool
      */
-    abstract protected fun _isMod2CanvasRequired()
+    abstract protected fun _isMod2CanvasRequired(): Boolean
 
     /**
      * Process the input file and create the file.
@@ -480,26 +469,25 @@ abstract class InstagramMedia
      *
      * @return string The path to the file.
      */
-    protected fun _process()
-    {
+    protected fun _process(): String{
         // Get the dimensions of the original input file.
-        $inputCanvas = Dimensions(this._details.getWidth(), this._details.getHeight())
+        val inputCanvas = Dimensions(_details.getWidth(), _details.getHeight())
 
         // Create an output canvas with the desired dimensions.
         // WARNING: This creates a LEGAL canvas which MUST be followed EXACTLY.
-        $canvasInfo = this._calculateNewCanvas( // Throws.
-            this._operation,
-            $inputCanvas.getWidth(),
-            $inputCanvas.getHeight(),
-            this._isMod2CanvasRequired(),
-            this._details.getMinAllowedWidth(),
-            this._details.getMaxAllowedWidth(),
-            this._minAspectRatio,
-            this._maxAspectRatio,
-            this._forceTargetAspectRatio,
-            this._allowNewAspectDeviation
+        val canvasInfo = _calculateNewCanvas( // Throws.
+            _operation,
+            inputCanvas.getWidth(),
+            inputCanvas.getHeight(),
+            _isMod2CanvasRequired(),
+            _details.getMinAllowedWidth(),
+            _details.getMaxAllowedWidth(),
+            _minAspectRatio,
+            _maxAspectRatio,
+            _forceTargetAspectRatio,
+            _allowNewAspectDeviation
         )
-        $outputCanvas = $canvasInfo["canvas"]
+        val outputCanvas = canvasInfo["canvas"]
 
         // Determine the media operation"s resampling parameters and perform it.
         // NOTE: This section is EXCESSIVELY commented to explain each step. The
@@ -507,28 +495,30 @@ abstract class InstagramMedia
         // detailed comments, future contributors may not understand any of it!
         // "We"d rather have a WaLL oF TeXt for future reference, than bugs due
         // to future misunderstandings!" - SteveJobzniak -)
-        if (this._operation === self::CROP) {
+        val srcRect
+        val dstRect
+        if (_operation === CROP) {
             // Determine the IDEAL canvas dimensions as if Mod2 adjustments were
             // not applied. That"s NECESSARY for calculating an ACCURATE scale-
             // change compared to the input, so that we can calculate how much
             // the canvas has rescaled. WARNING: These are 1-dimensional scales,
             // and only ONE value (the uncropped side) is valid for comparison.
-            $idealCanvas = Dimensions($outputCanvas.getWidth() - $canvasInfo["mod2WidthDiff"],
-                                          $outputCanvas.getHeight() - $canvasInfo["mod2HeightDiff"])
-            $idealWidthScale = (float) ($idealCanvas.getWidth() / $inputCanvas.getWidth())
-            $idealHeightScale = (float) ($idealCanvas.getHeight() / $inputCanvas.getHeight())
-            this._debugDimensions(
-                $inputCanvas.getWidth(), $inputCanvas.getHeight(),
+            val idealCanvas = Dimensions(outputCanvas.getWidth() - canvasInfo["mod2WidthDiff"],
+                                          outputCanvas.getHeight() - canvasInfo["mod2HeightDiff"])
+            val idealWidthScale  = (idealCanvas.getWidth() / inputCanvas.getWidth()).toFloat()
+            val idealHeightScale = (idealCanvas.getHeight() / inputCanvas.getHeight()).toFloat()
+            _debugDimensions(
+                inputCanvas.getWidth(), inputCanvas.getHeight(),
                 "CROP: Analyzing Original Input Canvas Size"
             )
-            this._debugDimensions(
-                $idealCanvas.getWidth(), $idealCanvas.getHeight(),
+            _debugDimensions(
+                idealCanvas.getWidth(), idealCanvas.getHeight(),
                 "CROP: Analyzing Ideally Cropped (Non-Mod2-adjusted) Output Canvas Size"
             )
-            this._debugText(
+            _debugText(
                 "CROP: Scale of Ideally Cropped Canvas vs Input Canvas",
                 "width=%.8f, height=%.8f",
-                $idealWidthScale, $idealHeightScale
+                idealWidthScale, idealHeightScale
             )
 
             // Now determine HOW the IDEAL canvas has been cropped compared to
@@ -556,34 +546,40 @@ abstract class InstagramMedia
             // doesn"t matter since this algorithm will STILL figure out the
             // proper scale and croppings to import for the canvas. Becaimport uneven,
             // aspect-affecting scaling basically IS cropping the INPUT canvas!
-            if ($idealCanvas.getAspectRatio() === $inputCanvas.getAspectRatio()) {
-                // No sides have been cropped. So both width and height scales
-                // WILL be IDENTICAL, since NOTHING else would be able to create
-                // an identical aspect ratio again (otherwise the aspect ratio
-                // would have been warped (not equal)). So just pick either one.
-                // NOTE: Identical (uncropped ratio) DOESN"T mean that scale is
-                // going to be 1.0. It MAY be. Or the canvas MAY have been
-                // evenly expanded or evenly shrunk in both dimensions.
-                $hasCropped = "nothing"
-                $overallRescale = $idealWidthScale // $idealHeightScale IS identical.
-            } elseif ($idealCanvas.getAspectRatio() < $inputCanvas.getAspectRatio()) {
-                // The horizontal width has been cropped. Grab the height"s
-                // scale, since that side is "unaffected" by the main cropping
-                // and should therefore have a scale of 1. Although it may have
-                // had up/down-scaling. In that case, the height scale will
-                // represent the amount of overall rescale change.
-                $hasCropped = "width"
-                $overallRescale = $idealHeightScale
-            } else { // Output aspect is > input.
-                // The vertical height has been cropped. Just like above, the
-                // "unaffected" side is what we"ll import as our scale reference.
-                $hasCropped = "height"
-                $overallRescale = $idealWidthScale
+            val hasCropped: String
+            val overallRescale: Float
+            when {
+                idealCanvas.getAspectRatio() === inputCanvas.getAspectRatio() -> {
+                    // No sides have been cropped. So both width and height scales
+                    // WILL be IDENTICAL, since NOTHING else would be able to create
+                    // an identical aspect ratio again (otherwise the aspect ratio
+                    // would have been warped (not equal)). So just pick either one.
+                    // NOTE: Identical (uncropped ratio) DOESN"T mean that scale is
+                    // going to be 1.0. It MAY be. Or the canvas MAY have been
+                    // evenly expanded or evenly shrunk in both dimensions.
+                    hasCropped = "nothing"
+                    overallRescale = idealWidthScale // $idealHeightScale IS identical.
+                }
+                idealCanvas.getAspectRatio() < inputCanvas.getAspectRatio() -> {
+                    // The horizontal width has been cropped. Grab the height"s
+                    // scale, since that side is "unaffected" by the main cropping
+                    // and should therefore have a scale of 1. Although it may have
+                    // had up/down-scaling. In that case, the height scale will
+                    // represent the amount of overall rescale change.
+                    hasCropped = "width"
+                    overallRescale = idealHeightScale
+                }
+                else -> { // Output aspect is > input.
+                    // The vertical height has been cropped. Just like above, the
+                    // "unaffected" side is what we"ll import as our scale reference.
+                    hasCropped = "height"
+                    overallRescale = idealWidthScale
+                }
             }
-            this._debugText(
+            _debugText(
                 "CROP: Detecting Cropped Direction",
                 "cropped=%s, overallRescale=%.8f",
-                $hasCropped, $overallRescale
+                hasCropped, overallRescale
             )
 
             // Alright, now calculate the dimensions of the "IDEALLY CROPPED
@@ -627,9 +623,9 @@ abstract class InstagramMedia
             // canvas. If scale is 1.0 it will be used as-is (pixel-perfect).
             // NOTE: We tell it to import round() so that the rescaled pixels are
             // as close to the perfect aspect ratio as possible.
-            $croppedInputCanvas = $idealCanvas.withRescaling(1 / $overallRescale, "round")
-            this._debugDimensions(
-                $croppedInputCanvas.getWidth(), $croppedInputCanvas.getHeight(),
+            var croppedInputCanvas = idealCanvas.withRescaling(1 / overallRescale, "round")
+            _debugDimensions(
+                croppedInputCanvas.getWidth(), croppedInputCanvas.getHeight(),
                 "CROP: Rescaled Ideally Cropped Canvas to Input Dimension Space"
             )
 
@@ -639,22 +635,22 @@ abstract class InstagramMedia
             // number. The rounding is INTENTIONAL, becaimport if scaling was used
             // for the IDEAL canvas then it DOESN"T MATTER how many exact pixels
             // we crop, but round() gives us the BEST APPROXIMATION!
-            $rescaledMod2WidthDiff = (int) round($canvasInfo["mod2WidthDiff"] * (1 / $overallRescale))
-            $rescaledMod2HeightDiff = (int) round($canvasInfo["mod2HeightDiff"] * (1 / $overallRescale))
-            this._debugText(
+            val rescaledMod2WidthDiff  = round(canvasInfo["mod2WidthDiff"] * (1 / overallRescale))
+            val rescaledMod2HeightDiff = round(canvasInfo["mod2HeightDiff"] * (1 / overallRescale))
+            _debugText(
                 "CROP: Rescaled Mod2 Adjustments to Input Dimension Space",
                 "width=%s, height=%s, widthRescaled=%s, heightRescaled=%s",
-                $canvasInfo["mod2WidthDiff"], $canvasInfo["mod2HeightDiff"],
-                $rescaledMod2WidthDiff, $rescaledMod2HeightDiff
+                canvasInfo["mod2WidthDiff"], canvasInfo["mod2HeightDiff"],
+                rescaledMod2WidthDiff, rescaledMod2HeightDiff
             )
 
             // Apply the Mod2 adjustments to the input cropping that we"ll
             // perform. This ensures that ALL of the Mod2 croppings (in ANY
             // dimension) will always be pixel-perfect when we"re at scale 1.0!
-            $croppedInputCanvas = Dimensions($croppedInputCanvas.getWidth() + $rescaledMod2WidthDiff,
-                                                 $croppedInputCanvas.getHeight() + $rescaledMod2HeightDiff)
-            this._debugDimensions(
-                $croppedInputCanvas.getWidth(), $croppedInputCanvas.getHeight(),
+            croppedInputCanvas = Dimensions(croppedInputCanvas.getWidth() + rescaledMod2WidthDiff,
+                                                 croppedInputCanvas.getHeight() + rescaledMod2HeightDiff)
+            _debugDimensions(
+                croppedInputCanvas.getWidth(), croppedInputCanvas.getHeight(),
                 "CROP: Applied Mod2 Adjustments to Final Cropped Input Canvas"
             )
 
@@ -666,26 +662,27 @@ abstract class InstagramMedia
             // adjustments applied to it! And if we"re at another scale, we have
             // a perfectly recalculated, cropped canvas which took into account
             // cropping, scaling and Mod2 adjustments. Advanced stuff! :-)
-            $croppedInputCanvasWidth = $croppedInputCanvas.getWidth() <= $inputCanvas.getWidth()
-                                     ? $croppedInputCanvas.getWidth() : $inputCanvas.getWidth()
-            $croppedInputCanvasHeight = $croppedInputCanvas.getHeight() <= $inputCanvas.getHeight()
-                                      ? $croppedInputCanvas.getHeight() : $inputCanvas.getHeight()
-            $croppedInputCanvas = Dimensions($croppedInputCanvasWidth, $croppedInputCanvasHeight)
-            this._debugDimensions(
-                $croppedInputCanvas.getWidth(), $croppedInputCanvas.getHeight(),
+            val croppedInputCanvasWidth = if (croppedInputCanvas.getWidth() <= inputCanvas.getWidth())
+                                      croppedInputCanvas.getWidth() else inputCanvas.getWidth()
+            val croppedInputCanvasHeight = if (croppedInputCanvas.getHeight() <= inputCanvas.getHeight())
+                                      croppedInputCanvas.getHeight() else inputCanvas.getHeight()
+            croppedInputCanvas = Dimensions(croppedInputCanvasWidth, croppedInputCanvasHeight)
+            _debugDimensions(
+                croppedInputCanvas.getWidth(), croppedInputCanvas.getHeight(),
                 "CROP: Clamped to Legal Input Max-Dimensions"
             )
 
             // Initialize the crop-shifting variables. They control the range of
             // X/Y coordinates we"ll copy from ORIGINAL INPUT to OUTPUT canvas.
             // NOTE: This properly selects the entire INPUT media canvas area.
-            $x1 = $y1 = 0
-            $x2 = $inputCanvas.getWidth()
-            $y2 = $inputCanvas.getHeight()
-            this._debugText(
+            var x1 = 0
+            val y1 = 0
+            var x2 = inputCanvas.getWidth()
+            val y2 = inputCanvas.getHeight()
+            _debugText(
                 "CROP: Initializing X/Y Variables to Full Input Canvas Size",
                 "x1=%s, x2=%s, y1=%s, y2=%s",
-                $x1, $x2, $y1, $y2
+                x1, x2, y1, y2
             )
 
             // Calculate the width and height diffs between the original INPUT
@@ -697,12 +694,12 @@ abstract class InstagramMedia
             // NOTE: Becaimport of clamping of the CROPPED INPUT canvas above, this
             // will actually never be a positive ("scale up") number. It will
             // only be 0 or less. That"s good, just be aware of it if editing!
-            $widthDiff = $croppedInputCanvas.getWidth() - $inputCanvas.getWidth()
-            $heightDiff = $croppedInputCanvas.getHeight() - $inputCanvas.getHeight()
-            this._debugText(
+            val widthDiff  = croppedInputCanvas.getWidth() - inputCanvas.getWidth()
+            val heightDiff = croppedInputCanvas.getHeight() - inputCanvas.getHeight()
+            _debugText(
                 "CROP: Calculated Input Canvas Crop Amounts",
                 "width=%s px, height=%s px",
-                $widthDiff, $heightDiff
+                widthDiff, heightDiff
             )
 
             // After ALL of that work... we finally know how to crop the input
@@ -710,59 +707,59 @@ abstract class InstagramMedia
             // NOTE: The main canvas-creation algorithm only crops a single
             // dimension (width or height), but its Mod2 adjustments may have
             // caused BOTH to be cropped, which is why we MUST process both.
-            if ($widthDiff < 0) {
+            if (widthDiff < 0) {
                 // Horizontal cropping. Focus on the center by default.
-                $horCropFocus = this._horCropFocus !== null ? this._horCropFocus : 0
-                this._debugText("CROP: Horizontal Crop Focus", "focus=%s", $horCropFocus)
+                var horCropFocus = if (_horCropFocus !== null) _horCropFocus else 0
+                _debugText("CROP: Horizontal Crop Focus", "focus=%s", horCropFocus)
 
                 // Invert the focus if this is horizontally flipped media.
-                if (this._details.isHorizontallyFlipped()) {
-                    $horCropFocus = -$horCropFocus
-                    this._debugText(
+                if (_details.isHorizontallyFlipped()) {
+                    horCropFocus = -horCropFocus
+                    _debugText(
                         "CROP: Media is HorFlipped, Flipping Horizontal Crop Focus",
                         "focus=%s",
-                        $horCropFocus
+                        horCropFocus
                     )
                 }
 
                 // Calculate amount of pixels to crop and shift them as-focused.
                 // NOTE: Always import floor() to make uneven amounts lean at left.
-                $absWidthDiff = abs($widthDiff)
-                $x1 = (int) floor($absWidthDiff * (50 + $horCropFocus) / 100)
-                $x2 = $x2 - ($absWidthDiff - $x1)
-                this._debugText("CROP: Calculated X Offsets", "x1=%s, x2=%s", $x1, $x2)
+                val absWidthDiff = abs(widthDiff)
+                x1 = floor(absWidthDiff * (50 + horCropFocus) / 100).toInt()
+                x2 = x2 - (absWidthDiff - x1)
+                _debugText("CROP: Calculated X Offsets", "x1=%s, x2=%s", x1, x2)
             }
-            if ($heightDiff < 0) {
+            if (heightDiff < 0) {
                 // Vertical cropping. Focus on top by default (to keep faces).
-                $verCropFocus = this._verCropFocus !== null ? this._verCropFocus : -50
-                this._debugText("CROP: Vertical Crop Focus", "focus=%s", $verCropFocus)
+                var verCropFocus = if (_verCropFocus !== null) _verCropFocus else -50
+                _debugText("CROP: Vertical Crop Focus", "focus=%s", verCropFocus)
 
                 // Invert the focus if this is vertically flipped media.
-                if (this._details.isVerticallyFlipped()) {
-                    $verCropFocus = -$verCropFocus
-                    this._debugText(
+                if (_details.isVerticallyFlipped()) {
+                    verCropFocus = -verCropFocus
+                    _debugText(
                         "CROP: Media is VerFlipped, Flipping Vertical Crop Focus",
                         "focus=%s",
-                        $verCropFocus
+                        verCropFocus
                     )
                 }
 
                 // Calculate amount of pixels to crop and shift them as-focused.
                 // NOTE: Always import floor() to make uneven amounts lean at top.
-                $absHeightDiff = abs($heightDiff)
-                $y1 = (int) floor($absHeightDiff * (50 + $verCropFocus) / 100)
-                $y2 = $y2 - ($absHeightDiff - $y1)
-                this._debugText("CROP: Calculated Y Offsets", "y1=%s, y2=%s", $y1, $y2)
+                val absHeightDiff = abs(heightDiff)
+                y1 = floor(absHeightDiff * (50 + verCropFocus) / 100).toInt()
+                y2 = y2 - (absHeightDiff - y1)
+                _debugText("CROP: Calculated Y Offsets", "y1=%s, y2=%s", y1, y2)
             }
 
             // Create a source rectangle which starts at the start-offsets
             // (x1/y1) and lasts until the width and height of the desired area.
-            $srcRect = Rectangle($x1, $y1, $x2 - $x1, $y2 - $y1)
-            this._debugText(
+            srcRect = Rectangle(x1, y1, x2 - x1, y2 - y1)
+            _debugText(
                 "CROP_SRC: Input Canvas Source Rectangle",
                 "x1=%s, x2=%s, y1=%s, y2=%s, width=%s, height=%s, aspect=%.8f",
-                $srcRect.getX1(), $srcRect.getX2(), $srcRect.getY1(), $srcRect.getY2(),
-                $srcRect.getWidth(), $srcRect.getHeight(), $srcRect.getAspectRatio()
+                srcRect.getX1(), srcRect.getX2(), srcRect.getY1(), srcRect.getY2(),
+                srcRect.getWidth(), srcRect.getHeight(), srcRect.getAspectRatio()
             )
 
             // Create a destination rectangle which completely fills the entire
@@ -775,34 +772,34 @@ abstract class InstagramMedia
             // shrunk. Everything else WILL import sharp 1:1 pixels and pure
             // cropping instead of stretching/shrinking. And when stretch/shrink
             // is used, the aspect ratio is always perfectly maintained!
-            $dstRect = Rectangle(0, 0, $outputCanvas.getWidth(), $outputCanvas.getHeight())
-            this._debugText(
+            dstRect = Rectangle(0, 0, outputCanvas.getWidth(), outputCanvas.getHeight())
+            _debugText(
                 "CROP_DST: Output Canvas Destination Rectangle",
                 "x1=%s, x2=%s, y1=%s, y2=%s, width=%s, height=%s, aspect=%.8f",
-                $dstRect.getX1(), $dstRect.getX2(), $dstRect.getY1(), $dstRect.getY2(),
-                $dstRect.getWidth(), $dstRect.getHeight(), $dstRect.getAspectRatio()
+                dstRect.getX1(), dstRect.getX2(), dstRect.getY1(), dstRect.getY2(),
+                dstRect.getWidth(), dstRect.getHeight(), dstRect.getAspectRatio()
             )
-        } elseif (this._operation === self::EXPAND) {
+        } else if (_operation === EXPAND) {
             // We"ll copy the entire original input media onto the canvas.
             // Always copy from the absolute top left of the original media.
-            $srcRect = Rectangle(0, 0, $inputCanvas.getWidth(), $inputCanvas.getHeight())
-            this._debugText(
+            srcRect = Rectangle(0, 0, inputCanvas.getWidth(), inputCanvas.getHeight())
+            _debugText(
                 "EXPAND_SRC: Input Canvas Source Rectangle",
                 "x1=%s, x2=%s, y1=%s, y2=%s, width=%s, height=%s, aspect=%.8f",
-                $srcRect.getX1(), $srcRect.getX2(), $srcRect.getY1(), $srcRect.getY2(),
-                $srcRect.getWidth(), $srcRect.getHeight(), $srcRect.getAspectRatio()
+                srcRect.getX1(), srcRect.getX2(), srcRect.getY1(), srcRect.getY2(),
+                srcRect.getWidth(), srcRect.getHeight(), srcRect.getAspectRatio()
             )
 
             // Determine the target dimensions to fit it on the canvas,
             // becaimport the input media"s dimensions may have been too large.
             // This will not scale anything (uses scale=1) if the input fits.
-            $outputWidthScale = (float) ($outputCanvas.getWidth() / $inputCanvas.getWidth())
-            $outputHeightScale = (float) ($outputCanvas.getHeight() / $inputCanvas.getHeight())
-            $scale = min($outputWidthScale, $outputHeightScale)
-            this._debugText(
+            val outputWidthScale  = (outputCanvas.getWidth() / inputCanvas.getWidth()).toFloat()
+            val outputHeightScale = (outputCanvas.getHeight() / inputCanvas.getHeight()).toFloat()
+            val scale = min(outputWidthScale, outputHeightScale)
+            _debugText(
                 "EXPAND: Calculating Scale to Fit Input on Output Canvas",
                 "scale=%.8f",
-                $scale
+                scale
             )
 
             // Calculate the scaled destination rectangle. Note that X/Y remain.
@@ -810,36 +807,36 @@ abstract class InstagramMedia
             // never scale a side badly and leave a 1px gap between the media
             // and canvas sides. Also note that ceil will never produce bad
             // values, since PHP allows the dst_w/dst_h to exceed beyond canvas!
-            $dstRect = $srcRect.withRescaling($scale, "ceil")
-            this._debugDimensions(
-                $dstRect.getWidth(), $dstRect.getHeight(),
+            dstRect = srcRect.withRescaling(scale, "ceil")
+            _debugDimensions(
+                dstRect.getWidth(), dstRect.getHeight(),
                 "EXPAND: Rescaled Input to Output Dimension Space"
             )
 
             // Now calculate the centered destination offset on the canvas.
             // NOTE: We import floor() to ensure that the result gets left-aligned
             // perfectly, and prefers to lean towards towards the top as well.
-            $dst_x = (int) floor(($outputCanvas.getWidth() - $dstRect.getWidth()) / 2)
-            $dst_y = (int) floor(($outputCanvas.getHeight() - $dstRect.getHeight()) / 2)
-            this._debugText(
+            val dst_x = floor((outputCanvas.getWidth() - dstRect.getWidth()) / 2).toInt()
+            val dst_y = floor((outputCanvas.getHeight() - dstRect.getHeight()) / 2).toInt()
+            _debugText(
                 "EXPAND: Calculating Centered Destination on Output Canvas",
                 "dst_x=%s, dst_y=%s",
-                $dst_x, $dst_y
+                dst_x, dst_y
             )
 
             // Build the final destination rectangle for the expanded canvas!
-            $dstRect = Rectangle($dst_x, $dst_y, $dstRect.getWidth(), $dstRect.getHeight())
-            this._debugText(
+            dstRect = Rectangle(dst_x, dst_y, dstRect.getWidth(), dstRect.getHeight())
+            _debugText(
                 "EXPAND_DST: Output Canvas Destination Rectangle",
                 "x1=%s, x2=%s, y1=%s, y2=%s, width=%s, height=%s, aspect=%.8f",
-                $dstRect.getX1(), $dstRect.getX2(), $dstRect.getY1(), $dstRect.getY2(),
-                $dstRect.getWidth(), $dstRect.getHeight(), $dstRect.getAspectRatio()
+                dstRect.getX1(), dstRect.getX2(), dstRect.getY1(), dstRect.getY2(),
+                dstRect.getWidth(), dstRect.getHeight(), dstRect.getAspectRatio()
             )
         } else {
-            throw .RuntimeException(sprintf("Unsupported operation: %s.", this._operation))
+            throw RuntimeException("Unsupported operation: $_operation.")
         }
 
-        return this._createOutputFile($srcRect, $dstRect, $outputCanvas)
+        return _createOutputFile(srcRect, dstRect, outputCanvas)
     }
 
     /**
@@ -851,10 +848,7 @@ abstract class InstagramMedia
      *
      * @return string The path to the output file.
      */
-    abstract protected fun _createOutputFile(
-        Rectangle $srcRect,
-        Rectangle $dstRect,
-        Dimensions $canvas)
+    abstract protected fun _createOutputFile( srcRect: Rectangle, dstRect: Rectangle, canvas: Dimensions): String
 
     /**
      * Calculate a canvas based on input size and requested modifications.
@@ -900,17 +894,16 @@ abstract class InstagramMedia
      *               compared to the ideal canvas.
      */
     protected fun _calculateNewCanvas(
-        $operation,
-        $inputWidth,
-        $inputHeight,
-        $isMod2CanvasRequired,
-        $minWidth = 1,
-        $maxWidth = 99999,
-        $minAspectRatio = null,
-        $maxAspectRatio = null,
-        $forceTargetAspectRatio = null,
-        $allowNewAspectDeviation = false)
-    {
+        operation: Int,
+        inputWidth: Int,
+        inputHeight: Int,
+        isMod2CanvasRequired: Boolean,
+        minWidth: Int = 1,
+        maxWidth: Int = 99999,
+        minAspectRatio: Float? = null,
+        maxAspectRatio: Float? = null,
+        forceTargetAspectRatio: Float? = null,
+        allowNewAspectDeviation: Boolean = false): Map<String, Any> {
         /*
          * WARNING TO POTENTIAL CONTRIBUTORS:
          *
@@ -948,60 +941,60 @@ abstract class InstagramMedia
          * Thank you.
          */
 
-        if ($forceTargetAspectRatio !== null) {
-            this._debugText("SPECIAL_PARAMETERS: Forced Target Aspect Ratio", "forceTargetAspectRatio=%.5f", $forceTargetAspectRatio)
+        if (forceTargetAspectRatio !== null) {
+            _debugText("SPECIAL_PARAMETERS: Forced Target Aspect Ratio", "forceTargetAspectRatio=%.5f", forceTargetAspectRatio)
         }
 
         // Initialize target canvas to original input dimensions & aspect ratio.
         // NOTE: MUST `float`-cast to FORCE float even when dividing EQUAL ints.
-        $targetWidth = (int) $inputWidth
-        $targetHeight = (int) $inputHeight
-        $targetAspectRatio = (float) ($inputWidth / $inputHeight)
-        this._debugDimensions($targetWidth, $targetHeight, "CANVAS_INPUT: Input Canvas Size")
+        var targetWidth  = inputWidth
+        var targetHeight = inputHeight
+        var targetAspectRatio = (inputWidth / inputHeight).toFloat()
+        _debugDimensions(targetWidth, targetHeight, "CANVAS_INPUT: Input Canvas Size")
 
         // Check aspect ratio and crop/expand the canvas to fit aspect if needed.
         if (
-            ($minAspectRatio !== null && $targetAspectRatio < $minAspectRatio)
-            || ($forceTargetAspectRatio !== null && $targetAspectRatio < $forceTargetAspectRatio)
+            (minAspectRatio !== null && targetAspectRatio < minAspectRatio)
+            || (forceTargetAspectRatio !== null && targetAspectRatio < forceTargetAspectRatio)
         ) {
             // Determine target ratio uses forced aspect ratio if set,
             // otherwise we target the MINIMUM allowed ratio (since we"re < it)).
-            $targetAspectRatio = $forceTargetAspectRatio !== null ? $forceTargetAspectRatio : $minAspectRatio
+            targetAspectRatio = if (forceTargetAspectRatio !== null) forceTargetAspectRatio else minAspectRatio
 
-            if ($operation === self::CROP) {
+            if (operation === CROP) {
                 // We need to limit the height, so floor is used intentionally to
                 // AVOID rounding height upwards to a still-too-low aspect ratio.
-                $targetHeight = (int) floor($targetWidth / $targetAspectRatio)
-                this._debugDimensions($targetWidth, $targetHeight, sprintf("CANVAS_CROPPED: %s", $forceTargetAspectRatio === null ? "Aspect Was < MIN" : "Applying Forced Aspect for INPUT < TARGET"))
-            } elseif ($operation === self::EXPAND) {
+                targetHeight = floor(targetWidth / targetAspectRatio).toInt()
+                _debugDimensions(targetWidth, targetHeight, "CANVAS_CROPPED: ${if (forceTargetAspectRatio === null) "Aspect Was < MIN" else "Applying Forced Aspect for INPUT < TARGET"}")
+            } else if (operation === EXPAND) {
                 // We need to expand the width with left/right borders. We use
                 // ceil to guarantee that the final media is wide enough to be
                 // above the minimum allowed aspect ratio.
-                $targetWidth = (int) ceil($targetHeight * $targetAspectRatio)
-                this._debugDimensions($targetWidth, $targetHeight, sprintf("CANVAS_EXPANDED: %s", $forceTargetAspectRatio === null ? "Aspect Was < MIN" : "Applying Forced Aspect for INPUT < TARGET"))
+                targetWidth = ceil(targetHeight * targetAspectRatio).toInt()
+                _debugDimensions(targetWidth, targetHeight, "CANVAS_EXPANDED: ${if (forceTargetAspectRatio === null) "Aspect Was < MIN" else "Applying Forced Aspect for INPUT < TARGET"}")
             }
-        } elseif (
-            ($maxAspectRatio !== null && $targetAspectRatio > $maxAspectRatio)
-            || ($forceTargetAspectRatio !== null && $targetAspectRatio > $forceTargetAspectRatio)
+        } else if (
+            (maxAspectRatio !== null && targetAspectRatio > maxAspectRatio)
+            || (forceTargetAspectRatio !== null && targetAspectRatio > forceTargetAspectRatio)
         ) {
             // Determine target ratio uses forced aspect ratio if set,
             // otherwise we target the MAXIMUM allowed ratio (since we"re > it)).
-            $targetAspectRatio = $forceTargetAspectRatio !== null ? $forceTargetAspectRatio : $maxAspectRatio
+            targetAspectRatio = if (forceTargetAspectRatio !== null) forceTargetAspectRatio else maxAspectRatio
 
-            if ($operation === self::CROP) {
+            if (operation === CROP) {
                 // We need to limit the width. We import floor to guarantee cutting
                 // enough pixels, since our width exceeds the maximum allowed ratio.
-                $targetWidth = (int) floor($targetHeight * $targetAspectRatio)
-                this._debugDimensions($targetWidth, $targetHeight, sprintf("CANVAS_CROPPED: %s", $forceTargetAspectRatio === null ? "Aspect Was > MAX" : "Applying Forced Aspect for INPUT > TARGET"))
-            } elseif ($operation === self::EXPAND) {
+                targetWidth = floor(targetHeight * targetAspectRatio).toInt()
+                _debugDimensions(targetWidth, targetHeight, "CANVAS_CROPPED: ${if (forceTargetAspectRatio === null) "Aspect Was > MAX" else "Applying Forced Aspect for INPUT > TARGET"}")
+            } else if (operation === EXPAND) {
                 // We need to expand the height with top/bottom borders. We use
                 // ceil to guarantee that the final media is tall enough to be
                 // below the maximum allowed aspect ratio.
-                $targetHeight = (int) ceil($targetWidth / $targetAspectRatio)
-                this._debugDimensions($targetWidth, $targetHeight, sprintf("CANVAS_EXPANDED: %s", $forceTargetAspectRatio === null ? "Aspect Was > MAX" : "Applying Forced Aspect for INPUT > TARGET"))
+                targetHeight = ceil(targetWidth / targetAspectRatio).toInt()
+                _debugDimensions(targetWidth, targetHeight, "CANVAS_EXPANDED: ${if(forceTargetAspectRatio === null) "Aspect Was > MAX" else "Applying Forced Aspect for INPUT > TARGET"}")
             }
         } else {
-            this._debugDimensions($targetWidth, $targetHeight, "CANVAS: Aspect Ratio Already Legal")
+            _debugDimensions(targetWidth, targetHeight, "CANVAS: Aspect Ratio Already Legal")
         }
 
         // Determine whether the final target ratio is closest to either the
@@ -1012,11 +1005,9 @@ abstract class InstagramMedia
         // `0` and max to `9999999` to ensure that we properly detect the "least
         // distance" direction even when only one (or neither) of the two "range
         // limit values" were provided.
-        $minAspectDistance = abs(($minAspectRatio !== null
-                                  ? $minAspectRatio : 0) - $targetAspectRatio)
-        $maxAspectDistance = abs(($maxAspectRatio !== null
-                                  ? $maxAspectRatio : 9999999) - $targetAspectRatio)
-        $isClosestToMinAspect = ($minAspectDistance <= $maxAspectDistance)
+        val minAspectDistance = abs( ( if (minAspectRatio !== null) minAspectRatio else 0) - targetAspectRatio )
+        val maxAspectDistance = abs( ( if (maxAspectRatio !== null) maxAspectRatio else 9999999) - targetAspectRatio)
+        val isClosestToMinAspect = (minAspectDistance <= maxAspectDistance)
 
         // We MUST now set up the correct height re-calculation behavior for the
         // later algorithm steps. This is used whenever our canvas needs to be
@@ -1030,7 +1021,7 @@ abstract class InstagramMedia
         // instead import ceil() on the height (since having more height causes the
         // aspect ratio value to shrink), to ensure that the result is always
         // BELOW the maximum ratio (maxAspectRatio).
-        $useFloorHeightRecalc = $isClosestToMinAspect
+        val useFloorHeightRecalc = isClosestToMinAspect
 
         // Verify square target ratios by ensuring canvas is now a square.
         // NOTE: This is just a sanity check against wrong code above. It will
@@ -1042,11 +1033,11 @@ abstract class InstagramMedia
         // shortest side when cropping or the longest side when expanding.
         // WARNING: Comparison MUST import `==` (NOT strict `===`) to support both
         // int(1) and float(1.0) values!
-        if ($targetAspectRatio == 1.0 && $targetWidth !== $targetHeight) { // Ratio 1 = Square.
-            $targetWidth = $targetHeight = $operation === self::CROP
-                         ? min($targetWidth, $targetHeight)
-                         : max($targetWidth, $targetHeight)
-            this._debugDimensions($targetWidth, $targetHeight, "CANVAS_SQUARIFY: Fixed Badly Generated Square")
+        if (targetAspectRatio == 1.0f && targetWidth !== targetHeight) { // Ratio 1 = Square.
+            targetWidth = if (targetHeight = operation === CROP)
+                         min(targetWidth, targetHeight)
+                         else max(targetWidth, targetHeight)
+            _debugDimensions(targetWidth, targetHeight, "CANVAS_SQUARIFY: Fixed Badly Generated Square")
         }
 
         // Lastly, enforce minimum and maximum width limits on our final canvas.
@@ -1054,96 +1045,83 @@ abstract class InstagramMedia
         // auto-limits height (since we can only import legal height ratios).
         // NOTE: Yet again, if the target ratio is 1 (square), we"ll get
         // identical width & height, so NO NEED to MANUALLY "fix square" here.
-        if ($targetWidth > $maxWidth) {
-            $targetWidth = $maxWidth
-            this._debugDimensions($targetWidth, $targetHeight, "CANVAS_WIDTH: Width Was > MAX")
-            $targetHeight = this._accurateHeightRecalc($useFloorHeightRecalc, $targetAspectRatio, $targetWidth)
-            this._debugDimensions($targetWidth, $targetHeight, "CANVAS_WIDTH: Height Recalc From Width & Aspect")
-        } elseif ($targetWidth < $minWidth) {
-            $targetWidth = $minWidth
-            this._debugDimensions($targetWidth, $targetHeight, "CANVAS_WIDTH: Width Was < MIN")
-            $targetHeight = this._accurateHeightRecalc($useFloorHeightRecalc, $targetAspectRatio, $targetWidth)
-            this._debugDimensions($targetWidth, $targetHeight, "CANVAS_WIDTH: Height Recalc From Width & Aspect")
+        if (targetWidth > maxWidth) {
+            targetWidth = maxWidth
+            _debugDimensions(targetWidth, targetHeight, "CANVAS_WIDTH: Width Was > MAX")
+            targetHeight = _accurateHeightRecalc(useFloorHeightRecalc, targetAspectRatio, targetWidth)
+            _debugDimensions(targetWidth, targetHeight, "CANVAS_WIDTH: Height Recalc From Width & Aspect")
+        } else if (targetWidth < minWidth) {
+            targetWidth = minWidth
+            _debugDimensions(targetWidth, targetHeight, "CANVAS_WIDTH: Width Was < MIN")
+            targetHeight = _accurateHeightRecalc(useFloorHeightRecalc, targetAspectRatio, targetWidth)
+            _debugDimensions(targetWidth, targetHeight, "CANVAS_WIDTH: Height Recalc From Width & Aspect")
         }
 
         // All of the main canvas algorithms are now finished, and we are now
         // able to check Mod2 compatibility and accurately readjust if needed.
-        $mod2WidthDiff = $mod2HeightDiff = 0
-        if ($isMod2CanvasRequired
-            && (!this._isNumberMod2($targetWidth) || !this._isNumberMod2($targetHeight))
-        ) {
+        var mod2WidthDiff = 0
+        var mod2HeightDiff = 0
+        if ( isMod2CanvasRequired && (!_isNumberMod2(targetWidth) || !_isNumberMod2(targetHeight)) ) {
             // Calculate the Mod2-adjusted final canvas size.
-            $mod2Canvas = this._calculateAdjustedMod2Canvas(
-                $inputWidth,
-                $inputHeight,
-                $useFloorHeightRecalc,
-                $targetWidth,
-                $targetHeight,
-                $targetAspectRatio,
-                $minWidth,
-                $maxWidth,
-                $minAspectRatio,
-                $maxAspectRatio,
-                $allowNewAspectDeviation
+            val mod2Canvas = _calculateAdjustedMod2Canvas(
+                inputWidth,
+                inputHeight,
+                useFloorHeightRecalc,
+                targetWidth,
+                targetHeight,
+                targetAspectRatio,
+                minWidth,
+                maxWidth,
+                minAspectRatio,
+                maxAspectRatio,
+                allowNewAspectDeviation
             )
 
             // Determine the pixel difference before and after processing.
-            $mod2WidthDiff = $mod2Canvas.getWidth() - $targetWidth
-            $mod2HeightDiff = $mod2Canvas.getHeight() - $targetHeight
-            this._debugText("CANVAS: Mod2 Difference Stats", "width=%s, height=%s", $mod2WidthDiff, $mod2HeightDiff)
+            mod2WidthDiff  = mod2Canvas.getWidth() - targetWidth
+            mod2HeightDiff = mod2Canvas.getHeight() - targetHeight
+            _debugText("CANVAS: Mod2 Difference Stats", "width=%s, height=%s", mod2WidthDiff, mod2HeightDiff)
 
             // Update the final canvas to the Mod2-adjusted canvas size.
             // NOTE: If code above failed, the values are invalid. But so
             // could our original values have been. We check that further down.
-            $targetWidth = $mod2Canvas.getWidth()
-            $targetHeight = $mod2Canvas.getHeight()
-            this._debugDimensions($targetWidth, $targetHeight, "CANVAS: Updated From Mod2 Result")
+            targetWidth = mod2Canvas.getWidth()
+            targetHeight = mod2Canvas.getHeight()
+            _debugDimensions(targetWidth, targetHeight, "CANVAS: Updated From Mod2 Result")
         }
 
         // Create the canvas Dimensions object.
-        $canvas = Dimensions($targetWidth, $targetHeight)
-        this._debugDimensions($targetWidth, $targetHeight, "CANVAS_OUTPUT: Final Output Canvas Size")
+        val canvas = Dimensions(targetWidth, targetHeight)
+        _debugDimensions(targetWidth, targetHeight, "CANVAS_OUTPUT: Final Output Canvas Size")
 
         // We must now validate the canvas before returning it.
         // NOTE: Most of these are just strict sanity-checks to protect against
         // bad code contributions in the future. The canvas won"t be able to
         // pass all of these checks unless the algorithm above remains perfect.
-        $isIllegalRatio = (($minAspectRatio !== null && $canvas.getAspectRatio() < $minAspectRatio)
-                           || ($maxAspectRatio !== null && $canvas.getAspectRatio() > $maxAspectRatio))
-        if ($canvas.getWidth() < 1 || $canvas.getHeight() < 1) {
-            throw .RuntimeException(sprintf(
-                "Canvas calculation failed. Target width (%s) or height (%s) less than one pixel.",
-                $canvas.getWidth(), $canvas.getHeight()
-            ))
-        } elseif ($canvas.getWidth() < $minWidth) {
-            throw .RuntimeException(sprintf(
-                "Canvas calculation failed. Target width (%s) less than minimum allowed (%s).",
-                $canvas.getWidth(), $minWidth
-            ))
-        } elseif ($canvas.getWidth() > $maxWidth) {
-            throw .RuntimeException(sprintf(
-                "Canvas calculation failed. Target width (%s) greater than maximum allowed (%s).",
-                $canvas.getWidth(), $maxWidth
-            ))
-        } elseif ($isIllegalRatio) {
-            if (!$allowNewAspectDeviation) {
-                throw .RuntimeException(sprintf(
-                    "Canvas calculation failed. Unable to reach target aspect ratio range during output canvas generation. The range of allowed aspect ratios is too narrow (%.8f - %.8f). We achieved a ratio of %.8f.",
-                    $minAspectRatio !== null ? $minAspectRatio : 0.0,
-                    $maxAspectRatio !== null ? $maxAspectRatio : INF,
-                    $canvas.getAspectRatio()
-                ))
+        val isIllegalRatio = ((minAspectRatio !== null && canvas.getAspectRatio() < minAspectRatio)
+                           || (maxAspectRatio !== null && canvas.getAspectRatio() > maxAspectRatio))
+        if (canvas.getWidth() < 1 || canvas.getHeight() < 1) {
+            throw RuntimeException("Canvas calculation failed. Target width (${canvas.getWidth()}) or height (${canvas.getHeight()}) less than one pixel.")
+        } else if (canvas.getWidth() < minWidth) {
+            throw RuntimeException("Canvas calculation failed. Target width (${canvas.getWidth()}) less than minimum allowed ($minWidth).")
+        } else if (canvas.getWidth() > maxWidth) {
+            throw RuntimeException("Canvas calculation failed. Target width (${canvas.getWidth()}) greater than maximum allowed ($maxWidth).")
+        } else if (isIllegalRatio) {
+            if (!allowNewAspectDeviation) {
+                throw RuntimeException(
+                    "Canvas calculation failed. Unable to reach target aspect ratio range during output canvas generation. The range of allowed aspect ratios is too narrow (${"%.8f".format(if (minAspectRatio !== null) minAspectRatio else 0.0)} - ${"%.8f".format(if (maxAspectRatio !== null) maxAspectRatio else INF)}). We achieved a ratio of ${"%.8f".format(canvas.getAspectRatio())}."
+                )
             } else {
                 // The user wants us to allow "near-misses", so we proceed...
-                this._debugDimensions($canvas.getWidth(), $canvas.getHeight(), "CANVAS_FINAL: Allowing Deviating Aspect Ratio")
+                _debugDimensions(canvas.getWidth(), canvas.getHeight(), "CANVAS_FINAL: Allowing Deviating Aspect Ratio")
             }
         }
 
-        return [
-            "canvas"         => $canvas,
-            "mod2WidthDiff"  => $mod2WidthDiff,
-            "mod2HeightDiff" => $mod2HeightDiff,
-        ]
+        return mapOf(
+            "canvas"         to canvas,
+            "mod2WidthDiff"  to mod2WidthDiff,
+            "mod2HeightDiff" to mod2HeightDiff
+        )
     }
 
     /**
@@ -1168,17 +1146,12 @@ abstract class InstagramMedia
      *
      * @return int
      */
-    protected fun _accurateHeightRecalc(
-        $useFloorHeightRecalc,
-        $targetAspectRatio,
-        $targetWidth)
-    {
+    protected fun _accurateHeightRecalc( useFloorHeightRecalc: Boolean, targetAspectRatio: Float, targetWidth: Int): Int{
         // Read the docs above to understand this CRITICALLY IMPORTANT code.
-        $targetHeight = $useFloorHeightRecalc
-                      ? (int) floor($targetWidth / $targetAspectRatio) // >=
-                      : (int) ceil($targetWidth / $targetAspectRatio) // <=
 
-        return $targetHeight
+        return if (useFloorHeightRecalc)
+                      floor(targetWidth / targetAspectRatio).toInt() // >=
+                      else ceil(targetWidth / targetAspectRatio) .toInt()
     }
 
     /**
@@ -1215,26 +1188,25 @@ abstract class InstagramMedia
      * @see InstagramMedia::_calculateNewCanvas()
      */
     protected fun _calculateAdjustedMod2Canvas(
-        $inputWidth,
-        $inputHeight,
-        $useFloorHeightRecalc,
-        $targetWidth,
-        $targetHeight,
-        $targetAspectRatio,
-        $minWidth = 1,
-        $maxWidth = 99999,
-        $minAspectRatio = null,
-        $maxAspectRatio = null,
-        $allowNewAspectDeviation = false)
-    {
+        inputWidth: Int,
+        inputHeight: Int,
+        useFloorHeightRecalc: Boolean,
+        targetWidth: Int,
+        targetHeight: Int,
+        targetAspectRatio: Float,
+        minWidth: Int = 1,
+        maxWidth: Int = 99999,
+        minAspectRatio: Float? = null,
+        maxAspectRatio: Float? = null,
+        allowNewAspectDeviation: Boolean = false): Dimensions {
         // Initialize to the calculated canvas size.
-        $mod2Width = $targetWidth
-        $mod2Height = $targetHeight
-        this._debugDimensions($mod2Width, $mod2Height, "MOD2_CANVAS: Current Canvas Size")
+        var mod2Width = targetWidth
+        var mod2Height = targetHeight
+        _debugDimensions(mod2Width, mod2Height, "MOD2_CANVAS: Current Canvas Size")
 
         // Determine if we"re able to cut an extra pixel from the width if
         // necessary, or if cutting would take us below the minimum width.
-        $canCutWidth = $mod2Width > $minWidth
+        val canCutWidth = mod2Width > minWidth
 
         // To begin, we must correct the width if it"s uneven. We"ll only do
         // this once, and then we"ll leave the width at its number. By
@@ -1242,7 +1214,7 @@ abstract class InstagramMedia
         // limits. And by only varying one dimension (height) if multiple Mod2
         // offset adjustments are needed, then we"ll properly get a steadily
         // increasing/decreasing aspect ratio (moving towards the target ratio).
-        if (!this._isNumberMod2($mod2Width)) {
+        if (!_isNumberMod2(mod2Width)) {
             // Always prefer cutting an extra pixel, rather than stretching
             // by +1. But import +1 if cutting would take us below minimum width.
             // NOTE: Another IMPORTANT reason to CUT width rather than extend
@@ -1250,21 +1222,21 @@ abstract class InstagramMedia
             // the extra width proportionally increases total area (thus height
             // too), and gives us less of the original pixels on the height-axis
             // to play with when attempting to fix the height (and its ratio).
-            $mod2Width += ($canCutWidth ? -1 : 1)
-            this._debugDimensions($mod2Width, $mod2Height, "MOD2_CANVAS: Width Mod2Fix")
+            mod2Width += (if (canCutWidth) -1 else 1)
+            _debugDimensions(mod2Width, mod2Height, "MOD2_CANVAS: Width Mod2Fix")
 
             // Calculate the relative height based on the width.
-            $mod2Height = this._accurateHeightRecalc($useFloorHeightRecalc, $targetAspectRatio, $mod2Width)
-            this._debugDimensions($mod2Width, $mod2Height, "MOD2_CANVAS: Height Recalc From Width & Aspect")
+            mod2Height = _accurateHeightRecalc(useFloorHeightRecalc, targetAspectRatio, mod2Width)
+            _debugDimensions(mod2Width, mod2Height, "MOD2_CANVAS: Height Recalc From Width & Aspect")
         }
 
         // Ensure that the calculated height is also Mod2, but totally ignore
         // the aspect ratio at this moment (we"ll fix that later). Instead,
         // we"ll import the same pattern we"d import for width above. That way, if
         // both width and height were uneven, they both get adjusted equally.
-        if (!this._isNumberMod2($mod2Height)) {
-            $mod2Height += ($canCutWidth ? -1 : 1)
-            this._debugDimensions($mod2Width, $mod2Height, "MOD2_CANVAS: Height Mod2Fix")
+        if (!_isNumberMod2(mod2Height)) {
+            mod2Height += (if (canCutWidth) -1 else 1)
+            _debugDimensions(mod2Width, mod2Height, "MOD2_CANVAS: Height Mod2Fix")
         }
 
         // We will now analyze multiple different height alternatives to find
@@ -1282,17 +1254,17 @@ abstract class InstagramMedia
         // and then rated into one of 3 categories: "perfect" (legal aspect
         // ratio, no stretching), "stretch" (legal aspect ratio, but stretches),
         // or "bad" (illegal aspect ratio).
-        $heightAlternatives = ["perfect" => [], "stretch" => [], "bad" => []]
-        static $offsetPriorities = [0, 2, -2, 4, -4, 6, -6]
-        foreach ($offsetPriorities as $offset) {
+        val heightAlternatives = mapOf<String, Any>("perfect" to [], "stretch" to [], "bad" to [])
+        val offsetPriorities = listOf(0, 2, -2, 4, -4, 6, -6) // todo: this variable have static method
+        for (offset in offsetPriorities) {
             // Calculate the height and its resulting aspect ratio.
             // NOTE: MUST `float`-cast to FORCE float even when dividing EQUAL ints.
-            $offsetMod2Height = $mod2Height + $offset
-            $offsetMod2AspectRatio = (float) ($mod2Width / $offsetMod2Height)
+            val offsetMod2Height = mod2Height + offset
+            val offsetMod2AspectRatio = (mod2Width / offsetMod2Height).toFloat()
 
             // Check if the aspect ratio is legal.
-            $isLegalRatio = (($minAspectRatio === null || $offsetMod2AspectRatio >= $minAspectRatio)
-                             && ($maxAspectRatio === null || $offsetMod2AspectRatio <= $maxAspectRatio))
+            val isLegalRatio = ((minAspectRatio === null || offsetMod2AspectRatio >= minAspectRatio)
+                             && (maxAspectRatio === null || offsetMod2AspectRatio <= maxAspectRatio))
 
             // Detect whether the height would need stretching. Stretching is
             // defined as "not enough pixels in the input media to reach".
@@ -1303,29 +1275,26 @@ abstract class InstagramMedia
             // be a perfect rating for it (where aspect ratio is legal AND zero
             // stretching is needed to reach those dimensions).
             // NOTE: The max() gets rid of negative values (cropping).
-            $stretchAmount = max(0, $offsetMod2Height - $inputHeight)
+            val stretchAmount = max(0, offsetMod2Height - inputHeight)
 
             // Calculate the deviation from the target aspect ratio. The larger
             // this number is, the further away from "the ideal canvas". The
             // "perfect" answers will always deviate by different amount, and
             // the most perfect one is the one with least deviation.
-            $ratioDeviation = abs($offsetMod2AspectRatio - $targetAspectRatio)
+            val ratioDeviation = abs(offsetMod2AspectRatio - targetAspectRatio)
 
             // Rate this height alternative and store it according to rating.
-            $rating = ($isLegalRatio && !$stretchAmount ? "perfect" : ($isLegalRatio ? "stretch" : "bad"))
-            $heightAlternatives[$rating][] = [
-                "offset"         => $offset,
-                "height"         => $offsetMod2Height,
-                "ratio"          => $offsetMod2AspectRatio,
-                "isLegalRatio"   => $isLegalRatio,
-                "stretchAmount"  => $stretchAmount,
-                "ratioDeviation" => $ratioDeviation,
-                "rating"         => $rating,
-            ]
-            this._debugDimensions($mod2Width, $offsetMod2Height, sprintf(
-                "MOD2_CANVAS_CHECK: Testing Height Mod2Ratio (h%s%s = %s)",
-                ($offset >= 0 ? "+" : ""), $offset, $rating)
+            val rating = ( isLegalRatio && if (!stretchAmount) "perfect" else (if (isLegalRatio) "stretch" else "bad") )
+            heightAlternatives[rating][] = mapOf(
+                "offset"         to offset,
+                "height"         to offsetMod2Height,
+                "ratio"          to offsetMod2AspectRatio,
+                "isLegalRatio"   to isLegalRatio,
+                "stretchAmount"  to stretchAmount,
+                "ratioDeviation" to ratioDeviation,
+                "rating"         to rating
             )
+            _debugDimensions(mod2Width, offsetMod2Height, "MOD2_CANVAS_CHECK: Testing Height Mod2Ratio (h${(if (offset >= 0) "+" else "")}$offset = $rating)")
         }
 
         // Now pick the BEST height from our available choices (if any). We will
@@ -1333,53 +1302,41 @@ abstract class InstagramMedia
         // ideal aspect ratio. In other words, the BEST-LOOKING aspect ratio!
         // NOTE: If we find no legal (perfect or stretch) choices, we"ll pick
         // the most accurate (least deviation from ratio) of the bad choices.
-        $bestHeight = null
-        foreach (["perfect", "stretch", "bad"] as $rating) {
-            if (!empty($heightAlternatives[$rating])) {
+        var bestHeight = null
+        for (rating in arrayOf("perfect", "stretch", "bad")) {
+            if (!(heightAlternatives[rating].isEmpty())) {
                 // Sort all alternatives by their amount of ratio deviation.
-                usort($heightAlternatives[$rating], fun ($a, $b) {
-                    return ($a["ratioDeviation"] < $b["ratioDeviation"])
-                        ? -1 : (($a["ratioDeviation"] > $b["ratioDeviation"]) ? 1 : 0)
+                usort(heightAlternatives[rating], fun (a, b) {
+                    return (a["ratioDeviation"] < b["ratioDeviation"]) -1 else (if (a["ratioDeviation"] > b["ratioDeviation"]) 1 else 0)
                 })
 
                 // Pick the 1st array element, which has the least deviation!
-                $bestHeight = $heightAlternatives[$rating][0]
+                bestHeight = heightAlternatives[rating][0]
                 break
             }
         }
 
         // Process and apply the best-possible height we found.
-        $mod2Height = $bestHeight["height"]
-        this._debugDimensions($mod2Width, $mod2Height, sprintf(
-            "MOD2_CANVAS: Selected Most Ideal Height Mod2Ratio (h%s%s = %s)",
-            ($bestHeight["offset"] >= 0 ? "+" : ""), $bestHeight["offset"], $bestHeight["rating"]
-        ))
+        mod2Height = bestHeight["height"]
+        _debugDimensions(mod2Width, mod2Height, "MOD2_CANVAS: Selected Most Ideal Height Mod2Ratio (h${if(bestHeight["offset"] >= 0) "+" else ""}${bestHeight["offset"]} = ${bestHeight["rating"]})")
 
         // Decide what to do if there were no legal aspect ratios among our
         // calculated choices. This can happen if the user gave us an insanely
         // narrow range (such as "min/max ratio 1.6578" or whatever).
-        if ($bestHeight["rating"] === "bad") {
-            if (!$allowNewAspectDeviation) {
-                throw .RuntimeException(sprintf(
-                    "Canvas calculation failed. Unable to reach target aspect ratio range during Mod2 canvas conversion. The range of allowed aspect ratios is too narrow (%.8f - %.8f). We achieved a ratio of %.8f.",
-                    $minAspectRatio !== null ? $minAspectRatio : 0.0,
-                    $maxAspectRatio !== null ? $maxAspectRatio : INF,
-                    (float) ($mod2Width / $mod2Height)
-                ))
+        if (bestHeight["rating"] === "bad") {
+            if (!allowNewAspectDeviation) {
+                throw RuntimeException("Canvas calculation failed. Unable to reach target aspect ratio range during Mod2 canvas conversion. The range of allowed aspect ratios is too narrow (${"%.8f".format(if(minAspectRatio !== null) minAspectRatio else 0.0)} - ${"%.8f".format(if(maxAspectRatio !== null) maxAspectRatio else INF)}). We achieved a ratio of ${"%.8f".format((mod2Width / mod2Height).toFloat())}.")
             } else {
                 // They WANT us to allow "near-misses", so we"ll KEEP our best
                 // possible bad ratio here (the one that was closest to the
                 // target). We didn"t find any more ideal aspect ratio (since
                 // all other attempts ALSO FAILED the aspect ratio ranges), so
                 // we have NO idea if they"d prefer any others! -)
-                this._debugDimensions($mod2Width, $mod2Height, sprintf(
-                    "MOD2_CANVAS: Allowing Deviating Height Mod2Ratio (h%s%s = %s)",
-                    ($bestHeight["offset"] >= 0 ? "+" : ""), $bestHeight["offset"], $bestHeight["rating"]
-                ))
+                _debugDimensions(mod2Width, mod2Height, "MOD2_CANVAS: Allowing Deviating Height Mod2Ratio (h${if(bestHeight["offset"] >= 0) "+" else ""}${bestHeight["offset"]} = ${bestHeight["rating"]})")
             }
         }
 
-        return Dimensions($mod2Width, $mod2Height)
+        return Dimensions(mod2Width, mod2Height)
     }
 
     /**
@@ -1389,11 +1346,9 @@ abstract class InstagramMedia
      *
      * @return bool
      */
-    protected fun _isNumberMod2(
-        $number)
-    {
+    protected fun _isNumberMod2( number: Int): Boolean{
         // NOTE: The modulo operator correctly returns ints even for float input such as 1.999.
-        return $number % 2 === 0
+        return number % 2 === 0
     }
 
     /**
@@ -1403,19 +1358,15 @@ abstract class InstagramMedia
      * @param string $formatMessage
      * @param mixed  $args,...
      */
-    protected fun _debugText(
-        $stepDescription,
-        $formatMessage,
-        ...$args)
-    {
-        if (!this._debug) {
+    protected fun _debugText( stepDescription: String, formatMessage: String, ...args){
+        if (!_debug) {
             return
         }
 
-        printf(
+        print(
             "[.033[133m%s.033[0m] {$formatMessage}.n",
-            $stepDescription,
-            ...$args
+            stepDescription,
+            ...args
         )
     }
 
@@ -1426,21 +1377,15 @@ abstract class InstagramMedia
      * @param int|float   $height
      * @param string|null $stepDescription
      */
-    protected fun _debugDimensions(
-        $width,
-        $height,
-        $stepDescription = null)
-    {
-        if (!this._debug) {
+    protected fun _debugDimensions( width: Float, height: Float, stepDescription: String? = null){
+        if (!_debug) {
             return
         }
 
-        printf(
+        print(
             // NOTE: This uses 8 decimals for proper debugging, since small
             // rounding errors can make rejected ratios look valid.
-            "[.033[133m%s.033[0m] w=%s h=%s (aspect %.8f).n",
-            $stepDescription !== null ? $stepDescription : "DEBUG",
-            $width, $height, (float) ($width / $height)
+            "[.033[133m${if(stepDescription !== null) stepDescription else "DEBUG"}.033[0m] w=$width h=$height (aspect ${"%.8f".format((width / height))}).n"
         )
     }
 }

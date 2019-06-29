@@ -16,7 +16,7 @@ class TvConstraints : StoryConstraints
      *
      * @var float
      */
-    val MIN_RATIO = 0.5
+    val MIN_RATIO: Float = 0.5f
 
     /**
      * Highest allowed aspect ratio.
@@ -27,7 +27,7 @@ class TvConstraints : StoryConstraints
      *
      * @var float
      */
-    val MAX_RATIO = 0.8
+    val MAX_RATIO: Float = 0.8f
 
     /**
      * Minimum allowed video duration.
@@ -38,7 +38,7 @@ class TvConstraints : StoryConstraints
      *
      * @var float
      */
-    val MIN_DURATION = 15.0
+    val MIN_DURATION: Float = 15.0f
 
     /**
      * Maximum allowed video duration.
@@ -49,35 +49,30 @@ class TvConstraints : StoryConstraints
      *
      * @var float
      */
-    val MAX_DURATION = 600.0
+    val MAX_DURATION: Float = 600.0f
 
     /** {@inheritdoc} */
-    public fun getTitle()
-    {
+    fun getTitle(): String {
         return "TV"
     }
 
     /** {@inheritdoc} */
-    public fun getMinAspectRatio()
-    {
-        return self::MIN_RATIO
+    fun getMinAspectRatio(): Float {
+        return MIN_RATIO
     }
 
     /** {@inheritdoc} */
-    public fun getMaxAspectRatio()
-    {
-        return self::MAX_RATIO
+    fun getMaxAspectRatio(): Float {
+        return MAX_RATIO
     }
 
     /** {@inheritdoc} */
-    public fun getMinDuration()
-    {
-        return self::MIN_DURATION
+    fun getMinDuration(): Float {
+        return MIN_DURATION
     }
 
     /** {@inheritdoc} */
-    public fun getMaxDuration()
-    {
-        return self::MAX_DURATION
+    fun getMaxDuration(): Float {
+        return MAX_DURATION
     }
 }

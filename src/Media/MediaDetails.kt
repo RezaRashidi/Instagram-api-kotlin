@@ -2,68 +2,63 @@
 
 package InstagramAPI.Media
 
-abstract class MediaDetails
-{
+import InstagramAPI.Response.Model.In
+
+abstract class MediaDetails{
     /** @var int */
-    private $_filesize
+    private var _filesize: Int
 
     /** @var string */
-    private $_filename
+    private lateinit var _filename: String
 
     /** @var int */
-    private $_width
+    private var _width: Int
 
     /** @var int */
-    private $_height
+    private var _height: Int
 
     /**
      * @return int
      */
-    public fun getWidth()
-    {
-        return this.hasSwappedAxes() ? this._height : this._width
+    fun getWidth(): Int{
+        return if(hasSwappedAxes()) _height else _width
     }
 
     /**
      * @return int
      */
-    public fun getHeight()
-    {
-        return this.hasSwappedAxes() ? this._width : this._height
+    fun getHeight(): Int{
+        return if (hasSwappedAxes()) _width else _height
     }
 
     /**
      * @return float
      */
-    public fun getAspectRatio()
-    {
+    fun getAspectRatio(): Float{
         // NOTE: MUST `float`-cast to FORCE float even when dividing EQUAL ints.
-        return (float) (this.getWidth() / this.getHeight())
+        return (getWidth() / getHeight()).toFloat()
     }
 
     /**
      * @return string
      */
-    public fun getFilename()
-    {
-        return this._filename
+    fun getFilename(): String{
+        return _filename
     }
 
     /**
      * @return int
      */
-    public fun getFilesize()
-    {
-        return this._filesize
+    fun getFilesize(): Int{
+        return _filesize
     }
 
     /**
      * @return string
      */
-    public fun getBasename()
-    {
+    fun getBasename(): String{
         // Fix full path disclosure.
-        return basename(this._filename)
+        return basename(_filename)
     }
 
     /**
@@ -71,21 +66,21 @@ abstract class MediaDetails
      *
      * @return int
      */
-    abstract public fun getMinAllowedWidth()
+    abstract fun getMinAllowedWidth(): Int
 
     /**
      * Get the maximum allowed media width for this media type.
      *
      * @return int
      */
-    abstract public fun getMaxAllowedWidth()
+    abstract fun getMaxAllowedWidth(): Int
 
     /**
      * Check whether the media has swapped axes.
      *
      * @return bool
      */
-    abstract public fun hasSwappedAxes()
+    abstract fun hasSwappedAxes(): Boolean
 
     /**
      * Check whether the media is horizontally flipped.
@@ -100,7 +95,7 @@ abstract class MediaDetails
      *
      * @return bool
      */
-    abstract public fun isHorizontallyFlipped()
+    abstract fun isHorizontallyFlipped(): Boolean
 
     /**
      * Check whether the media is vertically flipped.
@@ -115,7 +110,7 @@ abstract class MediaDetails
      *
      * @return bool
      */
-    abstract public fun isVerticallyFlipped()
+    abstract fun isVerticallyFlipped(): Boolean
 
     /**
      * Constructor.
@@ -125,16 +120,11 @@ abstract class MediaDetails
      * @param int    $width
      * @param int    $height
      */
-    public fun __construct(
-        $filename,
-        $filesize,
-        $width,
-        $height)
-    {
-        this._filename = $filename
-        this._filesize = $filesize
-        this._width = $width
-        this._height = $height
+    fun __construct( filename: String, filesize: Int, width: Int, height: Int){
+        _filename = filename
+        _filesize = filesize
+        _width    = width
+        _height   = height
     }
 
     /**
@@ -144,29 +134,21 @@ abstract class MediaDetails
      *
      * @throws  IllegalArgumentException If Instagram won"t allow this file.
      */
-    public fun validate(
-        ConstraintsInterface $constraints)
-    {
-        $mediaFilename = this.getBasename()
+    fun validate( constraints: ConstraintsInterface){
+        val mediaFilename = getBasename()
 
         // Check rotation.
-        if (this.hasSwappedAxes() || this.isVerticallyFlipped() || this.isHorizontallyFlipped()) {
-            throw  IllegalArgumentException(sprintf(
-                "Instagram only accepts non-rotated media. Your file "%s" is either rotated or flipped or both.",
-                $mediaFilename
-            ))
+        if (hasSwappedAxes() || isVerticallyFlipped() || isHorizontallyFlipped()) {
+            throw IllegalArgumentException("Instagram only accepts non-rotated media. Your file \"$mediaFilename\" is either rotated or flipped or both.")
         }
 
         // Check Aspect Ratio.
         // NOTE: This Instagram rule is the same for both videos and photos.
-        $aspectRatio = this.getAspectRatio()
-        $minAspectRatio = $constraints.getMinAspectRatio()
-        $maxAspectRatio = $constraints.getMaxAspectRatio()
-        if ($aspectRatio < $minAspectRatio || $aspectRatio > $maxAspectRatio) {
-            throw  IllegalArgumentException(sprintf(
-                "Instagram only accepts %s media with aspect ratios between %.3f and %.3f. Your file "%s" has a %.4f aspect ratio.",
-                $constraints.getTitle(), $minAspectRatio, $maxAspectRatio, $mediaFilename, $aspectRatio
-            ))
+        val aspectRatio = getAspectRatio()
+        val minAspectRatio = constraints.getMinAspectRatio()
+        val maxAspectRatio = constraints.getMaxAspectRatio()
+        if (aspectRatio < minAspectRatio || aspectRatio > maxAspectRatio) {
+            throw IllegalArgumentException("Instagram only accepts ${constraints.getTitle()} media with aspect ratios between ${"%.3f".format(minAspectRatio)} and ${"%.3f".format(maxAspectRatio)}. Your file \"$mediaFilename\" has a ${"%.4f".format(aspectRatio)} aspect ratio.")
         }
     }
 }

@@ -44,47 +44,41 @@ class PhotoDetails : MediaDetails
     val DEFAULT_ORIENTATION = 1
 
     /** @var int */
-    private $_type
+    private var _type: Int
 
     /** @var int */
-    private $_orientation
+    private var _orientation: Int
 
     /**
      * @return int
      */
-    public fun getType()
-    {
-        return this._type
+    fun getType(): Int {
+        return _type
     }
 
     /** {@inheritdoc} */
-    public fun hasSwappedAxes()
-    {
-        return in_array(this._orientation, [5, 6, 7, 8], true)
+    fun hasSwappedAxes(){
+        return in_array(_orientation, arrayOf(5, 6, 7, 8), true)
     }
 
     /** {@inheritdoc} */
-    public fun isHorizontallyFlipped()
-    {
-        return in_array(this._orientation, [2, 3, 6, 7], true)
+    fun isHorizontallyFlipped(){
+        return in_array(_orientation, arrayOf(2, 3, 6, 7), true)
     }
 
     /** {@inheritdoc} */
-    public fun isVerticallyFlipped()
-    {
-        return in_array(this._orientation, [3, 4, 7, 8], true)
+    public fun isVerticallyFlipped(){
+        return in_array(_orientation, arrayOf(3, 4, 7, 8), true)
     }
 
     /** {@inheritdoc} */
-    public fun getMinAllowedWidth()
-    {
-        return self::MIN_WIDTH
+    fun getMinAllowedWidth(): Int {
+        return MIN_WIDTH
     }
 
     /** {@inheritdoc} */
-    public fun getMaxAllowedWidth()
-    {
-        return self::MAX_WIDTH
+    fun getMaxAllowedWidth(): Int {
+        return MAX_WIDTH
     }
 
     /**
@@ -94,60 +88,50 @@ class PhotoDetails : MediaDetails
      *
      * @throws  IllegalArgumentException If the photo file is missing or invalid.
      */
-    public fun __construct(
-        $filename)
-    {
+    fun __construct(filename: String){
         // Check if input file exists.
-        if (empty($filename) || !is_file($filename)) {
-            throw  IllegalArgumentException(sprintf("The photo file "%s" does not exist on disk.", $filename))
+        if (filename.isEmpty() || !is_file(filename)) {
+            throw IllegalArgumentException("The photo file \"$filename\" does not exist on disk.")
         }
 
         // Determine photo file size and throw when the file is empty.
-        $filesize = filesize($filename)
-        if ($filesize < 1) {
-            throw  IllegalArgumentException(sprintf(
-                "The photo file "%s" is empty.",
-                $filename
-            ))
+        val filesize = filesize(filename)
+        if (filesize < 1) {
+            throw IllegalArgumentException("The photo file \"$filename\" is empty.")
         }
 
         // Get image details.
-        $result = @getimagesize($filename)
-        if ($result === false) {
-            throw  IllegalArgumentException(sprintf("The photo file "%s" is not a valid image.", $filename))
+        val result = @getimagesize(filename)
+        if (result === false) {
+            throw IllegalArgumentException("The photo file \"$filename\" is not a valid image.")
         }
-        list($width, $height, this._type) = $result
+        list(width, height, _type) = result
 
         // Detect JPEG EXIF orientation if it exists.
-        this._orientation = this._getExifOrientation($filename, this._type)
+        _orientation = _getExifOrientation(filename, _type)
 
         parent::__construct($filename, $filesize, $width, $height)
     }
 
     /** {@inheritdoc} */
-    public fun validate(
-        ConstraintsInterface $constraints)
-    {
-        parent::validate($constraints)
+    fun validate(constraints: ConstraintsInterface){
+        parent::validate(constraints)
 
         // WARNING TO CONTRIBUTORS: $mediaFilename is for ERROR DISPLAY to
         // users. Do NOT import it to read from the hard disk!
-        $mediaFilename = this.getBasename()
+        val mediaFilename = getBasename()
 
         // Validate image type.
         // NOTE: It is confirmed that Instagram only accepts JPEG files.
-        $type = this.getType()
-        if ($type !== IMAGETYPE_JPEG) {
-            throw  IllegalArgumentException(sprintf("The photo file "%s" is not a JPEG file.", $mediaFilename))
+        val type = getType()
+        if (type !== IMAGETYPE_JPEG) {
+            throw IllegalArgumentException("The photo file \"$mediaFilename\" is not a JPEG file.")
         }
 
-        $width = this.getWidth()
+        val width = getWidth()
         // Validate photo resolution. Instagram allows between 320px-1080px width.
-        if ($width < self::MIN_WIDTH || $width > self::MAX_WIDTH) {
-            throw  IllegalArgumentException(sprintf(
-                "Instagram only accepts photos that are between %d and %d pixels wide. Your file "%s" is %d pixels wide.",
-                self::MIN_WIDTH, self::MAX_WIDTH, $mediaFilename, $width
-            ))
+        if (width < MIN_WIDTH || width > MAX_WIDTH) {
+            throw  IllegalArgumentException("Instagram only accepts photos that are between $MIN_WIDTH and $MAX_WIDTH pixels wide. Your file \"$mediaFilename\" is $width pixels wide.")
         }
     }
 
@@ -159,19 +143,16 @@ class PhotoDetails : MediaDetails
      *
      * @return int
      */
-    protected fun _getExifOrientation(
-        $filename,
-        $type)
-    {
-        if ($type !== IMAGETYPE_JPEG || !fun_exists("exif_read_data")) {
-            return self::DEFAULT_ORIENTATION
+    protected fun _getExifOrientation(filename: String, type: Int): Int {
+        if (type !== IMAGETYPE_JPEG || !fun_exists("exif_read_data")) {
+            return DEFAULT_ORIENTATION
         }
 
-        $exif = @exif_read_data($filename)
-        if ($exif === false || !isset($exif["Orientation"])) {
-            return self::DEFAULT_ORIENTATION
+        val exif = @exif_read_data(filename)
+        if (exif === false || !isset(exif["Orientation"])) {
+            return DEFAULT_ORIENTATION
         }
 
-        return (int) $exif["Orientation"]
+        return exif["Orientation"].toInt()
     }
 }

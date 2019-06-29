@@ -3,7 +3,6 @@
 package InstagramAPI.Media.Constraints
 
 import InstagramAPI.Constants
-import InstagramAPI.Media.ConstraintsInterface
 
 class ConstraintsFactory
 {
@@ -16,30 +15,18 @@ class ConstraintsFactory
      *
      * @see Constants
      */
-    public static fun createFor(
-        $targetFeed)
-    {
-        switch ($targetFeed) {
-            case Constants::FEED_STORY:
-                $result = StoryConstraints()
-                break
-            case Constants::FEED_DIRECT:
-                $result = DirectConstraints()
-                break
-            case Constants::FEED_DIRECT_STORY:
-                $result = DirectStoryConstraints()
-                break
-            case Constants::FEED_TV:
-                $result = TvConstraints()
-                break
-            case Constants::FEED_TIMELINE_ALBUM:
-                $result = AlbumConstraints()
-                break
-            case Constants::FEED_TIMELINE:
-            default:
-                $result = TimelineConstraints()
-        }
+    companion object{
+         fun createFor( targetFeed: Int): ConstraintsInterface{
 
-        return $result
+            return when (targetFeed) {
+                Constants.FEED_STORY        -> StoryConstraints()
+                Constants.FEED_DIRECT       -> DirectConstraints()
+                Constants.FEED_DIRECT_STORY -> DirectStoryConstraints()
+                Constants.FEED_TV           -> TvConstraints()
+                Constants.FEED_TIMELINE_ALBUM -> AlbumConstraints()
+                Constants.FEED_TIMELINE     -> TimelineConstraints()
+                else                        -> TimelineConstraints()
+            }
+        }
     }
 }

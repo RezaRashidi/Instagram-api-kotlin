@@ -8,10 +8,9 @@ import InstagramAPI.Utils
 /**
  * Automatically creates a video thumbnail according to Instagram"s rules.
  */
-class InstagramThumbnail : InstagramVideo
-{
+class InstagramThumbnail : InstagramVideo{
     /** @var float Thumbnail offset in secs, with milliseconds (decimals). */
-    protected $_thumbnailTimestamp
+    protected var _thumbnailTimestamp: Float
 
     /**
      * Constructor.
@@ -25,46 +24,39 @@ class InstagramThumbnail : InstagramVideo
      *
      * @see InstagramMedia::__construct() description for the list of parameters.
      */
-    public fun __construct(
-        $inputFile,
-        array $options = [],
-        FFmpeg $ffmpeg = null)
-    {
-        parent::__construct($inputFile, $options, $ffmpeg)
+    fun __construct( inputFile, array options = [], ffmpeg: FFmpeg? = null){
+        parent::__construct(inputFile, options, ffmpeg)
 
         // The timeline and most feeds have the thumbnail at "00:00:01.000".
-        this._thumbnailTimestamp = 1.0 // Default.
+        _thumbnailTimestamp = 1.0F // Default.
 
         // Handle per-feed timestamps and custom thumbnail timestamps.
-        if (isset($options["targetFeed"])) {
-            switch ($options["targetFeed"]) {
-            case Constants::FEED_STORY:
-            case Constants::FEED_DIRECT_STORY:
-                // Stories always have the thumbnail at "00:00:00.000" instead.
-                this._thumbnailTimestamp = 0.0
-                break
-            case Constants::FEED_TIMELINE || Constants::FEED_TIMELINE_ALBUM:
-                // Handle custom timestamp (only supported by timeline media).
-                // NOTE: Matches real app which only customizes timeline covers.
-                if (isset($options["thumbnailTimestamp"])) {
-                    $customTimestamp = $options["thumbnailTimestamp"]
-                    // If custom timestamp is a number, import as-is. Else assume
-                    // a "HH:MM:SS[.000]" string and convert it. Throws if bad.
-                    this._thumbnailTimestamp = is_int($customTimestamp) || is_float($customTimestamp)
-                                               ? (float) $customTimestamp
-                                               : Utils::hmsTimeToSeconds($customTimestamp)
+        if (!(options["targetFeed"].isBlank())) {
+            when (options["targetFeed"]) {
+                Constants.FEED_STORY, Constants.FEED_DIRECT_STORY -> {
+                    // Stories always have the thumbnail at "00:00:00.000" instead.
+                    _thumbnailTimestamp = 0.0F
                 }
-                break
-            default:
+                Constants.FEED_TIMELINE , Constants.FEED_TIMELINE_ALBUM -> {
+                    // Handle custom timestamp (only supported by timeline media).
+                    // NOTE: Matches real app which only customizes timeline covers.
+                    if (!(options["thumbnailTimestamp"].isBlank())) {
+                        val customTimestamp = options["thumbnailTimestamp"]
+                        // If custom timestamp is a number, import as-is. Else assume
+                        // a "HH:MM:SS[.000]" string and convert it. Throws if bad.
+                        _thumbnailTimestamp = if (customTimestamp is Int || customTimestamp is Float )
+                                                customTimestamp.toFloat() else Utils.hmsTimeToSeconds(customTimestamp)
+                    }
+                }
                 // Keep the default.
             }
         }
 
         // Ensure the timestamp is 0+ and never longer than the video duration.
-        if (this._thumbnailTimestamp > this._details.getDuration()) {
-            this._thumbnailTimestamp = this._details.getDuration()
+        if (_details.getDuration() < _thumbnailTimestamp) {
+            _thumbnailTimestamp = _details.getDuration()
         }
-        if (this._thumbnailTimestamp < 0.0) {
+        if (_thumbnailTimestamp < 0.0) {
             throw  IllegalArgumentException("Thumbnail timestamp must be a positive number.")
         }
     }
@@ -74,9 +66,8 @@ class InstagramThumbnail : InstagramVideo
      *
      * @return float Thumbnail offset in secs, with milliseconds (decimals).
      */
-    public fun getTimestamp()
-    {
-        return this._thumbnailTimestamp
+    fun getTimestamp(): Float{
+        return _thumbnailTimestamp
     }
 
     /**
@@ -84,23 +75,18 @@ class InstagramThumbnail : InstagramVideo
      *
      * @return string The time formatted as `HH:MM:SS.###` (`###` is millis).
      */
-    public fun getTimestampString()
-    {
-        return Utils::hmsTimeFromSeconds(this._thumbnailTimestamp)
+    fun getTimestampString(): String{
+        return Utils.hmsTimeFromSeconds(_thumbnailTimestamp)
     }
 
     /** {@inheritdoc} */
-    protected fun _shouldProcess()
-    {
+    protected fun _shouldProcess(): Boolean {
         // We must always process the video to get its thumbnail.
         return true
     }
 
     /** {@inheritdoc} */
-    protected fun _ffmpegMustRunAgain(
-        $attempt,
-        array $ffmpegOutput)
-    {
+    protected fun _ffmpegMustRunAgain( attempt: Int , ffmpegOutput: List<String>): Boolean {
         // If this was the first run, we must look for the "first frame is no
         // keyframe" error. It is a rare error which can happen when the user
         // wants to extract a frame from a timestamp that is before the first
@@ -111,10 +97,10 @@ class InstagramThumbnail : InstagramVideo
         // such files to automatically make ffmpeg extract the 1st VALID frame.
         // NOTE: We"ll only need to retry if timestamp is over 0.0. If it was
         // zero, then we already executed without `-ss` and shouldn"t retry.
-        if ($attempt === 1 && this._thumbnailTimestamp > 0.0) {
-            foreach ($ffmpegOutput as $line) {
+        if (attempt === 1 && _thumbnailTimestamp > 0.0) {
+            for (line in ffmpegOutput) {
                 // Example: `[flv @ 0x7fc9cc002e00] warning: first frame is no keyframe`.
-                if (strpos($line, ": first frame is no keyframe") !== false) {
+                if (line.indexOf(": first frame is no keyframe") > 0) {
                     return true
                 }
             }
@@ -125,9 +111,7 @@ class InstagramThumbnail : InstagramVideo
     }
 
     /** {@inheritdoc} */
-    protected fun _getInputFlags(
-        $attempt)
-    {
+    protected fun _getInputFlags(attempt: Int): List<String> {
         // The seektime *must* be specified here, before the input file.
         // Otherwise ffmpeg will do a slow conversion of the whole file
         // (but discarding converted frames) until it gets to target time.
@@ -136,20 +120,14 @@ class InstagramThumbnail : InstagramVideo
         // COMMENTS IN `_ffmpegMustRunAgain()` FOR MORE INFORMATION ABOUT WHY.
         // AND WE"LL OMIT SEEKING COMPLETELY IF IT"S "0.0" ("EARLIEST POSSIBLE"), TO
         // GUARANTEE SUCCESS AT GRABBING THE "EARLIEST FRAME" W/O NEEDING RETRIES.
-        return $attempt > 1 || this._thumbnailTimestamp === 0.0
-            ? []
-            : [
-                sprintf("-ss %s", this.getTimestampString()),
-            ]
+        return if( attempt > 1 || _thumbnailTimestamp === 0.0F ) {
+            listOf()
+        } else { listOf("-ss ${getTimestampString()}")
+        }
     }
 
     /** {@inheritdoc} */
-    protected fun _getOutputFlags(
-        $attempt)
-    {
-        return [
-            "-f mjpeg",
-            "-vframes 1",
-        ]
+    protected fun _getOutputFlags( attempt): List<String> {
+        return listOf("-f mjpeg", "-vframes 1")
     }
 }

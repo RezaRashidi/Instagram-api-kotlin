@@ -5,19 +5,19 @@ package InstagramAPI.Media.Geometry
 class Rectangle
 {
     /** @var int */
-    protected $_x
+    protected var _x: Int
 
     /** @var int */
-    protected $_y
+    protected var _y: Int
 
     /** @var int */
-    protected $_width
+    protected var _width: Int
 
     /** @var int */
-    protected $_height
+    protected var _height: Int
 
     /** @var float */
-    protected $_aspectRatio
+    protected var _aspectRatio: Float
 
     /**
      * Constructor.
@@ -27,18 +27,13 @@ class Rectangle
      * @param int $width
      * @param int $height
      */
-    public fun __construct(
-        $x,
-        $y,
-        $width,
-        $height)
-    {
-        this._x = (int) $x
-        this._y = (int) $y
-        this._width = (int) $width
-        this._height = (int) $height
+    fun __construct( x: Int, y: Int, width: Int, height: Int){
+        _x = x
+        _y = y
+        _width = width
+        _height =height
         // NOTE: MUST `float`-cast to FORCE float even when dividing EQUAL ints.
-        this._aspectRatio = (float) (this._width / this._height)
+        _aspectRatio = (_width / _height).toFloat()
     }
 
     /**
@@ -46,9 +41,8 @@ class Rectangle
      *
      * @return int
      */
-    public fun getX()
-    {
-        return this._x
+    fun getX(): Int{
+        return _x
     }
 
     /**
@@ -56,9 +50,8 @@ class Rectangle
      *
      * @return int
      */
-    public fun getY()
-    {
-        return this._y
+    fun getY(): Int{
+        return _y
     }
 
     /**
@@ -69,9 +62,8 @@ class Rectangle
      *
      * @return int
      */
-    public fun getX1()
-    {
-        return this._x
+    fun getX1(): Int{
+        return _x
     }
 
     /**
@@ -82,9 +74,8 @@ class Rectangle
      *
      * @return int
      */
-    public fun getY1()
-    {
-        return this._y
+    fun getY1(): Int{
+        return _y
     }
 
     /**
@@ -92,9 +83,8 @@ class Rectangle
      *
      * @return int
      */
-    public fun getX2()
-    {
-        return this._x + this._width
+    fun getX2(): Int{
+        return _x + _width
     }
 
     /**
@@ -102,9 +92,8 @@ class Rectangle
      *
      * @return int
      */
-    public fun getY2()
-    {
-        return this._y + this._height
+    fun getY2(): Int{
+        return _y + _height
     }
 
     /**
@@ -112,9 +101,8 @@ class Rectangle
      *
      * @return int
      */
-    public fun getWidth()
-    {
-        return this._width
+    fun getWidth(): Int{
+        return _width
     }
 
     /**
@@ -122,9 +110,8 @@ class Rectangle
      *
      * @return int
      */
-    public fun getHeight()
-    {
-        return this._height
+    fun getHeight(): Int{
+        return _height
     }
 
     /**
@@ -132,9 +119,8 @@ class Rectangle
      *
      * @return float
      */
-    public fun getAspectRatio()
-    {
-        return this._aspectRatio
+    fun getAspectRatio(): Float{
+        return _aspectRatio
     }
 
     /**
@@ -142,9 +128,8 @@ class Rectangle
      *
      * @return self
      */
-    public fun withSwappedAxes()
-    {
-        return self(this._y, this._x, this._height, this._width)
+    fun withSwappedAxes(){
+        return self(_y, _x, _height, _width)
     }
 
     /**
@@ -160,20 +145,18 @@ class Rectangle
      *
      * @return self
      */
-    public fun withRescaling(
-        $newScale = 1.0,
-        $roundingFunc = "round")
+    fun withRescaling( newScale: Float = 1.0f, roundingFunc: String = "round")
     {
-        if (!is_float($newScale) && !is_int($newScale)) {
-            throw  IllegalArgumentException("The scale must be a float or integer.")
+        if (newScale !is Float) {
+            throw IllegalArgumentException("The scale must be a float or integer.")
         }
-        if ($roundingFunc !== "round" && $roundingFunc !== "floor" && $roundingFunc !== "ceil") {
-            throw  IllegalArgumentException(sprintf("Invalid rounding fun "%s".", $roundingFunc))
+        if (roundingFunc !== "round" && roundingFunc !== "floor" && roundingFunc !== "ceil") {
+            throw IllegalArgumentException("Invalid rounding fun \"$roundingFunc\".")
         }
 
-        $newWidth = (int) $roundingFunc($newScale * this._width)
-        $newHeight = (int) $roundingFunc($newScale * this._height)
+        val newWidth  = roundingFunc(newScale * _width)
+        val newHeight = roundingFunc(newScale * _height)
 
-        return self(this._x, this._y, $newWidth, $newHeight)
+        return self(_x, _y, newWidth, newHeight)
     }
 }

@@ -6,35 +6,96 @@ import InstagramAPI.Utils
 import Symfony.Component.Process.Process
 import Winbox.Args
 
-class FFmpeg
-{
-    val BINARIES = [
-        "ffmpeg",
-        "avconv",
-    ]
+class FFmpeg{
+    companion object{
+        val BINARIES = listOf(
+            "ffmpeg",
+            "avconv"
+        )
 
-    val WINDOWS_BINARIES = [
-        "ffmpeg.exe",
-        "avconv.exe",
-    ]
+        val WINDOWS_BINARIES = listOf(
+            "ffmpeg.exe",
+            "avconv.exe"
+        )
 
-    /** @var string|null */
-    public static $defaultBinary
+        /** @var string|null */
+        lateinit var defaultBinary: String?
 
-    /** @var int|null */
-    public static $defaultTimeout
+        /** @var int|null */
+        var defaultTimeout: Int?
 
-    /** @var FFmpeg[] */
-    protected static $_instances = []
+        /** @var FFmpeg[] */
+        protected var _instances = []
+
+        /**
+         * Create a instance or import a cached one.
+         *
+         * @param string|null $ffmpegBinary Path to a ffmpeg binary, or NULL to autodetect.
+         *
+         * @return static
+         */
+        fun factory( ffmpegBinary: String? = null){
+            if (ffmpegBinary === null) {
+            return _autoDetectBinary()
+        }
+
+            if (!(_instances[ffmpegBinary].isBlank())) {
+            return _instances[ffmpegBinary]
+        }
+
+            val instance = static(ffmpegBinary)
+            _instances[ffmpegBinary] = instance
+
+            return instance
+        }
+
+        /**
+         * @throws .RuntimeException
+         *
+         * @return static
+         */
+        protected fun _autoDetectBinary(){
+            val binaries = if (defined("PHP_WINDOWS_VERSION_MAJOR")) WINDOWS_BINARIES else BINARIES
+            if (defaultBinary !== null) {
+                array_unshift(binaries, defaultBinary)
+            }
+            /* Backwards compatibility. */
+            if (Utils.ffmpegBin !== null) {
+                array_unshift(binaries, Utils.ffmpegBin)
+            }
+
+            val instance = null
+            for (binary in binaries) {
+                if (!(_instances[binary].isBlank())) {
+                    return _instances[binary]
+                }
+
+                try {
+                    instance = static(binary)
+                } catch (e: Exception) {
+                    continue
+                }
+                defaultBinary = binary
+                _instances[binary] = instance
+
+                return instance
+            }
+
+            throw RuntimeException("You must have FFmpeg to process videos. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via \"\\InstagramAPI\\Media\\Video\\FFmpeg::$defaultBinary = '/home/exampleuser/ffmpeg/bin/ffmpeg';\" at the start of your script.")
+        }
+
+
+    }
+
 
     /** @var string */
-    protected $_ffmpegBinary
+    protected lateinit var _ffmpegBinary: String
 
     /** @var bool */
-    protected $_hasNoAutorotate
+    protected var _hasNoAutorotate: Boolean
 
     /** @var bool */
-    protected $_hasLibFdkAac
+    protected var _hasLibFdkAac: Boolean
 
     /**
      * Constructor.
@@ -43,41 +104,17 @@ class FFmpeg
      *
      * @throws .RuntimeException When a ffmpeg binary is missing.
      */
-    protected fun __construct(
-        $ffmpegBinary)
-    {
-        this._ffmpegBinary = $ffmpegBinary
+    protected fun __construct(ffmpegBinary: String){
+        _ffmpegBinary = ffmpegBinary
 
         try {
-            this.version()
-        } catch (.Exception $e) {
-            throw .RuntimeException(sprintf("It seems that the path to ffmpeg binary is invalid. Please check your path to ensure that it is correct."))
+            version()
+        } catch (e: Exception) {
+            throw RuntimeException("It seems that the path to ffmpeg binary is invalid. Please check your path to ensure that it is correct.")
         }
     }
 
-    /**
-     * Create a instance or import a cached one.
-     *
-     * @param string|null $ffmpegBinary Path to a ffmpeg binary, or NULL to autodetect.
-     *
-     * @return static
-     */
-    public static fun factory(
-        $ffmpegBinary = null)
-    {
-        if ($ffmpegBinary === null) {
-            return static::_autoDetectBinary()
-        }
 
-        if (isset(self::$_instances[$ffmpegBinary])) {
-            return self::$_instances[$ffmpegBinary]
-        }
-
-        $instance = static($ffmpegBinary)
-        self::$_instances[$ffmpegBinary] = $instance
-
-        return $instance
-    }
 
     /**
      * Run a command and wrap errors into an Exception (if any).
@@ -88,24 +125,23 @@ class FFmpeg
      *
      * @return string[]
      */
-    public fun run(
-        $command)
-    {
-        $process = this.runAsync($command)
+    fun run(command: String){
+        val process = runAsync(command)
+        val exitCode
 
         try {
-            $exitCode = $process.wait()
-        } catch (.Exception $e) {
-            throw .RuntimeException(sprintf("Failed to run the ffmpeg binary: %s", $e.getMessage()))
+            exitCode = process.wait()
+        } catch (e: Exception) {
+            throw RuntimeException("Failed to run the ffmpeg binary: ${e.getMessage()}")
         }
-        if ($exitCode) {
-            $errors = preg_replace("#[.r.n]+#", ""], ["", trim($process.getErrorOutput()))
-            $errorMsg = sprintf("FFmpeg Errors: ["%s"], Command: "%s".", $errors, $command)
+        if (exitCode) {
+            val errors = preg_replace("#[.r.n]+#", ""], ["", trim(process.getErrorOutput()))
+            val errorMsg = "FFmpeg Errors: [\"$errors\"], Command: \"$command\"."
 
-            throw .RuntimeException($errorMsg, $exitCode)
+            throw RuntimeException(errorMsg, exitCode)
         }
 
-        return preg_split("#[.r.n]+#", $process.getOutput(), null, PREG_SPLIT_NO_EMPTY)
+        return preg_split("#[.r.n]+#", process.getOutput(), null, PREG_SPLIT_NO_EMPTY)
     }
 
     /**
@@ -115,18 +151,16 @@ class FFmpeg
      *
      * @return Process
      */
-    public fun runAsync(
-        $command)
-    {
-        $fullCommand = sprintf("%s -v error %s", Args::escape(this._ffmpegBinary), $command)
+    fun runAsync(command: String): Process {
+        val fullCommand = "${Args.escape(_ffmpegBinary)} -v error $command"
 
-        $process = Process($fullCommand)
-        if (is_int(self::$defaultTimeout) && self::$defaultTimeout > 60) {
-            $process.setTimeout(self::$defaultTimeout)
+        val process = Process(fullCommand)
+        if (defaultTimeout is Int && defaultTimeout > 60) {
+            process.setTimeout(defaultTimeout)
         }
-        $process.start()
+        process.start()
 
-        return $process
+        return process
     }
 
     /**
@@ -136,9 +170,8 @@ class FFmpeg
      *
      * @return string
      */
-    public fun version()
-    {
-        return this.run("-version")[0]
+    fun version(): String{
+        return run("-version")[0]
     }
 
     /**
@@ -146,9 +179,8 @@ class FFmpeg
      *
      * @return string
      */
-    public fun getFFmpegBinary()
-    {
-        return this._ffmpegBinary
+    fun getFFmpegBinary(): String{
+        return _ffmpegBinary
     }
 
     /**
@@ -156,18 +188,17 @@ class FFmpeg
      *
      * @return bool
      */
-    public fun hasNoAutorotate()
-    {
-        if (this._hasNoAutorotate === null) {
+    fun hasNoAutorotate(): Boolean{
+        if (_hasNoAutorotate === null) {
             try {
-                this.run("-noautorotate -f lavfi -i color=color=red -t 1 -f null -")
-                this._hasNoAutorotate = true
-            } catch (.RuntimeException $e) {
-                this._hasNoAutorotate = false
+                run("-noautorotate -f lavfi -i color=color=red -t 1 -f null -")
+                _hasNoAutorotate = true
+            } catch (e: RuntimeException) {
+                _hasNoAutorotate = false
             }
         }
 
-        return this._hasNoAutorotate
+        return _hasNoAutorotate
     }
 
     /**
@@ -175,13 +206,12 @@ class FFmpeg
      *
      * @return bool
      */
-    public fun hasLibFdkAac()
-    {
-        if (this._hasLibFdkAac === null) {
-            this._hasLibFdkAac = this._hasAudioEncoder("libfdk_aac")
+    fun hasLibFdkAac(): Boolean{
+        if (_hasLibFdkAac === null) {
+            _hasLibFdkAac = _hasAudioEncoder("libfdk_aac")
         }
 
-        return this._hasLibFdkAac
+        return _hasLibFdkAac
     }
 
     /**
@@ -191,54 +221,14 @@ class FFmpeg
      *
      * @return bool
      */
-    protected fun _hasAudioEncoder(
-        $encoder)
-    {
+    protected fun _hasAudioEncoder(encoder: String): Boolean {
         try {
-            this.run(sprintf(
-                "-f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 -c:a %s -t 1 -f null -",
-                Args::escape($encoder)
-            ))
-
+            run("-f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 -c:a ${Args.escape(encoder)} -t 1 -f null -")
             return true
-        } catch (.RuntimeException $e) {
+        } catch (e: RuntimeException) {
             return false
         }
     }
 
-    /**
-     * @throws .RuntimeException
-     *
-     * @return static
-     */
-    protected static fun _autoDetectBinary()
-    {
-        $binaries = defined("PHP_WINDOWS_VERSION_MAJOR") ? self::WINDOWS_BINARIES : self::BINARIES
-        if (self::$defaultBinary !== null) {
-            array_unshift($binaries, self::$defaultBinary)
-        }
-        /* Backwards compatibility. */
-        if (Utils::$ffmpegBin !== null) {
-            array_unshift($binaries, Utils::$ffmpegBin)
-        }
 
-        $instance = null
-        foreach ($binaries as $binary) {
-            if (isset(self::$_instances[$binary])) {
-                return self::$_instances[$binary]
-            }
-
-            try {
-                $instance = static($binary)
-            } catch (.Exception $e) {
-                continue
-            }
-            self::$defaultBinary = $binary
-            self::$_instances[$binary] = $instance
-
-            return $instance
-        }
-
-        throw .RuntimeException("You must have FFmpeg to process videos. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via ".InstagramAPI.Media.Video.FFmpeg::$defaultBinary = ."/home/exampleuser/ffmpeg/bin/ffmpeg."" at the start of your script.")
-    }
 }
