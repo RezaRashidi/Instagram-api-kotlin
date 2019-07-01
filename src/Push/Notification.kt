@@ -10,141 +10,139 @@ class Notification
     /**
      * @var string
      */
-    protected $_json
+    protected lateinit var _json: String
 
     /**
      * @var string
      */
-    protected $_title
+    protected lateinit var _title: String
     /**
      * @var string
      */
-    protected $_message
+    protected lateinit var _message: String
     /**
      * @var string
      */
-    protected $_tickerText
+    protected lateinit var _tickerText: String
     /**
      * @var string
      */
-    protected $_igAction
+    protected lateinit var _igAction: String
     /**
      * @var string
      */
-    protected $_igActionOverride
+    protected lateinit var _igActionOverride: String
     /**
      * @var string
      */
-    protected $_optionalImage
+    protected lateinit var _optionalImage: String
     /**
      * @var string
      */
-    protected $_optionalAvatarUrl
+    protected lateinit var _optionalAvatarUrl: String
     /**
      * @var string
      */
-    protected $_collapseKey
+    protected lateinit var _collapseKey: String
     /**
      * @var string
      */
-    protected $_sound
+    protected lateinit var _sound: String
     /**
      * @var string
      */
-    protected $_pushId
+    protected lateinit var _pushId: String
     /**
      * @var string
      */
-    protected $_pushCategory
+    protected lateinit var _pushCategory: String
     /**
      * @var string
      */
-    protected $_intendedRecipientUserId
+    protected lateinit var _intendedRecipientUserId: String
     /**
      * @var string
      */
-    protected $_sourceUserId
+    protected lateinit var _sourceUserId: String
     /**
      * @var BadgeCount
      */
-    protected $_badgeCount
+    protected lateinit var _badgeCount: BadgeCount
     /**
      * @var string
      */
-    protected $_inAppActors
+    protected lateinit var _inAppActors: String
 
     /**
      * @var string
      */
-    protected $_actionPath
+    protected lateinit var _actionPath: String
     /**
      * @var array
      */
-    protected $_actionParams
+    protected lateinit var _actionParams: Array
 
     /**
      * @param string $json
      */
-    protected fun _parseJson(
-        $json)
-    {
-        $data = Json::decode($json)
+    protected fun _parseJson( json: String){
+        val data = Json.decode(json)
 
-        this._json = $json
+        _json = json
 
-        if (isset($data.t)) {
-            this._title = (string) $data.t
+        if (!(data.t).isBlank()) {
+            _title = data.t.toString()
         }
-        if (isset($data.m)) {
-            this._message = (string) $data.m
+        if (!(data.m).isBlank()) {
+            _message = data.m.toString()
         }
-        if (isset($data.tt)) {
-            this._tickerText = (string) $data.tt
+        if (!(data.tt).isBlank()) {
+            _tickerText = data.tt.toString()
         }
-        this._actionPath = ""
-        this._actionParams = []
-        if (isset($data.ig)) {
-            this._igAction = (string) $data.ig
-            $parts = parse_url(this._igAction)
-            if (isset($parts["path"])) {
-                this._actionPath = $parts["path"]
+        _actionPath = ""
+        _actionParams = []
+        if (!(data.ig).isBlank()) {
+            _igAction = data.ig.toString()
+            val parts = parse_url(_igAction)
+            if (!(parts["path"]).isBlank()) {
+                _actionPath = parts["path"]
             }
-            if (isset($parts["query"])) {
-                parse_str($parts["query"], this._actionParams)
+            if (!(parts["query"]).isBlank()) {
+                parse_str(parts["query"], _actionParams)
             }
         }
-        if (isset($data.collapse_key)) {
-            this._collapseKey = (string) $data.collapse_key
+        if ( !(data.collapse_key).isBlank() ) {
+            _collapseKey = data.collapse_key.toString()
         }
-        if (isset($data.i)) {
-            this._optionalImage = (string) $data.i
+        if ( !(data.i).isBlank() ) {
+            _optionalImage = data.i.toString()
         }
-        if (isset($data.a)) {
-            this._optionalAvatarUrl = (string) $data.a
+        if ( !(data.a).isBlank() ) {
+            _optionalAvatarUrl = data.a.toString()
         }
-        if (isset($data.sound)) {
-            this._sound = (string) $data.sound
+        if ( !(data.sound).isBlank() ) {
+            _sound = data.sound.toString()
         }
-        if (isset($data.pi)) {
-            this._pushId = (string) $data.pi
+        if ( !(data.pi).isBlank() ) {
+            _pushId = data.pi.toString()
         }
-        if (isset($data.c)) {
-            this._pushCategory = (string) $data.c
+        if ( !(data.c).isBlank() ) {
+            _pushCategory = data.c.toString()
         }
-        if (isset($data.u)) {
-            this._intendedRecipientUserId = (string) $data.u
+        if ( !(data.u).isBlank() ) {
+            _intendedRecipientUserId = data.u.toString()
         }
-        if (isset($data.s)) {
-            this._sourceUserId = (string) $data.s
+        if ( !(data.s).isBlank() ) {
+            _sourceUserId = data.s.toString()
         }
-        if (isset($data.igo)) {
-            this._igActionOverride = (string) $data.igo
+        if ( !(data.igo).isBlank() ) {
+            _igActionOverride = data.igo.toString()
         }
-        if (isset($data.bc)) {
-            this._badgeCount = BadgeCount((string) $data.bc)
+        if ( !(data.bc).isBlank() ) {
+            _badgeCount = BadgeCount(data.bc.toString())
         }
-        if (isset($data.ia)) {
-            this._inAppActors = (string) $data.ia
+        if ( !(data.ia).isBlank() ) {
+            _inAppActors = data.ia.toString()
         }
     }
 
@@ -153,154 +151,134 @@ class Notification
      *
      * @param string $json
      */
-    public fun __construct(
-        $json)
-    {
-        this._parseJson($json)
+    fun __construct(json: String): String{
+        _parseJson(json)
     }
 
     /**
      * @return string
      */
-    public fun __toString()
-    {
-        return this._json
+    public fun __toString(): String {
+        return _json
     }
 
     /**
      * @return string
      */
-    public fun getTitle()
-    {
-        return this._title
+    public fun getTitle(): String {
+        return _title
     }
 
     /**
      * @return string
      */
-    public fun getMessage()
-    {
-        return this._message
+    fun getMessage(): String {
+        return _message
     }
 
     /**
      * @return string
      */
-    public fun getTickerText()
-    {
-        return this._tickerText
+    fun getTickerText(): String {
+        return _tickerText
     }
 
     /**
      * @return string
      */
-    public fun getIgAction()
-    {
-        return this._igAction
+    fun getIgAction(): String {
+        return _igAction
     }
 
     /**
      * @return string
      */
-    public fun getIgActionOverride()
-    {
-        return this._igActionOverride
+    fun getIgActionOverride(): String {
+        return _igActionOverride
     }
 
     /**
      * @return string
      */
-    public fun getOptionalImage()
-    {
-        return this._optionalImage
+    fun getOptionalImage(): String {
+        return _optionalImage
     }
 
     /**
      * @return string
      */
-    public fun getOptionalAvatarUrl()
-    {
-        return this._optionalAvatarUrl
+    fun getOptionalAvatarUrl(): String {
+        return _optionalAvatarUrl
     }
 
     /**
      * @return string
      */
-    public fun getCollapseKey()
-    {
-        return this._collapseKey
+    fun getCollapseKey(): String {
+        return _collapseKey
     }
 
     /**
      * @return string
      */
-    public fun getSound()
-    {
-        return this._sound
+    fun getSound(): String {
+        return _sound
     }
 
     /**
      * @return string
      */
-    public fun getPushId()
-    {
-        return this._pushId
+    fun getPushId(): String {
+        return _pushId
     }
 
     /**
      * @return string
      */
-    public fun getPushCategory()
-    {
-        return this._pushCategory
+    fun getPushCategory(): String {
+        return _pushCategory
     }
 
     /**
      * @return string
      */
-    public fun getIntendedRecipientUserId()
-    {
-        return this._intendedRecipientUserId
+    fun getIntendedRecipientUserId(): String {
+        return _intendedRecipientUserId
     }
 
     /**
      * @return string
      */
-    public fun getSourceUserId()
-    {
-        return this._sourceUserId
+    fun getSourceUserId(): String {
+        return _sourceUserId
     }
 
     /**
      * @return BadgeCount
      */
-    public fun getBadgeCount()
-    {
-        return this._badgeCount
+    fun getBadgeCount(): BadgeCount {
+        return _badgeCount
     }
 
     /**
      * @return string
      */
-    public fun getInAppActors()
-    {
-        return this._inAppActors
+    fun getInAppActors(): String {
+        return _inAppActors
     }
 
     /**
      * @return string
      */
-    public fun getActionPath()
-    {
-        return this._actionPath
+    fun getActionPath(): String {
+        return _actionPath
     }
 
     /**
      * @return array
      */
-    public fun getActionParams()
-    {
-        return this._actionParams
+    fun getActionParams(){
+        return _actionParams
     }
 
     /**
@@ -308,9 +286,7 @@ class Notification
      *
      * @return mixed
      */
-    public fun getActionParam(
-        $key)
-    {
-        return isset(this._actionParams[$key]) ? this._actionParams[$key] : null
+    fun getActionParam(key: String): Any? {
+        return if( !(_actionParams[key]).isBlank() ) _actionParams[key] else null
     }
 }

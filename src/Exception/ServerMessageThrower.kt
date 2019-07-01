@@ -102,18 +102,18 @@ object ServerMessageThrower {
 	fun autoThrow(prefixString: String?, serverMessage: String?, serverResponse: Response? = null,
 	              httpResponse: HttpResponseInterface? = null) {
 		// We will analyze both the `message` AND `error_type` (if available).
-		val messages = mutableListOf<String>(serverMessage)
+		val messages = mutableListOf(serverMessage)
 		var serverErrorType = null
 		if (serverResponse !== null) {
 			// We are reading a property that isn"t defined in the class
 			// property map, so we must import "has" first, to ensure it exists.
-			if (serverResponse.hasErrorType() &&serverResponse.getErrorType() is String ) {
+			if (serverResponse.hasErrorType() && serverResponse.getErrorType() is String ) {
 				serverErrorType = serverResponse.getErrorType()
 				messages.add(serverErrorType)
 			}
 		}
 
-		exceptionClass = null
+		var exceptionClass: String? = null
 
 		// Check if the server message is in our CRITICAL exception table.
 		for(message in  messages ) {
@@ -141,43 +141,35 @@ object ServerMessageThrower {
 			// NOTE FOR CONTRIBUTORS: All HTTP status exceptions below MUST be
 			// derived from EndpointException, since all HTTP errors are
 			// endpoint-error-related responses and MUST be easily catchable!
-			httpStatusCode = httpResponse !== null ? httpResponse.getStatusCode() : null
-			switch(httpStatusCode) {
-				case 400:
-				exceptionClass = "BadRequestException"
-				break
-				case 404:
-				exceptionClass = "NotFoundException"
-				break
-				default:
+			val httpStatusCode = if (httpResponse !== null) httpResponse.getStatusCode() else null
+			exceptionClass = when (httpStatusCode) {
+				400 -> "BadRequestException"
+				404 -> "NotFoundException"
+				else -> "EndpointException"
 				// No critical exceptions and no HTTP code exceptions have
 				// been found, so import the generic "API fun exception"!
-				exceptionClass = "EndpointException"
 			}
 		}
 
 		// We need to specify the full package path to the exception class.
-		fullClassPath = "..".__package__."..".exceptionClass
+		val  fullClassPath = ".." + __package__ + ".." + exceptionClass
 
 		// Determine which message to display to the user.
-		displayMessage = is_string(serverMessage) && strlen(serverMessage)
-		? serverMessage : serverErrorType
-		if (!is_string(displayMessage) || !strlen(displayMessage)) {
+		var displayMessage = if(serverMessage is String && serverMessage.isNotEmpty())
+		serverMessage else serverErrorType
+		if (displayMessage !is String || displayMessage.isEmpty()) {
 			displayMessage = "Request failed."
 		}
 
 		// Some Instagram messages already have punctuation, and others need it.
-		displayMessage = self::prettifyMessage(displayMessage)
+		displayMessage = prettifyMessage(displayMessage)
 
 		// Create an instance of the final exception class, with the pretty msg.
-		e = fullClassPath(prefixString !== null
-		                  ? sprintf ("%s: %s", prefixString, displayMessage)
-		: displayMessage
-		)
+		val e = fullClassPath( if(prefixString !== null) "$prefixString: $displayMessage" else displayMessage)
 
 		// Attach the server response to the exception, IF a response exists.
 		// NOTE: Only possible on exceptions derived from InstagramException.
-		if (serverResponse instanceof Response && e instanceof . InstagramAPI . Exception . InstagramException) {
+		if (serverResponse instanceof Response && e instanceof InstagramAPI.Exception.InstagramException) {
 			e.setResponse(serverResponse)
 		}
 
@@ -194,20 +186,21 @@ object ServerMessageThrower {
 	 *
 	 * @return string The cleaned-up message.
 	 */
-	fun prettifyMessage(message: String):String {
+	fun prettifyMessage(messageRE: String):String {
 		// Some messages already have punctuation, and others need it. Prettify
 		// the message by ensuring that it ALWAYS ends in punctuation, for
 		// consistency with all of our internal error messages.
-		lastChar = substr(message, -1)
+		var message: String
+		val lastChar = messageRE.last().toString()
 		if (lastChar !== "" && lastChar !== "." && lastChar !== "!" && lastChar !== "?") {
-			message.= "."
+			message += "."
 		}
 
 		// Guarantee that the first letter is uppercase.
-		message = ucfirst(message)
+		message = message.capitalize()
 
 		// Replace all underscores (ie. "Login_required.") with spaces.
-		message = str_replace("_", " ", message)
+		message = message.replace("_", " ")
 
 		return message
 	}

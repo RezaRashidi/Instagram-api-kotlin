@@ -22,22 +22,20 @@ class FakeCookies
      *
      * @var array
      */
-    private $_cookies
+    private lateinit var _cookies: MutableMap<String, Any>
 
     /**
      * Constructor.
      */
-    public fun __construct()
-    {
-        this.clear()
+    fun __construct(){
+        clear()
     }
 
     /**
      * Removes all fake cookies so they won"t be added to further requests.
      */
-    public fun clear()
-    {
-        this._cookies = []
+    fun clear(){
+        _cookies = mutableMapOf()
     }
 
     /**
@@ -45,9 +43,8 @@ class FakeCookies
      *
      * @return array
      */
-    public fun cookies()
-    {
-        return this._cookies
+    fun cookies(): MutableMap<String, Any> {
+        return _cookies
     }
 
     /**
@@ -68,17 +65,14 @@ class FakeCookies
      * @param string $value     The value of the cookie.
      * @param bool   $singleimport If TRUE, the cookie will be deleted after 1 use.
      */
-    public fun add(
-        $name,
-        $value,
-        $singleimport = true)
+    fun add( name: String, value: String, singleimport: Boolean = true)
     {
         // This overwrites any existing fake cookie with the same name, which is
         // intentional since the names of cookies must be unique.
-        this._cookies[$name] = [
-            "value"     => $value,
-            "singleUse" => $singleUse,
-        ]
+        _cookies[name] = mapOf(
+            "value"     to value,
+            "singleUse" to singleUse
+        )
     }
 
     /**
@@ -88,10 +82,8 @@ class FakeCookies
      *
      * @param string $name The name of the cookie. CASE SENSITIVE!
      */
-    public fun delete(
-        $name)
-    {
-        unset(this._cookies[$name])
+    fun delete(name: String){
+        unset(_cookies[name])
     }
 
     /**
@@ -104,36 +96,35 @@ class FakeCookies
      *
      * @return callable
      */
-    public fun __invoke(
-        callable $handler)
+    fun __invoke(handler: callable)
     {
         return fun (
-            RequestInterface $request,
-            array $options
-        ) import ($handler) {
-            $fakeCookies = this.cookies()
+            request: RequestInterface,
+            options: Array<>
+        ) import (handler) {
+            val fakeCookies = cookies()
 
             // Pass request through unmodified if no work to do (to save CPU).
-            if (count($fakeCookies) === 0) {
-                return $handler($request, $options)
+            if (fakeCookies.count() === 0) {
+                return handler(request, options)
             }
 
-            $finalCookies = []
+            val finalCookies = []
 
             // Extract all existing cookies in this request"s "Cookie:" header.
-            if ($request.hasHeader("Cookie")) {
-                $cookieHeaders = $request.getHeader("Cookie")
-                foreach ($cookieHeaders as $headerLine) {
-                    $theseCookies = explode(" ", $headerLine)
-                    foreach ($theseCookies as $cookieEntry) {
-                        $cookieParts = explode("=", $cookieEntry, 2)
-                        if (count($cookieParts) == 2) {
+            if (request.hasHeader("Cookie")) {
+                val cookieHeaders = request.getHeader("Cookie")
+                for (headerLine in cookieHeaders) {
+                    val theseCookies = explode(" ", headerLine)
+                    for (cookieEntry in theseCookies) {
+                        val cookieParts = explode("=", cookieEntry, 2)
+                        if (cookieParts.count() == 2) {
                             // We have the name and value of the cookie!
-                            $finalCookies[$cookieParts[0]] = $cookieParts[1]
+                            finalCookies[cookieParts[0]] = cookieParts[1]
                         } else {
                             // Unable to find an equals sign, just re-import this
                             // cookie as-is (TRUE="re-import literally").
-                            $finalCookies[$cookieEntry] = true
+                            finalCookies[cookieEntry] = true
                         }
                     }
                 }
@@ -141,32 +132,32 @@ class FakeCookies
 
             // Inject all of our fake cookies, overwriting any name clashes.
             // NOTE: The name matching is CASE SENSITIVE!
-            foreach ($fakeCookies as $name => $cookieInfo) {
-                $finalCookies[$name] = $cookieInfo["value"]
+            for ((name, cookieInfo) in fakeCookies) {
+                finalCookies[name] = cookieInfo["value"]
 
                 // Delete the cookie now if it was a single-import cookie.
-                if ($cookieInfo["singleUse"]) {
-                    this.delete($name)
+                if (cookieInfo["singleUse"]) {
+                    delete(name)
                 }
             }
 
             // Generate all individual cookie strings for the final cookies.
-            $values = []
-            foreach ($finalCookies as $name => $value) {
-                if ($value === true) {
+            val values = []
+            for ((name, value) in finalCookies) {
+                if (value === true) {
                     // Cookies to re-import as-is, due to parsing error above.
-                    $values[] = $name
+                    values[] = name
                 } else {
-                    $values[] = $name."=".$value
+                    values[] = name + "=" + value
                 }
             }
 
             // Generate our new, semicolon-separated "Cookie:" header line.
             // NOTE: This completely replaces the old header. As intended.
-            $finalCookieHeader = implode(" ", $values)
-            $request = $request.withHeader("Cookie", $finalCookieHeader)
+            val finalCookieHeader = values.joinToString(" ")
+            val request = request.withHeader("Cookie", finalCookieHeader)
 
-            return $handler($request, $options)
+            return handler(request, options)
         }
     }
 }

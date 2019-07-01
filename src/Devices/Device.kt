@@ -7,8 +7,7 @@ package InstagramAPI.Devices
  *
  * @author SteveJobzniak (https://github.com/SteveJobzniak)
  */
-class Device : DeviceInterface
-{
+class Device : DeviceInterface{
     /**
      * The Android version of Instagram currently runs on Android OS 2.2+.
      *
@@ -18,78 +17,78 @@ class Device : DeviceInterface
      *
      * @see https://help.instagram.com/513067452056347
      */
-    val REQUIRED_ANDROID_VERSION = "2.2"
+    val REQUIRED_ANDROID_VERSION: String = "2.2"
 
     /**
      * Which Instagram client app version this "device" is running.
      *
      * @var string
      */
-    protected $_appVersion
+    protected lateinit var _appVersion: String
 
     /**
      * Which Instagram client app version code this "device" is running.
      *
      * @var string
      */
-    protected $_versionCode
+    protected lateinit var _versionCode: String
 
     /**
      * The device user"s locale, such as "en_US".
      *
      * @var string
      */
-    protected $_userLocale
+    protected lateinit var _userLocale: String
 
     /**
      * Which device string we were built with internally.
      *
      * @var string
      */
-    protected $_deviceString
+    protected lateinit var _deviceString: String
 
     /**
      * The user agent to import for this device. Built from properties.
      *
      * @var string
      */
-    protected $_userAgent
+    protected lateinit var _userAgent: String
 
     /**
      * The FB user agents to import for this device. Built from properties.
      *
      * @var array
      */
-    protected $_fbUserAgents
+    protected lateinit var _fbUserAgents: Array
 
     // Properties parsed from the device string...
 
     /** @var string Android SDK/API version. */
-    protected $_androidVersion
+    protected lateinit var _androidVersion: String
 
     /** @var string Android release version. */
-    protected $_androidRelease
+    protected lateinit var _androidRelease: String
 
     /** @var string Display DPI. */
-    protected $_dpi
+    protected lateinit var _dpi: String
 
     /** @var string Display resolution. */
-    protected $_resolution
+    protected lateinit var _resolution: String
 
     /** @var string Manufacturer. */
-    protected $_manufacturer
+    protected lateinit var _manufacturer: String
 
     /** @var string|null Manufacturer"s sub-brand (optional). */
-    protected $_brand
+    protected var _brand: String? = null
 
     /** @var string Hardware MODEL. */
-    protected $_model
+    protected lateinit var _model: String
 
     /** @var string Hardware DEVICE. */
-    protected $_device
+    protected lateinit var _device: String
 
     /** @var string Hardware CPU. */
-    protected $_cpu
+    protected lateinit var _cpu: String
 
     /**
      * Constructor.
@@ -104,24 +103,24 @@ class Device : DeviceInterface
      *
      * @throws .RuntimeException If fallback is disabled and device is invalid.
      */
-    public fun __construct(
-        $appVersion,
-        $versionCode,
-        $userLocale,
-        $deviceString = null,
-        $autoFallback = true)
+    fun __construct(
+        appVersion:  String,
+        versionCode: String,
+        userLocale:  String,
+        deviceString: String? = null,
+        autoFallback: Boolean = true)
     {
-        this._appVersion = $appVersion
-        this._versionCode = $versionCode
-        this._userLocale = $userLocale
+        _appVersion =  appVersion
+        _versionCode = versionCode
+        _userLocale =  userLocale
 
         // import the provided device if a valid good device. Otherwise import random.
-        if ($autoFallback && (!is_string($deviceString) || !GoodDevices::isGoodDevice($deviceString))) {
-            $deviceString = GoodDevices::getRandomGoodDevice()
+        if (autoFallback && (deviceString !is String || !GoodDevices.isGoodDevice(deviceString))) {
+            deviceString = GoodDevices.getRandomGoodDevice()
         }
 
         // Initialize ourselves from the device string.
-        this._initFromDeviceString($deviceString)
+        _initFromDeviceString(deviceString)
     }
 
     /**
@@ -133,136 +132,120 @@ class Device : DeviceInterface
      *
      * @throws .RuntimeException If the device string is invalid.
      */
-    protected fun _initFromDeviceString(
-        $deviceString)
-    {
-        if (!is_string($deviceString) || empty($deviceString)) {
-            throw .RuntimeException("Device string is empty.")
+    protected fun _initFromDeviceString(deviceString: String){
+        if (deviceString !is String || deviceString.isEmpty()) {
+            throw RuntimeException("Device string is empty.")
         }
 
         // Split the device identifier into its components and verify it.
-        $parts = explode(" ", $deviceString)
-        if (count($parts) !== 7) {
-            throw .RuntimeException(sprintf("Device string "%s" does not conform to the required device format.", $deviceString))
+        val parts = explode(" ", deviceString)
+        if (parts.count() !== 7) {
+            throw RuntimeException("Device string \"$deviceString\" does not conform to the required device format.")
         }
 
         // Check the android version.
-        $androidOS = explode("/", $parts[0], 2)
-        if (version_compare($androidOS[1], self::REQUIRED_ANDROID_VERSION, "<")) {
-            throw .RuntimeException(sprintf("Device string "%s" does not meet the minimum required Android version "%s" for Instagram.", $deviceString, self::REQUIRED_ANDROID_VERSION))
+        val androidOS = explode("/", parts[0], 2)
+        if (version_compare(androidOS[1], REQUIRED_ANDROID_VERSION, "<")) {
+            throw RuntimeException("Device string \"$deviceString\" does not meet the minimum required Android version \"$REQUIRED_ANDROID_VERSION\" for Instagram.")
         }
 
         // Check the screen resolution.
-        $resolution = explode("x", $parts[2], 2)
-        $pixelCount = (int) $resolution[0] * (int) $resolution[1]
-        if ($pixelCount < 2073600) { // 1920x1080.
-            throw .RuntimeException(sprintf("Device string "%s" does not meet the minimum resolution requirement of 1920x1080.", $deviceString))
+        val resolution = explode("x", parts[2], 2)
+        val pixelCount = resolution[0].toInt() * resolution[1].toInt()
+        if (pixelCount < 2073600) { // 1920x1080.
+            throw RuntimeException("Device string \"$deviceString\" does not meet the minimum resolution requirement of 1920x1080.")
         }
 
         // Extract "Manufacturer/Brand" string into separate fields.
-        $manufacturerAndBrand = explode("/", $parts[3], 2)
+        val manufacturerAndBrand = explode("/", parts[3], 2)
 
         // Store all field values.
-        this._deviceString = $deviceString
-        this._androidVersion = $androidOS[0] // "23".
-        this._androidRelease = $androidOS[1] // "6.0.1".
-        this._dpi = $parts[1]
-        this._resolution = $parts[2]
-        this._manufacturer = $manufacturerAndBrand[0]
-        this._brand = (isset($manufacturerAndBrand[1])
-                         ? $manufacturerAndBrand[1] : null)
-        this._model = $parts[4]
-        this._device = $parts[5]
-        this._cpu = $parts[6]
+        _deviceString   = deviceString
+        _androidVersion = androidOS[0] // "23".
+        _androidRelease = androidOS[1] // "6.0.1".
+        _dpi            = parts[1]
+        _resolution     = parts[2]
+        _manufacturer   = manufacturerAndBrand[0]
+        _brand  = ( if(!(manufacturerAndBrand[1].isBlank())) manufacturerAndBrand[1] else null)
+        _model  = parts[4]
+        _device = parts[5]
+        _cpu    = parts[6]
 
         // Build our user agent.
-        this._userAgent = UserAgent::buildUserAgent(this._appVersion, this._userLocale, this)
+        _userAgent = UserAgent.buildUserAgent(_appVersion, _userLocale, this)
 
-        this._fbUserAgents = []
+        _fbUserAgents = []
     }
 
     // Getters for all properties...
 
     /** {@inheritdoc} */
-    public fun getDeviceString()
-    {
-        return this._deviceString
+    fun getDeviceString(): String {
+        return _deviceString
     }
 
     /** {@inheritdoc} */
-    public fun getUserAgent()
-    {
-        return this._userAgent
+    fun getUserAgent(): String {
+        return _userAgent
     }
 
     /** {@inheritdoc} */
-    public fun getFbUserAgent(
-        $appName)
-    {
-        if (!isset(this._fbUserAgents[$appName])) {
-            this._fbUserAgents[$appName] = UserAgent::buildFbUserAgent(
-                $appName,
-                this._appVersion,
-                this._versionCode,
-                this._userLocale,
+    fun getFbUserAgent(appName){
+        if ( _fbUserAgents[appName].isBlank() ) {
+            _fbUserAgents[appName] = UserAgent.buildFbUserAgent(
+                appName,
+                _appVersion,
+                _versionCode,
+                _userLocale,
                 this
             )
         }
 
-        return this._fbUserAgents[$appName]
+        return _fbUserAgents[appName]
     }
 
     /** {@inheritdoc} */
-    public fun getAndroidVersion()
-    {
-        return this._androidVersion
+    fun getAndroidVersion(): String {
+        return _androidVersion
     }
 
     /** {@inheritdoc} */
-    public fun getAndroidRelease()
-    {
-        return this._androidRelease
+    fun getAndroidRelease(): String {
+        return _androidRelease
     }
 
     /** {@inheritdoc} */
-    public fun getDPI()
-    {
-        return this._dpi
+    fun getDPI(): String {
+        return _dpi
     }
 
     /** {@inheritdoc} */
-    public fun getResolution()
-    {
-        return this._resolution
+    fun getResolution(): String {
+        return _resolution
     }
 
     /** {@inheritdoc} */
-    public fun getManufacturer()
-    {
-        return this._manufacturer
+    fun getManufacturer(): String {
+        return _manufacturer
     }
 
     /** {@inheritdoc} */
-    public fun getBrand()
-    {
-        return this._brand
+    fun getBrand(): String? {
+        return _brand
     }
 
     /** {@inheritdoc} */
-    public fun getModel()
-    {
-        return this._model
+    fun getModel(): String {
+        return _model
     }
 
     /** {@inheritdoc} */
-    public fun getDevice()
-    {
-        return this._device
+    fun getDevice(): String {
+        return _device
     }
 
     /** {@inheritdoc} */
-    public fun getCPU()
-    {
-        return this._cpu
+    fun getCPU(): String {
+        return _cpu
     }
 }

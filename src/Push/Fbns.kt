@@ -33,28 +33,28 @@ class Fbns : PersistentInterface, EventEmitterInterface
     val DEFAULT_PORT = 443
 
     /** @var EventEmitterInterface */
-    protected $_target
+    protected lateinit var _target: EventEmitterInterface
 
     /** @var ConnectorInterface */
-    protected $_connector
+    protected lateinit var _connector: ConnectorInterface
 
     /** @var AuthInterface */
-    protected $_auth
+    protected lateinit var _auth: AuthInterface
 
     /** @var DeviceInterface */
-    protected $_device
+    protected lateinit var _device: DeviceInterface
 
     /** @var LoopInterface */
-    protected $_loop
+    protected lateinit var _loop: LoopInterface
 
     /** @var Lite */
-    protected $_client
+    protected lateinit var _client: Lite
 
     /** @var LoggerInterface */
-    protected $_logger
+    protected lateinit var _logger: LoggerInterface
 
     /** @var bool */
-    protected $_isActive
+    protected var _isActive: Boolean
 
     /**
      * Fbns constructor.
@@ -66,22 +66,22 @@ class Fbns : PersistentInterface, EventEmitterInterface
      * @param LoopInterface         $loop
      * @param LoggerInterface       $logger
      */
-    public fun __construct(
-        EventEmitterInterface $target,
-        ConnectorInterface $connector,
-        AuthInterface $auth,
-        DeviceInterface $device,
-        LoopInterface $loop,
-        LoggerInterface $logger)
-    {
-        this._target = $target
-        this._connector = $connector
-        this._auth = $auth
-        this._device = $device
-        this._loop = $loop
-        this._logger = $logger
+    fun __construct(
+        target: EventEmitterInterface,
+        connector: ConnectorInterface,
+        auth: AuthInterface,
+        device: DeviceInterface,
+        loop: LoopInterface,
+        logger: LoggerInterface
+    ){
+        _target    = target
+        _connector = connector
+        _auth      = auth
+        _device    = device
+        _loop      = loop
+        _logger    = logger
 
-        this._client = this._getClient()
+        _client = _getClient()
     }
 
     /**
@@ -89,52 +89,51 @@ class Fbns : PersistentInterface, EventEmitterInterface
      *
      * @return Lite
      */
-    protected fun _getClient()
-    {
-        $client = Lite(this._loop, this._connector, this._logger)
+    protected fun _getClient(){
+        val client = Lite(_loop, _connector, _logger)
 
         // Bind events.
-        $client
-            .on("connect", fun (Lite.ConnectResponsePacket $responsePacket) {
+        client
+            .on("connect", fun (Lite.ConnectResponsePacket responsePacket) {
                 // Update auth credentials.
-                $authJson = $responsePacket.getAuth()
-                if (strlen($authJson)) {
-                    this._logger.info("Received a non-empty auth.", [$authJson])
-                    this.emit("fbns_auth", [$authJson])
+                val authJson = responsePacket.getAuth()
+                if (authJson.length > 0) {
+                    _logger.info("Received a non-empty auth.", [authJson])
+                    emit("fbns_auth", [authJson])
                 }
 
                 // Register an application.
-                this._client.register(Constants::PACKAGE_NAME, Constants::FACEBOOK_ANALYTICS_APPLICATION_ID)
+                _client.register(Constants.PACKAGE_NAME, Constants.FACEBOOK_ANALYTICS_APPLICATION_ID)
             })
             .on("disconnect", fun () {
                 // Try to reconnect.
-                if (!this._reconnectInterval) {
-                    this._connect()
+                if (!_reconnectInterval) {
+                    _connect()
                 }
             })
-            .on("register", fun (Register $message) {
-                if (!empty($message.getError())) {
-                    this._target.emit("error", [.RuntimeException($message.getError())])
+            .on("register", fun (Register message) {
+                if (!message.getError().isEmpty() ) {
+                    _target.emit("error", [RuntimeException(message.getError())])
 
                     return
                 }
-                this._logger.info("Received a non-empty token.", [$message.getToken()])
-                this.emit("fbns_token", [$message.getToken()])
+                _logger.info("Received a non-empty token.", [message.getToken()])
+                emit("fbns_token", [message.getToken()])
             })
-            .on("push", fun (PushMessage $message) {
-                $payload = $message.getPayload()
+            .on("push", fun (PushMessage message) {
+                val payload = message.getPayload()
 
                 try {
-                    $notification = Notification($payload)
-                } catch (.Exception $e) {
-                    this._logger.error(sprintf("Failed to decode push: %s", $e.getMessage()), [$payload])
+                    val notification = Notification(payload)
+                } catch (e: Exception) {
+                    _logger.error(sprintf("Failed to decode push: %s", $e.getMessage()), [$payload])
 
                     return
                 }
-                this.emit("push", [$notification])
+                emit("push", [notification])
             })
 
-        return $client
+        return client
     }
 
     /**
@@ -143,52 +142,49 @@ class Fbns : PersistentInterface, EventEmitterInterface
     protected fun _connect()
     {
         this._setReconnectTimer(fun () {
-            $connection = Connection(
-                this._auth,
-                this._device.getFbUserAgent(Constants::FBNS_APPLICATION_NAME)
+            val connection = Connection(
+                _auth,
+                _device.getFbUserAgent(Constants.FBNS_APPLICATION_NAME)
             )
 
-            return this._client.connect(self::DEFAULT_HOST, self::DEFAULT_PORT, $connection, self::CONNECTION_TIMEOUT)
+            return _client.connect(DEFAULT_HOST, DEFAULT_PORT, connection, CONNECTION_TIMEOUT)
         })
     }
 
     /**
      * Start Push receiver.
      */
-    public fun start()
+    fun start()
     {
-        this._logger.info("Starting FBNS client...")
-        this._isActive = true
-        this._reconnectInterval = 0
-        this._connect()
+        _logger.info("Starting FBNS client...")
+        _isActive = true
+        _reconnectInterval = 0
+        _connect()
     }
 
     /**
      * Stop Push receiver.
      */
-    public fun stop()
+    fun stop()
     {
-        this._logger.info("Stopping FBNS client...")
-        this._isActive = false
-        this._cancelReconnectTimer()
-        this._client.disconnect()
+        _logger.info("Stopping FBNS client...")
+        _isActive = false
+        _cancelReconnectTimer()
+        _client.disconnect()
     }
 
     /** {@inheritdoc} */
-    public fun isActive()
-    {
-        return this._isActive
+    fun isActive(): Boolean {
+        return _isActive
     }
 
     /** {@inheritdoc} */
-    public fun getLogger()
-    {
-        return this._logger
+    fun getLogger(){
+        return _logger
     }
 
     /** {@inheritdoc} */
-    public fun getLoop()
-    {
-        return this._loop
+    fun getLoop(){
+        return _loop
     }
 }

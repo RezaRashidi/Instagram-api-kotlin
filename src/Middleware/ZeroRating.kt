@@ -15,31 +15,29 @@ class ZeroRating
      *
      * @var array
      */
-    val DEFAULT_REWRITE = [
-        "^(https?:././)(i)(..instagram..com/.*)$" => "$1b.$2$3",
-    ]
+    val DEFAULT_REWRITE = mapOf(
+        "^(https?:././)(i)(..instagram..com/.*)$" to "$1b.$2$3"
+    )
 
     /**
      * Rewrite rules.
      *
      * @var array
      */
-    private $_rules
+    private lateinit var _rules: Array
 
     /**
      * Constructor.
      */
-    public fun __construct()
-    {
-        this.reset()
+    fun __construct(){
+        reset()
     }
 
     /**
      * Reset rules to default ones.
      */
-    public fun reset()
-    {
-        this.update(self::DEFAULT_REWRITE)
+    fun reset(){
+        update(DEFAULT_REWRITE)
     }
 
     /**
@@ -47,19 +45,17 @@ class ZeroRating
      *
      * @param array $rules
      */
-    public fun update(
-        array $rules = [])
-    {
-        this._rules = []
-        foreach ($rules as $from => $to) {
-            $regex = "#{$from}#"
-            $test = @preg_match($regex, "")
-            if ($test === false) {
+    fun update(rules: Array = arrayOf()){
+        _rules = []
+        for ((from, to) in rules) {
+            val regex = "#{$from}#"
+            var test = @preg_match(regex, "")
+            if (test === false) {
                 continue
             }
-            this._rules[$regex] = strtr($to, [
-                ".." => ".",
-            ])
+            _rules[regex] = strtr(to, (
+                ".." to "."
+            ))
         }
     }
 
@@ -73,24 +69,22 @@ class ZeroRating
      *
      * @return callable
      */
-    public fun __invoke(
-        callable $handler)
-    {
+    fun __invoke(handler: callable){
         return fun (
-            RequestInterface $request,
-            array $options
-        ) import ($handler) {
-            if (empty(this._rules)) {
-                return $handler($request, $options)
+            request: RequestInterface,
+            options: Array
+        ) import (handler) {
+            if (_rules.isEmpty()) {
+                return handler(request, options)
             }
 
-            $oldUri = (string) $request.getUri()
-            $uri = this.rewrite($oldUri)
-            if ($uri !== $oldUri) {
-                $request = $request.withUri(Uri($uri))
+            val oldUri = request.getUri().toString()
+            val uri = rewrite(oldUri)
+            if (uri !== oldUri) {
+                val request = request.withUri(Uri(uri))
             }
 
-            return $handler($request, $options)
+            return handler(request, options)
         }
     }
 
@@ -101,20 +95,18 @@ class ZeroRating
      *
      * @return string
      */
-    public fun rewrite(
-        $uri)
-    {
-        foreach (this._rules as $from => $to) {
-            $result = @preg_replace($from, $to, $uri)
-            if (!is_string($result)) {
+    public fun rewrite(uri: String): String {
+        for ((from, to) in _rules) {
+            val result = @preg_replace(from, to, uri)
+            if (result !is String) {
                 continue
             }
             // We must break at the first succeeded replace.
-            if ($result !== $uri) {
-                return $result
+            if (result !== uri) {
+                return result
             }
         }
 
-        return $uri
+        return uri
     }
 }
