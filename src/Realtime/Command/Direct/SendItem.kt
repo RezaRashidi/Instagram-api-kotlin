@@ -4,8 +4,7 @@ package InstagramAPI.Realtime.Command.Direct
 
 import InstagramAPI.Realtime.Command.DirectCommand
 
-abstract class SendItem : DirectCommand
-{
+abstract class SendItem : DirectCommand(){
     val ACTION = "send_item"
 
     /**
@@ -17,23 +16,18 @@ abstract class SendItem : DirectCommand
      *
      * @throws  IllegalArgumentException
      */
-    public fun __construct(
-        $threadId,
-        $itemType,
-        array $options = [])
-    {
-        parent::__construct(self::ACTION, $threadId, $options)
+    fun __construct(threadId: String, itemType: String, array options = []){
+        parent::__construct(self::ACTION, threadId, options)
 
         // Handle action.
-        if (!in_array($itemType, this._getSupportedItemTypes(), true)) {
-            throw  IllegalArgumentException(sprintf(""%s" is not a supported item type.", $itemType))
+        if (!_getSupportedItemTypes().contains(itemType)) {
+            throw  IllegalArgumentException("\"$itemType\" is not a supported item type.")
         }
-        this._data["item_type"] = $itemType
+        this._data["item_type"] = itemType
     }
 
     /** {@inheritdoc} */
-    protected fun _isClientContextRequired()
-    {
+    protected fun _isClientContextRequired(): Boolean {
         return true
     }
 
@@ -42,9 +36,8 @@ abstract class SendItem : DirectCommand
      *
      * @return array
      */
-    protected fun _getSupportedItemTypes()
-    {
-        return [
+    protected fun _getSupportedItemTypes(): Array<String>{
+        return arrayOf(
             SendText::TYPE,
             SendLike::TYPE,
             SendReaction::TYPE,
@@ -52,7 +45,7 @@ abstract class SendItem : DirectCommand
             SendStory::TYPE,
             SendProfile::TYPE,
             SendLocation::TYPE,
-            SendHashtag::TYPE,
-        ]
+            SendHashtag::TYPE
+        )
     }
 }

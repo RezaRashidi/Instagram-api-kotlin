@@ -1251,8 +1251,8 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 		if (!(threadItemId.toIntOrNull() && threadItemId > 0) && (threadItemId !is Int || threadItemId < 0)) {
 			throw IllegalArgumentException(sprintf("" % s" is not a valid thread item ID.", threadItemId))
 		}
-		if (!in_array(reactionType, ["like"], true)) {
-			throw IllegalArgumentException(sprintf("" % s" is not a supported reaction type.", reactionType))
+		if (!arrayOf("like").contains(reactionType)) {
+			throw IllegalArgumentException("\"$reactionType\" is not a supported reaction type.")
 		}
 
 		return this._sendDirectItem("reaction", ["thread" => threadId], array_merge(options, [

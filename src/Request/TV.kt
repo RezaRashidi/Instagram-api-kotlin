@@ -39,11 +39,8 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      *
      * @return .InstagramAPI.Response.TVChannelsResponse
      */
-    fun getChannel(
-        id = "for_you",
-        maxId = null)
-    {
-        if (!in_array(id, ["for_you", "chrono_following", "popular", "continue_watching"])
+    fun getChannel(id: String = "for_you", maxId: String? = null){
+        if (!arrayOf("for_you", "chrono_following", "popular", "continue_watching").contains(id)
         && !preg_match("/^user_[1-9].d*/", id)) {
             throw  IllegalArgumentException("Invalid ID type.")
         }

@@ -57,18 +57,18 @@ class PhotoDetails : MediaDetails
     }
 
     /** {@inheritdoc} */
-    fun hasSwappedAxes(){
-        return in_array(_orientation, arrayOf(5, 6, 7, 8), true)
+    fun hasSwappedAxes(): Boolean {
+        return arrayOf(5, 6, 7, 8).contains(_orientation)
     }
 
     /** {@inheritdoc} */
-    fun isHorizontallyFlipped(){
-        return in_array(_orientation, arrayOf(2, 3, 6, 7), true)
+    fun isHorizontallyFlipped(): Boolean {
+        return arrayOf(2, 3, 6, 7).contains(_orientation)
     }
 
     /** {@inheritdoc} */
-    public fun isVerticallyFlipped(){
-        return in_array(_orientation, arrayOf(3, 4, 7, 8), true)
+    fun isVerticallyFlipped(): Boolean {
+        return arrayOf(3, 4, 7, 8).contains(_orientation)
     }
 
     /** {@inheritdoc} */

@@ -2,8 +2,7 @@
 
 package InstagramAPI.Realtime.Command.Direct
 
-final class SendReaction : SendItem
-{
+final class SendReaction : SendItem(){
     val TYPE = "reaction"
 
     val REACTION_LIKE = "like"
@@ -22,30 +21,24 @@ final class SendReaction : SendItem
      *
      * @throws  IllegalArgumentException
      */
-    public fun __construct(
-        $threadId,
-        $threadItemId,
-        $reaction,
-        $status,
-        array $options = [])
-    {
-        parent::__construct($threadId, self::TYPE, $options)
+    fun __construct(threadId: String, threadItemId: String, reaction: String, status: String, array options = []){
+        parent::__construct(threadId, self::TYPE, options)
 
         // Handle thread item identifier.
-        this._data["item_id"] = this._validateThreadItemId($threadItemId)
+        this._data["item_id"] = this._validateThreadItemId(threadItemId)
         this._data["node_type"] = "item"
 
         // Handle reaction type.
-        if (!in_array($reaction, this._getSupportedReactions(), true)) {
-            throw  IllegalArgumentException(sprintf(""%s" is not a supported reaction.", $reaction))
+        if (!_getSupportedReactions().contains(reaction)) {
+            throw IllegalArgumentException("\"$reaction\" is not a supported reaction.")
         }
-        this._data["reaction_type"] = $reaction
+        this._data["reaction_type"] = reaction
 
         // Handle reaction status.
-        if (!in_array($status, this._getSupportedStatuses(), true)) {
-            throw  IllegalArgumentException(sprintf(""%s" is not a supported reaction status.", $status))
+        if (!_getSupportedStatuses().contains(status)) {
+            throw IllegalArgumentException("\"$status\" is not a supported reaction status.")
         }
-        this._data["reaction_status"] = $status
+        this._data["reaction_status"] = status
     }
 
     /**
@@ -53,11 +46,10 @@ final class SendReaction : SendItem
      *
      * @return array
      */
-    protected fun _getSupportedReactions()
-    {
-        return [
-            self::REACTION_LIKE,
-        ]
+    protected fun _getSupportedReactions(): Array<String> {
+        return arrayOf(
+            REACTION_LIKE
+        )
     }
 
     /**
@@ -65,11 +57,10 @@ final class SendReaction : SendItem
      *
      * @return array
      */
-    protected fun _getSupportedStatuses()
-    {
-        return [
-            self::STATUS_CREATED,
-            self::STATUS_DELETED,
-        ]
+    protected fun _getSupportedStatuses(): Array<String> {
+        return arrayOf(
+            STATUS_CREATED,
+            STATUS_DELETED
+        )
     }
 }

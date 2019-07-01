@@ -881,8 +881,8 @@ object Utils{
      *
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
-    protected fun _throwIfInvalidStoryPollTallies(tallies){
-        var requiredKeys = setOf("text", "count", "font_size")
+    protected fun _throwIfInvalidStoryPollTallies(tallies: Map<String, Float>){
+        val requiredKeys = arrayOf("text", "count", "font_size")
         if (tallies.count() !== 2) {
             throw IllegalArgumentException("Missing data for tallies.")
         }
@@ -894,7 +894,7 @@ object Utils{
                 throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for location array.")
             }
             for ((k, v) in tallie) {
-                if (!in_array(k, requiredKeys, true)) {
+                if ( !requiredKeys.contains(k) ) {
                     throw IllegalArgumentException("Invalid key \"$k\" for story poll tallies.")
                 }
                 when (k) {
@@ -989,8 +989,8 @@ object Utils{
      * @throws IllegalArgumentException If caption doesn't contain any hashtag,
      *                                   or if any tags are invalid.
      */
-    fun throwIfInvalidStoryHashtags(captionText: String, hashtags){
-        var requiredKeys = setOf("tag_name", "use_custom_title", "is_sticker")
+    fun throwIfInvalidStoryHashtags(captionText: String, hashtags: Map<String, Boolean>){
+        val requiredKeys = arrayOf("tag_name", "use_custom_title", "is_sticker")
 
         // Extract all hashtags from the caption using a UTF-8 aware regex.
         if (!preg_match_all("/#(.w+[^.x00-.x7F]?+)/u", captionText, tagsInCaption)) {
@@ -1010,7 +1010,7 @@ object Utils{
                         // Ensure that the hashtag format is valid.
                         throwIfInvalidHashtag(v)
                         // Verify that this tag exists somewhere in the caption to check.
-                        if (!in_array(v, tagsInCaption[1])) {
+                        if ( !tagsInCaption[1].contains(v) ) {
                             // NOTE: UTF-8 aware.
                             throw IllegalArgumentException("Tag name \"$v\" does not exist in the caption text.")
                         }
@@ -1072,8 +1072,8 @@ object Utils{
      *
      * @throws IllegalArgumentException If storySticker is missing keys or has invalid values.
      */
-    fun _throwIfInvalidStoryStickerPlacement(storySticker, type: String){
-        var requiredKeys = setOf("x", "y", "width", "height", "rotation")
+    fun _throwIfInvalidStoryStickerPlacement(storySticker: Map<String, Float>, type: String){
+        val requiredKeys = arrayOf("x", "y", "width", "height", "rotation")
 
         // Ensure that all required hashtag array keys exist.
         var missingKeys = array_keys(array_diff_key(["x" to 1, "y" to 1, "width" to 1, "height" to 1, "rotation" to 0], storySticker))
@@ -1083,7 +1083,7 @@ object Utils{
 
         // Check the individual array values.
         for ((k, v) in storySticker) {
-            if (!in_array(k, requiredKeys, true)) {
+            if (!requiredKeys.contains(k)) {
                 throw IllegalArgumentException("Invalid key \"$k\" for \"$type\".")
             }
             when (k) {
@@ -1116,7 +1116,7 @@ object Utils{
                 else -> ""
             }
         }
-        if (!in_array(mediaType, ["PHOTO", "VIDEO", "CAROUSEL"], true)) {
+        if ( !arrayOf("PHOTO", "VIDEO", "CAROUSEL").contains(mediaType) ) {
             throw IllegalArgumentException("\"$mediaType\" is not a valid media type.")
         }
 
@@ -1245,7 +1245,7 @@ object Utils{
      *
      * @return bool TRUE on success, otherwise FALSE.
      */
-    fun deleteTree(folder: String,keepRootFolder: Boolean = false): String{
+    fun deleteTree(folder: String,keepRootFolder: Boolean = false): Boolean {
         // Handle bad arguments.
         if (folder.isEmpty() || !file_exists(folder)) {
             return true // No such file/folder exists.
@@ -1433,6 +1433,7 @@ object Utils{
 * array_keys()     to .keys
 * is_numeric()     to numericCheck()  : function write
 * ctype_digit(x)   to x.toIntOrNull() and x > 0
+* in_array()       to .contains()
 *
 *
 * */

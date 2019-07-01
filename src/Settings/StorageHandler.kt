@@ -214,8 +214,8 @@ class StorageHandler {
 	 *
 	 * @throws .InstagramAPI.Exception.SettingsException
 	 */
-	public fun setActiveUser(username) {
-		this._throwIfEmptyValue(username)
+	fun setActiveUser(username: String) {
+		_throwIfEmptyValue(username)
 
 		// If that user is already loaded, there"s no need to do anything.
 		if (username === this._username) {
@@ -235,17 +235,17 @@ class StorageHandler {
 		this._storage.openUser(username)
 
 		// Retrieve any existing settings for the user from the backend.
-		loadedSettings = this._storage.loadUserSettings()
-		foreach(loadedSettings as key => value) {
+		val loadedSettings = this._storage.loadUserSettings()
+		for((key, value) in loadedSettings) {
 			// Map renamed old-school keys to key names.
 			if (key == "username_id") {
 				key = "account_id"
-			} elseif (key == "adid") {
+			} else if (key == "adid") {
 				key = "advertising_id"
 			}
 
 			// Only keep values for keys that are still in use. Discard others.
-			if (in_array(key, self::PERSISTENT_KEYS)) {
+			if (PERSISTENT_KEYS.contains(key)) {
 				// Cast all values to strings to ensure we only import strings!
 				// NOTE: THIS CAST IS EXTREMELY IMPORTANT AND *MUST* BE DONE!
 				this._userSettings[key] = (string) value
@@ -288,9 +288,9 @@ class StorageHandler {
 	 *
 	 * @throws .InstagramAPI.Exception.SettingsException
 	 */
-	public fun eraseDeviceSettings() {
-		foreach(self::PERSISTENT_KEYS as key) {
-			if (!in_array(key, self::KEEP_KEYS_WHEN_ERASING_DEVICE)) {
+	fun eraseDeviceSettings() {
+		for(key in PERSISTENT_KEYS) {
+			if (!KEEP_KEYS_WHEN_ERASING_DEVICE.contains(key)) {
 				this.set(key, "") // Erase the setting.
 			}
 		}
@@ -310,12 +310,12 @@ class StorageHandler {
 	 * @return string|null The value as a string IF the setting exists AND is
 	 *                     a NON-EMPTY string. Otherwise NULL.
 	 */
-	public fun get(key) {
-		this._throwIfNoActiveUser()
+	fun get(key: String) {
+		_throwIfNoActiveUser()
 
 		// Reject anything that isn"t in our list of VALID persistent keys.
-		if (!in_array(key, self::PERSISTENT_KEYS)) {
-			throw SettingsException(sprintf("The settings key " % s" is not a valid persistent key name.", key))
+		if (!PERSISTENT_KEYS.contains(key)) {
+			throw SettingsException("The settings key \"$key\" is not a valid persistent key name.")
 		}
 
 		// Return value if it"s a NON-EMPTY string, otherwise return NULL.
@@ -336,12 +336,12 @@ class StorageHandler {
 	 *
 	 * @throws .InstagramAPI.Exception.SettingsException
 	 */
-	public fun set(key, value) {
-		this._throwIfNoActiveUser()
+	fun set(key: String, value) {
+		_throwIfNoActiveUser()
 
 		// Reject anything that isn"t in our list of VALID persistent keys.
-		if (!in_array(key, self::PERSISTENT_KEYS)) {
-			throw SettingsException(sprintf("The settings key " % s" is not a valid persistent key name.", key))
+		if (!PERSISTENT_KEYS.contains(key)) {
+			throw SettingsException("The settings key \"$key\" is not a valid persistent key name.")
 		}
 
 		// Reject null values, since they may be accidental. To unset a setting,
@@ -504,7 +504,7 @@ class StorageHandler {
 	 * @throws .InstagramAPI.Exception.SettingsException
 	 */
 	protected fun _throwIfEmptyValue(value) {
-		if (!is_string(value) || value === "") {
+		if (value !is String || value === "") {
 			throw SettingsException("Parameter must be non-empty string.")
 		}
 	}
@@ -530,10 +530,10 @@ class StorageHandler {
 	 *
 	 * @throws .InstagramAPI.Exception.SettingsException
 	 */
-	protected fun _triggerCallback(cbName) {
+	protected fun _triggerCallback(cbName: String) {
 		// Reject anything that isn"t in our list of VALID callbacks.
-		if (!in_array(cbName, self::SUPPORTED_CALLBACKS)) {
-			throw SettingsException(sprintf("The string " % s" is not a valid callback name.", cbName))
+		if (!SUPPORTED_CALLBACKS.contains(cbName)) {
+			throw SettingsException("The string \"$cbName\" is not a valid callback name.")
 		}
 
 		// Trigger the callback with a reference to our StorageHandler instance.

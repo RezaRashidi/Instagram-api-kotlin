@@ -23,18 +23,14 @@ abstract class DirectCommand : CommandInterface
      *
      * @throws  IllegalArgumentException
      */
-    public fun __construct(
-        $action,
-        $threadId,
-        array $options = [])
-    {
+    fun __construct(action: String, threadId: String, array options = []){
         this._data = []
 
         // Handle action.
-        if (!in_array($action, this._getSupportedActions(), true)) {
-            throw  IllegalArgumentException(sprintf(""%s" is not a supported action.", $action))
+        if (!_getSupportedActions().contains(action)) {
+            throw IllegalArgumentException("\"$action\" is not a supported action.")
         }
-        this._data["action"] = $action
+        this._data["action"] = action
 
         this._data["thread_id"] = this._validateThreadId($threadId)
 
@@ -90,13 +86,12 @@ abstract class DirectCommand : CommandInterface
      *
      * @return array
      */
-    protected fun _getSupportedActions()
-    {
-        return [
-            Direct.SendItem::ACTION,
-            Direct.MarkSeen::ACTION,
-            Direct.IndicateActivity::ACTION,
-        ]
+    protected fun _getSupportedActions(): Array<String>{
+        return (
+            Direct.SendItem.ACTION,
+            Direct.MarkSeen.ACTION,
+            Direct.IndicateActivity.ACTION
+        )
     }
 
     /**

@@ -116,8 +116,8 @@ class Discover(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .InstagramAPI.Response.SuggestedSearchesResponse
 	 */
 	fun getSuggestedSearches(type:String) {
-		if (!in_array(type, ["blended", "users", "hashtags", "places"], true)) {
-			throw IllegalArgumentException(sprintf("Unknown search type: %s.", type))
+		if (!arrayOf("blended", "users", "hashtags", "places").contains(type)) {
+			throw IllegalArgumentException("Unknown search type: $type.")
 		}
 
 		return this.ig.request("fbsearch/suggested_searches/").addParam("type", type)

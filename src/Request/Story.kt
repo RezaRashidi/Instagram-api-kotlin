@@ -537,30 +537,26 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *
      * @return .InstagramAPI.Response.ReelSettingsResponse
      */
-    fun setReelSettings(
-        messagePrefs,
-        allowStoryReshare = null,
-        autoArchive = null)
-    {
-        if (!in_array(messagePrefs, ["anyone", "following", "off"])) {
+    fun setReelSettings(messagePrefs: String, allowStoryReshare: Boolean? = null, autoArchive: String? = null){
+        if (!arrayOf("anyone", "following", "off").contains(messagePrefs)) {
             throw  IllegalArgumentException("You must provide a valid message preference value.")
         }
 
-        request = this.ig.request("users/set_reel_settings/")
+        val request = this.ig.request("users/set_reel_settings/")
             .addPost("_uuid", this.ig.uuid)
             .addPost("_uid", this.ig.account_id)
             .addPost("_csrftoken", this.ig.client.getToken())
             .addPost("message_prefs", messagePrefs)
 
         if (allowStoryReshare !== null) {
-            if (!is_bool(allowStoryReshare)) {
+            if (allowStoryReshare !is Boolean) {
                 throw  IllegalArgumentException("You must provide a valid value for allowing story reshare.")
             }
             request.addPost("allow_story_reshare", allowStoryReshare)
         }
 
         if (autoArchive !== null) {
-            if (!in_array(autoArchive, ["on", "off"])) {
+            if (!arrayOf("on", "off").contains(autoArchive)) {
                 throw  IllegalArgumentException("You must provide a valid value for auto archive.")
             }
             request.addPost("reel_auto_archive", autoArchive)

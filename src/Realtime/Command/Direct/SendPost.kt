@@ -2,8 +2,7 @@
 
 package InstagramAPI.Realtime.Command.Direct
 
-final class SendPost : ShareItem
-{
+final class SendPost : ShareItem(){
     val TYPE = "media_share"
 
     val MEDIA_REGEXP = "#^.d+_.d+$#D"
@@ -17,16 +16,12 @@ final class SendPost : ShareItem
      *
      * @throws  IllegalArgumentException
      */
-    public fun __construct(
-        $threadId,
-        $mediaId,
-        array $options = [])
-    {
-        parent::__construct($threadId, self::TYPE, $options)
+    fun __construct(threadId: String, mediaId: String, array options = []){
+        parent::__construct(threadId, self::TYPE, options)
 
-        if (!preg_match(self::MEDIA_REGEXP, $mediaId)) {
-            throw  IllegalArgumentException(sprintf(""%s" is not a valid media ID.", $mediaId))
+        if (!preg_match(MEDIA_REGEXP, mediaId)) {
+            throw  IllegalArgumentException("\"$mediaId\" is not a valid media ID.")
         }
-        this._data["media_id"] = (string) $mediaId
+        this._data["media_id"] = mediaId
     }
 }
