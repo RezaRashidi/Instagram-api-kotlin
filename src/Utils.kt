@@ -1434,7 +1434,9 @@ object Utils{
 * is_numeric()     to numericCheck()  : function write
 * ctype_digit(x)   to x.toIntOrNull() and x > 0
 * in_array()       to .contains()
-*
+* array_search()   to arraySearch()
+* array_diff_key() to arrayDiffKey()
+* array_flip()     to arrayFlip()
 *
 * */
 
@@ -1476,8 +1478,56 @@ fun numericCheck(input: String): Boolean =
         false
     }
 
+// search given value in map and return index of that : simulate array_search in php
 fun arraySearch (map: Map<Int, String>, str: String): Int {
     var m = 0
     map.forEach{ (k, v) -> if (v == str) m = k ;return@forEach }
     return m
+}
+
+// compares the keys of two arrays, and returns the differences : simulate array_diff_key() in php
+// type for map
+fun arrayDiffKey(a: Map<String, String>, b: Map<String, String>): MutableMap<String, String> {
+    val fiMap = mutableMapOf<String, String>()
+    for (i in a.keys){
+        if (!b.keys.contains(i)){
+            a[i]?.let {fiMap.put(i, it)}
+        }
+    }
+    return fiMap
+} // type for array
+fun arrayDiffKey(a: Array<String>, b: Array<String>): MutableMap<String, String> {
+    val fiMap = mutableMapOf<String, String>()
+    for (i in a){
+        if (!b.contains(i)){
+            fiMap[a.indexOf(i).toString()] = i
+        }
+    }
+    return fiMap
+}
+
+// Flip all keys with their associated values in an array : simulate array_flip() in php
+// type for array
+fun arrayFlip (a: Array<String>): MutableMap<String, Int>{
+    val fiMap = mutableMapOf<String, Int>()
+    for (i in 0 until a.size){
+        fiMap[a[i]] = i
+    }
+    return fiMap
+} // type for map
+fun arrayFlip (a: Map<String, String>): MutableMap<String, String>{
+    val fiMap = mutableMapOf<String, String>()
+    for (i in a.keys){
+        a[i]?.let {fiMap.put(it, i)}
+    }
+    return fiMap
+}
+
+// Return an array containing the keys : simulate array_keys() in php
+fun arrayKey(a: Map<String, String>): MutableMap<String, String>{
+    val fiMap = mutableMapOf<String, String>()
+    for ((j, i) in a.keys.withIndex()){
+        a[i]?.let {fiMap.put(j.toString(), i)}
+    }
+    return fiMap
 }
