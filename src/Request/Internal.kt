@@ -13,6 +13,7 @@ import InstagramAPI.Request.Metadata.Internal as InternalMetadata
 import InstagramAPI.Response
 import InstagramAPI.Signatures
 import InstagramAPI.Utils
+import InstagramAPI.Exception.*
 import Winbox.Args
 import kotlin.math.*
 import fun GuzzleHttp.Psr7.stream_for
@@ -139,7 +140,8 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return .InstagramAPI.Response.ConfigureResponse
 	 */
-	fun configureSinglePhoto(targetFeed:Int, internalMetadata: InternalMetadata  array externalMetadata = []) {
+	fun configureSinglePhoto(targetFeed:Int, internalMetadata: InternalMetadata ,  externalMetadata:Map<String,String>
+	= mapOf()) {
 		// Determine the target endpoint for the photo.
 		var endpoint = when(targetFeed) {
 			Constants.FEED_TIMELINE ->"media/configure/"
@@ -149,7 +151,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 
 		// Available external metadata parameters:
 		/** @var string Caption to import for the media. */
-		var captionText = if (!externalMetadata["caption"].isBlank()) externalMetadata["caption"] else ""
+		var captionText = externalMetadata["caption"] ?: ""
 		/** @var string Accesibility caption to import for the media. */
         val altText = if (!externalMetadata["custom_accessibility_caption"].isBlank()) externalMetadata["custom_accessibility_caption"] else null
 		/** @var Response.Model.Location|null A Location object describing where

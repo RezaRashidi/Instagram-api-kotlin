@@ -194,7 +194,7 @@ abstract class InstagramMedia
      *
      * @throws  IllegalArgumentException
      */
-    fun __construct( inputFile: String, array options = []){
+   constructor( inputFile: String, array options = []){
         // Assign variables for all options, to avoid bulky code repetition.
         var targetFeed: Int        = if(!(options["targetFeed"].isBlank())) options["targetFeed"] else Constants.FEED_TIMELINE
         var horCropFocus: Int?     = if( !(options["horCropFocus"].isBlank()) ) options["horCropFocus"] else null

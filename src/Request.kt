@@ -1,25 +1,27 @@
 package InstagramAPI
 
-import GuzzleHttp.Psr7.MultipartStream
-import GuzzleHttp.Psr7.Request as HttpRequest
-import GuzzleHttp.Psr7.Stream
+//import GuzzleHttp.Psr7.MultipartStream
+//import GuzzleHttp.Psr7.Request as HttpRequest
+//import GuzzleHttp.Psr7.Stream
 import InstagramAPI.Exception.InstagramException
 import InstagramAPI.Exception.LoginRequiredException
-import Psr.Http.Message.ResponseInterface as HttpResponseInterface
-import Psr.Http.Message.StreamInterface
-import com.sun.deploy.net.HttpRequest
-import fun GuzzleHttp.Psr7.stream_for
+import java.io.File
+
+//import Psr.Http.Message.ResponseInterface as HttpResponseInterface
+//import Psr.Http.Message.StreamInterface
+//import com.sun.deploy.net.HttpRequest
+//import fun GuzzleHttp.Psr7.stream_for
 
 /**
  * Bridge between Instagram Client calls, the object mapper & response objects.
  */
-class Request {
+class Request(parent: Instagram, url: String) {
 	/**
 	 * The Instagram class instance we belong to.
 	 *
 	 * @var .InstagramAPI.Instagram
 	 */
-	private lateinit var _parent: Instagram
+	private lateinit var _parent: Instagram = parent
 
 	/**
 	 * Which API version to import for this request.
@@ -33,7 +35,7 @@ class Request {
 	 *
 	 * @var string
 	 */
-	private lateinit var _url: String
+	private lateinit var _url: String = url
 
 
 	/**
@@ -136,14 +138,14 @@ class Request {
 	 *
 	 * @var resource[]
 	 */
-	private var _handles
+	private var _handles = mutableListOf<String>()
 
 	/**
 	 * Extra Guzzle options for this request.
 	 *
 	 * @var array
 	 */
-	private var _guzzleOptions
+	private var _guzzleOptions = listOf<String>()
 
 	/**
 	 * Cached HTTP response object.
@@ -153,24 +155,14 @@ class Request {
 	private lateinit var _httpResponse: HttpResponseInterface
 
 
-	/**
-	 * Constructor.
-	 *
-	 * @param Instagram parent
-	 * @param string    url
-	 */
-	constructor( parent:Instagram, url:String){
-		_parent = parent
-		_url = url
-
-		// Set defaults.
+	init {
 		_apiVersion = 1
 		_headers = mutableMapOf()
 		_params = mutableMapOf()
 		_posts = mutableMapOf()
 		_files = mutableMapOf()
-		_handles = []
-		_guzzleOptions = []
+//		_handles = []
+//		_guzzleOptions = []
 		_needsAuth = true
 		_signedPost = true
 		_signedGet = false
@@ -214,8 +206,8 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun addParam(key:String, value:Any):Request {
-		val valueFa = if (value === true) {
+	fun addParam(key:String, value:Boolean):Request {
+		val valueFa = if (value) {
 			 "true"
 		} else {
 			"false"
@@ -233,8 +225,8 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun addPost(key:String, value:Any):Request {
-		val valueFa = if (value === true) {
+	fun addPost(key:String, value:Boolean):Request {
+		val valueFa = if (value) {
 			"true"
 		} else {
 			"false"
@@ -255,7 +247,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun addUnsignedPost(key:String, value:Any):Request {
+	fun addUnsignedPost(key:String, value:Boolean):Request {
 		addPost(key, value)
 		_excludeSigned.add(key)
 
@@ -274,28 +266,31 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun addFile(key:String, filepath:String, filename:String? = null, array headers = []) :Request{
+	fun addFile(key:String, filepath:String, filename:String? = null,  headers: Map<String,String> = mutableMapOf())
+			:Request{
 		// Validate
-		if (!is_file(filepath)) {
+		if (!File(filepath).isFile) {
 			throw IllegalArgumentException("File \"$filepath\" does not exist.")
 		}
-		if (!is_readable(filepath)) {
+		if (!File(filepath).canRead()) {
 			throw IllegalArgumentException("File \"$filepath\" is not readable.")
 		}
 		// Inherit value from filepath, if not supplied.
-		if (filename === null) {
-			filename = filepath
-		}
-		filename = basename(filename)
+//		if (filename === null) {
+//			filename = filepath
+//		}
+		var _filename = filename?.let { File(it).name }
+
+
 		// Default headers.
-		headers = headers + mapOf(
+		var _headers = headers + mapOf(
 			"Content-Type"              to "application/octet-stream",
 			"Content-Transfer-Encoding" to "binary"
 		)
 		_files[key] = mapOf(
 			"filepath" to filepath,
-			"filename" to filename,
-			"headers"  to headers
+			"filename" to _filename,
+			"headers"  to _headers
 		)
 
 		return this
@@ -311,17 +306,17 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun addFileData(key: String, data: String, filename: String, array headers = []):Request {
-		filename = basename(filename)
+	fun addFileData(key: String, data: String, filename: String?, headers: Map<String, String> = mapOf()):Request {
+		var _filename = filename?.let { File(it).name }
 		// Default headers.
-		headers = headers + mapOf(
+		var _headers = headers + mapOf(
 			"Content-Type"              to "application/octet-stream",
 			"Content-Transfer-Encoding" to "binary"
 		)
 		_files[key] = mapOf(
 			"contents" to data,
-			"filename" to filename,
-			"headers"  to headers
+			"filename" to _filename,
+			"headers"  to _headers
 		)
 
 		return this
@@ -390,7 +385,7 @@ class Request {
 	 *
 	 * @return self
 	 */
-	fun setGuzzleOptions(array guzzleOptions) :Request{
+	fun setGuzzleOptions( guzzleOptions:List<String>) :Request{
 		_guzzleOptions = guzzleOptions
 
 		return this
@@ -471,10 +466,10 @@ class Request {
 	fun setIsBodyCompressed(isBodyCompressed: Boolean = false) :Request{
 		_isBodyCompressed = isBodyCompressed
 
-		if (isBodyCompressed === true) {
+		if (isBodyCompressed) {
 			_headers["Content-Encoding"] = "gzip"
 		} else if (!(_headers["Content-Encoding"]!!.isBlank()) && _headers["Content-Encoding"] === "gzip") {
-			unset(_headers["Content-Encoding"])
+			_headers.remove("Content-Encoding")
 		}
 
 		return this
@@ -490,16 +485,17 @@ class Request {
 	 *
 	 * @return StreamInterface
 	 */
-	private fun _getStreamForFile(array file) {
-		var result
-		if (!(file["contents"].isBlank())) {
+	private fun _getStreamForFile( file:Map<String,String>) {
+
+
+		if (file.containsKey("contents")) {
 			result = stream_for(file["contents"]) // Throws.
-		} else if (!(file["filepath"].isBlank())) {
-			var handle = fopen(file["filepath"], "rb")
+		} else if (file.containsKey("filepath")) {
+			var handle = File("filepath")
 			if (handle === false) {
 				throw RuntimeException("Could not open file \"${file["filepath"]}\" for reading.")
 			}
-			_handles[] = handle
+			_handles.add(handle)
 			result = stream_for(handle) // Throws.
 		} else {
 			throw IllegalArgumentException("No data for stream creation.")

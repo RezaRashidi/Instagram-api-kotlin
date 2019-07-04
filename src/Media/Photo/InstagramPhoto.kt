@@ -12,7 +12,7 @@ import InstagramAPI.Utils
  *
  * @property PhotoDetails $_details
  */
-class InstagramPhoto : InstagramMedia
+class InstagramPhoto : InstagramMedia()
 {
     /**
      * Output JPEG quality.
@@ -39,8 +39,8 @@ class InstagramPhoto : InstagramMedia
      *
      * @see InstagramMedia::__construct() description for the list of parameters.
      */
-    fun __construct(inputFile: String, array options = []){
-        parent::__construct(inputFile, options)
+     constructor(inputFile: String, array options = []){
+        super(inputFile, options)
         _details = PhotoDetails(_inputFile)
     }
 
