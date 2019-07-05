@@ -7,7 +7,23 @@ package InstagramAPI.Devices
  *
  * @author SteveJobzniak (https://github.com/SteveJobzniak)
  */
-class Device : DeviceInterface{
+class Device// import the provided device if a valid good device. Otherwise import random.
+
+// Initialize ourselves from the device string.
+/**
+ * Constructor.
+ *
+ * @param string      $appVersion   Instagram client app version.
+ * @param string      $versionCode  Instagram client app version code.
+ * @param string      $userLocale   The user"s locale, such as "en_US".
+ * @param string|null $deviceString (optional) The device string to attempt
+ *                                  to construct from. If NULL or not a good
+ *                                  device, we"ll import a random good device.
+ * @param bool        $autoFallback (optional) Toggle automatic fallback.
+ *
+ * @throws .RuntimeException If fallback is disabled and device is invalid.
+ */(appVersion: String, versionCode: String, userLocale: String, deviceString: String? = null,
+    autoFallback: Boolean = true) : DeviceInterface{
     /**
      * The Android version of Instagram currently runs on Android OS 2.2+.
      *
@@ -24,21 +40,21 @@ class Device : DeviceInterface{
      *
      * @var string
      */
-    protected lateinit var _appVersion: String
+    protected lateinit var _appVersion: String = appVersion
 
     /**
      * Which Instagram client app version code this "device" is running.
      *
      * @var string
      */
-    protected lateinit var _versionCode: String
+    protected lateinit var _versionCode: String = versionCode
 
     /**
      * The device user"s locale, such as "en_US".
      *
      * @var string
      */
-    protected lateinit var _userLocale: String
+    protected lateinit var _userLocale: String = userLocale
 
     /**
      * Which device string we were built with internally.
@@ -90,36 +106,10 @@ class Device : DeviceInterface{
     /** @var string Hardware CPU. */
     protected lateinit var _cpu: String
 
-    /**
-     * Constructor.
-     *
-     * @param string      $appVersion   Instagram client app version.
-     * @param string      $versionCode  Instagram client app version code.
-     * @param string      $userLocale   The user"s locale, such as "en_US".
-     * @param string|null $deviceString (optional) The device string to attempt
-     *                                  to construct from. If NULL or not a good
-     *                                  device, we"ll import a random good device.
-     * @param bool        $autoFallback (optional) Toggle automatic fallback.
-     *
-     * @throws .RuntimeException If fallback is disabled and device is invalid.
-     */
-    fun __construct(
-        appVersion:  String,
-        versionCode: String,
-        userLocale:  String,
-        deviceString: String? = null,
-        autoFallback: Boolean = true)
-    {
-        _appVersion =  appVersion
-        _versionCode = versionCode
-        _userLocale =  userLocale
-
-        // import the provided device if a valid good device. Otherwise import random.
+    init {
         if (autoFallback && (deviceString !is String || !GoodDevices.isGoodDevice(deviceString))) {
             deviceString = GoodDevices.getRandomGoodDevice()
         }
-
-        // Initialize ourselves from the device string.
         _initFromDeviceString(deviceString)
     }
 

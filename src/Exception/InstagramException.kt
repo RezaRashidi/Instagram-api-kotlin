@@ -9,14 +9,16 @@ import InstagramAPI.Response
  *
  * If you catch this exception, you KNOW it came from our Instagram-API library.
  */
-open class InstagramException:Throwable() //// TODO: implement RuntimeException on Kotlin
+open class InstagramException( override  val message: String?):Throwable(message) //// TODO: implement RuntimeException
+// on
+// Kotlin
 {
     /**
      * The full response that triggered the exception, if available.
      *
      * @var Response|null
      */
-    private var _response:Response? = null
+    private lateinit var _response:Response
 
     /**
      * Check whether the exception has a full server response.
@@ -35,9 +37,9 @@ open class InstagramException:Throwable() //// TODO: implement RuntimeException 
      *
      * @see InstagramException::hasResponse()
      */
-     fun getResponse():Response?
+     fun getResponse():Response
     {
-        return this._response
+        return _response
     }
 
     /**

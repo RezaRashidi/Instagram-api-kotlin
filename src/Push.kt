@@ -138,7 +138,7 @@ import React.EventLoop.LoopInterface
  *     - warning - An exception of severity "warning" occured.
  *     - error - An exception of severity "error" occurred. It"s not guaranteed that the Push client will continue to work.
  */
-class Push : EventEmitterInterface
+class Push //: EventEmitterInterface
 {
     import EventEmitterTrait
 
@@ -166,7 +166,7 @@ class Push : EventEmitterInterface
      *
      * @throws .RuntimeException
      */
-    public fun __construct(
+    constructor(
         LoopInterface $loop,
         Instagram $instagram,
         LoggerInterface $logger = null)

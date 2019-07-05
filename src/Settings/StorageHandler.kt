@@ -86,19 +86,19 @@ class StorageHandler {
 	val SUPPORTED_CALLBACKS = ["onCloseUser", ]
 
 	/** @var StorageInterface The active storage backend. */
-	private _storage
+	private var _storage
 
 	/** @var array Optional callback funs. */
-	private _callbacks
+	private var _callbacks
 
 	/** @var string Current Instagram username that all settings belong to. */
-	private _username
+	private var _username
 
 	/** @var array Cache for the current user"s key-value settings pairs. */
-	private _userSettings
+	private var _userSettings = mapOf<String,String>()
 
 	/** @var string|null Location of the cookiefile if file-based jar wanted. */
-	private _cookiesFilePath
+	private var _cookiesFilePath
 
 	/**
 	 * Constructor.
@@ -271,7 +271,7 @@ class StorageHandler {
 	 *
 	 * @return bool TRUE if possibly logged in, otherwise FALSE.
 	 */
-	public fun isMaybeLoggedIn() {
+	public fun isMaybeLoggedIn():Boolean{
 		this._throwIfNoActiveUser()
 
 		return this._storage.hasUserCookies() && !empty(this.get("account_id"))
@@ -310,7 +310,7 @@ class StorageHandler {
 	 * @return string|null The value as a string IF the setting exists AND is
 	 *                     a NON-EMPTY string. Otherwise NULL.
 	 */
-	fun get(key: String) {
+	fun get(key: String):String? {
 		_throwIfNoActiveUser()
 
 		// Reject anything that isn"t in our list of VALID persistent keys.
@@ -320,9 +320,7 @@ class StorageHandler {
 
 		// Return value if it"s a NON-EMPTY string, otherwise return NULL.
 		// NOTE: All values are cached as strings so no casting is needed.
-		return (isset(this._userSettings[key]) && this._userSettings[key] !== "")
-		? this._userSettings[key]
-		: null
+		return if (_userSettings.contains(key)  && _userSettings[key] !== "") _userSettings[key] else null
 	}
 
 	/**

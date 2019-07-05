@@ -225,13 +225,13 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun addPost(key:String, value:Boolean):Request {
-		val valueFa = if (value) {
-			"true"
-		} else {
-			"false"
+	fun addPost(key:String, value:Any?):Request {
+		val valueFa = if (value is Boolean){	if (value) "true"  else "false" } else value
+
+
+		 valueFa?.let {
+			_posts[key] =it
 		}
-		_posts[key] = valueFa
 
 		return this
 	}
