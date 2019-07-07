@@ -4,6 +4,7 @@ import InstagramAPI.Media.Video.FFmpeg
 import InstagramAPI.Response.Model.In
 import InstagramAPI.Response.Model.Item
 import InstagramAPI.Response.Model.Location
+import com.google.gson.Gson
 import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
@@ -62,6 +63,9 @@ object Utils{
      * @var string|null
      */
     var _lastUploadId: String ?= null
+
+    //gson
+    val gson=Gson()
 
     /**
      * @param (bool) $useNano Whether to return result in usec instead of msec.

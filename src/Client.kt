@@ -2,21 +2,21 @@
 
 package InstagramAPI
 
-import GuzzleHttp.Client as GuzzleClient
-import GuzzleHttp.Cookie.CookieJar
-import GuzzleHttp.Cookie.SetCookie
-import GuzzleHttp.HandlerStack
+//import GuzzleHttp.Client as GuzzleClient
+//import GuzzleHttp.Cookie.CookieJar
+//import GuzzleHttp.Cookie.SetCookie
+//import GuzzleHttp.HandlerStack
 import InstagramAPI.Exception.InstagramException
 import InstagramAPI.Exception.LoginRequiredException
 import InstagramAPI.Exception.ServerMessageThrower
 import InstagramAPI.Middleware.FakeCookies
 import InstagramAPI.Middleware.ZeroRating
-import LazyJsonMapper.Exception.LazyJsonMapperException
-import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
-import okhttp3.CookieJar
-import Psr.Http.Message.RequestInterface as HttpRequestInterface
-import Psr.Http.Message.ResponseInterface as HttpResponseInterface
-import fun GuzzleHttp.Psr7.modify_request
+//import LazyJsonMapper.Exception.LazyJsonMapperException
+//import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
+//import okhttp3.CookieJar
+//import Psr.Http.Message.RequestInterface as HttpRequestInterface
+//import Psr.Http.Message.ResponseInterface as HttpResponseInterface
+//import fun GuzzleHttp.Psr7.modify_request
 
 /**
  * This class handles core API network communication.
@@ -699,7 +699,9 @@ class Client
      *
      * @return HttpResponseInterface
      */
-    protected fun _apiRequest(request: HttpRequestInterface, array guzzleOptions = [], array libraryOptions = [])
+    protected fun _apiRequest(request: HttpRequestInterface, guzzleOptions: List<String> = listOf<String>(), libraryOptions: Map<String,
+            Boolean> =
+        mapOf())
     {
         // Perform the API request and retrieve the raw HTTP response body.
         val guzzleResponse = _guzzleRequest(request, guzzleOptions)
@@ -748,7 +750,7 @@ class Client
      *
      * @return HttpResponseInterface
      */
-    fun api( requestRE: HttpRequestInterface, array guzzleOptions = []){
+    fun api( requestRE: HttpRequestInterface,  guzzleOptions: MutableList<String> = mutableListOf<String>()){
         // Set up headers that are required for every request.
         val request = modify_request(requestRE, (
             "set_headers" to (
@@ -761,14 +763,14 @@ class Client
                 "Accept-Encoding"  to Constants.ACCEPT_ENCODING,
                 "Accept-Language"  to Constants.ACCEPT_LANGUAGE
             )
-        ))
+        )
 
         // Check the Content-Type header for debugging.
         val contentType = request.getHeader("Content-Type")
         val isFormData = contentType.count() && reset(contentType) === Constants.CONTENT_TYPE
 
         // Perform the API request.
-        val response = _apiRequest(request, guzzleOptions, (
+        val response = _apiRequest(request, guzzleOptions, mapOf<String,Boolean>(
             "debugUploadedBody"  to isFormData,
             "debugUploadedBytes" to !isFormData
         ))
@@ -791,7 +793,7 @@ class Client
      */
     companion object api_body_decode{
         fun api_body_decode(json: String, assoc: Boolean = true) {
-            return@json_decode (json, assoc, 512, JSON_BIGINT_AS_STRING)
+            return json_decode(json, assoc, 512, JSON_BIGINT_AS_STRING)
         }
     }
 

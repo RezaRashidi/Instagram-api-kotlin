@@ -5,6 +5,7 @@ package InstagramAPI
 //import GuzzleHttp.Psr7.Stream
 import InstagramAPI.Exception.InstagramException
 import InstagramAPI.Exception.LoginRequiredException
+import com.github.kittinunf.fuel.core.FileDataPart
 import java.io.File
 
 //import Psr.Http.Message.ResponseInterface as HttpResponseInterface
@@ -21,7 +22,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @var .InstagramAPI.Instagram
 	 */
-	private lateinit var _parent: Instagram = parent
+	private  var _parent: Instagram = parent
 
 	/**
 	 * Which API version to import for this request.
@@ -35,7 +36,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @var string
 	 */
-	private lateinit var _url: String = url
+	private  var _url: String = url
 
 
 	/**
@@ -43,7 +44,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @var array
 	 */
-	private lateinit var _params: MutableMap<String, Any>
+	private  var _params: MutableMap<String, String>
 
 
 	/**
@@ -51,14 +52,14 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @var array
 	 */
-	private lateinit var _posts: MutableMap<String, Any>
+	private  var _posts: MutableMap<String, String>
 
 	/**
 	 * An array of POST params keys to exclude from signed body.
 	 *
 	 * @var string[]
 	 */
-	private lateinit var _excludeSigned: MutableList<String>
+	private  var _excludeSigned: MutableList<String>
 
 	/**
 	 * Raw request body.
@@ -72,14 +73,14 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @var array
 	 */
-	private lateinit var _files: MutableMap<String, Any>
+	private  var _files: MutableMap<String, String>
 
 	/**
 	 * An array of HTTP headers to add to the request.
 	 *
 	 * @var string[]
 	 */
-	private lateinit var _headers: MutableMap<String, String>
+	private  var _headers: MutableMap<String, String>
 
 	/**
 	 * Whether to add the default headers.
@@ -485,20 +486,22 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return StreamInterface
 	 */
-	private fun _getStreamForFile( file:Map<String,String>) {
+	private fun _getStreamForFile( file:Map<String,String>):String {
 
 
-		if (file.containsKey("contents")) {
-			result = stream_for(file["contents"]) // Throws.
-		} else if (file.containsKey("filepath")) {
-			var handle = File("filepath")
-			if (handle === false) {
-				throw RuntimeException("Could not open file \"${file["filepath"]}\" for reading.")
+		when {
+			file.containsKey("contents") -> {
+				result = file["contents"] // Throws.
 			}
-			_handles.add(handle)
-			result = stream_for(handle) // Throws.
-		} else {
-			throw IllegalArgumentException("No data for stream creation.")
+			file.containsKey("filepath") -> {
+				val handle = File("filepath").readText()
+				if (handle.canRead()) {
+					throw RuntimeException("Could not open file \"${file["filepath"]}\" for reading.")
+				}
+				_handles.add(handle)
+				result = handle // Throws.
+			}
+			else -> throw IllegalArgumentException("No data for stream creation.")
 		}
 
 		return result
@@ -515,27 +518,27 @@ class Request(parent: Instagram, url: String) {
 	private fun _getMultipartBody() {
 		// Here is a tricky part: all form data (including files) must be ordered by hash code.
 		// So we are creating an index for building POST data.
-		val index = Utils.reorderByHashCode(array_merge(_posts, _files))
+		val index = Utils.reorderByHashCode(_posts.apply {
+			putAll(_files)
+		})
 		// Build multipart elements using created index.
-		val elements = Map<String, Any>()
-		val element  = Map<String, Any>()
-		var file: List<String>
+		val element  = mutableMapOf<String, Any>()
+		val file: MutableList<String> = mutableListOf()
 		for((key, value) in index) {
-			if (!isset(_files[key])) {
-				element.put("name" to key)
-				element.put("contents" to value)
+			if (!_files.contains(key)) {
+				element["name"] = key
+				element["contents"] = value
 			} else {
-				file = _files[key]
-				element.put("name" to key)
-				element.put("contents" to _getStreamForFile(file))// Throws.
-				element.put("filename" to if( isset(file["filename"]) ) file["filename"] else null)
-				element.put("headers"  to if( isset(file["headers"])  ) file["headers"] else [])
+				_files[key]?.let { file.add(it) }
+				element["name"] = key
+				element["contents"] = file// Throws.
+				element["filename"] = file.indexOf("filename")
+				element["headers"] = file.indexOf("headers")
 			}
-			elements[] = element
+
 		}
 
-		return MultipartStream( // Throws.
-			elements, Utils.generateMultipartBoundary())
+		return FileDataPart(element)
 	}
 
 	/**

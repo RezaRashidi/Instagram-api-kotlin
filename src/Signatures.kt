@@ -40,27 +40,28 @@ object Signatures {
      *
      * @return array
      */
-    fun signData(data: List<String>, exclude:List<String> = mutableListOf()) {
+    fun signData(data: MutableMap<String,String>, exclude:List<String> = mutableListOf()):MutableMap<String,String> {
         val result = mutableMapOf<String, String>()
         // Exclude some params from signed body.
         for (key in exclude) {
-            if (!(data[key].isBlank())) {
-                result[key] = data[key]
-//                unset(data[key])
+            if (data.contains(key)) {
+                data.get(key)?.let { result.put(key, it) }
+              data.remove(key)
             }
         }
         // Typecast all scalar values to string.
-        foreach(data as & value) {
-            if (is_scalar(value)) {
-                var value = value as String
-            }
-        }
+//        for(value in data) {
+//            if (is_scalar(value)) {
+//            var value = value as String
+//        }
+//    }
 //        unset(value) // Clear reference.
         // Reorder and convert data to JSON string.
-        data = json_encode((object) Utils.reorderByHashCode (data))
+        val _data =Utils.gson.toJson(Utils.reorderByHashCode(data))
+
         // Sign data.
         result["ig_sig_key_version"] = Constants.SIG_KEY_VERSION
-        result["signed_body"] = generateSignature(data) + "." + data
+        result["signed_body"] = generateSignature(_data) + "." + _data
         // Return value must be reordered.
         return Utils.reorderByHashCode(result)
     }
