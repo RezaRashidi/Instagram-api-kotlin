@@ -216,9 +216,9 @@ object Utils{
      * @return float The number of seconds, with decimals (milliseconds).
      */
     fun hmsTimeToSeconds(timeStr: String): Float{
-        if (timeStr !is String) {
-            throw IllegalArgumentException("Invalid non-string timestamp.")
-        }
+//        if (timeStr !is String) {
+//            throw IllegalArgumentException("Invalid non-string timestamp.")
+//        }
 
         var sec = 0.0
         for ((offsetKey, v) in (timeStr.split(":")).reversed() ) {
@@ -262,9 +262,9 @@ object Utils{
      */
     fun hmsTimeFromSeconds(sece: Float): String{
         var sec = sece
-        if (sec !is Float) {
-            throw IllegalArgumentException("Seconds must be a number.")
-        }
+//        if (sec !is Float) {
+//            throw IllegalArgumentException("Seconds must be a number.")
+//        }
 
         var wasNegative = false
         if (sec < 0) {
@@ -300,9 +300,9 @@ object Utils{
      * @return string The final JSON string ready to submit as an API parameter.
      */
     fun buildMediaLocationJSON(location: Location): String{
-        if (location !is Location) {
-            throw IllegalArgumentException("The location must be an instance of \\InstagramAPI\\Response\\Model\\Location.")
-        }
+//        if (location !is Location) {
+//            throw IllegalArgumentException("The location must be an instance of \\InstagramAPI\\Response\\Model\\Location.")
+//        }
 
         // Forbid locations that came from Location::searchFacebook() and
         // Location::searchFacebookByPoint()! They have slightly different
@@ -373,14 +373,14 @@ object Utils{
      */
     fun throwIfInvalidUserTag(userTag){
         // NOTE: We can import "array" type hint, but it doesn't give us enough freedom.
-        if (userTag !is Array) {
-            throw IllegalArgumentException("User tag must be an array.")
-        }
+//        if (userTag !is Array) {
+//            throw IllegalArgumentException("User tag must be an array.")
+//        }
 
         // Check for required keys.
-        var requiredKeys = setOf("position", "user_id")
-        var missingKeys = array_diff(requiredKeys, userTag.keys)
-        if (!(missingKeys.isEmpty())) {
+        val requiredKeys = arrayOf("position", "user_id")
+        val missingKeys = arrayDiff(requiredKeys, userTag.keys)
+        if (missingKeys.count() > 0) {
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = "\", \"")}\" for user tag array.")
         }
 
@@ -400,7 +400,7 @@ object Utils{
                     try {
                         throwIfInvalidPosition(value)
                     } catch (e: IllegalArgumentException) {
-                        throw IllegalArgumentException(sprintf("Invalid user tag position: %s", e.getMessage()), e.getCode(), e)
+                        throw IllegalArgumentException("Invalid user tag position: ${e.message}")
                     }
                 }
                 else ->{
@@ -425,9 +425,9 @@ object Utils{
      */
     fun throwIfInvalidUsertags(usertags){
         // NOTE: We can import "array" typehint, but it doesn't give us enough freedom.
-        if (!is_array(usertags)) {
-            throw IllegalArgumentException("Usertags must be an array.")
-        }
+//        if (!is_array(usertags)) {
+//            throw IllegalArgumentException("Usertags must be an array.")
+//        }
 
         if (usertags.isEmpty()) {
             throw IllegalArgumentException("Empty usertags array.")
@@ -449,11 +449,7 @@ object Utils{
                         try {
                             throwIfInvalidUserTag(userTag)
                         } catch (e: IllegalArgumentException) {
-                            throw IllegalArgumentException(
-                                sprintf("Invalid usertag at index "%d": %s", $idx, $e.getMessage()),
-                                e.getCode(),
-                                e
-                            )
+                            throw IllegalArgumentException("Invalid usertag at index \"${idx.toInt()}\": ${e.message}")
                         }
                     }
                 }
@@ -485,9 +481,9 @@ object Utils{
      */
     fun throwIfInvalidProductTags(productTags){ //todo : array second argument
         // NOTE: We can import "array" typehint, but it doesn't give us enough freedom.
-        if (!is_array(productTags)) {
-            throw IllegalArgumentException("Products tags must be an array.")
-        }
+//        if (!is_array(productTags)) {
+//            throw IllegalArgumentException("Products tags must be an array.")
+//        }
 
         if (productTags.isEmpty()) {
             throw IllegalArgumentException("Empty product tags array.")
@@ -512,11 +508,7 @@ object Utils{
                         try {
                             throwIfInvalidProductTag(productTag)
                         } catch (e: IllegalArgumentException) {
-                            throw IllegalArgumentException(
-                                sprintf("Invalid product tag at index "%d": %s", $idx, $e.getMessage()),
-                                $e.getCode(),
-                                $e
-                            )
+                            throw IllegalArgumentException("Invalid product tag at index \"${idx.toInt()}\": ${e.message}")
                         }
                     }
                 }
@@ -548,14 +540,14 @@ object Utils{
      */
     fun throwIfInvalidProductTag(productTag){
         // NOTE: We can import "array" typehint, but it doesn't give us enough freedom.
-        if (!is_array(productTag)) {
-            throw IllegalArgumentException("Product tag must be an array.")
-        }
+//        if (!is_array(productTag)) {
+//            throw IllegalArgumentException("Product tag must be an array.")
+//        }
 
         // Check for required keys.
         val requiredKeys = arrayOf("position", "product_id")
-        var missingKeys = array_diff(requiredKeys, productTag.keys)
-        if (!(missingKeys.isEmpty())) {
+        val missingKeys = arrayDiff(requiredKeys, productTag.keys)
+        if ( missingKeys.count() > 0) {
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = "\", \"")}\" for product tag array.")
         }
 
@@ -575,7 +567,7 @@ object Utils{
                     try {
                         throwIfInvalidPosition(value)
                     } catch (e: IllegalArgumentException) {
-                        throw IllegalArgumentException(sprintf("Invalid product tag position: %s", $e.getMessage()), $e.getCode(), $e)
+                        throw IllegalArgumentException("Invalid product tag position: ${e.message}")
                     }
                 }
                 else -> throw IllegalArgumentException("Invalid key \"$key\" in product tag array.")
@@ -591,9 +583,9 @@ object Utils{
      * @throws IllegalArgumentException
      */
     fun throwIfInvalidPosition(position){
-        if (position !is Array<String>) {
-            throw IllegalArgumentException("Position must be an array.")
-        }
+//        if (position !is Array<String>) {
+//            throw IllegalArgumentException("Position must be an array.")
+//        }
 
         if (position[0].isBlank()) {
             throw IllegalArgumentException("X coordinate is required.")
@@ -660,16 +652,16 @@ object Utils{
      *
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
-    fun throwIfInvalidStoryPoll(storyPoll: Map<String, String>){
-        val requiredKeys = setOf("question", "viewer_vote", "viewer_can_vote", "tallies", "is_sticker")
+    fun throwIfInvalidStoryPoll(storyPoll: Map<String, Int>){
+        val requiredKeys = arrayOf("question", "viewer_vote", "viewer_can_vote", "tallies", "is_sticker")
 
         if (storyPoll.count() !== 1) {
             throw IllegalArgumentException("Only one story poll is permitted. You added ${storyPoll.count()} story polls.")
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["question" to 1, "viewer_vote" to 1, "viewer_can_vote" to 1, "tallies" to 1, "is_sticker" to 1], storyPoll[0]))
-        if (missingKeys.count()) {
+        val missingKeys = arrayKey( arrayDiffKey( mapOf("question" to 1, "viewer_vote" to 1, "viewer_can_vote" to 1, "tallies" to 1, "is_sticker" to 1), storyPoll[0] ) )
+        if (missingKeys.count() > 0) {
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for story poll array.")
         }
 
@@ -698,7 +690,7 @@ object Utils{
                 }
             }
         }
-        _throwIfInvalidStoryStickerPlacement(array_diff_key(storyPoll[0], array_flip(requiredKeys)), "polls")
+        _throwIfInvalidStoryStickerPlacement( arrayDiffKey( storyPoll[0], arrayFlip(requiredKeys) ) , "polls")
     }
 
     /**
@@ -710,15 +702,15 @@ object Utils{
      */
     fun throwIfInvalidStorySlider(storySlider)
     {
-        var requiredKeys = setOf("question", "viewer_vote", "viewer_can_vote", "slider_vote_average", "slider_vote_count", "emoji", "background_color", "text_color", "is_sticker")
+        val requiredKeys = arrayOf("question", "viewer_vote", "viewer_can_vote", "slider_vote_average", "slider_vote_count", "emoji", "background_color", "text_color", "is_sticker")
 
         if (storySlider.count() !== 1) {
             throw IllegalArgumentException("Only one story slider is permitted. You added ${storySlider.count()} story sliders.")
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["question" to 1, "viewer_vote" to 1, "viewer_can_vote" to 1, "slider_vote_average" to 1, "slider_vote_count" to 1, "emoji" to 1, "background_color" to 1, "text_color" to 1, "is_sticker" to 1], storySlider[0]))
-        if (missingKeys.count()) {
+        val missingKeys = arrayKey( arrayDiffKey( mapOf("question" to 1, "viewer_vote" to 1, "viewer_can_vote" to 1, "slider_vote_average" to 1, "slider_vote_count" to 1, "emoji" to 1, "background_color" to 1, "text_color" to 1, "is_sticker" to 1), storySlider[0]))
+        if (missingKeys.count() > 0) {
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for story slider array.")
         }
 
@@ -755,7 +747,7 @@ object Utils{
 
             }
         }
-        _throwIfInvalidStoryStickerPlacement(array_diff_key(storySlider[0], array_flip(requiredKeys)), "sliders")
+        _throwIfInvalidStoryStickerPlacement( arrayDiffKey( storySlider[0], arrayFlip(requiredKeys) ), "sliders")
     }
 
     /**
@@ -766,15 +758,15 @@ object Utils{
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
     fun throwIfInvalidStoryQuestion(storyQuestion){
-        var requiredKeys = setOf("z", "viewer_can_interact", "background_color", "profile_pic_url", "question_type", "question", "text_color", "is_sticker")
+        val requiredKeys = arrayOf("z", "viewer_can_interact", "background_color", "profile_pic_url", "question_type", "question", "text_color", "is_sticker")
 
         if (storyQuestion.count() !== 1) {
             throw IllegalArgumentException("Only one story question is permitted. You added ${storyQuestion.count()} story questions.")
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["viewer_can_interact" to 1, "background_color" to 1, "profile_pic_url" to 1, "question_type" to 1, "question" to 1, "text_color" to 1, "is_sticker" to 1], storyQuestion[0]))
-        if (missingKeys.count()) {
+        val missingKeys = arrayKey( arrayDiffKey( mapOf("viewer_can_interact" to 1, "background_color" to 1, "profile_pic_url" to 1, "question_type" to 1, "question" to 1, "text_color" to 1, "is_sticker" to 1), storyQuestion[0]))
+        if (missingKeys.count() > 0) {
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for story question array.")
         }
 
@@ -818,7 +810,7 @@ object Utils{
                 }
             }
         }
-        _throwIfInvalidStoryStickerPlacement(array_diff_key(storyQuestion[0], array_flip(requiredKeys)), "questions")
+        _throwIfInvalidStoryStickerPlacement( arrayDiffKey( storyQuestion[0], arrayFlip(requiredKeys) ), "questions")
     }
 
     /**
@@ -829,15 +821,15 @@ object Utils{
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
     fun throwIfInvalidStoryCountdown(storyCountdown){
-        var requiredKeys = setOf("z", "text", "text_color", "start_background_color", "end_background_color", "digit_color", "digit_card_color", "end_ts", "following_enabled", "is_sticker")
+        val requiredKeys = arrayOf("z", "text", "text_color", "start_background_color", "end_background_color", "digit_color", "digit_card_color", "end_ts", "following_enabled", "is_sticker")
 
         if (storyCountdown.count() !== 1) {
             throw IllegalArgumentException("Only one story countdown is permitted. You added ${storyCountdown.count()} story countdowns.")
         }
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["z" to 1, "text" to 1, "text_color" to 1, "start_background_color" to 1, "end_background_color" to 1, "digit_color" to 1, "digit_card_color" to 1, "end_ts" to 1, "following_enabled" to 1, "is_sticker" to 1], storyCountdown[0]))
-        if (missingKeys.count()) {
+        val missingKeys = arrayKey( arrayDiffKey( mapOf("z" to 1, "text" to 1, "text_color" to 1, "start_background_color" to 1, "end_background_color" to 1, "digit_color" to 1, "digit_card_color" to 1, "end_ts" to 1, "following_enabled" to 1, "is_sticker" to 1), storyCountdown[0]) )
+        if (missingKeys.count() > 0) {
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for story countdown array.")
         }
 
@@ -875,7 +867,7 @@ object Utils{
                 }
             }
         }
-        _throwIfInvalidStoryStickerPlacement(array_diff_key(storyCountdown[0], array_flip(requiredKeys)), "countdowns")
+        _throwIfInvalidStoryStickerPlacement( arrayDiffKey( storyCountdown[0], arrayFlip(requiredKeys) ), "countdowns")
     }
 
     /**
@@ -892,7 +884,7 @@ object Utils{
         }
 
         for (tallie in tallies) {
-            var missingKeys = array_keys(array_diff_key(["text" to 1, "count" to 1, "font_size" to 1], tallie))
+            val missingKeys = arrayKey( arrayDiffKey( mapOf("text" to 1, "count" to 1, "font_size" to 1), tallie))
 
             if (missingKeys.count()) {
                 throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for location array.")
@@ -930,12 +922,12 @@ object Utils{
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
     fun throwIfInvalidStoryMentions(storyMentions){
-        var requiredKeys = ["user_id"]
+        val requiredKeys = arrayOf("user_id")
 
         for (mention in storyMentions) {
             // Ensure that all keys exist.
-            var missingKeys = array_keys(array_diff_key(["user_id" to 1], mention))
-            if (missingKeys.count()) {
+            val missingKeys = arrayKey( arrayDiffKey( mapOf("user_id" to 1), mention) )
+            if (missingKeys.count() > 0) {
                 throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for mention array.")
             }
 
@@ -948,7 +940,7 @@ object Utils{
                     }
                 }
             }
-            _throwIfInvalidStoryStickerPlacement(array_diff_key(mention, array_flip(requiredKeys)), "story mentions")
+            _throwIfInvalidStoryStickerPlacement( arrayDiffKey(mention, arrayFlip(requiredKeys) ), "story mentions")
         }
     }
 
@@ -960,10 +952,10 @@ object Utils{
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
     fun throwIfInvalidStoryLocationSticker(locationSticker){
-        var requiredKeys = setOf("location_id", "is_sticker")
-        var missingKeys = array_keys(array_diff_key(["location_id" to 1, "is_sticker" to 1], locationSticker))
+        val requiredKeys = arrayOf("location_id", "is_sticker")
+        val missingKeys = arrayKey( arrayDiffKey( mapOf("location_id" to 1, "is_sticker" to 1), locationSticker) )
 
-        if (missingKeys.count()) {
+        if (missingKeys.count() > 0) {
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for location array.")
         }
 
@@ -981,7 +973,7 @@ object Utils{
                 }
             }
         }
-        _throwIfInvalidStoryStickerPlacement(array_diff_key(locationSticker, array_flip(requiredKeys)), "location")
+        _throwIfInvalidStoryStickerPlacement( arrayDiffKey( locationSticker, arrayFlip(requiredKeys) ), "location")
     }
 
     /**
@@ -1003,8 +995,8 @@ object Utils{
 
         // Verify all provided hashtags.
         for (hashtag in hashtags ) {
-            var missingKeys = array_keys(array_diff_key(["tag_name" to 1, "use_custom_title" to 1, "is_sticker" to 1], hashtag))
-            if (missingKeys.count()) {
+            val missingKeys = arrayKey( arrayDiffKey( mapOf("tag_name" to 1, "use_custom_title" to 1, "is_sticker" to 1), hashtag) )
+            if (missingKeys.count() > 0) {
                 throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for hashtag array.")
             }
 
@@ -1031,7 +1023,7 @@ object Utils{
                     }
                 }
             }
-            _throwIfInvalidStoryStickerPlacement(array_diff_key(hashtag, array_flip(requiredKeys)), "hashtag")
+            _throwIfInvalidStoryStickerPlacement( arrayDiffKey(hashtag, arrayFlip(requiredKeys)), "hashtag")
         }
     }
 
@@ -1043,12 +1035,12 @@ object Utils{
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
     fun throwIfInvalidAttachedMedia(attachedMedia){
-        var attachedMedia = reset(attachedMedia)
-        var requiredKeys = setOf("media_id", "is_sticker")
+        val attachedMedia = reset(attachedMedia)
+        val requiredKeys = arrayOf("media_id", "is_sticker")
 
         // Ensure that all keys exist.
-        var missingKeys = array_keys(array_diff_key(["media_id" to 1, "is_sticker" to 1], attachedMedia))
-        if (missingKeys.count()) {
+        val missingKeys = arrayKey( arrayDiffKey( mapOf("media_id" to 1, "is_sticker" to 1), attachedMedia) )
+        if (missingKeys.count() > 0) {
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for attached media.")
         }
 
@@ -1060,7 +1052,7 @@ object Utils{
             throw IllegalArgumentException("Invalid value ${attachedMedia["is_sticker"]} for attached media.")
         }
 
-        _throwIfInvalidStoryStickerPlacement(array_diff_key(attachedMedia, array_flip(requiredKeys)), "attached media")
+        _throwIfInvalidStoryStickerPlacement( arrayDiffKey( attachedMedia, arrayFlip(requiredKeys) ), "attached media")
     }
 
     /**
@@ -1076,12 +1068,12 @@ object Utils{
      *
      * @throws IllegalArgumentException If storySticker is missing keys or has invalid values.
      */
-    fun _throwIfInvalidStoryStickerPlacement(storySticker: Map<String, Float>, type: String){
+    fun _throwIfInvalidStoryStickerPlacement(storySticker: Map<String, Int>, type: String){
         val requiredKeys = arrayOf("x", "y", "width", "height", "rotation")
 
         // Ensure that all required hashtag array keys exist.
-        var missingKeys = array_keys(array_diff_key(["x" to 1, "y" to 1, "width" to 1, "height" to 1, "rotation" to 0], storySticker))
-        if (missingKeys.count()) {
+        val missingKeys = arrayKey( arrayDiffKey( mapOf("x" to 1, "y" to 1, "width" to 1, "height" to 1, "rotation" to 0), storySticker))
+        if (missingKeys.count() > 0) {
             throw IllegalArgumentException("Missing keys \"${missingKeys.joinToString(separator = ", ")}\" for \"$type\".")
         }
 
@@ -1092,7 +1084,7 @@ object Utils{
             }
             when (k) {
                 "x", "y", "width", "height", "rotation" -> {
-                    if (v !is Float || v < 0.0 || v > 1.0) {
+                    if (v as Float !is Float || v < 0.0 || v > 1.0) {
                         throw IllegalArgumentException("Invalid value \"$v\" for \"$type\" key \"$k\".")
                     }
                 }
@@ -1441,7 +1433,7 @@ object Utils{
 * array_search()   to arraySearch()
 * array_diff_key() to arrayDiffKey()
 * array_flip()     to arrayFlip()
-*
+* array_diff()     to arrayDiff()
 * */
 
 
@@ -1491,8 +1483,8 @@ fun arraySearch (map: Map<Int, String>, str: String): Int {
 
 // compares the keys of two arrays, and returns the differences : simulate array_diff_key() in php
 // type for map
-fun arrayDiffKey(a: Map<String, String>, b: Map<String, String>): MutableMap<String, String> {
-    val fiMap = mutableMapOf<String, String>()
+fun arrayDiffKey(a: Map<String, Int>, b: Map<String, Int>): MutableMap<String, Int> {
+    val fiMap = mutableMapOf<String, Int>()
     for (i in a.keys){
         if (!b.keys.contains(i)){
             a[i]?.let {fiMap.put(i, it)}
@@ -1510,19 +1502,22 @@ fun arrayDiffKey(a: Array<String>, b: Array<String>): MutableMap<String, String>
     return fiMap
 }
 
+// compares two array and return the differences : simulate array_flip() in php
+fun arrayDiff(a: Array<String>, b: Set<String>): List<String>{
+    val fiMap = mutableListOf<String>()
+    for (i in a){
+        if (!b.contains(i)){
+            fiMap.add(i)
+        }
+    }
+    return fiMap
+}
+
 // Flip all keys with their associated values in an array : simulate array_flip() in php
-// type for array
 fun arrayFlip (a: Array<String>): MutableMap<String, Int>{
     val fiMap = mutableMapOf<String, Int>()
     for (i in 0 until a.size){
         fiMap[a[i]] = i
-    }
-    return fiMap
-} // type for map
-fun arrayFlip (a: Map<String, String>): MutableMap<String, String>{
-    val fiMap = mutableMapOf<String, String>()
-    for (i in a.keys){
-        a[i]?.let {fiMap.put(it, i)}
     }
     return fiMap
 }
@@ -1532,6 +1527,13 @@ fun arrayKey(a: Map<String, String>): MutableMap<String, String>{
     val fiMap = mutableMapOf<String, String>()
     for ((j, i) in a.keys.withIndex()){
         a[i]?.let {fiMap.put(j.toString(), i)}
+    }
+    return fiMap
+}//for return list
+fun arrayKey(a: Map<String, Int>): List<String>{
+    val fiMap = mutableListOf<String>()
+    for ( i in a.keys){
+        fiMap.add(i)
     }
     return fiMap
 }
