@@ -124,34 +124,33 @@ import InstagramAPI.Response
  * @method this unsetUploadUrl()
  * @method this unset_Messages()
  */
-class CreateLiveResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "broadcast_id"                                          => "string",
-        "upload_url"                                            => "string",
-        "max_time_in_seconds"                                   => "int",
-        "speed_test_ui_timeout"                                 => "int",
-        "stream_network_speed_test_payload_chunk_size_in_bytes" => "int",
-        "stream_network_speed_test_payload_size_in_bytes"       => "int",
-        "stream_network_speed_test_payload_timeout_in_seconds"  => "int",
-        "speed_test_minimum_bandwidth_threshold"                => "int",
-        "speed_test_retry_max_count"                            => "int",
-        "speed_test_retry_time_delay"                           => "int",
-        "disable_speed_test"                                    => "int",
-        "stream_video_allow_b_frames"                           => "int",
-        "stream_video_width"                                    => "int",
-        "stream_video_bit_rate"                                 => "int",
-        "stream_video_fps"                                      => "int",
-        "stream_audio_bit_rate"                                 => "int",
-        "stream_audio_sample_rate"                              => "int",
-        "stream_audio_channels"                                 => "int",
-        "heartbeat_interval"                                    => "int",
-        "broadcaster_update_frequency"                          => "int",
-        "stream_video_adaptive_bitrate_config"                  => "",
-        "stream_network_connection_retry_count"                 => "int",
-        "stream_network_connection_retry_delay_in_seconds"      => "int",
-        "connect_with_1rtt"                                     => "int",
-        "avc_rtmp_payload"                                      => "int",
-        "allow_resolution_change"                               => "int",
-    ]
+class CreateLiveResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "broadcast_id"                                          to "string",
+        "upload_url"                                            to "string",
+        "max_time_in_seconds"                                   to "int",
+        "speed_test_ui_timeout"                                 to "int",
+        "stream_network_speed_test_payload_chunk_size_in_bytes" to "int",
+        "stream_network_speed_test_payload_size_in_bytes"       to "int",
+        "stream_network_speed_test_payload_timeout_in_seconds"  to "int",
+        "speed_test_minimum_bandwidth_threshold"                to "int",
+        "speed_test_retry_max_count"                            to "int",
+        "speed_test_retry_time_delay"                           to "int",
+        "disable_speed_test"                                    to "int",
+        "stream_video_allow_b_frames"                           to "int",
+        "stream_video_width"                                    to "int",
+        "stream_video_bit_rate"                                 to "int",
+        "stream_video_fps"                                      to "int",
+        "stream_audio_bit_rate"                                 to "int",
+        "stream_audio_sample_rate"                              to "int",
+        "stream_audio_channels"                                 to "int",
+        "heartbeat_interval"                                    to "int",
+        "broadcaster_update_frequency"                          to "int",
+        "stream_video_adaptive_bitrate_config"                  to "",
+        "stream_network_connection_retry_count"                 to "int",
+        "stream_network_connection_retry_delay_in_seconds"      to "int",
+        "connect_with_1rtt"                                     to "int",
+        "avc_rtmp_payload"                                      to "int",
+        "allow_resolution_change"                               to "int"
+    )
 }

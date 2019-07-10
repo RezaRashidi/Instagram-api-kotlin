@@ -40,13 +40,12 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FetchQPDataResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "request_status"          => "string",
-        "extra_info"              => "Model.QPExtraInfo[]",
-        "qp_data"                 => "Model.QPData[]",
-        "client_cache_ttl_in_sec" => "int",
-        "error_msg"               => "",
-    ]
+class FetchQPDataResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "request_status"          to "string",
+        "extra_info"              to "Model.QPExtraInfo[]",
+        "qp_data"                 to "Model.QPData[]",
+        "client_cache_ttl_in_sec" to "int",
+        "error_msg"               to ""
+    )
 }

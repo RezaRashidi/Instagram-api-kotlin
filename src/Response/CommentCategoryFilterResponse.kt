@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class CommentCategoryFilterResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "disabled" => "",
-    ]
+class CommentCategoryFilterResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "disabled" to ""
+    )
 }

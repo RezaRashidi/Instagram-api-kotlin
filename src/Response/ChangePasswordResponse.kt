@@ -20,6 +20,6 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ChangePasswordResponse : Response
+class ChangePasswordResponse : Response()
 {
 }

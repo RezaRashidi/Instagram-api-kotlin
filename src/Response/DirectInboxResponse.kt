@@ -44,14 +44,13 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DirectInboxResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "pending_requests_total" => "",
-        "seq_id"                 => "string",
-        "pending_requests_users" => "Model.User[]",
-        "inbox"                  => "Model.DirectInbox",
-        "megaphone"              => "Model.Megaphone",
-        "snapshot_at_ms"         => "string",
-    ]
+class DirectInboxResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "pending_requests_total" to "",
+        "seq_id"                 to "string",
+        "pending_requests_users" to "Model.User[]",
+        "inbox"                  to "Model.DirectInbox",
+        "megaphone"              to "Model.Megaphone",
+        "snapshot_at_ms"         to "string"
+    )
 }

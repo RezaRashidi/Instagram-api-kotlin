@@ -32,11 +32,10 @@ import InstagramAPI.Response
  * @method this unsetStatusCode()
  * @method this unset_Messages()
  */
-class DirectSendItemsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "action"      => "",
-        "status_code" => "",
-        "payload"     => "Model.DirectSendItemPayload[]",
-    ]
+class DirectSendItemsResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "action"      to "",
+        "status_code" to "",
+        "payload"     to "Model.DirectSendItemPayload[]"
+    )
 }

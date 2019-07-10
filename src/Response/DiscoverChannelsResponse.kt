@@ -36,12 +36,11 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DiscoverChannelsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "auto_load_more_enabled" => "",
-        "items"                  => "Model.Item[]",
-        "more_available"         => "",
-        "next_max_id"            => "string",
-    ]
+class DiscoverChannelsResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "auto_load_more_enabled" to "",
+        "items"                  to "Model.Item[]",
+        "more_available"         to "",
+        "next_max_id"            to "string"
+    )
 }

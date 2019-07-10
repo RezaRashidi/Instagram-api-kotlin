@@ -40,13 +40,12 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DirectRankedRecipientsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "expires"           => "",
-        "ranked_recipients" => "Model.DirectRankedRecipient[]",
-        "filtered"          => "",
-        "request_id"        => "string",
-        "rank_token"        => "string",
-    ]
+class DirectRankedRecipientsResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "expires"           to "",
+        "ranked_recipients" to "Model.DirectRankedRecipient[]",
+        "filtered"          to "",
+        "request_id"        to "string",
+        "rank_token"        to "string"
+    )
 }

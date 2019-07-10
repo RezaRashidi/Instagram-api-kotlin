@@ -36,12 +36,11 @@ import InstagramAPI.Response
  * @method this unsetUploadId()
  * @method this unset_Messages()
  */
-class ConfigureResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "upload_id"         => "string",
-        "media"             => "Model.Item",
-        "client_sidecar_id" => "string",
-        "message_metadata"  => "Model.DirectMessageMetadata[]",
-    ]
+class ConfigureResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "upload_id"         to "string",
+        "media"             to "Model.Item",
+        "client_sidecar_id" to "string",
+        "message_metadata"  to "Model.DirectMessageMetadata[]"
+    )
 }

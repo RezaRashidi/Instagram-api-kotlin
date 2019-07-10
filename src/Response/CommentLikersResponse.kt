@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class CommentLikersResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "users" => "Model.User[]",
-    ]
+class CommentLikersResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "users" to "Model.User[]"
+    )
 }

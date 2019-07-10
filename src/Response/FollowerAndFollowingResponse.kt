@@ -44,14 +44,13 @@ import InstagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class FollowerAndFollowingResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "users"                             => "Model.User[]",
-        "suggested_users"                   => "Model.SuggestedUsers",
-        "truncate_follow_requests_at_index" => "int",
-        "next_max_id"                       => "string",
-        "page_size"                         => "",
-        "big_list"                          => "",
-    ]
+class FollowerAndFollowingResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "users"                             to "Model.User[]",
+        "suggested_users"                   to "Model.SuggestedUsers",
+        "truncate_follow_requests_at_index" to "int",
+        "next_max_id"                       to "string",
+        "page_size"                         to "",
+        "big_list"                          to ""
+    )
 }

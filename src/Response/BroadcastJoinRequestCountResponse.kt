@@ -40,13 +40,12 @@ import InstagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class BroadcastJoinRequestCountResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "fetch_ts"            => "string",
-        "num_total_requests"  => "int",
-        "num_new_requests"    => "int",
-        "users"               => "Model.User[]",
-        "num_unseen_requests" => "int",
-    ]
+class BroadcastJoinRequestCountResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "fetch_ts"            to "string",
+        "num_total_requests"  to "int",
+        "num_new_requests"    to "int",
+        "users"               to "Model.User[]",
+        "num_unseen_requests" to "int"
+    )
 }

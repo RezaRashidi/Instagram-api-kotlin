@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FaceModelsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "face_models" => "Model.FaceModels",
-    ]
+class FaceModelsResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "face_models" to "Model.FaceModels"
+    )
 }

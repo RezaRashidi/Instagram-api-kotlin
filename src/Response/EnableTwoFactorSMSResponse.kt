@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class EnableTwoFactorSMSResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "backup_codes" => "",
-    ]
+class EnableTwoFactorSMSResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "backup_codes" to ""
+    )
 }

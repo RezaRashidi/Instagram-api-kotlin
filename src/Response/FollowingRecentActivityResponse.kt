@@ -36,12 +36,11 @@ import InstagramAPI.Response
  * @method this unsetStories()
  * @method this unset_Messages()
  */
-class FollowingRecentActivityResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "stories"                => "Model.Story[]",
-        "next_max_id"            => "string",
-        "auto_load_more_enabled" => "",
-        "megaphone"              => "",
-    ]
+class FollowingRecentActivityResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "stories"                to "Model.Story[]",
+        "next_max_id"            to "string",
+        "auto_load_more_enabled" to "",
+        "megaphone"              to ""
+    )
 }

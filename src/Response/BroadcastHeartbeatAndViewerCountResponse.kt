@@ -52,16 +52,15 @@ import InstagramAPI.Response
  * @method this unsetViewerCount()
  * @method this unset_Messages()
  */
-class BroadcastHeartbeatAndViewerCountResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "broadcast_status"          => "string",
-        "viewer_count"              => "int",
-        "offset_to_video_start"     => "int",
-        "total_unique_viewer_count" => "int",
-        "is_top_live_eligible"      => "int",
-        "cobroadcaster_ids"         => "string[]",
-        "is_policy_violation"       => "int",
-        "policy_violation_reason"   => "string",
-    ]
+class BroadcastHeartbeatAndViewerCountResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "broadcast_status"          to "string",
+        "viewer_count"              to "int",
+        "offset_to_video_start"     to "int",
+        "total_unique_viewer_count" to "int",
+        "is_top_live_eligible"      to "int",
+        "cobroadcaster_ids"         to "string[]",
+        "is_policy_violation"       to "int",
+        "policy_violation_reason"   to "string"
+    )
 }

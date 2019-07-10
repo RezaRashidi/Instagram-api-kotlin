@@ -32,11 +32,10 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ActiveReelAdsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "reels"          => "Model.Reel[]",
-        "next_max_id"    => "string",
-        "more_available" => "bool",
-    ]
+class ActiveReelAdsResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "reels"          to "Model.Reel[]",
+        "next_max_id"    to "string",
+        "more_available" to "bool"
+    )
 }

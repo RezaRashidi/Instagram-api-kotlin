@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class CommentFilterResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "config_value" => "",
-    ]
+class CommentFilterResponse : Response() {
+    override val JSON_PROPERTY_MAP = mapOf(
+        "config_value" to ""
+    )
 }

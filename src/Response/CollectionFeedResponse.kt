@@ -52,16 +52,15 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class CollectionFeedResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "collection_id"          => "string",
-        "collection_name"        => "string",
-        "items"                  => "Model.SavedFeedItem[]",
-        "num_results"            => "int",
-        "more_available"         => "bool",
-        "auto_load_more_enabled" => "bool",
-        "next_max_id"            => "string",
-        "has_related_media"      => "bool",
-    ]
+class CollectionFeedResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "collection_id"          to "string",
+        "collection_name"        to "string",
+        "items"                  to "Model.SavedFeedItem[]",
+        "num_results"            to "int",
+        "more_available"         to "bool",
+        "auto_load_more_enabled" to "bool",
+        "next_max_id"            to "string",
+        "has_related_media"      to "bool"
+    )
 }

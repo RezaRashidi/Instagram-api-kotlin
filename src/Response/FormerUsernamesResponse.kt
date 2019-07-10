@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FormerUsernamesResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "former_usernames" => "Model.FormerUsername[]",
-    ]
+class FormerUsernamesResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "former_usernames" to "Model.FormerUsername[]"
+    )
 }

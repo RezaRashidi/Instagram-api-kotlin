@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class EditMediaResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "media" => "Model.Item",
-    ]
+class EditMediaResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "media" to "Model.Item"
+    )
 }

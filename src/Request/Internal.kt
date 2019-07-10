@@ -3,7 +3,7 @@ package InstagramAPI.Request
 import GuzzleHttp.Psr7.LimitStream
 import GuzzleHttp.Psr7.Stream
 import InstagramAPI.Constants
-import InstagramAPI.Exception.UploadFailedException
+import InstagramAPI.Exception.*
 import InstagramAPI.Media.MediaDetails
 import InstagramAPI.Media.Video.FFmpeg
 import InstagramAPI.Media.Video.InstagramThumbnail
@@ -56,7 +56,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @see Internal.configureSinglePhoto() for available metadata fields.
 	 */
-	fun uploadSinglePhoto(targetFeed:Int, photoFilename:String, internalMetadataRE: InternalMetadata = null, array externalMetadata = []) {
+	fun uploadSinglePhoto(targetFeed:Int, photoFilename:String, internalMetadataRE: InternalMetadata? = null, array externalMetadata = []) {
 		// Make sure we only allow these particular feeds for this fun.
 		if (targetFeed !== Constants.FEED_TIMELINE && targetFeed !== Constants.FEED_STORY && targetFeed !== Constants.FEED_DIRECT_STORY) {
 			throw IllegalArgumentException("Bad target feed \"$targetFeed\".")
@@ -73,7 +73,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 				internalMetadata.setPhotoDetails(targetFeed, photoFilename)
 			}
 		} catch (e: Exception) {
-			throw IllegalArgumentException(sprintf("Failed to get photo details: %s", e.getMessage()), e.getCode(), e)
+			throw IllegalArgumentException("Failed to get photo details: ${e.message}")
 		}
 
 		// Perform the upload.
@@ -117,7 +117,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			throw e
 		} catch (e: Exception) {
 			// Wrap runtime errors.
-			throw UploadFailedException(sprintf("Upload of \"%s\" failed: %s", internalMetadata.getPhotoDetails().getBasename(),e.getMessage()), e.getCode(), e)
+			throw UploadFailedException("Upload of \"${internalMetadata.getPhotoDetails().getBasename()}\" failed: ${e.message}")
 		}
 	}
 
@@ -139,9 +139,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @return .InstagramAPI.Response.ConfigureResponse
 	 */
-	fun configureSinglePhoto(targetFeed:Int, internalMetadata: InternalMetadata  array externalMetadata = []) {
+	fun configureSinglePhoto(targetFeed:Int, internalMetadata: InternalMetadata,  array externalMetadata = []) {
 		// Determine the target endpoint for the photo.
-		var endpoint = when(targetFeed) {
+		val endpoint = when(targetFeed) {
 			Constants.FEED_TIMELINE ->"media/configure/"
 			Constants.FEED_DIRECT_STORY, Constants.FEED_STORY -> "media/configure_to_story/"
 			else -> throw IllegalArgumentException("Bad target feed \"$targetFeed\".")

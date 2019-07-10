@@ -48,15 +48,14 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ExploreResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "num_results"            => "int",
-        "auto_load_more_enabled" => "",
-        "items"                  => "Model.ExploreItem[]",
-        "more_available"         => "",
-        "next_max_id"            => "string",
-        "max_id"                 => "string",
-        "rank_token"             => "string",
-    ]
+class ExploreResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "num_results"            to "int",
+        "auto_load_more_enabled" to "",
+        "items"                  to "Model.ExploreItem[]",
+        "more_available"         to "",
+        "next_max_id"            to "string",
+        "max_id"                 to "string",
+        "rank_token"             to "string"
+    )
 }

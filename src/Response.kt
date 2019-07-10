@@ -24,7 +24,7 @@ open class Response : AutoPropertyMapper() {
 	/** @var string */
 	val STATUS_FAIL = "fail"
 
-	val JSON_PROPERTY_MAP = mapOf(
+	open val JSON_PROPERTY_MAP = mapOf(
 		/*
 		 * Whether the API request succeeded or not.
 		 *

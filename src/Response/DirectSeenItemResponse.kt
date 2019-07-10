@@ -28,10 +28,9 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DirectSeenItemResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "action"  => "",
-        "payload" => "Model.DirectSeenItemPayload", // The number of unseen items.
-    ]
+class DirectSeenItemResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "action"  to "",
+        "payload" to "Model.DirectSeenItemPayload" // The number of unseen items.
+    )
 }

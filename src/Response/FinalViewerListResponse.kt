@@ -28,10 +28,9 @@ import InstagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class FinalViewerListResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "users"                     => "Model.User[]",
-        "total_unique_viewer_count" => "int",
-    ]
+class FinalViewerListResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "users"                     to "Model.User[]",
+        "total_unique_viewer_count" to "int"
+    )
 }

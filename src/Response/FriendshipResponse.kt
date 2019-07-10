@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FriendshipResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "friendship_status" => "Model.FriendshipStatus",
-    ]
+class FriendshipResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "friendship_status" to "Model.FriendshipStatus"
+    )
 }

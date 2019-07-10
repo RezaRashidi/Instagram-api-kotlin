@@ -32,11 +32,10 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FaceEffectsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "sdk_version"    => "",
-        "effects"        => "Model.Effect[]",
-        "loading_effect" => "Model.Effect",
-    ]
+class FaceEffectsResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "sdk_version"    to "",
+        "effects"        to "Model.Effect[]",
+        "loading_effect" to "Model.Effect"
+    )
 }

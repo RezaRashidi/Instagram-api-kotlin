@@ -36,12 +36,11 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ArchivedStoriesFeedResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "items"                  => "Model.ArchivedStoriesFeedItem[]",
-        "num_results"            => "int",
-        "more_available"         => "bool",
-        "max_id"                 => "string",
-    ]
+class ArchivedStoriesFeedResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "items"                  to "Model.ArchivedStoriesFeedItem[]",
+        "num_results"            to "int",
+        "more_available"         to "bool",
+        "max_id"                 to "string"
+    )
 }

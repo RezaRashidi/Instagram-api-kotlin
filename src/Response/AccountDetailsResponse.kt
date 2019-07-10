@@ -40,13 +40,12 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class AccountDetailsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "date_joined"                   => "string",
-        "former_username_info"          => "Model.FormerUsernameInfo",
-        "primary_country_info"          => "Model.PrimaryCountryInfo",
-        "shared_follower_accounts_info" => "Model.SharedFollowerAccountsInfo",
-        "ads_info"                      => "Model.AdsInfo",
-    ]
+class AccountDetailsResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "date_joined"                   to "string",
+        "former_username_info"          to "Model.FormerUsernameInfo",
+        "primary_country_info"          to "Model.PrimaryCountryInfo",
+        "shared_follower_accounts_info" to "Model.SharedFollowerAccountsInfo",
+        "ads_info"                      to "Model.AdsInfo"
+    )
 }

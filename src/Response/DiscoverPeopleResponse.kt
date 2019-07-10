@@ -36,12 +36,11 @@ import InstagramAPI.Response
  * @method this unsetSuggestedUsers()
  * @method this unset_Messages()
  */
-class DiscoverPeopleResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "more_available"      => "bool",
-        "max_id"              => "string",
-        "suggested_users"     => "Model.SuggestedUsers",
-        "new_suggested_users" => "Model.SuggestedUsers",
-    ]
+class DiscoverPeopleResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "more_available"      to "bool",
+        "max_id"              to "string",
+        "suggested_users"     to "Model.SuggestedUsers",
+        "new_suggested_users" to "Model.SuggestedUsers"
+    )
 }

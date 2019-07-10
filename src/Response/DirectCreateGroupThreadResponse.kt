@@ -88,25 +88,24 @@ import InstagramAPI.Response
  * @method this unsetViewerId()
  * @method this unset_Messages()
  */
-class DirectCreateGroupThreadResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "thread_id"        => "string",
-        "users"            => "Model.User[]",
-        "left_users"       => "Model.User[]",
-        "items"            => "Model.DirectThreadItem[]",
-        "last_activity_at" => "",
-        "muted"            => "",
-        "named"            => "",
-        "canonical"        => "",
-        "pending"          => "",
-        "thread_type"      => "",
-        "viewer_id"        => "string",
-        "thread_title"     => "",
-        "inviter"          => "Model.User",
-        "has_older"        => "bool",
-        "has_newer"        => "bool",
-        "last_seen_at"     => "",
-        "is_pin"           => "",
-    ]
+class DirectCreateGroupThreadResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "thread_id"        to "string",
+        "users"            to "Model.User[]",
+        "left_users"       to "Model.User[]",
+        "items"            to "Model.DirectThreadItem[]",
+        "last_activity_at" to "",
+        "muted"            to "",
+        "named"            to "",
+        "canonical"        to "",
+        "pending"          to "",
+        "thread_type"      to "",
+        "viewer_id"        to "string",
+        "thread_title"     to "",
+        "inviter"          to "Model.User",
+        "has_older"        to "bool",
+        "has_newer"        to "bool",
+        "last_seen_at"     to "",
+        "is_pin"           to ""
+    )
 }

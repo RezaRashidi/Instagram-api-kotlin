@@ -36,13 +36,12 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FBSearchResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "has_more"              => "bool",
-        "list"                  => "Model.UserList[]",
-        "clear_client_cache"    => "bool",
-        "has_more"              => "bool",
-        "rank_token"            => "string",
-    ]
+class FBSearchResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "has_more"              to "bool",
+        "list"                  to "Model.UserList[]",
+        "clear_client_cache"    to "bool",
+        "has_more"              to "bool",
+        "rank_token"            to "string"
+    )
 }

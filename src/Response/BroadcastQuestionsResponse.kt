@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class BroadcastQuestionsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "questions"          => "Model.BroadcastQuestion[]",
-    ]
+class BroadcastQuestionsResponse : Response() {
+    override val JSON_PROPERTY_MAP = mapOf(
+        "questions"          to "Model.BroadcastQuestion[]"
+    )
 }

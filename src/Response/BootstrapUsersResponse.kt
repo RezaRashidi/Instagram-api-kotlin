@@ -28,10 +28,9 @@ import InstagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class BootstrapUsersResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "surfaces" => "Model.Surface[]",
-        "users"    => "Model.User[]",
-    ]
+class BootstrapUsersResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "surfaces" to "Model.Surface[]",
+        "users"    to "Model.User[]"
+    )
 }

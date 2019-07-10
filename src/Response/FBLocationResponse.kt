@@ -32,11 +32,10 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FBLocationResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "has_more"   => "bool",
-        "items"      => "Model.LocationItem[]",
-        "rank_token" => "string",
-    ]
+class FBLocationResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "has_more"   to "bool",
+        "items"      to "Model.LocationItem[]",
+        "rank_token" to "string"
+    )
 }

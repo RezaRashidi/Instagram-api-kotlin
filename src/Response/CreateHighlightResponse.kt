@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class CreateHighlightResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "reel" => "Model.Reel",
-    ]
+class CreateHighlightResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "reel" to "Model.Reel"
+    )
 }

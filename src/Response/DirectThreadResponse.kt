@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetThread()
  * @method this unset_Messages()
  */
-class DirectThreadResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "thread" => "Model.DirectThread",
-    ]
+class DirectThreadResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "thread" to "Model.DirectThread"
+    )
 }

@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FacebookHiddenEntitiesResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "recent" => "Model.HiddenEntities",
-    ]
+class FacebookHiddenEntitiesResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "recent" to "Model.HiddenEntities"
+    )
 }

@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class BlockedMediaResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "media_ids" => "",
-    ]
+class BlockedMediaResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "media_ids" to ""
+    )
 }

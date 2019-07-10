@@ -60,18 +60,17 @@ import InstagramAPI.Response
  * @method this unsetSubscription()
  * @method this unset_Messages()
  */
-class ActivityNewsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "new_stories"            => "Model.Story[]",
-        "old_stories"            => "Model.Story[]",
-        "continuation"           => "",
-        "friend_request_stories" => "Model.Story[]",
-        "counts"                 => "Model.Counts",
-        "subscription"           => "Model.Subscription",
-        "partition"              => "",
-        "continuation_token"     => "",
-        "ads_manager"            => "",
-        "aymf"                   => "Model.Aymf",
-    ]
+class ActivityNewsResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "new_stories"            to "Model.Story[]",
+        "old_stories"            to "Model.Story[]",
+        "continuation"           to "",
+        "friend_request_stories" to "Model.Story[]",
+        "counts"                 to "Model.Counts",
+        "subscription"           to "Model.Subscription",
+        "partition"              to "",
+        "continuation_token"     to "",
+        "ads_manager"            to "",
+        "aymf"                   to "Model.Aymf"
+    )
 }

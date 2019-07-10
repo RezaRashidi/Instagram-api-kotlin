@@ -44,14 +44,13 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DiscoverTopLiveResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "broadcasts"             => "Model.Broadcast[]",
-        "post_live_broadcasts"   => "Model.PostLiveItem[]",
-        "score_map"              => "",
-        "more_available"         => "bool",
-        "auto_load_more_enabled" => "bool",
-        "next_max_id"            => "string",
-    ]
+class DiscoverTopLiveResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "broadcasts"             to "Model.Broadcast[]",
+        "post_live_broadcasts"   to "Model.PostLiveItem[]",
+        "score_map"              to "",
+        "more_available"         to "bool",
+        "auto_load_more_enabled" to "bool",
+        "next_max_id"            to "string"
+    )
 }

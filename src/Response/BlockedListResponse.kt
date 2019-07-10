@@ -32,11 +32,10 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class BlockedListResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "blocked_list" => "Model.User[]",
-        "next_max_id"  => "string",
-        "page_size"    => "",
-    ]
+class BlockedListResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "blocked_list" to "Model.User[]",
+        "next_max_id"  to "string",
+        "page_size"    to ""
+    )
 }

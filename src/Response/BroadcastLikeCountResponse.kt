@@ -36,12 +36,11 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class BroadcastLikeCountResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "like_ts"     => "string",
-        "likes"       => "int",
-        "burst_likes" => "int",
-        "likers"      => "Model.User[]",
-    ]
+class BroadcastLikeCountResponse : Response() {
+    override val JSON_PROPERTY_MAP = mapOf(
+        "like_ts"     to "string",
+        "likes"       to "int",
+        "burst_likes" to "int",
+        "likers"      to "Model.User[]"
+    )
 }

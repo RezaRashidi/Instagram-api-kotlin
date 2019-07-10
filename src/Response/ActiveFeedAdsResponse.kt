@@ -32,11 +32,10 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ActiveFeedAdsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "feed_items"     => "Model.FeedItem[]",
-        "next_max_id"    => "string",
-        "more_available" => "bool",
-    ]
+class ActiveFeedAdsResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "feed_items"     to "Model.FeedItem[]",
+        "next_max_id"    to "string",
+        "more_available" to "bool"
+    )
 }

@@ -24,9 +24,8 @@ import InstagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class EnableDisableLiveCommentsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "comment_muted" => "int",
-    ]
+class EnableDisableLiveCommentsResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "comment_muted" to "int"
+    )
 }
