@@ -5,7 +5,11 @@ import InstagramAPI.Response.Model.In
 import InstagramAPI.Response.Model.Item
 import InstagramAPI.Response.Model.Location
 import com.google.gson.Gson
+import java.io.ByteArrayOutputStream
+import java.nio.charset.StandardCharsets
 import java.util.*
+import java.util.zip.GZIPInputStream
+import java.util.zip.GZIPOutputStream
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import javax.xml.bind.DatatypeConverter
@@ -111,21 +115,7 @@ object Utils{
      * @see (https://en.wikipedia.org/wiki/Java_hashCode()#The_java.lang.String_hash_fun)
      */
     fun hashCode(string: String): Int{
-        var result: Long = 0
-        //for ($i = 0, $len = strlen($string) $i < $len ++$i)
-        for (i in 0 until string.length){   //Todo check loop step
-            result = (-result + (result.shl(5)) + string[i].toInt()) and 0xFFFFFFFF
-        }
-//        if (PHP_INT_SIZE > 4) {
-//
-//            if (result > 0x7FFFFFFF) {
-//                result -= 0x100000000
-//            } else if (result < -0x80000000) {
-//                result += 0x100000000
-//            }
-//        }
-
-        return result.toInt()
+        return string.hashCode()
     }
 
     /**
@@ -1413,7 +1403,7 @@ object Utils{
 
         return urls
     }
-}
+
 
 /*
 * adding code to this file
@@ -1437,17 +1427,17 @@ object Utils{
 * */
 
 
-// function to covert string to hash code (HmacSHA256 format) then convert it to base64 encode
-fun base64hashHmacSha256(key: String, message: String): String{
-    val hasher = Mac.getInstance("HmacSHA256")
-    hasher.init(SecretKeySpec(key.toByteArray(), "HmacSHA256"))
+	// function to covert string to hash code (HmacSHA256 format) then convert it to base64 encode
+	fun base64hashHmacSha256(key: String, message: String): String{
+		val hasher = Mac.getInstance("HmacSHA256")
+		hasher.init(SecretKeySpec(key.toByteArray(), "HmacSHA256"))
 
-    val hash = hasher.doFinal(message.toByteArray())
+		val hash = hasher.doFinal(message.toByteArray())
 
-    // to lowercase hexits
-    //return DatatypeConverter.printHexBinary(hash)
-    // to base64
-    return DatatypeConverter.printBase64Binary(hash)
+		// to lowercase hexits
+		//return DatatypeConverter.printHexBinary(hash)
+		// to base64
+		return DatatypeConverter.printBase64Binary(hash)
 
 //    error on return keyword
 //    try {
@@ -1463,77 +1453,89 @@ fun base64hashHmacSha256(key: String, message: String): String{
 //    }
 //    catch (e: NoSuchAlgorithmException) {}
 //    catch (e: InvalidKeyException) {}
-}
+	}
 
-// check string is a numeric : given value can be int, float, hex etc
-fun numericCheck(input: String): Boolean =
-    try {
-        input.toDouble()
-        true
-    } catch(e: NumberFormatException) {
-        false
-    }
+	// check string is a numeric : given value can be int, float, hex etc
+	fun numericCheck(input: String): Boolean =
+		try {
+			input.toDouble()
+			true
+		} catch(e: NumberFormatException) {
+			false
+		}
 
-// search given value in map and return index of that : simulate array_search in php
-fun arraySearch (map: Map<Int, String>, str: String): Int {
-    var m = 0
-    map.forEach{ (k, v) -> if (v == str) m = k ;return@forEach }
-    return m
-}
+	// search given value in map and return index of that : simulate array_search in php
+	fun arraySearch (map: Map<Int, String>, str: String): Int {
+		var m = 0
+		map.forEach{ (k, v) -> if (v == str) m = k ;return@forEach }
+		return m
+	}
 
-// compares the keys of two arrays, and returns the differences : simulate array_diff_key() in php
+	// compares the keys of two arrays, and returns the differences : simulate array_diff_key() in php
 // type for map
-fun arrayDiffKey(a: Map<String, Int>, b: Map<String, Int>): MutableMap<String, Int> {
-    val fiMap = mutableMapOf<String, Int>()
-    for (i in a.keys){
-        if (!b.keys.contains(i)){
-            a[i]?.let {fiMap.put(i, it)}
-        }
-    }
-    return fiMap
-} // type for array
-fun arrayDiffKey(a: Array<String>, b: Array<String>): MutableMap<String, String> {
-    val fiMap = mutableMapOf<String, String>()
-    for (i in a){
-        if (!b.contains(i)){
-            fiMap[a.indexOf(i).toString()] = i
-        }
-    }
-    return fiMap
-}
+	fun arrayDiffKey(a: Map<String, Int>, b: Map<String, Int>): MutableMap<String, Int> {
+		val fiMap = mutableMapOf<String, Int>()
+		for (i in a.keys){
+			if (!b.keys.contains(i)){
+				a[i]?.let {fiMap.put(i, it)}
+			}
+		}
+		return fiMap
+	} // type for array
+	fun arrayDiffKey(a: Array<String>, b: Array<String>): MutableMap<String, String> {
+		val fiMap = mutableMapOf<String, String>()
+		for (i in a){
+			if (!b.contains(i)){
+				fiMap[a.indexOf(i).toString()] = i
+			}
+		}
+		return fiMap
+	}
 
-// compares two array and return the differences : simulate array_flip() in php
-fun arrayDiff(a: Array<String>, b: Set<String>): List<String>{
-    val fiMap = mutableListOf<String>()
-    for (i in a){
-        if (!b.contains(i)){
-            fiMap.add(i)
-        }
-    }
-    return fiMap
-}
+	// compares two array and return the differences : simulate array_flip() in php
+	fun arrayDiff(a: Array<String>, b: Set<String>): List<String>{
+		val fiMap = mutableListOf<String>()
+		for (i in a){
+			if (!b.contains(i)){
+				fiMap.add(i)
+			}
+		}
+		return fiMap
+	}
 
-// Flip all keys with their associated values in an array : simulate array_flip() in php
-fun arrayFlip (a: Array<String>): MutableMap<String, Int>{
-    val fiMap = mutableMapOf<String, Int>()
-    for (i in 0 until a.size){
-        fiMap[a[i]] = i
-    }
-    return fiMap
-}
+	// Flip all keys with their associated values in an array : simulate array_flip() in php
+	fun arrayFlip (a: Array<String>): MutableMap<String, Int>{
+		val fiMap = mutableMapOf<String, Int>()
+		for (i in 0 until a.size){
+			fiMap[a[i]] = i
+		}
+		return fiMap
+	}
 
-// Return an array containing the keys : simulate array_keys() in php
-fun arrayKey(a: Map<String, String>): MutableMap<String, String>{
-    val fiMap = mutableMapOf<String, String>()
-    for ((j, i) in a.keys.withIndex()){
-        a[i]?.let {fiMap.put(j.toString(), i)}
-    }
-    return fiMap
-}//for return list
-fun arrayKey(a: Map<String, Int>): List<String>{
-    val fiMap = mutableListOf<String>()
-    for ( i in a.keys){
-        fiMap.add(i)
-    }
-    return fiMap
+	// Return an array containing the keys : simulate array_keys() in php
+	fun arrayKey(a: Map<String, String>): MutableMap<String, String>{
+		val fiMap = mutableMapOf<String, String>()
+		for ((j, i) in a.keys.withIndex()){
+			a[i]?.let {fiMap.put(j.toString(), i)}
+		}
+		return fiMap
+	}//for return list
+	fun arrayKey(a: Map<String, Int>): List<String>{
+		val fiMap = mutableListOf<String>()
+		for ( i in a.keys){
+			fiMap.add(i)
+		}
+		return fiMap
+	}
+	fun gzip(content: String): ByteArray {
+		val bos = ByteArrayOutputStream()
+		GZIPOutputStream(bos).bufferedWriter(StandardCharsets.UTF_8).use { it.write(content) }
+		return bos.toByteArray()
+	}
+
+	fun ungzip(content: ByteArray): String =
+		GZIPInputStream(content.inputStream()).bufferedReader(StandardCharsets.UTF_8).use { it.readText() }
+
+
+
 }

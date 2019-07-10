@@ -6,6 +6,7 @@ package InstagramAPI
 import InstagramAPI.Exception.InstagramException
 import InstagramAPI.Exception.LoginRequiredException
 import com.github.kittinunf.fuel.core.FileDataPart
+import com.sun.deploy.net.HttpRequest
 import java.io.File
 
 //import Psr.Http.Message.ResponseInterface as HttpResponseInterface
@@ -588,7 +589,7 @@ class Request(parent: Instagram, url: String) {
 		// Check and return raw body stream if set.
 		if (_body !== null) {
 			if (_isBodyCompressed) {
-				return stream_for(zlib_encode(_body.toString(), ZLIB_ENCODING_GZIP))
+				return Utils.gzip(_body.toString())
 			}
 
 			return _body
@@ -609,7 +610,7 @@ class Request(parent: Instagram, url: String) {
 		}
 
 		if (_isBodyCompressed) {
-			return stream_for(zlib_encode(result.toString(), ZLIB_ENCODING_GZIP))
+			return Utils.gzip(result.toString())
 		}
 
 		return result
