@@ -17,33 +17,33 @@ interface PersistentInterface
      *
      * @return int
      */
-    public fun getMinReconnectInterval()
+    fun getMinReconnectInterval(): Int
 
     /**
      * Returns a minimum allowed reconnection interval.
      *
      * @return int
      */
-    public fun getMaxReconnectInterval()
+    fun getMaxReconnectInterval(): Int
 
     /**
      * Returns whether persistence should be maintained.
      *
      * @return bool
      */
-    public fun isActive()
+    fun isActive(): Boolean
 
     /**
      * Returns the logger instance.
      *
      * @return LoggerInterface
      */
-    public fun getLogger()
+    fun getLogger(): LoggerInterface
 
     /**
      * Returns the loop instance.
      *
      * @return LoopInterface
      */
-    public fun getLoop()
+    fun getLoop(): LoopInterface
 }

@@ -6,70 +6,60 @@ import Fbns.Client.Auth.DeviceAuth
 import Fbns.Client.AuthInterface
 import InstagramAPI.Instagram
 
-class Auth : AuthInterface
-{
+class Auth : AuthInterface{
     /**
      * @var Instagram
      */
-    protected $_instagram
+    protected var _instagram: Instagram
 
     /**
      * @var DeviceAuth
      */
-    protected $_deviceAuth
+    protected var _deviceAuth: DeviceAuth
 
     /**
      * Auth constructor.
      *
      * @param Instagram $instagram
      */
-    public fun __construct(
-        Instagram $instagram)
-    {
-        this._instagram = $instagram
-        this._deviceAuth = this._instagram.settings.getFbnsAuth()
+    constructor(instagram: Instagram){
+        _instagram = instagram
+        _deviceAuth = _instagram.settings.getFbnsAuth()
     }
 
     /** {@inheritdoc} */
-    public fun getClientId()
-    {
-        return this._deviceAuth.getClientId()
+    fun getClientId(){
+        return _deviceAuth.getClientId()
     }
 
     /** {@inheritdoc} */
-    public fun getClientType()
-    {
-        return this._deviceAuth.getClientType()
+    fun getClientType(){
+        return _deviceAuth.getClientType()
     }
 
     /** {@inheritdoc} */
-    public fun getUserId()
-    {
-        return this._deviceAuth.getUserId()
+    fun getUserId()    {
+        return _deviceAuth.getUserId()
     }
 
     /** {@inheritdoc} */
-    public fun getPassword()
-    {
-        return this._deviceAuth.getPassword()
+    fun getPassword()    {
+        return _deviceAuth.getPassword()
     }
 
     /** {@inheritdoc} */
-    public fun getDeviceId()
-    {
-        return this._deviceAuth.getDeviceId()
+    fun getDeviceId()    {
+        return _deviceAuth.getDeviceId()
     }
 
     /** {@inheritdoc} */
-    public fun getDeviceSecret()
-    {
-        return this._deviceAuth.getDeviceSecret()
+    fun getDeviceSecret()    {
+        return _deviceAuth.getDeviceSecret()
     }
 
     /** {@inheritdoc} */
-    public fun __toString()
-    {
-        return this._deviceAuth.__toString()
+    fun __toString(){
+        return _deviceAuth.__toString()
     }
 
     /**
@@ -79,11 +69,9 @@ class Auth : AuthInterface
      *
      * @throws  IllegalArgumentException
      */
-    public fun update(
-        $auth)
-    {
+    fun update(auth: String){
         /* @var DeviceAuth $auth */
-        this._deviceAuth.read($auth)
-        this._instagram.settings.setFbnsAuth(this._deviceAuth)
+        _deviceAuth.read(auth)
+        _instagram.settings.setFbnsAuth(_deviceAuth)
     }
 }

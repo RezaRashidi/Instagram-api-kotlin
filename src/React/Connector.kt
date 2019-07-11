@@ -13,22 +13,21 @@ import React.Socket.Connector as SocketConnector
 import React.Socket.ConnectorInterface
 import React.Socket.SecureConnector
 
-class Connector : ConnectorInterface
-{
+class Connector : ConnectorInterface{
     /**
      * @var Instagram
      */
-    protected $_instagram
+    protected lateinit var _instagram: Instagram
 
     /**
      * @var LoopInterface
      */
-    protected $_loop
+    protected lateinit var _loop: LoopInterface
 
     /**
      * @var ConnectorInterface[]
      */
-    protected $_connectors
+    protected lateinit var _connectors: ConnectorInterface
 
     /**
      * Constructor.
@@ -36,38 +35,32 @@ class Connector : ConnectorInterface
      * @param Instagram     $instagram
      * @param LoopInterface $loop
      */
-    public fun __construct(
-        Instagram $instagram,
-        LoopInterface $loop)
-    {
-        this._instagram = $instagram
-        this._loop = $loop
+    constructor(instagram: Instagram, loop: LoopInterface){
+        _instagram = instagram
+        _loop = loop
 
-        this._connectors = []
+        _connectors = []
     }
 
     /** {@inheritdoc} */
-    public fun connect(
-        $uri)
-    {
-        $uriObj = Uri($uri)
-        $host = this._instagram.client.zeroRating().rewrite($uriObj.getHost())
-        $uriObj = $uriObj.withHost($host)
-        if (!isset(this._connectors[$host])) {
+    fun connect(uri){
+        var uriObj = Uri(uri)
+        val host = _instagram.client.zeroRating().rewrite(uriObj.getHost())
+        uriObj = uriObj.withHost(host)
+        if (_connectors[host].isBlank()) {
             try {
-                this._connectors[$host] = this._getSecureConnector(
-                    this._getSecureContext(this._instagram.getVerifySSL()),
-                    this._getProxyForHost($host, this._instagram.getProxy())
+                _connectors[host] = _getSecureConnector(
+                    _getSecureContext(_instagram.getVerifySSL()),
+                    _getProxyForHost(host, _instagram.getProxy())
                 )
-            } catch (.Exception $e) {
-                return RejectedPromise($e)
+            } catch (e: Exception) {
+                return RejectedPromise(e)
             }
         }
-        $niceUri = ltrim((string) $uriObj, "/")
-        /** @var PromiseInterface $promise */
-        $promise = this._connectors[$host].connect($niceUri)
+        val niceUri = ltrim(uriObj as String, "/")
 
-        return $promise
+        /** @var PromiseInterface $promise */
+        return _connectors[host].connect(niceUri)
     }
 
     /**
@@ -80,23 +73,20 @@ class Connector : ConnectorInterface
      *
      * @return ConnectorInterface
      */
-    protected fun _getSecureConnector(
-        array $secureContext = [],
-        $proxyAddress = null)
-    {
-        $connector = SocketConnector(this._loop, [
-            "tcp"     => true,
-            "tls"     => false,
-            "unix"    => false,
-            "dns"     => true,
-            "timeout" => true,
-        ])
+    protected fun _getSecureConnector(array secureContext = [], proxyAddress: String? = null){
+        var connector = SocketConnector(this._loop, mapOf(
+            "tcp"     to true,
+            "tls"     to false,
+            "unix"    to false,
+            "dns"     to true,
+            "timeout" to true
+        ))
 
-        if ($proxyAddress !== null) {
-            $connector = this._wrapConnectorIntoProxy($connector, $proxyAddress, $secureContext)
+        if (proxyAddress !== null) {
+            connector = _wrapConnectorIntoProxy(connector, proxyAddress, secureContext)
         }
 
-        return SecureConnector($connector, this._loop, $secureContext)
+        return SecureConnector(connector, _loop, secureContext)
     }
 
     /**
@@ -111,31 +101,28 @@ class Connector : ConnectorInterface
      *
      * @see http://docs.guzzlephp.org/en/stable/request-options.html#proxy
      */
-    protected fun _getProxyForHost(
-        $host,
-        $proxyConfig = null)
-    {
+    protected fun _getProxyForHost(host: String, proxyConfig = null): String?{
         // Empty config => no proxy.
-        if (empty($proxyConfig)) {
+        if (proxyConfig.isEmpty()) {
             return
         }
 
         // Plain string => return it.
-        if (!is_array($proxyConfig)) {
-            return $proxyConfig
+        if (!is_array(proxyConfig)) {
+            return proxyConfig
         }
 
         // HTTP proxies do not have CONNECT method.
-        if (!isset($proxyConfig["https"])) {
+        if (proxyConfig["https"].isBlank()) {
             throw  IllegalArgumentException("No proxy with CONNECT method found.")
         }
 
         // Check exceptions.
-        if (isset($proxyConfig["no"]) && .GuzzleHttp.is_host_in_noproxy($host, $proxyConfig["no"])) {
+        if (!(proxyConfig["no"].isBlank()) && GuzzleHttp.is_host_in_noproxy(host, proxyConfig["no"])) {
             return
         }
 
-        return $proxyConfig["https"]
+        return proxyConfig["https"]
     }
 
     /**
@@ -150,34 +137,32 @@ class Connector : ConnectorInterface
      *
      * @see http://docs.guzzlephp.org/en/stable/request-options.html#verify
      */
-    protected fun _getSecureContext(
-        $config)
-    {
-        $context = []
-        if ($config === true) {
+    protected fun _getSecureContext(config): MutableMap<String, Any> {
+        val context = mutableMapOf<String, Any>()
+        if (config === true) {
             // PHP 5.6 or greater will find the system cert by default. When
             // < 5.6, import the Guzzle bundled cacert.
             if (PHP_VERSION_ID < 50600) {
-                $context["cafile"] = .GuzzleHttp.default_ca_bundle()
+                context["cafile"] = GuzzleHttp.default_ca_bundle()
             }
-        } elseif (is_string($config)) {
-            $context["cafile"] = $config
-            if (!is_file($config)) {
-                throw .RuntimeException(sprintf("SSL CA bundle not found: "%s".", $config))
+        } else if (config is String) {
+            context["cafile"] = config
+            if (!is_file(config)) {
+                throw RuntimeException("SSL CA bundle not found: \"$config\".")
             }
-        } elseif ($config === false) {
-            $context["verify_peer"] = false
-            $context["verify_peer_name"] = false
+        } else if (config === false) {
+            context["verify_peer"] = false
+            context["verify_peer_name"] = false
 
-            return $context
+            return context
         } else {
             throw  IllegalArgumentException("Invalid verify request option.")
         }
-        $context["verify_peer"] = true
-        $context["verify_peer_name"] = true
-        $context["allow_self_signed"] = false
+        context["verify_peer"] = true
+        context["verify_peer_name"] = true
+        context["allow_self_signed"] = false
 
-        return $context
+        return context
     }
 
     /**
@@ -191,33 +176,18 @@ class Connector : ConnectorInterface
      *
      * @return ConnectorInterface
      */
-    protected fun _wrapConnectorIntoProxy(
-        ConnectorInterface $connector,
-        $proxyAddress,
-        array $secureContext = [])
-    {
-        if (strpos($proxyAddress, "://") === false) {
-            $scheme = "http"
+    protected fun _wrapConnectorIntoProxy( connector: ConnectorInterface, proxyAddress: String, array secureContext = []){
+        val scheme = if (strpos(proxyAddress, "://") === false) {
+            "http"
         } else {
-            $scheme = parse_url($proxyAddress, PHP_URL_SCHEME)
-        }
-        switch ($scheme) {
-            case "socks":
-            case "socks4":
-            case "socks4a":
-            case "socks5":
-                $connector = SocksProxy($proxyAddress, $connector)
-                break
-            case "http":
-                $connector = HttpConnectProxy($proxyAddress, $connector)
-                break
-            case "https":
-                $connector = HttpConnectProxy($proxyAddress, SecureConnector($connector, this._loop, $secureContext))
-                break
-            default:
-                throw  IllegalArgumentException(sprintf("Unsupported proxy scheme: "%s".", $scheme))
+            parse_url(proxyAddress, PHP_URL_SCHEME)
         }
 
-        return $connector
+        return when(scheme) {
+            "socks", "socks4", "socks4a", "socks5" -> SocksProxy(proxyAddress, connector)
+            "http"  -> HttpConnectProxy(proxyAddress, connector)
+            "https" -> HttpConnectProxy(proxyAddress, SecureConnector(connector, _loop, secureContext))
+            else    -> throw  IllegalArgumentException("Unsupported proxy scheme: \"$scheme\".")
+        }
     }
 }
