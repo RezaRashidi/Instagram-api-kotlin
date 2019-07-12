@@ -36,12 +36,11 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class GetCollectionsListResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "items"                  => "Model.Collection[]",
-        "more_available"         => "bool",
-        "auto_load_more_enabled" => "bool",
-        "next_max_id"            => "string",
-    ]
+class GetCollectionsListResponse : Response(){
+    override val JSON_PROPERTY_MAP = mapOf(
+        "items"                  to "Model.Collection[]",
+        "more_available"         to "bool",
+        "auto_load_more_enabled" to "bool",
+        "next_max_id"            to "string"
+    )
 }

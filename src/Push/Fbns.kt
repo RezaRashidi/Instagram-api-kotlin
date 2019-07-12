@@ -66,7 +66,7 @@ class Fbns : PersistentInterface, EventEmitterInterface
      * @param LoopInterface         $loop
      * @param LoggerInterface       $logger
      */
-    fun __construct(
+    constructor(
         target: EventEmitterInterface,
         connector: ConnectorInterface,
         auth: AuthInterface,
@@ -126,7 +126,7 @@ class Fbns : PersistentInterface, EventEmitterInterface
                 try {
                     val notification = Notification(payload)
                 } catch (e: Exception) {
-                    _logger.error(sprintf("Failed to decode push: %s", $e.getMessage()), [$payload])
+                    _logger.error("Failed to decode push: ${e.message}", [payload])
 
                     return
                 }

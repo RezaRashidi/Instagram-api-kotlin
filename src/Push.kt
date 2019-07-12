@@ -142,19 +142,19 @@ class Push //: EventEmitterInterface
     import EventEmitterTrait
 
     /** @var Instagram */
-    protected $_instagram
+    protected var _instagram: Instagram
 
     /** @var LoopInterface */
-    protected $_loop
+    protected var _loop: LoopInterface
 
     /** @var LoggerInterface */
-    protected $_logger
+    protected var _logger: LoggerInterface
 
     /** @var Fbns */
-    protected $_fbns
+    protected var _fbns: Fbns
 
     /** @var Fbns.Auth */
-    protected $_fbnsAuth
+    protected var _fbnsAuth: Fbns.Auth
 
     /**
      * Push constructor.
@@ -165,24 +165,21 @@ class Push //: EventEmitterInterface
      *
      * @throws .RuntimeException
      */
-    constructor(
-        LoopInterface $loop,
-        Instagram $instagram,
-        LoggerInterface $logger = null)
+    constructor( loop: LoopInterface, instagram: Instagram, logger: LoggerInterface? = null)
     {
         if (PHP_SAPI !== "cli") {
-            throw .RuntimeException("The Push client can only run from the command line.")
+            throw RuntimeException("The Push client can only run from the command line.")
         }
 
-        this._instagram = $instagram
-        this._loop = $loop
-        this._logger = $logger
-        if (this._logger === null) {
-            this._logger = NullLogger()
+        _instagram = instagram
+        _loop = loop
+        _logger = logger
+        if (_logger === null) {
+            _logger = NullLogger()
         }
 
-        this._fbnsAuth = Fbns.Auth(this._instagram)
-        this._fbns = this._getFbns()
+        _fbnsAuth = Fbns.Auth(_instagram)
+        _fbns = _getFbns()
     }
 
     /**
@@ -190,14 +187,12 @@ class Push //: EventEmitterInterface
      *
      * @param Notification $notification
      */
-    protected fun _onPush(
-        Notification $notification)
-    {
-        $collapseKey = $notification.getCollapseKey()
-        this._logger.info(sprintf("Received a push with collapse key "%s"", $collapseKey), [(string) $notification])
-        this.emit("incoming", [$notification])
-        if (!empty($collapseKey)) {
-            this.emit($collapseKey, [$notification])
+    protected fun _onPush(notification: Notification){
+        val collapseKey = notification.getCollapseKey()
+        _logger.info("Received a push with collapse key \"$collapseKey\"" , [notification as String])
+        this.emit("incoming", [notification])
+        if (collapseKey.isNotEmpty()) {
+            this.emit(collapseKey, [notification])
         }
     }
 
@@ -206,48 +201,47 @@ class Push //: EventEmitterInterface
      *
      * @return Fbns
      */
-    protected fun _getFbns()
-    {
-        $fbns = Fbns(
+    protected fun _getFbns(): Fbns {
+        val fbns = Fbns(
             this,
-            Connector(this._instagram, this._loop),
-            this._fbnsAuth,
-            this._instagram.device,
-            this._loop,
-            this._logger
+            Connector(_instagram, _loop),
+            _fbnsAuth,
+            _instagram.device,
+            _loop,
+            _logger
         )
-        $fbns.on("fbns_auth", fun ($authJson) {
+        fbns.on("fbns_auth", fun (authJson) {
             try {
-                this._fbnsAuth.update($authJson)
-            } catch (.Exception $e) {
-                this._logger.error(sprintf("Failed to update FBNS auth: %s", $e.getMessage()), [$authJson])
+                _fbnsAuth.update(authJson)
+            } catch (e: Exception) {
+                _logger.error("Failed to update FBNS auth: ${e.message}", [authJson])
             }
         })
-        $fbns.on("fbns_token", fun ($token) {
+        fbns.on("fbns_token", fun (token) {
             // Refresh the "last token activity" timestamp.
             // The age of this timestamp helps us detect when the user
             // has stopped using the Push features due to inactivity.
             try {
-                this._instagram.settings.set("last_fbns_token", time())
-            } catch (.Exception $e) {
-                this._logger.error(sprintf("Failed to write FBNS token timestamp: %s", $e.getMessage()))
+                _instagram.settings.set("last_fbns_token", System.currentTimeMillis()/1000 )
+            } catch (e: Exception) {
+                _logger.error("Failed to write FBNS token timestamp: ${e.message}")
             }
             // Read our old token. If an identical value exists, then we know
             // that we"ve already registered that token during this session.
             try {
-                $oldToken = this._instagram.settings.get("fbns_token")
+                val oldToken = _instagram.settings.get("fbns_token")
                 // Do nothing when the token is equal to the old one.
-                if ($token === $oldToken) {
+                if (token === oldToken) {
                     return
                 }
-            } catch (.Exception $e) {
-                this._logger.error(sprintf("Failed to read FBNS token: %s", $e.getMessage()))
+            } catch (e: Exception) {
+                _logger.error("Failed to read FBNS token: ${e.message}")
             }
             // Register the token.
             try {
-                this._instagram.push.register("mqtt", $token)
-            } catch (.Exception $e) {
-                this.emit("error", [$e])
+                _instagram.push.register("mqtt", token)
+            } catch (e: Exception) {
+                this.emit("error", [e])
             }
             // Save the newly received token to the storage.
             // NOTE: We save it even if the registration failed, since we now
@@ -255,31 +249,29 @@ class Push //: EventEmitterInterface
             // However, it"ll always be re-validated during the general login()
             // flow, and will be cleared there if it fails to register there.
             try {
-                this._instagram.settings.set("fbns_token", $token)
-            } catch (.Exception $e) {
-                this._logger.error(sprintf("Failed to update FBNS token: %s", $e.getMessage()), [$token])
+                _instagram.settings.set("fbns_token", token)
+            } catch (e: Exception) {
+                _logger.error("Failed to update FBNS token: ${e.message}", [token])
             }
         })
-        $fbns.on("push", fun (Notification $notification) {
-            this._onPush($notification)
+        fbns.on("push", fun (notification: Notification) {
+            this._onPush(notification)
         })
 
-        return $fbns
+        return fbns
     }
 
     /**
      * Start Push receiver.
      */
-    public fun start()
-    {
-        this._fbns.start()
+    fun start(){
+        _fbns.start()
     }
 
     /**
      * Stop Push receiver.
      */
-    public fun stop()
-    {
-        this._fbns.stop()
+    fun stop(){
+        _fbns.stop()
     }
 }

@@ -4,43 +4,40 @@ package instagramAPI.Push.Payload
 
 import Fbns.Client.Json
 
-class BadgeCount
-{
+class BadgeCount{
     /**
      * @var string
      */
-    protected $_json
+    protected lateinit var _json: String
 
     /**
      * @var int
      */
-    protected $_direct
+    protected var _direct: Int
     /**
      * @var int
      */
-    protected $_ds
+    protected var _ds: Int
     /**
      * @var int
      */
-    protected $_activities
+    protected var _activities: Int
 
     /**
      * @param string $json
      */
-    protected fun _parseJson(
-        $json)
-    {
-        $data = Json::decode($json)
-        this._json = $json
+    protected fun _parseJson(json: String)    {
+        val data = Json.decode(json)
+        _json = json
 
-        if (isset($data.di)) {
-            this._direct = (int) $data.di
+        if (!data.di.isBlank()) {
+            _direct = data.di
         }
-        if (isset($data.ds)) {
-            this._ds = (int) $data.ds
+        if (!data.ds.isBlack()) {
+            _ds = data.ds
         }
-        if (isset($data.ac)) {
-            this._activities = (int) $data.ac
+        if (!data.ac.isBlank()) {
+            _activities = data.ac
         }
     }
 
@@ -49,41 +46,35 @@ class BadgeCount
      *
      * @param string $json
      */
-    public fun __construct(
-        $json)
-    {
-        this._parseJson($json)
+    constructor(json: String){
+        _parseJson(json)
     }
 
     /**
      * @return string
      */
-    public fun __toString()
-    {
-        return this._json
+    fun __toString(): String {
+        return _json
     }
 
     /**
      * @return int
      */
-    public fun getDirect()
-    {
-        return this._direct
+    fun getDirect(): Int {
+        return _direct
     }
 
     /**
      * @return int
      */
-    public fun getDs()
-    {
-        return this._ds
+    fun getDs(): Int {
+        return _ds
     }
 
     /**
      * @return int
      */
-    public fun getActivities()
-    {
-        return this._activities
+    fun getActivities(): Int {
+        return _activities
     }
 }
