@@ -1,12 +1,11 @@
 
 
-package InstagramAPI
+package instagramAPI
 
 import Evenement.EventEmitterInterface
 import Evenement.EventEmitterTrait
-import InstagramAPI.Push.Fbns
-import InstagramAPI.Push.Notification
-import InstagramAPI.React.Connector
+import instagramAPI.Push.Fbns
+import instagramAPI.React.Connector
 import Psr.Log.LoggerInterface
 import Psr.Log.NullLogger
 import React.EventLoop.LoopInterface

@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Media.Constraints
+package instagramAPI.Media.Constraints
 
-import InstagramAPI.Media.ConstraintsInterface
+import instagramAPI.Media.ConstraintsInterface
 
 /**
  * Instagram"s timeline general media constraints.

@@ -1,10 +1,6 @@
 
 
-package InstagramAPI.Realtime.Handler
-
-import InstagramAPI.Realtime.HandlerInterface
-import InstagramAPI.Realtime.Message
-import InstagramAPI.Realtime.Payload.IrisSubscribeAck
+package instagramAPI.Realtime.Handler
 
 class IrisHandler : AbstractHandler : HandlerInterface
 {

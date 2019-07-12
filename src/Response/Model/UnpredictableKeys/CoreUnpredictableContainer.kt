@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Response.Model.UnpredictableKeys
+package instagramAPI.Response.Model.UnpredictableKeys
 
-import InstagramAPI.AutoPropertyMapper
+import instagramAPI.AutoPropertyMapper
 import LazyJsonMapper.Exception.LazyJsonMapperException
 
 /**

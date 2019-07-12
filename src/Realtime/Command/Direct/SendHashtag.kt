@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Realtime.Command.Direct
+package instagramAPI.Realtime.Command.Direct
 
 final class SendHashtag : ShareItem
 {

@@ -1,13 +1,14 @@
 
 
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Response
+import instagramAPI.Instagram
+import instagramAPI.Response
 
 /**
  * funs related to managing and exploring user tags in media.
  */
-class Usertag(instagram:Instagram) : RequestCollection(instagram)
+class Usertag(instagram: Instagram) : RequestCollection(instagram)
 {
     /**
      * Tag a user in a media item.
@@ -18,9 +19,9 @@ class Usertag(instagram:Instagram) : RequestCollection(instagram)
      * @param string  captionText Caption to import for the media.
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.EditMediaResponse
+     * @return .instagramAPI.Response.EditMediaResponse
      */
     fun tagMedia(
         mediaId,
@@ -46,9 +47,9 @@ class Usertag(instagram:Instagram) : RequestCollection(instagram)
      * @param string captionText Caption to import for the media.
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.EditMediaResponse
+     * @return .instagramAPI.Response.EditMediaResponse
      */
     fun untagMedia(
         mediaId,
@@ -70,9 +71,9 @@ class Usertag(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.MediaInfoResponse
+     * @return .instagramAPI.Response.MediaInfoResponse
      */
     fun removeSelfTag(
         mediaId)
@@ -90,9 +91,9 @@ class Usertag(instagram:Instagram) : RequestCollection(instagram)
      * @param string      userId Numerical UserPK ID.
      * @param string|null maxId  Next "maximum ID", used for pagination.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.UsertagsResponse
+     * @return .instagramAPI.Response.UsertagsResponse
      */
     fun getUserFeed(
         userId,
@@ -112,9 +113,9 @@ class Usertag(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string|null maxId Next "maximum ID", used for pagination.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.UsertagsResponse
+     * @return .instagramAPI.Response.UsertagsResponse
      */
     fun getSelfUserFeed(
         maxId = null)
@@ -127,9 +128,9 @@ class Usertag(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param bool enabled TRUE to manually accept photos, or FALSE to accept automatically.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ReviewPreferenceResponse
+     * @return .instagramAPI.Response.ReviewPreferenceResponse
      */
     fun setReviewPreference(
         enabled)

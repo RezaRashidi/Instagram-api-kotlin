@@ -1,4 +1,4 @@
-package InstagramAPI.Devices
+package instagramAPI.Devices
 
 interface DeviceInterface {
 	/**

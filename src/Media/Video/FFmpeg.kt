@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Media.Video
+package instagramAPI.Media.Video
 
-import InstagramAPI.Utils
+import instagramAPI.Utils
 import Symfony.Component.Process.Process
 import Winbox.Args
 
@@ -81,7 +81,7 @@ class FFmpeg{
                 return instance
             }
 
-            throw RuntimeException("You must have FFmpeg to process videos. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via \"\\InstagramAPI\\Media\\Video\\FFmpeg::$defaultBinary = '/home/exampleuser/ffmpeg/bin/ffmpeg';\" at the start of your script.")
+            throw RuntimeException("You must have FFmpeg to process videos. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via \"\\instagramAPI\\Media\\Video\\FFmpeg::$defaultBinary = '/home/exampleuser/ffmpeg/bin/ffmpeg';\" at the start of your script.")
         }
 
 

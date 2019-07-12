@@ -1,4 +1,4 @@
-package InstagramAPI
+package instagramAPI
 
 import LazyJsonMapper.LazyJsonMapper
 

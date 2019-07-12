@@ -1,15 +1,11 @@
 
 
-package InstagramAPI.Request.Metadata
+package instagramAPI.Request.Metadata
 
-import InstagramAPI.Media.Constraints.ConstraintsFactory
-import InstagramAPI.Media.Photo.PhotoDetails
-import InstagramAPI.Media.Video.VideoDetails
-import InstagramAPI.Response.Model.VideoUploadUrl
-import InstagramAPI.Response.UploadJobVideoResponse
-import InstagramAPI.Response.UploadPhotoResponse
-import InstagramAPI.Response.UploadVideoResponse
-import InstagramAPI.Utils
+import instagramAPI.Media.Constraints.ConstraintsFactory
+import instagramAPI.Media.Photo.PhotoDetails
+import instagramAPI.Media.Video.VideoDetails
+import instagramAPI.Utils
 
 final class Internal
 {

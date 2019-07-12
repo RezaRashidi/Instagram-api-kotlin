@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Realtime.Payload
+package instagramAPI.Realtime.Payload
 
-import InstagramAPI.AutoPropertyMapper
+import instagramAPI.AutoPropertyMapper
 
 /**
  * ZeroProvisionEvent.

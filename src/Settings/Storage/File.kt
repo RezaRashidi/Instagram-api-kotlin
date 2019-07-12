@@ -1,11 +1,11 @@
 
 
-package InstagramAPI.Settings.Storage
+package instagramAPI.Settings.Storage
 
-import InstagramAPI.Constants
-import InstagramAPI.Exception.SettingsException
-import InstagramAPI.Settings.StorageInterface
-import InstagramAPI.Utils
+import instagramAPI.Constants
+import instagramAPI.Exception.SettingsException
+import instagramAPI.Settings.StorageInterface
+import instagramAPI.Utils
 
 /**
  * Persistent storage backend which keeps settings in a reliable binary file.
@@ -274,7 +274,7 @@ class File : StorageInterface
      * @param int    $dataVersion Which data format to decode.
      * @param string $rawData     The raw data, encoded in version"s format.
      *
-     * @throws .InstagramAPI.Exception.SettingsException
+     * @throws .instagramAPI.Exception.SettingsException
      *
      * @return array An array with all current key-value pairs for the user.
      */
@@ -354,7 +354,7 @@ class File : StorageInterface
      *
      * @param string $folder The directory path.
      *
-     * @throws .InstagramAPI.Exception.SettingsException
+     * @throws .instagramAPI.Exception.SettingsException
      *
      * @return string The canonicalized absolute pathname of the folder, without
      *                any trailing slash.

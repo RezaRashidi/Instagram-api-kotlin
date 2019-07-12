@@ -1,11 +1,11 @@
 
 
-package InstagramAPI.Media.Photo
+package instagramAPI.Media.Photo
 
-import InstagramAPI.Media.Geometry.Dimensions
-import InstagramAPI.Media.Geometry.Rectangle
-import InstagramAPI.Media.InstagramMedia
-import InstagramAPI.Utils
+import instagramAPI.Media.Geometry.Dimensions
+import instagramAPI.Media.Geometry.Rectangle
+import instagramAPI.Media.InstagramMedia
+import instagramAPI.Utils
 
 /**
  * Automatically prepares a photo file according to Instagram"s rules.

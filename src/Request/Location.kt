@@ -1,9 +1,8 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Exception.RequestHeadersTooLargeException
-import InstagramAPI.Response
-import InstagramAPI.Signatures
-import InstagramAPI.Utils
+import instagramAPI.Response
+import instagramAPI.Signatures
+import instagramAPI.Utils
 
 /**
  * funs related to finding and exploring locations.
@@ -21,9 +20,9 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 *                               worldwide location text search, but lists
 	 *                               locations closest to your lat/lng first.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LocationResponse
+	 * @return .instagramAPI.Response.LocationResponse
 	 */
 	fun search(latitude:String, longitude:String, query:String? = null) {
 		locations = this.ig.request("location_search/")
@@ -52,9 +51,9 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null    rankToken   (When paginating) The rank token from the previous page"s response.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FBLocationResponse
+	 * @return .instagramAPI.Response.FBLocationResponse
 	 *
 	 * @see FBLocationResponse.getRankToken() To get a rank token from the response.
 	 * @see examples/paginateWithExclusion.php For an example.
@@ -96,9 +95,9 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null    rankToken   (When paginating) The rank token from the previous page"s response.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FBLocationResponse
+	 * @return .instagramAPI.Response.FBLocationResponse
 	 *
 	 * @see FBLocationResponse.getRankToken() To get a rank token from the response.
 	 * @see examples/paginateWithExclusion.php For an example.
@@ -134,9 +133,9 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string locationId The internal ID of a location (from a field
 	 *                           such as "pk", "external_id" or "facebook_places_id").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.RelatedLocationResponse
+	 * @return .instagramAPI.Response.RelatedLocationResponse
 	 */
 	fun getRelated(locationId:String) {
 		return this.ig.request("locations/{locationId}/related/")
@@ -161,9 +160,9 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null maxId        Next "maximum ID", used for pagination.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LocationFeedResponse
+	 * @return .instagramAPI.Response.LocationFeedResponse
 	 *
 	 * @see Signatures.generateUUID() To create a UUID.
 	 * @see examples/rankTokenUsage.php For an example.
@@ -205,9 +204,9 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           such as "pk", "external_id" or "facebook_places_id").
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LocationStoryResponse
+	 * @return .instagramAPI.Response.LocationStoryResponse
 	 */
 	fun getStoryFeed(locationId:String) {
 		return this.ig.request("locations/{locationId}/story/").getResponse(Response.LocationStoryResponse())
@@ -240,9 +239,9 @@ class Location(instagram: Instagram) : RequestCollection(instagram) {
 	 *                                                     story media Items.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MediaSeenResponse
+	 * @return .instagramAPI.Response.MediaSeenResponse
 	 *
 	 * @see Story.markMediaSeen()
 	 * @see Hashtag.markStoryMediaSeen()

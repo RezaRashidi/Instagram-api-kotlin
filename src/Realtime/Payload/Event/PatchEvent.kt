@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Realtime.Payload.Event
+package instagramAPI.Realtime.Payload.Event
 
-import InstagramAPI.Realtime.Payload.RealtimeEvent
+import instagramAPI.Realtime.Payload.RealtimeEvent
 
 /**
  * PatchEvent.

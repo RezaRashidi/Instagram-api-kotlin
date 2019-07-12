@@ -1,8 +1,10 @@
 
 
-package InstagramAPI.Response
+package instagramAPI.Response
 
-import InstagramAPI.Response
+import instagramAPI.Response
+
+//import instagramAPI.Response
 
 /**
  * AccountSecurityInfoResponse.

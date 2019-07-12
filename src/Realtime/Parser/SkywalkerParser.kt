@@ -1,12 +1,11 @@
 
 
-package InstagramAPI.Realtime.Parser
+package instagramAPI.Realtime.Parser
 
 import Fbns.Client.Thrift.Compact
 import Fbns.Client.Thrift.Reader
-import InstagramAPI.Client
-import InstagramAPI.Realtime.Message
-import InstagramAPI.Realtime.ParserInterface
+import instagramAPI.Realtime.Message
+import instagramAPI.Realtime.ParserInterface
 
 class SkywalkerParser : ParserInterface
 {

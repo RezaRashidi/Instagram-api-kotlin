@@ -1,8 +1,9 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Constants
-import InstagramAPI.Exception.RequestHeadersTooLargeException
-import InstagramAPI.Response
+import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date
+import instagramAPI.Constants
+import instagramAPI.Instagram
+import instagramAPI.Response
 
 /**
  * General content discovery funs which don"t fit into any better groups.
@@ -14,9 +15,9 @@ class Discover(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null maxId      Next "maximum ID", used for pagination.
 	 * @param bool        isPrefetch Whether this is the first fetch we"ll ignore maxId if TRUE.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ExploreResponse
+	 * @return .instagramAPI.Response.ExploreResponse
 	 */
 	fun getExploreFeed(maxId: String? = null, isPrefetch: Boolean = false) {
 		request =
@@ -41,9 +42,9 @@ class Discover(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string exploreSourceToken Token related to the Explore media.
 	 * @param string userId             Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ReportExploreMediaResponse
+	 * @return .instagramAPI.Response.ReportExploreMediaResponse
 	 */
 	fun reportExploreMedia(exploreSourceToken:String, userId:String) {
 		return this.ig.request("discover/explore_report/").addParam("explore_source_token", exploreSourceToken)
@@ -66,9 +67,9 @@ class Discover(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null rankToken   (When paginating) The rank token from the previous page"s response.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FBSearchResponse
+	 * @return .instagramAPI.Response.FBSearchResponse
 	 *
 	 * @see FBSearchResponse::getRankToken() To get a rank token from the response.
 	 * @see examples/paginateWithExclusion.php For a rank token example (but with a different type of exclude list).
@@ -111,9 +112,9 @@ class Discover(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string type One of: "blended", "users", "hashtags" or "places".
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SuggestedSearchesResponse
+	 * @return .instagramAPI.Response.SuggestedSearchesResponse
 	 */
 	fun getSuggestedSearches(type:String) {
 		if (!arrayOf("blended", "users", "hashtags", "places").contains(type)) {
@@ -129,9 +130,9 @@ class Discover(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * NOTE: In the app, they"re listed as the "Recent" in the "Top" tab at the "Search" screen.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.RecentSearchesResponse
+	 * @return .instagramAPI.Response.RecentSearchesResponse
 	 */
 	fun getRecentSearches() {
 		return this.ig.request("fbsearch/recent_searches/").getResponse(Response.RecentSearchesResponse())
@@ -140,9 +141,9 @@ class Discover(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Clear the search history.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun clearSearchHistory() {
 		return this.ig.request("fbsearch/clear_search_history/").setSignedPost(false).addPost("_uuid", this.ig.uuid)

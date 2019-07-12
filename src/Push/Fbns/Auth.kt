@@ -1,10 +1,9 @@
 
 
-package InstagramAPI.Push.Fbns
+package instagramAPI.Push.Fbns
 
 import Fbns.Client.Auth.DeviceAuth
 import Fbns.Client.AuthInterface
-import InstagramAPI.Instagram
 
 class Auth : AuthInterface
 {

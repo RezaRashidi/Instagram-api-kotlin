@@ -1,14 +1,12 @@
 
 
-package InstagramAPI
+package instagramAPI
 
 import Evenement.EventEmitterInterface
 import Evenement.EventEmitterTrait
-import InstagramAPI.React.Connector
-import InstagramAPI.Realtime.Command.Direct as DirectCommand
-import InstagramAPI.Realtime.Command.IrisSubscribe
-import InstagramAPI.Realtime.Mqtt.Auth
-import InstagramAPI.Realtime.Payload.ZeroProvisionEvent
+import instagramAPI.React.Connector
+import instagramAPI.Realtime.Command.IrisSubscribe
+import instagramAPI.Realtime.Mqtt.Auth
 import Psr.Log.LoggerInterface
 import Psr.Log.NullLogger
 import React.EventLoop.LoopInterface

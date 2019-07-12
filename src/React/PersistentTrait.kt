@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.React
+package instagramAPI.React
 
 import React.EventLoop.Timer.TimerInterface
 import React.Promise.PromiseInterface

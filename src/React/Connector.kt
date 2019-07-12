@@ -1,11 +1,10 @@
 
 
-package InstagramAPI.React
+package instagramAPI.React
 
 import Clue.React.HttpProxy.ProxyConnector as HttpConnectProxy
 import Clue.React.Socks.Client as SocksProxy
 import GuzzleHttp.Psr7.Uri
-import InstagramAPI.Instagram
 import React.EventLoop.LoopInterface
 import React.Promise.PromiseInterface
 import React.Promise.RejectedPromise

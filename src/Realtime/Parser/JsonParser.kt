@@ -1,10 +1,9 @@
 
 
-package InstagramAPI.Realtime.Parser
+package instagramAPI.Realtime.Parser
 
-import InstagramAPI.Client
-import InstagramAPI.Realtime.Message
-import InstagramAPI.Realtime.ParserInterface
+import instagramAPI.Realtime.Message
+import instagramAPI.Realtime.ParserInterface
 
 class JsonParser : ParserInterface
 {

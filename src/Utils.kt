@@ -1,9 +1,7 @@
-package InstagramAPI
+package instagramAPI
 
-import InstagramAPI.Media.Video.FFmpeg
-import InstagramAPI.Response.Model.In
-import InstagramAPI.Response.Model.Item
-import InstagramAPI.Response.Model.Location
+import instagramAPI.Response.Model.Item
+import instagramAPI.Response.Model.Location
 import com.google.gson.Gson
 import java.io.ByteArrayOutputStream
 import java.nio.charset.StandardCharsets
@@ -26,7 +24,7 @@ object Utils{
      * TIP: If your default system temp folder isn't writable, it's NECESSARY
      * for you to set this value to another, writable path, like this:
      *
-     * .InstagramAPI.Utils::$defaultTmpPath = '/home/example/foo/'
+     * .instagramAPI.Utils::$defaultTmpPath = '/home/example/foo/'
      */
     var defaultTmpPath = null
 
@@ -291,7 +289,7 @@ object Utils{
      */
     fun buildMediaLocationJSON(location: Location): String{
 //        if (location !is Location) {
-//            throw IllegalArgumentException("The location must be an instance of \\InstagramAPI\\Response\\Model\\Location.")
+//            throw IllegalArgumentException("The location must be an instance of \\instagramAPI\\Response\\Model\\Location.")
 //        }
 
         // Forbid locations that came from Location::searchFacebook() and
@@ -331,7 +329,7 @@ object Utils{
      * that need FFprobe, you must simply assign a manual value (ONCE) to tell
      * us where to find your FFprobe, like this:
      *
-     * .InstagramAPI.Utils::$ffprobeBin = "/home/exampleuser/ffmpeg/bin/ffprobe"
+     * .instagramAPI.Utils::$ffprobeBin = "/home/exampleuser/ffmpeg/bin/ffprobe"
      *
      * @return string|bool Name of the library if present, otherwise FALSE.
      */

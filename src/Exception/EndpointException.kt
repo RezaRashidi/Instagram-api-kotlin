@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Exception
+package instagramAPI.Exception
 
 /**
  * All general API fun call "server response" failures import this exception.

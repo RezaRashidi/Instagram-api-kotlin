@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Exception
+package instagramAPI.Exception
 
 /**
  * Means that you have become throttled by Instagram"s API server

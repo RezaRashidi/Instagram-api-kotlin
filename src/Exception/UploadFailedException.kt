@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Exception
+package instagramAPI.Exception
 
 /**
  * Used when we know for a fact that our uploads failed.

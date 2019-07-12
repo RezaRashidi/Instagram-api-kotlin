@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.React
+package instagramAPI.React
 
 import Psr.Log.LoggerInterface
 import React.EventLoop.LoopInterface

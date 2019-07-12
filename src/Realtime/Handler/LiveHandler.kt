@@ -1,14 +1,6 @@
 
 
-package InstagramAPI.Realtime.Handler
-
-import InstagramAPI.Client as HttpClient
-import InstagramAPI.Realtime.HandlerInterface
-import InstagramAPI.Realtime.Message
-import InstagramAPI.Realtime.Payload.Event.PatchEvent
-import InstagramAPI.Realtime.Payload.Event.PatchEventOp
-import InstagramAPI.Realtime.Payload.LiveBroadcast
-import InstagramAPI.Realtime.Payload.RealtimeEvent
+package instagramAPI.Realtime.Handler
 
 class LiveHandler : AbstractHandler : HandlerInterface
 {

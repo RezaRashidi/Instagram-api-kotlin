@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Realtime.Mqtt
+package instagramAPI.Realtime.Mqtt
 
 class Topics
 {

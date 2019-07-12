@@ -8,7 +8,7 @@
  * This source file is subject to the MIT license.
  */
 
-package InstagramAPI.Realtime.Mqtt
+package instagramAPI.Realtime.Mqtt
 
 import BinSoul.Net.Mqtt.Exception.EndOfStreamException
 import BinSoul.Net.Mqtt.Exception.MalformedPacketException

@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Push
+package instagramAPI.Push
 
 import Evenement.EventEmitterInterface
 import Evenement.EventEmitterTrait
@@ -9,10 +9,10 @@ import Fbns.Client.Connection
 import Fbns.Client.Lite
 import Fbns.Client.Message.Push as PushMessage
 import Fbns.Client.Message.Register
-import InstagramAPI.Constants
-import InstagramAPI.Devices.DeviceInterface
-import InstagramAPI.React.PersistentInterface
-import InstagramAPI.React.PersistentTrait
+import instagramAPI.Constants
+import instagramAPI.Devices.DeviceInterface
+import instagramAPI.React.PersistentInterface
+import instagramAPI.React.PersistentTrait
 import Psr.Log.LoggerInterface
 import React.EventLoop.LoopInterface
 import React.Socket.ConnectorInterface

@@ -1,6 +1,6 @@
-package InstagramAPI.Devices
+package instagramAPI.Devices
 
-import InstagramAPI.Constants
+import instagramAPI.Constants
 import kotlin.math.roundToInt
 
 /**

@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Realtime
+package instagramAPI.Realtime
 
-import InstagramAPI.Realtime.Handler.HandlerException
+import instagramAPI.Realtime.Handler.HandlerException
 
 interface HandlerInterface
 {

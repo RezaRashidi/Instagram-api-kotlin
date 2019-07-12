@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Exception
+package instagramAPI.Exception
 
-import InstagramAPI.Response
+import instagramAPI.Response
 
 /**
  * The core exception that ALL other library exceptions derive from.

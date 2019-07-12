@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Exception
+package instagramAPI.Exception
 
 /**
  * Used for all problems with the Settings storage.

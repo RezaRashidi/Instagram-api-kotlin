@@ -1,11 +1,11 @@
 
 
-package InstagramAPI.Media
+package instagramAPI.Media
 
-import InstagramAPI.Constants
-import InstagramAPI.Media.Constraints.ConstraintsFactory
-import InstagramAPI.Media.Geometry.Dimensions
-import InstagramAPI.Media.Geometry.Rectangle
+import instagramAPI.Constants
+import instagramAPI.Media.Constraints.ConstraintsFactory
+import instagramAPI.Media.Geometry.Dimensions
+import instagramAPI.Media.Geometry.Rectangle
 import kotlin.math.*
 
 /**
@@ -46,7 +46,7 @@ abstract class InstagramMedia
      * for you to set this value to another, writable path, like this:
      *
      * ```
-     * .InstagramAPI.InstagramMedia::$defaultTmpPath = "/home/example/foo/"
+     * .instagramAPI.InstagramMedia::$defaultTmpPath = "/home/example/foo/"
      * ```
      *
      * @var string|null

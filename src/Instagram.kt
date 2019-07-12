@@ -1,6 +1,7 @@
-package InstagramAPI
+package instagramAPI
 
-import InstagramAPI.Request.Account
+import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
+import instagramAPI.Request.Account
 import kotlin.system.exitProcess
 
 
@@ -34,9 +35,9 @@ class Instagram : ExperimentsInterface {
 	/**
 	 * The Android device for the currently active user.
 	 *
-	 * @var .InstagramAPI.Devices.DeviceInterface
+	 * @var .instagramAPI.Devices.DeviceInterface
 	 */
-	lateinit var device: InstagramAPI.Devices.DeviceInterface
+	lateinit var device: instagramAPI.Devices.DeviceInterface
 
 	/**
 	 * Toggles API query/response debug output.
@@ -157,9 +158,9 @@ class Instagram : ExperimentsInterface {
 	/**
 	 * The account settings storage.
 	 *
-	 * @var .InstagramAPI.Settings.StorageHandler|null
+	 * @var .instagramAPI.Settings.StorageHandler|null
 	 */
-	lateinit var settings: InstagramAPI.Settings.StorageHandler
+	lateinit var settings: instagramAPI.Settings.StorageHandler
 
 	/**
 	 * The current application session ID.
@@ -181,41 +182,41 @@ class Instagram : ExperimentsInterface {
 	/** @var Request.Account Collection of Account related funs. */
 	lateinit var account: Account
 	/** @var Request.Business Collection of Business related funs. */
-	lateinit var business: InstagramAPI.Request.Business
+	lateinit var business: instagramAPI.Request.Business
 	/** @var Request.Collection Collection of Collections related funs. */
-	lateinit var collection: InstagramAPI.Request.Collection
+	lateinit var collection: instagramAPI.Request.Collection
 	/** @var Request.Creative Collection of Creative related funs. */
-	lateinit var creative: InstagramAPI.Request.Creative
+	lateinit var creative: instagramAPI.Request.Creative
 	/** @var Request.Direct Collection of Direct related funs. */
-	lateinit var direct: InstagramAPI.Request.Direct
+	lateinit var direct: instagramAPI.Request.Direct
 	/** @var Request.Discover Collection of Discover related funs. */
-	lateinit var discover: InstagramAPI.Request.Discover
+	lateinit var discover: instagramAPI.Request.Discover
 	/** @var Request.Hashtag Collection of Hashtag related funs. */
-	lateinit var hashtag: InstagramAPI.Request.Hashtag
+	lateinit var hashtag: instagramAPI.Request.Hashtag
 	/** @var Request.Highlight Collection of Highlight related funs. */
-	lateinit var highlight: InstagramAPI.Request.Highlight
+	lateinit var highlight: instagramAPI.Request.Highlight
 	/** @var Request.TV Collection of Instagram TV funs. */
-	lateinit var tv: InstagramAPI.Request.TV
+	lateinit var tv: instagramAPI.Request.TV
 	/** @var Request.Internal Collection of Internal (non-public) funs. */
-	lateinit var internal: InstagramAPI.Request.Internal
+	lateinit var internal: instagramAPI.Request.Internal
 	/** @var Request.Live Collection of Live related funs. */
-	lateinit var live: InstagramAPI.Request.Live
+	lateinit var live: instagramAPI.Request.Live
 	/** @var Request.Location Collection of Location related funs. */
-	lateinit var location: InstagramAPI.Request.Location
+	lateinit var location: instagramAPI.Request.Location
 	/** @var Request.Media Collection of Media related funs. */
-	lateinit var media: InstagramAPI.Request.Media
+	lateinit var media: instagramAPI.Request.Media
 	/** @var Request.People Collection of People related funs. */
-	lateinit var people: InstagramAPI.Request.People
+	lateinit var people: instagramAPI.Request.People
 	/** @var Request.Push Collection of Push related funs. */
-	lateinit var push: InstagramAPI.Request.Push
+	lateinit var push: instagramAPI.Request.Push
 	/** @var Request.Shopping Collection of Shopping related funs. */
-	lateinit var shopping: InstagramAPI.Request.Shopping
+	lateinit var shopping: instagramAPI.Request.Shopping
 	/** @var Request.Story Collection of Story related funs. */
-	lateinit var story: InstagramAPI.Request.Story
+	lateinit var story: instagramAPI.Request.Story
 	/** @var Request.Timeline Collection of Timeline related funs. */
-	lateinit var timeline: InstagramAPI.Request.Timeline
+	lateinit var timeline: instagramAPI.Request.Timeline
 	/** @var Request.Usertag Collection of Usertag related funs. */
-	lateinit var usertag: InstagramAPI.Request.Usertag
+	lateinit var usertag: instagramAPI.Request.Usertag
 
 	/**
 	 *  valructor.
@@ -225,7 +226,7 @@ class Instagram : ExperimentsInterface {
 	 * @param array storageConfig  Configuration for the desired
 	 *                              user settings storage backend.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 */
 	fun constructor(debug: Boolean = false, truncatedDebug: Boolean = false,
 	                storageConfig: MutableMap<String, String> = mutableMapOf()) {
@@ -244,7 +245,7 @@ class Instagram : ExperimentsInterface {
 
 			print(
 				"<p>If you truly want to enable <em>incorrect</em> website usage by directly embedding this application emulator library in your page, then you can do that <strong>AT YOUR OWN RISK</strong> by setting the following flag <em>before</em> you create the <code>Instagram()</code> object:</p>")
-			print("<p><code>.InstagramAPI.Instagram.allowDangerousWebUsageAtMyOwnRisk = true </code></p>")
+			print("<p><code>.instagramAPI.Instagram.allowDangerousWebUsageAtMyOwnRisk = true </code></p>")
 			exitProcess(1) // Exit without error to avoid triggering Error 500.
 		}
 
@@ -257,7 +258,7 @@ class Instagram : ExperimentsInterface {
 //        static extensions =["curl", "mbstring", "gd", "exif", "zlib"]
 //        foreach(extensions as ext) {
 //            if (!@extension_loaded(ext)) {
-//                throw new.InstagramAPI.Exception.InternalException(
+//                throw new.instagramAPI.Exception.InternalException(
 //                    sprintf(
 //                        "You must have the "%s" PHP extension to import the Instagram API library.",
 //                        ext
@@ -274,28 +275,28 @@ class Instagram : ExperimentsInterface {
 		// Load all fun collections.
 
 		account = Account(this)
-		business = InstagramAPI.Request.Business(this)
-		collection = InstagramAPI.Request.Collection(this)
-		creative = InstagramAPI.Request.Creative(this)
-		direct = InstagramAPI.Request.Direct(this)
-		discover = InstagramAPI.Request.Discover(this)
-		hashtag = InstagramAPI.Request.Hashtag(this)
-		highlight = InstagramAPI.Request.Highlight(this)
-		tv = InstagramAPI.Request.TV(this)
-		internal = InstagramAPI.Request.Internal(this)
-		live = InstagramAPI.Request.Live(this)
-		location = InstagramAPI.Request.Location(this)
-		media = InstagramAPI.Request.Media(this)
-		people = InstagramAPI.Request.People(this)
-		push = InstagramAPI.Request.Push(this)
-		shopping = InstagramAPI.Request.Shopping(this)
-		story = InstagramAPI.Request.Story(this)
-		timeline = InstagramAPI.Request.Timeline(this)
-		usertag = InstagramAPI.Request.Usertag(this)
+		business = instagramAPI.Request.Business(this)
+		collection = instagramAPI.Request.Collection(this)
+		creative = instagramAPI.Request.Creative(this)
+		direct = instagramAPI.Request.Direct(this)
+		discover = instagramAPI.Request.Discover(this)
+		hashtag = instagramAPI.Request.Hashtag(this)
+		highlight = instagramAPI.Request.Highlight(this)
+		tv = instagramAPI.Request.TV(this)
+		internal = instagramAPI.Request.Internal(this)
+		live = instagramAPI.Request.Live(this)
+		location = instagramAPI.Request.Location(this)
+		media = instagramAPI.Request.Media(this)
+		people = instagramAPI.Request.People(this)
+		push = instagramAPI.Request.Push(this)
+		shopping = instagramAPI.Request.Shopping(this)
+		story = instagramAPI.Request.Story(this)
+		timeline = instagramAPI.Request.Timeline(this)
+		usertag = instagramAPI.Request.Usertag(this)
 
 		// Configure the settings storage and network client.
 		val self = this  //Todo: maybe this is not to copy of the class
-		settings = InstagramAPI.Settings.Factory.createHandler(storageConfig, mutableMapOf(
+		settings = instagramAPI.Settings.Factory.createHandler(storageConfig, mutableMapOf(
 			"onCloseUser" to { self.client.saveCookieJar() }))
 		client = Client(this)
 		///experiments = mutableMapOf<String,String>()
@@ -406,16 +407,16 @@ class Instagram : ExperimentsInterface {
 	 *                                          than the default 30 minutes!
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LoginResponse|null A login response if a
+	 * @return .instagramAPI.Response.LoginResponse|null A login response if a
 	 *                                                   full (re-)login
 	 *                                                   happens, otherwise
 	 *                                                   `NULL` if an existing
 	 *                                                   session is resumed.
 	 */
 	fun login(username: String, password: String,
-	          appRefreshInterval: Int = 1800): InstagramAPI.Response.LoginResponse? {
+	          appRefreshInterval: Int = 1800): instagramAPI.Response.LoginResponse? {
 		if (username.isBlank() || password.isBlank()) {
 			throw IllegalArgumentException("You must provide a username and password to login().")
 		}
@@ -436,14 +437,14 @@ class Instagram : ExperimentsInterface {
 	 * @param int    appRefreshInterval
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LoginResponse|null
+	 * @return .instagramAPI.Response.LoginResponse|null
 	 *
 	 * @see Instagram.login() The login handler with a full description.
 	 */
 	private fun _login(username: String, password: String, forceLogin: Boolean = false,
-	                   appRefreshInterval: Int = 1800): InstagramAPI.Response.LoginResponse {
+	                   appRefreshInterval: Int = 1800): instagramAPI.Response.LoginResponse {
 		if (username.isBlank() || password.isBlank()) {
 			throw IllegalArgumentException("You must provide a username and password to _login().")
 		}
@@ -464,7 +465,7 @@ class Instagram : ExperimentsInterface {
 					.addPost("username", username).addPost("adid", advertising_id).addPost("guid", uuid)
 					.addPost("device_id", device_id).addPost("password", password).addPost("google_tokens", "[]")
 					.addPost("login_attempt_count", 0).getResponse(Response.LoginResponse())
-			} catch (e: InstagramAPI.Exception.InstagramException) {
+			} catch (e: instagramAPI.Exception.InstagramException) {
 				if (e.hasResponse() && e.getResponse().isTwoFactorRequired()) {
 					// Login failed becaimport two-factor login is required.
 					// Return server response to tell user they need 2-factor.
@@ -510,13 +511,13 @@ class Instagram : ExperimentsInterface {
 	 *                                    with an email using Two Factor login.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LoginResponse
+	 * @return .instagramAPI.Response.LoginResponse
 	 */
 	fun finishTwoFactorLogin(username: String, password: String, twoFactorIdentifier: String, verificationCode: String,
 	                         verificationMethod: String = "1", appRefreshInterval: Int = 1800,
-	                         usernameHandler: Boolean? = null): InstagramAPI.Response.LoginResponse {
+	                         usernameHandler: Boolean? = null): instagramAPI.Response.LoginResponse {
 		if (username.isBlank() || password.isBlank()) {
 			throw  IllegalArgumentException("You must provide a username and password to finishTwoFactorLogin().")
 		}
@@ -571,12 +572,12 @@ class Instagram : ExperimentsInterface {
 	 * @param string twoFactorIdentifier Two factor identifier, obtained in
 	 *                                    `login()` response.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.TwoFactorLoginSMSResponse
+	 * @return .instagramAPI.Response.TwoFactorLoginSMSResponse
 	 */
 	fun sendTwoFactorLoginSMS(username: String, password: String,
-	                          twoFactorIdentifier: String): InstagramAPI.Response.TwoFactorLoginSMSResponse {
+	                          twoFactorIdentifier: String): instagramAPI.Response.TwoFactorLoginSMSResponse {
 		if (username.isBlank() || password.isBlank()) {
 			throw IllegalArgumentException("You must provide a username and password to sendTwoFactorLoginSMS().")
 		}
@@ -613,11 +614,11 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @param string username Your Instagram username.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UsersLookupResponse
+	 * @return .instagramAPI.Response.UsersLookupResponse
 	 */
-	fun userLookup(username: String): InstagramAPI.Response.UsersLookupResponse {
+	fun userLookup(username: String): instagramAPI.Response.UsersLookupResponse {
 		// Set active user (without pwd), and create database entry if user.
 		_setUserWithoutPassword(username)
 
@@ -636,15 +637,15 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @param string username Your Instagram username.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.RecoveryResponse
+	 * @return .instagramAPI.Response.RecoveryResponse
 	 */
-	fun sendRecoveryEmail(username: String): InstagramAPI.Response.RecoveryResponse {
+	fun sendRecoveryEmail(username: String): instagramAPI.Response.RecoveryResponse {
 		// Verify that they can import the recovery email option.
 		val userLookup = userLookup(username)
 		if (!userLookup.getCanEmailReset()) {
-			throw InstagramAPI.Exception.InternalException(
+			throw instagramAPI.Exception.InternalException(
 				"Email recovery is not available, since your account lacks a verified email address.")
 		}
 
@@ -663,11 +664,11 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @param string username Your Instagram username.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.RecoveryResponse
+	 * @return .instagramAPI.Response.RecoveryResponse
 	 */
-	fun sendRecoverySMS(username: String): InstagramAPI.Response.RecoveryResponse {
+	fun sendRecoverySMS(username: String): instagramAPI.Response.RecoveryResponse {
 		// Verify that they can import the recovery SMS option.
 		val userLookup = userLookup(username)
 		if (!userLookup.getHasValidPhone() || !userLookup.getCanSmsReset()) {
@@ -688,7 +689,7 @@ class Instagram : ExperimentsInterface {
 	 * @param string password Your Instagram password.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 */
 	private fun setUser(username: String, password: String) {
 		if (username.isBlank() || password.isBlank()) {
@@ -702,7 +703,7 @@ class Instagram : ExperimentsInterface {
 		// user"s last-used device IF they"ve got a valid, good one stored.
 		// But if they"ve got a BAD/none, this will create a brand-device.
 		savedDeviceString = settings.get("devicestring")
-		val device = InstagramAPI.Devices.Device(valants.IG_VERSION, valants.VERSION_CODE, valants.USER_AGENT_LOCALE,
+		val device = instagramAPI.Devices.Device(valants.IG_VERSION, valants.VERSION_CODE, valants.USER_AGENT_LOCALE,
 		                                         savedDeviceString)
 
 		// Get active device string so that we can compare it to any saved one.
@@ -799,7 +800,7 @@ class Instagram : ExperimentsInterface {
 	 * @param string username Your Instagram username.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 */
 	private fun _setUserWithoutPassword(username: String?) {
 		if (username.isNullOrBlank()) {
@@ -825,7 +826,7 @@ class Instagram : ExperimentsInterface {
 	 * @param Response.LoginResponse response The login response.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 */
 	private fun _updateLoginState(response: Response.LoginResponse) {
 		// This check is just protection against accidental bugs. It makes sure
@@ -843,7 +844,7 @@ class Instagram : ExperimentsInterface {
 	/**
 	 * Sends pre-login flow. This is required to emulate real device behavior.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 */
 	private fun _sendPreLoginFlow() {
 		// Reset zero rating rewrite rules.
@@ -914,16 +915,16 @@ class Instagram : ExperimentsInterface {
 	 *                                 parameter.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LoginResponse|null A login response if a
+	 * @return .instagramAPI.Response.LoginResponse|null A login response if a
 	 *                                                   full (re-)login is
 	 *                                                   needed during the login
 	 *                                                   flow attempt, otherwise
 	 *                                                   `NULL`.
 	 */
 	private fun _sendLoginFlow(justLoggedIn: Boolean,
-	                           appRefreshInterval: Int = 1800): InstagramAPI.Response.LoginResponse? {
+	                           appRefreshInterval: Int = 1800): instagramAPI.Response.LoginResponse? {
 		if (appRefreshInterval < 0) {
 			throw IllegalArgumentException("Instagram's app state refresh interval must be a positive integer.")
 		}
@@ -993,7 +994,7 @@ class Instagram : ExperimentsInterface {
 			try {
 				timeline.getTimelineFeed(null, ["is_pull_to_refresh" => isSessionExpired ? null : mt_rand(1, 3) < 3,
 				])
-			} catch (e: InstagramAPI.Exception.LoginRequiredException) {
+			} catch (e: instagramAPI.Exception.LoginRequiredException) {
 				// If our session cookies are expired, we were now told to login,
 				// so handle that by running a forced relogin in that case!
 
@@ -1057,13 +1058,13 @@ class Instagram : ExperimentsInterface {
 	 * logging out of the APP. But you SHOULDN"T do that! In almost 100% of all
 	 * cases you want to *stay logged in* so that `login()` resumes your session!
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LogoutResponse
+	 * @return .instagramAPI.Response.LogoutResponse
 	 *
 	 * @see Instagram.login()
 	 */
-	fun logout(): InstagramAPI.Response.LogoutResponse {
+	fun logout(): instagramAPI.Response.LogoutResponse {
 		response = request("accounts/logout/").setSignedPost(false).addPost("phone_id", phone_id)
 			.addPost("_csrftoken", client.getToken()).addPost("guid", uuid).addPost("device_id", device_id)
 			.addPost("_uuid", uuid).getResponse(Response.LogoutResponse())
@@ -1114,9 +1115,9 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @param string url
 	 *
-	 * @return .InstagramAPI.Request
+	 * @return .instagramAPI.Request
 	 */
-	fun request(url: String): InstagramAPI.Request {
+	fun request(url: String): instagramAPI.Request {
 		return Request(this, url)
 	}
 }

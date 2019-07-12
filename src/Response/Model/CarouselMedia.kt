@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Response.Model
+package instagramAPI.Response.Model
 
-import InstagramAPI.AutoPropertyMapper
+import instagramAPI.AutoPropertyMapper
 
 /**
  * CarouselMedia.

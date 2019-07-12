@@ -1,13 +1,11 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Constants
-import InstagramAPI.Exception.InstagramException
-import InstagramAPI.Exception.ThrottledException
-import InstagramAPI.Exception.UploadFailedException
-import InstagramAPI.Request.Metadata.Internal as InternalMetadata
-import InstagramAPI.Response
-import InstagramAPI.Signatures
-import InstagramAPI.Utils
+import instagramAPI.Constants
+import instagramAPI.Exception.UploadFailedException
+import instagramAPI.Request.Metadata.Internal as InternalMetadata
+import instagramAPI.Response
+import instagramAPI.Signatures
+import instagramAPI.Utils
 
 /**
  * Instagram Direct messaging funs.
@@ -24,9 +22,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string|null cursorId Next "cursor ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectInboxResponse
+	 * @return .instagramAPI.Response.DirectInboxResponse
 	 */
 	fun getInbox(cursorId:String? = null) {
 		request = this.ig.request("direct_v2/inbox/").addParam("persistentBadging", "true")
@@ -43,9 +41,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string|null cursorId Next "cursor ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectPendingInboxResponse
+	 * @return .instagramAPI.Response.DirectPendingInboxResponse
 	 */
 	fun getPendingInbox(cursorId:String? = null) {
 		request = this.ig.request("direct_v2/pending_inbox/").addParam("persistentBadging", "true")
@@ -63,9 +61,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array threads One or more thread identifiers.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun approvePendingThreads(array threads) {
 		if (!count(threads)) {
@@ -100,9 +98,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array threads One or more thread identifiers.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun declinePendingThreads(array threads) {
 		if (!count(threads)) {
@@ -134,9 +132,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Decline all pending threads.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun declineAllPendingThreads() {
 		return this.ig.request("direct_v2/threads/decline_all/").addPost("_csrftoken", this.ig.client.getToken())
@@ -146,9 +144,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get a list of activity statuses for users who you follow or message.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.PresencesResponse
+	 * @return .instagramAPI.Response.PresencesResponse
 	 */
 	fun getPresences() {
 		return this.ig.request("direct_v2/get_presence/").getResponse(Response.PresencesResponse())
@@ -164,9 +162,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param bool        showThreads Whether to include existing threads into response.
 	 * @param string|null query       (optional) The user to search for.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectRankedRecipientsResponse|null Will be NULL if throttled by Instagram.
+	 * @return .instagramAPI.Response.DirectRankedRecipientsResponse|null Will be NULL if throttled by Instagram.
 	 */
 	fun getRankedRecipients(mode:String, showThreads:Boolean, query:String? = null) {
 		try {
@@ -190,9 +188,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string[]|int[] users Array of numerical UserPK IDs.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectThreadResponse
+	 * @return .instagramAPI.Response.DirectThreadResponse
 	 */
 	fun getThreadByParticipants(array users) {
 		if (!count(users)) {
@@ -218,9 +216,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string      threadId Thread ID.
 	 * @param string|null cursorId Next "cursor ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectThreadResponse
+	 * @return .instagramAPI.Response.DirectThreadResponse
 	 */
 	fun getThread(threadId:String, cursorId:String? = null) {
 		request = this.ig.request("direct_v2/threads/threadId/").addParam("use_unified_inbox", "true")
@@ -239,9 +237,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string      threadId Thread ID.
 	 * @param string|null cursorId Next "cursor ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectVisualThreadResponse
+	 * @return .instagramAPI.Response.DirectVisualThreadResponse
 	 *
 	 * @deprecated Visual inbox has been superseded by the unified inbox.
 	 * @see Direct::getThread()
@@ -261,9 +259,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string threadId Thread ID.
 	 * @param string title    title.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectThreadResponse
+	 * @return .instagramAPI.Response.DirectThreadResponse
 	 */
 	fun updateThreadTitle(threadId:String, title:String) {
 		return this.ig.request("direct_v2/threads/{threadId}/update_title/").addPost("_uuid", this.ig.uuid)
@@ -276,9 +274,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string threadId Thread ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun muteThread(threadId:String) {
 		return this.ig.request("direct_v2/threads/{threadId}/mute/").addPost("_csrftoken", this.ig.client.getToken())
@@ -290,9 +288,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string threadId Thread ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun unmuteThread(threadId:String) {
 		return this.ig.request("direct_v2/threads/{threadId}/unmute/").addPost("_csrftoken", this.ig.client.getToken())
@@ -311,9 +309,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string         threadTitle Name of the group thread.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectCreateGroupThreadResponse
+	 * @return .instagramAPI.Response.DirectCreateGroupThreadResponse
 	 */
 	fun createGroupThread(array userIds, threadTitle:String) {
 		if (count(userIds) < 2) {
@@ -342,9 +340,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string[]|int[] users    Array of numerical UserPK IDs.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectThreadResponse
+	 * @return .instagramAPI.Response.DirectThreadResponse
 	 */
 	fun addUsersToThread(threadId:String, array users) {
 		if (!count(users)) {
@@ -369,9 +367,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string threadId Thread ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun leaveThread(threadId:String) {
 		return this.ig.request("direct_v2/threads/{threadId}/leave/").addPost("_csrftoken", this.ig.client.getToken())
@@ -383,9 +381,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string threadId Thread ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun hideThread(threadId:String) {
 		return this.ig.request("direct_v2/threads/{threadId}/hide/").addPost("use_unified_inbox", "true")
@@ -405,9 +403,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "client_context" - predefined UUID used to prevent double-posting.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemResponse
+	 * @return .instagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendText(array recipients, text:String, array options = []) {
 		if (!strlen(text)) {
@@ -445,9 +443,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "text" (optional) - text message.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemsResponse
+	 * @return .instagramAPI.Response.DirectSendItemsResponse
 	 *
 	 * @see https://help.instagram.com/1209246439090858 For more information.
 	 */
@@ -478,9 +476,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                              "client_context" - predefined UUID used to prevent double-posting.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemResponse
+	 * @return .instagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendPhoto(array recipients, photoFilename:String, array options = []) {
 		if (!is_file(photoFilename) || !is_readable(photoFilename)) {
@@ -503,9 +501,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ConfigureResponse
+	 * @return .instagramAPI.Response.ConfigureResponse
 	 *
 	 * @see Internal::configureSinglePhoto() for available metadata fields.
 	 */
@@ -530,10 +528,10 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
-	 * @throws .InstagramAPI.Exception.InstagramException
-	 * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
+	 * @throws .instagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.UploadFailedException If the video upload fails.
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemResponse
+	 * @return .instagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendVideo(array recipients, videoFilename:String, array options = []) {
 		// Direct videos import different upload IDs.
@@ -548,7 +546,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 
 		// Send the uploaded video to recipients.
 		try {
-			/** @var .InstagramAPI.Response.DirectSendItemResponse result */
+			/** @var .instagramAPI.Response.DirectSendItemResponse result */
 			result = this.ig.internal.configureWithRetries(fun() import (internalMetadata, recipients, options) {
 				videoUploadResponse = internalMetadata.getVideoUploadResponse()
 				// Attempt to configure video parameters (which sends it to the thread).
@@ -583,10 +581,10 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
-	 * @throws .InstagramAPI.Exception.InstagramException
-	 * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
+	 * @throws .instagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.UploadFailedException If the video upload fails.
 	 *
-	 * @return .InstagramAPI.Response.ConfigureResponse
+	 * @return .instagramAPI.Response.ConfigureResponse
 	 *
 	 * @see Internal::configureSingleVideo() for available metadata fields.
 	 */
@@ -608,9 +606,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array options    An associative array of optional parameters, including:
 	 *                          "client_context" - predefined UUID used to prevent double-posting.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemResponse
+	 * @return .instagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendLike(array recipients, array options = []) {
 		return this._sendDirectItem("like", recipients, options)
@@ -629,9 +627,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "text" - text message.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemResponse
+	 * @return .instagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendHashtag(array recipients, hashtag:String, array options = []) {
 		if (!strlen(hashtag)) {
@@ -658,9 +656,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "text" - text message.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemResponse
+	 * @return .instagramAPI.Response.DirectSendItemResponse
 	 *
 	 * @see Location::search()
 	 */
@@ -686,9 +684,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "text" - text message.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemResponse
+	 * @return .instagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendProfile(array recipients, userId:String, array options = []) {
 		if (!(userId.toIntOrNull() && userId > 0) && (userId !is Int || userId < 0)) {
@@ -709,9 +707,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                             "client_context" - predefined UUID used to prevent double-posting.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemResponse
+	 * @return .instagramAPI.Response.DirectSendItemResponse
 	 */
 	fun sendReaction(threadId, threadItemId, reactionType, array options = []) {
 		return this._handleReaction(threadId, threadItemId, reactionType, "created", options)
@@ -735,9 +733,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "text" - text message.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemsResponse
+	 * @return .instagramAPI.Response.DirectSendItemsResponse
 	 *
 	 * @see https://help.instagram.com/188382041703187 For more information.
 	 */
@@ -778,7 +776,7 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                            "client_context" - predefined UUID used to prevent double-posting.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
 	 * @return Response.DirectSendItemResponse
 	 */
@@ -797,9 +795,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                             "client_context" - predefined UUID used to prevent double-posting.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemResponse
+	 * @return .instagramAPI.Response.DirectSendItemResponse
 	 */
 	fun deleteReaction(threadId:String, threadItemId:String, reactionType:String, array options = []) {
 		return this._handleReaction(threadId, threadItemId, reactionType, "deleted", options)
@@ -811,9 +809,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string threadId     Thread ID.
 	 * @param string threadItemId Thread item ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun deleteItem(threadId:String, threadItemId:String) {
 		return this.ig.request("direct_v2/threads/{threadId}/items/{threadItemId}/delete/")
@@ -827,9 +825,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string threadId     Thread ID.
 	 * @param string threadItemId Thread item ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSeenItemResponse
+	 * @return .instagramAPI.Response.DirectSeenItemResponse
 	 */
 	fun markItemSeen(threadId:String, threadItemId:String) {
 		return this.ig.request("direct_v2/threads/{threadId}/items/{threadItemId}/seen/")
@@ -848,9 +846,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|string[] threadItemIds One or more thread item IDs.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun markVisualItemsSeen(threadId:String, threadItemIds) {
 		if (!is_array(threadItemIds)) {
@@ -874,9 +872,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|string[] threadItemIds One or more thread item IDs.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun markVisualItemsReplayed(threadId:String, threadItemIds) {
 		if (!is_array(threadItemIds)) {
@@ -972,9 +970,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "live" uses "client_context" and "text".
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemResponse
+	 * @return .instagramAPI.Response.DirectSendItemResponse
 	 */
 	protected fun _sendDirectItem(type:String, array recipients, array options = []) {
 		// Most requests are unsigned, but some import signing by overriding this.
@@ -1144,9 +1142,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                           "story_share" uses "client_context", "story_media_id", "media_type" and "text".
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemsResponse
+	 * @return .instagramAPI.Response.DirectSendItemsResponse
 	 */
 	protected fun _sendDirectItems(type:String, array recipients, array options = []) {
 		// Most requests are unsigned, but some import signing by overriding this.
@@ -1240,9 +1238,9 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 *                               "client_context" - predefined UUID used to prevent double-posting.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DirectSendItemResponse
+	 * @return .instagramAPI.Response.DirectSendItemResponse
 	 */
 	protected fun _handleReaction(threadId:String, threadItemId:String, reactionType:String, reactionStatus:String, array options = []) {
 		if (!(threadId.toIntOrNull() && threadId > 0) && (threadId !is Int || threadId < 0)) {

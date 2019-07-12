@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Media.Constraints
+package instagramAPI.Media.Constraints
 
-import InstagramAPI.Constants
+import instagramAPI.Constants
 
 class ConstraintsFactory
 {

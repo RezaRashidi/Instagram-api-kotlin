@@ -1,10 +1,10 @@
-package InstagramAPI
+package instagramAPI
 
 //import GuzzleHttp.Psr7.MultipartStream
 //import GuzzleHttp.Psr7.Request as HttpRequest
 //import GuzzleHttp.Psr7.Stream
-import InstagramAPI.Exception.InstagramException
-import InstagramAPI.Exception.LoginRequiredException
+import instagramAPI.Exception.InstagramException
+import instagramAPI.Exception.LoginRequiredException
 import com.github.kittinunf.fuel.core.FileDataPart
 import com.sun.deploy.net.HttpRequest
 import java.io.File
@@ -21,7 +21,7 @@ class Request(parent: Instagram, url: String) {
 	/**
 	 * The Instagram class instance we belong to.
 	 *
-	 * @var .InstagramAPI.Instagram
+	 * @var .instagramAPI.Instagram
 	 */
 	private  var _parent: Instagram = parent
 
@@ -147,7 +147,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @var array
 	 */
-	private var _guzzleOptions = listOf<String>()
+	//private var _guzzleOptions = listOf<String>()
 
 	/**
 	 * Cached HTTP response object.
@@ -177,10 +177,10 @@ class Request(parent: Instagram, url: String) {
 	/**
 	 * Destructor.
 	 */
-	fun __destruct() {
-		// Ensure that all opened handles are closed.
-		_closeHandles()
-	}
+//	fun __destruct() {
+//		// Ensure that all opened handles are closed.
+//		_closeHandles()
+//	}
 
 	/**
 	 * Set API version to use.
@@ -192,7 +192,7 @@ class Request(parent: Instagram, url: String) {
 	 * @return self
 	 */
 	fun setVersion(apiVersion:Int) :Request{
-		if (!array_key_exists(apiVersion, Constants.API_URLS)) {
+		if (Constants.API_URLS.contains(apiVersion)) {
 			throw IllegalArgumentException("\"$apiVersion\" is not a supported API version.")
 		}
 		_apiVersion = apiVersion
@@ -208,12 +208,8 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun addParam(key:String, value:Boolean):Request {
-		val valueFa = if (value) {
-			 "true"
-		} else {
-			"false"
-		}
+	fun addParam(key:String, value:String):Request {
+
 		_params[key] = valueFa
 
 		return this
@@ -227,13 +223,12 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun addPost(key:String, value:Any?):Request {
-		val valueFa = if (value is Boolean){	if (value) "true"  else "false" } else value
+	fun addPost(key:String, value:String):Request {
+//	val valueFa = if (value is Boolean){	if (value) "true"  else "false" } else value
 
 
-		 valueFa?.let {
-			_posts[key] =it
-		}
+			_posts[key] =value
+
 
 		return this
 	}
@@ -249,7 +244,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun addUnsignedPost(key:String, value:Boolean):Request {
+	fun addUnsignedPost(key:String, value:String):Request {
 		addPost(key, value)
 		_excludeSigned.add(key)
 

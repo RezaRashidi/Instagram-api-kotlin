@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Realtime.Payload.Event
+package instagramAPI.Realtime.Payload.Event
 
-import InstagramAPI.AutoPropertyMapper
+import instagramAPI.AutoPropertyMapper
 
 /**
  * PatchEventOp.

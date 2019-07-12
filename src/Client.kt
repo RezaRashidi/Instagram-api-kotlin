@@ -1,16 +1,18 @@
 
 
-package InstagramAPI
+package instagramAPI
 
 //import GuzzleHttp.Client as GuzzleClient
 //import GuzzleHttp.Cookie.CookieJar
 //import GuzzleHttp.Cookie.SetCookie
 //import GuzzleHttp.HandlerStack
-import InstagramAPI.Exception.InstagramException
-import InstagramAPI.Exception.LoginRequiredException
-import InstagramAPI.Exception.ServerMessageThrower
-import InstagramAPI.Middleware.FakeCookies
-import InstagramAPI.Middleware.ZeroRating
+import instagramAPI.Exception.InstagramException
+import instagramAPI.Exception.LoginRequiredException
+import instagramAPI.Exception.ServerMessageThrower
+import instagramAPI.Middleware.FakeCookies
+import instagramAPI.Middleware.ZeroRating
+import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
+
 //import LazyJsonMapper.Exception.LazyJsonMapperException
 //import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 //import okhttp3.CookieJar
@@ -42,7 +44,7 @@ class Client
     /**
      * The Instagram class instance we belong to.
      *
-     * @var .InstagramAPI.Instagram
+     * @var .instagramAPI.Instagram
      */
     protected var _parent: Instagram
 
@@ -89,12 +91,12 @@ class Client
     private var _guzzleClient: GuzzleHttp.Client
 
     /**
-     * @var .InstagramAPI.Middleware.FakeCookies
+     * @var .instagramAPI.Middleware.FakeCookies
      */
     private var _fakeCookies: FakeCookies
 
     /**
-     * @var .InstagramAPI.Middleware.ZeroRating
+     * @var .instagramAPI.Middleware.ZeroRating
      */
     private var _zeroRating: ZeroRating
 
@@ -127,11 +129,11 @@ class Client
     /**
      * Constructor.
      *
-     * @param .InstagramAPI.Instagram $parent
+     * @param .instagramAPI.Instagram $parent
      */
     constructor(parent:Instagram):this
     {
-        _parent = parent
+         _parent = parent
 
         // Defaults.
         _verifySSL = true
@@ -176,7 +178,7 @@ class Client
      *
      * @param bool $resetCookieJar (optional) Whether to clear current cookies.
      *
-     * @throws .InstagramAPI.Exception.SettingsException
+     * @throws .instagramAPI.Exception.SettingsException
      */
     fun updateFromCurrentSettings(resetCookieJar: Boolean = false){
         // Update our internal client state from the user"s settings.
@@ -201,7 +203,7 @@ class Client
      *
      * @param bool $resetCookieJar (optional) Whether to clear current cookies.
      *
-     * @throws .InstagramAPI.Exception.SettingsException
+     * @throws .instagramAPI.Exception.SettingsException
      */
     fun loadCookieJar(resetCookieJar: Boolean = false){
         // Mark any previous cookie jar for garbage collection.
@@ -314,7 +316,7 @@ class Client
      * automatically calls it when enough time has elapsed since last save.
      *
      * @throws  IllegalArgumentException                 If the JSON cannot be encoded.
-     * @throws .InstagramAPI.Exception.SettingsException
+     * @throws .instagramAPI.Exception.SettingsException
      */
     fun saveCookieJar(){
         // Tell the settings storage to persist the latest cookies.
@@ -461,13 +463,13 @@ class Client
             var httpStatusCode = if (httpResponse !== null) httpResponse.getStatusCode() else null
             when (httpStatusCode) {
                 400 -> {
-                    throw InstagramAPI.Exception.BadRequestException("Invalid request options.")
+                    throw instagramAPI.Exception.BadRequestException("Invalid request options.")
                 }
                 404 -> {
-                    throw InstagramAPI.Exception.NotFoundException("Requested resource does not exist.")
+                    throw instagramAPI.Exception.NotFoundException("Requested resource does not exist.")
                 }
                 else -> {
-                    throw InstagramAPI.Exception.EmptyResponseException("No response from server. Either a connection or configuration error.")
+                    throw instagramAPI.Exception.EmptyResponseException("No response from server. Either a connection or configuration error.")
                 }
             }
         }
@@ -543,7 +545,7 @@ class Client
         // means that the user can look at the full response details via the
         // exception itself.
         if (!responseObject.isOk()) {
-            var message = if (responseObject instanceof InstagramAPI.Response.DirectSendItemResponse && responseObject.getPayload() !== null) {
+            var message = if (responseObject instanceof instagramAPI.Response.DirectSendItemResponse && responseObject.getPayload() !== null) {
                 responseObject.getPayload().getMessage()
             } else {
                 responseObject.getMessage()
@@ -629,9 +631,9 @@ class Client
      * @param HttpRequestInterface $request       HTTP request to send.
      * @param array                $guzzleOptions Extra Guzzle options for this request.
      *
-     * @throws .InstagramAPI.Exception.NetworkException                For any network/socket related errors.
-     * @throws .InstagramAPI.Exception.ThrottledException              When we"re throttled by server.
-     * @throws .InstagramAPI.Exception.RequestHeadersTooLargeException When request is too large.
+     * @throws .instagramAPI.Exception.NetworkException                For any network/socket related errors.
+     * @throws .instagramAPI.Exception.ThrottledException              When we"re throttled by server.
+     * @throws .instagramAPI.Exception.RequestHeadersTooLargeException When request is too large.
      *
      * @return HttpResponseInterface
      */
@@ -644,7 +646,7 @@ class Client
             var response = _guzzleClient.send(request, guzzleOptions)
         } catch (e: Exception) {
             // Re-wrap Guzzle"s exception using our own NetworkException.
-            throw InstagramAPI.Exception.NetworkException(e)
+            throw instagramAPI.Exception.NetworkException(e)
         }
 
         // Detect very serious HTTP status codes in the response.
@@ -652,8 +654,8 @@ class Client
         // "429 Too Many Requests"
         // "431 Request Header Fields Too Large"
         when (httpCode) {
-            429 -> throw InstagramAPI.Exception.ThrottledException("Throttled by Instagram becaimport of too many API requests.")
-            431 -> throw InstagramAPI.Exception.RequestHeadersTooLargeException("The request start-line and/or headers are too large to process.")
+            429 -> throw instagramAPI.Exception.ThrottledException("Throttled by Instagram becaimport of too many API requests.")
+            431 -> throw instagramAPI.Exception.RequestHeadersTooLargeException("The request start-line and/or headers are too large to process.")
             // WARNING: Do NOT detect 404 and other higher-level HTTP errors here,
             // since we catch those later during steps like mapServerResponse()
             // and autoThrow. This is a warning to future contributors!
@@ -694,8 +696,8 @@ class Client
      * @param array                $libraryOptions Additional options for controlling Library features
      *                                             such as the debugging output.
      *
-     * @throws .InstagramAPI.Exception.NetworkException   For any network/socket related errors.
-     * @throws .InstagramAPI.Exception.ThrottledException When we"re throttled by server.
+     * @throws .instagramAPI.Exception.NetworkException   For any network/socket related errors.
+     * @throws .instagramAPI.Exception.ThrottledException When we"re throttled by server.
      *
      * @return HttpResponseInterface
      */

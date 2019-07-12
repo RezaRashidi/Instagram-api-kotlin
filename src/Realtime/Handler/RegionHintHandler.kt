@@ -1,9 +1,6 @@
 
 
-package InstagramAPI.Realtime.Handler
-
-import InstagramAPI.Realtime.HandlerInterface
-import InstagramAPI.Realtime.Message
+package instagramAPI.Realtime.Handler
 
 class RegionHintHandler : AbstractHandler : HandlerInterface
 {

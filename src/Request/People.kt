@@ -1,9 +1,7 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Exception.RequestHeadersTooLargeException
-import InstagramAPI.Exception.ThrottledException
-import InstagramAPI.Response
-import InstagramAPI.Utils
+import instagramAPI.Response
+import instagramAPI.Utils
 
 /**
  * funs related to finding, exploring and managing relations with people.
@@ -31,9 +29,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *                            "self_likers_self_likers_photo_view_profile",
 	 *                            "self_likers_self_likers_video_view_profile".
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UserInfoResponse
+	 * @return .instagramAPI.Response.UserInfoResponse
 	 */
 	fun getInfoById(userId, module = null) {
 		request = this.ig.request("users/{userId}/info/")
@@ -52,9 +50,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string      username Username as string (NOT as a numerical ID).
 	 * @param string|null module   From which app module (page) you have opened the profile.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UserInfoResponse
+	 * @return .instagramAPI.Response.UserInfoResponse
 	 *
 	 * @see People::getInfoById() For the list of supported modules.
 	 */
@@ -75,7 +73,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string username Username as string (NOT as a numerical ID).
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
 	 * @return string Their numerical UserPK ID.
 	 *
@@ -90,9 +88,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * Also try Account::getCurrentUser() instead, for account details.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UserInfoResponse
+	 * @return .instagramAPI.Response.UserInfoResponse
 	 *
 	 * @see Account::getCurrentUser()
 	 */
@@ -107,9 +105,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * liking your posts, commenting on your posts, tagging you in photos or in
 	 * comments, people who started following you, etc.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ActivityNewsResponse
+	 * @return .instagramAPI.Response.ActivityNewsResponse
 	 */
 	fun getRecentActivityInbox() {
 		return this.ig.request("news/inbox/").getResponse(Response.ActivityNewsResponse())
@@ -123,9 +121,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string|null maxId Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FollowingRecentActivityResponse
+	 * @return .instagramAPI.Response.FollowingRecentActivityResponse
 	 */
 	fun getFollowingRecentActivity(maxId = null) {
 		activity = this.ig.request("news/")
@@ -142,9 +140,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * WARNING: This is a special, very heavily throttled API endpoint.
 	 * Instagram REQUIRES that you wait several minutes between calls to it.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BootstrapUsersResponse|null Will be NULL if throttled by Instagram.
+	 * @return .instagramAPI.Response.BootstrapUsersResponse|null Will be NULL if throttled by Instagram.
 	 */
 	fun getBootstrapUsers() {
 		surfaces =
@@ -165,9 +163,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipsShowResponse
+	 * @return .instagramAPI.Response.FriendshipsShowResponse
 	 */
 	fun getFriendship(userId) {
 		return this.ig.request("friendships/show/{userId}/").getResponse(Response.FriendshipsShowResponse())
@@ -178,9 +176,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string|string[] userList List of numerical UserPK IDs.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipsShowManyResponse
+	 * @return .instagramAPI.Response.FriendshipsShowManyResponse
 	 */
 	fun getFriendships(userList) {
 		if (is_array(userList)) {
@@ -195,9 +193,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get list of pending friendship requests.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FollowerAndFollowingResponse
+	 * @return .instagramAPI.Response.FollowerAndFollowingResponse
 	 */
 	fun getPendingFriendships() {
 		request = this.ig.request("friendships/pending/")
@@ -210,9 +208,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 */
 	fun approveFriendship(userId) {
 		return this.ig.request("friendships/approve/{userId}/").addPost("_uuid", this.ig.uuid)
@@ -228,9 +226,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 */
 	fun rejectFriendship(userId) {
 		return this.ig.request("friendships/ignore/{userId}/").addPost("_uuid", this.ig.uuid)
@@ -243,9 +241,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 */
 	fun removeFollower(userId) {
 		return this.ig.request("friendships/remove_follower/{userId}/").addPost("_uuid", this.ig.uuid)
@@ -258,9 +256,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 */
 	fun markUserOverage(userId) {
 		return this.ig.request("friendships/mark_user_overage/{userId}/feed/").addPost("_uuid", this.ig.uuid)
@@ -277,9 +275,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null maxId       Next "maximum ID", used for pagination.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FollowerAndFollowingResponse
+	 * @return .instagramAPI.Response.FollowerAndFollowingResponse
 	 *
 	 * @see Signatures::generateUUID() To create a UUID.
 	 * @see examples/rankTokenUsage.php For an example.
@@ -307,9 +305,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null maxId       Next "maximum ID", used for pagination.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FollowerAndFollowingResponse
+	 * @return .instagramAPI.Response.FollowerAndFollowingResponse
 	 *
 	 * @see Signatures::generateUUID() To create a UUID.
 	 * @see examples/rankTokenUsage.php For an example.
@@ -334,9 +332,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null searchQuery Limit the userlist to ones matching the query.
 	 * @param string|null maxId       Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FollowerAndFollowingResponse
+	 * @return .instagramAPI.Response.FollowerAndFollowingResponse
 	 *
 	 * @see Signatures::generateUUID() To create a UUID.
 	 * @see examples/rankTokenUsage.php For an example.
@@ -352,9 +350,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null searchQuery Limit the userlist to ones matching the query.
 	 * @param string|null maxId       Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FollowerAndFollowingResponse
+	 * @return .instagramAPI.Response.FollowerAndFollowingResponse
 	 *
 	 * @see Signatures::generateUUID() To create a UUID.
 	 * @see examples/rankTokenUsage.php For an example.
@@ -375,9 +373,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @throws  IllegalArgumentException                  If invalid query or
 	 *                                                    trying to exclude too
 	 *                                                    many user IDs.
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SearchUserResponse
+	 * @return .instagramAPI.Response.SearchUserResponse
 	 *
 	 * @see SearchUserResponse::getRankToken() To get a rank token from the response.
 	 * @see examples/paginateWithExclusion.php For an example.
@@ -411,9 +409,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.AccountDetailsResponse
+	 * @return .instagramAPI.Response.AccountDetailsResponse
 	 */
 	fun getAccountDetails(userId) {
 		return this.ig.request("users/{userId}/account_details/").getResponse(Response.AccountDetailsResponse())
@@ -424,9 +422,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FormerUsernamesResponse
+	 * @return .instagramAPI.Response.FormerUsernamesResponse
 	 */
 	fun getFormerUsernames(userId) {
 		return this.ig.request("users/{userId}/former_usernames/").getResponse(Response.FormerUsernamesResponse())
@@ -437,9 +435,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPk ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SharedFollowersResponse
+	 * @return .instagramAPI.Response.SharedFollowersResponse
 	 */
 	fun getSharedFollowers(userId) {
 		return this.ig.request("users/{userId}/shared_follower_accounts/")
@@ -452,9 +450,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string      targetUserId Numerical UserPk ID.
 	 * @param string|null maxId        Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ActiveFeedAdsResponse
+	 * @return .instagramAPI.Response.ActiveFeedAdsResponse
 	 */
 	fun getActiveFeedAds(targetUserId, maxId = null) {
 		return this._getActiveAds(targetUserId, "35", maxId)
@@ -466,9 +464,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string      targetUserId Numerical UserPk ID.
 	 * @param string|null maxId        Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ActiveReelAdsResponse
+	 * @return .instagramAPI.Response.ActiveReelAdsResponse
 	 */
 	fun getActiveStoryAds(targetUserId, maxId = null) {
 		return this._getActiveAds(targetUserId, "49", maxId)
@@ -482,7 +480,7 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null maxId        Next "maximum ID", used for pagination.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
 	 * @return Response
 	 */
@@ -516,9 +514,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array  contacts
 	 * @param string module
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LinkAddressBookResponse
+	 * @return .instagramAPI.Response.LinkAddressBookResponse
 	 *
 	 * @see People::unlinkAddressBook()
 	 */
@@ -532,9 +530,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Unlink your address book from Instagram.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UnlinkAddressBookResponse
+	 * @return .instagramAPI.Response.UnlinkAddressBookResponse
 	 */
 	fun unlinkAddressBook() {
 		return this.ig.request("address_book/unlink/").addPost("_uuid", this.ig.uuid)
@@ -550,9 +548,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string|null maxId Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DiscoverPeopleResponse
+	 * @return .instagramAPI.Response.DiscoverPeopleResponse
 	 */
 	fun discoverPeople(maxId = null) {
 		request = this.ig.request("discover/ayml/").setSignedPost(false).addPost("phone_id", this.ig.phone_id)
@@ -571,9 +569,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SuggestedUsersResponse
+	 * @return .instagramAPI.Response.SuggestedUsersResponse
 	 */
 	fun getSuggestedUsers(userId) {
 		return this.ig.request("discover/chaining/").addParam("target_id", userId)
@@ -587,9 +585,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * sign" on your own profile in the Instagram app. Its amount of suggestions
 	 * matches the number on the badge, and it usually only has a handful (1-4).
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SuggestedUsersBadgeResponse
+	 * @return .instagramAPI.Response.SuggestedUsersBadgeResponse
 	 */
 	fun getSuggestedUsersBadge() {
 		return this.ig.request("discover/profile_su_badge/").addPost("_uuid", this.ig.uuid)
@@ -622,9 +620,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *                          must match that user"s "algorithm" value in
 	 *                          funs like People::discoverPeople().
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SuggestedUsersResponse
+	 * @return .instagramAPI.Response.SuggestedUsersResponse
 	 */
 	fun hideSuggestedUser(userId, algorithm) {
 		return this.ig.request("discover/aysf_dismiss/").addPost("_uuid", this.ig.uuid)
@@ -637,9 +635,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 */
 	fun follow(userId) {
 		return this.ig.request("friendships/create/{userId}/").addPost("_uuid", this.ig.uuid)
@@ -653,9 +651,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 */
 	fun unfollow(userId) {
 		return this.ig.request("friendships/destroy/{userId}/").addPost("_uuid", this.ig.uuid)
@@ -674,9 +672,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun favorite(userId) {
 		return this.ig.request("friendships/favorite/{userId}/").addPost("_uuid", this.ig.uuid)
@@ -689,9 +687,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun unfavorite(userId) {
 		return this.ig.request("friendships/unfavorite/{userId}/").addPost("_uuid", this.ig.uuid)
@@ -704,9 +702,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun favoriteForStories(userId) {
 		return this.ig.request("friendships/favorite_for_stories/{userId}/").addPost("_uuid", this.ig.uuid)
@@ -719,9 +717,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun unfavoriteForStories(userId) {
 		return this.ig.request("friendships/unfavorite_for_stories/{userId}/").addPost("_uuid", this.ig.uuid)
@@ -735,9 +733,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string userId     Numerical UserPK ID.
 	 * @param string sourceName (optional) Source app-module of the report.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun report(userId, sourceName = "profile") {
 		return this.ig.request("users/{userId}/flag_user/").addPost("reason_id", 1).addPost("_uuid", this.ig.uuid)
@@ -751,9 +749,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 */
 	fun block(userId) {
 		return this.ig.request("friendships/block/{userId}/").addPost("_uuid", this.ig.uuid)
@@ -771,9 +769,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *                       Available options: "story", "post" or "all".
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 */
 	fun muteUserMedia(userId, option) {
 		return this._muteOrUnmuteUserMedia(userId, option, "friendships/mute_posts_or_story_from_follow/")
@@ -787,9 +785,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *                       Available options: "story", "post" or "all".
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 */
 	fun unmuteUserMedia(userId, option) {
 		return this._muteOrUnmuteUserMedia(userId, option, "friendships/unmute_posts_or_story_from_follow/")
@@ -804,9 +802,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string endpoint API endpoint for muting/unmuting user media.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 *
 	 * @see People::muteUserMedia()
 	 * @see People::unmuteUserMedia()
@@ -838,9 +836,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 */
 	fun unblock(userId) {
 		return this.ig.request("friendships/unblock/{userId}/").addPost("_uuid", this.ig.uuid)
@@ -853,9 +851,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string|null maxId Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BlockedListResponse
+	 * @return .instagramAPI.Response.BlockedListResponse
 	 */
 	fun getBlockedList(maxId = null) {
 		request = this.ig.request("users/blocked_list/")
@@ -871,9 +869,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 *
 	 * @see People::muteFriendStory()
 	 */
@@ -888,9 +886,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 *
 	 * @see People::unmuteFriendStory()
 	 */
@@ -903,9 +901,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get the list of users who are blocked from seeing your stories.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BlockedReelsResponse
+	 * @return .instagramAPI.Response.BlockedReelsResponse
 	 */
 	fun getBlockedStoryList() {
 		return this.ig.request("friendships/blocked_reels/").addPost("_uuid", this.ig.uuid)
@@ -922,9 +920,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 *
 	 * @see People::blockMyStory()
 	 */
@@ -941,9 +939,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FriendshipResponse
+	 * @return .instagramAPI.Response.FriendshipResponse
 	 *
 	 * @see People::unblockMyStory()
 	 */
@@ -956,9 +954,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get the list of users on your close friends list.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CloseFriendsResponse
+	 * @return .instagramAPI.Response.CloseFriendsResponse
 	 */
 	fun getCloseFriends() {
 		return this.ig.request("friendships/besties/").getResponse(Response.CloseFriendsResponse())
@@ -967,9 +965,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get the list of suggested users for your close friends list.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CloseFriendsResponse
+	 * @return .instagramAPI.Response.CloseFriendsResponse
 	 */
 	fun getSuggestedCloseFriends() {
 		return this.ig.request("friendships/bestie_suggestions/").getResponse(Response.CloseFriendsResponse())
@@ -985,9 +983,9 @@ class People(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string module (optional) From which app module (page) you have change your close friends list.
 	 * @param string source (optional) Source page of app-module of where you changed your close friends list.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun setCloseFriends(array add, array remove, module = "favorites_home_list", source = "audience_manager") {
 		return this.ig.request("friendships/set_besties/").setSignedPost(true).addPost("module", module)

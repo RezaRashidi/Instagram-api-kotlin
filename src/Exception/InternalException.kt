@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Exception
+package instagramAPI.Exception
 
 /**
  * All internally generated non-server exceptions must derive from this class.

@@ -1,11 +1,8 @@
 
 
-package InstagramAPI.Realtime.Handler
+package instagramAPI.Realtime.Handler
 
-import InstagramAPI.Realtime.HandlerInterface
-import InstagramAPI.Realtime.Message
-import InstagramAPI.Realtime.Subscription.GraphQl.AppPresenceSubscription
-import InstagramAPI.Response.Model.UserPresence
+import instagramAPI.Realtime.Subscription.GraphQl.AppPresenceSubscription
 
 class PresenceHandler : AbstractHandler : HandlerInterface
 {

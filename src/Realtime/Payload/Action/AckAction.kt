@@ -1,14 +1,14 @@
 
 
-package InstagramAPI.Realtime.Payload.Action
+package instagramAPI.Realtime.Payload.Action
 
-import InstagramAPI.Realtime.Payload.RealtimeAction
+import instagramAPI.Realtime.Payload.RealtimeAction
 
 /**
  * AckAction.
  *
  * @method string getAction()
- * @method .InstagramAPI.Response.Model.DirectSendItemPayload getPayload()
+ * @method .instagramAPI.Response.Model.DirectSendItemPayload getPayload()
  * @method string getStatus()
  * @method mixed getStatusCode()
  * @method bool isAction()
@@ -16,7 +16,7 @@ import InstagramAPI.Realtime.Payload.RealtimeAction
  * @method bool isStatus()
  * @method bool isStatusCode()
  * @method this setAction(string $value)
- * @method this setPayload(.InstagramAPI.Response.Model.DirectSendItemPayload $value)
+ * @method this setPayload(.instagramAPI.Response.Model.DirectSendItemPayload $value)
  * @method this setStatus(string $value)
  * @method this setStatusCode(mixed $value)
  * @method this unsetAction()
@@ -28,6 +28,6 @@ class AckAction : RealtimeAction
 {
     val JSON_PROPERTY_MAP = [
         "status_code" => "",
-        "payload"     => ".InstagramAPI.Response.Model.DirectSendItemPayload",
+        "payload"     => ".instagramAPI.Response.Model.DirectSendItemPayload",
     ]
 }

@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Realtime.Handler
+package instagramAPI.Realtime.Handler
 
 class HandlerException : .DomainException
 {

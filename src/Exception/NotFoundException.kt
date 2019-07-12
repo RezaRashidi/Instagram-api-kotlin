@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Exception
+package instagramAPI.Exception
 
 /**
  * Used for endpoint calls that fail with HTTP code "404 Not Found", but only

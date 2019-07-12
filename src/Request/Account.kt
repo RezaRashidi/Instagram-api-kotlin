@@ -1,8 +1,8 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Exception.InternalException
-import InstagramAPI.Instagram
-import InstagramAPI.Response
+import instagramAPI.Exception.InternalException
+import instagramAPI.Instagram
+import instagramAPI.Response
 
 /**
  * Account-related funs, such as profile editing and security.
@@ -14,9 +14,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * Also try People::getSelfInfo() instead, for some different information.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UserInfoResponse
+	 * @return .instagramAPI.Response.UserInfoResponse
 	 *
 	 * @see People::getSelfInfo()
 	 */
@@ -41,9 +41,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string biography Biography text. import "" for nothing.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UserInfoResponse
+	 * @return .instagramAPI.Response.UserInfoResponse
 	 *
 	 * @see Account::editProfile() should be called after this fun!
 	 */
@@ -73,9 +73,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null newUsername (optional) Rename your account to a username,
 	 *                                 which you"ve already verified with checkUsername().
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UserInfoResponse
+	 * @return .instagramAPI.Response.UserInfoResponse
 	 *
 	 * @see Account::getCurrentUser() to get your current account details.
 	 * @see Account::checkUsername() to verify your username first.
@@ -111,9 +111,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string photoFilename The photo filename.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UserInfoResponse
+	 * @return .instagramAPI.Response.UserInfoResponse
 	 */
 	fun changeProfilePicture(photoFilename:String) {
 		return this.ig.request("accounts/change_profile_picture/").addPost("_csrftoken", this.ig.client.getToken())
@@ -124,9 +124,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Remove your account"s profile picture.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UserInfoResponse
+	 * @return .instagramAPI.Response.UserInfoResponse
 	 */
 	fun removeProfilePicture() {
 		return this.ig.request("accounts/remove_profile_picture/").addPost("_uuid", this.ig.uuid)
@@ -137,9 +137,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Sets your account to .
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UserInfoResponse
+	 * @return .instagramAPI.Response.UserInfoResponse
 	 */
 	fun setPublic() {
 		return this.ig.request("accounts/set_/").addPost("_uuid", this.ig.uuid).addPost("_uid", this.ig.account_id)
@@ -149,9 +149,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Sets your account to private.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UserInfoResponse
+	 * @return .instagramAPI.Response.UserInfoResponse
 	 */
 	fun setPrivate() {
 		return this.ig.request("accounts/set_private/").addPost("_uuid", this.ig.uuid)
@@ -165,9 +165,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 * In order to switch your account to Business profile you MUST
 	 * call Account::setBusinessInfo().
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SwitchBusinessProfileResponse
+	 * @return .instagramAPI.Response.SwitchBusinessProfileResponse
 	 *
 	 * @see Account::setBusinessInfo() sets required data to become a business profile.
 	 */
@@ -179,9 +179,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Switches your account to personal profile.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SwitchPersonalProfileResponse
+	 * @return .instagramAPI.Response.SwitchPersonalProfileResponse
 	 */
 	fun switchToPersonalProfile() {
 		return this.ig.request("accounts/convert_to_personal/").addPost("_uuid", this.ig.uuid)
@@ -196,9 +196,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string email       Email.
 	 * @param string categoryId  TODO: Info.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CreateBusinessInfoResponse
+	 * @return .instagramAPI.Response.CreateBusinessInfoResponse
 	 */
 	fun setBusinessInfo(phoneNumber:String, email:String, categoryId:String) {
 		return this.ig.request("accounts/create_business_info/").addPost("set_", "true")
@@ -219,9 +219,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string username Instagram username to check.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CheckUsernameResponse
+	 * @return .instagramAPI.Response.CheckUsernameResponse
 	 *
 	 * @see Account::editProfile() to rename your account.
 	 */
@@ -234,9 +234,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get account spam filter status.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CommentFilterResponse
+	 * @return .instagramAPI.Response.CommentFilterResponse
 	 */
 	fun getCommentFilter() {
 		return this.ig.request("accounts/get_comment_filter/").getResponse(Response.CommentFilterResponse())
@@ -247,9 +247,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param int config_value Whether spam filter is on (0 or 1).
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CommentFilterSetResponse
+	 * @return .instagramAPI.Response.CommentFilterSetResponse
 	 */
 	fun setCommentFilter(config_value:Int) {
 		return this.ig.request("accounts/set_comment_filter/").addPost("_uuid", this.ig.uuid)
@@ -260,9 +260,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get whether the comment category filter is disabled.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CommentCategoryFilterResponse
+	 * @return .instagramAPI.Response.CommentCategoryFilterResponse
 	 */
 	fun getCommentCategoryFilterDisabled() {
 		return this.ig.request("accounts/get_comment_category_filter_disabled/")
@@ -272,9 +272,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get account spam filter keywords.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CommentFilterKeywordsResponse
+	 * @return .instagramAPI.Response.CommentFilterKeywordsResponse
 	 */
 	fun getCommentFilterKeywords() {
 		return this.ig.request("accounts/get_comment_filter_keywords/")
@@ -286,9 +286,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string keywords List of blocked words, separated by comma.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CommentFilterSetResponse
+	 * @return .instagramAPI.Response.CommentFilterSetResponse
 	 */
 	fun setCommentFilterKeywords(keywords:String) {
 		return this.ig.request("accounts/set_comment_filter_keywords/").addPost("_uuid", this.ig.uuid)
@@ -302,9 +302,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string oldPassword Old password.
 	 * @param string newPassword password.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ChangePasswordResponse
+	 * @return .instagramAPI.Response.ChangePasswordResponse
 	 */
 	fun changePassword(oldPassword:String, newPassword:String) {
 		return this.ig.request("accounts/change_password/").addPost("_uuid", this.ig.uuid)
@@ -321,9 +321,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 *          CODES LET YOU REGAIN CONTROL OF YOUR ACCOUNT IF YOU LOSE THE
 	 *          PHONE NUMBER! WITHOUT THE CODES, YOU RISK LOSING YOUR ACCOUNT!
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.AccountSecurityInfoResponse
+	 * @return .instagramAPI.Response.AccountSecurityInfoResponse
 	 *
 	 * @see Account::enableTwoFactorSMS()
 	 */
@@ -341,9 +341,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string phoneNumber Phone number with country code. Format: +34123456789.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SendTwoFactorEnableSMSResponse
+	 * @return .instagramAPI.Response.SendTwoFactorEnableSMSResponse
 	 *
 	 * @see Account::enableTwoFactorSMS()
 	 */
@@ -367,9 +367,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string phoneNumber      Phone number with country code. Format: +34123456789.
 	 * @param string verificationCode The code sent to your phone via `Account::sendTwoFactorEnableSMS()`.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.AccountSecurityInfoResponse
+	 * @return .instagramAPI.Response.AccountSecurityInfoResponse
 	 *
 	 * @see Account::sendTwoFactorEnableSMS()
 	 * @see Account::getSecurityInfo()
@@ -388,9 +388,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Disable Two Factor authentication.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DisableTwoFactorSMSResponse
+	 * @return .instagramAPI.Response.DisableTwoFactorSMSResponse
 	 */
 	fun disableTwoFactorSMS() {
 		return this.ig.request("accounts/disable_sms_two_factor/").addPost("_uuid", this.ig.uuid)
@@ -416,9 +416,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get presence status.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.PresenceStatusResponse
+	 * @return .instagramAPI.Response.PresenceStatusResponse
 	 */
 	fun getPresenceStatus() {
 		/** @var Response.PresenceStatusResponse result */
@@ -436,9 +436,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 * Allow accounts you follow and anyone you message to see when you were
 	 * last active on Instagram apps.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun enablePresence() {
 		/** @var Response.GenericResponse result */
@@ -456,9 +456,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * You won"t be able to see the activity status of other accounts.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun disablePresence() {
 		/** @var Response.GenericResponse result */
@@ -474,9 +474,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Tell Instagram to send you a message to verify your email address.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SendConfirmEmailResponse
+	 * @return .instagramAPI.Response.SendConfirmEmailResponse
 	 */
 	fun sendConfirmEmail() {
 		return this.ig.request("accounts/send_confirm_email/").addPost("_uuid", this.ig.uuid)
@@ -489,9 +489,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string phoneNumber Phone number with country code. Format: +34123456789.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SendSMSCodeResponse
+	 * @return .instagramAPI.Response.SendSMSCodeResponse
 	 */
 	fun sendSMSCode(phoneNumber:String) {
 		cleanNumber = "+".preg_replace("/[^0-9]/", "", phoneNumber)
@@ -507,9 +507,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string phoneNumber      Phone number with country code. Format: +34123456789.
 	 * @param string verificationCode The code sent to your phone via `Account::sendSMSCode()`.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.VerifySMSCodeResponse
+	 * @return .instagramAPI.Response.VerifySMSCodeResponse
 	 *
 	 * @see Account::sendSMSCode()
 	 */
@@ -527,9 +527,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string usage Either "prefill" or "auto_confirmation".
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun setContactPointPrefill(usage:String) {
 		return this.ig.request("accounts/contact_point_prefill/").setNeedsAuth(false)
@@ -540,9 +540,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get account badge notifications for the "Switch account" menu.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BadgeNotificationsResponse
+	 * @return .instagramAPI.Response.BadgeNotificationsResponse
 	 */
 	fun getBadgeNotifications() {
 		return this.ig.request("notifications/badge/").setSignedPost(false).addPost("_uuid", this.ig.uuid)
@@ -553,9 +553,9 @@ class Account(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * TODO.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun getProcessContactPointSignals() {
 		return this.ig.request("accounts/process_contact_point_signals/").addPost("google_tokens", "[]")

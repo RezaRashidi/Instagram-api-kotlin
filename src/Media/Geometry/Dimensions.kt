@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Media.Geometry
+package instagramAPI.Media.Geometry
 
 class Dimensions{
     /** @var int */

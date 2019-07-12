@@ -1,9 +1,9 @@
 
 
-package InstagramAPI.Exception
+package instagramAPI.Exception
 
 import jdk.javadoc.internal.doclets.toolkit.util.DocPath.parent
-import InstagramAPI.Exception.RequestException as RequestException1
+import instagramAPI.Exception.RequestException as RequestException1
 
 /**
  * This exception re-wraps ALL networking/socket exceptions.
@@ -49,7 +49,7 @@ class NetworkException : RequestException1()
         // NOTE: We DON"T assign the guzzleException to "$previous", otherwise
         // the user would still see something like "Uncaught GuzzleHttp.Exception.
         // RequestException" and Guzzle"s stack trace, instead of "Uncaught
-        // InstagramAPI.Exception.NetworkException" and OUR correct stack trace.
+        // instagramAPI.Exception.NetworkException" and OUR correct stack trace.
        super(message) //todo::call core Exception  constructor
     }
 

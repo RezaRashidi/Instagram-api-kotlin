@@ -1,4 +1,4 @@
-package InstagramAPI
+package instagramAPI
 
 import kotlin.math.pow
 

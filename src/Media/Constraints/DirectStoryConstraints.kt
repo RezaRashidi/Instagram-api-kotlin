@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Media.Constraints
+package instagramAPI.Media.Constraints
 
 /**
  * Instagram"s direct messaging story media constraints.

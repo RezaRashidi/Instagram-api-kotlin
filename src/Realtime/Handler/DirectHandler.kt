@@ -1,24 +1,6 @@
 
 
-package InstagramAPI.Realtime.Handler
-
-import InstagramAPI.Client as HttpClient
-import InstagramAPI.Realtime.HandlerInterface
-import InstagramAPI.Realtime.Message
-import InstagramAPI.Realtime.Payload.Action.AckAction
-import InstagramAPI.Realtime.Payload.Event.PatchEvent
-import InstagramAPI.Realtime.Payload.Event.PatchEventOp
-import InstagramAPI.Realtime.Payload.RealtimeAction
-import InstagramAPI.Realtime.Payload.RealtimeEvent
-import InstagramAPI.Realtime.Payload.StoryScreenshot
-import InstagramAPI.Realtime.Payload.ThreadAction
-import InstagramAPI.Realtime.Payload.ThreadActivity
-import InstagramAPI.Response.Model.ActionBadge
-import InstagramAPI.Response.Model.DirectInbox
-import InstagramAPI.Response.Model.DirectSeenItemPayload
-import InstagramAPI.Response.Model.DirectThread
-import InstagramAPI.Response.Model.DirectThreadItem
-import InstagramAPI.Response.Model.DirectThreadLastSeenAt
+package instagramAPI.Realtime.Handler
 
 class DirectHandler : AbstractHandler : HandlerInterface
 {

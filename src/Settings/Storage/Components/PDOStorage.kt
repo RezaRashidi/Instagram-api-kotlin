@@ -1,9 +1,9 @@
 
 
-package InstagramAPI.Settings.Storage.Components
+package instagramAPI.Settings.Storage.Components
 
-import InstagramAPI.Exception.SettingsException
-import InstagramAPI.Settings.StorageInterface
+import instagramAPI.Exception.SettingsException
+import instagramAPI.Settings.StorageInterface
 import PDO
 
 /**
@@ -38,7 +38,7 @@ abstract class PDOStorage : StorageInterface
      *
      * @param string $backendName Human name of the backend, such as "MySQL" or "SQLite".
      *
-     * @throws .InstagramAPI.Exception.SettingsException
+     * @throws .instagramAPI.Exception.SettingsException
      */
     public fun __construct(
         $backendName = "PDO")
@@ -142,7 +142,7 @@ abstract class PDOStorage : StorageInterface
      * @param string $column The database column.
      * @param string $data   Data to be written.
      *
-     * @throws .InstagramAPI.Exception.SettingsException
+     * @throws .instagramAPI.Exception.SettingsException
      */
     protected fun _setUserColumn(
         $column,

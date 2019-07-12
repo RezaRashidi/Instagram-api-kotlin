@@ -1,10 +1,9 @@
 
 
-package InstagramAPI.Realtime.Command
+package instagramAPI.Realtime.Command
 
-import InstagramAPI.Realtime.CommandInterface
-import InstagramAPI.Realtime.Mqtt.QosLevel
-import InstagramAPI.Utils
+import instagramAPI.Realtime.CommandInterface
+import instagramAPI.Realtime.Mqtt.QosLevel
 
 class UpdateSubscriptions : CommandInterface
 {

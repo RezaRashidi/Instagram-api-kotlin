@@ -1,9 +1,9 @@
 
 
-package InstagramAPI.Media.Video
+package instagramAPI.Media.Video
 
-import InstagramAPI.Constants
-import InstagramAPI.Utils
+import instagramAPI.Constants
+import instagramAPI.Utils
 
 /**
  * Automatically creates a video thumbnail according to Instagram"s rules.

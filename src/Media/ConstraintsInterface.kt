@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Media
+package instagramAPI.Media
 
 /**
  * Represents Instagram"s media constraints.

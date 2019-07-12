@@ -1,9 +1,8 @@
 
 
-package InstagramAPI.Settings
+package instagramAPI.Settings
 
-import InstagramAPI.Exception.SettingsException
-import InstagramAPI.Instagram
+import instagramAPI.Exception.SettingsException
 import java.lang.System.getenv
 
 /**
@@ -23,9 +22,9 @@ object Factory
      *                             user settings storage backend.
      * @param array callbacks     Optional StorageHandler callback funs.
      *
-     * @throws .InstagramAPI.Exception.SettingsException
+     * @throws .instagramAPI.Exception.SettingsException
      *
-     * @return .InstagramAPI.Settings.StorageHandler
+     * @return .instagramAPI.Settings.StorageHandler
      */
    fun createHandler(storageConfig:MutableMap<String,String>, callbacks:MutableMap<String,()->Unit> = mutableMapOf() ):StorageHandler
 
@@ -56,7 +55,7 @@ object Factory
           var locationConfig = mutableMapOf("basefolder" to baseFolder)
 
 
-          var  storageInstance = InstagramAPI.Settings.Storage.File()
+          var  storageInstance = instagramAPI.Settings.Storage.File()
          }
 
       "mysql" ->
@@ -96,7 +95,7 @@ object Factory
                 locationConfig["dbname"] = self::getUserConfig("dbname", storageConfig, cmdOptions)
             }
 
-            storageInstance = InstagramAPI.Settings.Storage.MySQL()
+            storageInstance = instagramAPI.Settings.Storage.MySQL()
       }
 
          "sqlite" -> {
@@ -131,7 +130,7 @@ object Factory
                  locationConfig["dbfilename"] = self::getUserConfig("dbfilename", storageConfig, cmdOptions)
              }
 
-             storageInstance =InstagramAPI.Settings.Storage.SQLite()
+             storageInstance =instagramAPI.Settings.Storage.SQLite()
          }
 
          "memcached" -> {
@@ -176,7 +175,7 @@ object Factory
                  ]
              }
 
-             storageInstance = InstagramAPI.Settings.Storage.Memcached()
+             storageInstance = instagramAPI.Settings.Storage.Memcached()
          }
 
          "custom"-> {

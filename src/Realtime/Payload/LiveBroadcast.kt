@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Realtime.Payload
+package instagramAPI.Realtime.Payload
 
-import InstagramAPI.AutoPropertyMapper
+import instagramAPI.AutoPropertyMapper
 
 /**
  * LiveBroadcast.
@@ -11,7 +11,7 @@ import InstagramAPI.AutoPropertyMapper
  * @method string getBroadcastMessage()
  * @method mixed getDisplayNotification()
  * @method mixed getIsPeriodic()
- * @method .InstagramAPI.Response.Model.User getUser()
+ * @method .instagramAPI.Response.Model.User getUser()
  * @method bool isBroadcastId()
  * @method bool isBroadcastMessage()
  * @method bool isDisplayNotification()
@@ -21,7 +21,7 @@ import InstagramAPI.AutoPropertyMapper
  * @method this setBroadcastMessage(string $value)
  * @method this setDisplayNotification(mixed $value)
  * @method this setIsPeriodic(mixed $value)
- * @method this setUser(.InstagramAPI.Response.Model.User $value)
+ * @method this setUser(.instagramAPI.Response.Model.User $value)
  * @method this unsetBroadcastId()
  * @method this unsetBroadcastMessage()
  * @method this unsetDisplayNotification()
@@ -31,7 +31,7 @@ import InstagramAPI.AutoPropertyMapper
 class LiveBroadcast : AutoPropertyMapper
 {
     val JSON_PROPERTY_MAP = [
-        "user"                 => ".InstagramAPI.Response.Model.User",
+        "user"                 => ".instagramAPI.Response.Model.User",
         "broadcast_id"         => "string",
         "is_periodic"          => "",
         "broadcast_message"    => "string",

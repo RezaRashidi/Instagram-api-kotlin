@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Response.Model
+package instagramAPI.Response.Model
 
 /**
  * AymfItem.

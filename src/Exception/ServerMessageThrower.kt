@@ -1,6 +1,6 @@
-package InstagramAPI.Exception
+package instagramAPI.Exception
 
-import InstagramAPI.Response
+import instagramAPI.Response
 import Psr.Http.Message.ResponseInterface as HttpResponseInterface
 
 /**
@@ -169,7 +169,7 @@ object ServerMessageThrower {
 
 		// Attach the server response to the exception, IF a response exists.
 		// NOTE: Only possible on exceptions derived from InstagramException.
-		if (serverResponse instanceof Response && e instanceof InstagramAPI.Exception.InstagramException) {
+		if (serverResponse instanceof Response && e instanceof instagramAPI.Exception.InstagramException) {
 			e.setResponse(serverResponse)
 		}
 

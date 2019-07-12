@@ -1,8 +1,8 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Response
-import InstagramAPI.Signatures
-import InstagramAPI.Utils
+import instagramAPI.Response
+import instagramAPI.Signatures
+import instagramAPI.Utils
 
 /**
  * funs for exploring and interacting with live broadcasts.
@@ -11,9 +11,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get suggested broadcasts.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SuggestedBroadcastsResponse
+	 * @return .instagramAPI.Response.SuggestedBroadcastsResponse
 	 */
 	fun getSuggestedBroadcasts() {
 		endpoint = "live/get_suggested_broadcasts/"
@@ -29,9 +29,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BroadcastInfoResponse
+	 * @return .instagramAPI.Response.BroadcastInfoResponse
 	 */
 	fun getInfo(broadcastId:String) {
 		return this.ig.request("live/{broadcastId}/info/").getResponse(Response.BroadcastInfoResponse())
@@ -44,9 +44,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ViewerListResponse
+	 * @return .instagramAPI.Response.ViewerListResponse
 	 */
 	fun getViewerList(broadcastId:String) {
 		return this.ig.request("live/{broadcastId}/get_viewer_list/").getResponse(Response.ViewerListResponse())
@@ -57,9 +57,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FinalViewerListResponse
+	 * @return .instagramAPI.Response.FinalViewerListResponse
 	 */
 	fun getFinalViewerList(broadcastId:String) {
 		return this.ig.request("live/{broadcastId}/get_final_viewer_list/")
@@ -72,9 +72,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string      broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 * @param string|null maxId       Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.PostLiveViewerListResponse
+	 * @return .instagramAPI.Response.PostLiveViewerListResponse
 	 */
 	fun getPostLiveViewerList(broadcastId:String, maxId:String? = null) {
 		request = this.ig.request("live/{broadcastId}/get_post_live_viewers_list/")
@@ -90,9 +90,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BroadcastHeartbeatAndViewerCountResponse
+	 * @return .instagramAPI.Response.BroadcastHeartbeatAndViewerCountResponse
 	 */
 	fun getHeartbeatAndViewerCount(broadcastId:String) {
 		return this.ig.request("live/{broadcastId}/heartbeat_and_get_viewer_count/").setSignedPost(false)
@@ -111,9 +111,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int    lastSeenTs     Last seen timestamp (optional).
 	 * @param int    lastFetchTs    Last fetch timestamp (optional).
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BroadcastJoinRequestCountResponse|null
+	 * @return .instagramAPI.Response.BroadcastJoinRequestCountResponse|null
 	 */
 	fun getJoinRequestCounts(broadcastId:String, lastTotalCount:Int = 0, lastSeenTs:Int = 0, lastFetchTs:Int = 0) {
 		try {
@@ -131,9 +131,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 * @param string questionId  The question ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun showQuestion(broadcastId:String, questionId:String) {
 		return this.ig.request("live/{broadcastId}/question/{questionId}/activate/").setSignedPost(false)
@@ -147,9 +147,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 * @param string questionId  The question ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun hideQuestion(broadcastId:String, questionId:String) {
 		return this.ig.request("live/{broadcastId}/question/{questionId}/deactivate/").setSignedPost(false)
@@ -165,9 +165,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string broadcastId  The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 * @param string questionText Your question text.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun question(broadcastI:String, questionText:String) {
 		return this.ig.request("live/{broadcastId}/questions").setSignedPost(false)
@@ -178,9 +178,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get all received responses from a story question.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BroadcastQuestionsResponse
+	 * @return .instagramAPI.Response.BroadcastQuestionsResponse
 	 */
 	fun getQuestions() {
 		return this.ig.request("live/get_questions/").getResponse(Response.BroadcastQuestionsResponse())
@@ -191,9 +191,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BroadcastQuestionsResponse
+	 * @return .instagramAPI.Response.BroadcastQuestionsResponse
 	 */
 	fun getLiveBroadcastQuestions(broadcastId:String) {
 		return this.ig.request("live/{broadcastId}/questions/").addParam("sources", "story_and_live")
@@ -208,9 +208,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 * @param string viewerId    Numerical UserPK ID of the user to wave to.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun wave(broadcastId:String, viewerId:String) {
 		return this.ig.request("live/{broadcastId}/wave/").addPost("viewer_id", viewerId)
@@ -224,9 +224,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 * @param string commentText Your comment text.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CommentBroadcastResponse
+	 * @return .instagramAPI.Response.CommentBroadcastResponse
 	 */
 	fun comment(broadcastId:String, commentText:String) {
 		return this.ig.request("live/{broadcastId}/comment/")
@@ -242,9 +242,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 * @param string commentId   Target comment ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.PinCommentBroadcastResponse
+	 * @return .instagramAPI.Response.PinCommentBroadcastResponse
 	 */
 	fun pinComment(broadcastId:String, commentId:String) {
 		return this.ig.request("live/{broadcastId}/pin_comment/").addPost("offset_to_video_start", 0)
@@ -258,9 +258,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 * @param string commentId   Pinned comment ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UnpinCommentBroadcastResponse
+	 * @return .instagramAPI.Response.UnpinCommentBroadcastResponse
 	 */
 	fun unpinComment(broadcastId:String, commentId:String) {
 		return this.ig.request("live/{broadcastId}/unpin_comment/").addPost("offset_to_video_start", 0)
@@ -275,9 +275,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int    lastCommentTs     Last comments timestamp (optional).
 	 * @param int    commentsRequested Number of comments requested (optional).
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BroadcastCommentsResponse
+	 * @return .instagramAPI.Response.BroadcastCommentsResponse
 	 */
 	fun getComments(broadcastId:String, lastCommentTs:Int = 0, commentsRequested:Int = 3) {
 		return this.ig.request("live/{broadcastId}/get_comment/").addParam("last_comment_ts", lastCommentTs)
@@ -291,9 +291,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int    startingOffset (optional) The time-offset to start at when retrieving the comments.
 	 * @param string encodingTag    (optional) TODO: ?.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.PostLiveCommentsResponse
+	 * @return .instagramAPI.Response.PostLiveCommentsResponse
 	 */
 	fun getPostLiveComments(broadcastId:String, startingOffset:Int = 0, encodingTag:String = "instagram_dash_remuxed") {
 		return this.ig.request("live/{broadcastId}/get_post_live_comments/").addParam("starting_offset", startingOffset)
@@ -305,9 +305,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.EnableDisableLiveCommentsResponse
+	 * @return .instagramAPI.Response.EnableDisableLiveCommentsResponse
 	 */
 	fun enableComments(broadcastId:String) {
 		return this.ig.request("live/{broadcastId}/unmute_comment/").addPost("_uid", this.ig.account_id)
@@ -320,9 +320,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.EnableDisableLiveCommentsResponse
+	 * @return .instagramAPI.Response.EnableDisableLiveCommentsResponse
 	 */
 	fun disableComments(broadcastId:String) {
 		return this.ig.request("live/{broadcastId}/mute_comment/").addPost("_uid", this.ig.account_id)
@@ -337,9 +337,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int    likeCount   Number of likes ("hearts") to send (optional).
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BroadcastLikeResponse
+	 * @return .instagramAPI.Response.BroadcastLikeResponse
 	 */
 	fun like(broadcastId:String, likeCount:Int = 1) {
 		if (likeCount < 1 || likeCount > 6) {
@@ -357,9 +357,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 * @param int    likeTs      Like timestamp.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BroadcastLikeCountResponse
+	 * @return .instagramAPI.Response.BroadcastLikeCountResponse
 	 */
 	fun getLikeCount(broadcastId:String, likeTs:Int = 0) {
 		return this.ig.request("live/{broadcastId}/get_like_count/").addParam("like_ts", likeTs)
@@ -373,9 +373,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int    startingOffset (optional) The time-offset to start at when retrieving the likes.
 	 * @param string encodingTag    (optional) TODO: ?.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.PostLiveLikesResponse
+	 * @return .instagramAPI.Response.PostLiveLikesResponse
 	 */
 	fun getPostLiveLikes(broadcastId:String, startingOffset:Int = 0, encodingTag:String  = "instagram_dash_remuxed") {
 		return this.ig.request("live/{broadcastId}/get_post_live_likes/").addParam("starting_offset", startingOffset)
@@ -391,9 +391,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int previewHeight (optional) Height.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CreateLiveResponse
+	 * @return .instagramAPI.Response.CreateLiveResponse
 	 *
 	 * @see Live::start()
 	 * @see Live::end()
@@ -423,9 +423,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.StartLiveResponse
+	 * @return .instagramAPI.Response.StartLiveResponse
 	 *
 	 * @see Live::create()
 	 * @see Live::end()
@@ -451,9 +451,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun resumeBroadcastAfterContentMatch(broadcastId:String) {
 		return this.ig.request("live/{broadcastId}/resume_broadcast_after_content_match/")
@@ -470,9 +470,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string broadcastId      The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 * @param bool   copyrightWarning True when broadcast is ended via a copyright notice (optional).
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 *
 	 * @see Live::create()
 	 * @see Live::start()
@@ -490,9 +490,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun addToPostLive(broadcastId:String) {
 		return this.ig.request("live/{broadcastId}/add_to_post_live/").addPost("_uid", this.ig.account_id)
@@ -505,9 +505,9 @@ class Live(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string broadcastId The broadcast ID in Instagram"s internal format (ie "17854587811139572").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun deletePostLive(broadcastId:String) {
 		return this.ig.request("live/{broadcastId}/delete_post_live/").addPost("_uid", this.ig.account_id)

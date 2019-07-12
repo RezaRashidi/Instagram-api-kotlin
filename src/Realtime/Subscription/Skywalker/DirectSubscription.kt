@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Realtime.Subscription.Skywalker
+package instagramAPI.Realtime.Subscription.Skywalker
 
-import InstagramAPI.Realtime.Subscription.SkywalkerSubscription
+import instagramAPI.Realtime.Subscription.SkywalkerSubscription
 
 class DirectSubscription : SkywalkerSubscription
 {

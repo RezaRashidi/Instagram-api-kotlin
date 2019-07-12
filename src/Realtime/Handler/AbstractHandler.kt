@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Realtime.Handler
+package instagramAPI.Realtime.Handler
 
 import Evenement.EventEmitterInterface
 

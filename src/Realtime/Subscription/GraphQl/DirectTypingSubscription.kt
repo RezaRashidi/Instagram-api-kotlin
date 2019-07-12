@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Realtime.Subscription.GraphQl
+package instagramAPI.Realtime.Subscription.GraphQl
 
-import InstagramAPI.Realtime.Subscription.GraphQlSubscription
+import instagramAPI.Realtime.Subscription.GraphQlSubscription
 
 class DirectTypingSubscription : GraphQlSubscription
 {

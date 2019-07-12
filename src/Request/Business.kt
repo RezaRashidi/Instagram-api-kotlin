@@ -1,8 +1,8 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Constants
-import InstagramAPI.Instagram
-import InstagramAPI.Response
+import instagramAPI.Constants
+import instagramAPI.Instagram
+import instagramAPI.Response
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date
 
 /**
@@ -16,9 +16,9 @@ class Business(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param day
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.InsightsResponse
+	 * @return .instagramAPI.Response.InsightsResponse
 	 */
 	fun getInsights(day:String? = null) {
 		if (empty(day)) {
@@ -34,9 +34,9 @@ class Business(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MediaInsightsResponse
+	 * @return .instagramAPI.Response.MediaInsightsResponse
 	 */
 	fun getMediaInsights(mediaId:String) {
 		return this.ig.request("insights/media_organic_insights/{mediaId}/")
@@ -46,13 +46,13 @@ class Business(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get account statistics.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GraphqlResponse
+	 * @return .instagramAPI.Response.GraphqlResponse
 	 */
 	fun getStatistics() {
 		return this.ig.request("ads/graphql/").setSignedPost(false).setIsMultiResponse(true)
-			.addParam("locale", Constants::USER_AGENT_LOCALE).addParam("vc_policy", "insights_policy")
+			.addParam("locale", Constants.USER_AGENT_LOCALE).addParam("vc_policy", "insights_policy")
 			.addParam("surface", "account").addPost("access_token", "undefined")
 			.addPost("fb_api_caller_class", "RelayModern")
 			.addPost("variables", json_encode(["IgInsightsGridMediaImage_SIZE" => 240,

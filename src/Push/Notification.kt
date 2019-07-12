@@ -1,9 +1,9 @@
 
 
-package InstagramAPI.Push
+package instagramAPI.Push
 
 import Fbns.Client.Json
-import InstagramAPI.Push.Payload.BadgeCount
+import instagramAPI.Push.Payload.BadgeCount
 
 class Notification
 {

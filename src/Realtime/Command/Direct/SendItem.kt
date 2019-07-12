@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Realtime.Command.Direct
+package instagramAPI.Realtime.Command.Direct
 
-import InstagramAPI.Realtime.Command.DirectCommand
+import instagramAPI.Realtime.Command.DirectCommand
 
 abstract class SendItem : DirectCommand(){
     val ACTION = "send_item"

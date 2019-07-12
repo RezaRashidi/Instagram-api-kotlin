@@ -1,6 +1,6 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Response
+import instagramAPI.Response
 
 /**
  * funs related to creating and managing collections of your saved media.
@@ -16,9 +16,9 @@ class Collection(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string|null maxId Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GetCollectionsListResponse
+	 * @return .instagramAPI.Response.GetCollectionsListResponse
 	 */
 	fun getList(maxId: String? = null) {
 		request = this.ig.request("collections/list/")
@@ -36,9 +36,9 @@ class Collection(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string      collectionId The collection ID.
 	 * @param string|null maxId        Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CollectionFeedResponse
+	 * @return .instagramAPI.Response.CollectionFeedResponse
 	 */
 	fun getFeed(collectionId:String, maxId:String? = null) {
 		request = this.ig.request("feed/collection/{collectionId}/")
@@ -55,9 +55,9 @@ class Collection(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string name       Name of the collection.
 	 * @param string moduleName (optional) From which app module (page) you"re performing this action.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CreateCollectionResponse
+	 * @return .instagramAPI.Response.CreateCollectionResponse
 	 */
 	fun create(name:String, moduleName:String = "collection_create") {
 		return this.ig.request("collections/create/").addPost("module_name", moduleName)
@@ -71,9 +71,9 @@ class Collection(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string collectionId The collection ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DeleteCollectionResponse
+	 * @return .instagramAPI.Response.DeleteCollectionResponse
 	 */
 	fun delete(collectionId:String) {
 		return this.ig.request("collections/{collectionId}/delete/").addPost("_uuid", this.ig.uuid)
@@ -92,9 +92,9 @@ class Collection(instagram: Instagram) : RequestCollection(instagram) {
 	 *                             string "module_name" (optional).
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.EditCollectionResponse
+	 * @return .instagramAPI.Response.EditCollectionResponse
 	 */
 	fun edit(collectionId:String, array params) {
 		postData = []
@@ -135,9 +135,9 @@ class Collection(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string   mediaId       The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 * @param string   moduleName    (optional) From which app module (page) you"re performing this action.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.EditCollectionResponse
+	 * @return .instagramAPI.Response.EditCollectionResponse
 	 */
 	fun removeMedia(array collectionIds, mediaId:String, moduleName:String = "feed_contextual_saved_collections") {
 		return this.ig.request("media/{mediaId}/save/").addPost("module_name", moduleName)

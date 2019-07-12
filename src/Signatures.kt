@@ -1,4 +1,4 @@
-package InstagramAPI
+package instagramAPI
 
 import java.math.BigInteger
 import java.net.URLEncoder

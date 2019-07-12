@@ -1,9 +1,9 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Exception.RequestHeadersTooLargeException
-import InstagramAPI.Response
-import InstagramAPI.Signatures
-import InstagramAPI.Utils
+import instagramAPI.Exception.RequestHeadersTooLargeException
+import instagramAPI.Response
+import instagramAPI.Signatures
+import instagramAPI.Utils
 import java.net.URLEncoder
 
 /**
@@ -16,9 +16,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string hashtag The hashtag, not including the "#".
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.TagInfoResponse
+	 * @return .instagramAPI.Response.TagInfoResponse
 	 */
 	fun getInfo(hashtag:String) {
 		Utils.throwIfInvalidHashtag(hashtag)
@@ -32,9 +32,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string hashtag The hashtag, not including the "#".
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.TagsStoryResponse
+	 * @return .instagramAPI.Response.TagsStoryResponse
 	 */
 	fun getStory(hashtag:String) {
 		Utils.throwIfInvalidHashtag(hashtag)
@@ -54,9 +54,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null maxId        Next "maximum ID", used for pagination.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.TagFeedResponse
+	 * @return .instagramAPI.Response.TagFeedResponse
 	 */
 	fun getSection(hashtag:String, rankToken:String, tab:String? = null, nextMediaIds:Int? = null, maxId:String = null) {
 		Utils.throwIfInvalidHashtag(hashtag)
@@ -114,9 +114,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @throws  IllegalArgumentException                  If invalid query or
 	 *                                                    trying to exclude too
 	 *                                                    many hashtags.
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SearchTagResponse
+	 * @return .instagramAPI.Response.SearchTagResponse
 	 *
 	 * @see SearchTagResponse.getRankToken() To get a rank token from the response.
 	 * @see examples/paginateWithExclusion.php For an example.
@@ -155,9 +155,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string hashtag The hashtag, not including the "#".
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.TagRelatedResponse
+	 * @return .instagramAPI.Response.TagRelatedResponse
 	 */
 	fun follow(hashtag:String) {
 		Utils.throwIfInvalidHashtag(hashtag)
@@ -175,9 +175,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string hashtag The hashtag, not including the "#".
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.TagRelatedResponse
+	 * @return .instagramAPI.Response.TagRelatedResponse
 	 */
 	fun unfollow(hashtag:String) {
 		Utils.throwIfInvalidHashtag(hashtag)
@@ -195,9 +195,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string hashtag The hashtag, not including the "#".
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.TagRelatedResponse
+	 * @return .instagramAPI.Response.TagRelatedResponse
 	 */
 	fun getRelated(hashtag:String) {
 		Utils.throwIfInvalidHashtag(hashtag)
@@ -216,9 +216,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string|null maxId     Next "maximum ID", used for pagination.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.TagFeedResponse
+	 * @return .instagramAPI.Response.TagFeedResponse
 	 *
 	 * @see Signatures.generateUUID() To create a UUID.
 	 * @see examples/rankTokenUsage.php For an example.
@@ -241,9 +241,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.HashtagsResponse
+	 * @return .instagramAPI.Response.HashtagsResponse
 	 */
 	fun getFollowing(userId:String) {
 		return this.ig.request("users/{userId}/following_tags_info/").getResponse(Response.HashtagsResponse())
@@ -252,9 +252,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get list of tags that you are following.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.HashtagsResponse
+	 * @return .instagramAPI.Response.HashtagsResponse
 	 */
 	fun getSelfFollowing() {
 		return this.getFollowing(this.ig.account_id)
@@ -263,9 +263,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get list of tags that are suggested to follow to.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.HashtagsResponse
+	 * @return .instagramAPI.Response.HashtagsResponse
 	 */
 	fun getFollowSuggestions() {
 		return this.ig.request("tags/suggested/").getResponse(Response.HashtagsResponse())
@@ -297,9 +297,9 @@ class Hashtag(instagram: Instagram) : RequestCollection(instagram) {
 	 *                                              media Items.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MediaSeenResponse
+	 * @return .instagramAPI.Response.MediaSeenResponse
 	 *
 	 * @see Story.markMediaSeen()
 	 * @see Location.markStoryMediaSeen()

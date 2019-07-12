@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Realtime
+package instagramAPI.Realtime
 
 interface ParserInterface
 {

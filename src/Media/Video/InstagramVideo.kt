@@ -1,12 +1,11 @@
 
 
-package InstagramAPI.Media.Video
+package instagramAPI.Media.Video
 
-import InstagramAPI.Media.Geometry.Dimensions
-import InstagramAPI.Media.Geometry.Rectangle
-import InstagramAPI.Media.InstagramMedia
-import InstagramAPI.Response.Model.In
-import InstagramAPI.Utils
+import instagramAPI.Media.Geometry.Dimensions
+import instagramAPI.Media.Geometry.Rectangle
+import instagramAPI.Media.InstagramMedia
+import instagramAPI.Utils
 import Winbox.Args
 
 /**

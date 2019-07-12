@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Response
+import instagramAPI.Response
 
 /**
  * funs for managing your push notifications.
@@ -16,9 +16,9 @@ class Push(instagram:Instagram) : RequestCollection(instagram)
      * @param string token       The token used to register to the push channel.
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.PushRegisterResponse
+     * @return .instagramAPI.Response.PushRegisterResponse
      */
     fun register(
         pushChannel,
@@ -46,9 +46,9 @@ class Push(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Get push preferences.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.PushPreferencesResponse
+     * @return .instagramAPI.Response.PushPreferencesResponse
      */
     fun getPreferences()
     {
@@ -61,9 +61,9 @@ class Push(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param array preferences Described in "extradocs/Push_setPreferences.txt".
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.PushPreferencesResponse
+     * @return .instagramAPI.Response.PushPreferencesResponse
      */
     fun setPreferences(
         array preferences)

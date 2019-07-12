@@ -1,4 +1,4 @@
-package InstagramAPI
+package instagramAPI
 
 import Psr.Http.Message.ResponseInterface as HttpResponseInterface
 
@@ -18,7 +18,8 @@ import Psr.Http.Message.ResponseInterface as HttpResponseInterface
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-open class Response : AutoPropertyMapper() {
+
+open class Response{ //: AutoPropertyMapper() {
 	/** @var string */
 	val STATUS_OK = "ok"
 	/** @var string */

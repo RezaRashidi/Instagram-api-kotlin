@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Devices
+package instagramAPI.Devices
 
 /**
  * Android hardware device representation.

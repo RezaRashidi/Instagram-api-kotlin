@@ -8,7 +8,7 @@
  * This source file is subject to the MIT license.
  */
 
-package InstagramAPI.Realtime.Mqtt
+package instagramAPI.Realtime.Mqtt
 
 import BinSoul.Net.Mqtt.Exception.UnknownPacketTypeException
 import BinSoul.Net.Mqtt.Packet

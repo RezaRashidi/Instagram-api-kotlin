@@ -1,9 +1,9 @@
 
 
-package InstagramAPI.Realtime.Subscription
+package instagramAPI.Realtime.Subscription
 
-import InstagramAPI.Realtime.Mqtt
-import InstagramAPI.Realtime.SubscriptionInterface
+import instagramAPI.Realtime.Mqtt
+import instagramAPI.Realtime.SubscriptionInterface
 
 abstract class SkywalkerSubscription : SubscriptionInterface
 {

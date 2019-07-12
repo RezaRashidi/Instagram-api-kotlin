@@ -1,11 +1,11 @@
 
 
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Constants
-import InstagramAPI.Request.Metadata.Internal as InternalMetadata
-import InstagramAPI.Response
-import InstagramAPI.Utils
+import instagramAPI.Constants
+import instagramAPI.Request.Metadata.Internal as InternalMetadata
+import instagramAPI.Response
+import instagramAPI.Utils
 
 /**
  * funs for managing your story and interacting with other stories.
@@ -22,9 +22,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *
      * @throws  IllegalArgumentException
      * @throws .RuntimeException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ConfigureResponse
+     * @return .instagramAPI.Response.ConfigureResponse
      *
      * @see Internal::configureSinglePhoto() for available metadata fields.
      */
@@ -43,9 +43,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *
      * @throws  IllegalArgumentException
      * @throws .RuntimeException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ConfigureResponse
+     * @return .instagramAPI.Response.ConfigureResponse
      *
      * @see Internal::configureSinglePhoto() for available metadata fields.
      * @see https://help.instagram.com/2183694401643300
@@ -68,10 +68,10 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *
      * @throws  IllegalArgumentException
      * @throws .RuntimeException
-     * @throws .InstagramAPI.Exception.InstagramException
-     * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
+     * @throws .instagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.UploadFailedException If the video upload fails.
      *
-     * @return .InstagramAPI.Response.ConfigureResponse
+     * @return .instagramAPI.Response.ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      */
@@ -90,10 +90,10 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *
      * @throws  IllegalArgumentException
      * @throws .RuntimeException
-     * @throws .InstagramAPI.Exception.InstagramException
-     * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
+     * @throws .instagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.UploadFailedException If the video upload fails.
      *
-     * @return .InstagramAPI.Response.ConfigureResponse
+     * @return .instagramAPI.Response.ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      * @see https://help.instagram.com/2183694401643300
@@ -115,9 +115,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * still have stories. So it"s always safer to call getUserStoryFeed() if
      * a specific user"s story feed matters to you.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ReelsTrayFeedResponse
+     * @return .instagramAPI.Response.ReelsTrayFeedResponse
      *
      * @see Story::getUserStoryFeed()
      */
@@ -141,9 +141,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string userId Numerical UserPK ID.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.UserReelMediaFeedResponse
+     * @return .instagramAPI.Response.UserReelMediaFeedResponse
      *
      * @see Story::getUserStoryFeed()
      */
@@ -167,9 +167,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string userId Numerical UserPK ID.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.UserStoryFeedResponse
+     * @return .instagramAPI.Response.UserStoryFeedResponse
      *
      * @see Story::getUserReelMediaFeed()
      */
@@ -194,9 +194,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param string|string[] feedList List of numerical UserPK IDs, OR highlight IDs (such as `highlight:123882132324123`).
      * @param string          source   (optional) Source app-module where the request was made.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ReelsMediaResponse
+     * @return .instagramAPI.Response.ReelsMediaResponse
      *
      * @see Highlight::getUserFeed() More info about when to import this API for highlight-details.
      */
@@ -226,9 +226,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Get your archived story media feed.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ArchivedStoriesFeedResponse
+     * @return .instagramAPI.Response.ArchivedStoriesFeedResponse
      */
     fun getArchivedStoriesFeed()
     {
@@ -249,9 +249,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param string      storyPk The story media item"s PK in Instagram"s internal format (ie "3482384834").
      * @param string|null maxId   Next "maximum ID", used for pagination.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ReelMediaViewerResponse
+     * @return .instagramAPI.Response.ReelMediaViewerResponse
      */
     fun getStoryItemViewers(
         storyPk,
@@ -276,9 +276,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param int    votingOption Value that represents the voting option of the voter. 0 for the first option, 1 for the second option.
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ReelMediaViewerResponse
+     * @return .instagramAPI.Response.ReelMediaViewerResponse
      */
     fun votePollStory(
         storyId,
@@ -309,9 +309,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param float  votingOption Value that represents the voting option of the voter. Should be a float from 0 to 1 (ie "0.25").
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ReelMediaViewerResponse
+     * @return .instagramAPI.Response.ReelMediaViewerResponse
      */
     fun voteSliderStory(
         storyId,
@@ -343,9 +343,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param string|null maxId        Next "maximum ID", used for pagination.
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.StoryPollVotersResponse
+     * @return .instagramAPI.Response.StoryPollVotersResponse
      */
     fun getStoryPollVoters(
         storyId,
@@ -374,9 +374,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param string questionId   The question ID in Instagram"s internal format (ie "17956159684032257").
      * @param string responseText The text to respond to the question with. (Note: Android App limits this to 94 characters).
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.GenericResponse
+     * @return .instagramAPI.Response.GenericResponse
      */
     fun answerStoryQuestion(
         storyId,
@@ -399,9 +399,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param string      questionId The question ID in Instagram"s internal format (ie "17956159684032257").
      * @param string|null maxId      Next "maximum ID", used for pagination.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.StoryAnswersResponse
+     * @return .instagramAPI.Response.StoryAnswersResponse
      */
     fun getStoryAnswers(
          storyId,
@@ -420,9 +420,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Gets the created story countdowns of the current account.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.StoryCountdownsResponse
+     * @return .instagramAPI.Response.StoryCountdownsResponse
      */
     fun getStoryCountdowns()
     {
@@ -435,9 +435,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string countdownId The countdown ID in Instagram"s internal format (ie "17956159684032257").
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.GenericResponse
+     * @return .instagramAPI.Response.GenericResponse
      */
     fun followStoryCountdown(
         countdownId)
@@ -454,9 +454,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string countdownId The countdown ID in Instagram"s internal format (ie "17956159684032257").
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.GenericResponse
+     * @return .instagramAPI.Response.GenericResponse
      */
     fun unfollowStoryCountdown(
         countdownId)
@@ -490,9 +490,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * @param Response.Model.Item[] items Array of one or more story media Items.
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.MediaSeenResponse
+     * @return .instagramAPI.Response.MediaSeenResponse
      *
      * @see Location::markStoryMediaSeen()
      * @see Hashtag::markStoryMediaSeen()
@@ -511,9 +511,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      * to your story), and the list of users you have blocked from seeing your
      * stories.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ReelSettingsResponse
+     * @return .instagramAPI.Response.ReelSettingsResponse
      */
     fun getReelSettings()
     {
@@ -533,9 +533,9 @@ class Story(instagram:Instagram) : RequestCollection(instagram)
      *                                       "on" and "off".
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ReelSettingsResponse
+     * @return .instagramAPI.Response.ReelSettingsResponse
      */
     fun setReelSettings(messagePrefs: String, allowStoryReshare: Boolean? = null, autoArchive: String? = null){
         if (!arrayOf("anyone", "following", "off").contains(messagePrefs)) {

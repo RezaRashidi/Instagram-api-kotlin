@@ -1,8 +1,6 @@
 
 
-package InstagramAPI.Media
-
-import InstagramAPI.Response.Model.In
+package instagramAPI.Media
 
 abstract class MediaDetails{
     /** @var int */

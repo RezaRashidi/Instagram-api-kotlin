@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Realtime.Command.Direct
+package instagramAPI.Realtime.Command.Direct
 
 abstract class ShareItem : SendItem
 {

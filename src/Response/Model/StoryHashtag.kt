@@ -1,9 +1,8 @@
 
 
-package InstagramAPI.Response.Model
+package instagramAPI.Response.Model
 
-import InstagramAPI.AutoPropertyMapper
-import InstagramAPI.Response.PropertyCollection
+import instagramAPI.AutoPropertyMapper
 
 /**
  * StoryHashtag.

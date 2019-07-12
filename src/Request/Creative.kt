@@ -1,14 +1,15 @@
 
 
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Constants
-import InstagramAPI.Response
+import instagramAPI.Constants
+import instagramAPI.Instagram
+import instagramAPI.Response
 
 /**
  * funs related to Instagram"s "creative assets", such as stickers.
  */
-class Creative(instagram:Instagram) : RequestCollection(instagram)
+class Creative(instagram: Instagram) : RequestCollection(instagram)
 {
     /**
      * Get sticker assets.
@@ -21,9 +22,9 @@ class Creative(instagram:Instagram) : RequestCollection(instagram)
      * @param array|null location    (optional) Array containing lat, lng and horizontalAccuracy.
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.StickerAssetsResponse
+     * @return .instagramAPI.Response.StickerAssetsResponse
      */
     fun getStickerAssets(
         stickerType:String = "static_stickers",
@@ -57,9 +58,9 @@ class Creative(instagram:Instagram) : RequestCollection(instagram)
      * NOTE: The files are some strange binary format that only the Instagram
      * app understands. If anyone figures out the format, please contact us.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.FaceModelsResponse
+     * @return .instagramAPI.Response.FaceModelsResponse
      */
     fun getFaceModels()
     {
@@ -81,9 +82,9 @@ class Creative(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param array|null location (optional) Array containing lat, lng and horizontalAccuracy.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.FaceEffectsResponse
+     * @return .instagramAPI.Response.FaceEffectsResponse
      */
     fun getFaceEffects(
         array location = null)

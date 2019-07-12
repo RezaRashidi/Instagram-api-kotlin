@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Middleware
+package instagramAPI.Middleware
 
 import GuzzleHttp.Psr7.Uri
 import Psr.Http.Message.RequestInterface

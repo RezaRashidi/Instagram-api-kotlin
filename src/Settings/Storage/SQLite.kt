@@ -1,10 +1,10 @@
 
 
-package InstagramAPI.Settings.Storage
+package instagramAPI.Settings.Storage
 
-import InstagramAPI.Constants
-import InstagramAPI.Settings.Storage.Components.PDOStorage
-import InstagramAPI.Utils
+import instagramAPI.Constants
+import instagramAPI.Settings.Storage.Components.PDOStorage
+import instagramAPI.Utils
 import PDO
 
 /**

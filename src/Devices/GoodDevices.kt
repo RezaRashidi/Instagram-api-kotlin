@@ -1,4 +1,4 @@
-package InstagramAPI.Devices
+package instagramAPI.Devices
 
 /**
  * Internal list of verified Android devices.

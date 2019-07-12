@@ -1,6 +1,6 @@
 
 
-package InstagramAPI.Push.Payload
+package instagramAPI.Push.Payload
 
 import Fbns.Client.Json
 

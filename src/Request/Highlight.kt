@@ -1,7 +1,7 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Constants
-import InstagramAPI.Response
+import instagramAPI.Constants
+import instagramAPI.Response
 
 /**
  * funs related to creating and managing highlights of your media.
@@ -16,9 +16,9 @@ class Highlight(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string userId Numerical UserPK ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.HighlightFeedResponse
+	 * @return .instagramAPI.Response.HighlightFeedResponse
 	 *
 	 * @see Story::getReelsMediaFeed() To get highlight items when they aren"t included in this response.
 	 */
@@ -36,9 +36,9 @@ class Highlight(instagram: Instagram) : RequestCollection(instagram) {
 	 * `Highlight::getUserFeed()` for more information about what to do.
 	 * Note 2: if user has a igtv post reponse will include "tv_channel" property
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.HighlightFeedResponse
+	 * @return .instagramAPI.Response.HighlightFeedResponse
 	 *
 	 * @see Highlight::getUserFeed()
 	 * @see Story::getReelsMediaFeed() To get highlight items when they aren"t included in this response.
@@ -56,9 +56,9 @@ class Highlight(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string      module
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CreateHighlightResponse
+	 * @return .instagramAPI.Response.CreateHighlightResponse
 	 */
 	fun create(array mediaIds, title:String = "Highlights", coverMediaId:String? = null, module:String = "self_profile") {
 		if (empty(mediaIds)) {
@@ -92,9 +92,9 @@ class Highlight(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string module          (optional) From which app module (page) you"re performing this action.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.HighlightFeedResponse
+	 * @return .instagramAPI.Response.HighlightFeedResponse
 	 */
 	fun edit(highlightReelId:String, array params, module:String = "self_profile") {
 		if (!isset(params["cover_media_id"])) {
@@ -129,9 +129,9 @@ class Highlight(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string highlightReelId Highlight ID, using internal format (ie "highlight:12345678901234567").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun delete(highlightReelId:String) {
 		return this.ig.request("highlights/{highlightReelId}/delete_reel/").addPost("_uuid", this.ig.uuid)

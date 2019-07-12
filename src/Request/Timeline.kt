@@ -1,13 +1,12 @@
 
 
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Constants
-import InstagramAPI.Exception.InstagramException
-import InstagramAPI.Exception.UploadFailedException
-import InstagramAPI.Request.Metadata.Internal as InternalMetadata
-import InstagramAPI.Response
-import InstagramAPI.Utils
+import instagramAPI.Constants
+import instagramAPI.Exception.UploadFailedException
+import instagramAPI.Request.Metadata.Internal as InternalMetadata
+import instagramAPI.Response
+import instagramAPI.Utils
 
 /**
  * funs for managing your timeline and interacting with other timelines.
@@ -25,9 +24,9 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      *
      * @throws  IllegalArgumentException
      * @throws .RuntimeException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ConfigureResponse
+     * @return .instagramAPI.Response.ConfigureResponse
      *
      * @see Internal::configureSinglePhoto() for available metadata fields.
      */
@@ -45,10 +44,10 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      * @param array  externalMetadata (optional) User-provided metadata key-value pairs.
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
-     * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
+     * @throws .instagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.UploadFailedException If the video upload fails.
      *
-     * @return .InstagramAPI.Response.ConfigureResponse
+     * @return .instagramAPI.Response.ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      */
@@ -76,10 +75,10 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      *
      * @throws  IllegalArgumentException
      * @throws .RuntimeException
-     * @throws .InstagramAPI.Exception.InstagramException
-     * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
+     * @throws .instagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.UploadFailedException If the video upload fails.
      *
-     * @return .InstagramAPI.Response.ConfigureResponse
+     * @return .instagramAPI.Response.ConfigureResponse
      *
      * @see Internal::configureTimelineAlbum() for available album metadata fields.
      */
@@ -157,7 +156,7 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
         albumInternalMetadata = InternalMetadata()
         // Configure the uploaded album and attach it to our timeline.
         try {
-            /** @var .InstagramAPI.Response.ConfigureResponse configure */
+            /** @var .instagramAPI.Response.ConfigureResponse configure */
             configure = this.ig.internal.configureWithRetries(
                 fun () import (media, albumInternalMetadata, externalMetadata) {
                     return this.ig.internal.configureTimelineAlbum(media, albumInternalMetadata, externalMetadata)
@@ -200,9 +199,9 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      *                             installed for the first time
      *                             "feed_view_info" DON"T import IT YET.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.TimelineFeedResponse
+     * @return .instagramAPI.Response.TimelineFeedResponse
      */
     fun getTimelineFeed(
         maxId = null,
@@ -315,9 +314,9 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      * @param string      userId Numerical UserPK ID.
      * @param string|null maxId  Next "maximum ID", used for pagination.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.UserFeedResponse
+     * @return .instagramAPI.Response.UserFeedResponse
      */
     fun getUserFeed(
         userId,
@@ -339,9 +338,9 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string|null maxId Next "maximum ID", used for pagination.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.UserFeedResponse
+     * @return .instagramAPI.Response.UserFeedResponse
      */
     fun getSelfUserFeed(
         maxId = null)
@@ -352,9 +351,9 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
     /**
      * Get your archived timeline media feed.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.UserFeedResponse
+     * @return .instagramAPI.Response.UserFeedResponse
      */
     fun getArchivedMediaFeed()
     {
@@ -374,9 +373,9 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      *                        Otherwise, if false, makes the media to everyone again.
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.ArchiveMediaResponse
+     * @return .instagramAPI.Response.ArchiveMediaResponse
      */
     fun archiveMedia(
         mediaId,
@@ -405,7 +404,7 @@ class Timeline(instagram:Instagram) : RequestCollection(instagram)
      * @param bool   printProgress  (optional) Toggles terminal output.
      *
      * @throws .RuntimeException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      */
     fun backup(
         baseOutputPath = null,

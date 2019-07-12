@@ -1,6 +1,6 @@
 
 
-package InstagramAPI
+package instagramAPI
 
 object Debug
 {

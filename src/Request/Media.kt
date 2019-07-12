@@ -1,9 +1,6 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Request
-import InstagramAPI.Response
-import InstagramAPI.Signatures
-import InstagramAPI.Utils
+import instagramAPI.*
 
 /**
  * funs for interacting with media items from yourself and others.
@@ -16,9 +13,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MediaInfoResponse
+	 * @return .instagramAPI.Response.MediaInfoResponse
 	 */
 	fun getInfo(mediaId:String) {
 		return this.ig.request("media/{mediaId}/info/").getResponse(Response.MediaInfoResponse())
@@ -32,9 +29,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *                              "CAROUSEL", or the raw value of the Item"s "getMediaType()" fun.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MediaDeleteResponse
+	 * @return .instagramAPI.Response.MediaDeleteResponse
 	 */
 	fun delete(mediaId:String, mediaType:String = "PHOTO") {
 		mediaType = Utils.checkMediaType(mediaType)
@@ -59,9 +56,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *                                "CAROUSEL", or the raw value of the Item"s "getMediaType()" fun.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.EditMediaResponse
+	 * @return .instagramAPI.Response.EditMediaResponse
 	 *
 	 * @see Usertag.tagMedia() for an example of proper "usertags" metadata formatting.
 	 * @see Usertag.untagMedia() for an example of proper "usertags" metadata formatting.
@@ -86,7 +83,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 				// The user wants to add/change the location of the media.
 				if (!metadata["location"] instanceof Response.Model.Location) {
 					throw IllegalArgumentException(
-						"The " location " metadata value must be an instance of .InstagramAPI.Response.Model.Location.")
+						"The " location " metadata value must be an instance of .instagramAPI.Response.Model.Location.")
 				}
 
 				request.addPost("location", Utils.buildMediaLocationJSON(metadata["location"]))
@@ -114,9 +111,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array  extraData (optional) Depending on the module name, additional data is required.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 *
 	 * @see Media._parseLikeParameters() For all supported modules and required parameters.
 	 */
@@ -140,9 +137,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array  extraData (optional) Depending on the module name, additional data is required.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 *
 	 * @see Media._parseLikeParameters() For all supported modules and required parameters.
 	 */
@@ -161,9 +158,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string|null maxId Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LikeFeedResponse
+	 * @return .instagramAPI.Response.LikeFeedResponse
 	 */
 	fun getLikedFeed(maxId:String? = null) {
 		request = this.ig.request("feed/liked/")
@@ -179,9 +176,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MediaLikersResponse
+	 * @return .instagramAPI.Response.MediaLikersResponse
 	 */
 	fun getLikers(mediaId:String) {
 		return this.ig.request("media/{mediaId}/likers/").getResponse(Response.MediaLikersResponse())
@@ -205,9 +202,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MediaLikersResponse
+	 * @return .instagramAPI.Response.MediaLikersResponse
 	 */
 	fun getLikersChrono(mediaId:String) {
 		return this.ig.request("media/{mediaId}/likers_chrono/").getResponse(Response.MediaLikersResponse())
@@ -218,9 +215,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun enableComments(mediaId:String) {
 		return this.ig.request("media/{mediaId}/enable_comments/").addPost("_uuid", this.ig.uuid)
@@ -233,9 +230,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun disableComments(mediaId:String) {
 		return this.ig.request("media/{mediaId}/disable_comments/").addPost("_uuid", this.ig.uuid)
@@ -253,9 +250,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string module         (optional) From which app module (page) you"re performing this action.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CommentResponse
+	 * @return .instagramAPI.Response.CommentResponse
 	 */
 	fun comment(mediaId:String commentText:String, replyCommentId :String?= null, module:String = "comments_feed_timeline") {
 		request = this.ig.request("media/{mediaId}/comment/")
@@ -298,9 +295,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *                        "target_comment_id" - used by comment Push notifications to retrieve the page with the specific comment.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MediaCommentsResponse
+	 * @return .instagramAPI.Response.MediaCommentsResponse
 	 */
 	fun getComments(mediaId:String, array options = []) {
 		request = this.ig.request("media/{mediaId}/comments/").addParam("can_support_threading", true)
@@ -350,9 +347,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *                          "min_id" - next "minimum ID" (get newer comments, after this ID), used for forwards pagination.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MediaCommentRepliesResponse
+	 * @return .instagramAPI.Response.MediaCommentRepliesResponse
 	 */
 	fun getCommentReplies(mediaId:String, commentId:String, array options = []) {
 		request = this.ig.request("media/{mediaId}/comments/{commentId}/inline_child_comments/")
@@ -377,9 +374,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string mediaId   The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 * @param string commentId The comment"s ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DeleteCommentResponse
+	 * @return .instagramAPI.Response.DeleteCommentResponse
 	 */
 	fun deleteComment(mediaId:String, commentId:String) {
 		return this.ig.request("media/{mediaId}/comment/{commentId}/delete/").addPost("_uuid", this.ig.uuid)
@@ -393,9 +390,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string          mediaId    The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 * @param string|string[] commentIds The IDs of one or more comments to delete.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.DeleteCommentResponse
+	 * @return .instagramAPI.Response.DeleteCommentResponse
 	 */
 	fun deleteComments(mediaId:String, commentIds) {
 		if (is_array(commentIds)) {
@@ -412,9 +409,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string commentId The comment"s ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CommentLikeUnlikeResponse
+	 * @return .instagramAPI.Response.CommentLikeUnlikeResponse
 	 */
 	fun likeComment(commentId:String) {
 		return this.ig.request("media/{commentId}/comment_like/").addPost("_uuid", this.ig.uuid)
@@ -427,9 +424,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string commentId The comment"s ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CommentLikeUnlikeResponse
+	 * @return .instagramAPI.Response.CommentLikeUnlikeResponse
 	 */
 	fun unlikeComment(commentId:String) {
 		return this.ig.request("media/{commentId}/comment_unlike/").addPost("_uuid", this.ig.uuid)
@@ -442,9 +439,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string commentId The comment"s ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.CommentLikersResponse
+	 * @return .instagramAPI.Response.CommentLikersResponse
 	 */
 	fun getCommentLikers(commentId:String) {
 		return this.ig.request("media/{commentId}/comment_likers/").getResponse(Response.CommentLikersResponse())
@@ -457,9 +454,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string|string[] commentIds The IDs of one or more comments and/or media IDs
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.TranslateResponse
+	 * @return .instagramAPI.Response.TranslateResponse
 	 */
 	fun translateComments(commentIds) {
 		if (is_array(commentIds)) {
@@ -478,9 +475,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string url The URL you want to validate.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ValidateURLResponse
+	 * @return .instagramAPI.Response.ValidateURLResponse
 	 */
 	fun validateURL(url:String) {
 		return this.ig.request("media/validate_reel_url/").addPost("_uuid", this.ig.uuid)
@@ -493,9 +490,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SaveAndUnsaveMedia
+	 * @return .instagramAPI.Response.SaveAndUnsaveMedia
 	 */
 	fun save(mediaId:String) {
 		return this.ig.request("media/{mediaId}/save/").addPost("_uuid", this.ig.uuid)
@@ -508,9 +505,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SaveAndUnsaveMedia
+	 * @return .instagramAPI.Response.SaveAndUnsaveMedia
 	 */
 	fun unsave(mediaId:String) {
 		return this.ig.request("media/{mediaId}/unsave/").addPost("_uuid", this.ig.uuid)
@@ -523,9 +520,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string|null maxId Next "maximum ID", used for pagination.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SavedFeedResponse
+	 * @return .instagramAPI.Response.SavedFeedResponse
 	 */
 	fun getSavedFeed(maxId:String? = null) {
 		request = this.ig.request("feed/saved/")
@@ -539,9 +536,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get blocked media.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.BlockedMediaResponse
+	 * @return .instagramAPI.Response.BlockedMediaResponse
 	 */
 	fun getBlockedMedia() {
 		return this.ig.request("media/blocked/").getResponse(Response.BlockedMediaResponse())
@@ -553,9 +550,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string mediaId    The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 * @param string sourceName (optional) Source of the media.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun report(mediaId:String, sourceName :String= "feed_contextual_chain") {
 		return this.ig.request("media/{mediaId}/flag_media/").addPost("media_id", mediaId)
@@ -570,9 +567,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string mediaId   The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 * @param string commentId The comment"s ID.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun reportComment(mediaId:String, commentId:String) {
 		return this.ig.request("media/{mediaId}/comment/{commentId}/flag/").addPost("media_id", mediaId)
@@ -586,9 +583,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string mediaId The media ID in Instagram"s internal format (ie "3482384834_43294").
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.PermalinkResponse
+	 * @return .instagramAPI.Response.PermalinkResponse
 	 */
 	fun getPermalink(mediaId:String) {
 		return this.ig.request("media/{mediaId}/permalink/").addParam("share_to_app", "copy_link")
@@ -609,9 +606,9 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 		// Is this a "double-tap to like"? Note that Instagram doesn"t have
 		// "double-tap to unlike". So this can only be "1" if it"s a "like".
 		if (type === "like" && isset(extraData["double_tap"]) && extraData["double_tap"]) {
-			request.addUnsignedPost("d", 1)
+			request.addUnsignedPost("d", "1")
 		} else {
-			request.addUnsignedPost("d", 0) // Must always be 0 for "unlike".
+			request.addUnsignedPost("d", "0") // Must always be 0 for "unlike".
 		}
 
 		// Now parse the necessary parameters for the selected module.

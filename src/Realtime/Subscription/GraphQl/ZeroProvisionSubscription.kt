@@ -1,9 +1,8 @@
 
 
-package InstagramAPI.Realtime.Subscription.GraphQl
+package instagramAPI.Realtime.Subscription.GraphQl
 
-import InstagramAPI.Realtime.Subscription.GraphQlSubscription
-import InstagramAPI.Signatures
+import instagramAPI.Realtime.Subscription.GraphQlSubscription
 
 class ZeroProvisionSubscription : GraphQlSubscription
 {

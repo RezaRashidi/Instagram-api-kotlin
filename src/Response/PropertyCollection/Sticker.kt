@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Response.PropertyCollection
+package instagramAPI.Response.PropertyCollection
 
-import InstagramAPI.AutoPropertyMapper
+import instagramAPI.AutoPropertyMapper
 
 /**
  * Sticker.

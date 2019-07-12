@@ -1,14 +1,15 @@
 
 
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Constants
-import InstagramAPI.Response
+import instagramAPI.Constants
+import instagramAPI.Instagram
+import instagramAPI.Response
 
 /**
  * funs related to Shopping and catalogs.
  */
-class Shopping(instagram:Instagram) : RequestCollection(instagram)
+class Shopping(instagram: Instagram) : RequestCollection(instagram)
 {
     /**
      * Get on tag product information.
@@ -18,9 +19,9 @@ class Shopping(instagram:Instagram) : RequestCollection(instagram)
      * @param string merchantId  The merchant ID in Instagram"s internal format (ie "20100000").
      * @param int    deviceWidth Device width (optional).
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.OnTagProductResponse
+     * @return .instagramAPI.Response.OnTagProductResponse
      */
     fun getOnTagProductInfo(
         productId,
@@ -41,9 +42,9 @@ class Shopping(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string locale The device user"s locale, such as "en_US.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.GraphqlResponse
+     * @return .instagramAPI.Response.GraphqlResponse
      */
     fun getCatalogs(
         locale = "en_US")
@@ -64,9 +65,9 @@ class Shopping(instagram:Instagram) : RequestCollection(instagram)
      * @param string query     Finds products containing this string.
      * @param int    offset    Offset, used for pagination. Values must be multiples of 20.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.GraphqlResponse
+     * @return .instagramAPI.Response.GraphqlResponse
      */
     fun getCatalogItems(
         catalogId,
@@ -95,8 +96,8 @@ class Shopping(instagram:Instagram) : RequestCollection(instagram)
             .addUnsignedPost("doc_id", "1747750168640998")
             .addUnsignedPost("locale", Constants::ACCEPT_LANGUAGE)
             .addUnsignedPost("vc_policy", "default")
-            .addUnsignedPost("strip_nulls", true)
-            .addUnsignedPost("strip_defaults", true)
+            .addUnsignedPost("strip_nulls", "true")
+            .addUnsignedPost("strip_defaults", "true")
             .addUnsignedPost("query_params", json_encode(queryParams, JSON_FORCE_OBJECT))
             .getResponse(Response.GraphqlResponse())
     }
@@ -106,9 +107,9 @@ class Shopping(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string catalogId The catalog"s ID.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.OnBoardCatalogResponse
+     * @return .instagramAPI.Response.OnBoardCatalogResponse
      */
     fun setOnBoardCatalog(
         catalogId)

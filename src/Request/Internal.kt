@@ -1,18 +1,18 @@
-package InstagramAPI.Request
+package instagramAPI.Request
 
 import GuzzleHttp.Psr7.LimitStream
 import GuzzleHttp.Psr7.Stream
-import InstagramAPI.Constants
-import InstagramAPI.Exception.*
-import InstagramAPI.Media.MediaDetails
-import InstagramAPI.Media.Video.FFmpeg
-import InstagramAPI.Media.Video.InstagramThumbnail
-import InstagramAPI.Media.Video.VideoDetails
-import InstagramAPI.Request
-import InstagramAPI.Request.Metadata.Internal as InternalMetadata
-import InstagramAPI.Response
-import InstagramAPI.Signatures
-import InstagramAPI.Utils
+import instagramAPI.Constants
+import instagramAPI.Exception.*
+import instagramAPI.Media.MediaDetails
+import instagramAPI.Media.Video.FFmpeg
+import instagramAPI.Media.Video.InstagramThumbnail
+import instagramAPI.Media.Video.VideoDetails
+import instagramAPI.Request
+import instagramAPI.Request.Metadata.Internal as InternalMetadata
+import instagramAPI.Response
+import instagramAPI.Signatures
+import instagramAPI.Utils
 import Winbox.Args
 import kotlin.math.*
 import fun GuzzleHttp.Psr7.stream_for
@@ -49,10 +49,10 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array                 externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
-	 * @throws .InstagramAPI.Exception.UploadFailedException
+	 * @throws .instagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.UploadFailedException
 	 *
-	 * @return .InstagramAPI.Response.ConfigureResponse
+	 * @return .instagramAPI.Response.ConfigureResponse
 	 *
 	 * @see Internal.configureSinglePhoto() for available metadata fields.
 	 */
@@ -91,8 +91,8 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
-	 * @throws .InstagramAPI.Exception.UploadFailedException
+	 * @throws .instagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.UploadFailedException
 	 */
 	fun uploadPhotoData(targetFeed:Int, internalMetadata: InternalMetadata) {
 		// Make sure we disallow some feeds for this fun.
@@ -135,9 +135,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array            externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ConfigureResponse
+	 * @return .instagramAPI.Response.ConfigureResponse
 	 */
 	fun configureSinglePhoto(targetFeed:Int, internalMetadata: InternalMetadata,  array externalMetadata = []) {
 		// Determine the target endpoint for the photo.
@@ -335,8 +335,8 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param InternalMetadata|null internalMetadata (optional) Internal library-generated metadata object.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
-	 * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
+	 * @throws .instagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.UploadFailedException If the video upload fails.
 	 *
 	 * @return InternalMetadata Updated internal metadata object.
 	 */
@@ -387,10 +387,10 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array                 externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
-	 * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
+	 * @throws .instagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.UploadFailedException If the video upload fails.
 	 *
-	 * @return .InstagramAPI.Response.ConfigureResponse
+	 * @return .instagramAPI.Response.ConfigureResponse
 	 *
 	 * @see Internal.configureSingleVideo() for available metadata fields.
 	 */
@@ -408,7 +408,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 
 		// Configure the uploaded video and attach it to our timeline/story.
 		try {
-			/** @var .InstagramAPI.Response.ConfigureResponse configure */
+			/** @var .instagramAPI.Response.ConfigureResponse configure */
 			var configure = ig.internal.configureWithRetries(fun() import (targetFeed, internalMetadata, externalMetadata) {
 					// Attempt to configure video parameters.
 					return configureSingleVideo(targetFeed, internalMetadata, externalMetadata)
@@ -434,8 +434,8 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array            externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
-	 * @throws .InstagramAPI.Exception.UploadFailedException
+	 * @throws .instagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.UploadFailedException
 	 */
 	fun uploadVideoThumbnail(targetFeed:Int,  internalMetadata:InternalMetadata, array externalMetadata = []) {
 		if (internalMetadata.getVideoDetails() === null) {
@@ -467,9 +467,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param int              targetFeed       One of the FEED_X constants.
 	 * @param InternalMetadata internalMetadata Internal library-generated metadata object.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException If the request fails.
+	 * @throws .instagramAPI.Exception.InstagramException If the request fails.
 	 *
-	 * @return .InstagramAPI.Response.UploadJobVideoResponse
+	 * @return .instagramAPI.Response.UploadJobVideoResponse
 	 */
 	protected fun _requestVideoUploadURL(:Int,  internalMetadata:InternalMetadata) {
 		request = ig.request("upload/video/").setSignedPost(false)
@@ -499,9 +499,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param array            externalMetadata (optional) User-provided metadata key-value pairs.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ConfigureResponse
+	 * @return .instagramAPI.Response.ConfigureResponse
 	 */
 	fun configureSingleVideo(targetFeed:Int,  internalMetadata:InternalMetadata, array externalMetadata = []) {
 		// Determine the target endpoint for the video.
@@ -698,9 +698,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *                                           for the album itself (its caption, location, etc).
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ConfigureResponse
+	 * @return .instagramAPI.Response.ConfigureResponse
 	 */
 	fun configureTimelineAlbum(array media,  internalMetadata:InternalMetadata, array externalMetadata = []) {
 		val endpoint = "media/configure_sidecar/"
@@ -817,7 +817,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param Response.SyncResponse syncResponse
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	protected fun _saveExperiments( syncResponse:Response.SyncResponse)
 	{
@@ -854,9 +854,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param bool prelogin
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SyncResponse
+	 * @return .instagramAPI.Response.SyncResponse
 	 */
 	fun syncDeviceFeatures(prelogin:Boolean = false) {
 		var request = ig.request("qe/sync/")
@@ -877,9 +877,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Perform an Instagram "feature synchronization" call for account.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.SyncResponse
+	 * @return .instagramAPI.Response.SyncResponse
 	 */
 	fun syncUserFeatures() {
 		var result = ig.request("qe/sync/")
@@ -902,9 +902,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param bool prelogin Indicates if the request is done before login request.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LauncherSyncResponse
+	 * @return .instagramAPI.Response.LauncherSyncResponse
 	 */
 	fun sendLauncherSync(prelogin:Boolean) {
 		var request = ig.request("launcher/sync/")
@@ -925,9 +925,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Registers advertising identifier.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun logAttribution() {
 		return ig.request("attribution/log_attribution/")
@@ -939,9 +939,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * TODO.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	fun logResurrectAttribution() {
 		return ig.request("attribution/log_resurrect_attribution/")
@@ -958,9 +958,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string      usage    Desired usage, either "ig_select_app" or "default".
 	 * @param string|null subnoKey Encoded subscriber number.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MsisdnHeaderResponse
+	 * @return .instagramAPI.Response.MsisdnHeaderResponse
 	 */
 	fun readMsisdnHeader(usage:String, subnoKey:String? = null) {
 		var request = ig.request("accounts/read_msisdn_header/")
@@ -981,9 +981,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string usage Mobile subno usage.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MsisdnHeaderResponse
+	 * @return .instagramAPI.Response.MsisdnHeaderResponse
 	 *
 	 * @since 10.24.0 app version.
 	 */
@@ -1027,9 +1027,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @param string reason One of: "token_expired", "mqtt_token_push", "token_stale", "provisioning_time_mismatch".
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.TokenResultResponse
+	 * @return .instagramAPI.Response.TokenResultResponse
 	 */
 	fun fetchZeroRatingToken(reason:String = "token_expired") {
 		val request = ig.request("zr/token/result/")
@@ -1049,9 +1049,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get megaphone log.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MegaphoneLogResponse
+	 * @return .instagramAPI.Response.MegaphoneLogResponse
 	 */
 	fun getMegaphoneLog() {
 		return ig.request("megaphone/log/")
@@ -1072,9 +1072,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * TODO: We don"t know what this fun does. If we ever discover that it
 	 * has a useful purpose, then we should move it somewhere else.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FacebookHiddenEntitiesResponse
+	 * @return .instagramAPI.Response.FacebookHiddenEntitiesResponse
 	 */
 	fun getFacebookHiddenSearchEntities() {
 		return ig.request("fbsearch/get_hidden_search_entities/")
@@ -1084,9 +1084,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get Facebook OTA (Over-The-Air) update information.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FacebookOTAResponse
+	 * @return .instagramAPI.Response.FacebookOTAResponse
 	 */
 	fun getFacebookOTA() {
 		return ig.request("facebook_ota/").addParam("fields", Constants.FACEBOOK_OTA_FIELDS)
@@ -1103,9 +1103,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Fetch profiler traces config.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.LoomFetchConfigResponse
+	 * @return .instagramAPI.Response.LoomFetchConfigResponse
 	 *
 	 * @see https://github.com/facebookincubator/profilo
 	 */
@@ -1119,9 +1119,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * This is just for some internal state information, such as
 	 * "has_change_password_megaphone". It"s not for use.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.ProfileNoticeResponse
+	 * @return .instagramAPI.Response.ProfileNoticeResponse
 	 */
 	fun getProfileNotice() {
 		return ig.request("users/profile_notice/").getResponse(Response.ProfileNoticeResponse())
@@ -1135,9 +1135,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * policy where Instagram asks you to accept policy and accept that
 	 * you have 18 years old or more.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.FetchQPDataResponse
+	 * @return .instagramAPI.Response.FetchQPDataResponse
 	 */
 	fun getQPFetch() {
 		var query = "viewer() {eligible_promotions.surface_nux_id(<surface>).external_gating_permitted_qps(<external_gating_permitted_qps>).supports_client_filters(true) {edges {priority,time_range {start,end},node {id,promotion_id,max_impressions,triggers,contextual_filters {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}},clauses {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}},clauses {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}},clauses {clause_type,filters {filter_type,unknown_action,value {name,required,bool_value,int_value, string_value},extra_datas {name,required,bool_value,int_value, string_value}}}}}},template {name,parameters {name,required,bool_value,string_value,color_value,}},creatives {title {text},content {text},footer {text},social_context {text},primary_action{title {text},url,limit,dismiss_promotion},secondary_action{title {text},url,limit,dismiss_promotion},dismiss_action{title {text},url,limit,dismiss_promotion},image.scale(<scale>) {uri,width,height}}}}}}"
@@ -1156,9 +1156,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	/**
 	 * Get quick promotions cooldowns.
 	 *
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.QPCooldownsResponse
+	 * @return .instagramAPI.Response.QPCooldownsResponse
 	 */
 	fun getQPCooldowns() {
 		return ig.request("qp/get_cooldowns/")
@@ -1181,9 +1181,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @param string                module   Module where the story was found.
 	 *
 	 * @throws  IllegalArgumentException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.MediaSeenResponse
+	 * @return .instagramAPI.Response.MediaSeenResponse
 	 *
 	 * @see Story.markMediaSeen()
 	 * @see Location.markStoryMediaSeen()
@@ -1196,7 +1196,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		var seenAt = maxSeenAt - (3 * items.count()) // Start seenAt in the past.
 		for(item in items) {
 			if (!item instanceof Response.Model.Item) {
-				throw IllegalArgumentException("All story items must be instances of .InstagramAPI.Response.Model.Item.")
+				throw IllegalArgumentException("All story items must be instances of .instagramAPI.Response.Model.Item.")
 			}
 
 			// Raise "seenAt" if it"s somehow older than the item"s "takenAt".
@@ -1252,7 +1252,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
 	 * @return Response
 	 */
@@ -1342,7 +1342,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
 	 * @return Response.ResumableUploadResponse
 	 */
@@ -1417,9 +1417,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 *
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UploadPhotoResponse
+	 * @return .instagramAPI.Response.UploadPhotoResponse
 	 */
 	protected fun _uploadPhotoInOnePiece(targetFeed:Int,  internalMetadata:InternalMetadata) {
 		// Prepare payload for the upload request.
@@ -1445,9 +1445,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	protected fun _uploadResumablePhoto(targetFeed:Int,  internalMetadata:InternalMetadata) {
 		val photoDetails = internalMetadata.getPhotoDetails()
@@ -1534,9 +1534,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.UploadVideoResponse
+	 * @return .instagramAPI.Response.UploadVideoResponse
 	 */
 	protected fun _uploadVideoChunks(targetFeed:Int,  internalMetadata:InternalMetadata) {
 		val videoFilename = internalMetadata.getVideoDetails().getFilename()
@@ -1708,9 +1708,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	protected fun _uploadSegmentedVideo(targetFeed:Int,  internalMetadata:InternalMetadata) {
 		val videoDetails = internalMetadata.getVideoDetails()
@@ -1784,9 +1784,9 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws .LogicException
-	 * @throws .InstagramAPI.Exception.InstagramException
+	 * @throws .instagramAPI.Exception.InstagramException
 	 *
-	 * @return .InstagramAPI.Response.GenericResponse
+	 * @return .instagramAPI.Response.GenericResponse
 	 */
 	protected fun _uploadResumableVideo(targetFeed:Int,  internalMetadata:InternalMetadata) {
 		val rurCookie = ig.client.getCookie("rur", "i.instagram.com")

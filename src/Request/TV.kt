@@ -1,9 +1,9 @@
 
 
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Constants
-import InstagramAPI.Response
+import instagramAPI.Constants
+import instagramAPI.Response
 
 /**
  * funs related to Instagram TV.
@@ -15,9 +15,9 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      *
      * It provides a catalogue of popular and suggested channels.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.TVGuideResponse
+     * @return .instagramAPI.Response.TVGuideResponse
      */
     fun getTvGuide()
     {
@@ -35,9 +35,9 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      * @param string|null maxId Next "maximum ID", used for pagination.
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.TVChannelsResponse
+     * @return .instagramAPI.Response.TVChannelsResponse
      */
     fun getChannel(id: String = "for_you", maxId: String? = null){
         if (!arrayOf("for_you", "chrono_following", "popular", "continue_watching").contains(id)
@@ -66,10 +66,10 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      *
      * @throws  IllegalArgumentException
      * @throws .RuntimeException
-     * @throws .InstagramAPI.Exception.InstagramException
-     * @throws .InstagramAPI.Exception.UploadFailedException If the video upload fails.
+     * @throws .instagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.UploadFailedException If the video upload fails.
      *
-     * @return .InstagramAPI.Response.ConfigureResponse
+     * @return .instagramAPI.Response.ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      */
@@ -85,9 +85,9 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      *
      * @param string query The username or channel you are looking for.
      *
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.TVSearchResponse
+     * @return .instagramAPI.Response.TVSearchResponse
      */
     fun search(
         query = "")
@@ -111,9 +111,9 @@ class TV(instagram:Instagram) : RequestCollection(instagram)
      * @param mixed  gridImpressions TODO No info yet.
      *
      * @throws  IllegalArgumentException
-     * @throws .InstagramAPI.Exception.InstagramException
+     * @throws .instagramAPI.Exception.InstagramException
      *
-     * @return .InstagramAPI.Response.GenericResponse
+     * @return .instagramAPI.Response.GenericResponse
      */
     fun writeSeenState(
         impression,

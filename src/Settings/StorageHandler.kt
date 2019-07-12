@@ -1,9 +1,9 @@
-package InstagramAPI.Settings
+package instagramAPI.Settings
 
 import Fbns.Client.Auth.DeviceAuth
 import Fbns.Client.AuthInterface
-import InstagramAPI.Exception.SettingsException
-import InstagramAPI.Utils
+import instagramAPI.Exception.SettingsException
+import instagramAPI.Utils
 
 /**
  * Advanced, modular settings storage engine.
@@ -108,7 +108,7 @@ class StorageHandler {
 	 *                                          the storage backend location.
 	 * @param array            callbacks       Optional callback funs.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	constructor(storageInstance, array locationConfig = [], array callbacks = []) {
 		if (!storageInstance instanceof StorageInterface) {
@@ -129,7 +129,7 @@ class StorageHandler {
 	/**
 	 * Destructor.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	public fun __destruct() {
 		// The storage handler is being killed, so tell the location to close.
@@ -146,7 +146,7 @@ class StorageHandler {
 	 *
 	 * @param string username The Instagram username.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 *
 	 * @return bool TRUE if user exists, otherwise FALSE.
 	 */
@@ -177,7 +177,7 @@ class StorageHandler {
 	 * @param string oldUsername The old name that settings are stored as.
 	 * @param string newUsername The name to move the settings to.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	public fun moveUser(oldUsername, newUsername) {
 		this._throwIfEmptyValue(oldUsername)
@@ -195,7 +195,7 @@ class StorageHandler {
 	 *
 	 * @param string username The Instagram username.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	public fun deleteUser(username) {
 		this._throwIfEmptyValue(username)
@@ -212,7 +212,7 @@ class StorageHandler {
 	 *
 	 * @param string username The Instagram username.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	fun setActiveUser(username: String) {
 		_throwIfEmptyValue(username)
@@ -267,7 +267,7 @@ class StorageHandler {
 	 * Can only be executed after setActiveUser(). And the session it looks
 	 * for may be expired, so there"s no guarantee that we are still logged in.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 *
 	 * @return bool TRUE if possibly logged in, otherwise FALSE.
 	 */
@@ -286,7 +286,7 @@ class StorageHandler {
 	 *
 	 * Note that ALL cookies will be erased too, to clear out the old session.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	fun eraseDeviceSettings() {
 		for(key in PERSISTENT_KEYS) {
@@ -305,7 +305,7 @@ class StorageHandler {
 	 *
 	 * @param string key Name of the setting.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 *
 	 * @return string|null The value as a string IF the setting exists AND is
 	 *                     a NON-EMPTY string. Otherwise NULL.
@@ -332,7 +332,7 @@ class StorageHandler {
 	 * @param string       key   Name of the setting.
 	 * @param string|mixed value The data to store. MUST be castable to string.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	fun set(key: String, value) {
 		_throwIfNoActiveUser()
@@ -366,7 +366,7 @@ class StorageHandler {
 	 *
 	 * Can only be executed after setActiveUser().
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 *
 	 * @return bool TRUE if cookies exist, otherwise FALSE.
 	 */
@@ -381,7 +381,7 @@ class StorageHandler {
 	 *
 	 * Can only be executed after setActiveUser().
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 *
 	 * @return string|null A previously-stored, raw cookie data string
 	 *                     (non-empty), or NULL if no cookies exist for
@@ -432,7 +432,7 @@ class StorageHandler {
 	 * @param string rawData An encoded string with all cookie data. import an
 	 *                        empty string to erase currently stored cookies.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	public fun setCookies(rawData) {
 		this._throwIfNoActiveUser()
@@ -468,7 +468,7 @@ class StorageHandler {
 	/**
 	 * Ensures the whole directory path to the cookie file exists/is writable.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	protected fun _createCookiesFileDirectory() {
 		if (this._cookiesFilePath === null) {
@@ -486,7 +486,7 @@ class StorageHandler {
 	 *
 	 * @param mixed value The value to check.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	protected fun _throwIfNotString(value) {
 		if (!is_string(value)) {
@@ -499,7 +499,7 @@ class StorageHandler {
 	 *
 	 * @param mixed value The value to check.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	protected fun _throwIfEmptyValue(value) {
 		if (value !is String || value === "") {
@@ -510,7 +510,7 @@ class StorageHandler {
 	/**
 	 * Internal: Ensures that there is an active storage user.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	protected fun _throwIfNoActiveUser() {
 		if (this._username === null) {
@@ -526,7 +526,7 @@ class StorageHandler {
 	 *
 	 * @param string cbName The name of the callback.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	protected fun _triggerCallback(cbName: String) {
 		// Reject anything that isn"t in our list of VALID callbacks.
@@ -554,7 +554,7 @@ class StorageHandler {
 	 *
 	 * @param array experiments
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 *
 	 * @return array A list of "good" experiments.
 	 */
@@ -574,7 +574,7 @@ class StorageHandler {
 	/**
 	 * Return saved experiments.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 *
 	 * @return array
 	 */
@@ -587,7 +587,7 @@ class StorageHandler {
 	 *
 	 * @param array rules
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 */
 	public fun setRewriteRules(array rules) {
 		this.set("zr_rules", this._packJson(rules))
@@ -596,7 +596,7 @@ class StorageHandler {
 	/**
 	 * Return saved rewrite rules.
 	 *
-	 * @throws .InstagramAPI.Exception.SettingsException
+	 * @throws .instagramAPI.Exception.SettingsException
 	 *
 	 * @return array
 	 */

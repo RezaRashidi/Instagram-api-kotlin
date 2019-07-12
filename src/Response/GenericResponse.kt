@@ -1,8 +1,8 @@
 
 
-package InstagramAPI.Response
+package instagramAPI.Response
 
-import InstagramAPI.Response
+import instagramAPI.Response
 
 /**
  * Used for generic API responses that don"t contain any extra data.

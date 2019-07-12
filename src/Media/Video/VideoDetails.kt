@@ -1,11 +1,10 @@
 
 
-package InstagramAPI.Media.Video
+package instagramAPI.Media.Video
 
-import InstagramAPI.Media.ConstraintsInterface
-import InstagramAPI.Media.MediaDetails
-import InstagramAPI.Response.Model.In
-import InstagramAPI.Utils
+import instagramAPI.Media.ConstraintsInterface
+import instagramAPI.Media.MediaDetails
+import instagramAPI.Utils
 import Winbox.Args
 import kotlin.math.roundToInt
 
@@ -131,7 +130,7 @@ class VideoDetails : MediaDetails(){
         // The user must have FFprobe.
         val ffprobe = Utils.checkFFPROBE()
         if (ffprobe as Boolean === false) {
-            throw RuntimeException("You must have FFprobe to analyze video details. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via \"\\InstagramAPI\\Utils.ffprobeBin = '/home/exampleuser/ffmpeg/bin/ffprobe';\" at the start of your script.")
+            throw RuntimeException("You must have FFprobe to analyze video details. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via \"\\instagramAPI\\Utils.ffprobeBin = '/home/exampleuser/ffmpeg/bin/ffprobe';\" at the start of your script.")
         }
 
         // Load with FFPROBE. Shows details as JSON and exits.

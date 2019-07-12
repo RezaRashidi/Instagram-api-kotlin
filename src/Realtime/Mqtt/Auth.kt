@@ -1,9 +1,8 @@
 
 
-package InstagramAPI.Realtime.Mqtt
+package instagramAPI.Realtime.Mqtt
 
 import Fbns.Client.AuthInterface
-import InstagramAPI.Instagram
 
 class Auth : AuthInterface
 {

@@ -1,9 +1,9 @@
 
 
-package InstagramAPI.Request
+package instagramAPI.Request
 
-import InstagramAPI.Instagram
-import InstagramAPI.Utils
+import instagramAPI.Instagram
+import instagramAPI.Utils
 /**
  * Base class for grouping multiple related request funs.
  */

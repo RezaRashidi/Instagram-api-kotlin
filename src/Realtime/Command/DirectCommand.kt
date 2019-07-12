@@ -1,11 +1,10 @@
 
 
-package InstagramAPI.Realtime.Command
+package instagramAPI.Realtime.Command
 
-import InstagramAPI.Realtime.CommandInterface
-import InstagramAPI.Realtime.Mqtt
-import InstagramAPI.Response.Model.In
-import InstagramAPI.Signatures
+import instagramAPI.Realtime.CommandInterface
+import instagramAPI.Realtime.Mqtt
+import instagramAPI.Signatures
 
 abstract class DirectCommand : CommandInterface
 {

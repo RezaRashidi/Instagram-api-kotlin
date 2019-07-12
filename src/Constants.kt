@@ -1,11 +1,11 @@
-package InstagramAPI
+package instagramAPI
 
 
 object Constants{
     // Core API Constants.
     val API_URLS = mapOf(
-        "1" to "https://i.instagram.com/api/v1/",
-        "2" to "https://i.instagram.com/api/v2/"
+        1 to "https://i.instagram.com/api/v1/",
+        2 to "https://i.instagram.com/api/v2/"
     )
     const val IG_VERSION = "85.0.0.21.100"
     const val VERSION_CODE = "146536611"
