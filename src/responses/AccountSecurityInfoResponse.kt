@@ -4,7 +4,7 @@ package instagramAPI.responses
 
 import instagramAPI.Response
 
-//import instagramAPI.Responses
+//import instagramAPI.responses
 
 /**
  * AccountSecurityInfoResponse.

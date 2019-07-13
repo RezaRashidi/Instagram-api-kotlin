@@ -7,5 +7,5 @@ package instagramAPI.responses.Model.UnpredictableKeys
  */
 class ReelUnpredictableContainer : CoreUnpredictableContainer
 {
-    protected $_type = ".instagramAPI.Responses.Model.Reel"
+    protected $_type = ".instagramAPI.responses.Model.Reel"
 }

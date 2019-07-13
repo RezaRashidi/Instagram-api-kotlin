@@ -9,5 +9,5 @@ package instagramAPI.responses.Model.UnpredictableKeys
  */
 class UserUnpredictableContainer : CoreUnpredictableContainer
 {
-    protected $_type = ".instagramAPI.Responses.Model.User"
+    protected $_type = ".instagramAPI.responses.Model.User"
 }

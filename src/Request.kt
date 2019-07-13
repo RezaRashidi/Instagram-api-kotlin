@@ -740,13 +740,13 @@ class Request(parent: Instagram, url: String) {
 	/**
 	 * Perform the request and map its response data to the provided object.
 	 *
-	 * @param Responses responseObject An instance of a class object whose properties to fill with the response.
+	 * @param responses responseObject An instance of a class object whose properties to fill with the response.
 	 *
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws InstagramException
 	 *
-	 * @return Responses The provided responseObject with all JSON properties filled.
+	 * @return responses The provided responseObject with all JSON properties filled.
 	 */
 	fun getResponse(responseObject: Response):responseObject {
 		// Check for API response success and put its response in the object.

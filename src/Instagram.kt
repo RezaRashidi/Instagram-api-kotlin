@@ -56,7 +56,7 @@ class Instagram : ExperimentsInterface {
 	/**
 	 * For internal import by Instagram-API developers!
 	 *
-	 * Toggles the throwing of exceptions whenever Instagram-API"s "Responses"
+	 * Toggles the throwing of exceptions whenever Instagram-API"s "responses"
 	 * classes lack fields that were provided by the server. Useful for
 	 * discovering that our library classes need updating.
 	 *
@@ -409,7 +409,7 @@ class Instagram : ExperimentsInterface {
 	 * @throws  IllegalArgumentException
 	 * @throws .instagramAPI.exception.InstagramException
 	 *
-	 * @return .instagramAPI.Responses.LoginResponse|null A login response if a
+	 * @return .instagramAPI.responses.LoginResponse|null A login response if a
 	 *                                                   full (re-)login
 	 *                                                   happens, otherwise
 	 *                                                   `NULL` if an existing
@@ -439,7 +439,7 @@ class Instagram : ExperimentsInterface {
 	 * @throws  IllegalArgumentException
 	 * @throws .instagramAPI.exception.InstagramException
 	 *
-	 * @return .instagramAPI.Responses.LoginResponse|null
+	 * @return .instagramAPI.responses.LoginResponse|null
 	 *
 	 * @see Instagram.login() The login handler with a full description.
 	 */
@@ -513,7 +513,7 @@ class Instagram : ExperimentsInterface {
 	 * @throws  IllegalArgumentException
 	 * @throws .instagramAPI.exception.InstagramException
 	 *
-	 * @return .instagramAPI.Responses.LoginResponse
+	 * @return .instagramAPI.responses.LoginResponse
 	 */
 	fun finishTwoFactorLogin(username: String, password: String, twoFactorIdentifier: String, verificationCode: String,
 	                         verificationMethod: String = "1", appRefreshInterval: Int = 1800,
@@ -574,7 +574,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @throws .instagramAPI.exception.InstagramException
 	 *
-	 * @return .instagramAPI.Responses.TwoFactorLoginSMSResponse
+	 * @return .instagramAPI.responses.TwoFactorLoginSMSResponse
 	 */
 	fun sendTwoFactorLoginSMS(username: String, password: String,
 	                          twoFactorIdentifier: String): instagramAPI.Response.TwoFactorLoginSMSResponse {
@@ -616,7 +616,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @throws .instagramAPI.exception.InstagramException
 	 *
-	 * @return .instagramAPI.Responses.UsersLookupResponse
+	 * @return .instagramAPI.responses.UsersLookupResponse
 	 */
 	fun userLookup(username: String): instagramAPI.Response.UsersLookupResponse {
 		// Set active user (without pwd), and create database entry if user.
@@ -639,7 +639,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @throws .instagramAPI.exception.InstagramException
 	 *
-	 * @return .instagramAPI.Responses.RecoveryResponse
+	 * @return .instagramAPI.responses.RecoveryResponse
 	 */
 	fun sendRecoveryEmail(username: String): instagramAPI.Response.RecoveryResponse {
 		// Verify that they can import the recovery email option.
@@ -666,7 +666,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @throws .instagramAPI.exception.InstagramException
 	 *
-	 * @return .instagramAPI.Responses.RecoveryResponse
+	 * @return .instagramAPI.responses.RecoveryResponse
 	 */
 	fun sendRecoverySMS(username: String): instagramAPI.Response.RecoveryResponse {
 		// Verify that they can import the recovery SMS option.
@@ -917,7 +917,7 @@ class Instagram : ExperimentsInterface {
 	 * @throws  IllegalArgumentException
 	 * @throws .instagramAPI.exception.InstagramException
 	 *
-	 * @return .instagramAPI.Responses.LoginResponse|null A login response if a
+	 * @return .instagramAPI.responses.LoginResponse|null A login response if a
 	 *                                                   full (re-)login is
 	 *                                                   needed during the login
 	 *                                                   flow attempt, otherwise
@@ -1060,7 +1060,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @throws .instagramAPI.exception.InstagramException
 	 *
-	 * @return .instagramAPI.Responses.LogoutResponse
+	 * @return .instagramAPI.responses.LogoutResponse
 	 *
 	 * @see Instagram.login()
 	 */

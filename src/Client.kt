@@ -491,7 +491,7 @@ class Client
                 // Remove all "missing_definitions" errors for UnpredictableKeys containers.
                 // NOTE: We will keep any "bad_definitions" errors for them.
                 for ((className, x) in analysis.missing_definitions) {
-                    if (className.indexOf("..Responses..Model..UnpredictableKeys..") !== false) {
+                    if (className.indexOf("..responses..Model..UnpredictableKeys..") !== false) {
                         unset(analysis.missing_definitions[className])
                     }
                 }
@@ -521,7 +521,7 @@ class Client
                     )
                     if (prettyJson !== false) {
                         Debug.printResponse(
-                            "Human-Readable Responses:" + PHP_EOL.prettyJson,
+                            "Human-Readable responses:" + PHP_EOL.prettyJson,
                             false // Not truncated.
                         )
                     }
