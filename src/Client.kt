@@ -13,7 +13,7 @@ import instagramAPI.Middleware.FakeCookies
 import instagramAPI.Middleware.ZeroRating
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 
-//import LazyJsonMapper.Exception.LazyJsonMapperException
+//import LazyJsonMapper.exception.LazyJsonMapperException
 //import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 //import okhttp3.CookieJar
 //import Psr.Http.Message.RequestInterface as HttpRequestInterface
@@ -91,12 +91,12 @@ class Client
     private var _guzzleClient: GuzzleHttp.Client
 
     /**
-     * @var .instagramAPI.Middleware.FakeCookies
+     * @var .instagramAPI.middleware.FakeCookies
      */
     private var _fakeCookies: FakeCookies
 
     /**
-     * @var .instagramAPI.Middleware.ZeroRating
+     * @var .instagramAPI.middleware.ZeroRating
      */
     private var _zeroRating: ZeroRating
 
@@ -172,13 +172,13 @@ class Client
     }
 
     /**
-     * Resets certain Client settings via the current Settings storage.
+     * Resets certain Client settings via the current settings storage.
      *
      * Used whenever we switch active user, to configure our internal state.
      *
      * @param bool $resetCookieJar (optional) Whether to clear current cookies.
      *
-     * @throws .instagramAPI.Exception.SettingsException
+     * @throws .instagramAPI.exception.SettingsException
      */
     fun updateFromCurrentSettings(resetCookieJar: Boolean = false){
         // Update our internal client state from the user"s settings.
@@ -199,11 +199,11 @@ class Client
     }
 
     /**
-     * Loads all cookies via the current Settings storage.
+     * Loads all cookies via the current settings storage.
      *
      * @param bool $resetCookieJar (optional) Whether to clear current cookies.
      *
-     * @throws .instagramAPI.Exception.SettingsException
+     * @throws .instagramAPI.exception.SettingsException
      */
     fun loadCookieJar(resetCookieJar: Boolean = false){
         // Mark any previous cookie jar for garbage collection.
@@ -286,7 +286,7 @@ class Client
     /**
      * Gives you all cookies in the Jar encoded as a JSON string.
      *
-     * This allows custom Settings storages to retrieve all cookies for saving.
+     * This allows custom settings storages to retrieve all cookies for saving.
      *
      * @throws  IllegalArgumentException If the JSON cannot be encoded.
      *
@@ -316,7 +316,7 @@ class Client
      * automatically calls it when enough time has elapsed since last save.
      *
      * @throws  IllegalArgumentException                 If the JSON cannot be encoded.
-     * @throws .instagramAPI.Exception.SettingsException
+     * @throws .instagramAPI.exception.SettingsException
      */
     fun saveCookieJar(){
         // Tell the settings storage to persist the latest cookies.
@@ -491,7 +491,7 @@ class Client
                 // Remove all "missing_definitions" errors for UnpredictableKeys containers.
                 // NOTE: We will keep any "bad_definitions" errors for them.
                 for ((className, x) in analysis.missing_definitions) {
-                    if (className.indexOf("..Response..Model..UnpredictableKeys..") !== false) {
+                    if (className.indexOf("..Responses..Model..UnpredictableKeys..") !== false) {
                         unset(analysis.missing_definitions[className])
                     }
                 }
@@ -521,7 +521,7 @@ class Client
                     )
                     if (prettyJson !== false) {
                         Debug.printResponse(
-                            "Human-Readable Response:" + PHP_EOL.prettyJson,
+                            "Human-Readable Responses:" + PHP_EOL.prettyJson,
                             false // Not truncated.
                         )
                     }
@@ -631,9 +631,9 @@ class Client
      * @param HttpRequestInterface $request       HTTP request to send.
      * @param array                $guzzleOptions Extra Guzzle options for this request.
      *
-     * @throws .instagramAPI.Exception.NetworkException                For any network/socket related errors.
-     * @throws .instagramAPI.Exception.ThrottledException              When we"re throttled by server.
-     * @throws .instagramAPI.Exception.RequestHeadersTooLargeException When request is too large.
+     * @throws .instagramAPI.exception.NetworkException                For any network/socket related errors.
+     * @throws .instagramAPI.exception.ThrottledException              When we"re throttled by server.
+     * @throws .instagramAPI.exception.RequestHeadersTooLargeException When request is too large.
      *
      * @return HttpResponseInterface
      */
@@ -696,8 +696,8 @@ class Client
      * @param array                $libraryOptions Additional options for controlling Library features
      *                                             such as the debugging output.
      *
-     * @throws .instagramAPI.Exception.NetworkException   For any network/socket related errors.
-     * @throws .instagramAPI.Exception.ThrottledException When we"re throttled by server.
+     * @throws .instagramAPI.exception.NetworkException   For any network/socket related errors.
+     * @throws .instagramAPI.exception.ThrottledException When we"re throttled by server.
      *
      * @return HttpResponseInterface
      */

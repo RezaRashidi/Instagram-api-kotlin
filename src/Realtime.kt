@@ -2,14 +2,15 @@
 
 package instagramAPI
 
-import Evenement.EventEmitterInterface
-import Evenement.EventEmitterTrait
+//import Evenement.EventEmitterInterface
+//import Evenement.EventEmitterTrait
 import instagramAPI.React.Connector
-import instagramAPI.Realtime.Command.IrisSubscribe
-import instagramAPI.Realtime.Mqtt.Auth
-import Psr.Log.LoggerInterface
-import Psr.Log.NullLogger
-import React.EventLoop.LoopInterface
+import instagramAPI.realtimes.Command.IrisSubscribe
+import instagramAPI.realtimes.Mqtt.Auth
+//import Psr.Log.LoggerInterface
+//import Psr.Log.NullLogger
+//import React.EventLoop.LoopInterface
+import instagramAPI.realtimes.Command.DirectCommand
 
 /**
  * The following events are emitted:
@@ -47,7 +48,7 @@ class Realtime : EventEmitterInterface
     /** @var LoggerInterface */
     protected $_logger
 
-    /** @var Realtime.Mqtt */
+    /** @var realtimes.Mqtt */
     protected $_client
 
     /**
@@ -65,7 +66,7 @@ class Realtime : EventEmitterInterface
         LoggerInterface $logger = null)
     {
         if (PHP_SAPI !== "cli") {
-            throw .RuntimeException("The Realtime client can only run from the command line.")
+            throw .RuntimeException("The realtimes client can only run from the command line.")
         }
 
         this._instagram = $instagram
@@ -97,7 +98,7 @@ class Realtime : EventEmitterInterface
     /**
      * Build a MQTT client.
      *
-     * @return Realtime.Mqtt
+     * @return realtimes.Mqtt
      */
     protected fun _buildMqttClient()
     {

@@ -3,8 +3,8 @@ package instagramAPI
 //import GuzzleHttp.Psr7.MultipartStream
 //import GuzzleHttp.Psr7.Request as HttpRequest
 //import GuzzleHttp.Psr7.Stream
-import instagramAPI.Exception.InstagramException
-import instagramAPI.Exception.LoginRequiredException
+import instagramAPI.exception.InstagramException
+import instagramAPI.exception.LoginRequiredException
 import com.github.kittinunf.fuel.core.FileDataPart
 import com.sun.deploy.net.HttpRequest
 import java.io.File
@@ -740,13 +740,13 @@ class Request(parent: Instagram, url: String) {
 	/**
 	 * Perform the request and map its response data to the provided object.
 	 *
-	 * @param Response responseObject An instance of a class object whose properties to fill with the response.
+	 * @param Responses responseObject An instance of a class object whose properties to fill with the response.
 	 *
 	 * @throws  IllegalArgumentException
 	 * @throws .RuntimeException
 	 * @throws InstagramException
 	 *
-	 * @return Response The provided responseObject with all JSON properties filled.
+	 * @return Responses The provided responseObject with all JSON properties filled.
 	 */
 	fun getResponse(responseObject: Response):responseObject {
 		// Check for API response success and put its response in the object.

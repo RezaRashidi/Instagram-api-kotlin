@@ -2,13 +2,13 @@
 
 package instagramAPI
 
-import Evenement.EventEmitterInterface
-import Evenement.EventEmitterTrait
-import instagramAPI.Push.Fbns
+//import Evenement.EventEmitterInterface
+//import Evenement.EventEmitterTrait
+import instagramAPI.pushs.Fbns
 import instagramAPI.React.Connector
-import Psr.Log.LoggerInterface
-import Psr.Log.NullLogger
-import React.EventLoop.LoopInterface
+//import Psr.Log.LoggerInterface
+//import Psr.Log.NullLogger
+//import React.EventLoop.LoopInterface
 
 /**
  * The following events are emitted.
@@ -135,7 +135,7 @@ import React.EventLoop.LoopInterface
  *     - silent_push - Some kind of service push that does nothing. Nothing important, I hope.
  *     - incoming - The event that catches all pushes. Useful for debugging and logging.
  *     - warning - An exception of severity "warning" occured.
- *     - error - An exception of severity "error" occurred. It"s not guaranteed that the Push client will continue to work.
+ *     - error - An exception of severity "error" occurred. It"s not guaranteed that the pushs client will continue to work.
  */
 class Push //: EventEmitterInterface
 {
@@ -157,7 +157,7 @@ class Push //: EventEmitterInterface
     protected var _fbnsAuth: Fbns.Auth
 
     /**
-     * Push constructor.
+     * pushs constructor.
      *
      * @param LoopInterface        $loop
      * @param Instagram            $instagram
@@ -168,7 +168,7 @@ class Push //: EventEmitterInterface
     constructor( loop: LoopInterface, instagram: Instagram, logger: LoggerInterface? = null)
     {
         if (PHP_SAPI !== "cli") {
-            throw RuntimeException("The Push client can only run from the command line.")
+            throw RuntimeException("The pushs client can only run from the command line.")
         }
 
         _instagram = instagram
@@ -220,7 +220,7 @@ class Push //: EventEmitterInterface
         fbns.on("fbns_token", fun (token) {
             // Refresh the "last token activity" timestamp.
             // The age of this timestamp helps us detect when the user
-            // has stopped using the Push features due to inactivity.
+            // has stopped using the pushs features due to inactivity.
             try {
                 _instagram.settings.set("last_fbns_token", System.currentTimeMillis()/1000 )
             } catch (e: Exception) {
@@ -262,14 +262,14 @@ class Push //: EventEmitterInterface
     }
 
     /**
-     * Start Push receiver.
+     * Start pushs receiver.
      */
     fun start(){
         _fbns.start()
     }
 
     /**
-     * Stop Push receiver.
+     * Stop pushs receiver.
      */
     fun stop(){
         _fbns.stop()

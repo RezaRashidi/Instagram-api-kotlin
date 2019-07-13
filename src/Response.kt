@@ -1,19 +1,19 @@
 package instagramAPI
 
-import Psr.Http.Message.ResponseInterface as HttpResponseInterface
+//import Psr.Http.Message.ResponseInterface as HttpResponseInterface
 
 /**
  * Core class for Instagram API responses.
  *
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Response.Model._Message[] get_Messages()
+ * @method Responses.Model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool is_Messages()
  * @method this setMessage(mixed value)
  * @method this setStatus(string value)
- * @method this set_Messages(Response.Model._Message[] value)
+ * @method this set_Messages(Responses.Model._Message[] value)
  * @method this unsetMessage()
  * @method this unsetStatus()
  * @method this unset_Messages()
@@ -47,7 +47,7 @@ open class Response{ //: AutoPropertyMapper() {
 		 * Known messages: "fb_needs_reauth", "vkontakte_needs_reauth",
 		 * "twitter_needs_reauth", "ameba_needs_reauth", "update_push_token".
 		 */
-		"_messages" to "Response.Model._Message[]")
+		"_messages" to "Responses.Model._Message[]")
 
 	/** @var HttpResponseInterface */
 	lateinit var httpResponse

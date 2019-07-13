@@ -1,7 +1,7 @@
 package instagramAPI
 
-import instagramAPI.Response.Model.Item
-import instagramAPI.Response.Model.Location
+import instagramAPI.responses.Model.Item
+import instagramAPI.responses.Model.Location
 import com.google.gson.Gson
 import java.io.ByteArrayOutputStream
 import java.nio.charset.StandardCharsets
@@ -289,7 +289,7 @@ object Utils{
      */
     fun buildMediaLocationJSON(location: Location): String{
 //        if (location !is Location) {
-//            throw IllegalArgumentException("The location must be an instance of \\instagramAPI\\Response\\Model\\Location.")
+//            throw IllegalArgumentException("The location must be an instance of \\instagramAPI\\Responses\\Model\\Location.")
 //        }
 
         // Forbid locations that came from Location::searchFacebook() and
