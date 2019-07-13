@@ -11,10 +11,10 @@ import instagramAPI.Response
  * @method mixed getFiltered()
  * @method mixed getMessage()
  * @method string getRankToken()
- * @method Model.DirectRankedRecipient[] getRankedRecipients()
+ * @method model.DirectRankedRecipient[] getRankedRecipients()
  * @method string getRequestId()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isExpires()
  * @method bool isFiltered()
  * @method bool isMessage()
@@ -27,10 +27,10 @@ import instagramAPI.Response
  * @method this setFiltered(mixed $value)
  * @method this setMessage(mixed $value)
  * @method this setRankToken(string $value)
- * @method this setRankedRecipients(Model.DirectRankedRecipient[] $value)
+ * @method this setRankedRecipients(model.DirectRankedRecipient[] $value)
  * @method this setRequestId(string $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetExpires()
  * @method this unsetFiltered()
  * @method this unsetMessage()
@@ -43,7 +43,7 @@ import instagramAPI.Response
 class DirectRankedRecipientsResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
         "expires"           to "",
-        "ranked_recipients" to "Model.DirectRankedRecipient[]",
+        "ranked_recipients" to "model.DirectRankedRecipient[]",
         "filtered"          to "",
         "request_id"        to "string",
         "rank_token"        to "string"

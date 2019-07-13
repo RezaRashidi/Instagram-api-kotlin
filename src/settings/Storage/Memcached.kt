@@ -2,7 +2,7 @@
 
 package instagramAPI.settings.Storage
 
-import instagramAPI.Exception.SettingsException
+import instagramAPI.exception.SettingsException
 import instagramAPI.Settings.StorageInterface
 import Memcached as PHPMemcached
 

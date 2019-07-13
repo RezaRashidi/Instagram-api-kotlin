@@ -11,13 +11,13 @@ import instagramAPI.Response
  * @method string getCollectionId()
  * @method string getCollectionName()
  * @method bool getHasRelatedMedia()
- * @method Model.SavedFeedItem[] getItems()
+ * @method model.SavedFeedItem[] getItems()
  * @method mixed getMessage()
  * @method bool getMoreAvailable()
  * @method string getNextMaxId()
  * @method int getNumResults()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isAutoLoadMoreEnabled()
  * @method bool isCollectionId()
  * @method bool isCollectionName()
@@ -33,13 +33,13 @@ import instagramAPI.Response
  * @method this setCollectionId(string $value)
  * @method this setCollectionName(string $value)
  * @method this setHasRelatedMedia(bool $value)
- * @method this setItems(Model.SavedFeedItem[] $value)
+ * @method this setItems(model.SavedFeedItem[] $value)
  * @method this setMessage(mixed $value)
  * @method this setMoreAvailable(bool $value)
  * @method this setNextMaxId(string $value)
  * @method this setNumResults(int $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAutoLoadMoreEnabled()
  * @method this unsetCollectionId()
  * @method this unsetCollectionName()
@@ -56,7 +56,7 @@ class CollectionFeedResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
         "collection_id"          to "string",
         "collection_name"        to "string",
-        "items"                  to "Model.SavedFeedItem[]",
+        "items"                  to "model.SavedFeedItem[]",
         "num_results"            to "int",
         "more_available"         to "bool",
         "auto_load_more_enabled" to "bool",

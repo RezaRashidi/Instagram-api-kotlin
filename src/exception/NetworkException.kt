@@ -3,7 +3,7 @@
 package instagramAPI.exception
 
 import jdk.javadoc.internal.doclets.toolkit.util.DocPath.parent
-import instagramAPI.Exception.RequestException as RequestException1
+import instagramAPI.exception.RequestException as RequestException1
 
 /**
  * This exception re-wraps ALL networking/socket exceptions.

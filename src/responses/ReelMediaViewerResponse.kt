@@ -13,10 +13,10 @@ import instagramAPI.Response
  * @method string getStatus()
  * @method int getTotalScreenshotCount()
  * @method int getTotalViewerCount()
- * @method Model.Item getUpdatedMedia()
+ * @method model.Item getUpdatedMedia()
  * @method int getUserCount()
- * @method Model.User[] getUsers()
- * @method Model._Message[] get_Messages()
+ * @method model.User[] getUsers()
+ * @method model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isNextMaxId()
  * @method bool isScreenshotterUserIds()
@@ -33,10 +33,10 @@ import instagramAPI.Response
  * @method this setStatus(string $value)
  * @method this setTotalScreenshotCount(int $value)
  * @method this setTotalViewerCount(int $value)
- * @method this setUpdatedMedia(Model.Item $value)
+ * @method this setUpdatedMedia(model.Item $value)
  * @method this setUserCount(int $value)
- * @method this setUsers(Model.User[] $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setUsers(model.User[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetMessage()
  * @method this unsetNextMaxId()
  * @method this unsetScreenshotterUserIds()
@@ -51,12 +51,12 @@ import instagramAPI.Response
 class ReelMediaViewerResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "users"                     => "Model.User[]",
+        "users"                     => "model.User[]",
         "next_max_id"               => "string",
         "user_count"                => "int",
         "total_viewer_count"        => "int",
         "screenshotter_user_ids"    => "",
         "total_screenshot_count"    => "int",
-        "updated_media"             => "Model.Item",
+        "updated_media"             => "model.Item",
     ]
 }

@@ -8,14 +8,14 @@ import instagramAPI.Response
  * PopularFeedResponse.
  *
  * @method mixed getAutoLoadMoreEnabled()
- * @method Model.Item[] getItems()
+ * @method model.Item[] getItems()
  * @method string getMaxId()
  * @method mixed getMessage()
  * @method mixed getMoreAvailable()
  * @method string getNextMaxId()
  * @method int getNumResults()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isAutoLoadMoreEnabled()
  * @method bool isItems()
  * @method bool isMaxId()
@@ -26,14 +26,14 @@ import instagramAPI.Response
  * @method bool isStatus()
  * @method bool is_Messages()
  * @method this setAutoLoadMoreEnabled(mixed $value)
- * @method this setItems(Model.Item[] $value)
+ * @method this setItems(model.Item[] $value)
  * @method this setMaxId(string $value)
  * @method this setMessage(mixed $value)
  * @method this setMoreAvailable(mixed $value)
  * @method this setNextMaxId(string $value)
  * @method this setNumResults(int $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAutoLoadMoreEnabled()
  * @method this unsetItems()
  * @method this unsetMaxId()
@@ -50,7 +50,7 @@ class PopularFeedResponse : Response
         "next_max_id"            => "string",
         "more_available"         => "",
         "auto_load_more_enabled" => "",
-        "items"                  => "Model.Item[]",
+        "items"                  => "model.Item[]",
         "num_results"            => "int",
         "max_id"                 => "string",
     ]

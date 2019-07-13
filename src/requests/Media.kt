@@ -83,7 +83,7 @@ class Media(instagram: Instagram) : RequestCollection(instagram) {
 				// The user wants to add/change the location of the media.
 				if (!metadata["location"] instanceof Response.Model.Location) {
 					throw IllegalArgumentException(
-						"The " location " metadata value must be an instance of .instagramAPI.responses.Model.Location.")
+						"The " location " metadata value must be an instance of .instagramAPI.responses.model.Location.")
 				}
 
 				request.addPost("location", Utils.buildMediaLocationJSON(metadata["location"]))

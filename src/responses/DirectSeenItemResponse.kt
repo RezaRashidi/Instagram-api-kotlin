@@ -9,9 +9,9 @@ import instagramAPI.Response
  *
  * @method mixed getAction()
  * @method mixed getMessage()
- * @method Model.DirectSeenItemPayload getPayload()
+ * @method model.DirectSeenItemPayload getPayload()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isAction()
  * @method bool isMessage()
  * @method bool isPayload()
@@ -19,9 +19,9 @@ import instagramAPI.Response
  * @method bool is_Messages()
  * @method this setAction(mixed $value)
  * @method this setMessage(mixed $value)
- * @method this setPayload(Model.DirectSeenItemPayload $value)
+ * @method this setPayload(model.DirectSeenItemPayload $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAction()
  * @method this unsetMessage()
  * @method this unsetPayload()
@@ -31,6 +31,6 @@ import instagramAPI.Response
 class DirectSeenItemResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
         "action"  to "",
-        "payload" to "Model.DirectSeenItemPayload" // The number of unseen items.
+        "payload" to "model.DirectSeenItemPayload" // The number of unseen items.
     )
 }

@@ -10,12 +10,12 @@ import instagramAPI.Response
  * @method mixed getCanonical()
  * @method bool getHasNewer()
  * @method bool getHasOlder()
- * @method Model.User getInviter()
+ * @method model.User getInviter()
  * @method mixed getIsPin()
- * @method Model.DirectThreadItem[] getItems()
+ * @method model.DirectThreadItem[] getItems()
  * @method mixed getLastActivityAt()
  * @method mixed getLastSeenAt()
- * @method Model.User[] getLeftUsers()
+ * @method model.User[] getLeftUsers()
  * @method mixed getMessage()
  * @method mixed getMuted()
  * @method mixed getNamed()
@@ -24,9 +24,9 @@ import instagramAPI.Response
  * @method string getThreadId()
  * @method mixed getThreadTitle()
  * @method mixed getThreadType()
- * @method Model.User[] getUsers()
+ * @method model.User[] getUsers()
  * @method string getViewerId()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isCanonical()
  * @method bool isHasNewer()
  * @method bool isHasOlder()
@@ -50,12 +50,12 @@ import instagramAPI.Response
  * @method this setCanonical(mixed $value)
  * @method this setHasNewer(bool $value)
  * @method this setHasOlder(bool $value)
- * @method this setInviter(Model.User $value)
+ * @method this setInviter(model.User $value)
  * @method this setIsPin(mixed $value)
- * @method this setItems(Model.DirectThreadItem[] $value)
+ * @method this setItems(model.DirectThreadItem[] $value)
  * @method this setLastActivityAt(mixed $value)
  * @method this setLastSeenAt(mixed $value)
- * @method this setLeftUsers(Model.User[] $value)
+ * @method this setLeftUsers(model.User[] $value)
  * @method this setMessage(mixed $value)
  * @method this setMuted(mixed $value)
  * @method this setNamed(mixed $value)
@@ -64,9 +64,9 @@ import instagramAPI.Response
  * @method this setThreadId(string $value)
  * @method this setThreadTitle(mixed $value)
  * @method this setThreadType(mixed $value)
- * @method this setUsers(Model.User[] $value)
+ * @method this setUsers(model.User[] $value)
  * @method this setViewerId(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetCanonical()
  * @method this unsetHasNewer()
  * @method this unsetHasOlder()
@@ -91,9 +91,9 @@ import instagramAPI.Response
 class DirectCreateGroupThreadResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
         "thread_id"        to "string",
-        "users"            to "Model.User[]",
-        "left_users"       to "Model.User[]",
-        "items"            to "Model.DirectThreadItem[]",
+        "users"            to "model.User[]",
+        "left_users"       to "model.User[]",
+        "items"            to "model.DirectThreadItem[]",
         "last_activity_at" to "",
         "muted"            to "",
         "named"            to "",
@@ -102,7 +102,7 @@ class DirectCreateGroupThreadResponse : Response(){
         "thread_type"      to "",
         "viewer_id"        to "string",
         "thread_title"     to "",
-        "inviter"          to "Model.User",
+        "inviter"          to "model.User",
         "has_older"        to "bool",
         "has_newer"        to "bool",
         "last_seen_at"     to "",

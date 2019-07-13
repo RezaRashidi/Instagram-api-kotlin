@@ -12,8 +12,8 @@ import instagramAPI.Response
  * @method string getNextMaxId()
  * @method mixed getPageSize()
  * @method string getStatus()
- * @method Model.User[] getUsers()
- * @method Model._Message[] get_Messages()
+ * @method model.User[] getUsers()
+ * @method model._Message[] get_Messages()
  * @method bool isBigList()
  * @method bool isMessage()
  * @method bool isNextMaxId()
@@ -26,8 +26,8 @@ import instagramAPI.Response
  * @method this setNextMaxId(string $value)
  * @method this setPageSize(mixed $value)
  * @method this setStatus(string $value)
- * @method this setUsers(Model.User[] $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setUsers(model.User[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetBigList()
  * @method this unsetMessage()
  * @method this unsetNextMaxId()
@@ -39,7 +39,7 @@ import instagramAPI.Response
 class MutedReelsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "users"       => "Model.User[]",
+        "users"       => "model.User[]",
         "next_max_id" => "string",
         "page_size"   => "",
         "big_list"    => "",

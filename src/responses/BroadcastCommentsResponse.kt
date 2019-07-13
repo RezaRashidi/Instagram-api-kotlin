@@ -12,17 +12,17 @@ import instagramAPI.Response
  * @method int getCommentCount()
  * @method bool getCommentLikesEnabled()
  * @method int getCommentMuted()
- * @method Model.Comment[] getComments()
+ * @method model.Comment[] getComments()
  * @method bool getHasMoreComments()
  * @method bool getHasMoreHeadloadComments()
  * @method string getIsFirstFetch()
  * @method int getLiveSecondsPerComment()
  * @method string getMediaHeaderDisplay()
  * @method mixed getMessage()
- * @method Model.Comment getPinnedComment()
+ * @method model.Comment getPinnedComment()
  * @method string getStatus()
- * @method Model.Comment[] getSystemComments()
- * @method Model._Message[] get_Messages()
+ * @method model.Comment[] getSystemComments()
+ * @method model._Message[] get_Messages()
  * @method bool isCaption()
  * @method bool isCaptionIsEdited()
  * @method bool isCommentCount()
@@ -44,17 +44,17 @@ import instagramAPI.Response
  * @method this setCommentCount(int $value)
  * @method this setCommentLikesEnabled(bool $value)
  * @method this setCommentMuted(int $value)
- * @method this setComments(Model.Comment[] $value)
+ * @method this setComments(model.Comment[] $value)
  * @method this setHasMoreComments(bool $value)
  * @method this setHasMoreHeadloadComments(bool $value)
  * @method this setIsFirstFetch(string $value)
  * @method this setLiveSecondsPerComment(int $value)
  * @method this setMediaHeaderDisplay(string $value)
  * @method this setMessage(mixed $value)
- * @method this setPinnedComment(Model.Comment $value)
+ * @method this setPinnedComment(model.Comment $value)
  * @method this setStatus(string $value)
- * @method this setSystemComments(Model.Comment[] $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setSystemComments(model.Comment[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetCaption()
  * @method this unsetCaptionIsEdited()
  * @method this unsetCommentCount()
@@ -74,7 +74,7 @@ import instagramAPI.Response
  */
 class BroadcastCommentsResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
-        "comments"                   to "Model.Comment[]",
+        "comments"                   to "model.Comment[]",
         "comment_count"              to "int",
         "live_seconds_per_comment"   to "int",
         "has_more_headload_comments" to "bool",
@@ -83,8 +83,8 @@ class BroadcastCommentsResponse : Response(){
          */
         "is_first_fetch"             to "string",
         "comment_likes_enabled"      to "bool",
-        "pinned_comment"             to "Model.Comment",
-        "system_comments"            to "Model.Comment[]",
+        "pinned_comment"             to "model.Comment",
+        "system_comments"            to "model.Comment[]",
         "has_more_comments"          to "bool",
         "caption_is_edited"          to "bool",
         "caption"                    to "",

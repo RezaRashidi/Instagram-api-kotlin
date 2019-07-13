@@ -10,10 +10,10 @@ import instagramAPI.Response
  * @method string getMaxId()
  * @method mixed getMessage()
  * @method bool getMoreAvailable()
- * @method Model.SuggestedUsers getNewSuggestedUsers()
+ * @method model.SuggestedUsers getNewSuggestedUsers()
  * @method string getStatus()
- * @method Model.SuggestedUsers getSuggestedUsers()
- * @method Model._Message[] get_Messages()
+ * @method model.SuggestedUsers getSuggestedUsers()
+ * @method model._Message[] get_Messages()
  * @method bool isMaxId()
  * @method bool isMessage()
  * @method bool isMoreAvailable()
@@ -24,10 +24,10 @@ import instagramAPI.Response
  * @method this setMaxId(string $value)
  * @method this setMessage(mixed $value)
  * @method this setMoreAvailable(bool $value)
- * @method this setNewSuggestedUsers(Model.SuggestedUsers $value)
+ * @method this setNewSuggestedUsers(model.SuggestedUsers $value)
  * @method this setStatus(string $value)
- * @method this setSuggestedUsers(Model.SuggestedUsers $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setSuggestedUsers(model.SuggestedUsers $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetMaxId()
  * @method this unsetMessage()
  * @method this unsetMoreAvailable()
@@ -40,7 +40,7 @@ class DiscoverPeopleResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
         "more_available"      to "bool",
         "max_id"              to "string",
-        "suggested_users"     to "Model.SuggestedUsers",
-        "new_suggested_users" to "Model.SuggestedUsers"
+        "suggested_users"     to "model.SuggestedUsers",
+        "new_suggested_users" to "model.SuggestedUsers"
     )
 }

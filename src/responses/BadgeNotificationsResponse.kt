@@ -7,18 +7,18 @@ import instagramAPI.Response
 /**
  * BadgeNotificationsResponse.
  *
- * @method Model.UnpredictableKeys.CoreUnpredictableContainer getBadgePayload()
+ * @method model.unpredictableKeys.CoreUnpredictableContainer getBadgePayload()
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isBadgePayload()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method this setBadgePayload(Model.UnpredictableKeys.CoreUnpredictableContainer $value)
+ * @method this setBadgePayload(model.unpredictableKeys.CoreUnpredictableContainer $value)
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetBadgePayload()
  * @method this unsetMessage()
  * @method this unsetStatus()
@@ -31,6 +31,6 @@ class BadgeNotificationsResponse : Response(){
         // the data sub-values will be arrays (no type-conversion of the values
         // will happen). We should define this as a specific type (like
         // UserUnpredictableContainer) when we know exactly what the data is.
-        "badge_payload" to "Model.UnpredictableKeys.CoreUnpredictableContainer"
+        "badge_payload" to "model.unpredictableKeys.CoreUnpredictableContainer"
     )
 }

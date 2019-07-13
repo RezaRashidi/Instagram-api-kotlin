@@ -3,7 +3,7 @@
 package instagramAPI.requests
 
 import instagramAPI.Constants
-import instagramAPI.Request.Metadata.Internal as InternalMetadata
+import instagramAPI.requests.Metadata.Internal as InternalMetadata
 import instagramAPI.Response
 import instagramAPI.Utils
 

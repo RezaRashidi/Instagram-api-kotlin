@@ -10,8 +10,8 @@ import instagramAPI.Response
  * @method mixed getMessage()
  * @method string getStatus()
  * @method int getTotalUniqueViewerCount()
- * @method Model.User[] getUsers()
- * @method Model._Message[] get_Messages()
+ * @method model.User[] getUsers()
+ * @method model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool isTotalUniqueViewerCount()
@@ -20,8 +20,8 @@ import instagramAPI.Response
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
  * @method this setTotalUniqueViewerCount(int $value)
- * @method this setUsers(Model.User[] $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setUsers(model.User[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetMessage()
  * @method this unsetStatus()
  * @method this unsetTotalUniqueViewerCount()
@@ -30,7 +30,7 @@ import instagramAPI.Response
  */
 class FinalViewerListResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
-        "users"                     to "Model.User[]",
+        "users"                     to "model.User[]",
         "total_unique_viewer_count" to "int"
     )
 }

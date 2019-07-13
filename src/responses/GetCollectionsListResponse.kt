@@ -8,12 +8,12 @@ import instagramAPI.Response
  * GetCollectionsListResponse.
  *
  * @method bool getAutoLoadMoreEnabled()
- * @method Model.Collection[] getItems()
+ * @method model.Collection[] getItems()
  * @method mixed getMessage()
  * @method bool getMoreAvailable()
  * @method string getNextMaxId()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isAutoLoadMoreEnabled()
  * @method bool isItems()
  * @method bool isMessage()
@@ -22,12 +22,12 @@ import instagramAPI.Response
  * @method bool isStatus()
  * @method bool is_Messages()
  * @method this setAutoLoadMoreEnabled(bool $value)
- * @method this setItems(Model.Collection[] $value)
+ * @method this setItems(model.Collection[] $value)
  * @method this setMessage(mixed $value)
  * @method this setMoreAvailable(bool $value)
  * @method this setNextMaxId(string $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAutoLoadMoreEnabled()
  * @method this unsetItems()
  * @method this unsetMessage()
@@ -38,7 +38,7 @@ import instagramAPI.Response
  */
 class GetCollectionsListResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
-        "items"                  to "Model.Collection[]",
+        "items"                  to "model.Collection[]",
         "more_available"         to "bool",
         "auto_load_more_enabled" to "bool",
         "next_max_id"            to "string"

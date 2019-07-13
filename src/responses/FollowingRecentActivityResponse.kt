@@ -12,8 +12,8 @@ import instagramAPI.Response
  * @method mixed getMessage()
  * @method string getNextMaxId()
  * @method string getStatus()
- * @method Model.Story[] getStories()
- * @method Model._Message[] get_Messages()
+ * @method model.Story[] getStories()
+ * @method model._Message[] get_Messages()
  * @method bool isAutoLoadMoreEnabled()
  * @method bool isMegaphone()
  * @method bool isMessage()
@@ -26,8 +26,8 @@ import instagramAPI.Response
  * @method this setMessage(mixed $value)
  * @method this setNextMaxId(string $value)
  * @method this setStatus(string $value)
- * @method this setStories(Model.Story[] $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setStories(model.Story[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAutoLoadMoreEnabled()
  * @method this unsetMegaphone()
  * @method this unsetMessage()
@@ -38,7 +38,7 @@ import instagramAPI.Response
  */
 class FollowingRecentActivityResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
-        "stories"                to "Model.Story[]",
+        "stories"                to "model.Story[]",
         "next_max_id"            to "string",
         "auto_load_more_enabled" to "",
         "megaphone"              to ""

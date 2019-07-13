@@ -2,8 +2,8 @@
 
 package instagramAPI.media.Video
 
-import instagramAPI.Media.ConstraintsInterface
-import instagramAPI.Media.MediaDetails
+import instagramAPI.media.ConstraintsInterface
+import instagramAPI.media.MediaDetails
 import instagramAPI.Utils
 import Winbox.Args
 import kotlin.math.roundToInt

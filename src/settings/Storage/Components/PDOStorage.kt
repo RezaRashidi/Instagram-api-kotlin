@@ -2,7 +2,7 @@
 
 package instagramAPI.settings.Storage.Components
 
-import instagramAPI.Exception.SettingsException
+import instagramAPI.exception.SettingsException
 import instagramAPI.Settings.StorageInterface
 import PDO
 

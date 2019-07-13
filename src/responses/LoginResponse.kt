@@ -10,7 +10,7 @@ import instagramAPI.Response
  * @method bool getAllowContactsSync()
  * @method string getAllowedCommenterType()
  * @method mixed getButtons()
- * @method Model.Challenge getChallenge()
+ * @method model.Challenge getChallenge()
  * @method string getCheckpointUrl()
  * @method int getCountryCode()
  * @method mixed getErrorTitle()
@@ -22,20 +22,20 @@ import instagramAPI.Response
  * @method bool getIsPrivate()
  * @method bool getIsVerified()
  * @method mixed getLock()
- * @method Model.User getLoggedInUser()
+ * @method model.User getLoggedInUser()
  * @method mixed getMessage()
  * @method int getNationalNumber()
  * @method string getPhoneNumber()
- * @method Model.PhoneVerificationSettings getPhoneVerificationSettings()
+ * @method model.PhoneVerificationSettings getPhoneVerificationSettings()
  * @method string getPk()
  * @method string getProfilePicId()
  * @method string getProfilePicUrl()
  * @method string getReelAutoArchive()
  * @method string getStatus()
- * @method Model.TwoFactorInfo getTwoFactorInfo()
+ * @method model.TwoFactorInfo getTwoFactorInfo()
  * @method mixed getTwoFactorRequired()
  * @method string getUsername()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isAllowContactsSync()
  * @method bool isAllowedCommenterType()
  * @method bool isButtons()
@@ -68,7 +68,7 @@ import instagramAPI.Response
  * @method this setAllowContactsSync(bool $value)
  * @method this setAllowedCommenterType(string $value)
  * @method this setButtons(mixed $value)
- * @method this setChallenge(Model.Challenge $value)
+ * @method this setChallenge(model.Challenge $value)
  * @method this setCheckpointUrl(string $value)
  * @method this setCountryCode(int $value)
  * @method this setErrorTitle(mixed $value)
@@ -80,20 +80,20 @@ import instagramAPI.Response
  * @method this setIsPrivate(bool $value)
  * @method this setIsVerified(bool $value)
  * @method this setLock(mixed $value)
- * @method this setLoggedInUser(Model.User $value)
+ * @method this setLoggedInUser(model.User $value)
  * @method this setMessage(mixed $value)
  * @method this setNationalNumber(int $value)
  * @method this setPhoneNumber(string $value)
- * @method this setPhoneVerificationSettings(Model.PhoneVerificationSettings $value)
+ * @method this setPhoneVerificationSettings(model.PhoneVerificationSettings $value)
  * @method this setPk(string $value)
  * @method this setProfilePicId(string $value)
  * @method this setProfilePicUrl(string $value)
  * @method this setReelAutoArchive(string $value)
  * @method this setStatus(string $value)
- * @method this setTwoFactorInfo(Model.TwoFactorInfo $value)
+ * @method this setTwoFactorInfo(model.TwoFactorInfo $value)
  * @method this setTwoFactorRequired(mixed $value)
  * @method this setUsername(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAllowContactsSync()
  * @method this unsetAllowedCommenterType()
  * @method this unsetButtons()
@@ -145,13 +145,13 @@ class LoginResponse : Response()
         "error_type"                    to "", // On wrong pass.
         "buttons"                       to "", // On wrong pass.
         "invalid_credentials"           to "", // On wrong pass.
-        "logged_in_user"                to "Model.User",
+        "logged_in_user"                to "model.User",
         "two_factor_required"           to "",
-        "phone_verification_settings"   to "Model.PhoneVerificationSettings",
-        "two_factor_info"               to "Model.TwoFactorInfo",
+        "phone_verification_settings"   to "model.PhoneVerificationSettings",
+        "two_factor_info"               to "model.TwoFactorInfo",
         "checkpoint_url"                to "string",
         "lock"                          to "",
         "help_url"                      to "string",
-        "challenge"                     to "Model.Challenge"
+        "challenge"                     to "model.Challenge"
     )
 }

@@ -2,9 +2,9 @@
 
 package instagramAPI.media.Photo
 
-import instagramAPI.Media.Geometry.Dimensions
-import instagramAPI.Media.Geometry.Rectangle
-import instagramAPI.Media.InstagramMedia
+import instagramAPI.media.Geometry.Dimensions
+import instagramAPI.media.Geometry.Rectangle
+import instagramAPI.media.InstagramMedia
 import instagramAPI.Utils
 
 /**

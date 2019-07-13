@@ -9,16 +9,16 @@ import instagramAPI.Response
  *
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model.SharedFollower[] getUsers()
- * @method Model._Message[] get_Messages()
+ * @method model.SharedFollower[] getUsers()
+ * @method model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool isUsers()
  * @method bool is_Messages()
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this setUsers(Model.SharedFollower[] $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setUsers(model.SharedFollower[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetMessage()
  * @method this unsetStatus()
  * @method this unsetUsers()
@@ -27,6 +27,6 @@ import instagramAPI.Response
 class SharedFollowersResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "users" => "Model.SharedFollower[]",
+        "users" => "model.SharedFollower[]",
     ]
 }

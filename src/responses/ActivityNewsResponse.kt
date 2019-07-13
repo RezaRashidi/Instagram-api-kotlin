@@ -8,18 +8,18 @@ import instagramAPI.Response
  * ActivityNewsResponse.
  *
  * @method mixed getAdsManager()
- * @method Model.Aymf getAymf()
+ * @method model.Aymf getAymf()
  * @method mixed getContinuation()
  * @method mixed getContinuationToken()
- * @method Model.Counts getCounts()
- * @method Model.Story[] getFriendRequestStories()
+ * @method model.Counts getCounts()
+ * @method model.Story[] getFriendRequestStories()
  * @method mixed getMessage()
- * @method Model.Story[] getNewStories()
- * @method Model.Story[] getOldStories()
+ * @method model.Story[] getNewStories()
+ * @method model.Story[] getOldStories()
  * @method mixed getPartition()
  * @method string getStatus()
- * @method Model.Subscription getSubscription()
- * @method Model._Message[] get_Messages()
+ * @method model.Subscription getSubscription()
+ * @method model._Message[] get_Messages()
  * @method bool isAdsManager()
  * @method bool isAymf()
  * @method bool isContinuation()
@@ -34,18 +34,18 @@ import instagramAPI.Response
  * @method bool isSubscription()
  * @method bool is_Messages()
  * @method this setAdsManager(mixed $value)
- * @method this setAymf(Model.Aymf $value)
+ * @method this setAymf(model.Aymf $value)
  * @method this setContinuation(mixed $value)
  * @method this setContinuationToken(mixed $value)
- * @method this setCounts(Model.Counts $value)
- * @method this setFriendRequestStories(Model.Story[] $value)
+ * @method this setCounts(model.Counts $value)
+ * @method this setFriendRequestStories(model.Story[] $value)
  * @method this setMessage(mixed $value)
- * @method this setNewStories(Model.Story[] $value)
- * @method this setOldStories(Model.Story[] $value)
+ * @method this setNewStories(model.Story[] $value)
+ * @method this setOldStories(model.Story[] $value)
  * @method this setPartition(mixed $value)
  * @method this setStatus(string $value)
- * @method this setSubscription(Model.Subscription $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setSubscription(model.Subscription $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAdsManager()
  * @method this unsetAymf()
  * @method this unsetContinuation()
@@ -62,15 +62,15 @@ import instagramAPI.Response
  */
 class ActivityNewsResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
-        "new_stories"            to "Model.Story[]",
-        "old_stories"            to "Model.Story[]",
+        "new_stories"            to "model.Story[]",
+        "old_stories"            to "model.Story[]",
         "continuation"           to "",
-        "friend_request_stories" to "Model.Story[]",
-        "counts"                 to "Model.Counts",
-        "subscription"           to "Model.Subscription",
+        "friend_request_stories" to "model.Story[]",
+        "counts"                 to "model.Counts",
+        "subscription"           to "model.Subscription",
         "partition"              to "",
         "continuation_token"     to "",
         "ads_manager"            to "",
-        "aymf"                   to "Model.Aymf"
+        "aymf"                   to "model.Aymf"
     )
 }

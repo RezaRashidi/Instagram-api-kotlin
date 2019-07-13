@@ -7,18 +7,18 @@ import instagramAPI.Response
 /**
  * TranslateResponse.
  *
- * @method Model.CommentTranslations[] getCommentTranslations()
+ * @method model.CommentTranslations[] getCommentTranslations()
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isCommentTranslations()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method this setCommentTranslations(Model.CommentTranslations[] $value)
+ * @method this setCommentTranslations(model.CommentTranslations[] $value)
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetCommentTranslations()
  * @method this unsetMessage()
  * @method this unsetStatus()
@@ -27,6 +27,6 @@ import instagramAPI.Response
 class TranslateResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "comment_translations" => "Model.CommentTranslations[]",
+        "comment_translations" => "model.CommentTranslations[]",
     ]
 }

@@ -9,9 +9,9 @@ import instagramAPI.Response
  *
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model.TwoFactorInfo getTwoFactorInfo()
+ * @method model.TwoFactorInfo getTwoFactorInfo()
  * @method bool getTwoFactorRequired()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool isTwoFactorInfo()
@@ -19,9 +19,9 @@ import instagramAPI.Response
  * @method bool is_Messages()
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this setTwoFactorInfo(Model.TwoFactorInfo $value)
+ * @method this setTwoFactorInfo(model.TwoFactorInfo $value)
  * @method this setTwoFactorRequired(bool $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetMessage()
  * @method this unsetStatus()
  * @method this unsetTwoFactorInfo()
@@ -32,6 +32,6 @@ class TwoFactorLoginSMSResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         "two_factor_required" => "bool",
-        "two_factor_info"     => "Model.TwoFactorInfo",
+        "two_factor_info"     => "model.TwoFactorInfo",
     ]
 }

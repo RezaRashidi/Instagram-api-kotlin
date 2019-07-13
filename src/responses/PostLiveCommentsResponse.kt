@@ -7,14 +7,14 @@ import instagramAPI.Response
 /**
  * PostLiveCommentsResponse.
  *
- * @method Model.LiveComment[] getComments()
+ * @method model.LiveComment[] getComments()
  * @method mixed getEndingOffset()
  * @method mixed getMessage()
  * @method mixed getNextFetchOffset()
- * @method Model.LiveComment[] getPinnedComments()
+ * @method model.LiveComment[] getPinnedComments()
  * @method mixed getStartingOffset()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isComments()
  * @method bool isEndingOffset()
  * @method bool isMessage()
@@ -23,14 +23,14 @@ import instagramAPI.Response
  * @method bool isStartingOffset()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method this setComments(Model.LiveComment[] $value)
+ * @method this setComments(model.LiveComment[] $value)
  * @method this setEndingOffset(mixed $value)
  * @method this setMessage(mixed $value)
  * @method this setNextFetchOffset(mixed $value)
- * @method this setPinnedComments(Model.LiveComment[] $value)
+ * @method this setPinnedComments(model.LiveComment[] $value)
  * @method this setStartingOffset(mixed $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetComments()
  * @method this unsetEndingOffset()
  * @method this unsetMessage()
@@ -46,7 +46,7 @@ class PostLiveCommentsResponse : Response
         "starting_offset"   => "",
         "ending_offset"     => "",
         "next_fetch_offset" => "",
-        "comments"          => "Model.LiveComment[]",
-        "pinned_comments"   => "Model.LiveComment[]",
+        "comments"          => "model.LiveComment[]",
+        "pinned_comments"   => "model.LiveComment[]",
     ]
 }

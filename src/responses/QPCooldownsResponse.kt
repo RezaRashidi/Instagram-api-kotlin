@@ -10,10 +10,10 @@ import instagramAPI.Response
  * @method int getDefault()
  * @method int getGlobal()
  * @method mixed getMessage()
- * @method Model.Slot[] getSlots()
+ * @method model.Slot[] getSlots()
  * @method string getStatus()
- * @method Model.QPSurface[] getSurfaces()
- * @method Model._Message[] get_Messages()
+ * @method model.QPSurface[] getSurfaces()
+ * @method model._Message[] get_Messages()
  * @method bool isDefault()
  * @method bool isGlobal()
  * @method bool isMessage()
@@ -24,10 +24,10 @@ import instagramAPI.Response
  * @method this setDefault(int $value)
  * @method this setGlobal(int $value)
  * @method this setMessage(mixed $value)
- * @method this setSlots(Model.Slot[] $value)
+ * @method this setSlots(model.Slot[] $value)
  * @method this setStatus(string $value)
- * @method this setSurfaces(Model.QPSurface[] $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setSurfaces(model.QPSurface[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetDefault()
  * @method this unsetGlobal()
  * @method this unsetMessage()
@@ -41,7 +41,7 @@ class QPCooldownsResponse : Response
     val JSON_PROPERTY_MAP = [
         "global"    => "int",
         "default"   => "int",
-        "surfaces"  => "Model.QPSurface[]",
-        "slots"     => "Model.Slot[]",
+        "surfaces"  => "model.QPSurface[]",
+        "slots"     => "model.Slot[]",
     ]
 }

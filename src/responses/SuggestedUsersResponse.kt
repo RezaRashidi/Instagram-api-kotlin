@@ -10,8 +10,8 @@ import instagramAPI.Response
  * @method mixed getIsBackup()
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model.User[] getUsers()
- * @method Model._Message[] get_Messages()
+ * @method model.User[] getUsers()
+ * @method model._Message[] get_Messages()
  * @method bool isIsBackup()
  * @method bool isMessage()
  * @method bool isStatus()
@@ -20,8 +20,8 @@ import instagramAPI.Response
  * @method this setIsBackup(mixed $value)
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this setUsers(Model.User[] $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setUsers(model.User[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetIsBackup()
  * @method this unsetMessage()
  * @method this unsetStatus()
@@ -31,7 +31,7 @@ import instagramAPI.Response
 class SuggestedUsersResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "users"     => "Model.User[]",
+        "users"     => "model.User[]",
         "is_backup" => "",
     ]
 }

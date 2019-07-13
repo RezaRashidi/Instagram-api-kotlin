@@ -11,10 +11,10 @@ import instagramAPI.Response
  * @method bool getClientFeedChangelistApplied()
  * @method mixed getClientGapEnforcerMatrix()
  * @method string getClientSessionId()
- * @method Model.FeedItem[] getFeedItems()
+ * @method model.FeedItem[] getFeedItems()
  * @method string getFeedPillText()
  * @method bool getIsDirectV2Enabled()
- * @method Model.FeedAysf getMegaphone()
+ * @method model.FeedAysf getMegaphone()
  * @method mixed getMessage()
  * @method bool getMoreAvailable()
  * @method string getNextMaxId()
@@ -22,7 +22,7 @@ import instagramAPI.Response
  * @method mixed getPaginationInfo()
  * @method string getStatus()
  * @method string getViewStateVersion()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isAutoLoadMoreEnabled()
  * @method bool isClientFeedChangelistApplied()
  * @method bool isClientGapEnforcerMatrix()
@@ -43,10 +43,10 @@ import instagramAPI.Response
  * @method this setClientFeedChangelistApplied(bool $value)
  * @method this setClientGapEnforcerMatrix(mixed $value)
  * @method this setClientSessionId(string $value)
- * @method this setFeedItems(Model.FeedItem[] $value)
+ * @method this setFeedItems(model.FeedItem[] $value)
  * @method this setFeedPillText(string $value)
  * @method this setIsDirectV2Enabled(bool $value)
- * @method this setMegaphone(Model.FeedAysf $value)
+ * @method this setMegaphone(model.FeedAysf $value)
  * @method this setMessage(mixed $value)
  * @method this setMoreAvailable(bool $value)
  * @method this setNextMaxId(string $value)
@@ -54,7 +54,7 @@ import instagramAPI.Response
  * @method this setPaginationInfo(mixed $value)
  * @method this setStatus(string $value)
  * @method this setViewStateVersion(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAutoLoadMoreEnabled()
  * @method this unsetClientFeedChangelistApplied()
  * @method this unsetClientGapEnforcerMatrix()
@@ -82,8 +82,8 @@ class TimelineFeedResponse : Response
         "more_available"                 => "bool",
         "next_max_id"                    => "string",
         "pagination_info"                => "",
-        "feed_items"                     => "Model.FeedItem[]",
-        "megaphone"                      => "Model.FeedAysf",
+        "feed_items"                     => "model.FeedItem[]",
+        "megaphone"                      => "model.FeedAysf",
         "client_feed_changelist_applied" => "bool",
         "view_state_version"             => "string",
         "feed_pill_text"                 => "string",

@@ -7,18 +7,18 @@ import instagramAPI.Response
 /**
  * FormerUsernamesResponse.
  *
- * @method Model.FormerUsername[] getFormerUsernames()
+ * @method model.FormerUsername[] getFormerUsernames()
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isFormerUsernames()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method this setFormerUsernames(Model.FormerUsername[] $value)
+ * @method this setFormerUsernames(model.FormerUsername[] $value)
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetFormerUsernames()
  * @method this unsetMessage()
  * @method this unsetStatus()
@@ -26,6 +26,6 @@ import instagramAPI.Response
  */
 class FormerUsernamesResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
-        "former_usernames" to "Model.FormerUsername[]"
+        "former_usernames" to "model.FormerUsername[]"
     )
 }

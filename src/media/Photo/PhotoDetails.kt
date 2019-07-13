@@ -2,8 +2,8 @@
 
 package instagramAPI.media.Photo
 
-import instagramAPI.Media.ConstraintsInterface
-import instagramAPI.Media.MediaDetails
+import instagramAPI.media.ConstraintsInterface
+import instagramAPI.media.MediaDetails
 
 class PhotoDetails : MediaDetails
 {

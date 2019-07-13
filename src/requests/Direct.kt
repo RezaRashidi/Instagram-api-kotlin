@@ -1,8 +1,8 @@
 package instagramAPI.requests
 
 import instagramAPI.*
-import instagramAPI.Exception.UploadFailedException
-import instagramAPI.Request.Metadata.Internal as InternalMetadata
+import instagramAPI.exception.UploadFailedException
+import instagramAPI.requests.Metadata.Internal as InternalMetadata
 
 /**
  * Instagram Direct messaging funs.

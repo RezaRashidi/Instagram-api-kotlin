@@ -17,9 +17,9 @@ import instagramAPI.Response
  * @method mixed getMessage()
  * @method string getPhoneNumber()
  * @method string getStatus()
- * @method Model.User getUser()
+ * @method model.User getUser()
  * @method string getUserId()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isCanEmailReset()
  * @method bool isCanSmsReset()
  * @method bool isCorrectedInput()
@@ -43,9 +43,9 @@ import instagramAPI.Response
  * @method this setMessage(mixed $value)
  * @method this setPhoneNumber(string $value)
  * @method this setStatus(string $value)
- * @method this setUser(Model.User $value)
+ * @method this setUser(model.User $value)
  * @method this setUserId(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetCanEmailReset()
  * @method this unsetCanSmsReset()
  * @method this unsetCorrectedInput()
@@ -63,7 +63,7 @@ import instagramAPI.Response
 class UsersLookupResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "user"            => "Model.User",
+        "user"            => "model.User",
         "email_sent"      => "bool",
         "has_valid_phone" => "bool",
         "can_email_reset" => "bool",

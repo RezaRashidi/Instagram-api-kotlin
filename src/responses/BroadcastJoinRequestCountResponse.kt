@@ -13,8 +13,8 @@ import instagramAPI.Response
  * @method int getNumTotalRequests()
  * @method int getNumUnseenRequests()
  * @method string getStatus()
- * @method Model.User[] getUsers()
- * @method Model._Message[] get_Messages()
+ * @method model.User[] getUsers()
+ * @method model._Message[] get_Messages()
  * @method bool isFetchTs()
  * @method bool isMessage()
  * @method bool isNumNewRequests()
@@ -29,8 +29,8 @@ import instagramAPI.Response
  * @method this setNumTotalRequests(int $value)
  * @method this setNumUnseenRequests(int $value)
  * @method this setStatus(string $value)
- * @method this setUsers(Model.User[] $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setUsers(model.User[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetFetchTs()
  * @method this unsetMessage()
  * @method this unsetNumNewRequests()
@@ -45,7 +45,7 @@ class BroadcastJoinRequestCountResponse : Response(){
         "fetch_ts"            to "string",
         "num_total_requests"  to "int",
         "num_new_requests"    to "int",
-        "users"               to "Model.User[]",
+        "users"               to "model.User[]",
         "num_unseen_requests" to "int"
     )
 }

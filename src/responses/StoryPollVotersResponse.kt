@@ -9,16 +9,16 @@ import instagramAPI.Response
  *
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model.VoterInfo getVoterInfo()
- * @method Model._Message[] get_Messages()
+ * @method model.VoterInfo getVoterInfo()
+ * @method model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool isVoterInfo()
  * @method bool is_Messages()
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this setVoterInfo(Model.VoterInfo $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setVoterInfo(model.VoterInfo $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetMessage()
  * @method this unsetStatus()
  * @method this unsetVoterInfo()
@@ -27,6 +27,6 @@ import instagramAPI.Response
 class StoryPollVotersResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "voter_info"    => "Model.VoterInfo",
+        "voter_info"    => "model.VoterInfo",
     ]
 }

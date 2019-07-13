@@ -7,18 +7,18 @@ import instagramAPI.Response
 /**
  * GraphqlResponse.
  *
- * @method Model.GraphData getData()
+ * @method model.GraphData getData()
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isData()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method this setData(Model.GraphData $value)
+ * @method this setData(model.GraphData $value)
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetData()
  * @method this unsetMessage()
  * @method this unsetStatus()
@@ -27,7 +27,7 @@ import instagramAPI.Response
 class GraphqlResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "data"            => "Model.GraphData",
+        "data"            => "model.GraphData",
     ]
 
     /**

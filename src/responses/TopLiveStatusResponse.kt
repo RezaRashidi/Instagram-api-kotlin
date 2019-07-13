@@ -7,18 +7,18 @@ import instagramAPI.Response
 /**
  * TopLiveStatusResponse.
  *
- * @method Model.BroadcastStatusItem[] getBroadcastStatusItems()
+ * @method model.BroadcastStatusItem[] getBroadcastStatusItems()
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isBroadcastStatusItems()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method this setBroadcastStatusItems(Model.BroadcastStatusItem[] $value)
+ * @method this setBroadcastStatusItems(model.BroadcastStatusItem[] $value)
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetBroadcastStatusItems()
  * @method this unsetMessage()
  * @method this unsetStatus()
@@ -27,6 +27,6 @@ import instagramAPI.Response
 class TopLiveStatusResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "broadcast_status_items" => "Model.BroadcastStatusItem[]",
+        "broadcast_status_items" => "model.BroadcastStatusItem[]",
     ]
 }

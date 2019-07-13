@@ -8,20 +8,20 @@ import instagramAPI.Response
  * StickerAssetsResponse.
  *
  * @method mixed getMessage()
- * @method Model.StaticStickers[] getStaticStickers()
+ * @method model.StaticStickers[] getStaticStickers()
  * @method string getStatus()
  * @method mixed getVersion()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isStaticStickers()
  * @method bool isStatus()
  * @method bool isVersion()
  * @method bool is_Messages()
  * @method this setMessage(mixed $value)
- * @method this setStaticStickers(Model.StaticStickers[] $value)
+ * @method this setStaticStickers(model.StaticStickers[] $value)
  * @method this setStatus(string $value)
  * @method this setVersion(mixed $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetMessage()
  * @method this unsetStaticStickers()
  * @method this unsetStatus()
@@ -32,6 +32,6 @@ class StickerAssetsResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         "version"         => "",
-        "static_stickers" => "Model.StaticStickers[]",
+        "static_stickers" => "model.StaticStickers[]",
     ]
 }

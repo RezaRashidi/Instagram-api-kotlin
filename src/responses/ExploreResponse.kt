@@ -8,7 +8,7 @@ import instagramAPI.Response
  * ExploreResponse.
  *
  * @method mixed getAutoLoadMoreEnabled()
- * @method Model.ExploreItem[] getItems()
+ * @method model.ExploreItem[] getItems()
  * @method string getMaxId()
  * @method mixed getMessage()
  * @method mixed getMoreAvailable()
@@ -16,7 +16,7 @@ import instagramAPI.Response
  * @method int getNumResults()
  * @method string getRankToken()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isAutoLoadMoreEnabled()
  * @method bool isItems()
  * @method bool isMaxId()
@@ -28,7 +28,7 @@ import instagramAPI.Response
  * @method bool isStatus()
  * @method bool is_Messages()
  * @method this setAutoLoadMoreEnabled(mixed $value)
- * @method this setItems(Model.ExploreItem[] $value)
+ * @method this setItems(model.ExploreItem[] $value)
  * @method this setMaxId(string $value)
  * @method this setMessage(mixed $value)
  * @method this setMoreAvailable(mixed $value)
@@ -36,7 +36,7 @@ import instagramAPI.Response
  * @method this setNumResults(int $value)
  * @method this setRankToken(string $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAutoLoadMoreEnabled()
  * @method this unsetItems()
  * @method this unsetMaxId()
@@ -52,7 +52,7 @@ class ExploreResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
         "num_results"            to "int",
         "auto_load_more_enabled" to "",
-        "items"                  to "Model.ExploreItem[]",
+        "items"                  to "model.ExploreItem[]",
         "more_available"         to "",
         "next_max_id"            to "string",
         "max_id"                 to "string",

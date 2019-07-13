@@ -8,17 +8,17 @@ import instagramAPI.Response
  * CreateHighlightResponse.
  *
  * @method mixed getMessage()
- * @method Model.Reel getReel()
+ * @method model.Reel getReel()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isReel()
  * @method bool isStatus()
  * @method bool is_Messages()
  * @method this setMessage(mixed $value)
- * @method this setReel(Model.Reel $value)
+ * @method this setReel(model.Reel $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetMessage()
  * @method this unsetReel()
  * @method this unsetStatus()
@@ -26,6 +26,6 @@ import instagramAPI.Response
  */
 class CreateHighlightResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
-        "reel" to "Model.Reel"
+        "reel" to "model.Reel"
     )
 }

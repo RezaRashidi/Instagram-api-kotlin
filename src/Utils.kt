@@ -289,7 +289,7 @@ object Utils{
      */
     fun buildMediaLocationJSON(location: Location): String{
 //        if (location !is Location) {
-//            throw IllegalArgumentException("The location must be an instance of \\instagramAPI\\responses\\Model\\Location.")
+//            throw IllegalArgumentException("The location must be an instance of \\instagramAPI\\responses\\model\\Location.")
 //        }
 
         // Forbid locations that came from Location::searchFacebook() and

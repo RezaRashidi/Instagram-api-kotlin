@@ -8,14 +8,14 @@ import instagramAPI.Response
  * UserFeedResponse.
  *
  * @method bool getAutoLoadMoreEnabled()
- * @method Model.Item[] getItems()
+ * @method model.Item[] getItems()
  * @method string getMaxId()
  * @method mixed getMessage()
  * @method bool getMoreAvailable()
  * @method string getNextMaxId()
  * @method int getNumResults()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isAutoLoadMoreEnabled()
  * @method bool isItems()
  * @method bool isMaxId()
@@ -26,14 +26,14 @@ import instagramAPI.Response
  * @method bool isStatus()
  * @method bool is_Messages()
  * @method this setAutoLoadMoreEnabled(bool $value)
- * @method this setItems(Model.Item[] $value)
+ * @method this setItems(model.Item[] $value)
  * @method this setMaxId(string $value)
  * @method this setMessage(mixed $value)
  * @method this setMoreAvailable(bool $value)
  * @method this setNextMaxId(string $value)
  * @method this setNumResults(int $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAutoLoadMoreEnabled()
  * @method this unsetItems()
  * @method this unsetMaxId()
@@ -47,7 +47,7 @@ import instagramAPI.Response
 class UserFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "items"                  => "Model.Item[]",
+        "items"                  => "model.Item[]",
         "num_results"            => "int",
         "more_available"         => "bool",
         "next_max_id"            => "string",

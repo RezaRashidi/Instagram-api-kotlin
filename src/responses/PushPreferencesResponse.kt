@@ -22,12 +22,12 @@ import instagramAPI.Response
  * @method mixed getNewFollower()
  * @method mixed getNotificationReminders()
  * @method mixed getPendingDirectShare()
- * @method Model.PushSettings[] getPushSettings()
+ * @method model.PushSettings[] getPushSettings()
  * @method mixed getReportUpdated()
  * @method string getStatus()
  * @method mixed getUserTagged()
  * @method mixed getViewCount()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isAds()
  * @method bool isAnnouncements()
  * @method bool isCommentLikes()
@@ -64,12 +64,12 @@ import instagramAPI.Response
  * @method this setNewFollower(mixed $value)
  * @method this setNotificationReminders(mixed $value)
  * @method this setPendingDirectShare(mixed $value)
- * @method this setPushSettings(Model.PushSettings[] $value)
+ * @method this setPushSettings(model.PushSettings[] $value)
  * @method this setReportUpdated(mixed $value)
  * @method this setStatus(string $value)
  * @method this setUserTagged(mixed $value)
  * @method this setViewCount(mixed $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAds()
  * @method this unsetAnnouncements()
  * @method this unsetCommentLikes()
@@ -95,7 +95,7 @@ import instagramAPI.Response
 class PushPreferencesResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "push_settings"                         => "Model.PushSettings[]",
+        "push_settings"                         => "model.PushSettings[]",
         "likes"                                 => "",
         "comments"                              => "",
         "comment_likes"                         => "",

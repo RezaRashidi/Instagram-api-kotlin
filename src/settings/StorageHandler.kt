@@ -2,7 +2,7 @@ package instagramAPI.settings
 
 import Fbns.Client.Auth.DeviceAuth
 import Fbns.Client.AuthInterface
-import instagramAPI.Exception.SettingsException
+import instagramAPI.exception.SettingsException
 import instagramAPI.Utils
 
 /**

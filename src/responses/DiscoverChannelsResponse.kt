@@ -8,12 +8,12 @@ import instagramAPI.Response
  * DiscoverChannelsResponse.
  *
  * @method mixed getAutoLoadMoreEnabled()
- * @method Model.Item[] getItems()
+ * @method model.Item[] getItems()
  * @method mixed getMessage()
  * @method mixed getMoreAvailable()
  * @method string getNextMaxId()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isAutoLoadMoreEnabled()
  * @method bool isItems()
  * @method bool isMessage()
@@ -22,12 +22,12 @@ import instagramAPI.Response
  * @method bool isStatus()
  * @method bool is_Messages()
  * @method this setAutoLoadMoreEnabled(mixed $value)
- * @method this setItems(Model.Item[] $value)
+ * @method this setItems(model.Item[] $value)
  * @method this setMessage(mixed $value)
  * @method this setMoreAvailable(mixed $value)
  * @method this setNextMaxId(string $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAutoLoadMoreEnabled()
  * @method this unsetItems()
  * @method this unsetMessage()
@@ -39,7 +39,7 @@ import instagramAPI.Response
 class DiscoverChannelsResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
         "auto_load_more_enabled" to "",
-        "items"                  to "Model.Item[]",
+        "items"                  to "model.Item[]",
         "more_available"         to "",
         "next_max_id"            to "string"
     )

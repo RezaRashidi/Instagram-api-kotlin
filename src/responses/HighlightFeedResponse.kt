@@ -12,10 +12,10 @@ import instagramAPI.Response
  * @method string getNextMaxId()
  * @method bool getShowEmptyState()
  * @method string getStatus()
- * @method Model.Story[] getStories()
- * @method Model.StoryTray[] getTray()
- * @method Model.StoryTvChannel getTvChannel()
- * @method Model._Message[] get_Messages()
+ * @method model.Story[] getStories()
+ * @method model.StoryTray[] getTray()
+ * @method model.StoryTvChannel getTvChannel()
+ * @method model._Message[] get_Messages()
  * @method bool isAutoLoadMoreEnabled()
  * @method bool isMessage()
  * @method bool isNextMaxId()
@@ -30,10 +30,10 @@ import instagramAPI.Response
  * @method this setNextMaxId(string $value)
  * @method this setShowEmptyState(bool $value)
  * @method this setStatus(string $value)
- * @method this setStories(Model.Story[] $value)
- * @method this setTray(Model.StoryTray[] $value)
- * @method this setTvChannel(Model.StoryTvChannel $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setStories(model.Story[] $value)
+ * @method this setTray(model.StoryTray[] $value)
+ * @method this setTvChannel(model.StoryTvChannel $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAutoLoadMoreEnabled()
  * @method this unsetMessage()
  * @method this unsetNextMaxId()
@@ -49,9 +49,9 @@ class HighlightFeedResponse : Response
     val JSON_PROPERTY_MAP = [
         "auto_load_more_enabled" => "bool",
         "next_max_id"            => "string",
-        "stories"                => "Model.Story[]",
+        "stories"                => "model.Story[]",
         "show_empty_state"       => "bool",
-        "tray"                   => "Model.StoryTray[]",
-        "tv_channel"             => "Model.StoryTvChannel",
+        "tray"                   => "model.StoryTray[]",
+        "tv_channel"             => "model.StoryTvChannel",
     ]
 }

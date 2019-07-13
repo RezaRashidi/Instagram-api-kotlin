@@ -12,10 +12,10 @@ import instagramAPI.Response
  * @method string getNextMaxId()
  * @method mixed getPageSize()
  * @method string getStatus()
- * @method Model.SuggestedUsers getSuggestedUsers()
+ * @method model.SuggestedUsers getSuggestedUsers()
  * @method int getTruncateFollowRequestsAtIndex()
- * @method Model.User[] getUsers()
- * @method Model._Message[] get_Messages()
+ * @method model.User[] getUsers()
+ * @method model._Message[] get_Messages()
  * @method bool isBigList()
  * @method bool isMessage()
  * @method bool isNextMaxId()
@@ -30,10 +30,10 @@ import instagramAPI.Response
  * @method this setNextMaxId(string $value)
  * @method this setPageSize(mixed $value)
  * @method this setStatus(string $value)
- * @method this setSuggestedUsers(Model.SuggestedUsers $value)
+ * @method this setSuggestedUsers(model.SuggestedUsers $value)
  * @method this setTruncateFollowRequestsAtIndex(int $value)
- * @method this setUsers(Model.User[] $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setUsers(model.User[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetBigList()
  * @method this unsetMessage()
  * @method this unsetNextMaxId()
@@ -46,8 +46,8 @@ import instagramAPI.Response
  */
 class FollowerAndFollowingResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
-        "users"                             to "Model.User[]",
-        "suggested_users"                   to "Model.SuggestedUsers",
+        "users"                             to "model.User[]",
+        "suggested_users"                   to "model.SuggestedUsers",
         "truncate_follow_requests_at_index" to "int",
         "next_max_id"                       to "string",
         "page_size"                         to "",

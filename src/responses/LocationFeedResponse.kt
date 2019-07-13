@@ -12,9 +12,9 @@ import instagramAPI.Response
  * @method string getNextMaxId()
  * @method int[] getNextMediaIds()
  * @method int getNextPage()
- * @method Model.Section[] getSections()
+ * @method model.Section[] getSections()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isMoreAvailable()
  * @method bool isNextMaxId()
@@ -28,9 +28,9 @@ import instagramAPI.Response
  * @method this setNextMaxId(string $value)
  * @method this setNextMediaIds(int[] $value)
  * @method this setNextPage(int $value)
- * @method this setSections(Model.Section[] $value)
+ * @method this setSections(model.Section[] $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetMessage()
  * @method this unsetMoreAvailable()
  * @method this unsetNextMaxId()
@@ -43,7 +43,7 @@ import instagramAPI.Response
 class LocationFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "sections"               => "Model.Section[]",
+        "sections"               => "model.Section[]",
         "next_page"              => "int",
         "more_available"         => "bool",
         "next_media_ids"         => "int[]",

@@ -7,24 +7,24 @@ import instagramAPI.Response
 /**
  * UserStoryFeedResponse.
  *
- * @method Model.Broadcast getBroadcast()
+ * @method model.Broadcast getBroadcast()
  * @method mixed getMessage()
- * @method Model.PostLiveItem getPostLiveItem()
- * @method Model.Reel getReel()
+ * @method model.PostLiveItem getPostLiveItem()
+ * @method model.Reel getReel()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isBroadcast()
  * @method bool isMessage()
  * @method bool isPostLiveItem()
  * @method bool isReel()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method this setBroadcast(Model.Broadcast $value)
+ * @method this setBroadcast(model.Broadcast $value)
  * @method this setMessage(mixed $value)
- * @method this setPostLiveItem(Model.PostLiveItem $value)
- * @method this setReel(Model.Reel $value)
+ * @method this setPostLiveItem(model.PostLiveItem $value)
+ * @method this setReel(model.Reel $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetBroadcast()
  * @method this unsetMessage()
  * @method this unsetPostLiveItem()
@@ -35,8 +35,8 @@ import instagramAPI.Response
 class UserStoryFeedResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "broadcast"      => "Model.Broadcast",
-        "reel"           => "Model.Reel",
-        "post_live_item" => "Model.PostLiveItem",
+        "broadcast"      => "model.Broadcast",
+        "reel"           => "model.Reel",
+        "post_live_item" => "model.PostLiveItem",
     ]
 }

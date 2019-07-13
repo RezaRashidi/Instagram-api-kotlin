@@ -3,7 +3,7 @@
 package instagramAPI.settings.Storage
 
 import instagramAPI.Constants
-import instagramAPI.Exception.SettingsException
+import instagramAPI.exception.SettingsException
 import instagramAPI.Settings.StorageInterface
 import instagramAPI.Utils
 

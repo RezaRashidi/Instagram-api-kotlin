@@ -7,13 +7,13 @@ package instagramAPI
  *
  * @method mixed getMessage()
  * @method string getStatus()
- * @method responses.Model._Message[] get_Messages()
+ * @method responses.model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isStatus()
  * @method bool is_Messages()
  * @method this setMessage(mixed value)
  * @method this setStatus(string value)
- * @method this set_Messages(responses.Model._Message[] value)
+ * @method this set_Messages(responses.model._Message[] value)
  * @method this unsetMessage()
  * @method this unsetStatus()
  * @method this unset_Messages()
@@ -47,7 +47,7 @@ open class Response{ //: AutoPropertyMapper() {
 		 * Known messages: "fb_needs_reauth", "vkontakte_needs_reauth",
 		 * "twitter_needs_reauth", "ameba_needs_reauth", "update_push_token".
 		 */
-		"_messages" to "responses.Model._Message[]")
+		"_messages" to "responses.model._Message[]")
 
 	/** @var HttpResponseInterface */
 	lateinit var httpResponse

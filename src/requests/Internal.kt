@@ -2,12 +2,12 @@ package instagramAPI.requests
 
 import GuzzleHttp.Psr7.LimitStream
 import GuzzleHttp.Psr7.Stream
-import instagramAPI.Exception.*
-import instagramAPI.Media.MediaDetails
-import instagramAPI.Media.Video.FFmpeg
-import instagramAPI.Media.Video.InstagramThumbnail
-import instagramAPI.Media.Video.VideoDetails
-import instagramAPI.Request.Metadata.Internal as InternalMetadata
+import instagramAPI.exception.*
+import instagramAPI.media.MediaDetails
+import instagramAPI.media.Video.FFmpeg
+import instagramAPI.media.Video.InstagramThumbnail
+import instagramAPI.media.Video.VideoDetails
+import instagramAPI.requests.Metadata.Internal as InternalMetadata
 import Winbox.Args
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
@@ -151,7 +151,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		var captionText = if (!externalMetadata["caption"].isBlank()) externalMetadata["caption"] else ""
 		/** @var string Accesibility caption to import for the media. */
         val altText = if (!externalMetadata["custom_accessibility_caption"].isBlank()) externalMetadata["custom_accessibility_caption"] else null
-		/** @var responses.Model.Location|null A Location object describing where
+		/** @var responses.model.Location|null A Location object describing where
 		 * the media was taken. */
         val location = if (!externalMetadata["location"].isBlank()) externalMetadata["location"] else null
 		/** @var array|null Array of story location sticker instructions. ONLY
@@ -518,7 +518,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		 * your video. ONLY USED IN STORY VIDEOS! TODO: Actually, it"s not even
 		 * implemented for stories. */
         val usertags = if(!externalMetadata["usertags"].isBlank() && targetFeed == Constants.FEED_STORY) externalMetadata["usertags"] else null
-		/** @var responses.Model.Location|null A Location object describing where
+		/** @var responses.model.Location|null A Location object describing where
 		 * the media was taken. */
 		val location = if(!externalMetadata["location"].isBlank()) externalMetadata["location"] else null
 		/** @var array|null Array of story location sticker instructions. ONLY
@@ -709,7 +709,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		// Available external metadata parameters:
 		/** @var string Caption to import for the album. */
 		var captionText = if(!externalMetadata["caption"].isBlank()) externalMetadata["caption"] else ""
-		/** @var responses.Model.Location|null A Location object describing where
+		/** @var responses.model.Location|null A Location object describing where
 		 * the album was taken. */
 		val location = if(externalMetadata["location"].isBlank()) externalMetadata["location"] else null
 
@@ -1195,7 +1195,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 		var seenAt = maxSeenAt - (3 * items.count()) // Start seenAt in the past.
 		for(item in items) {
 			if (!item instanceof Response.Model.Item) {
-				throw IllegalArgumentException("All story items must be instances of .instagramAPI.responses.Model.Item.")
+				throw IllegalArgumentException("All story items must be instances of .instagramAPI.responses.model.Item.")
 			}
 
 			// Raise "seenAt" if it"s somehow older than the item"s "takenAt".

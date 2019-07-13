@@ -2,7 +2,7 @@
 
 package instagramAPI.settings
 
-import instagramAPI.Exception.SettingsException
+import instagramAPI.exception.SettingsException
 import java.lang.System.getenv
 
 /**

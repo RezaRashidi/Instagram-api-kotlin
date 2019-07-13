@@ -10,9 +10,9 @@ import instagramAPI.Response
  * @method int getId()
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model.SystemControl getSystemControl()
- * @method Model.TraceControl getTraceControl()
- * @method Model._Message[] get_Messages()
+ * @method model.SystemControl getSystemControl()
+ * @method model.TraceControl getTraceControl()
+ * @method model._Message[] get_Messages()
  * @method bool isId()
  * @method bool isMessage()
  * @method bool isStatus()
@@ -22,9 +22,9 @@ import instagramAPI.Response
  * @method this setId(int $value)
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this setSystemControl(Model.SystemControl $value)
- * @method this setTraceControl(Model.TraceControl $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setSystemControl(model.SystemControl $value)
+ * @method this setTraceControl(model.TraceControl $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetId()
  * @method this unsetMessage()
  * @method this unsetStatus()
@@ -35,8 +35,8 @@ import instagramAPI.Response
 class LoomFetchConfigResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "system_control" => "Model.SystemControl",
-        "trace_control"  => "Model.TraceControl",
+        "system_control" => "model.SystemControl",
+        "trace_control"  => "model.TraceControl",
         "id"             => "int",
     ]
 }

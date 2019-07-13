@@ -2,7 +2,7 @@
 
 package instagramAPI.media.Constraints
 
-import instagramAPI.Media.ConstraintsInterface
+import instagramAPI.media.ConstraintsInterface
 
 /**
  * Instagram"s story media constraints.

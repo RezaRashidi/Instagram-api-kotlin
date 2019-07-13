@@ -1,6 +1,6 @@
 package instagramAPI.requests
 
-import instagramAPI.Exception.RequestHeadersTooLargeException
+import instagramAPI.exception.RequestHeadersTooLargeException
 import instagramAPI.Response
 import instagramAPI.Signatures
 import instagramAPI.Utils

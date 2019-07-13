@@ -8,7 +8,7 @@ import instagramAPI.Response
  * MediaCommentRepliesResponse.
  *
  * @method int getChildCommentCount()
- * @method Model.Comment[] getChildComments()
+ * @method model.Comment[] getChildComments()
  * @method bool getHasMoreHeadChildComments()
  * @method bool getHasMoreTailChildComments()
  * @method mixed getMessage()
@@ -16,9 +16,9 @@ import instagramAPI.Response
  * @method string getNextMinChildCursor()
  * @method int getNumHeadChildComments()
  * @method int getNumTailChildComments()
- * @method Model.Comment getParentComment()
+ * @method model.Comment getParentComment()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isChildCommentCount()
  * @method bool isChildComments()
  * @method bool isHasMoreHeadChildComments()
@@ -32,7 +32,7 @@ import instagramAPI.Response
  * @method bool isStatus()
  * @method bool is_Messages()
  * @method this setChildCommentCount(int $value)
- * @method this setChildComments(Model.Comment[] $value)
+ * @method this setChildComments(model.Comment[] $value)
  * @method this setHasMoreHeadChildComments(bool $value)
  * @method this setHasMoreTailChildComments(bool $value)
  * @method this setMessage(mixed $value)
@@ -40,9 +40,9 @@ import instagramAPI.Response
  * @method this setNextMinChildCursor(string $value)
  * @method this setNumHeadChildComments(int $value)
  * @method this setNumTailChildComments(int $value)
- * @method this setParentComment(Model.Comment $value)
+ * @method this setParentComment(model.Comment $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetChildCommentCount()
  * @method this unsetChildComments()
  * @method this unsetHasMoreHeadChildComments()
@@ -59,12 +59,12 @@ import instagramAPI.Response
 class MediaCommentRepliesResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "parent_comment"               => "Model.Comment",
+        "parent_comment"               => "model.Comment",
         /*
          * Number of child comments in this comment thread.
          */
         "child_comment_count"          => "int",
-        "child_comments"               => "Model.Comment[]",
+        "child_comments"               => "model.Comment[]",
         /*
          * When "has_more_tail_child_comments" is true, you can import the value
          * in "next_max_child_cursor" as "max_id" parameter to load up to

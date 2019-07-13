@@ -10,8 +10,8 @@ import instagramAPI.Response
  * @method mixed getMessage()
  * @method string getRequestId()
  * @method string getStatus()
- * @method Model.Location[] getVenues()
- * @method Model._Message[] get_Messages()
+ * @method model.Location[] getVenues()
+ * @method model._Message[] get_Messages()
  * @method bool isMessage()
  * @method bool isRequestId()
  * @method bool isStatus()
@@ -20,8 +20,8 @@ import instagramAPI.Response
  * @method this setMessage(mixed $value)
  * @method this setRequestId(string $value)
  * @method this setStatus(string $value)
- * @method this setVenues(Model.Location[] $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setVenues(model.Location[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetMessage()
  * @method this unsetRequestId()
  * @method this unsetStatus()
@@ -31,7 +31,7 @@ import instagramAPI.Response
 class LocationResponse : Response
 {
     val JSON_PROPERTY_MAP = [
-        "venues"     => "Model.Location[]",
+        "venues"     => "model.Location[]",
         "request_id" => "string",
     ]
 }

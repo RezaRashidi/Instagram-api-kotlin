@@ -9,11 +9,11 @@ import instagramAPI.Response
  *
  * @method int getBurstLikes()
  * @method string getLikeTs()
- * @method Model.User[] getLikers()
+ * @method model.User[] getLikers()
  * @method int getLikes()
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isBurstLikes()
  * @method bool isLikeTs()
  * @method bool isLikers()
@@ -23,11 +23,11 @@ import instagramAPI.Response
  * @method bool is_Messages()
  * @method this setBurstLikes(int $value)
  * @method this setLikeTs(string $value)
- * @method this setLikers(Model.User[] $value)
+ * @method this setLikers(model.User[] $value)
  * @method this setLikes(int $value)
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetBurstLikes()
  * @method this unsetLikeTs()
  * @method this unsetLikers()
@@ -41,6 +41,6 @@ class BroadcastLikeCountResponse : Response() {
         "like_ts"     to "string",
         "likes"       to "int",
         "burst_likes" to "int",
-        "likers"      to "Model.User[]"
+        "likers"      to "model.User[]"
     )
 }

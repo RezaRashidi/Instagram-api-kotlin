@@ -6,9 +6,9 @@ package instagramAPI
 //import GuzzleHttp.Cookie.CookieJar
 //import GuzzleHttp.Cookie.SetCookie
 //import GuzzleHttp.HandlerStack
-import instagramAPI.Exception.InstagramException
-import instagramAPI.Exception.LoginRequiredException
-import instagramAPI.Exception.ServerMessageThrower
+import instagramAPI.exception.InstagramException
+import instagramAPI.exception.LoginRequiredException
+import instagramAPI.exception.ServerMessageThrower
 import instagramAPI.Middleware.FakeCookies
 import instagramAPI.Middleware.ZeroRating
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
@@ -483,15 +483,15 @@ class Client
             // import API developer debugging? We"ll throw if class lacks property
             // definitions, or if they can"t be mapped as defined in the class
             // property map. But we"ll ignore missing properties in our custom
-            // UnpredictableKeys containers, since those ALWAYS lack keys. -)
+            // unpredictableKeys containers, since those ALWAYS lack keys. -)
             if (_parent.apiDeveloperDebug) {
                 // Perform manual analysis (so that we can intercept its analysis result).
                 var analysis = responseObject.exportClassAnalysis() // Never throws.
 
-                // Remove all "missing_definitions" errors for UnpredictableKeys containers.
+                // Remove all "missing_definitions" errors for unpredictableKeys containers.
                 // NOTE: We will keep any "bad_definitions" errors for them.
                 for ((className, x) in analysis.missing_definitions) {
-                    if (className.indexOf("..responses..Model..UnpredictableKeys..") !== false) {
+                    if (className.indexOf("..responses..model..unpredictableKeys..") !== false) {
                         unset(analysis.missing_definitions[className])
                     }
                 }

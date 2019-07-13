@@ -10,8 +10,8 @@ import instagramAPI.Response
  * @method mixed getMegaphone()
  * @method mixed getMessage()
  * @method string getStatus()
- * @method Model.User getUser()
- * @method Model._Message[] get_Messages()
+ * @method model.User getUser()
+ * @method model._Message[] get_Messages()
  * @method bool isMegaphone()
  * @method bool isMessage()
  * @method bool isStatus()
@@ -20,8 +20,8 @@ import instagramAPI.Response
  * @method this setMegaphone(mixed $value)
  * @method this setMessage(mixed $value)
  * @method this setStatus(string $value)
- * @method this setUser(Model.User $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this setUser(model.User $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetMegaphone()
  * @method this unsetMessage()
  * @method this unsetStatus()
@@ -32,6 +32,6 @@ class UserInfoResponse : Response
 {
     val JSON_PROPERTY_MAP = [
         "megaphone" => "",
-        "user"      => "Model.User",
+        "user"      => "model.User",
     ]
 }

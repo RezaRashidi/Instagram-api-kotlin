@@ -7,14 +7,14 @@ import instagramAPI.Response
 /**
  * AccountDetailsResponse.
  *
- * @method Model.AdsInfo getAdsInfo()
+ * @method model.AdsInfo getAdsInfo()
  * @method string getDateJoined()
- * @method Model.FormerUsernameInfo getFormerUsernameInfo()
+ * @method model.FormerUsernameInfo getFormerUsernameInfo()
  * @method mixed getMessage()
- * @method Model.PrimaryCountryInfo getPrimaryCountryInfo()
- * @method Model.SharedFollowerAccountsInfo getSharedFollowerAccountsInfo()
+ * @method model.PrimaryCountryInfo getPrimaryCountryInfo()
+ * @method model.SharedFollowerAccountsInfo getSharedFollowerAccountsInfo()
  * @method string getStatus()
- * @method Model._Message[] get_Messages()
+ * @method model._Message[] get_Messages()
  * @method bool isAdsInfo()
  * @method bool isDateJoined()
  * @method bool isFormerUsernameInfo()
@@ -23,14 +23,14 @@ import instagramAPI.Response
  * @method bool isSharedFollowerAccountsInfo()
  * @method bool isStatus()
  * @method bool is_Messages()
- * @method this setAdsInfo(Model.AdsInfo $value)
+ * @method this setAdsInfo(model.AdsInfo $value)
  * @method this setDateJoined(string $value)
- * @method this setFormerUsernameInfo(Model.FormerUsernameInfo $value)
+ * @method this setFormerUsernameInfo(model.FormerUsernameInfo $value)
  * @method this setMessage(mixed $value)
- * @method this setPrimaryCountryInfo(Model.PrimaryCountryInfo $value)
- * @method this setSharedFollowerAccountsInfo(Model.SharedFollowerAccountsInfo $value)
+ * @method this setPrimaryCountryInfo(model.PrimaryCountryInfo $value)
+ * @method this setSharedFollowerAccountsInfo(model.SharedFollowerAccountsInfo $value)
  * @method this setStatus(string $value)
- * @method this set_Messages(Model._Message[] $value)
+ * @method this set_Messages(model._Message[] $value)
  * @method this unsetAdsInfo()
  * @method this unsetDateJoined()
  * @method this unsetFormerUsernameInfo()
@@ -43,9 +43,9 @@ import instagramAPI.Response
 class AccountDetailsResponse : Response(){
     override val JSON_PROPERTY_MAP = mapOf(
         "date_joined"                   to "string",
-        "former_username_info"          to "Model.FormerUsernameInfo",
-        "primary_country_info"          to "Model.PrimaryCountryInfo",
-        "shared_follower_accounts_info" to "Model.SharedFollowerAccountsInfo",
-        "ads_info"                      to "Model.AdsInfo"
+        "former_username_info"          to "model.FormerUsernameInfo",
+        "primary_country_info"          to "model.PrimaryCountryInfo",
+        "shared_follower_accounts_info" to "model.SharedFollowerAccountsInfo",
+        "ads_info"                      to "model.AdsInfo"
     )
 }

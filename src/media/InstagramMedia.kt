@@ -3,9 +3,9 @@
 package instagramAPI.media
 
 import instagramAPI.Constants
-import instagramAPI.Media.Constraints.ConstraintsFactory
-import instagramAPI.Media.Geometry.Dimensions
-import instagramAPI.Media.Geometry.Rectangle
+import instagramAPI.media.Constraints.ConstraintsFactory
+import instagramAPI.media.Geometry.Dimensions
+import instagramAPI.media.Geometry.Rectangle
 import kotlin.math.*
 
 /**
