@@ -638,18 +638,16 @@ class StorageHandler {
 	 *
 	 * @return string
 	 */
-	protected fun _packJson(data) {
-		json = json_encode(data)
-		gzipped = base64_encode(zlib_encode(json, ZLIB_ENCODING_DEFLATE, 9))
+	protected fun _packJson(data): String {
+		val json: String = json_encode(data)
+		val gzipped: String = zlib_encode(json, ZLIB_ENCODING_DEFLATE, 9).toString().base64_encode()
 		// We must compare gzipped with double encoded JSON.
-		doubleJson = json_encode(json)
-		if (strlen(gzipped) < strlen(doubleJson)) {
-			serialized = "Z".gzipped
+		val doubleJson: String = json_encode(json)
+		return if (doubleJson.length > gzipped.length) {
+			"Z$gzipped"
 		} else {
-			serialized = "J".json
+			"J$json"
 		}
-
-		return serialized
 	}
 
 	/**

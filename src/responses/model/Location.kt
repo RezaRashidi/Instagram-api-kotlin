@@ -108,7 +108,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTimezone()
  * @method this unsetType()
  */
-class Location : AutoPropertyMapper {
+data class Location (
+    val name: String,
+    val external_id_source: String
+) {
     val JSON_PROPERTY_MAP = mapOf(
         "name"                 to "string",
         "external_id_source"   to "string",

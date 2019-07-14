@@ -210,7 +210,7 @@ class Request(private val parent: Instagram, private var url: String) {
 	 */
 	fun addParam(key: String, value: String): Request {
 
-		_params[key] = valueFa
+		_params[key] = value
 
 		return this
 	}

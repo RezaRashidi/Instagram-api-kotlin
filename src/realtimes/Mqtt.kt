@@ -738,27 +738,17 @@ class Mqtt : PersistentInterface
      * @param string $topic
      * @param string $payload
      */
-    protected fun _handleMessage(
-        $topic,
-        $payload)
-    {
-        this._logger.debug(
-            sprintf("Received a message from topic "%s"", $topic),
-            [base64_encode($payload)]
-        )
-        if (!isset(this._parsers[$topic])) {
-            this._logger.warning(
-                sprintf("No parser for topic "%s" found, skipping the message(s)", $topic),
-                [base64_encode($payload)]
-            )
-
+    protected fun _handleMessage( topic: String, payload: String){
+        this._logger.debug("Received a message from topic \"$topic\"",[payload.base64_encode()])
+        if (!isset(this._parsers[topic])) {
+            this._logger.warning("No parser for topic \"$topic\" found, skipping the message(s)",[payload.base64_encode()])
             return
         }
 
         try {
             $messages = this._parsers[$topic].parseMessage($topic, $payload)
-        } catch (.Exception $e) {
-            this._logger.warning($e.getMessage(), [$topic, base64_encode($payload)])
+        } catch (e: Exception) {
+            this._logger.warning(e.message, [topic, payload.base64_encode()])
 
             return
         }

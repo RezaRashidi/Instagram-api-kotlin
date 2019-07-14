@@ -1,7 +1,7 @@
 package instagramAPI
 
-import instagramAPI.responses.Model.Item
-import instagramAPI.responses.Model.Location
+import instagramAPI.responses.model.Item
+import instagramAPI.responses.model.Location
 import com.google.gson.Gson
 import instagramAPI.responses.model.Item
 import java.io.ByteArrayOutputStream
@@ -188,7 +188,7 @@ object Utils{
         // base64_encode(hash_hmac('sha256', $data, $key, true)) => base64hashHmacSha256(key, data)
         // base64_encode($data) => Base64.getEncoder().encodeToString(data.toByteArray())
         val codedData: String = base64hashHmacSha256(key, data)
-        return codedData + ".n" + Base64.getEncoder().encodeToString(data.toByteArray()) + ".n"
+        return codedData + ".n" + data.base64_encode() + ".n"
     }
 
     /**
@@ -209,7 +209,7 @@ object Utils{
 //        }
 
         var sec = 0.0
-        for ((offsetKey, v) in (timeStr.split(":")).reversed() ) {
+        for ( (offsetKey, v) in (timeStr.split(":")).reversed().withIndex() ) {
             if (offsetKey > 2) {
                 throw IllegalArgumentException("Invalid input \"$timeStr\" with too many components (max 3 is allowed \"HH:MM:SS\").")
             }
@@ -218,14 +218,14 @@ object Utils{
             if (v === "" || ! ("/^\\d+(?:\\.\\d+)?\$/".toRegex().matches(v)) ) {
                 throw IllegalArgumentException("Invalid non-digit or empty component \"$v\" in time string \"$timeStr\".")
             }
-            if (offsetKey !== 0 && v.indexOf(".") !== false) {
+            if (offsetKey !== 0 && v.indexOf(".") > 0) {
                 throw IllegalArgumentException("Unexpected period in time component \"$v\" in time string \"$timeStr\". Only the seconds-component supports milliseconds.")
             }
 
             // Convert the value to float and cap minutes/seconds to 60 (but
             // allow any number of hours).
-            var v = v as Float
-            var maxValue = if(offsetKey < 2) 60 else -1
+            val v = v as Float
+            val maxValue = if(offsetKey < 2) 60 else -1
             if (maxValue >= 0 && v > maxValue) {
                 throw IllegalArgumentException("Invalid time component \"${v.toInt()}\" (its allowed range is 0-$maxValue) in time string \"$timeStr\".")
             }
@@ -233,7 +233,7 @@ object Utils{
             // Multiply the current component of the "01:02:03" string with the
             // power of its offset. Hour-offset will be 2, Minutes 1 and Secs 0
             // and "pow(60, 0)" will return 1 which is why seconds work too.
-            sec += Math.pow(60.toDouble(), offsetKey) * v
+            sec += Math.pow(60.toDouble(), offsetKey.toDouble()) * v
         }
 
         return sec.toFloat()
@@ -318,7 +318,7 @@ object Utils{
         // Ensure that all keys are listed in the correct hash order.
         obj = reorderByHashCode(obj)
 
-        return json_encode(obj)
+        return gson(obj)
     }
 
     /**
@@ -1023,7 +1023,7 @@ object Utils{
      * @throws IllegalArgumentException If it"s missing keys or has invalid values.
      */
     fun throwIfInvalidAttachedMedia(attachedMedia){
-        val attachedMedia = reset(attachedMedia)
+        //val attachedMedia = reset(attachedMedia)
         val requiredKeys = arrayOf("media_id", "is_sticker")
 
         // Ensure that all keys exist.
@@ -1407,7 +1407,7 @@ object Utils{
 * adding code to this file
 *
 *
-* base64_encode(x) to Base64.getEncoder().encodeToString(x.toByteArray())
+* base64_encode(x) to x.base64_encode()
 * hash_hmac        to base64hashHmacSha256 (just one type)
 * floor()          to Math.floor
 * fmod()           to rem()
@@ -1533,6 +1533,10 @@ object Utils{
 
 	fun ungzip(content: ByteArray): String =
 		GZIPInputStream(content.inputStream()).bufferedReader(StandardCharsets.UTF_8).use { it.readText() }
+
+    fun String.base64_encode(): String {
+        return Base64.getEncoder().encodeToString(toByteArray())
+    }
 
 
 

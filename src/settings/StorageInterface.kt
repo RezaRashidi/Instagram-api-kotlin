@@ -66,8 +66,7 @@ interface StorageInterface
      *
      * @throws .instagramAPI.exception.SettingsException
      */
-    public fun openLocation(
-        array $locationConfig)
+    fun openLocation(locationConfig: List<Any>)
 
     /**
      * Whether the storage backend contains a specific user.
@@ -83,8 +82,7 @@ interface StorageInterface
      *
      * @return bool TRUE if user exists, otherwise FALSE.
      */
-    public fun hasUser(
-        $username)
+    fun hasUser(username: String): Boolean
 
     /**
      * Move the internal data for a username to a username.
@@ -102,9 +100,7 @@ interface StorageInterface
      *
      * @throws .instagramAPI.exception.SettingsException
      */
-    public fun moveUser(
-        $oldUsername,
-        $newUsername)
+    fun moveUser(oldUsername: String, newUsername: String)
 
     /**
      * Delete all internal data for a given username.
@@ -119,8 +115,7 @@ interface StorageInterface
      *
      * @throws .instagramAPI.exception.SettingsException
      */
-    public fun deleteUser(
-        $username)
+    fun deleteUser(username: String)
 
     /**
      * Open the data storage for a specific user.
@@ -143,8 +138,7 @@ interface StorageInterface
      *
      * @throws .instagramAPI.exception.SettingsException
      */
-    public fun openUser(
-        $username)
+    fun openUser(username: String)
 
     /**
      * Load all settings for the currently active user.
@@ -154,7 +148,7 @@ interface StorageInterface
      * @return array An array with all current key-value pairs for the user, or
      *               an empty array if no settings exist.
      */
-    public fun loadUserSettings()
+    fun loadUserSettings()
 
     /**
      * Save the settings for the currently active user.
@@ -168,9 +162,7 @@ interface StorageInterface
      *
      * @throws .instagramAPI.exception.SettingsException
      */
-    public fun saveUserSettings(
-        array $userSettings,
-        $triggerKey)
+    fun saveUserSettings(userSettings: Map<String, String>, triggerKey: String)
 
     /**
      * Whether the storage backend has cookies for the currently active user.
@@ -186,7 +178,7 @@ interface StorageInterface
      *
      * @return bool TRUE if cookies exist, otherwise FALSE.
      */
-    public fun hasUserCookies()
+    fun hasUserCookies(): Boolean
 
     /**
      * Get the cookiefile disk path (only if a file-based cookie jar is wanted).
@@ -202,7 +194,7 @@ interface StorageInterface
      *                     non-string value) if the BACKEND wants to
      *                     handle the cookies itself.
      */
-    public fun getUserCookiesFilePath()
+    fun getUserCookiesFilePath(): String?
 
     /**
      * (Non-cookiefile) Load all cookies for the currently active user.
@@ -217,7 +209,7 @@ interface StorageInterface
      * @return string|null A previously-stored raw cookie data string, or an
      *                     empty string/NULL if no data exists in the storage.
      */
-    public fun loadUserCookies()
+    fun loadUserCookies(): String?
 
     /**
      * (Non-cookiefile) Save all cookies for the currently active user.
@@ -231,8 +223,7 @@ interface StorageInterface
      *
      * @throws .instagramAPI.exception.SettingsException
      */
-    public fun saveUserCookies(
-        $rawData)
+    fun saveUserCookies(rawData: String)
 
     /**
      * Close the settings storage for the currently active user.
@@ -247,7 +238,7 @@ interface StorageInterface
      *
      * @throws .instagramAPI.exception.SettingsException
      */
-    public fun closeUser()
+    fun closeUser()
 
     /**
      * Disconnect from a storage location and perform necessary shutdown steps.
@@ -260,5 +251,5 @@ interface StorageInterface
      *
      * @throws .instagramAPI.exception.SettingsException
      */
-    public fun closeLocation()
+    fun closeLocation()
 }
