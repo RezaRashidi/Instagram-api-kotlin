@@ -3,27 +3,27 @@ package instagramAPI
 //import GuzzleHttp.Psr7.MultipartStream
 //import GuzzleHttp.Psr7.Request as HttpRequest
 //import GuzzleHttp.Psr7.Stream
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.DataPart
 import instagramAPI.exception.InstagramException
 import instagramAPI.exception.LoginRequiredException
 import com.github.kittinunf.fuel.core.FileDataPart
+import com.github.kittinunf.fuel.core.FuelManager
+import com.github.kittinunf.fuel.core.InlineDataPart
 import com.sun.deploy.net.HttpRequest
+import jdk.nashorn.internal.objects.NativeString.substring
 import java.io.File
+import java.sql.Array
 
 //import Psr.Http.Message.ResponseInterface as HttpResponseInterface
 //import Psr.Http.Message.StreamInterface
 //import com.sun.deploy.net.HttpRequest
 //import fun GuzzleHttp.Psr7.stream_for
-
 /**
  * Bridge between Instagram Client calls, the object mapper & response objects.
  */
-class Request(parent: Instagram, url: String) {
-	/**
-	 * The Instagram class instance we belong to.
-	 *
-	 * @var .instagramAPI.Instagram
-	 */
-	private  var _parent: Instagram = parent
+class Request(private val parent: Instagram, private var url: String) {
+
 
 	/**
 	 * Which API version to import for this request.
@@ -37,7 +37,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @var string
 	 */
-	private  var _url: String = url
+//	private  var url: String = url
 
 
 	/**
@@ -45,7 +45,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @var array
 	 */
-	private  var _params: MutableMap<String, String>
+	private var _params: MutableMap<String, String>
 
 
 	/**
@@ -53,35 +53,35 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @var array
 	 */
-	private  var _posts: MutableMap<String, String>
+	private var _posts: MutableMap<String, String>
 
 	/**
 	 * An array of POST params keys to exclude from signed body.
 	 *
 	 * @var string[]
 	 */
-	private  var _excludeSigned: MutableList<String>
+	private var _excludeSigned: MutableList<String>
 
 	/**
 	 * Raw request body.
 	 *
 	 * @var StreamInterface
 	 */
-	private var _body
+	private var _body: String? = ""
 
 	/**
 	 * An array of files to upload.
 	 *
 	 * @var array
 	 */
-	private  var _files: MutableMap<String, String>
+	private var _files: MutableMap<String, FileDataPart>
 
 	/**
 	 * An array of HTTP headers to add to the request.
 	 *
 	 * @var string[]
 	 */
-	private  var _headers: MutableMap<String, String>
+	private var _headers: MutableMap<String, String>
 
 	/**
 	 * Whether to add the default headers.
@@ -191,7 +191,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun setVersion(apiVersion:Int) :Request{
+	fun setVersion(apiVersion: Int): Request {
 		if (Constants.API_URLS.contains(apiVersion)) {
 			throw IllegalArgumentException("\"$apiVersion\" is not a supported API version.")
 		}
@@ -208,7 +208,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun addParam(key:String, value:String):Request {
+	fun addParam(key: String, value: String): Request {
 
 		_params[key] = valueFa
 
@@ -223,11 +223,11 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun addPost(key:String, value:String):Request {
+	fun addPost(key: String, value: String): Request {
 //	val valueFa = if (value is Boolean){	if (value) "true"  else "false" } else value
 
 
-			_posts[key] =value
+		_posts[key] = value
 
 
 		return this
@@ -244,7 +244,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun addUnsignedPost(key:String, value:String):Request {
+	fun addUnsignedPost(key: String, value: String): Request {
 		addPost(key, value)
 		_excludeSigned.add(key)
 
@@ -263,8 +263,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun addFile(key:String, filepath:String, filename:String? = null,  headers: Map<String,String> = mutableMapOf())
-			:Request{
+	fun addFile(key: String, filepath: String, filename: String): Request {
 		// Validate
 		if (!File(filepath).isFile) {
 			throw IllegalArgumentException("File \"$filepath\" does not exist.")
@@ -276,19 +275,16 @@ class Request(parent: Instagram, url: String) {
 //		if (filename === null) {
 //			filename = filepath
 //		}
-		var _filename = filename?.let { File(it).name }
+		//var _filename = filename?.let { File(it).name }
 
 
 		// Default headers.
-		var _headers = headers + mapOf(
-			"Content-Type"              to "application/octet-stream",
-			"Content-Transfer-Encoding" to "binary"
-		)
-		_files[key] = mapOf(
-			"filepath" to filepath,
-			"filename" to _filename,
-			"headers"  to _headers
-		)
+//
+//			"Content-Type"              to "application/octet-stream",
+//			"Content-Transfer-Encoding" to "binary"
+//
+		_files[key] = FileDataPart(File(filepath), filename = filename, contentType = "application/octet-stream")
+
 
 		return this
 	}
@@ -303,21 +299,21 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun addFileData(key: String, data: String, filename: String?, headers: Map<String, String> = mapOf()):Request {
-		var _filename = filename?.let { File(it).name }
-		// Default headers.
-		var _headers = headers + mapOf(
-			"Content-Type"              to "application/octet-stream",
-			"Content-Transfer-Encoding" to "binary"
-		)
-		_files[key] = mapOf(
-			"contents" to data,
-			"filename" to _filename,
-			"headers"  to _headers
-		)
-
-		return this
-	}
+//	fun addFileData(key: String, data: String, filename: String?, headers: Map<String, String> = mapOf()):Request {
+//		var _filename = filename?.let { File(it).name }
+//		// Default headers.
+//		var _headers = headers + mapOf(
+//			"Content-Type"              to "application/octet-stream",
+//			"Content-Transfer-Encoding" to "binary"
+//		)
+//		_files[key] = mapOf(
+//			"contents" to data,
+//			"filename" to _filename,
+//			"headers"  to _headers
+//		)
+//
+//		return this
+//	}
 
 	/**
 	 * Add custom header to request, overwriting any previous or default value.
@@ -336,7 +332,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun addHeader(key: String, value: String):Request {
+	fun addHeader(key: String, value: String): Request {
 		_headers[key] = value
 
 		return this
@@ -347,7 +343,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	private fun _addDefaultHeaders():Request {
+	private fun _addDefaultHeaders(): Request {
 		if (_defaultHeaders) {
 			_headers["X-IG-App-ID"] = Constants.FACEBOOK_ANALYTICS_APPLICATION_ID
 			_headers["X-IG-Capabilities"] = Constants.X_IG_Capabilities
@@ -369,7 +365,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun setAddDefaultHeaders(flag:Boolean) :Request{
+	fun setAddDefaultHeaders(flag: Boolean): Request {
 		_defaultHeaders = flag
 
 		return this
@@ -382,11 +378,11 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun setGuzzleOptions( guzzleOptions:List<String>) :Request{
-		_guzzleOptions = guzzleOptions
-
-		return this
-	}
+//	fun setGuzzleOptions( guzzleOptions:List<String>) :Request{
+//		_guzzleOptions = guzzleOptions
+//
+//		return this
+//	}
 
 	/**
 	 * Set raw request body.
@@ -395,11 +391,11 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun setBody( stream : StreamInterface):Request {
-		_body = stream
-
-		return this
-	}
+//	fun setBody( stream ):Request {
+//		_body = stream
+//
+//		return this
+//	}
 
 	/**
 	 * Set authorized request flag.
@@ -408,7 +404,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun setNeedsAuth(needsAuth:Boolean):Request {
+	fun setNeedsAuth(needsAuth: Boolean): Request {
 		_needsAuth = needsAuth
 
 		return this
@@ -421,7 +417,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun setSignedPost(signedPost: Boolean = true):Request {
+	fun setSignedPost(signedPost: Boolean = true): Request {
 		_signedPost = signedPost
 
 		return this
@@ -434,7 +430,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun setSignedGet(signedGet: Boolean = false):Request {
+	fun setSignedGet(signedGet: Boolean = false): Request {
 		_signedGet = signedGet
 
 		return this
@@ -447,7 +443,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun setIsMultiResponse(flag: Boolean = false) :Request{
+	fun setIsMultiResponse(flag: Boolean = false): Request {
 		_isMultiResponse = flag
 
 		return this
@@ -460,7 +456,7 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return self
 	 */
-	fun setIsBodyCompressed(isBodyCompressed: Boolean = false) :Request{
+	fun setIsBodyCompressed(isBodyCompressed: Boolean = false): Request {
 		_isBodyCompressed = isBodyCompressed
 
 		if (isBodyCompressed) {
@@ -482,26 +478,26 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return StreamInterface
 	 */
-	private fun _getStreamForFile( file:Map<String,String>):String {
-
-
-		when {
-			file.containsKey("contents") -> {
-				result = file["contents"] // Throws.
-			}
-			file.containsKey("filepath") -> {
-				val handle = File("filepath").readText()
-				if (handle.canRead()) {
-					throw RuntimeException("Could not open file \"${file["filepath"]}\" for reading.")
-				}
-				_handles.add(handle)
-				result = handle // Throws.
-			}
-			else -> throw IllegalArgumentException("No data for stream creation.")
-		}
-
-		return result
-	}
+//	private fun _getStreamForFile( file:Map<String,String>):String {
+//
+//
+//		when {
+//			file.containsKey("contents") -> {
+//				result = file["contents"] // Throws.
+//			}
+//			file.containsKey("filepath") -> {
+//				val handle = File("filepath").readText()
+//				if (handle.canRead()) {
+//					throw RuntimeException("Could not open file \"${file["filepath"]}\" for reading.")
+//				}
+//				_handles.add(handle)
+//				result = handle // Throws.
+//			}
+//			else -> throw IllegalArgumentException("No data for stream creation.")
+//		}
+//
+//		return result
+//	}
 
 	/**
 	 * Convert the request"s data into its HTTP POST multipart body contents.
@@ -511,51 +507,48 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return MultipartStream
 	 */
-	private fun _getMultipartBody() {
+	private fun _getMultipartBody(): kotlin.Array<DataPart> {
 		// Here is a tricky part: all form data (including files) must be ordered by hash code.
 		// So we are creating an index for building POST data.
-		val index = Utils.reorderByHashCode(_posts.apply {
-			putAll(_files)
-		})
-		// Build multipart elements using created index.
-		val element  = mutableMapOf<String, Any>()
-		val file: MutableList<String> = mutableListOf()
-		for((key, value) in index) {
-			if (!_files.contains(key)) {
-				element["name"] = key
-				element["contents"] = value
-			} else {
-				_files[key]?.let { file.add(it) }
-				element["name"] = key
-				element["contents"] = file// Throws.
-				element["filename"] = file.indexOf("filename")
-				element["headers"] = file.indexOf("headers")
-			}
+		val allUploads = _posts.keys.apply { addAll(_files.keys) }
 
+		val index = Utils.reorderByHashCode(allUploads).toList()
+		// Build multipart elements using created index.
+		val element = Array<DataPart>(index.size) { i: Int ->
+			if (_files.contains(index[i])) {
+				return@Array _files[index[i]]!!
+
+			} else {
+				return@Array InlineDataPart("name=${index[i]}&contents=${_posts[index[i]]}", name = index[i])
+
+
+			}
 		}
 
-		return FileDataPart(element)
+
+
+		return element
 	}
 
 	/**
 	 * Close opened file handles.
 	 */
-	private fun _closeHandles() {
-		if (!is_array(_handles) || !count(_handles)) {
-			return
-		}
-
-		for(handle in _handles) {
-			Utils.safe_fclose(handle)
-		}
-		_resetHandles()
-	}
+//	private fun _closeHandles() {
+//		if (!is_array(_handles) || !count(_handles)) {
+//			return
+//		}
+//
+//		for(handle in _handles) {
+//			Utils.safe_fclose(handle)
+//		}
+//		_resetHandles()
+//	}
 
 	/**
 	 * Reset opened handles array.
 	 */
 	private fun _resetHandles() {
-		_handles = []
+		_handles = mutableListOf<String>()
 	}
 
 	/**
@@ -565,11 +558,10 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return Stream
 	 */
-	private fun _getUrlencodedBody() {
+	private fun _getUrlencodedBody(): String {
 		_headers["Content-Type"] = Constants.CONTENT_TYPE
 
-		return stream_for( // Throws.
-			http_build_query(Utils.reorderByHashCode(_posts)))
+		return Utils.reorderByHashCode(_posts).toString().removePrefix("{").removeSuffix("}").replace(", ", "&")
 	}
 
 	/**
@@ -580,35 +572,45 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return StreamInterface|null The body stream if POST request otherwise NULL if GET request.
 	 */
-	private fun _getRequestBody() {
+
+
+	private fun _getRequestBodyPost(): String? {
 		// Check and return raw body stream if set.
 		if (_body !== null) {
-			if (_isBodyCompressed) {
-				return Utils.gzip(_body.toString())
-			}
+//			if (_isBodyCompressed) {
+//				return Utils.gzip(_body.toString())
+//			}
 
 			return _body
 		}
-		// We have no POST data and no files.
-		if (!count(_posts) && !count(_files)) {
-			return
-		}
+
 		// Sign POST data if needed.
 		if (_signedPost) {
 			_posts = Signatures.signData(_posts, _excludeSigned)
 		}
 		// Switch between multipart (at least one file) or urlencoded body.
-		val result = if (!count(_files)) {
-			_getUrlencodedBody() // Throws.
-		} else {
-			_getMultipartBody() // Throws.
-		}
+		val result = _getUrlencodedBody()     // Throws.
 
-		if (_isBodyCompressed) {
-			return Utils.gzip(result.toString())
-		}
+
+//		if (_isBodyCompressed) {
+//			return Utils.gzip(result.toString())
+//		}
 
 		return result
+	}
+
+	private fun _getRequestbodyUpload(): kotlin.Array<DataPart> {
+		// Sign POST data if needed.
+		if (_posts.isEmpty() && _files.isEmpty()) {
+			return null
+		}
+		if (_signedPost) {
+			_posts = Signatures.signData(_posts, _excludeSigned)
+		}
+		// Switch between multipart (at least one file) or urlencoded body.
+		return _getMultipartBody()     // Throws.
+
+
 	}
 
 	/**
@@ -620,10 +622,10 @@ class Request(parent: Instagram, url: String) {
 	 * @return HttpRequest
 	 */
 	private fun _buildHttpRequest() {
-		var endpoint = _url
+		var endpoint = url
 		// Determine the URI to import (it"s either relative to API, or a full URI).
-		if (strncmp(endpoint, "http:", 5) !== 0 && strncmp(endpoint, "https:", 6) !== 0) {
-			endpoint = Constants.API_URLS[_apiVersion.toString()] + endpoint
+		if (endpoint.substring(0, 6) !== "http:" && endpoint.substring(0, 7) !== "https:") {
+			endpoint = Constants.API_URLS[_apiVersion] + endpoint
 		}
 		// Check signed request params flag.
 		if (_signedGet) {
@@ -631,18 +633,26 @@ class Request(parent: Instagram, url: String) {
 		}
 		// Generate the final endpoint URL, by adding any custom query params.
 		if (_params.count() > 0) {
-			endpoint += (if (endpoint.indexOf("?")) === false "?" else "&")
-			 + http_build_query(Utils.reorderByHashCode(_params))
+			endpoint += if (endpoint.indexOf("?") == -1) "?" else "&"
+			+Utils.reorderByHashCode(_params).toString().removePrefix("{").removeSuffix("}").replace(", ", "&")
 		}
 		// Add default headers (if enabled).
 		_addDefaultHeaders()
 		/** @var StreamInterface|null postData The POST body stream is NULL if GET request instead. */
-		val postData = _getRequestBody() // Throws.
-		// Determine request method.
-		val method = if(postData !== null) "POST" else "GET"
+		val postData = _getRequestBodyPost().isNullOrEmpty() && _getRequestbodyUpload().isNullOrEmpty() // Throws.
+
+		if (postData) {
+
+		return	Fuel.get(url).header(_headers)
+		} else {
+
+		return	Fuel.upload(url).add(*_getRequestbodyUpload()).header(_headers)
+
+
+		}
 		// Build HTTP request object.
-		return HttpRequest( // Throws (they didn"t document that properly).
-			method, endpoint, _headers, postData)
+
+
 	}
 
 	/**
@@ -656,7 +666,7 @@ class Request(parent: Instagram, url: String) {
 	private fun _throwIfNotLoggedIn() {
 		// Check the cached login state. May not reflect what will happen on the
 		// server. But it"s the best we can check without trying the actual request!
-		if (!_parent.isMaybeLoggedIn) {
+		if (!parent.isMaybeLoggedIn) {
 			throw LoginRequiredException("User not logged in. Please call login() and then try again.")
 		}
 	}
@@ -681,7 +691,7 @@ class Request(parent: Instagram, url: String) {
 			_resetHandles()
 
 			try {
-				_httpResponse = _parent.client.api( // Throws.
+				_httpResponse = parent.client.api( // Throws.
 					_buildHttpRequest(), // Throws.
 					_guzzleOptions)
 			} finally {
@@ -731,10 +741,10 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return mixed
 	 */
-	fun getDecodedResponse(assoc:Boolean = true) {
+	fun getDecodedResponse(assoc: Boolean = true) {
 		// Important: Special JSON decoder.
 		return Client.api_body_decode(getRawResponse(), // Throws.
-		                               assoc)
+		                              assoc)
 	}
 
 	/**
@@ -748,9 +758,9 @@ class Request(parent: Instagram, url: String) {
 	 *
 	 * @return responses The provided responseObject with all JSON properties filled.
 	 */
-	fun getResponse(responseObject: Response):responseObject {
+	fun getResponse(responseObject: Response): responseObject {
 		// Check for API response success and put its response in the object.
-		_parent.client.mapServerResponse( // Throws.
+		parent.client.mapServerResponse( // Throws.
 			responseObject, getRawResponse(), // Throws.
 			getHttpResponse() // Throws.
 		)

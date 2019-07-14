@@ -12,6 +12,8 @@ import instagramAPI.exception.ServerMessageThrower
 import instagramAPI.Middleware.FakeCookies
 import instagramAPI.Middleware.ZeroRating
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
+import instagramAPI.middleware.FakeCookies
+import instagramAPI.middleware.ZeroRating
 
 //import LazyJsonMapper.exception.LazyJsonMapperException
 //import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time

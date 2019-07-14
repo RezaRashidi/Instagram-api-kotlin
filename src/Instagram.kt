@@ -182,41 +182,41 @@ class Instagram : ExperimentsInterface {
 	/** @var Request.Account Collection of Account related funs. */
 	lateinit var account: Account
 	/** @var Request.Business Collection of Business related funs. */
-	lateinit var business: instagramAPI.Request.Business
+	lateinit var business: instagramAPI.requests.Business
 	/** @var Request.Collection Collection of Collections related funs. */
-	lateinit var collection: instagramAPI.Request.Collection
+	lateinit var collection: instagramAPI.requests.Collection
 	/** @var Request.Creative Collection of Creative related funs. */
-	lateinit var creative: instagramAPI.Request.Creative
+	lateinit var creative: instagramAPI.requests.Creative
 	/** @var Request.Direct Collection of Direct related funs. */
-	lateinit var direct: instagramAPI.Request.Direct
+	lateinit var direct: instagramAPI.requests.Direct
 	/** @var Request.Discover Collection of Discover related funs. */
-	lateinit var discover: instagramAPI.Request.Discover
+	lateinit var discover: instagramAPI.requests.Discover
 	/** @var Request.Hashtag Collection of Hashtag related funs. */
-	lateinit var hashtag: instagramAPI.Request.Hashtag
+	lateinit var hashtag: instagramAPI.requests.Hashtag
 	/** @var Request.Highlight Collection of Highlight related funs. */
-	lateinit var highlight: instagramAPI.Request.Highlight
+	lateinit var highlight: instagramAPI.requests.Highlight
 	/** @var Request.TV Collection of Instagram TV funs. */
-	lateinit var tv: instagramAPI.Request.TV
+	lateinit var tv: instagramAPI.requests.TV
 	/** @var Request.Internal Collection of Internal (non-public) funs. */
-	lateinit var internal: instagramAPI.Request.Internal
+	lateinit var internal: instagramAPI.requests.Internal
 	/** @var Request.Live Collection of Live related funs. */
-	lateinit var live: instagramAPI.Request.Live
+	lateinit var live: instagramAPI.requests.Live
 	/** @var Request.Location Collection of Location related funs. */
-	lateinit var location: instagramAPI.Request.Location
+	lateinit var location: instagramAPI.requests.Location
 	/** @var Request.media Collection of media related funs. */
-	lateinit var media: instagramAPI.Request.Media
+	lateinit var media: instagramAPI.requests.Media
 	/** @var Request.People Collection of People related funs. */
-	lateinit var people: instagramAPI.Request.People
+	lateinit var people: instagramAPI.requests.People
 	/** @var Request.pushs Collection of pushs related funs. */
-	lateinit var push: instagramAPI.Request.Push
+	lateinit var push: instagramAPI.requests.Push
 	/** @var Request.Shopping Collection of Shopping related funs. */
-	lateinit var shopping: instagramAPI.Request.Shopping
+	lateinit var shopping: instagramAPI.requests.Shopping
 	/** @var Request.Story Collection of Story related funs. */
-	lateinit var story: instagramAPI.Request.Story
+	lateinit var story: instagramAPI.requests.Story
 	/** @var Request.Timeline Collection of Timeline related funs. */
-	lateinit var timeline: instagramAPI.Request.Timeline
+	lateinit var timeline: instagramAPI.requests.Timeline
 	/** @var Request.Usertag Collection of Usertag related funs. */
-	lateinit var usertag: instagramAPI.Request.Usertag
+	lateinit var usertag: instagramAPI.requests.Usertag
 
 	/**
 	 *  valructor.
@@ -275,24 +275,24 @@ class Instagram : ExperimentsInterface {
 		// Load all fun collections.
 
 		account = Account(this)
-		business = instagramAPI.Request.Business(this)
-		collection = instagramAPI.Request.Collection(this)
-		creative = instagramAPI.Request.Creative(this)
-		direct = instagramAPI.Request.Direct(this)
-		discover = instagramAPI.Request.Discover(this)
-		hashtag = instagramAPI.Request.Hashtag(this)
-		highlight = instagramAPI.Request.Highlight(this)
-		tv = instagramAPI.Request.TV(this)
-		internal = instagramAPI.Request.Internal(this)
-		live = instagramAPI.Request.Live(this)
-		location = instagramAPI.Request.Location(this)
-		media = instagramAPI.Request.Media(this)
-		people = instagramAPI.Request.People(this)
-		push = instagramAPI.Request.Push(this)
-		shopping = instagramAPI.Request.Shopping(this)
-		story = instagramAPI.Request.Story(this)
-		timeline = instagramAPI.Request.Timeline(this)
-		usertag = instagramAPI.Request.Usertag(this)
+		business = instagramAPI.requests.Business(this)
+		collection = instagramAPI.requests.Collection(this)
+		creative = instagramAPI.requests.Creative(this)
+		direct = instagramAPI.requests.Direct(this)
+		discover = instagramAPI.requests.Discover(this)
+		hashtag = instagramAPI.requests.Hashtag(this)
+		highlight = instagramAPI.requests.Highlight(this)
+		tv = instagramAPI.requests.TV(this)
+		internal = instagramAPI.requests.Internal(this)
+		live = instagramAPI.requests.Live(this)
+		location = instagramAPI.requests.Location(this)
+		media = instagramAPI.requests.Media(this)
+		people = instagramAPI.requests.People(this)
+		push = instagramAPI.requests.Push(this)
+		shopping = instagramAPI.requests.Shopping(this)
+		story = instagramAPI.requests.Story(this)
+		timeline = instagramAPI.requests.Timeline(this)
+		usertag = instagramAPI.requests.Usertag(this)
 
 		// Configure the settings storage and network client.
 		val self = this  //Todo: maybe this is not to copy of the class

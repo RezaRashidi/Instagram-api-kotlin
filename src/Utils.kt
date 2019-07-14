@@ -3,6 +3,7 @@ package instagramAPI
 import instagramAPI.responses.Model.Item
 import instagramAPI.responses.Model.Location
 import com.google.gson.Gson
+import instagramAPI.responses.model.Item
 import java.io.ByteArrayOutputStream
 import java.nio.charset.StandardCharsets
 import java.util.*
@@ -123,23 +124,22 @@ object Utils{
      *
      * @return array
      */
-    fun reorderByHashCode(data: Map<String, String>): Map<String, String>{
+    fun reorderByHashCode(data: Set<String>): Set<String>{
+        val hashCodes = mutableMapOf<String, Int>()
+        for (key in data) {
+            hashCodes[key] = hashCode(key)
+        }
+        data.toSortedSet(compareBy {
+            hashCodes[it]
+        })
+
+        return data
+    }
+    fun reorderByHashCode(data: Map<String,String>): Map<String,String>{
         val hashCodes = mutableMapOf<String, Int>()
         for ((key,value) in data) {
             hashCodes[key] = hashCode(key)
         }
-
-//        uksort(data, fun (a, b) import (hashCodes) {
-//            var a = hashCodes[a]
-//            var b = hashCodes[b]
-//            if (a < b) {
-//                return -1
-//            } else if (a > b) {
-//                return 1
-//            } else {
-//                return 0
-//            }
-//        })
         data.toSortedMap(compareBy {
             hashCodes[it]
         })
