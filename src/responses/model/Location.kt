@@ -110,50 +110,73 @@ import instagramAPI.AutoPropertyMapper
  */
 data class Location (
     val name: String,
-    val external_id_source: String
+    val external_id_source: String,
+    val external_source: String,
+    val address: String,
+    val lat: Float,
+    val lng: Float,
+    val external_id: String,
+    val facebook_places_id: String,
+    val city: String,
+    val pk: String,
+    val short_name: String,
+    val facebook_events_id: String,
+    val start_time: String,
+    val end_time: String,
+    val location_dict: Location,
+    val type: String,
+    val profile_pic_url: String,
+    val profile_pic_username: String,
+    val time_granularity: String,
+    val timezone: String,
+    val country: Int,
+    val created_at: String,
+    val event_category: Int,
+    val place_fbid: String,
+    val place_name: String
 ) {
-    val JSON_PROPERTY_MAP = mapOf(
-        "name"                 to "string",
-        "external_id_source"   to "string",
-        "external_source"      to "string",
-        "address"              to "string",
-        "lat"                  to "float",
-        "lng"                  to "float",
-        "external_id"          to "string",
-        "facebook_places_id"   to "string",
-        "city"                 to "string",
-        "pk"                   to "string",
-        "short_name"           to "string",
-        "facebook_events_id"   to "string",
-        "start_time"           to "",
-        "end_time"             to "",
-        "location_dict"        to "Location",
-        "type"                 to "",
-        "profile_pic_url"      to "string",
-        "profile_pic_username" to "string",
-        "time_granularity"     to "",
-        "timezone"             to "",
-        /*
-         * Country number such as int(398), but it has no relation to actual
-         * country codes, so the number is useless...
-         */
-        "country"              to "int",
-        /*
-         * Regular unix timestamp of when the location was created.
-         */
-        "created_at"           to "string",
-        /*
-         * Some kind of internal number to signify what type of event a special
-         * location (such as a festival) is. We"ve only seen this with int(0).
-         */
-        "event_category"       to "int",
-        /*
-         * 64-bit integer with the facebook places ID for the location.
-         */
-        "place_fbid"           to "string",
-        /*
-         * Human-readable name of the facebook place for the location.
-         */
-        "place_name"           to "string"
-    )
+//    val JSON_PROPERTY_MAP = mapOf(
+//        "name"                 to "string",
+//        "external_id_source"   to "string",
+//        "external_source"      to "string",
+//        "address"              to "string",
+//        "lat"                  to "float",
+//        "lng"                  to "float",
+//        "external_id"          to "string",
+//        "facebook_places_id"   to "string",
+//        "city"                 to "string",
+//        "pk"                   to "string",
+//        "short_name"           to "string",
+//        "facebook_events_id"   to "string",
+//        "start_time"           to "",
+//        "end_time"             to "",
+//        "location_dict"        to "Location",
+//        "type"                 to "",
+//        "profile_pic_url"      to "string",
+//        "profile_pic_username" to "string",
+//        "time_granularity"     to "",
+//        "timezone"             to "",
+//        /*
+//         * Country number such as int(398), but it has no relation to actual
+//         * country codes, so the number is useless...
+//         */
+//        "country"              to "int",
+//        /*
+//         * Regular unix timestamp of when the location was created.
+//         */
+//        "created_at"           to "string",
+//        /*
+//         * Some kind of internal number to signify what type of event a special
+//         * location (such as a festival) is. We"ve only seen this with int(0).
+//         */
+//        "event_category"       to "int",
+//        /*
+//         * 64-bit integer with the facebook places ID for the location.
+//         */
+//        "place_fbid"           to "string",
+//        /*
+//         * Human-readable name of the facebook place for the location.
+//         */
+//        "place_name"           to "string"
+//    )
 }
