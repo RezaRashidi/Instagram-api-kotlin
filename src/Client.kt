@@ -9,11 +9,10 @@ package instagramAPI
 import instagramAPI.exception.InstagramException
 import instagramAPI.exception.LoginRequiredException
 import instagramAPI.exception.ServerMessageThrower
-import instagramAPI.Middleware.FakeCookies
-import instagramAPI.Middleware.ZeroRating
-import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
 import instagramAPI.middleware.FakeCookies
 import instagramAPI.middleware.ZeroRating
+import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
+
 
 //import LazyJsonMapper.exception.LazyJsonMapperException
 //import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
@@ -34,7 +33,7 @@ import instagramAPI.middleware.ZeroRating
  * @author mgp25: Founder, Reversing, Project Leader (https://github.com/mgp25)
  * @author SteveJobzniak (https://github.com/SteveJobzniak)
  */
-class Client
+class Client(val parent:Instagram)
 {
     /**
      * How frequently we"re allowed to auto-save the cookie jar, in seconds.
@@ -43,12 +42,6 @@ class Client
      */
     val COOKIE_AUTOSAVE_INTERVAL = 45
 
-    /**
-     * The Instagram class instance we belong to.
-     *
-     * @var .instagramAPI.Instagram
-     */
-    protected var _parent: Instagram
 
     /**
      * What user agent to identify our client as.
@@ -124,7 +117,7 @@ class Client
      */
     private var _resetConnection: Boolean
 
-//    private var _parent: Instagram
+//    private var parent: Instagram
 //    private var _verifySSL: Instagram
 
 
@@ -133,9 +126,8 @@ class Client
      *
      * @param .instagramAPI.Instagram $parent
      */
-    constructor(parent:Instagram):this
-    {
-         _parent = parent
+    init{
+
 
         // Defaults.
         _verifySSL = true
@@ -144,14 +136,14 @@ class Client
         // Create a default handler stack with Guzzle"s auto-selected "best
         // possible transfer handler for the user"s system", and with all of
         // Guzzle"s default middleware (cookie jar support, etc).
-        var stack = HandlerStack.create()
+        //var stack = HandlerStack.create()
 
         // Create our cookies middleware and add it to the stack.
-        _fakeCookies = FakeCookies()
-        stack.push(_fakeCookies, "fake_cookies")
+        _fakeCookies = FakeCookies
+        //stack.push(_fakeCookies, "fake_cookies")
 
-        _zeroRating = ZeroRating()
-        stack.push(_zeroRating, "zero_rewrite")
+        _zeroRating = ZeroRating
+      //  stack.push(_zeroRating, "zero_rewrite")
 
         // Default request options (immutable after client creation).
         _guzzleClient = GuzzleClient(
@@ -184,7 +176,7 @@ class Client
      */
     fun updateFromCurrentSettings(resetCookieJar: Boolean = false){
         // Update our internal client state from the user"s settings.
-        _userAgent = _parent.device.getUserAgent()
+        _userAgent = parent.device.getUserAgent()
         loadCookieJar(resetCookieJar)
 
         // Verify that the jar contains a non-expired csrftoken for the API
@@ -193,11 +185,11 @@ class Client
         // these checks succeed, the cookie may still not be valid. It"s just a
         // preliminary check to detect definitely-invalid session cookies!
         if (this.getToken() === null) {
-            _parent.isMaybeLoggedIn = false
+            parent.isMaybeLoggedIn = false
         }
 
         // Load rewrite rules (if any).
-        zeroRating().update(_parent.settings.getRewriteRules())
+        zeroRating().update(parent.settings.getRewriteRules())
     }
 
     /**
@@ -213,11 +205,11 @@ class Client
 
         // Delete all current cookies from the storage if this is a reset.
         if (resetCookieJar) {
-            _parent.settings.setCookies("")
+            parent.settings.setCookies("")
         }
 
         // Get all cookies for the currently active user.
-        var cookieData = _parent.settings.getCookies()
+        var cookieData = parent.settings.getCookies()
 
         // Attempt to restore the cookies, otherwise create a new, empty jar.
         var restoredCookies = if(cookieData is String) @json_decode(cookieData, true) else null
@@ -323,7 +315,7 @@ class Client
     fun saveCookieJar(){
         // Tell the settings storage to persist the latest cookies.
         val newCookies = getCookieJarAsJSON()
-        _parent.settings.setCookies(newCookies)
+        parent.settings.setCookies(newCookies)
 
         // Reset the "last saved" timestamp to the current time.
         _cookieJarLastSaved = time()
@@ -437,7 +429,7 @@ class Client
         Debug.printHttpCode(response.getStatusCode(), bytes)
 
         // Display the actual API response body.
-        Debug.printResponse(responseBody, _parent.truncatedDebug)
+        Debug.printResponse(responseBody, parent.truncatedDebug)
     }
 
     /**
@@ -486,7 +478,7 @@ class Client
             // definitions, or if they can"t be mapped as defined in the class
             // property map. But we"ll ignore missing properties in our custom
             // unpredictableKeys containers, since those ALWAYS lack keys. -)
-            if (_parent.apiDeveloperDebug) {
+            if (parent.apiDeveloperDebug) {
                 // Perform manual analysis (so that we can intercept its analysis result).
                 var analysis = responseObject.exportClassAnalysis() // Never throws.
 
@@ -566,7 +558,7 @@ class Client
                 // ensures that users with various retry-algorithms won"t hammer
                 // their server. When this flag is false, ALL further attempts
                 // at AUTHENTICATED requests will be aborted by our library.
-                _parent.isMaybeLoggedIn = false
+                parent.isMaybeLoggedIn = false
 
                 throw e // Re-throw.
             }
@@ -712,7 +704,7 @@ class Client
         var uploadedBody: String?
 
         // Debugging (must be shown before possible decoding error).
-        if (_parent.debug!! && (libraryOptions["noDebug"].isBlank() || !libraryOptions["noDebug"])) {
+        if (parent.debug!! && (libraryOptions["noDebug"].isBlank() || !libraryOptions["noDebug"])) {
             // Determine whether we should display the contents of the UPLOADED body.
             if (!(libraryOptions["debugUploadedBody"].isBlank()) && libraryOptions["debugUploadedBody"]) {
                 uploadedBody = request.getBody().toString()

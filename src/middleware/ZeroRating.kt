@@ -8,7 +8,7 @@ import Psr.Http.Message.RequestInterface
 /**
  * Zero rating rewrite middleware.
  */
-class ZeroRating
+object ZeroRating
 {
     /**
      * Default rewrite rules.
@@ -24,12 +24,12 @@ class ZeroRating
      *
      * @var array
      */
-    private lateinit var _rules: Array
+    private lateinit var _rules: MutableMap<String,String>
 
     /**
      * Constructor.
      */
-    fun __construct(){
+    init{
         reset()
     }
 
@@ -45,12 +45,12 @@ class ZeroRating
      *
      * @param array $rules
      */
-    fun update(rules: Array = arrayOf()){
-        _rules = []
+    fun update(rules: MutableMap<String,String> = mutableMapOf()){
+        this._rules = mutableMapOf()
         for ((from, to) in rules) {
             val regex = "#{$from}#"
-            var test = @preg_match(regex, "")
-            if (test === false) {
+            val test = regex.toRegex().matches("")
+            if (!test ) {
                 continue
             }
             _rules[regex] = strtr(to, (

@@ -5,6 +5,7 @@ package instagramAPI
 //import GuzzleHttp.Psr7.Stream
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.DataPart
+
 import instagramAPI.exception.InstagramException
 import instagramAPI.exception.LoginRequiredException
 import com.github.kittinunf.fuel.core.FileDataPart
@@ -621,7 +622,7 @@ class Request(private val parent: Instagram, private var url: String) {
 	 *
 	 * @return HttpRequest
 	 */
-	private fun _buildHttpRequest() {
+	private fun _buildHttpRequest():com.github.kittinunf.fuel.core.Request {
 		var endpoint = url
 		// Determine the URI to import (it"s either relative to API, or a full URI).
 		if (endpoint.substring(0, 6) !== "http:" && endpoint.substring(0, 7) !== "https:") {
