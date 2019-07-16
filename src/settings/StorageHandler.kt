@@ -4,6 +4,7 @@ import Fbns.Client.Auth.DeviceAuth
 import Fbns.Client.AuthInterface
 import instagramAPI.exception.SettingsException
 import instagramAPI.Utils
+import kotlin.random.Random
 
 /**
  * Advanced, modular settings storage engine.
@@ -434,32 +435,33 @@ class StorageHandler {
 	 *
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
-	public fun setCookies(rawData) {
-		this._throwIfNoActiveUser()
-		this._throwIfNotString(rawData)
+	fun setCookies(rawData: String) {
+		_throwIfNoActiveUser()
+		_throwIfNotString(rawData)
 
-		if (this._cookiesFilePath === null) { // Backend storage.
-			this._storage.saveUserCookies(rawData)
+		if (_cookiesFilePath === null) { // Backend storage.
+			_storage.saveUserCookies(rawData)
 		} else { // Cookiefile on disk.
-			if (strlen(rawData)) { // Update cookies (value is non-empty).
+			if (rawData.isNotEmpty()) { // Update cookies (value is non-empty).
 				// Perform an atomic diskwrite, which prevents accidental
 				// truncation if the script is ever interrupted mid-write.
-				this._createCookiesFileDirectory() // Ensures dir exists.
-				timeout = 5
-				init = time()
-				while (!written = Utils::atomicWrite(this._cookiesFilePath, rawData)) {
-					usleep(mt_rand(400000, 600000))  // 0.4-0.6 sec
-					if (time() - init > timeout) {
+				_createCookiesFileDirectory() // Ensures dir exists.
+				val timeout = 5
+				val init = System.currentTimeMillis()/1000
+				val written: Int = Utils.atomicWrite(_cookiesFilePath, rawData)
+				while (written > 0 ) {
+					usleep( Random.nextInt(400000, 600000) )  // 0.4-0.6 sec
+					if ( System.currentTimeMillis()/1000 - init > timeout) {
 						break
 					}
 				}
-				if (written === false) {
-					throw SettingsException(sprintf("The " % s" cookie file is not writable.", this._cookiesFilePath))
+				if (written === -1) {
+					throw SettingsException("The \"$_cookiesFilePath\" cookie file is not writable.")
 				}
 			} else { // Delete cookies (empty string).
 				// Delete any existing cookie jar since the data is empty.
 				if (is_file(this._cookiesFilePath) && !@unlink(this._cookiesFilePath)) {
-					throw SettingsException(sprintf("Unable to delete the " % s" cookie file.", this._cookiesFilePath))
+					throw SettingsException("Unable to delete the \"$_cookiesFilePath\" cookie file.")
 				}
 			}
 		}
@@ -658,39 +660,36 @@ class StorageHandler {
 	 *
 	 * @return array|object
 	 */
-	protected fun _unpackJson(packed, assoc = true) {
+	protected fun _unpackJson(packed: String, assoc: Boolean = true) {
 		if (packed === null || packed === "") {
-			return assoc ? [] : .stdClass()
+			return if (assoc) [] else .stdClass()
 		}
-		format = packed[0]
-		packed = substr(packed, 1)
+		val format = packed[0]
+		packed = packed.substring(1)
 
 		try {
-			switch(format) {
-				case "Z":
-				packed = base64_decode(packed, true)
-				if (packed === false) {
-					throw.RuntimeException("Invalid Base64 encoded string.")
+			when (format) {
+				'Z' -> {
+					packed = base64_decode(packed, true)
+					if (packed === false) {
+						throw RuntimeException("Invalid Base64 encoded string.")
+					}
+					json = @zlib_decode(packed) if (json === false) {
+						throw RuntimeException("Invalid zlib encoded string.")
+					}
 				}
-				json = @zlib_decode(packed) if (json === false) {
-					throw.RuntimeException("Invalid zlib encoded string.")
-				}
-				break
-				case "J":
-				json = packed
-				break
-				default:
-				throw.RuntimeException("Invalid packed type.")
+				'J'  -> json = packed
+				else -> throw RuntimeException("Invalid packed type.")
 			}
-			data = json_decode(json, assoc)
+			var data = json_decode(json, assoc)
 			if (assoc && !is_array(data)) {
-				throw.RuntimeException("JSON is not an array.")
+				throw RuntimeException("JSON is not an array.")
 			}
 			if (!assoc && !is_object(data)) {
-				throw.RuntimeException("JSON is not an object.")
+				throw RuntimeException("JSON is not an object.")
 			}
-		} catch (.RuntimeException e) {
-			data = assoc ? [] : .stdClass()
+		} catch (e: RuntimeException) {
+			data = if (assoc) [] else .stdClass()
 		}
 
 		return data

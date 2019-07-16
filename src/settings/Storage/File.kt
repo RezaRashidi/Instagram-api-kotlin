@@ -184,22 +184,19 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun saveUserSettings(
-        array $userSettings,
-        $triggerKey)
-    {
+    public fun saveUserSettings(array userSettings, triggerKey){
         // Generate the storage version header.
-        $versionHeader = "FILESTORAGEv".self::STORAGE_VERSION.""
+        val versionHeader = "FILESTORAGEv$STORAGE_VERSION"
 
         // Encode a binary representation of all settings.
         // VERSION 2 STORAGE FORMAT: JSON-encoded blob.
-        $encodedData = $versionHeader.json_encode($userSettings)
+        val encodedData = versionHeader + json_encode(userSettings)
 
         // Perform an atomic diskwrite, which prevents accidental truncation.
         // NOTE: If we had just written directly to settingsPath, the file would
         // have become corrupted if the script was killed mid-write. The atomic
         // write process guarantees that the data is fully written to disk.
-        Utils::atomicWrite(this._settingsFile, $encodedData)
+        Utils.atomicWrite(this._settingsFile, encodedData)
     }
 
     /**

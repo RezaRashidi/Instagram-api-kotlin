@@ -3,7 +3,6 @@ package instagramAPI
 import instagramAPI.responses.model.Item
 import instagramAPI.responses.model.Location
 import com.google.gson.Gson
-import instagramAPI.responses.model.Item
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.nio.charset.StandardCharsets
@@ -1235,24 +1234,24 @@ object Utils{
         if (folder.isEmpty() || !File(folder).exists()) {
             return true // No such file/folder exists.
         } else if (File(folder).isFile || is_link(folder)) {
-            return @unlink(folder) // Delete file/link.
+            return File(folder).delete() // Delete file/link.
         }
 
         // Delete all children.
-        var files = RecursiveIteratorIterator(
-            RecursiveDirectoryIterator(folder, RecursiveDirectoryIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::CHILD_FIRST
+        val files = RecursiveIteratorIterator(
+                    RecursiveDirectoryIterator(folder, RecursiveDirectoryIterator::SKIP_DOTS),
+                    RecursiveIteratorIterator::CHILD_FIRST
         )
 
         for (fileinfo in files) {
-            var action = if(fileinfo.isDir()) "rmdir" else "unlink"
-            if (!@action(fileinfo.getRealPath())) {
+            //val action = if(fileinfo.isDir()) "rmdir" else "unlink"
+            if ( !File( fileinfo.getRealPath() ).delete() ) {
                 return false // Abort due to the failure.
             }
         }
 
         // Delete the root folder itself?
-        return if(!keepRootFolder) {return @rmdir(folder)} else {return true}
+        return if(!keepRootFolder) File(folder).delete() else true
     }
 
     /**
@@ -1271,15 +1270,16 @@ object Utils{
      *
      * @return int|bool Number of bytes written on success, otherwise `FALSE`.
      */
-    fun atomicWrite(filename: String, data: String, atomicSuffix: String = "atomictmp"){
+    // saeed : for boolean returning type give -1 for false and for true check returning is bigger than 0
+    fun atomicWrite(filename: String, data: String, atomicSuffix: String = "atomictmp"): Int{
         // Perform an exclusive (locked) overwrite to a temporary file.
-        val filenameTmp = print("$filename.$atomicSuffix")
-        var writeResult = @file_put_contents(filenameTmp, data, LOCK_EX)
+        val filenameTmp = "$filename.$atomicSuffix"
+        val writeResult = @file_put_contents(filenameTmp, data, LOCK_EX)
 
         // Only proceed if we wrote 100% of the data bytes to disk.
-        if (writeResult !== false && writeResult === strlen(data)) {
+        if (writeResult !== false && writeResult === data.length) {
             // Now move the file to its real destination (replaces if exists).
-            var moveResult = @rename(filenameTmp, filename)
+            val moveResult = File(filenameTmp).renameTo(File(filename))
             if (moveResult === true) {
                 // Successful write and move. Return number of bytes written.
                 return writeResult
@@ -1287,11 +1287,11 @@ object Utils{
         }
 
         // We"ve failed. Remove the temporary file if it exists.
-        if (is_file(filenameTmp)) {
-            @unlink(filenameTmp)
+        if (File(filenameTmp).isFile) {
+            File(filenameTmp).delete()
         }
 
-        return false // Failed.
+        return -1 // Failed.
     }
 
     /**
@@ -1309,12 +1309,11 @@ object Utils{
         val finalPrefix = "INSTA${namePrefix}_"
 
         // Try to create the file (detects errors).
-        var tmpFile = @tempnam(outputDir, finalPrefix)
-        if (tmpFile !is String) {
-            throw RuntimeException("Unable to create temporary output file in \"$outputDir\" (with prefix \"$finalPrefix\").")
-        }
+        //        if (tmpFile !is String) {
+//            throw RuntimeException("Unable to create temporary output file in \"$outputDir\" (with prefix \"$finalPrefix\").")
+//        }
 
-        return tmpFile
+        return File.createTempFile(outputDir, finalPrefix).absolutePath
     }
 
     /**
@@ -1424,6 +1423,9 @@ object Utils{
 * array_diff_key() to arrayDiffKey()
 * array_flip()     to arrayFlip()
 * array_diff()     to arrayDiff()
+* unlink(x)        to File(x).delete()
+* rmdir(x)         to File(x).delete()
+* tempnam()         to File.createTempFile()
 * */
 
 
