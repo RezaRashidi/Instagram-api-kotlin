@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.SuggestedUsers
 
 /**
  * DiscoverPeopleResponse.
@@ -36,11 +37,16 @@ import instagramAPI.Response
  * @method this unsetSuggestedUsers()
  * @method this unset_Messages()
  */
-class DiscoverPeopleResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "more_available"      to "bool",
-        "max_id"              to "string",
-        "suggested_users"     to "model.SuggestedUsers",
-        "new_suggested_users" to "model.SuggestedUsers"
-    )
+data class DiscoverPeopleResponse (
+    val more_available: Boolean,
+    val max_id: String,
+    val suggested_users: SuggestedUsers,
+    val new_suggested_users: SuggestedUsers
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "more_available"      to "bool",
+//        "max_id"              to "string",
+//        "suggested_users"     to "model.SuggestedUsers",
+//        "new_suggested_users" to "model.SuggestedUsers"
+//    )
 }

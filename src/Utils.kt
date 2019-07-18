@@ -5,6 +5,7 @@ import instagramAPI.responses.model.Location
 import com.google.gson.Gson
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileWriter
 import java.nio.charset.StandardCharsets
 import java.util.*
 import java.util.zip.GZIPInputStream
@@ -1232,8 +1233,8 @@ object Utils{
     fun deleteTree(folder: String,keepRootFolder: Boolean = false): Boolean {
         // Handle bad arguments.
         if (folder.isEmpty() || !File(folder).exists()) {
-            return true // No such file/folder exists.
-        } else if (File(folder).isFile || is_link(folder)) {
+            return true // No such file/folder exists.   comment from if : is_link(folder)
+        } else if (File(folder).isFile) {
             return File(folder).delete() // Delete file/link.
         }
 
@@ -1245,7 +1246,7 @@ object Utils{
 
         for (fileinfo in files) {
             //val action = if(fileinfo.isDir()) "rmdir" else "unlink"
-            if ( !File( fileinfo.getRealPath() ).delete() ) {
+            if ( !File( "${fileinfo.getRealPath()}" ).delete() ) {
                 return false // Abort due to the failure.
             }
         }
@@ -1274,10 +1275,10 @@ object Utils{
     fun atomicWrite(filename: String, data: String, atomicSuffix: String = "atomictmp"): Int{
         // Perform an exclusive (locked) overwrite to a temporary file.
         val filenameTmp = "$filename.$atomicSuffix"
-        val writeResult = @file_put_contents(filenameTmp, data, LOCK_EX)
+        val writeResult = filePutContents(filenameTmp, data)
 
         // Only proceed if we wrote 100% of the data bytes to disk.
-        if (writeResult !== false && writeResult === data.length) {
+        if (writeResult === data.length) {
             // Now move the file to its real destination (replaces if exists).
             val moveResult = File(filenameTmp).renameTo(File(filename))
             if (moveResult === true) {
@@ -1374,8 +1375,8 @@ object Utils{
      *
      * @return array An array of URLs and their individual components.
      */
-    fun extractURLs(text: String): MutableMap<String, String> {
-        var urls = mutableMapOf<String, String>()
+    fun extractURLs(text: String): MutableList<Map<String, String>> {
+        var urls = mutableListOf<Map<String, String>>()
         val matches = mutableMapOf<Int, String>()
         if (preg_match_all(
             // NOTE: This disgusting regex comes from the Android SDK, slightly
@@ -1540,6 +1541,13 @@ object Utils{
 
     fun String.base64_encode(): String {
         return Base64.getEncoder().encodeToString(toByteArray())
+    }
+
+    fun filePutContents(file: String, str: String): Int{
+        val fo = FileWriter(file, true)
+        fo.write(str)
+        fo.close()
+        return str.length
     }
 
 

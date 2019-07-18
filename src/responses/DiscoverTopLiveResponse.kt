@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Broadcast
+import instagramAPI.responses.model.PostLiveItem
 
 /**
  * DiscoverTopLiveResponse.
@@ -44,13 +46,20 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DiscoverTopLiveResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "broadcasts"             to "model.Broadcast[]",
-        "post_live_broadcasts"   to "model.PostLiveItem[]",
-        "score_map"              to "",
-        "more_available"         to "bool",
-        "auto_load_more_enabled" to "bool",
-        "next_max_id"            to "string"
-    )
+data class DiscoverTopLiveResponse (
+    val broadcasts: MutableList<Broadcast>,
+    val post_live_broadcasts: MutableList<PostLiveItem>,
+    val score_map: String,
+    val more_available: Boolean,
+    val auto_load_more_enabled: Boolean,
+    val next_max_id: String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "broadcasts"             to "model.Broadcast[]",
+//        "post_live_broadcasts"   to "model.PostLiveItem[]",
+//        "score_map"              to "",
+//        "more_available"         to "bool",
+//        "auto_load_more_enabled" to "bool",
+//        "next_max_id"            to "string"
+//    )
 }

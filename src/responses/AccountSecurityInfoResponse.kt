@@ -46,13 +46,20 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class AccountSecurityInfoResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "backup_codes"          to "",
-        "is_phone_confirmed"    to "",
-        "country_code"          to "int",
-        "phone_number"          to "string",
-        "is_two_factor_enabled" to "",
-        "national_number"       to "string" // Really int, but may be >32bit.
-    )
+data class AccountSecurityInfoResponse (
+    val backup_codes          : String,
+    val is_phone_confirmed    : String,
+    val country_code          : Int,
+    val phone_number          : String,
+    val is_two_factor_enabled : String,
+    val national_number       : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "backup_codes"          to "",
+//        "is_phone_confirmed"    to "",
+//        "country_code"          to "int",
+//        "phone_number"          to "string",
+//        "is_two_factor_enabled" to "",
+//        "national_number"       to "string" // Really int, but may be >32bit.
+//    )
 }

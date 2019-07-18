@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * CreateBusinessInfoResponse.
@@ -24,8 +25,10 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class CreateBusinessInfoResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "users" to "model.User[]"
-    )
+data class CreateBusinessInfoResponse (
+    val users: MutableList<User>
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "users" to "model.User[]"
+//    )
 }

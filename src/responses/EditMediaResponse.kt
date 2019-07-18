@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Item
 
 /**
  * EditMediaResponse.
@@ -24,8 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class EditMediaResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "media" to "model.Item"
-    )
+data class EditMediaResponse (
+    val media: Item
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "media" to "model.Item"
+//    )
 }

@@ -40,12 +40,18 @@ import instagramAPI.Response
  * @method this unsetValid()
  * @method this unset_Messages()
  */
-class CheckEmailResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "valid"                to "",
-        "available"            to "",
-        "confirmed"            to "",
-        "username_suggestions" to "string[]",
-        "error_type"           to ""
-    )
+data class CheckEmailResponse (
+    val valid                : String,
+    val available            : String,
+    val confirmed            : String,
+    val username_suggestions : MutableList<String>,
+    val error_type           : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "valid"                to "",
+//        "available"            to "",
+//        "confirmed"            to "",
+//        "username_suggestions" to "string[]",
+//        "error_type"           to ""
+//    )
 }

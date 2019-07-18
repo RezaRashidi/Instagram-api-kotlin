@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.DirectThreadItem
+import instagramAPI.responses.model.User
 
 /**
  * DirectCreateGroupThreadResponse.
@@ -88,24 +90,42 @@ import instagramAPI.Response
  * @method this unsetViewerId()
  * @method this unset_Messages()
  */
-class DirectCreateGroupThreadResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "thread_id"        to "string",
-        "users"            to "model.User[]",
-        "left_users"       to "model.User[]",
-        "items"            to "model.DirectThreadItem[]",
-        "last_activity_at" to "",
-        "muted"            to "",
-        "named"            to "",
-        "canonical"        to "",
-        "pending"          to "",
-        "thread_type"      to "",
-        "viewer_id"        to "string",
-        "thread_title"     to "",
-        "inviter"          to "model.User",
-        "has_older"        to "bool",
-        "has_newer"        to "bool",
-        "last_seen_at"     to "",
-        "is_pin"           to ""
-    )
+data class DirectCreateGroupThreadResponse (
+    val thread_id: String,
+    val users: MutableList<User>,
+    val left_users: MutableList<User>,
+    val items: MutableList<DirectThreadItem>,
+    val last_activity_at: String,
+    val muted: String,
+    val named: String,
+    val canonical: String,
+    val pending: String,
+    val thread_type: String,
+    val viewer_id: String,
+    val thread_title: String,
+    val inviter: User,
+    val has_older: Boolean,
+    val has_newer: Boolean,
+    val last_seen_at: String,
+    val is_pin: String
+    ){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "thread_id"        to "string",
+//        "users"            to "model.User[]",
+//        "left_users"       to "model.User[]",
+//        "items"            to "model.DirectThreadItem[]",
+//        "last_activity_at" to "",
+//        "muted"            to "",
+//        "named"            to "",
+//        "canonical"        to "",
+//        "pending"          to "",
+//        "thread_type"      to "",
+//        "viewer_id"        to "string",
+//        "thread_title"     to "",
+//        "inviter"          to "model.User",
+//        "has_older"        to "bool",
+//        "has_newer"        to "bool",
+//        "last_seen_at"     to "",
+//        "is_pin"           to ""
+//    )
 }

@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * CommentLikersResponse.
@@ -24,8 +25,10 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class CommentLikersResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "users" to "model.User[]"
-    )
+data class CommentLikersResponse (
+    val users: MutableList<User>
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "users" to "model.User[]"
+//    )
 }

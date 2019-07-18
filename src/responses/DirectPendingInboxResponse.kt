@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.DirectInbox
 
 /**
  * DirectPendingInboxResponse.
@@ -32,10 +33,14 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DirectPendingInboxResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "seq_id"                 to "string",
-        "pending_requests_total" to "",
-        "inbox"                  to "model.DirectInbox"
-    )
+data class DirectPendingInboxResponse (
+    val seq_id: String,
+    val pending_requests_total: String,
+    val inbox: DirectInbox
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "seq_id"                 to "string",
+//        "pending_requests_total" to "",
+//        "inbox"                  to "model.DirectInbox"
+//    )
 }

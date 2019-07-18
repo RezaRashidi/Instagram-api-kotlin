@@ -3,6 +3,9 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.DirectInbox
+import instagramAPI.responses.model.Megaphone
+import instagramAPI.responses.model.User
 
 /**
  * DirectInboxResponse.
@@ -44,13 +47,20 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DirectInboxResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "pending_requests_total" to "",
-        "seq_id"                 to "string",
-        "pending_requests_users" to "model.User[]",
-        "inbox"                  to "model.DirectInbox",
-        "megaphone"              to "model.Megaphone",
-        "snapshot_at_ms"         to "string"
-    )
+data class DirectInboxResponse (
+    val pending_requests_total: String,
+    val seq_id: String,
+    val pending_requests_users: MutableList<User>,
+    val inbox: DirectInbox,
+    val megaphone: Megaphone,
+    val snapshot_at_ms: String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "pending_requests_total" to "",
+//        "seq_id"                 to "string",
+//        "pending_requests_users" to "model.User[]",
+//        "inbox"                  to "model.DirectInbox",
+//        "megaphone"              to "model.Megaphone",
+//        "snapshot_at_ms"         to "string"
+//    )
 }

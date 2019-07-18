@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.DirectSendItemPayload
 
 /**
  * DirectSeenItemResponse.
@@ -28,9 +29,12 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DirectSeenItemResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "action"  to "",
-        "payload" to "model.DirectSeenItemPayload" // The number of unseen items.
+data class DirectSeenItemResponse (
+    val action: String,
+    val payload: DirectSendItemPayload
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "action"  to "",
+//        "payload" to "model.DirectSeenItemPayload" // The number of unseen items.
     )
 }

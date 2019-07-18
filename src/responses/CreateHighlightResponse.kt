@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Reel
 
 /**
  * CreateHighlightResponse.
@@ -24,8 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class CreateHighlightResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "reel" to "model.Reel"
-    )
+data class CreateHighlightResponse (
+    val reel: Reel
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "reel" to "model.Reel"
+//    )
 }

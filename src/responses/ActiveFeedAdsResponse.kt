@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.FeedItem
 
 /**
  * ActiveFeedAdsResponse.
@@ -32,10 +33,14 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ActiveFeedAdsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "feed_items"     to "model.FeedItem[]",
-        "next_max_id"    to "string",
-        "more_available" to "bool"
-    )
+data class ActiveFeedAdsResponse (
+    val feed_items     : MutableList<FeedItem>,
+    val next_max_id    : String,
+    val more_available : Boolean
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "feed_items"     to "model.FeedItem[]",
+//        "next_max_id"    to "string",
+//        "more_available" to "bool"
+//    )
 }
