@@ -1,7 +1,7 @@
 package instagramAPI.settings
 
-import Fbns.Client.Auth.DeviceAuth
-import Fbns.Client.AuthInterface
+//import Fbns.Client.Auth.DeviceAuth
+//import Fbns.Client.AuthInterface
 import instagramAPI.exception.SettingsException
 import instagramAPI.Utils
 import kotlin.random.Random
@@ -388,7 +388,7 @@ class StorageHandler {
 	 *                     (non-empty), or NULL if no cookies exist for
 	 *                     the active user.
 	 */
-	public fun getCookies() {
+	public fun getCookies():String? {
 		this._throwIfNoActiveUser()
 
 		// Read the cookies via the appropriate backend method.

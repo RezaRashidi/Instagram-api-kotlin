@@ -6,12 +6,14 @@ package instagramAPI
 //import GuzzleHttp.Cookie.CookieJar
 //import GuzzleHttp.Cookie.SetCookie
 //import GuzzleHttp.HandlerStack
+import com.google.gson.Gson
 import instagramAPI.exception.InstagramException
 import instagramAPI.exception.LoginRequiredException
 import instagramAPI.exception.ServerMessageThrower
 import instagramAPI.middleware.FakeCookies
 import instagramAPI.middleware.ZeroRating
 import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
+import instagramAPI.middleware.CookieJar
 
 
 //import LazyJsonMapper.exception.LazyJsonMapperException
@@ -66,7 +68,7 @@ open class Client(val parent:Instagram)
      *
      * @var string|array|null
      */
-    private var _proxy:MutableList<String>
+    private var _proxy:MutableList<String>?
 
     /**
      * Network interface override to use.
@@ -98,7 +100,7 @@ open class Client(val parent:Instagram)
     /**
      * @var .GuzzleHttp.Cookie.CookieJar
      */
-    private var _cookieJar: CookieJar
+    private var _cookieJar: CookieJar =CookieJar()
 
     /**
      * The timestamp of when we last saved our cookie jar to disk.
@@ -108,7 +110,7 @@ open class Client(val parent:Instagram)
      *
      * @var int
      */
-    private var _cookieJarLastSaved: Int
+    private var _cookieJarLastSaved: Long = 0
 
     /**
      * The flag to force cURL to reopen a fresh connection.
@@ -130,7 +132,7 @@ open class Client(val parent:Instagram)
 
 
         // Defaults.
-        _verifySSL = true
+        _verifySSL = "true"
         _proxy = null
 
         // Create a default handler stack with Guzzle"s auto-selected "best
@@ -146,21 +148,21 @@ open class Client(val parent:Instagram)
       //  stack.push(_zeroRating, "zero_rewrite")
 
         // Default request options (immutable after client creation).
-        _guzzleClient = GuzzleClient(
-            mapOf(
-                "handler"         to stack, // Our middleware is now injected.
-                "allow_redirects" to (
-                            "max" to 8 // Allow up to eight redirects (that"s plenty).
-                        ),
-                "connect_timeout" to 30.0, // Give up trying to connect after 30s.
-                "decode_content"  to true, // Decode gzip/deflate/etc HTTP responses.
-                "timeout"         to 240.0, // Maximum per-request time (seconds).
-                // Tells Guzzle to stop throwing exceptions on non-"2xx" HTTP codes,
-                // thus ensuring that it only triggers exceptions on socket errors!
-                // We"ll instead MANUALLY be throwing on certain other HTTP codes.
-                "http_errors"     to false
-            )
-        )
+//        _guzzleClient = GuzzleClient(
+//            mapOf(
+//                "handler"         to stack, // Our middleware is now injected.
+//                "allow_redirects" to (
+//                            "max" to 8 // Allow up to eight redirects (that"s plenty).
+//                        ),
+//                "connect_timeout" to 30.0, // Give up trying to connect after 30s.
+//                "decode_content"  to true, // Decode gzip/deflate/etc HTTP responses.
+//                "timeout"         to 240.0, // Maximum per-request time (seconds).
+//                // Tells Guzzle to stop throwing exceptions on non-"2xx" HTTP codes,
+//                // thus ensuring that it only triggers exceptions on socket errors!
+//                // We"ll instead MANUALLY be throwing on certain other HTTP codes.
+//                "http_errors"     to false
+//            )
+//        )
 
         _resetConnection = false
     }
@@ -176,7 +178,7 @@ open class Client(val parent:Instagram)
      */
     fun updateFromCurrentSettings(resetCookieJar: Boolean = false){
         // Update our internal client state from the user"s settings.
-        _userAgent = parent.device.getUserAgent()
+        var _userAgent = parent.device.getUserAgent()
         loadCookieJar(resetCookieJar)
 
         // Verify that the jar contains a non-expired csrftoken for the API
@@ -184,7 +186,7 @@ open class Client(val parent:Instagram)
         // If it"s missing, we"re definitely NOT logged in! But even if all of
         // these checks succeed, the cookie may still not be valid. It"s just a
         // preliminary check to detect definitely-invalid session cookies!
-        if (this.getToken() === null) {
+        if (getToken().isNullOrEmpty()) {
             parent.isMaybeLoggedIn = false
         }
 
@@ -201,7 +203,7 @@ open class Client(val parent:Instagram)
      */
     fun loadCookieJar(resetCookieJar: Boolean = false){
         // Mark any previous cookie jar for garbage collection.
-        _cookieJar = null
+        var _cookieJar = null
 
         // Delete all current cookies from the storage if this is a reset.
         if (resetCookieJar) {
@@ -212,7 +214,7 @@ open class Client(val parent:Instagram)
         var cookieData = parent.settings.getCookies()
 
         // Attempt to restore the cookies, otherwise create a new, empty jar.
-        var restoredCookies = if(cookieData is String) @json_decode(cookieData, true) else null
+        var restoredCookies = Gson()
         if (!is_array(restoredCookies)) {
             restoredCookies = []
         }
@@ -222,7 +224,7 @@ open class Client(val parent:Instagram)
 
         // Reset the "last saved" timestamp to the current time to prevent
         // auto-saving the cookies again immediately after this jar is loaded.
-        _cookieJarLastSaved = time()
+        _cookieJarLastSaved = System.currentTimeMillis()
     }
 
     /**
@@ -255,7 +257,7 @@ open class Client(val parent:Instagram)
      */
     fun getCookie( name: String, domain: String ?= null, path: String ?= null){
         var foundCookie = null
-        if (_cookieJar instanceof CookieJar) {
+
             /** @var SetCookie $cookie */
             for (cookie in this._cookieJar.getIterator()) {
                 if (cookie.getName() === name
@@ -272,7 +274,7 @@ open class Client(val parent:Instagram)
                     foundCookie = cookie
                 }
             }
-        }
+
 
         return foundCookie
     }

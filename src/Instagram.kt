@@ -37,7 +37,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @var .instagramAPI.devices.DeviceInterface
 	 */
-	lateinit var device: instagramAPI.Devices.DeviceInterface
+	lateinit var device: instagramAPI.devices.DeviceInterface
 
 	/**
 	 * Toggles API query/response debug output.
