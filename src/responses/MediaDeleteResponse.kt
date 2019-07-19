@@ -24,9 +24,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class MediaDeleteResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "did_delete" => "",
-    ]
+data class MediaDeleteResponse (
+    val did_delete : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "did_delete" => "",
+//    ]
 }

@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.SharedFollower
 
 /**
  * SharedFollowersResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class SharedFollowersResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "users" => "model.SharedFollower[]",
-    ]
+data class SharedFollowersResponse (
+    val users : MutableList<SharedFollower>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "users" => "model.SharedFollower[]",
+//    ]
 }

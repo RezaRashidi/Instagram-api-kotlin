@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Item
 
 /**
  * MediaInfoResponse.
@@ -36,12 +37,16 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class MediaInfoResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "auto_load_more_enabled" => "",
-        "num_results"            => "int",
-        "more_available"         => "",
-        "items"                  => "model.Item[]",
-    ]
+data class MediaInfoResponse (
+    val auto_load_more_enabled : String,
+    val num_results            : Int,
+    val more_available         : String,
+    val items                  : MutableList<Item>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "auto_load_more_enabled" => "",
+//        "num_results"            => "int",
+//        "more_available"         => "",
+//        "items"                  => "model.Item[]",
+//    ]
 }

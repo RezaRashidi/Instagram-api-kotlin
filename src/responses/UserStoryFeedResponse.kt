@@ -3,6 +3,9 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Broadcast
+import instagramAPI.responses.model.PostLiveItem
+import instagramAPI.responses.model.Reel
 
 /**
  * UserStoryFeedResponse.
@@ -32,11 +35,14 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class UserStoryFeedResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "broadcast"      => "model.Broadcast",
-        "reel"           => "model.Reel",
-        "post_live_item" => "model.PostLiveItem",
-    ]
+data class UserStoryFeedResponse (
+    val broadcast      : Broadcast,
+    val reel           : Reel,
+    val post_live_item : PostLiveItem
+){
+//    val JSON_PROPERTY_MAP = [
+//        "broadcast"      => "model.Broadcast",
+//        "reel"           => "model.Reel",
+//        "post_live_item" => "model.PostLiveItem",
+//    ]
 }

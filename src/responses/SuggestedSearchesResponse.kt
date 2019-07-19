@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Suggested
 
 /**
  * SuggestedSearchesResponse.
@@ -28,10 +29,12 @@ import instagramAPI.Response
  * @method this unsetSuggested()
  * @method this unset_Messages()
  */
-class SuggestedSearchesResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "suggested"  => "model.Suggested[]",
-        "rank_token" => "string",
-    ]
+data class SuggestedSearchesResponse (
+    val suggested  : MutableList<Suggested>,
+    val rank_token : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "suggested"  => "model.Suggested[]",
+//        "rank_token" => "string",
+//    ]
 }

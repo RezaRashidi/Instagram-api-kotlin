@@ -24,9 +24,10 @@ import instagramAPI.Response
  * @method this unsetSuccess()
  * @method this unset_Messages()
  */
-class MegaphoneLogResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "success" => "",
-    ]
+data class MegaphoneLogResponse (
+    val success: String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "success" => "",
+//    ]
 }

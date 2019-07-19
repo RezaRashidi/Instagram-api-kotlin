@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.StoryTray
 
 /**
  * LocationStoryResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStory()
  * @method this unset_Messages()
  */
-class LocationStoryResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "story"               => "model.StoryTray",
-    ]
+data class LocationStoryResponse (
+    val story : StoryTray
+){
+//    val JSON_PROPERTY_MAP = [
+//        "story"               => "model.StoryTray",
+//    ]
 }

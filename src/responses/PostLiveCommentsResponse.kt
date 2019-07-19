@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.LiveComment
 
 /**
  * PostLiveCommentsResponse.
@@ -40,13 +41,18 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class PostLiveCommentsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "starting_offset"   => "",
-        "ending_offset"     => "",
-        "next_fetch_offset" => "",
-        "comments"          => "model.LiveComment[]",
-        "pinned_comments"   => "model.LiveComment[]",
-    ]
+data class PostLiveCommentsResponse (
+    val starting_offset   : String,
+    val ending_offset     : String,
+    val next_fetch_offset : String,
+    val comments          : MutableList<LiveComment>,
+    val pinned_comments   : MutableList<LiveComment>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "starting_offset"   => "",
+//        "ending_offset"     => "",
+//        "next_fetch_offset" => "",
+//        "comments"          => "model.LiveComment[]",
+//        "pinned_comments"   => "model.LiveComment[]",
+//    ]
 }

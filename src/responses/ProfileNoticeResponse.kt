@@ -24,9 +24,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ProfileNoticeResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "has_change_password_megaphone" => "bool",
-    ]
+data class ProfileNoticeResponse (
+    val has_change_password_megaphone: Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "has_change_password_megaphone" => "bool",
+//    ]
 }

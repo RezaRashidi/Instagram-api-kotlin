@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * UserInfoResponse.
@@ -28,10 +29,12 @@ import instagramAPI.Response
  * @method this unsetUser()
  * @method this unset_Messages()
  */
-class UserInfoResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "megaphone" => "",
-        "user"      => "model.User",
-    ]
+data class UserInfoResponse (
+    val megaphone : String,
+    val user      : User
+){
+//    val JSON_PROPERTY_MAP = [
+//        "megaphone" => "",
+//        "user"      => "model.User",
+//    ]
 }

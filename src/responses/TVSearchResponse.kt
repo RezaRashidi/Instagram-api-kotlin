@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.TVSearchResult
 
 /**
  * TVSearchResponse.
@@ -32,11 +33,14 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class TVSearchResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "results"       => "model.TVSearchResult[]",
-        "num_results"   => "int",
-        "rank_token"    => "string",
-    ]
+data class TVSearchResponse (
+    val results       : MutableList<TVSearchResult>,
+    val num_results   : Int,
+    val rank_token    : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "results"       => "model.TVSearchResult[]",
+//        "num_results"   => "int",
+//        "rank_token"    => "string",
+//    ]
 }

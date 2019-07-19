@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Broadcast
 
 /**
  * SuggestedBroadcastsResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class SuggestedBroadcastsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "broadcasts" => "model.Broadcast[]",
-    ]
+data class SuggestedBroadcastsResponse (
+    val broadcasts : MutableList<Broadcast>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "broadcasts" => "model.Broadcast[]",
+//    ]
 }

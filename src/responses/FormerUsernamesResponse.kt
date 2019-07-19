@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.FormerUsername
 
 /**
  * FormerUsernamesResponse.
@@ -24,8 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FormerUsernamesResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "former_usernames" to "model.FormerUsername[]"
-    )
+data class FormerUsernamesResponse (
+    val former_usernames: MutableList<FormerUsername>
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "former_usernames" to "model.FormerUsername[]"
+//    )
 }

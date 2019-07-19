@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.FaceModels
 
 /**
  * FaceModelsResponse.
@@ -24,8 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FaceModelsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "face_models" to "model.FaceModels"
-    )
+data class FaceModelsResponse (
+    val face_models: FaceModels
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "face_models" to "model.FaceModels"
+//    )
 }

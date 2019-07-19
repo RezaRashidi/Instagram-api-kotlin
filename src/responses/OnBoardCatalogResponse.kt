@@ -32,11 +32,14 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class OnBoardCatalogResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "shopping_onboarding_state"         => "string",
-        "current_catalog_id"                => "string",
-        "is_business_targeted_for_shopping" => "bool",
-    ]
+data class OnBoardCatalogResponse (
+    val shopping_onboarding_state         : String,
+    val current_catalog_id                : String,
+    val is_business_targeted_for_shopping : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "shopping_onboarding_state"         => "string",
+//        "current_catalog_id"                => "string",
+//        "is_business_targeted_for_shopping" => "bool",
+//    ]
 }

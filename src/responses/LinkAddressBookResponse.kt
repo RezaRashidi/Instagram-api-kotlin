@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Suggestion
 
 /**
  * LinkAddressBookResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class LinkAddressBookResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "items" => "model.Suggestion[]",
-    ]
+data class LinkAddressBookResponse (
+    val items : MutableList<Suggestion>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "items" => "model.Suggestion[]",
+//    ]
 }

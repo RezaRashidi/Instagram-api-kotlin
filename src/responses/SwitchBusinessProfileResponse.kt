@@ -24,9 +24,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class SwitchBusinessProfileResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "social_context" => "",
-    ]
+data class SwitchBusinessProfileResponse (
+    val social_context : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "social_context" => "",
+//    ]
 }

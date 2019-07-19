@@ -3,6 +3,9 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Badging
+import instagramAPI.responses.model.Composer
+import instagramAPI.responses.model.TVChannel
 
 /**
  * TVGuideResponse.
@@ -36,12 +39,16 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class TVGuideResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "channels"   => "model.TVChannel[]",
-        "my_channel" => "model.TVChannel",
-        "badging"    => "model.Badging",
-        "composer"   => "model.Composer",
-    ]
+data class TVGuideResponse (
+    val channels   : MutableList<TVChannel>,
+    val my_channel : TVChannel,
+    val badging    : Badging,
+    val composer   : Composer
+){
+//    val JSON_PROPERTY_MAP = [
+//        "channels"   => "model.TVChannel[]",
+//        "my_channel" => "model.TVChannel",
+//        "badging"    => "model.Badging",
+//        "composer"   => "model.Composer",
+//    ]
 }

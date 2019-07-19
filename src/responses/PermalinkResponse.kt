@@ -24,9 +24,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class PermalinkResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "permalink"       => "string",
-    ]
+data class PermalinkResponse (
+    val permalink: String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "permalink"       => "string",
+//    ]
 }

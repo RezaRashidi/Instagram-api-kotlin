@@ -1239,17 +1239,19 @@ object Utils{
         }
 
         // Delete all children.
-        val files = RecursiveIteratorIterator(
-                    RecursiveDirectoryIterator(folder, RecursiveDirectoryIterator::SKIP_DOTS),
-                    RecursiveIteratorIterator::CHILD_FIRST
-        )
-
-        for (fileinfo in files) {
-            //val action = if(fileinfo.isDir()) "rmdir" else "unlink"
-            if ( !File( "${fileinfo.getRealPath()}" ).delete() ) {
-                return false // Abort due to the failure.
-            }
-        }
+//        val files = RecursiveIteratorIterator(
+//                    RecursiveDirectoryIterator(folder, RecursiveDirectoryIterator::SKIP_DOTS),
+//                    RecursiveIteratorIterator::CHILD_FIRST
+//        )
+//
+//        for (fileinfo in files) {
+//            //val action = if(fileinfo.isDir()) "rmdir" else "unlink"
+//            if ( !File( "${fileinfo.getRealPath()}" ).delete() ) {
+//                return false // Abort due to the failure.
+//            }
+//        }
+        val fileA = File(folder)
+        fileA.deleteRecursively()
 
         // Delete the root folder itself?
         return if(!keepRootFolder) File(folder).delete() else true
@@ -1330,13 +1332,15 @@ object Utils{
      *
      * @return bool TRUE on success or FALSE on failure.
      */
-    fun safe_fclose(handle): Boolean{
-        if (is_resource(handle)) {
-            return fclose(handle)
-        }
-
-        return true
-    }
+    // Saeed : kotlin automatically close file
+    // https://kotlinlang.org/docs/tutorials/kotlin-for-py/file-io.html
+//    fun safe_fclose(handle): Boolean{
+//        if (is_resource(handle)) {
+//            return fclose(handle)
+//        }
+//
+//        return true
+//    }
 
     /**
      * Checks if a URL has valid "web" syntax.

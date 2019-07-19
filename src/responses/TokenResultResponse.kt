@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Token
 
 /**
  * TokenResultResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetToken()
  * @method this unset_Messages()
  */
-class TokenResultResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "token" => "model.Token",
-    ]
+data class TokenResultResponse (
+    val token : Token
+){
+//    val JSON_PROPERTY_MAP = [
+//        "token" => "model.Token",
+//    ]
 }

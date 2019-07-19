@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Suggested
 
 /**
  * RecentSearchesResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class RecentSearchesResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "recent" => "model.Suggested[]",
-    ]
+data class RecentSearchesResponse (
+    val recent : MutableList<Suggested>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "recent" => "model.Suggested[]",
+//    ]
 }

@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.BroadcastStatusItem
 
 /**
  * TopLiveStatusResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class TopLiveStatusResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "broadcast_status_items" => "model.BroadcastStatusItem[]",
-    ]
+data class TopLiveStatusResponse (
+    val broadcast_status_items : MutableList<BroadcastStatusItem>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "broadcast_status_items" => "model.BroadcastStatusItem[]",
+//    ]
 }

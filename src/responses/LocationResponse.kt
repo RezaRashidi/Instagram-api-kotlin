@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Location
 
 /**
  * LocationResponse.
@@ -28,10 +29,12 @@ import instagramAPI.Response
  * @method this unsetVenues()
  * @method this unset_Messages()
  */
-class LocationResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "venues"     => "model.Location[]",
-        "request_id" => "string",
-    ]
+data class LocationResponse (
+    val venues     : Location,
+    val request_id : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "venues"     => "model.Location[]",
+//        "request_id" => "string",
+//    ]
 }

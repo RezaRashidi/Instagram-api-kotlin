@@ -28,10 +28,12 @@ import instagramAPI.Response
  * @method this unsetVerified()
  * @method this unset_Messages()
  */
-class VerifySMSCodeResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "verified"     => "bool",
-        "phone_number" => "string",
-    ]
+data class VerifySMSCodeResponse (
+    val verified     : Boolean,
+    val phone_number : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "verified"     => "bool",
+//        "phone_number" => "string",
+//    ]
 }

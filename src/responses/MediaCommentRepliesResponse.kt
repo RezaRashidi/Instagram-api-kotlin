@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Comment
 
 /**
  * MediaCommentRepliesResponse.
@@ -56,30 +57,39 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class MediaCommentRepliesResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "parent_comment"               => "model.Comment",
-        /*
-         * Number of child comments in this comment thread.
-         */
-        "child_comment_count"          => "int",
-        "child_comments"               => "model.Comment[]",
-        /*
-         * When "has_more_tail_child_comments" is true, you can import the value
-         * in "next_max_child_cursor" as "max_id" parameter to load up to
-         * "num_tail_child_comments" older child-comments.
-         */
-        "has_more_tail_child_comments"      => "bool",
-        "next_max_child_cursor"             => "string",
-        "num_tail_child_comments"           => "int",
-        /*
-         * When "has_more_head_child_comments" is true, you can import the value
-         * in "next_min_child_cursor" as "min_id" parameter to load up to
-         * "num_head_child_comments" newer child-comments.
-         */
-        "has_more_head_child_comments"      => "bool",
-        "next_min_child_cursor"             => "string",
-        "num_head_child_comments"           => "int",
-    ]
+data class MediaCommentRepliesResponse (
+    val parent_comment                    : Comment,
+    val child_comment_count               : Int,
+    val child_comments                    : MutableList<Comment>,
+    val has_more_tail_child_comments      : Boolean,
+    val next_max_child_cursor             : String,
+    val num_tail_child_comments           : Int,
+    val has_more_head_child_comments      : Boolean,
+    val next_min_child_cursor             : String,
+    val num_head_child_comments           : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "parent_comment"               => "model.Comment",
+//        /*
+//         * Number of child comments in this comment thread.
+//         */
+//        "child_comment_count"          => "int",
+//        "child_comments"               => "model.Comment[]",
+//        /*
+//         * When "has_more_tail_child_comments" is true, you can import the value
+//         * in "next_max_child_cursor" as "max_id" parameter to load up to
+//         * "num_tail_child_comments" older child-comments.
+//         */
+//        "has_more_tail_child_comments"      => "bool",
+//        "next_max_child_cursor"             => "string",
+//        "num_tail_child_comments"           => "int",
+//        /*
+//         * When "has_more_head_child_comments" is true, you can import the value
+//         * in "next_min_child_cursor" as "min_id" parameter to load up to
+//         * "num_head_child_comments" newer child-comments.
+//         */
+//        "has_more_head_child_comments"      => "bool",
+//        "next_min_child_cursor"             => "string",
+//        "num_head_child_comments"           => "int",
+//    ]
 }

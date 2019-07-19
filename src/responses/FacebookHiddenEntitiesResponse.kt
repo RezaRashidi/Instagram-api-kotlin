@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.HiddenEntities
 
 /**
  * FacebookHiddenEntitiesResponse.
@@ -24,8 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FacebookHiddenEntitiesResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "recent" to "model.HiddenEntities"
-    )
+data class FacebookHiddenEntitiesResponse (
+    val recent: HiddenEntities
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "recent" to "model.HiddenEntities"
+//    )
 }

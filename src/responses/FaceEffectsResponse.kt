@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Effect
 
 /**
  * FaceEffectsResponse.
@@ -32,10 +33,14 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FaceEffectsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "sdk_version"    to "",
-        "effects"        to "model.Effect[]",
-        "loading_effect" to "model.Effect"
-    )
+data class FaceEffectsResponse (
+    val sdk_version    : String,
+    val effects        : MutableList<Effect>,
+    val loading_effect : Effect
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "sdk_version"    to "",
+//        "effects"        to "model.Effect[]",
+//        "loading_effect" to "model.Effect"
+//    )
 }

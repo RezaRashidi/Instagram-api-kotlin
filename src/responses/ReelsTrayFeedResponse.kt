@@ -3,6 +3,10 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Broadcast
+import instagramAPI.responses.model.PostLive
+import instagramAPI.responses.model.StoryTray
+import instagramAPI.responses.model.TraySuggestions
 
 /**
  * ReelsTrayFeedResponse.
@@ -56,17 +60,26 @@ import instagramAPI.Response
  * @method this unsetTray()
  * @method this unset_Messages()
  */
-class ReelsTrayFeedResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "story_ranking_token"                  => "string",
-        "broadcasts"                           => "model.Broadcast[]",
-        "tray"                                 => "model.StoryTray[]",
-        "post_live"                            => "model.PostLive",
-        "sticker_version"                      => "int",
-        "face_filter_nux_version"              => "int",
-        "stories_viewer_gestures_nux_eligible" => "bool",
-        "has_new_nux_story"                    => "bool",
-        "suggestions"                          => "model.TraySuggestions[]",
-    ]
+data class ReelsTrayFeedResponse (
+    val story_ranking_token                  : String,
+    val broadcasts                           : MutableList<Broadcast>,
+    val tray                                 : MutableList<StoryTray>,
+    val post_live                            : PostLive,
+    val sticker_version                      : Int,
+    val face_filter_nux_version              : Int,
+    val stories_viewer_gestures_nux_eligible : Boolean,
+    val has_new_nux_story                    : Boolean,
+    val suggestions                          : MutableList<TraySuggestions>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "story_ranking_token"                  => "string",
+//        "broadcasts"                           => "model.Broadcast[]",
+//        "tray"                                 => "model.StoryTray[]",
+//        "post_live"                            => "model.PostLive",
+//        "sticker_version"                      => "int",
+//        "face_filter_nux_version"              => "int",
+//        "stories_viewer_gestures_nux_eligible" => "bool",
+//        "has_new_nux_story"                    => "bool",
+//        "suggestions"                          => "model.TraySuggestions[]",
+//    ]
 }

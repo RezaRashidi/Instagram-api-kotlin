@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * MediaLikersResponse.
@@ -28,10 +29,12 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class MediaLikersResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "user_count" => "int",
-        "users"      => "model.User[]",
-    ]
+data class MediaLikersResponse (
+    val user_count : Int,
+    val users      : MutableList<User>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "user_count" => "int",
+//        "users"      => "model.User[]",
+//    ]
 }

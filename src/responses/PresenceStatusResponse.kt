@@ -28,10 +28,12 @@ import instagramAPI.Response
  * @method this unsetThreadPresenceDisabled()
  * @method this unset_Messages()
  */
-class PresenceStatusResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "disabled"                 => "bool",
-        "thread_presence_disabled" => "bool",
-    ]
+data class PresenceStatusResponse (
+    val disabled                 : Boolean,
+    val thread_presence_disabled : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "disabled"                 => "bool",
+//        "thread_presence_disabled" => "bool",
+//    ]
 }

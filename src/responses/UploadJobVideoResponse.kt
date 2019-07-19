@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.VideoUploadUrl
 
 /**
  * UploadJobVideoResponse.
@@ -28,10 +29,12 @@ import instagramAPI.Response
  * @method this unsetVideoUploadUrls()
  * @method this unset_Messages()
  */
-class UploadJobVideoResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "upload_id"         => "string",
-        "video_upload_urls" => "model.VideoUploadUrl[]",
-    ]
+data class UploadJobVideoResponse (
+    val upload_id         : String,
+    val video_upload_urls : MutableList<VideoUploadUrl>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "upload_id"         => "string",
+//        "video_upload_urls" => "model.VideoUploadUrl[]",
+//    ]
 }

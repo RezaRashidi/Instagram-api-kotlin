@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.MediaInsights
 
 /**
  * MediaInsightsResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class MediaInsightsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "media_organic_insights" => "model.MediaInsights",
-    ]
+data class MediaInsightsResponse (
+    val media_organic_insights : MediaInsights
+){
+//    val JSON_PROPERTY_MAP = [
+//        "media_organic_insights" => "model.MediaInsights",
+//    ]
 }

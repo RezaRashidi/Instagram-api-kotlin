@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Story
 
 /**
  * FollowingRecentActivityResponse.
@@ -36,11 +37,16 @@ import instagramAPI.Response
  * @method this unsetStories()
  * @method this unset_Messages()
  */
-class FollowingRecentActivityResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "stories"                to "model.Story[]",
-        "next_max_id"            to "string",
-        "auto_load_more_enabled" to "",
-        "megaphone"              to ""
-    )
+data class FollowingRecentActivityResponse (
+    val stories                : MutableList<Story>,
+    val next_max_id            : String,
+    val auto_load_more_enabled : String,
+    val megaphone              : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "stories"                to "model.Story[]",
+//        "next_max_id"            to "string",
+//        "auto_load_more_enabled" to "",
+//        "megaphone"              to ""
+//    )
 }

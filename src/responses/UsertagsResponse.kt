@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Item
 
 /**
  * UsertagsResponse.
@@ -52,16 +53,24 @@ import instagramAPI.Response
  * @method this unsetTotalCount()
  * @method this unset_Messages()
  */
-class UsertagsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "num_results"            => "int",
-        "auto_load_more_enabled" => "",
-        "items"                  => "model.Item[]",
-        "more_available"         => "",
-        "next_max_id"            => "string",
-        "total_count"            => "",
-        "requires_review"        => "",
-        "new_photos"             => "",
-    ]
+data class UsertagsResponse (
+    val num_results            : Int,
+    val auto_load_more_enabled : String,
+    val items                  : MutableList<Item>,
+    val more_available         : String,
+    val next_max_id            : String,
+    val total_count            : String,
+    val requires_review        : String,
+    val new_photos             : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "num_results"            => "int",
+//        "auto_load_more_enabled" => "",
+//        "items"                  => "model.Item[]",
+//        "more_available"         => "",
+//        "next_max_id"            => "string",
+//        "total_count"            => "",
+//        "requires_review"        => "",
+//        "new_photos"             => "",
+//    ]
 }

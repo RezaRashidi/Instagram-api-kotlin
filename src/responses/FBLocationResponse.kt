@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.LocationItem
 
 /**
  * FBLocationResponse.
@@ -32,10 +33,14 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FBLocationResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "has_more"   to "bool",
-        "items"      to "model.LocationItem[]",
-        "rank_token" to "string"
-    )
+data class FBLocationResponse (
+    val has_more   : Boolean,
+    val items      : MutableList<LocationItem>,
+    val rank_token : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "has_more"   to "bool",
+//        "items"      to "model.LocationItem[]",
+//        "rank_token" to "string"
+//    )
 }

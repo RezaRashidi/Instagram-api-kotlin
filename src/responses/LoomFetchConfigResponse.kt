@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.SystemControl
+import instagramAPI.responses.model.TraceControl
 
 /**
  * LoomFetchConfigResponse.
@@ -32,11 +34,14 @@ import instagramAPI.Response
  * @method this unsetTraceControl()
  * @method this unset_Messages()
  */
-class LoomFetchConfigResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "system_control" => "model.SystemControl",
-        "trace_control"  => "model.TraceControl",
-        "id"             => "int",
-    ]
+data class LoomFetchConfigResponse (
+    val system_control : SystemControl,
+    val trace_control  : TraceControl,
+    val id             : Int
+    ){
+//    val JSON_PROPERTY_MAP = [
+//        "system_control" => "model.SystemControl",
+//        "trace_control"  => "model.TraceControl",
+//        "id"             => "int",
+//    ]
 }

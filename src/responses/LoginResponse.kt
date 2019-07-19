@@ -3,6 +3,10 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Challenge
+import instagramAPI.responses.model.PhoneVerificationSettings
+import instagramAPI.responses.model.TwoFactorInfo
+import instagramAPI.responses.model.User
 
 /**
  * LoginResponse.
@@ -124,34 +128,60 @@ import instagramAPI.Response
  * @method this unsetUsername()
  * @method this unset_Messages()
  */
-class LoginResponse : Response()
-{
-    val JSON_PROPERTY_MAP = mapOf<String,String>(
-        "username"                      to "string",
-        "has_anonymous_profile_picture" to "bool",
-        "profile_pic_url"               to "string",
-        "profile_pic_id"                to "string",
-        "full_name"                     to "string",
-        "pk"                            to "string",
-        "is_private"                    to "bool",
-        "is_verified"                   to "bool",
-        "allowed_commenter_type"        to "string",
-        "reel_auto_archive"             to "string",
-        "allow_contacts_sync"           to "bool",
-        "phone_number"                  to "string",
-        "country_code"                  to "int",
-        "national_number"               to "int",
-        "error_title"                   to "", // On wrong pass.
-        "error_type"                    to "", // On wrong pass.
-        "buttons"                       to "", // On wrong pass.
-        "invalid_credentials"           to "", // On wrong pass.
-        "logged_in_user"                to "model.User",
-        "two_factor_required"           to "",
-        "phone_verification_settings"   to "model.PhoneVerificationSettings",
-        "two_factor_info"               to "model.TwoFactorInfo",
-        "checkpoint_url"                to "string",
-        "lock"                          to "",
-        "help_url"                      to "string",
-        "challenge"                     to "model.Challenge"
-    )
+data class LoginResponse (
+    val username                      : String,
+    val has_anonymous_profile_picture : Boolean,
+    val profile_pic_url               : String,
+    val profile_pic_id                : String,
+    val full_name                     : String,
+    val pk                            : String,
+    val is_private                    : Boolean,
+    val is_verified                   : Boolean,
+    val allowed_commenter_type        : String,
+    val reel_auto_archive             : String,
+    val allow_contacts_sync           : Boolean,
+    val phone_number                  : String,
+    val country_code                  : Int,
+    val national_number               : Int,
+    val error_title                   : String, // On wrong pass.
+    val error_type                    : String, // On wrong pass.
+    val buttons                       : String, // On wrong pass.
+    val invalid_credentials           : String, // On wrong pass.
+    val logged_in_user                : User,
+    val two_factor_required           : String,
+    val phone_verification_settings   : PhoneVerificationSettings,
+    val two_factor_info               : TwoFactorInfo,
+    val checkpoint_url                : String,
+    val lock                          : String,
+    val help_url                      : String,
+    val challenge                     : Challenge
+){
+//    val JSON_PROPERTY_MAP = mapOf<String,String>(
+//        "username"                      to "string",
+//        "has_anonymous_profile_picture" to "bool",
+//        "profile_pic_url"               to "string",
+//        "profile_pic_id"                to "string",
+//        "full_name"                     to "string",
+//        "pk"                            to "string",
+//        "is_private"                    to "bool",
+//        "is_verified"                   to "bool",
+//        "allowed_commenter_type"        to "string",
+//        "reel_auto_archive"             to "string",
+//        "allow_contacts_sync"           to "bool",
+//        "phone_number"                  to "string",
+//        "country_code"                  to "int",
+//        "national_number"               to "int",
+//        "error_title"                   to "", // On wrong pass.
+//        "error_type"                    to "", // On wrong pass.
+//        "buttons"                       to "", // On wrong pass.
+//        "invalid_credentials"           to "", // On wrong pass.
+//        "logged_in_user"                to "model.User",
+//        "two_factor_required"           to "",
+//        "phone_verification_settings"   to "model.PhoneVerificationSettings",
+//        "two_factor_info"               to "model.TwoFactorInfo",
+//        "checkpoint_url"                to "string",
+//        "lock"                          to "",
+//        "help_url"                      to "string",
+//        "challenge"                     to "model.Challenge"
+//    )
 }

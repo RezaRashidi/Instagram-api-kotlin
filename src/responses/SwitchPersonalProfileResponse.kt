@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * SwitchPersonalProfileResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class SwitchPersonalProfileResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "users" => "model.User[]",
-    ]
+data class SwitchPersonalProfileResponse (
+    val users : MutableList<User>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "users" => "model.User[]",
+//    ]
 }

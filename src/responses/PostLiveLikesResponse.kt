@@ -36,12 +36,16 @@ import instagramAPI.Response
  * @method this unsetTimeSeries()
  * @method this unset_Messages()
  */
-class PostLiveLikesResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "starting_offset"   => "",
-        "ending_offset"     => "",
-        "next_fetch_offset" => "",
-        "time_series"       => "",
-    ]
+data class PostLiveLikesResponse (
+    val starting_offset   : String,
+    val ending_offset     : String,
+    val next_fetch_offset : String,
+    val time_series       : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "starting_offset"   => "",
+//        "ending_offset"     => "",
+//        "next_fetch_offset" => "",
+//        "time_series"       => "",
+//    ]
 }

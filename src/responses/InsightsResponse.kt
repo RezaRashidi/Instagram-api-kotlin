@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Insights
 
 /**
  * InsightsResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class InsightsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "instagram_user" => "model.Insights",
-    ]
+data class InsightsResponse (
+    val instagram_user : Insights
+){
+//    val JSON_PROPERTY_MAP = [
+//        "instagram_user" => "model.Insights",
+//    ]
 }

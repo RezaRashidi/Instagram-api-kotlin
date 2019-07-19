@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.CountdownSticker
 
 /**
  * StoryCountdownsResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class StoryCountdownsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "countdowns" => "model.CountdownSticker[]",
-    ]
+data class StoryCountdownsResponse (
+    val countdowns : MutableList<CountdownSticker>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "countdowns" => "model.CountdownSticker[]",
+//    ]
 }

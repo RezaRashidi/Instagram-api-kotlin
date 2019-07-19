@@ -32,11 +32,14 @@ import instagramAPI.Response
  * @method this unsetTitle()
  * @method this unset_Messages()
  */
-class SendConfirmEmailResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "title"          => "",
-        "is_email_legit" => "",
-        "body"           => "",
-    ]
+data class SendConfirmEmailResponse (
+    val title          : String,
+    val is_email_legit : String,
+    val body           : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "title"          => "",
+//        "is_email_legit" => "",
+//        "body"           => "",
+//    ]
 }

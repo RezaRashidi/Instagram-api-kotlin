@@ -32,11 +32,14 @@ import instagramAPI.Response
  * @method this unsetUploadId()
  * @method this unset_Messages()
  */
-class UploadVideoResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "upload_id"          => "string",
-        "configure_delay_ms" => "float",
-        "result"             => "",
-    ]
+data class UploadVideoResponse (
+    val upload_id          : String,
+    val configure_delay_ms : Float,
+    val result             : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "upload_id"          => "string",
+//        "configure_delay_ms" => "float",
+//        "result"             => "",
+//    ]
 }

@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * UsersLookupResponse.
@@ -60,18 +61,28 @@ import instagramAPI.Response
  * @method this unsetUserId()
  * @method this unset_Messages()
  */
-class UsersLookupResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "user"            => "model.User",
-        "email_sent"      => "bool",
-        "has_valid_phone" => "bool",
-        "can_email_reset" => "bool",
-        "can_sms_reset"   => "bool",
-        "user_id"         => "string",
-        "lookup_source"   => "string",
-        "email"           => "string",
-        "phone_number"    => "string",
-        "corrected_input" => "string",
+data class UsersLookupResponse (
+    val user            : User,
+    val email_sent      : Boolean,
+    val has_valid_phone : Boolean,
+    val can_email_reset : Boolean,
+    val can_sms_reset   : Boolean,
+    val user_id         : String,
+    val lookup_source   : String,
+    val email           : String,
+    val phone_number    : String,
+    val corrected_input : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "user"            => "model.User",
+//        "email_sent"      => "bool",
+//        "has_valid_phone" => "bool",
+//        "can_email_reset" => "bool",
+//        "can_sms_reset"   => "bool",
+//        "user_id"         => "string",
+//        "lookup_source"   => "string",
+//        "email"           => "string",
+//        "phone_number"    => "string",
+//        "corrected_input" => "string",
     ]
 }

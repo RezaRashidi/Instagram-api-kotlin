@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * ReviewPreferenceResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetUser()
  * @method this unset_Messages()
  */
-class ReviewPreferenceResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "user" => "model.User",
-    ]
+data class ReviewPreferenceResponse (
+    val user : User
+){
+//    val JSON_PROPERTY_MAP = [
+//        "user" => "model.User",
+//    ]
 }

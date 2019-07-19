@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.VoterInfo
 
 /**
  * StoryPollVotersResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetVoterInfo()
  * @method this unset_Messages()
  */
-class StoryPollVotersResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "voter_info"    => "model.VoterInfo",
-    ]
+data class StoryPollVotersResponse (
+    val voter_info : VoterInfo
+){
+//    val JSON_PROPERTY_MAP = [
+//        "voter_info"    => "model.VoterInfo",
+//    ]
 }

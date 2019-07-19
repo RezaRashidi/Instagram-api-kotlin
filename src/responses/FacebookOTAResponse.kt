@@ -28,9 +28,12 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FacebookOTAResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "bundles"    to "",
-        "request_id" to "string"
-    )
+data class FacebookOTAResponse (
+    val bundles    : String,
+    val request_id : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "bundles"    to "",
+//        "request_id" to "string"
+//    )
 }

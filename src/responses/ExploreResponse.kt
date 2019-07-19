@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.ExploreItem
 
 /**
  * ExploreResponse.
@@ -48,14 +49,22 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ExploreResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "num_results"            to "int",
-        "auto_load_more_enabled" to "",
-        "items"                  to "model.ExploreItem[]",
-        "more_available"         to "",
-        "next_max_id"            to "string",
-        "max_id"                 to "string",
-        "rank_token"             to "string"
-    )
+data class ExploreResponse (
+    val num_results            : Int,
+    val auto_load_more_enabled : String,
+    val items                  : MutableList<ExploreItem>,
+    val more_available         : String,
+    val next_max_id            : String,
+    val max_id                 : String,
+    val rank_token             : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "num_results"            to "int",
+//        "auto_load_more_enabled" to "",
+//        "items"                  to "model.ExploreItem[]",
+//        "more_available"         to "",
+//        "next_max_id"            to "string",
+//        "max_id"                 to "string",
+//        "rank_token"             to "string"
+//    )
 }

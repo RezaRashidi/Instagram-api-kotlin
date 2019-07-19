@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * PostLiveViewerListResponse.
@@ -32,11 +33,14 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class PostLiveViewerListResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "users"              => "model.User[]",
-        "next_max_id"        => "",
-        "total_viewer_count" => "int",
-    ]
+data class PostLiveViewerListResponse (
+    val users              : MutableList<User>,
+    val next_max_id        :String,
+    val total_viewer_count : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "users"              => "model.User[]",
+//        "next_max_id"        => "",
+//        "total_viewer_count" => "int",
+//    ]
 }

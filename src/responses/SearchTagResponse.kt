@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Tag
 
 /**
  * SearchTagResponse.
@@ -32,11 +33,14 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class SearchTagResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "has_more"   => "bool",
-        "results"    => "model.Tag[]",
-        "rank_token" => "string",
-    ]
+data class SearchTagResponse (
+    val has_more   : Boolean,
+    val results    : MutableList<Tag>,
+    val rank_token : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "has_more"   => "bool",
+//        "results"    => "model.Tag[]",
+//        "rank_token" => "string",
+//    ]
 }

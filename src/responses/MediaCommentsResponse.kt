@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Caption
+import instagramAPI.responses.model.Comment
 
 /**
  * MediaCommentsResponse.
@@ -68,20 +70,32 @@ import instagramAPI.Response
  * @method this unsetThreadingEnabled()
  * @method this unset_Messages()
  */
-class MediaCommentsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "comments"                   => "model.Comment[]",
-        "comment_count"              => "int",
-        "comment_likes_enabled"      => "bool",
-        "next_max_id"                => "string",
-        "next_min_id"                => "string",
-        "caption"                    => "model.Caption",
-        "has_more_comments"          => "bool",
-        "caption_is_edited"          => "bool",
-        "preview_comments"           => "",
-        "has_more_headload_comments" => "bool",
-        "media_header_display"       => "string",
-        "threading_enabled"          => "bool",
-    ]
+data class MediaCommentsResponse (
+    val comments                   : MutableList<Comment>,
+    val comment_count              : Int,
+    val comment_likes_enabled      : Boolean,
+    val next_max_id                : String,
+    val next_min_id                : String,
+    val caption                    : Caption,
+    val has_more_comments          : Boolean,
+    val caption_is_edited          : Boolean,
+    val preview_comments           : String,
+    val has_more_headload_comments : Boolean,
+    val media_header_display       : String,
+    val threading_enabled          : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "comments"                   => "model.Comment[]",
+//        "comment_count"              => "int",
+//        "comment_likes_enabled"      => "bool",
+//        "next_max_id"                => "string",
+//        "next_min_id"                => "string",
+//        "caption"                    => "model.Caption",
+//        "has_more_comments"          => "bool",
+//        "caption_is_edited"          => "bool",
+//        "preview_comments"           => "",
+//        "has_more_headload_comments" => "bool",
+//        "media_header_display"       => "string",
+//        "threading_enabled"          => "bool",
+//    ]
 }

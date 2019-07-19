@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.unpredictableKeys.FriendshipStatusUnpredictableContainer
 
 /**
  * FriendshipsShowManyResponse.
@@ -24,8 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FriendshipsShowManyResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "friendship_statuses" to "model.unpredictableKeys.FriendshipStatusUnpredictableContainer"
-    )
+data class FriendshipsShowManyResponse (
+    val friendship_statuses: FriendshipStatusUnpredictableContainer
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "friendship_statuses" to "model.unpredictableKeys.FriendshipStatusUnpredictableContainer"
+//    )
 }

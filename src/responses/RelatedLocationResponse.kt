@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Location
 
 /**
  * RelatedLocationResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class RelatedLocationResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "related" => "model.Location[]",
-    ]
+data class RelatedLocationResponse (
+    val related : MutableList<Location>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "related" => "model.Location[]",
+//    ]
 }

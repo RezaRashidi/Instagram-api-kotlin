@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.QPData
+import instagramAPI.responses.model.QPExtraInfo
 
 /**
  * FetchQPDataResponse.
@@ -40,12 +42,18 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FetchQPDataResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "request_status"          to "string",
-        "extra_info"              to "model.QPExtraInfo[]",
-        "qp_data"                 to "model.QPData[]",
-        "client_cache_ttl_in_sec" to "int",
-        "error_msg"               to ""
-    )
+data class FetchQPDataResponse (
+    val request_status          : String,
+    val extra_info              : MutableList<QPExtraInfo>,
+    val qp_data                 : MutableList<QPData>,
+    val client_cache_ttl_in_sec : Int,
+    val error_msg               : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "request_status"          to "string",
+//        "extra_info"              to "model.QPExtraInfo[]",
+//        "qp_data"                 to "model.QPData[]",
+//        "client_cache_ttl_in_sec" to "int",
+//        "error_msg"               to ""
+//    )
 }

@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.BlockedReels
 
 /**
  * ReelSettingsResponse.
@@ -28,10 +29,12 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ReelSettingsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "message_prefs" => "",
-        "blocked_reels" => "model.BlockedReels",
-    ]
+data class ReelSettingsResponse (
+    val message_prefs : String,
+    val blocked_reels : BlockedReels
+){
+//    val JSON_PROPERTY_MAP = [
+//        "message_prefs" => "",
+//        "blocked_reels" => "model.BlockedReels",
+//    ]
 }

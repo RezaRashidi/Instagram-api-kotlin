@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.unpredictableKeys.PresenceUnpredictableContainer
 
 /**
  * PresencesResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetUserPresence()
  * @method this unset_Messages()
  */
-class PresencesResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "user_presence" => "model.unpredictableKeys.PresenceUnpredictableContainer",
-    ]
+data class PresencesResponse (
+    val user_presence: PresenceUnpredictableContainer
+){
+//    val JSON_PROPERTY_MAP = [
+//        "user_presence" => "model.unpredictableKeys.PresenceUnpredictableContainer",
+//    ]
 }

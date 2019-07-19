@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Hashtag
 
 /**
  * HashtagsResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetTags()
  * @method this unset_Messages()
  */
-class HashtagsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "tags" => "model.Hashtag[]",
-    ]
+data class HashtagsResponse (
+    val tags : MutableList<Hashtag>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "tags" => "model.Hashtag[]",
+//    ]
 }

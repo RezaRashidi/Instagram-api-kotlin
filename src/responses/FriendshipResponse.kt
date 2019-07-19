@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.FriendshipStatus
 
 /**
  * FriendshipResponse.
@@ -24,8 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FriendshipResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "friendship_status" to "model.FriendshipStatus"
-    )
+data class FriendshipResponse (
+    val friendship_status : FriendshipStatus
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "friendship_status" to "model.FriendshipStatus"
+//    )
 }

@@ -32,11 +32,14 @@ import instagramAPI.Response
  * @method this unsetTitle()
  * @method this unset_Messages()
  */
-class RecoveryResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "phone_number_valid" => "bool",
-        "title"              => "string",
-        "body"               => "string",
-    ]
+data class RecoveryResponse (
+    val phone_number_valid : Boolean,
+    val title              : String,
+    val body               : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "phone_number_valid" => "bool",
+//        "title"              => "string",
+//        "body"               => "string",
+//    ]
 }

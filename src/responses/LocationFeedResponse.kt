@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Section
 
 /**
  * LocationFeedResponse.
@@ -40,13 +41,18 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class LocationFeedResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "sections"               => "model.Section[]",
-        "next_page"              => "int",
-        "more_available"         => "bool",
-        "next_media_ids"         => "int[]",
-        "next_max_id"            => "string",
-    ]
+data class LocationFeedResponse (
+    val sections               : MutableList<Section>,
+    val next_page              : Int,
+    val more_available         : Boolean,
+    val next_media_ids         : MutableList<Int>,
+    val next_max_id            : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "sections"               => "model.Section[]",
+//        "next_page"              => "int",
+//        "more_available"         => "bool",
+//        "next_media_ids"         => "int[]",
+//        "next_max_id"            => "string",
+//    ]
 }

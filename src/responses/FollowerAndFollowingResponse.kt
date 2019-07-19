@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.SuggestedUsers
+import instagramAPI.responses.model.User
 
 /**
  * FollowerAndFollowingResponse.
@@ -44,13 +46,20 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class FollowerAndFollowingResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "users"                             to "model.User[]",
-        "suggested_users"                   to "model.SuggestedUsers",
-        "truncate_follow_requests_at_index" to "int",
-        "next_max_id"                       to "string",
-        "page_size"                         to "",
-        "big_list"                          to ""
-    )
+data class FollowerAndFollowingResponse (
+    val users                             : MutableList<User>,
+    val suggested_users                   : SuggestedUsers,
+    val truncate_follow_requests_at_index : Int,
+    val next_max_id                       : String,
+    val page_size                         : String,
+    val big_list                          : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "users"                             to "model.User[]",
+//        "suggested_users"                   to "model.SuggestedUsers",
+//        "truncate_follow_requests_at_index" to "int",
+//        "next_max_id"                       to "string",
+//        "page_size"                         to "",
+//        "big_list"                          to ""
+//    )
 }

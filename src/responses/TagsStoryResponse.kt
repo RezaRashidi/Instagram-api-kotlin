@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Reel
 
 /**
  * TagsStoryResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStory()
  * @method this unset_Messages()
  */
-class TagsStoryResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "story"       => "model.Reel",
-    ]
+data class TagsStoryResponse (
+    val story : Reel
+){
+//    val JSON_PROPERTY_MAP = [
+//        "story"       => "model.Reel",
+//    ]
 }

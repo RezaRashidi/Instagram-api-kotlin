@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.TwoFactorInfo
 
 /**
  * TwoFactorLoginSMSResponse.
@@ -28,10 +29,12 @@ import instagramAPI.Response
  * @method this unsetTwoFactorRequired()
  * @method this unset_Messages()
  */
-class TwoFactorLoginSMSResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "two_factor_required" => "bool",
-        "two_factor_info"     => "model.TwoFactorInfo",
-    ]
+data class TwoFactorLoginSMSResponse (
+    val two_factor_required  : Boolean,
+    val two_factor_info      : TwoFactorInfo
+){
+//    val JSON_PROPERTY_MAP = [
+//        "two_factor_required" => "bool",
+//        "two_factor_info"     => "model.TwoFactorInfo",
+//    ]
 }

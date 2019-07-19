@@ -24,9 +24,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ReportExploreMediaResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "explore_report_status" => "",
-    ]
+data class ReportExploreMediaResponse (
+    val explore_report_status : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "explore_report_status" => "",
+//    ]
 }

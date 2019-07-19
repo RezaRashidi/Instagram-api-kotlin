@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * FinalViewerListResponse.
@@ -28,9 +29,12 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class FinalViewerListResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "users"                     to "model.User[]",
-        "total_unique_viewer_count" to "int"
-    )
+data class FinalViewerListResponse (
+    val users                     : MutableList<User>,
+    val total_unique_viewer_count : Int
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "users"                     to "model.User[]",
+//        "total_unique_viewer_count" to "int"
+//    )
 }

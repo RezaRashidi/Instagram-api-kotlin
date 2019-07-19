@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Item
 
 /**
  * LikeFeedResponse.
@@ -48,15 +49,22 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class LikeFeedResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "auto_load_more_enabled" => "",
-        "items"                  => "model.Item[]",
-        "more_available"         => "",
-        "patches"                => "",
-        "last_counted_at"        => "",
-        "num_results"            => "int",
-        "next_max_id"            => "string",
-    ]
+class LikeFeedResponse (
+    val auto_load_more_enabled : String,
+    val items                  : MutableList<Item>,
+    val more_available         : String,
+    val patches                : String,
+    val last_counted_at        : String,
+    val num_results            : Int,
+    val next_max_id            : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "auto_load_more_enabled" => "",
+//        "items"                  => "model.Item[]",
+//        "more_available"         => "",
+//        "patches"                => "",
+//        "last_counted_at"        => "",
+//        "num_results"            => "int",
+//        "next_max_id"            => "string",
+//    ]
 }

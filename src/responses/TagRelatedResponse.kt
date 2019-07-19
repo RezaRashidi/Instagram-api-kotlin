@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Related
 
 /**
  * TagRelatedResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class TagRelatedResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "related" => "model.Related[]",
-    ]
+data class TagRelatedResponse (
+    val related : MutableList<Related>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "related" => "model.Related[]",
+//    ]
 }

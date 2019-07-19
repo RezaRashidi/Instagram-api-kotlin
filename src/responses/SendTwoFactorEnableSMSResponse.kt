@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.PhoneVerificationSettings
 
 /**
  * SendTwoFactorEnableSMSResponse.
@@ -28,10 +29,12 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class SendTwoFactorEnableSMSResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "phone_verification_settings" => "model.PhoneVerificationSettings",
-        "obfuscated_phone_number"     => "",
-    ]
+data class SendTwoFactorEnableSMSResponse (
+    val phone_verification_settings : PhoneVerificationSettings,
+    val obfuscated_phone_number     : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "phone_verification_settings" => "model.PhoneVerificationSettings",
+//        "obfuscated_phone_number"     => "",
+//    ]
 }

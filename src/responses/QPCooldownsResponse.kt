@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.QPSurface
+import instagramAPI.responses.model.Slot
 
 /**
  * QPCooldownsResponse.
@@ -36,12 +38,16 @@ import instagramAPI.Response
  * @method this unsetSurfaces()
  * @method this unset_Messages()
  */
-class QPCooldownsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "global"    => "int",
-        "default"   => "int",
-        "surfaces"  => "model.QPSurface[]",
-        "slots"     => "model.Slot[]",
-    ]
+data class QPCooldownsResponse (
+    val global    : Int,
+    val default   : Int,
+    val surfaces  : MutableList<QPSurface>,
+    val slots     : Slot
+){
+//    val JSON_PROPERTY_MAP = [
+//        "global"    => "int",
+//        "default"   => "int",
+//        "surfaces"  => "model.QPSurface[]",
+//        "slots"     => "model.Slot[]",
+//    ]
 }

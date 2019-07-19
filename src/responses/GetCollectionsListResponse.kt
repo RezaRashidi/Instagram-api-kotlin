@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Collection
 
 /**
  * GetCollectionsListResponse.
@@ -36,11 +37,16 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class GetCollectionsListResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "items"                  to "model.Collection[]",
-        "more_available"         to "bool",
-        "auto_load_more_enabled" to "bool",
-        "next_max_id"            to "string"
-    )
+data class GetCollectionsListResponse (
+    val items                  : MutableList<Collection>,
+    val more_available         : Boolean,
+    val auto_load_more_enabled : Boolean,
+    val next_max_id            : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "items"                  to "model.Collection[]",
+//        "more_available"         to "bool",
+//        "auto_load_more_enabled" to "bool",
+//        "next_max_id"            to "string"
+//    )
 }

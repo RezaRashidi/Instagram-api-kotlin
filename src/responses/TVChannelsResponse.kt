@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Item
+import instagramAPI.responses.model.User
 
 /**
  * TVChannelsResponse.
@@ -52,16 +54,24 @@ import instagramAPI.Response
  * @method this unsetUserDict()
  * @method this unset_Messages()
  */
-class TVChannelsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "type"              => "string",
-        "title"             => "string",
-        "id"                => "string",
-        "items"             => "model.Item[]",
-        "more_available"    => "bool",
-        "max_id"            => "string",
-        "seen_state"        => "",
-        "user_dict"         => "model.User",
-    ]
+data class TVChannelsResponse (
+    val type              : String,
+    val title             : String,
+    val id                : String,
+    val items             : MutableList<Item>,
+    val more_available    : Boolean,
+    val max_id            : String,
+    val seen_state        : String,
+    val user_dict         : User
+){
+//    val JSON_PROPERTY_MAP = [
+//        "type"              => "string",
+//        "title"             => "string",
+//        "id"                => "string",
+//        "items"             => "model.Item[]",
+//        "more_available"    => "bool",
+//        "max_id"            => "string",
+//        "seen_state"        => "",
+//        "user_dict"         => "model.User",
+//    ]
 }

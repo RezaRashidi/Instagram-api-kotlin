@@ -24,9 +24,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class PinCommentBroadcastResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "comment_id" => "string",
-    ]
+data class PinCommentBroadcastResponse (
+    val comment_id: String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "comment_id" => "string",
+//    ]
 }

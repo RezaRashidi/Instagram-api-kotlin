@@ -24,9 +24,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class LauncherSyncResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "configs"    => "",
-    ]
+data class LauncherSyncResponse (
+    val configs: String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "configs"    => "",
+//    ]
 }

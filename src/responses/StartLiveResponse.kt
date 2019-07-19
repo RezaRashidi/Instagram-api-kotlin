@@ -24,9 +24,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class StartLiveResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "media_id" => "string",
-    ]
+data class StartLiveResponse (
+    val media_id : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "media_id" => "string",
+//    ]
 }

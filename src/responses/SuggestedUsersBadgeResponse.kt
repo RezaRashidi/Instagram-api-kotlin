@@ -28,10 +28,12 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class SuggestedUsersBadgeResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "should_badge"       => "",
-        "new_suggestion_ids" => "string[]",
-    ]
+data class SuggestedUsersBadgeResponse (
+    val should_badge       : String,
+    val new_suggestion_ids : MutableList<String>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "should_badge"       => "",
+//        "new_suggestion_ids" => "string[]",
+//    ]
 }

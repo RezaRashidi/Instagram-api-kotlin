@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.SavedFeedItem
 
 /**
  * SavedFeedResponse.
@@ -40,13 +41,18 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class SavedFeedResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "items"                  => "model.SavedFeedItem[]",
-        "more_available"         => "",
-        "next_max_id"            => "string",
-        "auto_load_more_enabled" => "",
-        "num_results"            => "int",
-    ]
+data class SavedFeedResponse (
+    val items                  : MutableList<SavedFeedItem>,
+    val more_available         : String,
+    val next_max_id            : String,
+    val auto_load_more_enabled : String,
+    val num_results            : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "items"                  => "model.SavedFeedItem[]",
+//        "more_available"         => "",
+//        "next_max_id"            => "string",
+//        "auto_load_more_enabled" => "",
+//        "num_results"            => "int",
+//    ]
 }

@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * SearchUserResponse.
@@ -36,12 +37,16 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class SearchUserResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "has_more"    => "bool",
-        "num_results" => "int",
-        "users"       => "model.User[]",
-        "rank_token"  => "string",
-    ]
+data class SearchUserResponse (
+    val has_more    : Boolean,
+    val num_results : Int,
+    val users       : MutableList<User>,
+    val rank_token  : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "has_more"    => "bool",
+//        "num_results" => "int",
+//        "users"       => "model.User[]",
+//        "rank_token"  => "string",
+//    ]
 }

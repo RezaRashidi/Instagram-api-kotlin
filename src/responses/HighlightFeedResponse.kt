@@ -3,6 +3,9 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Story
+import instagramAPI.responses.model.StoryTray
+import instagramAPI.responses.model.StoryTvChannel
 
 /**
  * HighlightFeedResponse.
@@ -44,14 +47,20 @@ import instagramAPI.Response
  * @method this unsetTvChannel()
  * @method this unset_Messages()
  */
-class HighlightFeedResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "auto_load_more_enabled" => "bool",
-        "next_max_id"            => "string",
-        "stories"                => "model.Story[]",
-        "show_empty_state"       => "bool",
-        "tray"                   => "model.StoryTray[]",
-        "tv_channel"             => "model.StoryTvChannel",
-    ]
+data class HighlightFeedResponse (
+    val auto_load_more_enabled : Boolean,
+    val next_max_id            : String,
+    val stories                : MutableList<Story>,
+    val show_empty_state       : Boolean,
+    val tray                   : MutableList<StoryTray>,
+    val tv_channel             : StoryTvChannel
+){
+//    val JSON_PROPERTY_MAP = [
+//        "auto_load_more_enabled" => "bool",
+//        "next_max_id"            => "string",
+//        "stories"                => "model.Story[]",
+//        "show_empty_state"       => "bool",
+//        "tray"                   => "model.StoryTray[]",
+//        "tv_channel"             => "model.StoryTvChannel",
+//    ]
 }

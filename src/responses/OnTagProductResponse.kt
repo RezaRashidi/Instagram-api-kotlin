@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Product
+import instagramAPI.responses.model.User
 
 /**
  * OnTagProductResponse.
@@ -32,11 +34,14 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class OnTagProductResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "product_item"              => "model.Product",
-        "merchant"                  => "model.User",
-        "other_product_items"       => "model.Product[]",
-    ]
+data class OnTagProductResponse (
+    val product_item              : Product,
+    val merchant                  : User,
+    val other_product_items       : MutableList<Product>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "product_item"              => "model.Product",
+//        "merchant"                  => "model.User",
+//        "other_product_items"       => "model.Product[]",
+//    ]
 }

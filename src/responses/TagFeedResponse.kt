@@ -3,6 +3,9 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Item
+import instagramAPI.responses.model.Section
+import instagramAPI.responses.model.StoryTray
 
 /**
  * TagFeedResponse.
@@ -60,18 +63,28 @@ import instagramAPI.Response
  * @method this unsetStory()
  * @method this unset_Messages()
  */
-class TagFeedResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "sections"               => "model.Section[]",
-        "num_results"            => "int",
-        "ranked_items"           => "model.Item[]",
-        "auto_load_more_enabled" => "bool",
-        "items"                  => "model.Item[]",
-        "story"                  => "model.StoryTray",
-        "more_available"         => "bool",
-        "next_max_id"            => "string",
-        "next_media_ids"         => "",
-        "next_page"              => "int",
-    ]
+data class TagFeedResponse (
+    val sections               : MutableList<Section>,
+    val num_results            : Int,
+    val ranked_items           : MutableList<Item>,
+    val auto_load_more_enabled : Boolean,
+    val items                  : MutableList<Item>,
+    val story                  : StoryTray,
+    val more_available         : Boolean,
+    val next_max_id            : String,
+    val next_media_ids         : String,
+    val next_page              : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "sections"               => "model.Section[]",
+//        "num_results"            => "int",
+//        "ranked_items"           => "model.Item[]",
+//        "auto_load_more_enabled" => "bool",
+//        "items"                  => "model.Item[]",
+//        "story"                  => "model.StoryTray",
+//        "more_available"         => "bool",
+//        "next_max_id"            => "string",
+//        "next_media_ids"         => "",
+//        "next_page"              => "int",
+//    ]
 }

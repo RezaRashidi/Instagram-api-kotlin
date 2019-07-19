@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * SuggestedUsersResponse.
@@ -28,10 +29,12 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class SuggestedUsersResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "users"     => "model.User[]",
-        "is_backup" => "",
-    ]
+data class SuggestedUsersResponse (
+    val users     : MutableList<User>,
+    val is_backup : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "users"     => "model.User[]",
+//        "is_backup" => "",
+//    ]
 }

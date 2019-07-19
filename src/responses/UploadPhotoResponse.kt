@@ -28,10 +28,12 @@ import instagramAPI.Response
  * @method this unsetUploadId()
  * @method this unset_Messages()
  */
-class UploadPhotoResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "upload_id" => "string",
-        "media_id"  => "string",
-    ]
+data class UploadPhotoResponse (
+    val upload_id : String,
+    val media_id  : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "upload_id" => "string",
+//        "media_id"  => "string",
+//    ]
 }

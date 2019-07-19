@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.CommentTranslations
 
 /**
  * TranslateResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class TranslateResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "comment_translations" => "model.CommentTranslations[]",
-    ]
+data class TranslateResponse (
+    val comment_translations : MutableList<CommentTranslations>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "comment_translations" => "model.CommentTranslations[]",
+//    ]
 }

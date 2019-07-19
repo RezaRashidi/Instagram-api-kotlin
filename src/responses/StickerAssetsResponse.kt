@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.StaticStickers
 
 /**
  * StickerAssetsResponse.
@@ -28,10 +29,12 @@ import instagramAPI.Response
  * @method this unsetVersion()
  * @method this unset_Messages()
  */
-class StickerAssetsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "version"         => "",
-        "static_stickers" => "model.StaticStickers[]",
-    ]
+data class StickerAssetsResponse (
+    val version         : String,
+    val static_stickers : MutableList<StaticStickers>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "version"         => "",
+//        "static_stickers" => "model.StaticStickers[]",
+//    ]
 }

@@ -28,10 +28,12 @@ import instagramAPI.Response
  * @method this unsetXsharingNonces()
  * @method this unset_Messages()
  */
-class ResumableUploadResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "xsharing_nonces" => "",
-        "upload_id"       => "int",
-    ]
+data class ResumableUploadResponse (
+    val xsharing_nonces : String,
+    val upload_id       : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "xsharing_nonces" => "",
+//        "upload_id"       => "int",
+//    ]
 }

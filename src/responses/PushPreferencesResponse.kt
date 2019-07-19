@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.PushSettings
 
 /**
  * PushPreferencesResponse.
@@ -92,26 +93,44 @@ import instagramAPI.Response
  * @method this unsetViewCount()
  * @method this unset_Messages()
  */
-class PushPreferencesResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "push_settings"                         => "model.PushSettings[]",
-        "likes"                                 => "",
-        "comments"                              => "",
-        "comment_likes"                         => "",
-        "like_and_comment_on_photo_user_tagged" => "",
-        "live_broadcast"                        => "",
-        "new_follower"                          => "",
-        "follow_request_accepted"               => "",
-        "contact_joined"                        => "",
-        "pending_direct_share"                  => "",
-        "direct_share_activity"                 => "",
-        "user_tagged"                           => "",
-        "notification_reminders"                => "",
-        "first_post"                            => "",
-        "announcements"                         => "",
-        "ads"                                   => "",
-        "view_count"                            => "",
-        "report_updated"                        => "",
-    ]
+data class PushPreferencesResponse (
+    val push_settings                         : MutableList<PushSettings>,
+    val likes                                 : String,
+    val comments                              : String,
+    val comment_likes                         : String,
+    val like_and_comment_on_photo_user_tagged : String,
+    val live_broadcast                        : String,
+    val new_follower                          : String,
+    val follow_request_accepted               : String,
+    val contact_joined                        : String,
+    val pending_direct_share                  : String,
+    val direct_share_activity                 : String,
+    val user_tagged                           : String,
+    val notification_reminders                : String,
+    val first_post                            : String,
+    val announcements                         : String,
+    val ads                                   : String,
+    val view_count                            : String,
+    val report_updated                        : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "push_settings"                         => "model.PushSettings[]",
+//        "likes"                                 => "",
+//        "comments"                              => "",
+//        "comment_likes"                         => "",
+//        "like_and_comment_on_photo_user_tagged" => "",
+//        "live_broadcast"                        => "",
+//        "new_follower"                          => "",
+//        "follow_request_accepted"               => "",
+//        "contact_joined"                        => "",
+//        "pending_direct_share"                  => "",
+//        "direct_share_activity"                 => "",
+//        "user_tagged"                           => "",
+//        "notification_reminders"                => "",
+//        "first_post"                            => "",
+//        "announcements"                         => "",
+//        "ads"                                   => "",
+//        "view_count"                            => "",
+//        "report_updated"                        => "",
+//    ]
 }

@@ -39,14 +39,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetY()
  * @method this unsetZ()
  */
-class Sticker : AutoPropertyMapper(){
-    val JSON_PROPERTY_MAP = mapOf(
-        "x"         to "float",
-        "y"         to "float",
-        "z"         to "float", // Unused by IG for now. So far it"s always int(0).
-        "width"     to "float",
-        "height"    to "float",
-        "rotation"  to "float",
-        "is_pinned" to "int"
-    )
+data class Sticker (
+    val x         : Float,
+    val y         : Float,
+    val z         : Float, // Unused by IG for now. So far its always int(0).
+    val width     : Float,
+    val height    : Float,
+    val rotation  : Float,
+    val is_pinned : Int
+){
+//    val JSON_PROPERTY_MAP = mapOf(
+//        "x"         to "float",
+//        "y"         to "float",
+//        "z"         to "float", // Unused by IG for now. So far it"s always int(0).
+//        "width"     to "float",
+//        "height"    to "float",
+//        "rotation"  to "float",
+//        "is_pinned" to "int"
+//    )
 }

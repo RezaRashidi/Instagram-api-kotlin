@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Experiment
 
 /**
  * SyncResponse.
@@ -24,9 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class SyncResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "experiments" => "model.Experiment[]",
-    ]
+data class SyncResponse (
+    val experiments : MutableList<Experiment>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "experiments" => "model.Experiment[]",
+//    ]
 }

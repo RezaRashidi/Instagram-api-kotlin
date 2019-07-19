@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.UserList
 
 /**
  * FBSearchResponse.
@@ -36,12 +37,17 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FBSearchResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "has_more"              to "bool",
-        "list"                  to "model.UserList[]",
-        "clear_client_cache"    to "bool",
-        "has_more"              to "bool",
-        "rank_token"            to "string"
-    )
+data class FBSearchResponse (
+    val has_more              : Boolean,
+    val list                  : MutableList<UserList>,
+    val clear_client_cache    : Boolean,
+    val rank_token            : String
+){ // note (saeed) : there is two has_more in php code but kotlin accept one
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "has_more"              to "bool",
+//        "list"                  to "model.UserList[]",
+//        "clear_client_cache"    to "bool",
+//        "has_more"              to "bool",
+//        "rank_token"            to "string"
+//    )
 }

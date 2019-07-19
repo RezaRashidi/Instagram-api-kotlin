@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Reel
+import instagramAPI.responses.model.unpredictableKeys.ReelUnpredictableContainer
 
 /**
  * ReelsMediaResponse.
@@ -28,10 +30,12 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ReelsMediaResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "reels_media" => "model.Reel[]",
-        "reels"       => "model.unpredictableKeys.ReelUnpredictableContainer",
-    ]
+data class ReelsMediaResponse (
+    val reels_media : Reel,
+    val reels       : ReelUnpredictableContainer
+){
+//    val JSON_PROPERTY_MAP = [
+//        "reels_media" => "model.Reel[]",
+//        "reels"       => "model.unpredictableKeys.ReelUnpredictableContainer",
+//    ]
 }

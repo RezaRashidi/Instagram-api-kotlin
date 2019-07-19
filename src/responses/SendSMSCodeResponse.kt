@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.PhoneVerificationSettings
 
 /**
  * SendSMSCodeResponse.
@@ -28,10 +29,12 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class SendSMSCodeResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "phone_number_valid"          => "bool",
-        "phone_verification_settings" => "model.PhoneVerificationSettings",
-    ]
+data class SendSMSCodeResponse (
+    val phone_number_valid          : Boolean,
+    val phone_verification_settings : PhoneVerificationSettings
+){
+//    val JSON_PROPERTY_MAP = [
+//        "phone_number_valid"          => "bool",
+//        "phone_verification_settings" => "model.PhoneVerificationSettings",
+//    ]
 }
