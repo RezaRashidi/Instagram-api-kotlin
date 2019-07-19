@@ -155,7 +155,7 @@ class Request(private val parent: Instagram, private var url: String) {
 	 *
 	 * @var HttpResponseInterface
 	 */
-	private lateinit var _httpResponse: HttpResponseInterface
+	//private lateinit var _httpResponse: HttpResponseInterface
 
 
 	init {

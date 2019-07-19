@@ -33,14 +33,14 @@ import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
  * @author mgp25: Founder, Reversing, Project Leader (https://github.com/mgp25)
  * @author SteveJobzniak (https://github.com/SteveJobzniak)
  */
-class Client(val parent:Instagram)
+open class Client(val parent:Instagram)
 {
     /**
      * How frequently we"re allowed to auto-save the cookie jar, in seconds.
      *
      * @var int
      */
-    val COOKIE_AUTOSAVE_INTERVAL = 45
+    private val COOKIE_AUTOSAVE_INTERVAL = 45
 
 
     /**
@@ -48,7 +48,7 @@ class Client(val parent:Instagram)
      *
      * @var string
      */
-    protected var _userAgent: String
+    private lateinit var _userAgent: String
 
     /**
      * The SSL certificate verification behavior of requests.
@@ -57,7 +57,7 @@ class Client(val parent:Instagram)
      *
      * @var bool|string
      */
-    protected var _verifySSL
+    private var _verifySSL:String
 
     /**
      * Proxy to import for all requests. Optional.
@@ -66,7 +66,7 @@ class Client(val parent:Instagram)
      *
      * @var string|array|null
      */
-    protected var _proxy
+    private var _proxy:MutableList<String>
 
     /**
      * Network interface override to use.
@@ -78,12 +78,12 @@ class Client(val parent:Instagram)
      *
      * @var string|null
      */
-    protected var _outputInterface: String?
+    //protected var _outputInterface: String
 
     /**
      * @var .GuzzleHttp.Client
      */
-    private var _guzzleClient: GuzzleHttp.Client
+//    private var _guzzleClient: GuzzleHttp.Client
 
     /**
      * @var .instagramAPI.middleware.FakeCookies
@@ -98,7 +98,7 @@ class Client(val parent:Instagram)
     /**
      * @var .GuzzleHttp.Cookie.CookieJar
      */
-    private var _cookieJar: GuzzleHttp.Cookie.CookieJar
+    private var _cookieJar: CookieJar
 
     /**
      * The timestamp of when we last saved our cookie jar to disk.

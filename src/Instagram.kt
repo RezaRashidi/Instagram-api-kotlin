@@ -160,7 +160,7 @@ class Instagram : ExperimentsInterface {
 	 *
 	 * @var .instagramAPI.settings.StorageHandler|null
 	 */
-	lateinit var settings: instagramAPI.Settings.StorageHandler
+	lateinit var settings: instagramAPI.settings.StorageHandler
 
 	/**
 	 * The current application session ID.
