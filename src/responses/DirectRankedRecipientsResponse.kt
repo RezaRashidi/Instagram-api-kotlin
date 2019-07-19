@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.DirectRankedRecipient
 
 /**
  * DirectRankedRecipientsResponse.
@@ -40,12 +41,18 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DirectRankedRecipientsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "expires"           to "",
-        "ranked_recipients" to "model.DirectRankedRecipient[]",
-        "filtered"          to "",
-        "request_id"        to "string",
-        "rank_token"        to "string"
-    )
+data class DirectRankedRecipientsResponse (
+    val expires: String,
+    val ranked_recipients: MutableList<DirectRankedRecipient>,
+    val filtered: String,
+    val request_id: String,
+    val rank_token: String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "expires"           to "",
+//        "ranked_recipients" to "model.DirectRankedRecipient[]",
+//        "filtered"          to "",
+//        "request_id"        to "string",
+//        "rank_token"        to "string"
+//    )
 }

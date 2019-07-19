@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.ArchivedStoriesFeedItem
 
 /**
  * ArchivedStoriesFeedResponse.
@@ -36,11 +37,16 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ArchivedStoriesFeedResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "items"                  to "model.ArchivedStoriesFeedItem[]",
-        "num_results"            to "int",
-        "more_available"         to "bool",
-        "max_id"                 to "string"
-    )
+data class ArchivedStoriesFeedResponse (
+    val items                  : MutableList<ArchivedStoriesFeedItem>,
+    val num_results            : Int,
+    val more_available         : Boolean,
+    val max_id                 : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "items"                  to "model.ArchivedStoriesFeedItem[]",
+//        "num_results"            to "int",
+//        "more_available"         to "bool",
+//        "max_id"                 to "string"
+//    )
 }

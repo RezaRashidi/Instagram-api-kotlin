@@ -36,11 +36,16 @@ import instagramAPI.Response
  * @method this unsetUsername()
  * @method this unset_Messages()
  */
-class CheckUsernameResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "username"   to "string",
-        "available"  to "",
-        "error"      to "",
-        "error_type" to ""
-    )
+data class CheckUsernameResponse (
+    val username   : String,
+    val available  : String,
+    val error      : String,
+    val error_type : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "username"   to "string",
+//        "available"  to "",
+//        "error"      to "",
+//        "error_type" to ""
+//    )
 }

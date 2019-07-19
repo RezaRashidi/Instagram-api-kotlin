@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Comment
 
 /**
  * BroadcastCommentsResponse.
@@ -72,23 +73,40 @@ import instagramAPI.Response
  * @method this unsetSystemComments()
  * @method this unset_Messages()
  */
-class BroadcastCommentsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "comments"                   to "model.Comment[]",
-        "comment_count"              to "int",
-        "live_seconds_per_comment"   to "int",
-        "has_more_headload_comments" to "bool",
-        /*
-         * NOTE: Instagram sends "True" or "False" as a string in this property.
-         */
-        "is_first_fetch"             to "string",
-        "comment_likes_enabled"      to "bool",
-        "pinned_comment"             to "model.Comment",
-        "system_comments"            to "model.Comment[]",
-        "has_more_comments"          to "bool",
-        "caption_is_edited"          to "bool",
-        "caption"                    to "",
-        "comment_muted"              to "int",
-        "media_header_display"       to "string"
-    )
+data class BroadcastCommentsResponse (
+    val comments                   : MutableList<Comment>,
+    val comment_count              : Int,
+    val live_seconds_per_comment   : Int,
+    val has_more_headload_comments : Boolean,
+/*
+ * NOTE: Instagram sends True or False as a string in this property.
+ */
+    val is_first_fetch             : String,
+    val comment_likes_enabled      : Boolean,
+    val pinned_comment             : Comment,
+    val system_comments            : MutableList<Comment>,
+    val has_more_comments          : Boolean,
+    val caption_is_edited          : Boolean,
+    val caption                    : String,
+    val comment_muted              : Int,
+    val media_header_display       : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "comments"                   to "model.Comment[]",
+//        "comment_count"              to "int",
+//        "live_seconds_per_comment"   to "int",
+//        "has_more_headload_comments" to "bool",
+//        /*
+//         * NOTE: Instagram sends "True" or "False" as a string in this property.
+//         */
+//        "is_first_fetch"             to "string",
+//        "comment_likes_enabled"      to "bool",
+//        "pinned_comment"             to "model.Comment",
+//        "system_comments"            to "model.Comment[]",
+//        "has_more_comments"          to "bool",
+//        "caption_is_edited"          to "bool",
+//        "caption"                    to "",
+//        "comment_muted"              to "int",
+//        "media_header_display"       to "string"
+//    )
 }

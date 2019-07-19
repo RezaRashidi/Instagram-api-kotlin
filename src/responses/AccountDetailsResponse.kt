@@ -3,6 +3,10 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.AdsInfo
+import instagramAPI.responses.model.FormerUsernameInfo
+import instagramAPI.responses.model.PrimaryCountryInfo
+import instagramAPI.responses.model.SharedFollowerAccountsInfo
 
 /**
  * AccountDetailsResponse.
@@ -40,12 +44,18 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class AccountDetailsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "date_joined"                   to "string",
-        "former_username_info"          to "model.FormerUsernameInfo",
-        "primary_country_info"          to "model.PrimaryCountryInfo",
-        "shared_follower_accounts_info" to "model.SharedFollowerAccountsInfo",
-        "ads_info"                      to "model.AdsInfo"
-    )
+data class AccountDetailsResponse (
+    val date_joined                   : String,
+    val former_username_info          : FormerUsernameInfo,
+    val primary_country_info          : PrimaryCountryInfo,
+    val shared_follower_accounts_info : SharedFollowerAccountsInfo,
+    val ads_info                      : AdsInfo
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "date_joined"                   to "string",
+//        "former_username_info"          to "model.FormerUsernameInfo",
+//        "primary_country_info"          to "model.PrimaryCountryInfo",
+//        "shared_follower_accounts_info" to "model.SharedFollowerAccountsInfo",
+//        "ads_info"                      to "model.AdsInfo"
+//    )
 }

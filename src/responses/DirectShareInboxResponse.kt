@@ -44,13 +44,20 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DirectShareInboxResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "shares"          to "",
-        "max_id"          to "string",
-        "new_shares"      to "",
-        "patches"         to "",
-        "last_counted_at" to "",
-        "new_shares_info" to ""
-    )
+data class DirectShareInboxResponse (
+    val shares: String,
+    val max_id: String,
+    val new_shares: String,
+    val patches: String,
+    val last_counted_at: String,
+    val new_shares_info: String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "shares"          to "",
+//        "max_id"          to "string",
+//        "new_shares"      to "",
+//        "patches"         to "",
+//        "last_counted_at" to "",
+//        "new_shares_info" to ""
+//    )
 }

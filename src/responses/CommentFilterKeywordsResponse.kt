@@ -24,8 +24,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class CommentFilterKeywordsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "keywords" to ""
-    )
+data class CommentFilterKeywordsResponse (
+    val keywords: String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "keywords" to ""
+//    )
 }

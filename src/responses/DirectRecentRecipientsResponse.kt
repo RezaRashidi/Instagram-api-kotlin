@@ -28,9 +28,12 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DirectRecentRecipientsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "expiration_interval" to "",
-        "recent_recipients"   to ""
-    )
+data class DirectRecentRecipientsResponse (
+    val expiration_interval: String,
+    val recent_recipients: String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "expiration_interval" to "",
+//        "recent_recipients"   to ""
+//    )
 }

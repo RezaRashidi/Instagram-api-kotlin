@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Surface
+import instagramAPI.responses.model.User
 
 /**
  * BootstrapUsersResponse.
@@ -28,9 +30,12 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class BootstrapUsersResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "surfaces" to "model.Surface[]",
-        "users"    to "model.User[]"
-    )
+data class BootstrapUsersResponse (
+    val surfaces : MutableList<Surface>,
+    val users    : MutableList<User>
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "surfaces" to "model.Surface[]",
+//        "users"    to "model.User[]"
+//    )
 }

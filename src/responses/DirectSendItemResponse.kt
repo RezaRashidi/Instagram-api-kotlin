@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.DirectSendItemPayload
 
 /**
  * DirectSendItemResponse.
@@ -32,11 +33,14 @@ import instagramAPI.Response
  * @method this unsetStatusCode()
  * @method this unset_Messages()
  */
-class DirectSendItemResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "action"      => "",
-        "status_code" => "",
-        "payload"     => "model.DirectSendItemPayload",
-    ]
+data class DirectSendItemResponse(
+    val action: String,
+    val status_code: String,
+    val payload: DirectSendItemPayload
+) {
+//    val JSON_PROPERTY_MAP = [
+//        "action"      => "",
+//        "status_code" => "",
+//        "payload"     => "model.DirectSendItemPayload",
+//    ]
 }

@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Reel
 
 /**
  * ActiveReelAdsResponse.
@@ -32,10 +33,14 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class ActiveReelAdsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "reels"          to "model.Reel[]",
-        "next_max_id"    to "string",
-        "more_available" to "bool"
-    )
+data class ActiveReelAdsResponse (
+    val reels          : MutableList<Reel>,
+    val next_max_id    : String,
+    val more_available : Boolean
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "reels"          to "model.Reel[]",
+//        "next_max_id"    to "string",
+//        "more_available" to "bool"
+//    )
 }

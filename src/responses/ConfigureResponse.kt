@@ -3,6 +3,8 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.DirectMessageMetadata
+import instagramAPI.responses.model.Item
 
 /**
  * ConfigureResponse.
@@ -36,11 +38,16 @@ import instagramAPI.Response
  * @method this unsetUploadId()
  * @method this unset_Messages()
  */
-class ConfigureResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "upload_id"         to "string",
-        "media"             to "model.Item",
-        "client_sidecar_id" to "string",
-        "message_metadata"  to "model.DirectMessageMetadata[]"
-    )
+data class ConfigureResponse (
+    val upload_id: String,
+    val media: Item,
+    val client_sidecar_id: String,
+    val message_metadata: MutableList<DirectMessageMetadata>
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "upload_id"         to "string",
+//        "media"             to "model.Item",
+//        "client_sidecar_id" to "string",
+//        "message_metadata"  to "model.DirectMessageMetadata[]"
+//    )
 }

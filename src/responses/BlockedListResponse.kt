@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * BlockedListResponse.
@@ -32,10 +33,14 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class BlockedListResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "blocked_list" to "model.User[]",
-        "next_max_id"  to "string",
-        "page_size"    to ""
-    )
+data class BlockedListResponse (
+    val blocked_list : MutableList<User>,
+    val next_max_id  : String,
+    val page_size    : String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "blocked_list" to "model.User[]",
+//        "next_max_id"  to "string",
+//        "page_size"    to ""
+//    )
 }

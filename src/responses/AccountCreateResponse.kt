@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * AccountCreateResponse.
@@ -28,9 +29,12 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class AccountCreateResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "account_created" to "",
-        "created_user"    to "model.User"
-    )
+data class AccountCreateResponse (
+    val account_created : String,
+    val created_user    : User
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "account_created" to "",
+//        "created_user"    to "model.User"
+//    )
 }

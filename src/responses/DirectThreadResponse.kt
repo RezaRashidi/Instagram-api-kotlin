@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.DirectThread
 
 /**
  * DirectThreadResponse.
@@ -24,8 +25,10 @@ import instagramAPI.Response
  * @method this unsetThread()
  * @method this unset_Messages()
  */
-class DirectThreadResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "thread" to "model.DirectThread"
-    )
+data class DirectThreadResponse (
+    val thread: DirectThread
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "thread" to "model.DirectThread"
+//    )
 }

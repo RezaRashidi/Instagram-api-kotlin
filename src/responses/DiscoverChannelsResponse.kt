@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Item
 
 /**
  * DiscoverChannelsResponse.
@@ -36,11 +37,16 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class DiscoverChannelsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "auto_load_more_enabled" to "",
-        "items"                  to "model.Item[]",
-        "more_available"         to "",
-        "next_max_id"            to "string"
-    )
+data class DiscoverChannelsResponse (
+    val auto_load_more_enabled: String,
+    val items: MutableList<Item>,
+    val more_available: String,
+    val next_max_id: String
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "auto_load_more_enabled" to "",
+//        "items"                  to "model.Item[]",
+//        "more_available"         to "",
+//        "next_max_id"            to "string"
+//    )
 }

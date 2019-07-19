@@ -3,6 +3,10 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Aymf
+import instagramAPI.responses.model.Counts
+import instagramAPI.responses.model.Story
+import instagramAPI.responses.model.Subscription
 
 /**
  * ActivityNewsResponse.
@@ -60,17 +64,28 @@ import instagramAPI.Response
  * @method this unsetSubscription()
  * @method this unset_Messages()
  */
-class ActivityNewsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "new_stories"            to "model.Story[]",
-        "old_stories"            to "model.Story[]",
-        "continuation"           to "",
-        "friend_request_stories" to "model.Story[]",
-        "counts"                 to "model.Counts",
-        "subscription"           to "model.Subscription",
-        "partition"              to "",
-        "continuation_token"     to "",
-        "ads_manager"            to "",
-        "aymf"                   to "model.Aymf"
-    )
+data class ActivityNewsResponse (
+    val new_stories            : MutableList<Story>,
+    val old_stories            : MutableList<Story>,
+    val continuation           : String,
+    val friend_request_stories : MutableList<Story>,
+    val counts                 : Counts,
+    val subscription           : Subscription,
+    val partition              : String,
+    val continuation_token     : String,
+    val ads_manager            : String,
+    val aymf                   : Aymf
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "new_stories"            to "model.Story[]",
+//        "old_stories"            to "model.Story[]",
+//        "continuation"           to "",
+//        "friend_request_stories" to "model.Story[]",
+//        "counts"                 to "model.Counts",
+//        "subscription"           to "model.Subscription",
+//        "partition"              to "",
+//        "continuation_token"     to "",
+//        "ads_manager"            to "",
+//        "aymf"                   to "model.Aymf"
+//    )
 }

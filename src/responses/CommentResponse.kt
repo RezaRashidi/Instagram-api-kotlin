@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Comment
 
 /**
  * CommentResponse.
@@ -24,8 +25,10 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class CommentResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        "comment" to "model.Comment"
-    )
+data class CommentResponse (
+    val comment: Comment
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        "comment" to "model.Comment"
+//    )
 }

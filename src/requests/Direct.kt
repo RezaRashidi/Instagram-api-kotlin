@@ -406,25 +406,23 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 * @return .instagramAPI.responses.DirectSendItemResponse
 	 */
 	fun sendText(array recipients, text:String, array options = []) {
-		if (!strlen(text)) {
+		if ( text.isNotEmpty() ) {
 			throw IllegalArgumentException("Text can not be empty.")
 		}
 
-		urls = Utils::extractURLs(text)
-		if (count(urls)) {
+		val urls = Utils.extractURLs(text)
+		return if (urls.count() > 0) {
 			/** @var responses.DirectSendItemResponse result */
-			result = this._sendDirectItem("links", recipients,
-			                              array_merge(options, ["link_urls" => json_encode (array_map(fun(array url) {
-				                              return url["fullUrl"]
-			                              }, urls)), "link_text" => text,
-			]))
+			_sendDirectItem("links", recipients,
+						  array_merge(options,
+							  ["link_urls" => json_encode(array_map(fun(array url) {
+							  return url["fullUrl"]
+						  }, urls)), "link_text" => text])
+			)
 		} else {
 			/** @var responses.DirectSendItemResponse result */
-			result = this._sendDirectItem("message", recipients, array_merge(options, ["text" => text,
-			]))
+			_sendDirectItem("message", recipients, array_merge(options, mapOf("text" to text) ))
 		}
-
-		return result
 	}
 
 	/**
@@ -974,127 +972,132 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 	 */
 	protected fun _sendDirectItem(type:String, array recipients, array options = []) {
 		// Most requests are unsigned, but some import signing by overriding this.
-		signedPost = false
+		val signedPost = false
 
 		// Handle the request...
-		switch(type) {
-			case "message":
-			request = this.ig.request("direct_v2/threads/broadcast/text/")
-			// Check and set text.
-			if (!isset(options["text"])) {
-				throw IllegalArgumentException("No text message provided.")
-			}
-			request.addPost("text", options["text"])
-			break
-			case "like":
-			request = this.ig.request("direct_v2/threads/broadcast/like/")
-			break
-			case "hashtag":
-			request = this.ig.request("direct_v2/threads/broadcast/hashtag/")
-			// Check and set hashtag.
-			if (!isset(options["hashtag"])) {
-				throw IllegalArgumentException("No hashtag provided.")
-			}
-			request.addPost("hashtag", options["hashtag"])
-			// Set text if provided.
-			if (isset(options["text"]) && strlen(options["text"])) {
+		when(type) {
+			"message" -> {
+				request = this.ig.request("direct_v2/threads/broadcast/text/")
+				// Check and set text.
+				if (!isset(options["text"])) {
+					throw IllegalArgumentException("No text message provided.")
+				}
 				request.addPost("text", options["text"])
 			}
-			break
-			case "location":
-			request = this.ig.request("direct_v2/threads/broadcast/location/")
-			// Check and set venue_id.
-			if (!isset(options["venue_id"])) {
-				throw IllegalArgumentException("No venue_id provided.")
+
+			"like" -> request = this.ig.request("direct_v2/threads/broadcast/like/")
+
+			"hashtag" -> {
+				request = this.ig.request("direct_v2/threads/broadcast/hashtag/")
+				// Check and set hashtag.
+				if (!isset(options["hashtag"])) {
+					throw IllegalArgumentException("No hashtag provided.")
+				}
+				request.addPost("hashtag", options["hashtag"])
+				// Set text if provided.
+				if (isset(options["text"]) && strlen(options["text"])) {
+					request.addPost("text", options["text"])
+				}
 			}
-			request.addPost("venue_id", options["venue_id"])
-			// Set text if provided.
-			if (isset(options["text"]) && strlen(options["text"])) {
-				request.addPost("text", options["text"])
+
+			"location" -> {
+				request = this.ig.request("direct_v2/threads/broadcast/location/")
+				// Check and set venue_id.
+				if (!isset(options["venue_id"])) {
+					throw IllegalArgumentException("No venue_id provided.")
+				}
+				request.addPost("venue_id", options["venue_id"])
+				// Set text if provided.
+				if (isset(options["text"]) && strlen(options["text"])) {
+					request.addPost("text", options["text"])
+				}
 			}
-			break
-			case "profile":
-			request = this.ig.request("direct_v2/threads/broadcast/profile/")
-			// Check and set profile_user_id.
-			if (!isset(options["profile_user_id"])) {
-				throw IllegalArgumentException("No profile_user_id provided.")
+
+			"profile"-> {
+				request = this.ig.request("direct_v2/threads/broadcast/profile/")
+				// Check and set profile_user_id.
+				if (!isset(options["profile_user_id"])) {
+					throw IllegalArgumentException("No profile_user_id provided.")
+				}
+				request.addPost("profile_user_id", options["profile_user_id"])
+				// Set text if provided.
+				if (isset(options["text"]) && strlen(options["text"])) {
+					request.addPost("text", options["text"])
+				}
 			}
-			request.addPost("profile_user_id", options["profile_user_id"])
-			// Set text if provided.
-			if (isset(options["text"]) && strlen(options["text"])) {
-				request.addPost("text", options["text"])
+
+			"photo" -> {
+				request = this.ig.request("direct_v2/threads/broadcast/upload_photo/")
+				// Check and set filepath.
+				if (!isset(options["filepath"])) {
+					throw IllegalArgumentException("No filepath provided.")
+				}
+				request.addFile("photo", options["filepath"], "direct_temp_photo_" + Utils.generateUploadId() + ".jpg")
 			}
-			break
-			case "photo":
-			request = this.ig.request("direct_v2/threads/broadcast/upload_photo/")
-			// Check and set filepath.
-			if (!isset(options["filepath"])) {
-				throw IllegalArgumentException("No filepath provided.")
+
+			"video" -> {
+				request = this.ig.request("direct_v2/threads/broadcast/configure_video/")
+				// Check and set upload_id.
+				if (!isset(options["upload_id"])) {
+					throw IllegalArgumentException("No upload_id provided.")
+				}
+				request.addPost("upload_id", options["upload_id"])
+				// Set video_result if provided.
+				if (isset(options["video_result"])) {
+					request.addPost("video_result", options["video_result"])
+				}
 			}
-			request.addFile("photo", options["filepath"], "direct_temp_photo_".Utils::generateUploadId().".jpg")
-			break
-			case "video":
-			request = this.ig.request("direct_v2/threads/broadcast/configure_video/")
-			// Check and set upload_id.
-			if (!isset(options["upload_id"])) {
-				throw IllegalArgumentException("No upload_id provided.")
+
+			"links" -> {
+				request = this.ig.request("direct_v2/threads/broadcast/link/")
+				// Check and set link_urls.
+				if (!isset(options["link_urls"])) {
+					throw IllegalArgumentException("No link_urls provided.")
+				}
+				request.addPost("link_urls", options["link_urls"])
+				// Check and set link_text.
+				if (!isset(options["link_text"])) {
+					throw IllegalArgumentException("No link_text provided.")
+				}
+				request.addPost("link_text", options["link_text"])
 			}
-			request.addPost("upload_id", options["upload_id"])
-			// Set video_result if provided.
-			if (isset(options["video_result"])) {
-				request.addPost("video_result", options["video_result"])
+
+			"reaction" -> {
+				request = this.ig.request("direct_v2/threads/broadcast/reaction/")
+				// Check and set reaction_type.
+				if (!isset(options["reaction_type"])) {
+					throw IllegalArgumentException("No reaction_type provided.")
+				}
+				request.addPost("reaction_type", options["reaction_type"])
+				// Check and set reaction_status.
+				if (!isset(options["reaction_status"])) {
+					throw IllegalArgumentException("No reaction_status provided.")
+				}
+				request.addPost("reaction_status", options["reaction_status"])
+				// Check and set item_id.
+				if (!isset(options["item_id"])) {
+					throw IllegalArgumentException("No item_id provided.")
+				}
+				request.addPost("item_id", options["item_id"])
+				// Check and set node_type.
+				if (!isset(options["node_type"])) {
+					throw IllegalArgumentException("No node_type provided.")
+				}
+				request.addPost("node_type", options["node_type"])
 			}
-			break
-			case "links":
-			request = this.ig.request("direct_v2/threads/broadcast/link/")
-			// Check and set link_urls.
-			if (!isset(options["link_urls"])) {
-				throw IllegalArgumentException("No link_urls provided.")
+			"live" -> {
+				request = this.ig.request("direct_v2/threads/broadcast/live_viewer_invite/")
+				// Check and set broadcast id.
+				if (!isset(options["broadcast_id"])) {
+					throw IllegalArgumentException("No broadcast_id provided.")
+				}
+				request.addPost("broadcast_id", options["broadcast_id"])
+				// Set text if provided.
+				if (isset(options["text"]) && strlen(options["text"])) {
+					request.addPost("text", options["text"])
+				}
 			}
-			request.addPost("link_urls", options["link_urls"])
-			// Check and set link_text.
-			if (!isset(options["link_text"])) {
-				throw IllegalArgumentException("No link_text provided.")
-			}
-			request.addPost("link_text", options["link_text"])
-			break
-			case "reaction":
-			request = this.ig.request("direct_v2/threads/broadcast/reaction/")
-			// Check and set reaction_type.
-			if (!isset(options["reaction_type"])) {
-				throw IllegalArgumentException("No reaction_type provided.")
-			}
-			request.addPost("reaction_type", options["reaction_type"])
-			// Check and set reaction_status.
-			if (!isset(options["reaction_status"])) {
-				throw IllegalArgumentException("No reaction_status provided.")
-			}
-			request.addPost("reaction_status", options["reaction_status"])
-			// Check and set item_id.
-			if (!isset(options["item_id"])) {
-				throw IllegalArgumentException("No item_id provided.")
-			}
-			request.addPost("item_id", options["item_id"])
-			// Check and set node_type.
-			if (!isset(options["node_type"])) {
-				throw IllegalArgumentException("No node_type provided.")
-			}
-			request.addPost("node_type", options["node_type"])
-			break
-			case "live":
-			request = this.ig.request("direct_v2/threads/broadcast/live_viewer_invite/")
-			// Check and set broadcast id.
-			if (!isset(options["broadcast_id"])) {
-				throw IllegalArgumentException("No broadcast_id provided.")
-			}
-			request.addPost("broadcast_id", options["broadcast_id"])
-			// Set text if provided.
-			if (isset(options["text"]) && strlen(options["text"])) {
-				request.addPost("text", options["text"])
-			}
-			break
-			default:
-			throw IllegalArgumentException("Unsupported _sendDirectItem() type.")
+			else -> throw IllegalArgumentException("Unsupported _sendDirectItem() type.")
 		}
 
 		// Add recipients.
@@ -1112,8 +1115,8 @@ class Direct(instagram: Instagram) : RequestCollection(instagram) {
 			// WARNING: Must be random every time otherwise we can only
 			// make a single post per direct-discussion thread.
 			options["client_context"] = Signatures::generateUUID(true)
-		} else if (!Signatures::isValidUUID(options["client_context"])) {
-			throw IllegalArgumentException(sprintf("" % s" is not a valid UUID.", options["client_context"]))
+		} else if (!Signatures.isValidUUID(options["client_context"])) {
+			throw IllegalArgumentException("\"${options["client_context"]}\" is not a valid UUID.")
 		}
 
 		// Add some additional data if signed post.
