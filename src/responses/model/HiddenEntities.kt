@@ -20,15 +20,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetPlace()
  * @method this unsetUser()
  */
-class HiddenEntities : AutoPropertyMapper
-{
+data class HiddenEntities (
+    val user    : String,
+    val hashtag : String,
+    val place   : String
+){
     // TODO: The server returns each of these fields as [] arrays, but we don"t
     // know what kind of objects those arrays can contain since we"ve never seen
     // any values in them. So for now, these are left as default types. Most
     // likely, they"ll need to be User[], Tag[] and Location[].
-    val JSON_PROPERTY_MAP = [
-        "user"    => "",
-        "hashtag" => "",
-        "place"   => "",
-    ]
+//    val JSON_PROPERTY_MAP = [
+//        "user"    => "",
+//        "hashtag" => "",
+//        "place"   => "",
+//    ]
 }

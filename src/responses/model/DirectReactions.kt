@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetLikes()
  * @method this unsetLikesCount()
  */
-class DirectReactions : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "likes_count" => "int",
-        "likes"       => "DirectReaction[]",
-    ]
+data class DirectReactions (
+    val likes_count : Int,
+    val likes       : MutableList<DirectReaction>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "likes_count" => "int",
+//        "likes"       => "DirectReaction[]",
+//    ]
 }

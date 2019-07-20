@@ -84,27 +84,46 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTrackingToken()
  * @method this unsetViewTags()
  */
-class Injected : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "label"                        => "string",
-        "show_icon"                    => "bool",
-        "hide_label"                   => "string",
-        "invalidation"                 => "", // Only encountered as NULL.
-        "is_demo"                      => "bool",
-        "view_tags"                    => "", // Only seen as [].
-        "is_holdout"                   => "bool",
-        "tracking_token"               => "string",
-        "show_ad_choices"              => "bool",
-        "ad_title"                     => "string",
-        "about_ad_params"              => "string",
-        "direct_share"                 => "bool",
-        "ad_id"                        => "string",
-        "display_viewability_eligible" => "bool",
-        "fb_page_url"                  => "string",
-        "hide_reasons_v2"              => "HideReason[]",
-        "hide_flow_type"               => "int",
-        "cookies"                      => "string[]",
-        "lead_gen_form_id"             => "string",
-    ]
+data class Injected (
+    val label                        : String,
+    val show_icon                    : Boolean,
+    val hide_label                   : String,
+    val invalidation                 : String, // Only encountered as NULL.
+    val is_demo                      : Boolean,
+    val view_tags                    : String, // Only seen as [].
+    val is_holdout                   : Boolean,
+    val tracking_token               : String,
+    val show_ad_choices              : Boolean,
+    val ad_title                     : String,
+    val about_ad_params              : String,
+    val direct_share                 : Boolean,
+    val ad_id                        : String,
+    val display_viewability_eligible : Boolean,
+    val fb_page_url                  : String,
+    val hide_reasons_v2              : MutableList<HideReason>,
+    val hide_flow_type               : Int,
+    val cookies                      : MutableList<String>,
+    val lead_gen_form_id             : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "label"                        => "string",
+//        "show_icon"                    => "bool",
+//        "hide_label"                   => "string",
+//        "invalidation"                 => "", // Only encountered as NULL.
+//        "is_demo"                      => "bool",
+//        "view_tags"                    => "", // Only seen as [].
+//        "is_holdout"                   => "bool",
+//        "tracking_token"               => "string",
+//        "show_ad_choices"              => "bool",
+//        "ad_title"                     => "string",
+//        "about_ad_params"              => "string",
+//        "direct_share"                 => "bool",
+//        "ad_id"                        => "string",
+//        "display_viewability_eligible" => "bool",
+//        "fb_page_url"                  => "string",
+//        "hide_reasons_v2"              => "HideReason[]",
+//        "hide_flow_type"               => "int",
+//        "cookies"                      => "string[]",
+//        "lead_gen_form_id"             => "string",
+//    ]
 }

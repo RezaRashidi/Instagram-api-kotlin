@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTimestamp()
  * @method this unsetType()
  */
-class DirectExpiringSummary : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "type"      => "string",
-        "timestamp" => "string",
-        "count"     => "int",
-    ]
+data class DirectExpiringSummary (
+    val type      : String,
+    val timestamp : String,
+    val count     : int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "type"      => "string",
+//        "timestamp" => "string",
+//        "count"     => "int",
+//    ]
 }

@@ -36,15 +36,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTextColor()
  * @method this unsetUrl()
  */
-class Button : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "text"             => "string",
-        "url"              => "string",
-        "action"           => "",
-        "background_color" => "",
-        "border_color"     => "",
-        "text_color"       => "",
-        "action_info"      => "",
-    ]
+data class Button (
+    val text             : String,
+    val url              : String,
+    val action           : String,
+    val background_color : String,
+    val border_color     : String,
+    val text_color       : String,
+    val action_info      : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "text"             => "string",
+//        "url"              => "string",
+//        "action"           => "",
+//        "background_color" => "",
+//        "border_color"     => "",
+//        "text_color"       => "",
+//        "action_info"      => "",
+//    ]
 }

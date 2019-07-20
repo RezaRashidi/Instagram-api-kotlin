@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetFaceDetectModel()
  * @method this unsetPdmMultires()
  */
-class FaceModels : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "face_align_model"  => "",
-        "face_detect_model" => "",
-        "pdm_multires"      => "",
-    ]
+data class FaceModels (
+    val face_align_model  : String,
+    val face_detect_model : String,
+    val pdm_multires      : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "face_align_model"  => "",
+//        "face_detect_model" => "",
+//        "pdm_multires"      => "",
+//    ]
 }

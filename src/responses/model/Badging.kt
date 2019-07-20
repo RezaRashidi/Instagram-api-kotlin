@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetIds()
  * @method this unsetItems()
  */
-class Badging : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "ids"   => "",
-        "items" => "",
-    ]
+data class Badging (
+    val ids   : String,
+    val items : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "ids"   => "",
+//        "items" => "",
+//    ]
 }

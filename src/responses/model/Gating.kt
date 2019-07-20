@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetGatingType()
  * @method this unsetTitle()
  */
-class Gating : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "gating_type" => "",
-        "description" => "",
-        "buttons"     => "",
-        "title"       => "",
-    ]
+data class Gating (
+    val gating_type : String,
+    val description : String,
+    val buttons     : String,
+    val title       : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "gating_type" => "",
+//        "description" => "",
+//        "buttons"     => "",
+//        "title"       => "",
+//    ]
 }

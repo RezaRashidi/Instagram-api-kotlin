@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetClauses()
  * @method this unsetFilters()
  */
-class ContextualFilters : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "clause_type" => "string",
-        "filters"     => "",
-        "clauses"     => "",
-    ]
+data class ContextualFilters (
+    val clause_type : String,
+    val filters     : String,
+    val clauses     : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "clause_type" => "string",
+//        "filters"     => "",
+//        "clauses"     => "",
+//    ]
 }

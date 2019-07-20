@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetEdges()
  * @method this unsetPageInfo()
  */
-class CatalogData : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "page_info"          => "PageInfo",
-        "edges"              => "CatalogEdge[]",
-    ]
+data class CatalogData (
+    val page_info          : PageInfo,
+    val edges              : MutableList<CatalogEdge>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "page_info"          => "PageInfo",
+//        "edges"              => "CatalogEdge[]",
+//    ]
 }

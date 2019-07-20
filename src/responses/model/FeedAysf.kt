@@ -56,20 +56,32 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUuid()
  * @method this unsetViewAllText()
  */
-class FeedAysf : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "landing_site_type"  => "",
-        "uuid"               => "string",
-        "view_all_text"      => "",
-        "feed_position"      => "",
-        "landing_site_title" => "",
-        "is_dismissable"     => "",
-        "suggestions"        => "Suggestion[]",
-        "should_refill"      => "",
-        "display_new_unit"   => "",
-        "fetch_user_details" => "",
-        "title"              => "",
-        "activator"          => "",
-    ]
+data class FeedAysf (
+    val landing_site_type  : String,
+    val uuid               : String,
+    val view_all_text      : String,
+    val feed_position      : String,
+    val landing_site_title : String,
+    val is_dismissable     : String,
+    val suggestions        : MutableList<Suggestion>,
+    val should_refill      : String,
+    val display_new_unit   : String,
+    val fetch_user_details : String,
+    val title              : String,
+    val activator          : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "landing_site_type"  => "",
+//        "uuid"               => "string",
+//        "view_all_text"      => "",
+//        "feed_position"      => "",
+//        "landing_site_title" => "",
+//        "is_dismissable"     => "",
+//        "suggestions"        => "Suggestion[]",
+//        "should_refill"      => "",
+//        "display_new_unit"   => "",
+//        "fetch_user_details" => "",
+//        "title"              => "",
+//        "activator"          => "",
+//    ]
 }

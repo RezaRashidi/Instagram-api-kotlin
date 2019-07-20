@@ -56,35 +56,47 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTextColor()
  * @method this unsetViewerIsFollowing()
  */
-class CountdownSticker : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "countdown_id"           => "string",
-        "end_ts"                 => "string",
-        "text"                   => "string",
-        /*
-         * HTML color string such as "#812A2A".
-         */
-        "text_color"             => "string",
-        /*
-         * HTML color string such as "#812A2A".
-         */
-        "start_background_color" => "string",
-        /*
-         * HTML color string such as "#812A2A".
-         */
-        "end_background_color"   => "string",
-        /*
-         * HTML color string such as "#812A2A".
-         */
-        "digit_color"            => "string",
-        /*
-         * HTML color string such as "#812A2A".
-         */
-        "digit_card_color"       => "string",
-        "following_enabled"      => "bool",
-        "is_owner"               => "bool",
-        "attribution"            => "",
-        "viewer_is_following"    => "bool",
-    ]
+data class CountdownSticker (
+    val countdown_id           : String,
+    val end_ts                 : String,
+    val text                   : String,
+    val text_color             : String,
+    val start_background_color : String,
+    val end_background_color   : String,
+    val digit_color            : String,
+    val digit_card_color       : String,
+    val following_enabled      : Boolean,
+    val is_owner               : Boolean,
+    val attribution            : String,
+    val viewer_is_following    : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "countdown_id"           => "string",
+//        "end_ts"                 => "string",
+//        "text"                   => "string",
+//        /*
+//         * HTML color string such as "#812A2A".
+//         */
+//        "text_color"             => "string",
+//        /*
+//         * HTML color string such as "#812A2A".
+//         */
+//        "start_background_color" => "string",
+//        /*
+//         * HTML color string such as "#812A2A".
+//         */
+//        "end_background_color"   => "string",
+//        /*
+//         * HTML color string such as "#812A2A".
+//         */
+//        "digit_color"            => "string",
+//        /*
+//         * HTML color string such as "#812A2A".
+//         */
+//        "digit_card_color"       => "string",
+//        "following_enabled"      => "bool",
+//        "is_owner"               => "bool",
+//        "attribution"            => "",
+//        "viewer_is_following"    => "bool",
+//    ]
 }

@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetCursor()
  * @method this unsetNode()
  */
-class BusinessEdge : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "node"   => "BusinessNode",
-        "cursor" => "",
-    ]
+data class BusinessEdge (
+    val node   : BusinessNode,
+    val cursor : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "node"   => "BusinessNode",
+//        "cursor" => "",
+//    ]
 }

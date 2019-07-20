@@ -662,10 +662,12 @@ package instagramAPI.responses.model
  * @method this unsetViewers()
  * @method this unsetVisibility()
  */
-class AymfItem : Item
-{
-    val JSON_PROPERTY_MAP = [
-        "caption" => "string",
-        "uuid"    => "string",
-    ]
+data class AymfItem (
+    val caption : String,
+    val uuid    : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "caption" => "string",
+//        "uuid"    => "string",
+//    ]
 }

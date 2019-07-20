@@ -32,14 +32,20 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUser()
  * @method this unset__Typename()
  */
-class GraphData : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "__typename"    => "string",
-        "name"          => "string",
-        "user"          => "ShadowInstagramUser",
-        "error"         => "",
-        "catalog_items" => "CatalogData",
-        "me"            => "MeGraphData",
-    ]
+data class GraphData (
+    val __typename    : String,
+    val name          : String,
+    val user          : ShadowInstagramUser,
+    val error         : String,
+    val catalog_items : CatalogData,
+    val me            : MeGraphData
+){
+//    val JSON_PROPERTY_MAP = [
+//        "__typename"    => "string",
+//        "name"          => "string",
+//        "user"          => "ShadowInstagramUser",
+//        "error"         => "",
+//        "catalog_items" => "CatalogData",
+//        "me"            => "MeGraphData",
+//    ]
 }

@@ -32,14 +32,20 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUnseenCount()
  * @method this unsetUnseenCountTs()
  */
-class DirectInbox : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "has_older"             => "bool",
-        "unseen_count"          => "",
-        "unseen_count_ts"       => "", // Is a timestamp.
-        "blended_inbox_enabled" => "bool",
-        "oldest_cursor"         => "",
-        "threads"               => "DirectThread[]",
-    ]
+data class DirectInbox (
+    val has_older             : Boolean,
+    val unseen_count          : String,
+    val unseen_count_ts       : String, // Is a timestamp.
+    val blended_inbox_enabled : Boolean,
+    val oldest_cursor         : String,
+    val threads               : MutableList<DirectThread>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "has_older"             => "bool",
+//        "unseen_count"          => "",
+//        "unseen_count_ts"       => "", // Is a timestamp.
+//        "blended_inbox_enabled" => "bool",
+//        "oldest_cursor"         => "",
+//        "threads"               => "DirectThread[]",
+//    ]
 }

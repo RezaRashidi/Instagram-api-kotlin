@@ -36,15 +36,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetStoriesUnit()
  * @method this unsetTopPostsUnit()
  */
-class BusinessManager : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "account_summary_unit"  => "AccountSummaryUnit",
-        "account_insights_unit" => "BusinessNode",
-        "followers_unit"        => "BusinessNode",
-        "top_posts_unit"        => "BusinessNode",
-        "stories_unit"          => "BusinessNode",
-        "promotions_unit"       => "PromotionsUnit",
-        "feed"                  => "BusinessFeed",
-    ]
+data class BusinessManager (
+    val account_summary_unit  : AccountSummaryUnit,
+    val account_insights_unit : BusinessNode,
+    val followers_unit        : BusinessNode,
+    val top_posts_unit        : BusinessNode,
+    val stories_unit          : BusinessNode,
+    val promotions_unit       : PromotionsUnit,
+    val feed                  : BusinessFeed
+){
+//    val JSON_PROPERTY_MAP = [
+//        "account_summary_unit"  => "AccountSummaryUnit",
+//        "account_insights_unit" => "BusinessNode",
+//        "followers_unit"        => "BusinessNode",
+//        "top_posts_unit"        => "BusinessNode",
+//        "stories_unit"          => "BusinessNode",
+//        "promotions_unit"       => "PromotionsUnit",
+//        "feed"                  => "BusinessFeed",
+//    ]
 }

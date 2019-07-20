@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetCollectionName()
  * @method this unsetCoverMedia()
  */
-class Collection : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "collection_id"   => "string",
-        "collection_name" => "string",
-        "cover_media"     => "Item",
-    ]
+data class Collection (
+    val collection_id   : String,
+    val collection_name : String,
+    val cover_media     : Item
+){
+//    val JSON_PROPERTY_MAP = [
+//        "collection_id"   => "string",
+//        "collection_name" => "string",
+//        "cover_media"     => "Item",
+//    ]
 }

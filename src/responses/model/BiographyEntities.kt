@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetNuxType()
  * @method this unsetRawText()
  */
-class BiographyEntities : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "entities"   => "",
-        "raw_text"   => "string",
-        "nux_type"   => "string",
-    ]
+data class BiographyEntities (
+    val entities   : String,
+    val raw_text   : String,
+    val nux_type   : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "entities"   => "",
+//        "raw_text"   => "string",
+//        "nux_type"   => "string",
+//    ]
 }

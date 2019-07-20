@@ -136,51 +136,83 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetVideoSubtitlesUri()
  * @method this unsetVideoVersions()
  */
-class CarouselMedia : AutoPropertyMapper
-{
+data class CarouselMedia (
+    val pk                  : String,
+    val id                  : String,
+    val carousel_parent_id  : String,
+    val fb_user_tags        : Usertag,
+    val number_of_qualities : Int,
+    val is_dash_eligible    : Int,
+    val video_dash_manifest : String,
+    val image_versions2     : Image_Versions2,
+    val video_versions      : MutableList<VideoVersions>,
+    val has_audio           : Boolean,
+    val video_duration      : Float,
+    val video_subtitles_uri : String,
+    val original_height     : Int,
+    val original_width      : Int,
+    val media_type          : Int,
+    val dynamic_item_id     : String,
+    val usertags            : Usertag,
+    val preview             : String,
+    val headline            : Headline,
+    val link                : String,
+    val link_text           : String,
+    val link_hint_text      : String,
+    val android_links       : MutableList<AndroidLinks>,
+    val ad_metadata         : MutableList<AdMetadata>,
+    val ad_action           : String,
+    val ad_link_type        : Int,
+    val force_overlay       : Boolean,
+    val hide_nux_text       : Boolean,
+    val overlay_text        : String,
+    val overlay_title       : String,
+    val overlay_subtitle    : String,
+    val dominant_color      : String
+){
     val PHOTO = 1
     val VIDEO = 2
 
-    val JSON_PROPERTY_MAP = [
-        "pk"                  => "string",
-        "id"                  => "string",
-        "carousel_parent_id"  => "string",
-        "fb_user_tags"        => "Usertag",
-        "number_of_qualities" => "int",
-        "is_dash_eligible"    => "int",
-        "video_dash_manifest" => "string",
-        "image_versions2"     => "Image_Versions2",
-        "video_versions"      => "VideoVersions[]",
-        "has_audio"           => "bool",
-        "video_duration"      => "float",
-        "video_subtitles_uri" => "string",
-        "original_height"     => "int",
-        "original_width"      => "int",
-        /*
-         * A number describing what type of media this is. Should be compared
-         * against the `CarouselMedia::PHOTO` and `CarouselMedia::VIDEO`
-         * constants!
-         */
-        "media_type"          => "int",
-        "dynamic_item_id"     => "string",
-        "usertags"            => "Usertag",
-        "preview"             => "string",
-        "headline"            => "Headline",
-        "link"                => "string",
-        "link_text"           => "string",
-        "link_hint_text"      => "string",
-        "android_links"       => "AndroidLinks[]",
-        "ad_metadata"         => "AdMetadata[]",
-        "ad_action"           => "string",
-        "ad_link_type"        => "int",
-        "force_overlay"       => "bool",
-        "hide_nux_text"       => "bool",
-        "overlay_text"        => "string",
-        "overlay_title"       => "string",
-        "overlay_subtitle"    => "string",
-        /*
-         * HTML color string such as "#812A2A".
-         */
-        "dominant_color"      => "string",
-    ]
+//    val JSON_PROPERTY_MAP = [
+//        "pk"                  => "string",
+//        "id"                  => "string",
+//        "carousel_parent_id"  => "string",
+//        "fb_user_tags"        => "Usertag",
+//        "number_of_qualities" => "int",
+//        "is_dash_eligible"    => "int",
+//        "video_dash_manifest" => "string",
+//        "image_versions2"     => "Image_Versions2",
+//        "video_versions"      => "VideoVersions[]",
+//        "has_audio"           => "bool",
+//        "video_duration"      => "float",
+//        "video_subtitles_uri" => "string",
+//        "original_height"     => "int",
+//        "original_width"      => "int",
+//        /*
+//         * A number describing what type of media this is. Should be compared
+//         * against the `CarouselMedia::PHOTO` and `CarouselMedia::VIDEO`
+//         * constants!
+//         */
+//        "media_type"          => "int",
+//        "dynamic_item_id"     => "string",
+//        "usertags"            => "Usertag",
+//        "preview"             => "string",
+//        "headline"            => "Headline",
+//        "link"                => "string",
+//        "link_text"           => "string",
+//        "link_hint_text"      => "string",
+//        "android_links"       => "AndroidLinks[]",
+//        "ad_metadata"         => "AdMetadata[]",
+//        "ad_action"           => "string",
+//        "ad_link_type"        => "int",
+//        "force_overlay"       => "bool",
+//        "hide_nux_text"       => "bool",
+//        "overlay_text"        => "string",
+//        "overlay_title"       => "string",
+//        "overlay_subtitle"    => "string",
+//        /*
+//         * HTML color string such as "#812A2A".
+//         */
+//        "dominant_color"      => "string",
+//    ]
 }

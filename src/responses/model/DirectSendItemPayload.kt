@@ -40,16 +40,24 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetThreadId()
  * @method this unsetTimestamp()
  */
-class DirectSendItemPayload : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "client_request_id" => "string",
-        "client_context"    => "string",
-        "message"           => "string",
-        "item_id"           => "string",
-        "timestamp"         => "string",
-        "thread_id"         => "string",
-        "canonical"         => "bool",
-        "participant_ids"   => "string[]",
-    ]
+data class DirectSendItemPayload (
+    val client_request_id : String,
+    val client_context    : String,
+    val message           : String,
+    val item_id           : String,
+    val timestamp         : String,
+    val thread_id         : String,
+    val canonical         : Boolean,
+    val participant_ids   : MutableList<String>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "client_request_id" => "string",
+//        "client_context"    => "string",
+//        "message"           => "string",
+//        "item_id"           => "string",
+//        "timestamp"         => "string",
+//        "thread_id"         => "string",
+//        "canonical"         => "bool",
+//        "participant_ids"   => "string[]",
+//    ]
 }

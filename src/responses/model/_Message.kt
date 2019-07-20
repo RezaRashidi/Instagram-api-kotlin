@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetKey()
  * @method this unsetTime()
  */
-class _Message : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "key"  => "",
-        "time" => "",
-    ]
+data class _Message (
+    val key  : String,
+    val time : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "key"  => "",
+//        "time" => "",
+//    ]
 }

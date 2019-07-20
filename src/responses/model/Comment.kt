@@ -112,80 +112,106 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUser()
  * @method this unsetUserId()
  */
-class Comment : AutoPropertyMapper
-{
+data class Comment (
+    val status                            : String,
+    val user_id                           : String,
+    val created_at                        : String,
+    val created_at_utc                    : String,
+    val bit_flags                         : Int,
+    val user                              : User,
+    val pk                                : String,
+    val media_id                          : String,
+    val text                              : String,
+    val content_type                      : String,
+    val type                              : Int,
+    val comment_like_count                : Int,
+    val has_liked_comment                 : Boolean,
+    val has_translation                   : Boolean,
+    val did_report_as_spam                : Boolean,
+    val parent_comment_id                 : String,
+    val child_comment_count               : Int,
+    val preview_child_comments            : MutableList<Comment>,
+    val other_preview_users               : MutableList<User>,
+    val inline_composer_display_condition : String,
+    val has_more_tail_child_comments      : Boolean,
+    val next_max_child_cursor             : String,
+    val num_tail_child_comments           : Int,
+    val has_more_head_child_comments      : Boolean,
+    val next_min_child_cursor             : String,
+    val num_head_child_comments           : Int
+){
     /** @var int Top-level comment. */
     val PARENT = 0
     /** @var int Threaded reply to another comment. */
     val CHILD = 2
 
-    val JSON_PROPERTY_MAP = [
-        "status"                            => "string",
-        "user_id"                           => "string",
-        /*
-         * Unix timestamp (UTC) of when the comment was posted.
-         * Yes, this is the UTC timestamp even though it"s not named "utc"!
-         */
-        "created_at"                        => "string",
-        /*
-         * WARNING: DO NOT import THIS VALUE! It is NOT a real UTC timestamp.
-         * Instagram has messed up their values of "created_at" vs "created_at_utc".
-         * In `getComments()`, both have identical values. In `getCommentReplies()`,
-         * both are identical too. But in the `getComments()` "reply previews",
-         * their "created_at_utc" values are completely wrong (always +8 hours into
-         * the future, beyond the real UTC time). So just ignore this bad value!
-         * The real app only reads "created_at" for showing comment timestamps!
-         */
-        "created_at_utc"                    => "string",
-        "bit_flags"                         => "int",
-        "user"                              => "User",
-        "pk"                                => "string",
-        "media_id"                          => "string",
-        "text"                              => "string",
-        "content_type"                      => "string",
-        /*
-         * A number describing what type of comment this is. Should be compared
-         * against the `Comment::PARENT` and `Comment::CHILD` constants. All
-         * replies are of type `CHILD`, and all parents are of type `PARENT`.
-         */
-        "type"                              => "int",
-        "comment_like_count"                => "int",
-        "has_liked_comment"                 => "bool",
-        "has_translation"                   => "bool",
-        "did_report_as_spam"                => "bool",
-        /*
-         * If this is a child in a thread, this is the ID of its parent thread.
-         */
-        "parent_comment_id"                 => "string",
-        /*
-         * Number of child comments in this comment thread.
-         */
-        "child_comment_count"               => "int",
-        /*
-         * Previews of some of the child comments. Compare it to the child
-         * comment count. If there are more, you must request the comment thread.
-         */
-        "preview_child_comments"            => "Comment[]",
-        /*
-         * Previews of users in very long comment threads.
-         */
-        "other_preview_users"               => "User[]",
-        "inline_composer_display_condition" => "string",
-        /*
-         * When "has_more_tail_child_comments" is true, you can import the value
-         * in "next_max_child_cursor" as "max_id" parameter to load up to
-         * "num_tail_child_comments" older child-comments.
-         */
-        "has_more_tail_child_comments"      => "bool",
-        "next_max_child_cursor"             => "string",
-        "num_tail_child_comments"           => "int",
-        /*
-         * When "has_more_head_child_comments" is true, you can import the value
-         * in "next_min_child_cursor" as "min_id" parameter to load up to
-         * "num_head_child_comments" newer child-comments.
-         */
-        "has_more_head_child_comments"      => "bool",
-        "next_min_child_cursor"             => "string",
-        "num_head_child_comments"           => "int",
-    ]
+//    val JSON_PROPERTY_MAP = [
+//        "status"                            => "string",
+//        "user_id"                           => "string",
+//        /*
+//         * Unix timestamp (UTC) of when the comment was posted.
+//         * Yes, this is the UTC timestamp even though it"s not named "utc"!
+//         */
+//        "created_at"                        => "string",
+//        /*
+//         * WARNING: DO NOT import THIS VALUE! It is NOT a real UTC timestamp.
+//         * Instagram has messed up their values of "created_at" vs "created_at_utc".
+//         * In `getComments()`, both have identical values. In `getCommentReplies()`,
+//         * both are identical too. But in the `getComments()` "reply previews",
+//         * their "created_at_utc" values are completely wrong (always +8 hours into
+//         * the future, beyond the real UTC time). So just ignore this bad value!
+//         * The real app only reads "created_at" for showing comment timestamps!
+//         */
+//        "created_at_utc"                    => "string",
+//        "bit_flags"                         => "int",
+//        "user"                              => "User",
+//        "pk"                                => "string",
+//        "media_id"                          => "string",
+//        "text"                              => "string",
+//        "content_type"                      => "string",
+//        /*
+//         * A number describing what type of comment this is. Should be compared
+//         * against the `Comment::PARENT` and `Comment::CHILD` constants. All
+//         * replies are of type `CHILD`, and all parents are of type `PARENT`.
+//         */
+//        "type"                              => "int",
+//        "comment_like_count"                => "int",
+//        "has_liked_comment"                 => "bool",
+//        "has_translation"                   => "bool",
+//        "did_report_as_spam"                => "bool",
+//        /*
+//         * If this is a child in a thread, this is the ID of its parent thread.
+//         */
+//        "parent_comment_id"                 => "string",
+//        /*
+//         * Number of child comments in this comment thread.
+//         */
+//        "child_comment_count"               => "int",
+//        /*
+//         * Previews of some of the child comments. Compare it to the child
+//         * comment count. If there are more, you must request the comment thread.
+//         */
+//        "preview_child_comments"            => "Comment[]",
+//        /*
+//         * Previews of users in very long comment threads.
+//         */
+//        "other_preview_users"               => "User[]",
+//        "inline_composer_display_condition" => "string",
+//        /*
+//         * When "has_more_tail_child_comments" is true, you can import the value
+//         * in "next_max_child_cursor" as "max_id" parameter to load up to
+//         * "num_tail_child_comments" older child-comments.
+//         */
+//        "has_more_tail_child_comments"      => "bool",
+//        "next_max_child_cursor"             => "string",
+//        "num_tail_child_comments"           => "int",
+//        /*
+//         * When "has_more_head_child_comments" is true, you can import the value
+//         * in "next_min_child_cursor" as "min_id" parameter to load up to
+//         * "num_head_child_comments" newer child-comments.
+//         */
+//        "has_more_head_child_comments"      => "bool",
+//        "next_min_child_cursor"             => "string",
+//        "num_head_child_comments"           => "int",
+//    ]
 }

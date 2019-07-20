@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setEdges(Edges[] $value)
  * @method this unsetEdges()
  */
-class EligiblePromotions : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "edges"   => "Edges[]",
-    ]
+data class EligiblePromotions (
+    val edges : MutableList<Edges>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "edges"   => "Edges[]",
+//    ]
 }

@@ -28,13 +28,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetId()
  * @method this unsetViewerCount()
  */
-class BroadcastStatusItem : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "broadcast_status"       => "string",
-        "has_reduced_visibility" => "bool",
-        "cover_frame_url"        => "string",
-        "viewer_count"           => "int",
-        "id"                     => "string",
-    ]
+data class BroadcastStatusItem (
+    val broadcast_status       : String,
+    val has_reduced_visibility : Boolean,
+    val cover_frame_url        : String,
+    val viewer_count           : Int,
+    val id                     : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "broadcast_status"       => "string",
+//        "has_reduced_visibility" => "bool",
+//        "cover_frame_url"        => "string",
+//        "viewer_count"           => "int",
+//        "id"                     => "string",
+//    ]
 }

@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetCount()
  * @method this unsetTimestamp()
  */
-class DirectSeenItemPayload : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "count"     => "",
-        "timestamp" => "string",
-    ]
+data class DirectSeenItemPayload (
+    val count     : String,
+    val timestamp : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "count"     => "",
+//        "timestamp" => "string",
+//    ]
 }

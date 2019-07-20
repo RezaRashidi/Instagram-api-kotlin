@@ -48,18 +48,28 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetProfilePicUrl()
  * @method this unsetRelatedTags()
  */
-class Hashtag : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"                 => "string",
-        "name"               => "string",
-        "media_count"        => "int",
-        "profile_pic_url"    => "string",
-        "follow_status"      => "int",
-        "following"          => "int",
-        "allow_following"    => "int",
-        "allow_muting_story" => "bool",
-        "related_tags"       => "",
-        "debug_info"         => "",
-    ]
+data class Hashtag (
+    val id                 : String,
+    val name               : String,
+    val media_count        : Int,
+    val profile_pic_url    : String,
+    val follow_status      : Int,
+    val following          : Int,
+    val allow_following    : Int,
+    val allow_muting_story : Boolean,
+    val related_tags       : String,
+    val debug_info         : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"                 => "string",
+//        "name"               => "string",
+//        "media_count"        => "int",
+//        "profile_pic_url"    => "string",
+//        "follow_status"      => "int",
+//        "following"          => "int",
+//        "allow_following"    => "int",
+//        "allow_muting_story" => "bool",
+//        "related_tags"       => "",
+//        "debug_info"         => "",
+//    ]
 }

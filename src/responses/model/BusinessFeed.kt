@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this set_UnitsgGaCa(SummaryPromotions $value)
  * @method this unset_UnitsgGaCa()
  */
-class BusinessFeed : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "_unitsgGaCa" => "SummaryPromotions",
-    ]
+data class BusinessFeed (
+    val _unitsgGaCa : SummaryPromotions
+){
+//    val JSON_PROPERTY_MAP = [
+//        "_unitsgGaCa" => "SummaryPromotions",
+//    ]
 }

@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setName(string $value)
  * @method this unsetName()
  */
-class Attribution : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "name" => "string",
-    ]
+data class Attribution (
+    val name : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "name" => "string",
+//    ]
 }

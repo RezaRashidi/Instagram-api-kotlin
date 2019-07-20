@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetChangeTimestamp()
  * @method this unsetFormerUsername()
  */
-class FormerUsername : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "former_username"  => "string",
-        "change_timestamp" => "string",
-    ]
+data class FormerUsername (
+    val former_username  : String,
+    val change_timestamp : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "former_username"  => "string",
+//        "change_timestamp" => "string",
+//    ]
 }

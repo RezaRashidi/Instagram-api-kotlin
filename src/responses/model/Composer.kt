@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setNuxFinished(bool $value)
  * @method this unsetNuxFinished()
  */
-class Composer : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "nux_finished"   => "bool",
-    ]
+data class Composer (
+    val nux_finished : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "nux_finished"   => "bool",
+//    ]
 }

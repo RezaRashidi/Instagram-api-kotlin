@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetItemId()
  * @method this unsetTimestamp()
  */
-class DirectThreadLastSeenAt : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "item_id"   => "string",
-        "timestamp" => "",
-    ]
+data class DirectThreadLastSeenAt (
+    val item_id   : String,
+    val timestamp : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "item_id"   => "string",
+//        "timestamp" => "",
+//    ]
 }

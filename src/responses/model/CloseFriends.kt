@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetSections()
  * @method this unsetUsers()
  */
-class CloseFriends : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "sections"  => "",
-        "users"     => "User[]",
-        "big_list"  => "",
-        "page_size" => "",
-    ]
+data class CloseFriends (
+    val sections  : String,
+    val users     : MutableList<User>,
+    val big_list  : String,
+    val page_size : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "sections"  => "",
+//        "users"     => "User[]",
+//        "big_list"  => "",
+//        "page_size" => "",
+//    ]
 }

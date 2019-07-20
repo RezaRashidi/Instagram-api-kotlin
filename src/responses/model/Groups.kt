@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetItems()
  * @method this unsetType()
  */
-class Groups : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "type"  => "",
-        "items" => "Item[]",
-    ]
+data class Groups (
+    val type  : String,
+    val items : MutableList<Item>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "type"  => "",
+//        "items" => "Item[]",
+//    ]
 }

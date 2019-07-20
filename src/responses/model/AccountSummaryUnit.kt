@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setPostsCount(int $value)
  * @method this unsetPostsCount()
  */
-class AccountSummaryUnit : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "posts_count"          => "int",
-    ]
+data class AccountSummaryUnit (
+    val posts_count : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "posts_count"          => "int",
+//    ]
 }

@@ -32,14 +32,20 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTimeInVideo()
  * @method this unsetUser()
  */
-class In : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "position"                   => "float[]",
-        "user"                       => "User",
-        "time_in_video"              => "",
-        "start_time_in_video_in_sec" => "",
-        "duration_in_video_in_sec"   => "",
-        "product"                    => "Product",
-    ]
+data class In (
+    val position                   : MutableList<Float>,
+    val user                       : User,
+    val time_in_video              : String,
+    val start_time_in_video_in_sec : String,
+    val duration_in_video_in_sec   : String,
+    val product                    : Product
+){
+//    val JSON_PROPERTY_MAP = [
+//        "position"                   => "float[]",
+//        "user"                       => "User",
+//        "time_in_video"              => "",
+//        "start_time_in_video_in_sec" => "",
+//        "duration_in_video_in_sec"   => "",
+//        "product"                    => "Product",
+//    ]
 }

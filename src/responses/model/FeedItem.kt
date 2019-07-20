@@ -32,14 +32,20 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetStoriesNetego()
  * @method this unsetSuggestedUsers()
  */
-class FeedItem : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "media_or_ad"            => "Item",
-        "stories_netego"         => "StoriesNetego",
-        "ad4ad"                  => "Ad4ad",
-        "suggested_users"        => "SuggestedUsers",
-        "end_of_feed_demarcator" => "",
-        "ad_link_type"           => "int",
-    ]
+data class FeedItem (
+    val media_or_ad            : Item,
+    val stories_netego         : StoriesNetego,
+    val ad4ad                  : Ad4ad,
+    val suggested_users        : SuggestedUsers,
+    val end_of_feed_demarcator : String,
+    val ad_link_type           : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "media_or_ad"            => "Item",
+//        "stories_netego"         => "StoriesNetego",
+//        "ad4ad"                  => "Ad4ad",
+//        "suggested_users"        => "SuggestedUsers",
+//        "end_of_feed_demarcator" => "",
+//        "ad_link_type"           => "int",
+//    ]
 }

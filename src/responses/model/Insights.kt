@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setInstagramInsights(mixed $value)
  * @method this unsetInstagramInsights()
  */
-class Insights : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "instagram_insights" => "",
-    ]
+data class Insights (
+    val instagram_insights : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "instagram_insights" => "",
+//    ]
 }

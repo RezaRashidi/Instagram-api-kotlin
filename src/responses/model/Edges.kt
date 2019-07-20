@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetPriority()
  * @method this unsetTimeRange()
  */
-class Edges : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "priority"      => "int",
-        "time_range"    => "TimeRange",
-        "node"          => "QPNode",
-    ]
+data class Edges (
+    val priority      : Int,
+    val time_range    : TimeRange,
+    val node          : QPNode
+){
+//    val JSON_PROPERTY_MAP = [
+//        "priority"      => "int",
+//        "time_range"    => "TimeRange",
+//        "node"          => "QPNode",
+//    ]
 }

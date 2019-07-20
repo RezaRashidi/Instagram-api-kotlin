@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetItems()
  * @method this unsetMoreAvailable()
  */
-class Aymf : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "items"          => "AymfItem[]",
-        "more_available" => "",
-    ]
+data class Aymf (
+    val items          : MutableList<AymfItem>,
+    val more_available : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "items"          => "AymfItem[]",
+//        "more_available" => "",
+//    ]
 }

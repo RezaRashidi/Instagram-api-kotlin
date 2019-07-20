@@ -28,13 +28,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetReelType()
  * @method this unsetTimestamp()
  */
-class ArchivedStoriesFeedItem : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "timestamp"             => "string",
-        "media_count"           => "int",
-        "id"                    => "string",
-        "reel_type"             => "string",
-        "latest_reel_media"     => "string",
-    ]
+data class ArchivedStoriesFeedItem (
+    val timestamp             : String,
+    val media_count           : Int,
+    val id                    : String,
+    val reel_type             : String,
+    val latest_reel_media     : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "timestamp"             => "string",
+//        "media_count"           => "int",
+//        "id"                    => "string",
+//        "reel_type"             => "string",
+//        "latest_reel_media"     => "string",
+//    ]
 }

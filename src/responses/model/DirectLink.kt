@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetLinkContext()
  * @method this unsetText()
  */
-class DirectLink : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "text"         => "string",
-        "link_context" => "LinkContext",
-    ]
+data class DirectLink (
+    val text         : String,
+    val link_context : LinkContext
+){
+//    val JSON_PROPERTY_MAP = [
+//        "text"         => "string",
+//        "link_context" => "LinkContext",
+//    ]
 }

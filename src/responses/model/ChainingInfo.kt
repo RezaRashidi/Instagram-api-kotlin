@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setSources(string $value)
  * @method this unsetSources()
  */
-class ChainingInfo : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "sources" => "string",
-    ]
+data class ChainingInfo (
+    val sources : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "sources" => "string",
+//    ]
 }

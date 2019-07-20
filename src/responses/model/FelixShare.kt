@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetText()
  * @method this unsetVideo()
  */
-class FelixShare : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "video" => "Item[]",
-        "text"  => "string",
-    ]
+data class FelixShare (
+    val video : MutableList<Item>,
+    val text  : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "video" => "Item[]",
+//        "text"  => "string",
+//    ]
 }

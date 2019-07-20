@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetThreadId()
  * @method this unsetTimestamp()
  */
-class DirectMessageMetadata : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "thread_id"       => "string",
-        "item_id"         => "string",
-        "timestamp"       => "string",
-        "participant_ids" => "string[]",
-    ]
+data class DirectMessageMetadata (
+    val thread_id       : String,
+    val item_id         : String,
+    val timestamp       : String,
+    val participant_ids : MutableList<String>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "thread_id"       => "string",
+//        "item_id"         => "string",
+//        "timestamp"       => "string",
+//        "participant_ids" => "string[]",
+//    ]
 }

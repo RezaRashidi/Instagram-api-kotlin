@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetId()
  * @method this unsetTranslation()
  */
-class CommentTranslations : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"          => "string",
-        "translation" => "",
-    ]
+data class CommentTranslations (
+    val id          : String,
+    val translation : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"          => "string",
+//        "translation" => "",
+//    ]
 }

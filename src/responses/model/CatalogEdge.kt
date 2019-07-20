@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setNode(CatalogNode $value)
  * @method this unsetNode()
  */
-class CatalogEdge : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "node"          => "CatalogNode",
-    ]
+data class CatalogEdge (
+    val node : CatalogNode
+){
+//    val JSON_PROPERTY_MAP = [
+//        "node"          => "CatalogNode",
+//    ]
 }

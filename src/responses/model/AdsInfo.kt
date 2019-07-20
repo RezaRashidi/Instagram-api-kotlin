@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetAdsUrl()
  * @method this unsetHasAds()
  */
-class AdsInfo : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "has_ads" => "bool",
-        "ads_url" => "string",
-    ]
+data class AdsInfo (
+    val has_ads : Boolean,
+    val ads_url : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "has_ads" => "bool",
+//        "ads_url" => "string",
+//    ]
 }

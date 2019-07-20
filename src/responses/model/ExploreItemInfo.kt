@@ -28,13 +28,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetNumColumns()
  * @method this unsetTotalNumColumns()
  */
-class ExploreItemInfo : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "num_columns"       => "int",
-        "total_num_columns" => "int",
-        "aspect_ratio"      => "int",
-        "autoplay"          => "bool",
-        "destination_view"  => "string",
-    ]
+data class ExploreItemInfo (
+    val num_columns       : Int,
+    val total_num_columns : Int,
+    val aspect_ratio      : Int,
+    val autoplay          : Boolean,
+    val destination_view  : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "num_columns"       => "int",
+//        "total_num_columns" => "int",
+//        "aspect_ratio"      => "int",
+//        "autoplay"          => "bool",
+//        "destination_view"  => "string",
+//    ]
 }

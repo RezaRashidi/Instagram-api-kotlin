@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetType()
  * @method this unsetValue()
  */
-class AdMetadata : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "value" => "",
-        "type"  => "",
-    ]
+data class AdMetadata (
+    val value : String,
+    val type  : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "value" => "",
+//        "type"  => "",
+//    ]
 }

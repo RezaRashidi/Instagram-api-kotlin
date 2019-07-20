@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUrl()
  * @method this unsetWidth()
  */
-class ImageCandidate : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "url"    => "string",
-        "width"  => "int",
-        "height" => "int",
-    ]
+data class ImageCandidate (
+    val url    : String,
+    val width  : Int,
+    val height : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "url"    => "string",
+//        "width"  => "int",
+//        "height" => "int",
+//    ]
 }

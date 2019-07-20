@@ -32,14 +32,20 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetNativeFlow()
  * @method this unsetUrl()
  */
-class Challenge : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "url"                 => "string",
-        "api_path"            => "",
-        "hide_webview_header" => "",
-        "lock"                => "",
-        "logout"              => "",
-        "native_flow"         => "",
-    ]
+data class Challenge (
+    val url                 : String,
+    val api_path            : String,
+    val hide_webview_header : String,
+    val lock                : String,
+    val logout              : String,
+    val native_flow         : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "url"                 => "string",
+//        "api_path"            => "",
+//        "hide_webview_header" => "",
+//        "lock"                => "",
+//        "logout"              => "",
+//        "native_flow"         => "",
+//    ]
 }

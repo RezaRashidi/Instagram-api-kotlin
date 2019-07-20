@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setFixedHeight(AnimatedMediaImageFixedHeigth $value)
  * @method this unsetFixedHeight()
  */
-class AnimatedMediaImage : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "fixed_height"  => "AnimatedMediaImageFixedHeigth",
-    ]
+data class AnimatedMediaImage (
+    val fixed_height : AnimatedMediaImageFixedHeigth
+){
+//    val JSON_PROPERTY_MAP = [
+//        "fixed_height"  => "AnimatedMediaImageFixedHeigth",
+//    ]
 }

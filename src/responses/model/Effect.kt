@@ -36,15 +36,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetThumbnailUrl()
  * @method this unsetTitle()
  */
-class Effect : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "title"          => "",
-        "id"             => "string",
-        "effect_id"      => "string",
-        "effect_file_id" => "string",
-        "asset_url"      => "string",
-        "thumbnail_url"  => "string",
-        "instructions"   => "",
-    ]
+data class Effect (
+    val title          : String,
+    val id             : String,
+    val effect_id      : String,
+    val effect_file_id : String,
+    val asset_url      : String,
+    val thumbnail_url  : String,
+    val instructions   : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "title"          => "",
+//        "id"             => "string",
+//        "effect_id"      => "string",
+//        "effect_file_id" => "string",
+//        "asset_url"      => "string",
+//        "thumbnail_url"  => "string",
+//        "instructions"   => "",
+//    ]
 }

@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetExplanation()
  * @method this unsetSourceToken()
  */
-class Explore : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "explanation"  => "",
-        "actor_id"     => "string",
-        "source_token" => "",
-    ]
+data class Explore (
+    val explanation  : String ,
+    val actor_id     : String,
+    val source_token : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "explanation"  => "",
+//        "actor_id"     => "string",
+//        "source_token" => "",
+//    ]
 }

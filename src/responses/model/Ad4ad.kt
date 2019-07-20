@@ -32,14 +32,20 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTrackingToken()
  * @method this unsetType()
  */
-class Ad4ad : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "type"           => "",
-        "title"          => "",
-        "media"          => "Item",
-        "footer"         => "",
-        "id"             => "string",
-        "tracking_token" => "string",
-    ]
+data class Ad4ad (
+    val type           : String,
+    val title          : String,
+    val media          : Item,
+    val footer         : String,
+    val id             : String,
+    val tracking_token : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "type"           => "",
+//        "title"          => "",
+//        "media"          => "Item",
+//        "footer"         => "",
+//        "id"             => "string",
+//        "tracking_token" => "string",
+//    ]
 }

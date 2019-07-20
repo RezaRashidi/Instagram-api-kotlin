@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetCandidates()
  * @method this unsetTraceToken()
  */
-class Image_Versions2 : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "candidates"  => "ImageCandidate[]",
-        "trace_token" => "",
-    ]
+data class Image_Versions2 (
+    val candidates  : MutableList<ImageCandidate>,
+    val trace_token : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "candidates"  => "ImageCandidate[]",
+//        "trace_token" => "",
+//    ]
 }

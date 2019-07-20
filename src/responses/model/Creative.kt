@@ -40,17 +40,25 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetSocialContext()
  * @method this unsetTitle()
  */
-class Creative : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "title"            => "Text",
-        "content"          => "Text",
-        "footer"           => "Text",
-        "social_context"   => "Text",
-        "content"          => "Text",
-        "primary_action"   => "Action",
-        "secondary_action" => "Action",
-        "dismiss_action"   => "",
-        "image"            => "Image",
-    ]
+data class Creative (
+    val title            : Text,
+    val content          : Text,
+    val footer           : Text,
+    val social_context   : Text,
+    val primary_action   : Action,
+    val secondary_action : Action,
+    val dismiss_action   : String,
+    val image            : Image
+){ // there is two content in php but kotlin let have one with same name
+//    val JSON_PROPERTY_MAP = [
+//        "title"            => "Text",
+//        "content"          => "Text",
+//        "footer"           => "Text",
+//        "social_context"   => "Text",
+//        "content"          => "Text",
+//        "primary_action"   => "Action",
+//        "secondary_action" => "Action",
+//        "dismiss_action"   => "",
+//        "image"            => "Image",
+//    ]
 }

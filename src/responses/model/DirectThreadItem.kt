@@ -124,8 +124,37 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUserId()
  * @method this unsetVideoCallEvent()
  */
-class DirectThreadItem : AutoPropertyMapper
-{
+data class DirectThreadItem (
+    val item_id                       : String,
+    val item_type                     : String,
+    val text                          : String,
+    val media_share                   : Item,
+    val preview_medias                : MutableList<Item>,
+    val media                         : DirectThreadItemMedia,
+    val user_id                       : String,
+    val timestamp                     : String,
+    val client_context                : String,
+    val hide_in_thread                : String,
+    val action_log                    : ActionLog,
+    val link                          : DirectLink,
+    val reactions                     : DirectReactions,
+    val raven_media                   : Item,
+    val seen_user_ids                 : MutableList<String>,
+    val expiring_media_action_summary : DirectExpiringSummary,
+    val reel_share                    : ReelShare,
+    val placeholder                   : Placeholder,
+    val location                      : Location,
+    val like                          : String,
+    val live_video_share              : LiveVideoShare,
+    val live_viewer_invite            : LiveViewerInvite,
+    val profile                       : User,
+    val story_share                   : StoryShare,
+    val direct_media_share            : MediaShare,
+    val video_call_event              : VideoCallEvent,
+    val product_share                 : ProductShare,
+    val animated_media                : AnimatedMedia,
+    val felix_share                   : FelixShare
+){
     val PLACEHOLDER = "placeholder"
     val TEXT = "text"
     val HASHTAG = "hashtag"
@@ -145,35 +174,35 @@ class DirectThreadItem : AutoPropertyMapper
     val PRODUCT_SHARE = "product_share"
     val VIDEO_CALL_EVENT = "video_call_event"
 
-    val JSON_PROPERTY_MAP = [
-        "item_id"                       => "string",
-        "item_type"                     => "",
-        "text"                          => "string",
-        "media_share"                   => "Item",
-        "preview_medias"                => "Item[]",
-        "media"                         => "DirectThreadItemMedia",
-        "user_id"                       => "string",
-        "timestamp"                     => "",
-        "client_context"                => "string",
-        "hide_in_thread"                => "",
-        "action_log"                    => "ActionLog",
-        "link"                          => "DirectLink",
-        "reactions"                     => "DirectReactions",
-        "raven_media"                   => "Item",
-        "seen_user_ids"                 => "string[]",
-        "expiring_media_action_summary" => "DirectExpiringSummary",
-        "reel_share"                    => "ReelShare",
-        "placeholder"                   => "Placeholder",
-        "location"                      => "Location",
-        "like"                          => "",
-        "live_video_share"              => "LiveVideoShare",
-        "live_viewer_invite"            => "LiveViewerInvite",
-        "profile"                       => "User",
-        "story_share"                   => "StoryShare",
-        "direct_media_share"            => "MediaShare",
-        "video_call_event"              => "VideoCallEvent",
-        "product_share"                 => "ProductShare",
-        "animated_media"                => "AnimatedMedia",
-        "felix_share"                   => "FelixShare",
-    ]
+//    val JSON_PROPERTY_MAP = [
+//        "item_id"                       => "String",
+//        "item_type"                     => "",
+//        "text"                          => "String",
+//        "media_share"                   => "Item",
+//        "preview_medias"                => "Item[]",
+//        "media"                         => "DirectThreadItemMedia",
+//        "user_id"                       => "string",
+//        "timestamp"                     => "",
+//        "client_context"                => "string",
+//        "hide_in_thread"                => "",
+//        "action_log"                    => "ActionLog",
+//        "link"                          => "DirectLink",
+//        "reactions"                     => "DirectReactions",
+//        "raven_media"                   => "Item",
+//        "seen_user_ids"                 => "string[]",
+//        "expiring_media_action_summary" => "DirectExpiringSummary",
+//        "reel_share"                    => "ReelShare",
+//        "placeholder"                   => "Placeholder",
+//        "location"                      => "Location",
+//        "like"                          => "",
+//        "live_video_share"              => "LiveVideoShare",
+//        "live_viewer_invite"            => "LiveViewerInvite",
+//        "profile"                       => "User",
+//        "story_share"                   => "StoryShare",
+//        "direct_media_share"            => "MediaShare",
+//        "video_call_event"              => "VideoCallEvent",
+//        "product_share"                 => "ProductShare",
+//        "animated_media"                => "AnimatedMedia",
+//        "felix_share"                   => "FelixShare",
+//    ]
 }

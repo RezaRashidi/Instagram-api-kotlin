@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetEnd()
  * @method this unsetStart()
  */
-class Bold : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "start" => "",
-        "end"   => "",
-    ]
+data class Bold (
+    val start : String,
+    val end   : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "start" => "",
+//        "end"   => "",
+//    ]
 }

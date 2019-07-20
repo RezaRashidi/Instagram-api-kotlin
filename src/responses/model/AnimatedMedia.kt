@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetId()
  * @method this unsetImages()
  */
-class AnimatedMedia : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"       => "string",
-        "images"   => "AnimatedMediaImage",
-    ]
+data class AnimatedMedia (
+    val id       : String,
+    val images   : AnimatedMediaImage
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"       => "string",
+//        "images"   => "AnimatedMediaImage",
+//    ]
 }

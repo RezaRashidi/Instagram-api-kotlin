@@ -36,15 +36,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetName()
  * @method this unsetRetailerId()
  */
-class CatalogNode : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"                            => "string",
-        "full_price"                    => "",
-        "current_price"                 => "",
-        "name"                          => "string",
-        "description"                   => "string",
-        "main_image_with_safe_fallback" => "",
-        "retailer_id"                   => "string",
-    ]
+data class CatalogNode (
+    val id                            : String,
+    val full_price                    : String,
+    val current_price                 : String,
+    val name                          : String,
+    val description                   : String,
+    val main_image_with_safe_fallback : String,
+    val retailer_id                   : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"                            => "string",
+//        "full_price"                    => "",
+//        "current_price"                 => "",
+//        "name"                          => "string",
+//        "description"                   => "string",
+//        "main_image_with_safe_fallback" => "",
+//        "retailer_id"                   => "string",
+//    ]
 }

@@ -36,15 +36,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetMediaCount()
  * @method this unsetTitle()
  */
-class Channel : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "channel_id"   => "string",
-        "channel_type" => "",
-        "title"        => "",
-        "header"       => "",
-        "media_count"  => "int",
-        "media"        => "Item",
-        "context"      => "",
-    ]
+data class Channel (
+    val channel_id   : String,
+    val channel_type : String,
+    val title        : String,
+    val header       : String,
+    val media_count  : Int,
+    val media        : Item,
+    val context      : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "channel_id"   => "string",
+//        "channel_type" => "",
+//        "title"        => "",
+//        "header"       => "",
+//        "media_count"  => "int",
+//        "media"        => "Item",
+//        "context"      => "",
+//    ]
 }

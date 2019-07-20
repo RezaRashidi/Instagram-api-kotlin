@@ -36,15 +36,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetSenderId()
  * @method this unsetTimestamp()
  */
-class DirectReaction : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "reaction_type"   => "string",
-        "timestamp"       => "string",
-        "sender_id"       => "string",
-        "client_context"  => "string",
-        "reaction_status" => "string",
-        "node_type"       => "string",
-        "item_id"         => "string",
-    ]
+data class DirectReaction (
+    val reaction_type   : String,
+    val timestamp       : String,
+    val sender_id       : String,
+    val client_context  : String,
+    val reaction_status : String,
+    val node_type       : String,
+    val item_id         : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "reaction_type"   => "string",
+//        "timestamp"       => "string",
+//        "sender_id"       => "string",
+//        "client_context"  => "string",
+//        "reaction_status" => "string",
+//        "node_type"       => "string",
+//        "item_id"         => "string",
+//    ]
 }

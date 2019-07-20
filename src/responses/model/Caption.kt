@@ -60,21 +60,34 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUser()
  * @method this unsetUserId()
  */
-class Caption : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "status"             => "",
-        "user_id"            => "string",
-        "created_at_utc"     => "string",
-        "created_at"         => "string",
-        "bit_flags"          => "int",
-        "user"               => "User",
-        "content_type"       => "",
-        "text"               => "string",
-        "media_id"           => "string",
-        "pk"                 => "string",
-        "type"               => "",
-        "has_translation"    => "bool",
-        "did_report_as_spam" => "bool",
-    ]
+data class Caption (
+    val status             : String,
+    val user_id            : String,
+    val created_at_utc     : String,
+    val created_at         : String,
+    val bit_flags          : Int,
+    val user               : User,
+    val content_type       : String,
+    val text               : String,
+    val media_id           : String,
+    val pk                 : String,
+    val type               : String,
+    val has_translation    : Boolean,
+    val did_report_as_spam : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "status"             => "",
+//        "user_id"            => "string",
+//        "created_at_utc"     => "string",
+//        "created_at"         => "string",
+//        "bit_flags"          => "int",
+//        "user"               => "User",
+//        "content_type"       => "",
+//        "text"               => "string",
+//        "media_id"           => "string",
+//        "pk"                 => "string",
+//        "type"               => "",
+//        "has_translation"    => "bool",
+//        "did_report_as_spam" => "bool",
+//    ]
 }

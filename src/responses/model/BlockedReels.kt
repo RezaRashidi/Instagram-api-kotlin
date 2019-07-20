@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetPageSize()
  * @method this unsetUsers()
  */
-class BlockedReels : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "users"     => "User[]",
-        "page_size" => "",
-        "big_list"  => "",
-    ]
+data class BlockedReels (
+    val users     : MutableList<User>,
+    val page_size : String,
+    val big_list  : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "users"     => "User[]",
+//        "page_size" => "",
+//        "big_list"  => "",
+//    ]
 }

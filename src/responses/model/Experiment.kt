@@ -32,14 +32,20 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetName()
  * @method this unsetParams()
  */
-class Experiment : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "name"              => "string",
-        "group"             => "string",
-        "additional_params" => "", // TODO: Only seen as [] empty array so far.
-        "params"            => "Param[]",
-        "logging_id"        => "string",
-        "expired"           => "bool",
-    ]
+data class Experiment (
+    val name              : String,
+    val group             : String,
+    val additional_params : String,
+    val params            : MutableList<Param>,
+    val logging_id        : String,
+    val expired           : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "name"              => "string",
+//        "group"             => "string",
+//        "additional_params" => "", // TODO: Only seen as [] empty array so far.
+//        "params"            => "Param[]",
+//        "logging_id"        => "string",
+//        "expired"           => "bool",
+//    ]
 }

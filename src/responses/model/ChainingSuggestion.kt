@@ -494,10 +494,12 @@ package instagramAPI.responses.model
  * @method this unsetUsertagsCount()
  * @method this unsetZip()
  */
-class ChainingSuggestion : User
-{
-    val JSON_PROPERTY_MAP = [
-       "chaining_info"                    => "ChainingInfo",
-       "profile_chaining_secondary_label" => "",
-   ]
+data class ChainingSuggestion (
+    val chaining_info                    : ChainingInfo,
+    val profile_chaining_secondary_label : String
+){
+//    val JSON_PROPERTY_MAP = [
+//       "chaining_info"                    => "ChainingInfo",
+//       "profile_chaining_secondary_label" => "",
+//   ]
 }

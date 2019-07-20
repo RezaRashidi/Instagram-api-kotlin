@@ -36,15 +36,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetMessage()
  * @method this unsetTitle()
  */
-class DismissCard : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "card_id"        => "",
-        "image_url"      => "string",
-        "title"          => "",
-        "message"        => "",
-        "button_text"    => "",
-        "camera_target"  => "",
-        "face_filter_id" => "",
-    ]
+data class DismissCard (
+    val card_id        : String,
+    val image_url      : String,
+    val title          : String,
+    val message        : String,
+    val button_text    : String,
+    val camera_target  : String,
+    val face_filter_id : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "card_id"        => "",
+//        "image_url"      => "string",
+//        "title"          => "",
+//        "message"        => "",
+//        "button_text"    => "",
+//        "camera_target"  => "",
+//        "face_filter_id" => "",
+//    ]
 }

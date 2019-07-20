@@ -32,14 +32,20 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTimestamp()
  * @method this unsetUser()
  */
-class BroadcastQuestion : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "text"               => "string",
-        "qid"                => "string",
-        "source"             => "string",
-        "user"               => "User",
-        "story_sticker_text" => "string",
-        "timestamp"          => "string",
-    ]
+data class BroadcastQuestion (
+    val text               : String,
+    val qid                : String,
+    val source             : String,
+    val user               : User,
+    val story_sticker_text : String,
+    val timestamp          : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "text"               => "string",
+//        "qid"                => "string",
+//        "source"             => "string",
+//        "user"               => "User",
+//        "story_sticker_text" => "string",
+//        "timestamp"          => "string",
+//    ]
 }

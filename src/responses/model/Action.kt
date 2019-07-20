@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTitle()
  * @method this unsetUrl()
  */
-class Action : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "title"             => "Text",
-        "url"               => "string",
-        "limit"             => "int",
-        "dismiss_promotion" => "bool",
-    ]
+data class Action (
+    val title             : Text,
+    val url               : String,
+    val limit             : Int,
+    val dismiss_promotion : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "title"             => "Text",
+//        "url"               => "string",
+//        "limit"             => "int",
+//        "dismiss_promotion" => "bool",
+//    ]
 }

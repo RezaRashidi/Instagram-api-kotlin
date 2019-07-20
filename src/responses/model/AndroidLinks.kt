@@ -48,18 +48,28 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetRedirectUri()
  * @method this unsetWebUri()
  */
-class AndroidLinks : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "linkType"          => "int",
-        "webUri"            => "string",
-        "androidClass"      => "string",
-        "package"           => "string",
-        "deeplinkUri"       => "string",
-        "callToActionTitle" => "string",
-        "redirectUri"       => "string",
-        "igUserId"          => "string",
-        "leadGenFormId"     => "string",
-        "canvasDocId"       => "string",
-    ]
+data class AndroidLinks (
+    val linkType           : Int,
+    val webUri             : String,
+    val androidClass       : String,
+    val package            : String,
+    val deeplinkUri        : String,
+    val callToActionTitle  : String,
+    val redirectUri        : String,
+    val igUserId           : String,
+    val leadGenFormId      : String,
+    val canvasDocId        : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "linkType"          => "int",
+//        "webUri"            => "string",
+//        "androidClass"      => "string",
+//        "package"           => "string",
+//        "deeplinkUri"       => "string",
+//        "callToActionTitle" => "string",
+//        "redirectUri"       => "string",
+//        "igUserId"          => "string",
+//        "leadGenFormId"     => "string",
+//        "canvasDocId"       => "string",
+//    ]
 }

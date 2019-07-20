@@ -64,22 +64,36 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetType()
  * @method this unsetUuid()
  */
-class GenericMegaphone : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "type"              => "",
-        "title"             => "",
-        "message"           => "",
-        "dismissible"       => "",
-        "icon"              => "",
-        "buttons"           => "Button[]",
-        "megaphone_version" => "",
-        "button_layout"     => "",
-        "action_info"       => "",
-        "button_location"   => "",
-        "background_color"  => "",
-        "title_color"       => "",
-        "message_color"     => "",
-        "uuid"              => "string",
-    ]
+data class GenericMegaphone (
+    val type              : String,
+    val title             : String,
+    val message           : String,
+    val dismissible       : String,
+    val icon              : String,
+    val buttons           : MutableList<Button>,
+    val megaphone_version : String,
+    val button_layout     : String,
+    val action_info       : String,
+    val button_location   : String,
+    val background_color  : String,
+    val title_color       : String,
+    val message_color     : String,
+    val uuid              : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "type"              => "",
+//        "title"             => "",
+//        "message"           => "",
+//        "dismissible"       => "",
+//        "icon"              => "",
+//        "buttons"           => "Button[]",
+//        "megaphone_version" => "",
+//        "button_layout"     => "",
+//        "action_info"       => "",
+//        "button_location"   => "",
+//        "background_color"  => "",
+//        "title_color"       => "",
+//        "message_color"     => "",
+//        "uuid"              => "string",
+//    ]
 }

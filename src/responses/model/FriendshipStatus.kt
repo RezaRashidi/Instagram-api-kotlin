@@ -48,18 +48,28 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetMuting()
  * @method this unsetOutgoingRequest()
  */
-class FriendshipStatus : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "following"        => "bool",
-        "followed_by"      => "bool",
-        "incoming_request" => "bool",
-        "outgoing_request" => "bool",
-        "is_private"       => "bool",
-        "is_blocking_reel" => "bool",
-        "is_muting_reel"   => "bool",
-        "blocking"         => "bool",
-        "muting"           => "bool",
-        "is_bestie"        => "bool",
-    ]
+data class FriendshipStatus (
+    val following        : Boolean,
+    val followed_by      : Boolean,
+    val incoming_request : Boolean,
+    val outgoing_request : Boolean,
+    val is_private       : Boolean,
+    val is_blocking_reel : Boolean,
+    val is_muting_reel   : Boolean,
+    val blocking         : Boolean,
+    val muting           : Boolean,
+    val is_bestie        : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "following"        => "bool",
+//        "followed_by"      => "bool",
+//        "incoming_request" => "bool",
+//        "outgoing_request" => "bool",
+//        "is_private"       => "bool",
+//        "is_blocking_reel" => "bool",
+//        "is_muting_reel"   => "bool",
+//        "blocking"         => "bool",
+//        "muting"           => "bool",
+//        "is_bestie"        => "bool",
+//    ]
 }

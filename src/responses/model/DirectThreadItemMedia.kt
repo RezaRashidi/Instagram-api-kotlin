@@ -28,21 +28,26 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetOriginalWidth()
  * @method this unsetVideoVersions()
  */
-class DirectThreadItemMedia : AutoPropertyMapper
-{
+data class DirectThreadItemMedia (
+    val media_type      : Int,
+    val image_versions2 : Image_Versions2,
+    val video_versions  : MutableList<VideoVersions>,
+    val original_width  : Int,
+    val original_height : Int
+){
     val PHOTO = 1
     val VIDEO = 2
 
-    val JSON_PROPERTY_MAP = [
-        /*
-         * A number describing what type of media this is. Should be compared
-         * against the `DirectThreadItemMedia::PHOTO` and
-         * `DirectThreadItemMedia::VIDEO` constants!
-         */
-        "media_type"      => "int",
-        "image_versions2" => "Image_Versions2",
-        "video_versions"  => "VideoVersions[]",
-        "original_width"  => "int",
-        "original_height" => "int",
-    ]
+//    val JSON_PROPERTY_MAP = [
+//        /*
+//         * A number describing what type of media this is. Should be compared
+//         * against the `DirectThreadItemMedia::PHOTO` and
+//         * `DirectThreadItemMedia::VIDEO` constants!
+//         */
+//        "media_type"      => "int",
+//        "image_versions2" => "Image_Versions2",
+//        "video_versions"  => "VideoVersions[]",
+//        "original_width"  => "int",
+//        "original_height" => "int",
+//    ]
 }

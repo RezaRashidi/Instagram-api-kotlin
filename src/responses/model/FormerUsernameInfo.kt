@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setHasFormerUsernames(bool $value)
  * @method this unsetHasFormerUsernames()
  */
-class FormerUsernameInfo : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "has_former_usernames" => "bool",
-    ]
+data class FormerUsernameInfo (
+    val has_former_usernames : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "has_former_usernames" => "bool",
+//    ]
 }

@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetCanvasDocId()
  * @method this unsetLinkType()
  */
-class IOSLinks : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "linkType"    => "int",
-        "canvasDocId" => "string",
-    ]
+data class IOSLinks (
+    val linkType    : Int,
+    val canvasDocId : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "linkType"    => "int",
+//        "canvasDocId" => "string",
+//    ]
 }

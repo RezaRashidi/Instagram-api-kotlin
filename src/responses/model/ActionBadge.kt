@@ -20,8 +20,11 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetActionTimestamp()
  * @method this unsetActionType()
  */
-class ActionBadge : AutoPropertyMapper
-{
+data class ActionBadge (
+    val action_type      : String,
+    val action_count     : String,
+    val action_timestamp : String
+){
     val DELIVERED = "raven_delivered"
     val SENT = "raven_sent"
     val OPENED = "raven_opened"
@@ -33,9 +36,9 @@ class ActionBadge : AutoPropertyMapper
     val UNKNOWN = "raven_unknown"
     val SUGGESTED = "raven_suggested"
 
-    val JSON_PROPERTY_MAP = [
-        "action_type"      => "",
-        "action_count"     => "",
-        "action_timestamp" => "",
-    ]
+//    val JSON_PROPERTY_MAP = [
+//        "action_type"      => "",
+//        "action_count"     => "",
+//        "action_timestamp" => "",
+//    ]
 }

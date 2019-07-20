@@ -44,20 +44,29 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetOriginalHeight()
  * @method this unsetOriginalWidth()
  */
-class CoverMedia : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"              => "string",
-        "media_id"        => "string",
-        /*
-         * A number describing what type of media this is.
-         */
-        "media_type"            => "int",
-        "image_versions2"       => "Image_Versions2",
-        "original_width"        => "int",
-        "original_height"       => "int",
-        "cropped_image_version" => "ImageCandidate",
-        "crop_rect"             => "int[]",
-        "full_image_version"    => "ImageCandidate",
-    ]
+data class CoverMedia (
+    val id                    : String,
+    val media_id              : String,
+    val media_type            : Int,
+    val image_versions2       : Image_Versions2,
+    val original_width        : Int,
+    val original_height       : Int,
+    val cropped_image_version : ImageCandidate,
+    val crop_rect             : MutableList<Int>,
+    val full_image_version    : ImageCandidate
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"              => "string",
+//        "media_id"        => "string",
+//        /*
+//         * A number describing what type of media this is.
+//         */
+//        "media_type"            => "int",
+//        "image_versions2"       => "Image_Versions2",
+//        "original_width"        => "int",
+//        "original_height"       => "int",
+//        "cropped_image_version" => "ImageCandidate",
+//        "crop_rect"             => "int[]",
+//        "full_image_version"    => "ImageCandidate",
+//    ]
 }

@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetThread()
  * @method this unsetUser()
  */
-class DirectRankedRecipient : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "thread" => "DirectThread",
-        "user"   => "User",
-    ]
+data class DirectRankedRecipient (
+    val thread : DirectThread,
+    val user   : User
+){
+//    val JSON_PROPERTY_MAP = [
+//        "thread" => "DirectThread",
+//        "user"   => "User",
+//    ]
 }

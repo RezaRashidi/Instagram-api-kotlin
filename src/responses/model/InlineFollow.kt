@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetOutgoingRequest()
  * @method this unsetUserInfo()
  */
-class InlineFollow : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "user_info"        => "User",
-        "following"        => "bool",
-        "outgoing_request" => "bool",
-    ]
+data class InlineFollow (
+    val user_info        : User,
+    val following        : Boolean,
+    val outgoing_request : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "user_info"        => "User",
+//        "following"        => "bool",
+//        "outgoing_request" => "bool",
+//    ]
 }

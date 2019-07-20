@@ -40,16 +40,24 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetRequests()
  * @method this unsetUsertags()
  */
-class Counts : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "relationships"         => "",
-        "requests"              => "",
-        "photos_of_you"         => "",
-        "usertags"              => "",
-        "comments"              => "",
-        "likes"                 => "",
-        "comment_likes"         => "",
-        "campaign_notification" => "",
-    ]
+data class Counts (
+    val relationships         : String,
+    val requests              : String,
+    val photos_of_you         : String,
+    val usertags              : String,
+    val comments              : String,
+    val likes                 : String,
+    val comment_likes         : String,
+    val campaign_notification : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "relationships"         => "",
+//        "requests"              => "",
+//        "photos_of_you"         => "",
+//        "usertags"              => "",
+//        "comments"              => "",
+//        "likes"                 => "",
+//        "comment_likes"         => "",
+//        "campaign_notification" => "",
+//    ]
 }

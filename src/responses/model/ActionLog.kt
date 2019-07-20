@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetBold()
  * @method this unsetDescription()
  */
-class ActionLog : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "bold"        => "Bold[]",
-        "description" => "",
-    ]
+data class ActionLog (
+    val bold        : MutableList<Bold>,
+    val description : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "bold"        => "Bold[]",
+//        "description" => "",
+//    ]
 }

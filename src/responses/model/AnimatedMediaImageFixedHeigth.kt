@@ -40,16 +40,24 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetWebpSize()
  * @method this unsetWidth()
  */
-class AnimatedMediaImageFixedHeigth : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "url"       => "string",
-        "width"     => "string",
-        "heigth"    => "string",
-        "size"      => "string",
-        "mp4"       => "string",
-        "mp4_size"  => "string",
-        "webp"      => "string",
-        "webp_size" => "string",
-    ]
+data class AnimatedMediaImageFixedHeigth (
+    val url       : String,
+    val width     : String,
+    val heigth    : String,
+    val size      : String,
+    val mp4       : String,
+    val mp4_size  : String,
+    val webp      : String,
+    val webp_size : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "url"       => "string",
+//        "width"     => "string",
+//        "heigth"    => "string",
+//        "size"      => "string",
+//        "mp4"       => "string",
+//        "mp4_size"  => "string",
+//        "webp"      => "string",
+//        "webp_size" => "string",
+//    ]
 }

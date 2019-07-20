@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetMedia()
  * @method this unsetStories()
  */
-class ExploreItem : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "media"             => "Item",
-        "stories"           => "Stories",
-        "channel"           => "Channel",
-        "explore_item_info" => "ExploreItemInfo",
-    ]
+data class ExploreItem (
+    val media             : Item,
+    val stories           : Stories,
+    val channel           : Channel,
+    val explore_item_info : ExploreItemInfo
+){
+//    val JSON_PROPERTY_MAP = [
+//        "media"             => "Item",
+//        "stories"           => "Stories",
+//        "channel"           => "Channel",
+//        "explore_item_info" => "ExploreItemInfo",
+//    ]
 }
