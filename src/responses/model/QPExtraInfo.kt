@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetExtraInfo()
  * @method this unsetSurface()
  */
-class QPExtraInfo : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "surface"                 => "int",
-        "extra_info"              => "string",
-    ]
+data class QPExtraInfo (
+    val surface    : Int,
+    val extra_info : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "surface"                 => "int",
+//        "extra_info"              => "string",
+//    ]
 }

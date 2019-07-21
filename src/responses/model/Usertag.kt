@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetIn()
  * @method this unsetPhotoOfYou()
  */
-class Usertag : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "in"           => "In[]",
-        "photo_of_you" => "bool",
-    ]
+data class Usertag (
+    val in           : MutableList<In>,
+    val photo_of_you : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "in"           => "In[]",
+//        "photo_of_you" => "bool",
+//    ]
 }

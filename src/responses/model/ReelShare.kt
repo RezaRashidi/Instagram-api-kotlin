@@ -52,19 +52,30 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTray()
  * @method this unsetType()
  */
-class ReelShare : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "tray"                => "Item[]",
-        "story_ranking_token" => "string",
-        "broadcasts"          => "",
-        "sticker_version"     => "int",
-        "text"                => "string",
-        "type"                => "string",
-        "is_reel_persisted"   => "bool",
-        "reel_owner_id"       => "string",
-        "reel_type"           => "string",
-        "media"               => "Item",
-        "mentioned_user_id"   => "string",
-    ]
+data class ReelShare (
+    val tray                : MutableList<Item>,
+    val story_ranking_token : String,
+    val broadcasts          : String,
+    val sticker_version     : Int,
+    val text                : String,
+    val type                : String,
+    val is_reel_persisted   : Boolean,
+    val reel_owner_id       : String,
+    val reel_type           : String,
+    val media               : Item,
+    val mentioned_user_id   : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "tray"                => "Item[]",
+//        "story_ranking_token" => "string",
+//        "broadcasts"          => "",
+//        "sticker_version"     => "int",
+//        "text"                => "string",
+//        "type"                => "string",
+//        "is_reel_persisted"   => "bool",
+//        "reel_owner_id"       => "string",
+//        "reel_type"           => "string",
+//        "media"               => "Item",
+//        "mentioned_user_id"   => "string",
+//    ]
 }

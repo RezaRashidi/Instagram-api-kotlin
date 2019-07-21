@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setMaxTraceTimeoutMs(int $value)
  * @method this unsetMaxTraceTimeoutMs()
  */
-class TraceControl : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "max_trace_timeout_ms"             => "int",
-    ]
+data class TraceControl (
+    val max_trace_timeout_ms : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "max_trace_timeout_ms"             => "int",
+//    ]
 }

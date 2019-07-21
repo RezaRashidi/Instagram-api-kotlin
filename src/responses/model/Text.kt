@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setText(string $value)
  * @method this unsetText()
  */
-class Text : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "text" => "string",
-    ]
+data class Text (
+    val text : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "text" => "string",
+//    ]
 }

@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetName()
  * @method this unsetParameters()
  */
-class Template : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "name"       => "string",
-        "parameters" => "",
-    ]
+data class Template (
+    val name       : String,
+    val parameters : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "name"       => "string",
+//        "parameters" => "",
+//    ]
 }

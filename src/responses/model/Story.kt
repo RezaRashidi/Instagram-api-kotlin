@@ -28,13 +28,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetStoryType()
  * @method this unsetType()
  */
-class Story : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "pk"         => "string",
-        "counts"     => "Counts",
-        "args"       => "Args",
-        "type"       => "int",
-        "story_type" => "int",
-    ]
+data class Story (
+    val pk         : String,
+    val counts     : Counts,
+    val args       : Args,
+    val type       : Int,
+    val story_type : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "pk"         => "string",
+//        "counts"     => "Counts",
+//        "args"       => "Args",
+//        "type"       => "int",
+//        "story_type" => "int",
+//    ]
 }

@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setHasSharedFollowerAccounts(bool $value)
  * @method this unsetHasSharedFollowerAccounts()
  */
-class SharedFollowerAccountsInfo : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "has_shared_follower_accounts" => "bool",
-    ]
+data class SharedFollowerAccountsInfo (
+    val has_shared_follower_accounts : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "has_shared_follower_accounts" => "bool",
+//    ]
 }

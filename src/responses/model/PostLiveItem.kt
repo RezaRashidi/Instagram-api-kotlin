@@ -48,18 +48,28 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetSeenRankedPosition()
  * @method this unsetUser()
  */
-class PostLiveItem : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "pk"                     => "string",
-        "user"                   => "User",
-        "broadcasts"             => "Broadcast[]",
-        "peak_viewer_count"      => "int",
-        "last_seen_broadcast_ts" => "",
-        "can_reply"              => "",
-        "ranked_position"        => "",
-        "seen_ranked_position"   => "",
-        "muted"                  => "",
-        "can_reshare"            => "",
-    ]
+data class PostLiveItem (
+    val pk                     : String,
+    val user                   : User,
+    val broadcasts             : MutableList<Broadcast>,
+    val peak_viewer_count      : Int,
+    val last_seen_broadcast_ts : String,
+    val can_reply              : String,
+    val ranked_position        : String,
+    val seen_ranked_position   : String,
+    val muted                  : String,
+    val can_reshare            : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "pk"                     => "string",
+//        "user"                   => "User",
+//        "broadcasts"             => "Broadcast[]",
+//        "peak_viewer_count"      => "int",
+//        "last_seen_broadcast_ts" => "",
+//        "can_reply"              => "",
+//        "ranked_position"        => "",
+//        "seen_ranked_position"   => "",
+//        "muted"                  => "",
+//        "can_reshare"            => "",
+//    ]
 }

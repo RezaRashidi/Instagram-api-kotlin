@@ -28,13 +28,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUrl()
  * @method this unsetWidth()
  */
-class VideoVersions : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "type"   => "int", // Some kinda internal type ID, such as int(102).
-        "width"  => "int",
-        "height" => "int",
-        "url"    => "string",
-        "id"     => "string",
-    ]
+data class VideoVersions (
+    val type   : Int,
+    val width  : Int,
+    val height : Int,
+    val url    : String,
+    val id     : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "type"   => "int", // Some kinda internal type ID, such as int(102).
+//        "width"  => "int",
+//        "height" => "int",
+//        "url"    => "string",
+//        "id"     => "string",
+//    ]
 }

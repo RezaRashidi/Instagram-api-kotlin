@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setPostLiveItems(PostLiveItem[] $value)
  * @method this unsetPostLiveItems()
  */
-class PostLive : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "post_live_items" => "PostLiveItem[]",
-    ]
+data class PostLive (
+    val post_live_items : MutableList<PostLiveItem>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "post_live_items" => "PostLiveItem[]",
+//    ]
 }

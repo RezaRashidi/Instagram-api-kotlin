@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setEligiblePromotions(EligiblePromotions $value)
  * @method this unsetEligiblePromotions()
  */
-class Viewer : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "eligible_promotions"   => "EligiblePromotions",
-    ]
+data class Viewer (
+    val eligible_promotions : EligiblePromotions
+){
+//    val JSON_PROPERTY_MAP = [
+//        "eligible_promotions"   => "EligiblePromotions",
+//    ]
 }

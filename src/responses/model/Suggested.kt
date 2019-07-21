@@ -28,13 +28,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetPosition()
  * @method this unsetUser()
  */
-class Suggested : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "position"     => "int",
-        "hashtag"      => "Hashtag",
-        "user"         => "User",
-        "place"        => "LocationItem",
-        "client_time"  => "",
-    ]
+data class Suggested (
+    val position     : Int,
+    val hashtag      : Hashtag,
+    val user         : User,
+    val place        : LocationItem,
+    val client_time  : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "position"     => "int",
+//        "hashtag"      => "Hashtag",
+//        "user"         => "User",
+//        "place"        => "LocationItem",
+//        "client_time"  => "",
+//    ]
 }

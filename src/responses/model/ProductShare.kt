@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetProduct()
  * @method this unsetText()
  */
-class ProductShare : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "media"   => "Item",
-        "text"    => "string",
-        "product" => "Product",
-    ]
+data class ProductShare (
+    val media   : Item,
+    val text    : String,
+    val product : Product
+){
+//    val JSON_PROPERTY_MAP = [
+//        "media"   => "Item",
+//        "text"    => "string",
+//        "product" => "Product",
+//    ]
 }

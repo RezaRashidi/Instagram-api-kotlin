@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setIn(In[] $value)
  * @method this unsetIn()
  */
-class ProductTags : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "in"        => "In[]",
-    ]
+data class ProductTags (
+    val in : MutableList<In>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "in"        => "In[]",
+//    ]
 }

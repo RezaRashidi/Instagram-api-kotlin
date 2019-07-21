@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUpsellFbcCard()
  * @method this unsetUserCard()
  */
-class SuggestionCard : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "user_card"            => "UserCard",
-        "upsell_ci_card"       => "",
-        "upsell_fbc_card"      => "",
-    ]
+data class SuggestionCard (
+    val user_card            : UserCard,
+    val upsell_ci_card       : String,
+    val upsell_fbc_card      : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "user_card"            => "UserCard",
+//        "upsell_ci_card"       => "",
+//        "upsell_fbc_card"      => "",
+//    ]
 }

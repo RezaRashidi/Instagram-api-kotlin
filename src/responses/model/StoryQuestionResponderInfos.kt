@@ -48,18 +48,28 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetResponders()
  * @method this unsetTextColor()
  */
-class StoryQuestionResponderInfos : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "question_id"                   => "string",
-        "question"                      => "string",
-        "question_type"                 => "string",
-        "background_color"              => "string",
-        "text_color"                    => "string",
-        "responders"                    => "Responder[]",
-        "max_id"                        => "",
-        "more_available"                => "bool",
-        "question_response_count"       => "int",
-        "latest_question_response_time" => "int",
-    ]
+data class StoryQuestionResponderInfos (
+    val question_id                   : String,
+    val question                      : String,
+    val question_type                 : String,
+    val background_color              : String,
+    val text_color                    : String,
+    val responders                    : MutableList<Responder>,
+    val max_id                        : String,
+    val more_available                : Boolean,
+    val question_response_count       : Int,
+    val latest_question_response_time : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "question_id"                   => "string",
+//        "question"                      => "string",
+//        "question_type"                 => "string",
+//        "background_color"              => "string",
+//        "text_color"                    => "string",
+//        "responders"                    => "Responder[]",
+//        "max_id"                        => "",
+//        "more_available"                => "bool",
+//        "question_response_count"       => "int",
+//        "latest_question_response_time" => "int",
+//    ]
 }

@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTitle()
  * @method this unsetType()
  */
-class Tab : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "type"  => "string",
-        "title" => "string",
-    ]
+data class Tab (
+    val type  : String,
+    val title : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "type"  => "string",
+//        "title" => "string",
+//    ]
 }

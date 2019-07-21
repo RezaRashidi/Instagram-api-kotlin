@@ -48,20 +48,30 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTtl()
  * @method this unsetZeroCmsFetchIntervalSeconds()
  */
-class Token : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "carrier_name"                    => "string",
-        "carrier_id"                      => "int",
-        "ttl"                             => "int",
-        "features"                        => "",
-        "request_time"                    => "string",
-        "token_hash"                      => "string",
-        "rewrite_rules"                   => "RewriteRule[]",
-        "enabled_wallet_defs_keys"        => "",
-        "deadline"                        => "string",
-        "zero_cms_fetch_interval_seconds" => "int",
-    ]
+data class Token (
+    val carrier_name                    : String,
+    val carrier_id                      : Int,
+    val ttl                             : Int,
+    val features                        : String,
+    val request_time                    : String,
+    val token_hash                      : String,
+    val rewrite_rules                   : MutableList<RewriteRule>,
+    val enabled_wallet_defs_keys        : String,
+    val deadline                        : String,
+    val zero_cms_fetch_interval_seconds : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "carrier_name"                    => "string",
+//        "carrier_id"                      => "int",
+//        "ttl"                             => "int",
+//        "features"                        => "",
+//        "request_time"                    => "string",
+//        "token_hash"                      => "string",
+//        "rewrite_rules"                   => "RewriteRule[]",
+//        "enabled_wallet_defs_keys"        => "",
+//        "deadline"                        => "string",
+//        "zero_cms_fetch_interval_seconds" => "int",
+//    ]
 
     val DEFAULT_TTL = 3600
 
@@ -70,13 +80,12 @@ class Token : AutoPropertyMapper
      *
      * @return int
      */
-    public fun expiresAt()
-    {
-        $ttl = (int) this.getTtl()
-        if ($ttl === 0) {
-            $ttl = self::DEFAULT_TTL
+    fun expiresAt(): Int{
+        var ttl = getTtl() as Int
+        if (ttl === 0) {
+            ttl = DEFAULT_TTL
         }
 
-        return time() + $ttl
+        return  (System.currentTimeMillis()/1000).toInt() + ttl
     }
 }

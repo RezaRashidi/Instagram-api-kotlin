@@ -36,21 +36,28 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTextColor()
  * @method this unsetViewerCanInteract()
  */
-class QuestionSticker : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "question_id"         => "string",
-        "question"            => "string",
-        /*
-         * HTML color string such as "#812A2A".
-         */
-        "text_color"          => "string",
-        /*
-         * HTML color string such as "#812A2A".
-         */
-        "background_color"    => "string",
-        "viewer_can_interact" => "bool",
-        "profile_pic_url"     => "string",
-        "question_type"       => "string",
-    ]
+data class QuestionSticker (
+    val question_id         : String,
+    val question            : String,
+    val text_color          : String,
+    val background_color    : String,
+    val viewer_can_interact : Boolean,
+    val profile_pic_url     : String,
+    val question_type       : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "question_id"         => "string",
+//        "question"            => "string",
+//        /*
+//         * HTML color string such as "#812A2A".
+//         */
+//        "text_color"          => "string",
+//        /*
+//         * HTML color string such as "#812A2A".
+//         */
+//        "background_color"    => "string",
+//        "viewer_can_interact" => "bool",
+//        "profile_pic_url"     => "string",
+//        "question_type"       => "string",
+//    ]
 }

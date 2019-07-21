@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetCooldown()
  * @method this unsetSurfaceId()
  */
-class QPSurface : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "surface_id"             => "int",
-        "cooldown"               => "int",
-    ]
+data class QPSurface (
+    val surface_id : Int,
+    val cooldown   : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "surface_id"             => "int",
+//        "cooldown"               => "int",
+//    ]
 }

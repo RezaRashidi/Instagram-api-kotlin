@@ -80,26 +80,44 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetSubtitle()
  * @method this unsetType()
  */
-class Tag : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"                           => "string",
-        "name"                         => "string",
-        "media_count"                  => "int",
-        "type"                         => "string",
-        "follow_status"                => "",
-        "following"                    => "",
-        "allow_following"              => "",
-        "allow_muting_story"           => "",
-        "profile_pic_url"              => "",
-        "non_violating"                => "",
-        "related_tags"                 => "",
-        "subtitle"                     => "",
-        "social_context"               => "",
-        "social_context_profile_links" => "",
-        "show_follow_drop_down"        => "",
-        "follow_button_text"           => "",
-        "debug_info"                   => "",
-        "search_result_subtitle"       => "",
-    ]
+data class Tag (
+    val id                           : String,
+    val name                         : String,
+    val media_count                  : Int,
+    val type                         : String,
+    val follow_status                : String,
+    val following                    : String,
+    val allow_following              : String,
+    val allow_muting_story           : String,
+    val profile_pic_url              : String,
+    val non_violating                : String,
+    val related_tags                 : String,
+    val subtitle                     : String,
+    val social_context               : String,
+    val social_context_profile_links : String,
+    val show_follow_drop_down        : String,
+    val follow_button_text           : String,
+    val debug_info                   : String,
+    val search_result_subtitle       : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"                           => "string",
+//        "name"                         => "string",
+//        "media_count"                  => "int",
+//        "type"                         => "string",
+//        "follow_status"                => "",
+//        "following"                    => "",
+//        "allow_following"              => "",
+//        "allow_muting_story"           => "",
+//        "profile_pic_url"              => "",
+//        "non_violating"                => "",
+//        "related_tags"                 => "",
+//        "subtitle"                     => "",
+//        "social_context"               => "",
+//        "social_context_profile_links" => "",
+//        "show_follow_drop_down"        => "",
+//        "follow_button_text"           => "",
+//        "debug_info"                   => "",
+//        "search_result_subtitle"       => "",
+//    ]
 }

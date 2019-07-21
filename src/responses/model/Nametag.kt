@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetMode()
  * @method this unsetSelfieSticker()
  */
-class Nametag : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "mode"                 => "int",
-        "gradient"             => "int",
-        "emoji"                => "string",
-        "selfie_sticker"       => "int",
-    ]
+data class Nametag (
+    val mode                 : Int,
+    val gradient             : Int,
+    val emoji                : String,
+    val selfie_sticker       : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "mode"                 => "int",
+//        "gradient"             => "int",
+//        "emoji"                => "string",
+//        "selfie_sticker"       => "int",
+//    ]
 }

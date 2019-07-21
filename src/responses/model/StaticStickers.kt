@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetIncludeInRecent()
  * @method this unsetStickers()
  */
-class StaticStickers : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "include_in_recent" => "",
-        "id"                => "string",
-        "stickers"          => "Stickers[]",
-    ]
+data class StaticStickers (
+    val include_in_recent : String,
+    val id                : String,
+    val stickers          : MutableList<Stickers>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "include_in_recent" => "",
+//        "id"                => "string",
+//        "stickers"          => "Stickers[]",
+//    ]
 }

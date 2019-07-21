@@ -56,20 +56,32 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUpsellFbPos()
  * @method this unsetViewAllText()
  */
-class SuggestedUsers : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"                 => "string",
-        "view_all_text"      => "",
-        "title"              => "",
-        "auto_dvance"        => "",
-        "type"               => "",
-        "tracking_token"     => "string",
-        "landing_site_type"  => "",
-        "landing_site_title" => "",
-        "upsell_fb_pos"      => "",
-        "suggestions"        => "Suggestion[]",
-        "suggestion_cards"   => "SuggestionCard[]",
-        "netego_type"        => "",
-    ]
+data class SuggestedUsers (
+    val id                 : String,
+    val view_all_text      : String,
+    val title              : String,
+    val auto_dvance        : String,
+    val type               : String,
+    val tracking_token     : String,
+    val landing_site_type  : String,
+    val landing_site_title : String,
+    val upsell_fb_pos      : String,
+    val suggestions        : MutableList<Suggestion>,
+    val suggestion_cards   : MutableList<SuggestionCard>,
+    val netego_type        : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"                 => "string",
+//        "view_all_text"      => "",
+//        "title"              => "",
+//        "auto_dvance"        => "",
+//        "type"               => "",
+//        "tracking_token"     => "string",
+//        "landing_site_type"  => "",
+//        "landing_site_title" => "",
+//        "upsell_fb_pos"      => "",
+//        "suggestions"        => "Suggestion[]",
+//        "suggestion_cards"   => "SuggestionCard[]",
+//        "netego_type"        => "",
+//    ]
 }

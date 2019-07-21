@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setLinks(AndroidLinks[] $value)
  * @method this unsetLinks()
  */
-class StoryCta : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "links"          => "AndroidLinks[]",
-    ]
+data class StoryCta (
+    val links : MutableList<AndroidLinks>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "links"          => "AndroidLinks[]",
+//    ]
 }

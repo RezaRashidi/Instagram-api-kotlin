@@ -28,13 +28,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetImage()
  * @method this unsetUser()
  */
-class Media : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "image"                            => "string",
-        "id"                               => "string",
-        "user"                             => "User",
-        "expiring_at"                      => "",
-        "comment_threading_enabled"        => "bool",
-    ]
+data class Media (
+    val image                            : String,
+    val id                               : String,
+    val user                             : User,
+    val expiring_at                      : String,
+    val comment_threading_enabled        : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "image"                            => "string",
+//        "id"                               => "string",
+//        "user"                             => "User",
+//        "expiring_at"                      => "",
+//        "comment_threading_enabled"        => "bool",
+//    ]
 }

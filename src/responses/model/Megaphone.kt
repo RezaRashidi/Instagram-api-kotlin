@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setGenericMegaphone(GenericMegaphone $value)
  * @method this unsetGenericMegaphone()
  */
-class Megaphone : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "generic_megaphone" => "GenericMegaphone",
-    ]
+data class Megaphone (
+    val generic_megaphone : GenericMegaphone
+){
+//    val JSON_PROPERTY_MAP = [
+//        "generic_megaphone" => "GenericMegaphone",
+//    ]
 }

@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setViewer(Viewer $value)
  * @method this unsetViewer()
  */
-class QPViewerData : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "viewer"   => "Viewer",
-    ]
+data class QPViewerData (
+    val viewer : Viewer
+){
+//    val JSON_PROPERTY_MAP = [
+//        "viewer"   => "Viewer",
+//    ]
 }

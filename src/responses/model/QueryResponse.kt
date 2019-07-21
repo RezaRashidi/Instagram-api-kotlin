@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setShadowInstagramUser(ShadowInstagramUser $value)
  * @method this unsetShadowInstagramUser()
  */
-class QueryResponse : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "shadow_instagram_user" => "ShadowInstagramUser",
-    ]
+data class QueryResponse (
+    val shadow_instagram_user : ShadowInstagramUser
+){
+//    val JSON_PROPERTY_MAP = [
+//        "shadow_instagram_user" => "ShadowInstagramUser",
+//    ]
 }

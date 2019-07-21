@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this set_SummaryPromotions2ubm1F(SummaryPromotions $value)
  * @method this unset_SummaryPromotions2ubm1F()
  */
-class PromotionsUnit : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "_summary_promotions2ubm1F" => "SummaryPromotions",
-    ]
+data class PromotionsUnit (
+    val _summary_promotions2ubm1F : SummaryPromotions
+){
+//    val JSON_PROPERTY_MAP = [
+//        "_summary_promotions2ubm1F" => "SummaryPromotions",
+//    ]
 }

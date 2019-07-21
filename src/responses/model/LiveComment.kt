@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetEvent()
  * @method this unsetOffset()
  */
-class LiveComment : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "comment" => "Comment",
-        "offset"  => "",
-        "event"   => "",
-    ]
+data class LiveComment (
+    val comment : Comment,
+    val offset  : String,
+    val event   : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "comment" => "Comment",
+//        "offset"  => "",
+//        "event"   => "",
+//    ]
 }

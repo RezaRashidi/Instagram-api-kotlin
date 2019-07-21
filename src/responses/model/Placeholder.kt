@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetMessage()
  * @method this unsetTitle()
  */
-class Placeholder : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "is_linked" => "bool",
-        "title"     => "string",
-        "message"   => "string",
-    ]
+data class Placeholder (
+    val is_linked : Boolean,
+    val title     : String,
+    val message   : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "is_linked" => "bool",
+//        "title"     => "string",
+//        "message"   => "string",
+//    ]
 }

@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetLastActivityAtMs()
  * @method this unsetUserId()
  */
-class UserPresence : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "user_id"             => "string",
-        "last_activity_at_ms" => "string",
-        "is_active"           => "bool",
-        "in_threads"          => "string[]",
-    ]
+data class UserPresence (
+    val user_id             : String,
+    val last_activity_at_ms : String,
+    val is_active           : Boolean,
+    val in_threads          : MutableList<String>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "user_id"             => "string",
+//        "last_activity_at_ms" => "string",
+//        "is_active"           => "bool",
+//        "in_threads"          => "string[]",
+//    ]
 }

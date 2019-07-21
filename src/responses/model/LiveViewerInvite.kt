@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetText()
  * @method this unsetTitle()
  */
-class LiveViewerInvite : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "text"      => "string",
-        "broadcast" => "Broadcast",
-        "title"     => "string",
-        "message"   => "string",
-    ]
+data class LiveViewerInvite (
+    val text      : String,
+    val broadcast : Broadcast,
+    val title     : String,
+    val message   : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "text"      => "string",
+//        "broadcast" => "Broadcast",
+//        "title"     => "string",
+//        "message"   => "string",
+//    ]
 }

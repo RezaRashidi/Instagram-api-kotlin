@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetLayoutContent()
  * @method this unsetLayoutType()
  */
-class Section : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "layout_type"       => "string",
-        "layout_content"    => "LayoutContent",
-        "feed_type"         => "string",
-        "explore_item_info" => "ExploreItemInfo",
-    ]
+data class Section (
+    val layout_type       : String,
+    val layout_content    : LayoutContent,
+    val feed_type         : String,
+    val explore_item_info : ExploreItemInfo
+){
+//    val JSON_PROPERTY_MAP = [
+//        "layout_type"       => "string",
+//        "layout_content"    => "LayoutContent",
+//        "feed_type"         => "string",
+//        "explore_item_info" => "ExploreItemInfo",
+//    ]
 }

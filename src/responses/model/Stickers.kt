@@ -40,16 +40,24 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTrayImageWidthRatio()
  * @method this unsetType()
  */
-class Stickers : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"                     => "string",
-        "tray_image_width_ratio" => "",
-        "image_height"           => "",
-        "image_width_ratio"      => "",
-        "type"                   => "",
-        "image_width"            => "",
-        "name"                   => "",
-        "image_url"              => "string",
-    ]
+data class Stickers (
+    val id                     : String,
+    val tray_image_width_ratio : String,
+    val image_height           : String,
+    val image_width_ratio      : String,
+    val type                   : String,
+    val image_width            : String,
+    val name                   : String,
+    val image_url              : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"                     => "string",
+//        "tray_image_width_ratio" => "",
+//        "image_height"           => "",
+//        "image_width_ratio"      => "",
+//        "type"                   => "",
+//        "image_width"            => "",
+//        "name"                   => "",
+//        "image_url"              => "string",
+//    ]
 }

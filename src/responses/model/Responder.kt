@@ -28,13 +28,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTs()
  * @method this unsetUser()
  */
-class Responder : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "response"            => "string",
-        "has_shared_response" => "bool",
-        "id"                  => "string",
-        "user"                => "User",
-        "ts"                  => "int",
-    ]
+data class Responder (
+    val response            : String,
+    val has_shared_response : Boolean,
+    val id                  : String,
+    val user                : User,
+    val ts                  : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "response"            => "string",
+//        "has_shared_response" => "bool",
+//        "id"                  => "string",
+//        "user"                => "User",
+//        "ts"                  => "int",
+//    ]
 }

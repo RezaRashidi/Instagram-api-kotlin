@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetId()
  * @method this unsetTaggableCatalogs()
  */
-class MeGraphData : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "taggable_catalogs" => "CatalogData",
-        "id"                => "string",
-    ]
+data class MeGraphData (
+    val taggable_catalogs : CatalogData,
+    val id                : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "taggable_catalogs" => "CatalogData",
+//        "id"                => "string",
+//    ]
 }

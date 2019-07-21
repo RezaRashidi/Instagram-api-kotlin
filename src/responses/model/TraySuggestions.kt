@@ -28,13 +28,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTray()
  * @method this unsetTrayTitle()
  */
-class TraySuggestions : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "tray"            => "StoryTray[]",
-        "tray_title"      => "string",
-        "banner_title"    => "string",
-        "banner_subtitle" => "string",
-        "suggestion_type" => "string",
-    ]
+data class TraySuggestions (
+    val tray            : MutableList<StoryTray>,
+    val tray_title      : String,
+    val banner_title    : String,
+    val banner_subtitle : String,
+    val suggestion_type : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "tray"            => "StoryTray[]",
+//        "tray_title"      => "string",
+//        "banner_title"    => "string",
+//        "banner_subtitle" => "string",
+//        "suggestion_type" => "string",
+//    ]
 }

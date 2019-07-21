@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTwoFactorIdentifier()
  * @method this unsetUsername()
  */
-class TwoFactorInfo : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "username"                    => "string",
-        "two_factor_identifier"       => "string",
-        "phone_verification_settings" => "PhoneVerificationSettings",
-        "obfuscated_phone_number"     => "",
-    ]
+data class TwoFactorInfo (
+    val username                    : String,
+    val two_factor_identifier       : String,
+    val phone_verification_settings : PhoneVerificationSettings,
+    val obfuscated_phone_number     : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "username"                    => "string",
+//        "two_factor_identifier"       => "string",
+//        "phone_verification_settings" => "PhoneVerificationSettings",
+//        "obfuscated_phone_number"     => "",
+//    ]
 }

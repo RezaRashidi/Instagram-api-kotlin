@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetText()
  * @method this unsetVideoOffset()
  */
-class LiveVideoShare : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "text"                => "string",
-        "broadcast"           => "Broadcast",
-        "video_offset"        => "int",
-    ]
+data class LiveVideoShare (
+    val text                : String,
+    val broadcast           : Broadcast,
+    val video_offset        : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "text"                => "string",
+//        "broadcast"           => "Broadcast",
+//        "video_offset"        => "int",
+//    ]
 }

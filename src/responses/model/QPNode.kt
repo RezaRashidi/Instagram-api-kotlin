@@ -36,15 +36,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTemplate()
  * @method this unsetTriggers()
  */
-class QPNode : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"                 => "string",
-        "promotion_id"       => "string",
-        "max_impressions"    => "int",
-        "triggers"           => "string[]",
-        "contextual_filters" => "ContextualFilters",
-        "template"           => "Template",
-        "creatives"          => "Creative[]",
-    ]
+data class QPNode (
+    val id                 : String,
+    val promotion_id       : String,
+    val max_impressions    : Int,
+    val triggers           : MutableList<String>,
+    val contextual_filters : ContextualFilters,
+    val template           : Template,
+    val creatives          : MutableList<Creative>
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"                 => "string",
+//        "promotion_id"       => "string",
+//        "max_impressions"    => "int",
+//        "triggers"           => "string[]",
+//        "contextual_filters" => "ContextualFilters",
+//        "template"           => "Template",
+//        "creatives"          => "Creative[]",
+//    ]
 }

@@ -56,20 +56,32 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUuid()
  * @method this unsetValue()
  */
-class Suggestion : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "media_infos"       => "",
-        "social_context"    => "string",
-        "algorithm"         => "string",
-        "thumbnail_urls"    => "string[]",
-        "value"             => "float",
-        "caption"           => "",
-        "user"              => "User",
-        "large_urls"        => "string[]",
-        "media_ids"         => "",
-        "icon"              => "",
-        "is_new_suggestion" => "bool",
-        "uuid"              => "string",
-    ]
+data class Suggestion (
+    val media_infos       : String,
+    val social_context    : String,
+    val algorithm         : String,
+    val thumbnail_urls    : MutableList<String>,
+    val value             : Float,
+    val caption           : String,
+    val user              : User,
+    val large_urls        : MutableList<String>,
+    val media_ids         : String,
+    val icon              : String,
+    val is_new_suggestion : Boolean,
+    val uuid              : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "media_infos"       => "",
+//        "social_context"    => "string",
+//        "algorithm"         => "string",
+//        "thumbnail_urls"    => "string[]",
+//        "value"             => "float",
+//        "caption"           => "",
+//        "user"              => "User",
+//        "large_urls"        => "string[]",
+//        "media_ids"         => "",
+//        "icon"              => "",
+//        "is_new_suggestion" => "bool",
+//        "uuid"              => "string",
+//    ]
 }

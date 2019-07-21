@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetEnd()
  * @method this unsetStart()
  */
-class TimeRange : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "start" => "string",
-        "end"   => "string",
-    ]
+data class TimeRange (
+    val start : String,
+    val end   : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "start" => "string",
+//        "end"   => "string",
+//    ]
 }

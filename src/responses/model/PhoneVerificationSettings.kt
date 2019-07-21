@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetRobocallAfterMaxSms()
  * @method this unsetRobocallCountDownTimeSec()
  */
-class PhoneVerificationSettings : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "resend_sms_delay_sec"         => "int",
-        "max_sms_count"                => "int",
-        "robocall_count_down_time_sec" => "int",
-        "robocall_after_max_sms"       => "bool",
-    ]
+data class PhoneVerificationSettings (
+    val resend_sms_delay_sec         : Int,
+    val max_sms_count                : Int,
+    val robocall_count_down_time_sec : Int,
+    val robocall_after_max_sms       : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "resend_sms_delay_sec"         => "int",
+//        "max_sms_count"                => "int",
+//        "robocall_count_down_time_sec" => "int",
+//        "robocall_after_max_sms"       => "bool",
+//    ]
 }

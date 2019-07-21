@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetName()
  * @method this unsetType()
  */
-class Related : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "name" => "",
-        "id"   => "string",
-        "type" => "",
-    ]
+data class Related (
+    val name  : String,
+    val id    : String,
+    val type  : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "name" => "",
+//        "id"   => "string",
+//        "type" => "",
+//    ]
 }

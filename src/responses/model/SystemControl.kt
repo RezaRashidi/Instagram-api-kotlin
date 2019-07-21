@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUploadMaxBytes()
  * @method this unsetUploadTimePeriodSec()
  */
-class SystemControl : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "upload_max_bytes"                     => "int",
-        "upload_time_period_sec"               => "int",
-        "upload_bytes_per_update"              => "int",
-    ]
+data class SystemControl (
+    val upload_max_bytes        : Int,
+    val upload_time_period_sec  : Int,
+    val upload_bytes_per_update : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "upload_max_bytes"                     => "int",
+//        "upload_time_period_sec"               => "int",
+//        "upload_bytes_per_update"              => "int",
+//    ]
 }

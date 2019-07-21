@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetSelected()
  * @method this unsetTabs()
  */
-class TabsInfo : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "tabs"      => "Tab[]",
-        "selected"  => "string",
-    ]
+data class TabsInfo (
+    val tabs     : MutableList<Tab>,
+    val selected : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "tabs"      => "Tab[]",
+//        "selected"  => "string",
+//    ]
 }

@@ -32,14 +32,20 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetOptions()
  * @method this unsetTitle()
  */
-class PushSettings : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "name"     => "",
-        "eligible" => "",
-        "title"    => "",
-        "example"  => "",
-        "options"  => "",
-        "checked"  => "",
-    ]
+data class PushSettings (
+    val name     : String,
+    val eligible : String,
+    val title    : String,
+    val example  : String,
+    val options  : String,
+    val checked  : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "name"     => "",
+//        "eligible" => "",
+//        "title"    => "",
+//        "example"  => "",
+//        "options"  => "",
+//        "checked"  => "",
+//    ]
 }

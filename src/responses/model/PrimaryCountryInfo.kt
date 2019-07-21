@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetHasCountry()
  * @method this unsetIsVisible()
  */
-class PrimaryCountryInfo : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "is_visible"              => "bool",
-        "has_country"             => "bool",
-        "country_name"            => "string",
-    ]
+data class PrimaryCountryInfo (
+    val is_visible              : Boolean,
+    val has_country             : Boolean,
+    val country_name            : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "is_visible"              => "bool",
+//        "has_country"             => "bool",
+//        "country_name"            => "string",
+//    ]
 }

@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetCooldown()
  * @method this unsetSlot()
  */
-class Slot : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "slot"                 => "int",
-        "cooldown"             => "int",
-    ]
+data class Slot (
+    val slot     : Int,
+    val cooldown : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "slot"                 => "int",
+//        "cooldown"             => "int",
+//    ]
 }

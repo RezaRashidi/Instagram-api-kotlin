@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetSubtitle()
  * @method this unsetTitle()
  */
-class LocationItem : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "media_bundles" => "",
-        "subtitle"      => "",
-        "location"      => "Location",
-        "title"         => "",
-    ]
+data class LocationItem (
+    val media_bundles : String,
+    val subtitle      : String,
+    val location      : Location,
+    val title         : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "media_bundles" => "",
+//        "subtitle"      => "",
+//        "location"      => "Location",
+//        "title"         => "",
+//    ]
 }

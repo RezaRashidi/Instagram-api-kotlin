@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetMedia()
  * @method this unsetText()
  */
-class MediaShare : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "media" => "Item",
-        "text"  => "string",
-    ]
+data class MediaShare (
+    val media : Item,
+    val text  : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "media" => "Item",
+//        "text"  => "string",
+//    ]
 }

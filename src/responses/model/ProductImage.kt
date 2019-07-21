@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setImageVersions2(Image_Versions2 $value)
  * @method this unsetImageVersions2()
  */
-class ProductImage : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "image_versions2" => "Image_Versions2",
-    ]
+data class ProductImage (
+    val image_versions2 : Image_Versions2
+){
+//    val JSON_PROPERTY_MAP = [
+//        "image_versions2" => "Image_Versions2",
+//    ]
 }

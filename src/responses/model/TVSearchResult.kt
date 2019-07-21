@@ -28,13 +28,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetType()
  * @method this unsetUser()
  */
-class TVSearchResult : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "type"          => "string",
-        "User"          => "User",
-        "channel"       => "TVChannel",
-        "num_results"   => "int",
-        "rank_token"    => "string",
-    ]
+data class TVSearchResult (
+    val type          : String,
+    val User          : User,
+    val channel       : TVChannel,
+    val num_results   : Int,
+    val rank_token    : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "type"          => "string",
+//        "User"          => "User",
+//        "channel"       => "TVChannel",
+//        "num_results"   => "int",
+//        "rank_token"    => "string",
+//    ]
 }

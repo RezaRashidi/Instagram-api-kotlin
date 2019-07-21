@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTopLive()
  * @method this unsetTray()
  */
-class Stories : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "is_portrait" => "",
-        "tray"        => "StoryTray[]",
-        "id"          => "string",
-        "top_live"    => "TopLive",
-    ]
+data class Stories (
+    val is_portrait : String,
+    val tray        : MutableList<StoryTray>,
+    val id          : String,
+    val top_live    : TopLive
+){
+//    val JSON_PROPERTY_MAP = [
+//        "is_portrait" => "",
+//        "tray"        => "StoryTray[]",
+//        "id"          => "string",
+//        "top_live"    => "TopLive",
+//    ]
 }

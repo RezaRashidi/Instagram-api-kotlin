@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetMatcher()
  * @method this unsetReplacer()
  */
-class RewriteRule : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "matcher"    => "string",
-        "replacer"   => "string",
-    ]
+data class RewriteRule (
+    val matcher  : String,
+    val replacer : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "matcher"    => "string",
+//        "replacer"   => "string",
+//    ]
 }

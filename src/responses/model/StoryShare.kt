@@ -28,13 +28,18 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetText()
  * @method this unsetTitle()
  */
-class StoryShare : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "media"                            => "Item",
-        "text"                             => "string",
-        "title"                            => "string",
-        "message"                          => "string",
-        "is_linked"                        => "bool",
-    ]
+data class StoryShare (
+    val media                            : Item,
+    val text                             : String,
+    val title                            : String,
+    val message                          : String,
+    val is_linked                        : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "media"                            => "Item",
+//        "text"                             => "string",
+//        "title"                            => "string",
+//        "message"                          => "string",
+//        "is_linked"                        => "bool",
+//    ]
 }

@@ -36,15 +36,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetProfilePicture()
  * @method this unsetUsername()
  */
-class ShadowInstagramUser : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"                => "string",
-        "instagram_user_id" => "string",
-        "followers_count"   => "int",
-        "username"          => "string",
-        "profile_picture"   => "Image",
-        "business_manager"  => "BusinessManager",
-        "error"             => "",
-    ]
+data class ShadowInstagramUser (
+    val id                : String,
+    val instagram_user_id : String,
+    val followers_count   : Int,
+    val username          : String,
+    val profile_picture   : Image,
+    val business_manager  : BusinessManager,
+    val error             : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"                => "string",
+//        "instagram_user_id" => "string",
+//        "followers_count"   => "int",
+//        "username"          => "string",
+//        "profile_picture"   => "Image",
+//        "business_manager"  => "BusinessManager",
+//        "error"             => "",
+//    ]
 }

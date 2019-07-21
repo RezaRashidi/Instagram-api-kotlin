@@ -108,40 +108,65 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetUniqueIntegerReelId()
  * @method this unsetUser()
  */
-class StoryTray : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"                   => "string",
-        "items"                => "Item[]",
-        "user"                 => "User",
-        "can_reply"            => "",
-        "expiring_at"          => "",
-        "seen_ranked_position" => "string",
-        /*
-         * The "taken_at" timestamp of the last story media you have seen for
-         * that user (the current tray"s user). Defaults to `0` (not seen).
-         */
-        "seen"                 => "string",
-        /*
-         * Unix "taken_at" timestamp of the newest item in their story reel.
-         */
-        "latest_reel_media"      => "string",
-        "ranked_position"        => "string",
-        "is_nux"                 => "",
-        "show_nux_tooltip"       => "",
-        "muted"                  => "",
-        "prefetch_count"         => "int",
-        "location"               => "Location",
-        "source_token"           => "",
-        "owner"                  => "Owner",
-        "nux_id"                 => "string",
-        "dismiss_card"           => "DismissCard",
-        "can_reshare"            => "",
-        "has_besties_media"      => "bool",
-        "reel_type"              => "string",
-        "unique_integer_reel_id" => "string",
-        "cover_media"            => "CoverMedia",
-        "title"                  => "string",
-        "media_count"            => "int",
-    ]
+data class StoryTray (
+    val id                   : String,
+    val items                : MutableList<Item>,
+    val user                 : User,
+    val can_reply            : String,
+    val expiring_at          : String,
+    val seen_ranked_position : String,
+    val seen                 : String,
+    val latest_reel_media      : String,
+    val ranked_position        : String,
+    val is_nux                 : String,
+    val show_nux_tooltip       : String,
+    val muted                  : String,
+    val prefetch_count         : Int,
+    val location               : Location,
+    val source_token           : String,
+    val owner                  : Owner,
+    val nux_id                 : String,
+    val dismiss_card           : DismissCard,
+    val can_reshare            : String,
+    val has_besties_media      : Boolean,
+    val reel_type              : String,
+    val unique_integer_reel_id : String,
+    val cover_media            : CoverMedia,
+    val title                  : String,
+    val media_count            : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"                   => "string",
+//        "items"                => "Item[]",
+//        "user"                 => "User",
+//        "can_reply"            => "",
+//        "expiring_at"          => "",
+//        "seen_ranked_position" => "string",
+//        /*
+//         * The "taken_at" timestamp of the last story media you have seen for
+//         * that user (the current tray"s user). Defaults to `0` (not seen).
+//         */
+//        "seen"                 => "string",
+//        /*
+//         * Unix "taken_at" timestamp of the newest item in their story reel.
+//         */
+//        "latest_reel_media"      => "string",
+//        "ranked_position"        => "string",
+//        "is_nux"                 => "",
+//        "show_nux_tooltip"       => "",
+//        "muted"                  => "",
+//        "prefetch_count"         => "int",
+//        "location"               => "Location",
+//        "source_token"           => "",
+//        "owner"                  => "Owner",
+//        "nux_id"                 => "string",
+//        "dismiss_card"           => "DismissCard",
+//        "can_reshare"            => "",
+//        "has_besties_media"      => "bool",
+//        "reel_type"              => "string",
+//        "unique_integer_reel_id" => "string",
+//        "cover_media"            => "CoverMedia",
+//        "title"                  => "string",
+//        "media_count"            => "int",
+//    ]
 }

@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetId()
  * @method this unsetTrackingToken()
  */
-class StoriesNetego : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "tracking_token"    => "string",
-        "hide_unit_if_seen" => "string",
-        "id"                => "string",
-    ]
+data class StoriesNetego (
+    val tracking_token    : String,
+    val hide_unit_if_seen : String,
+    val id                : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "tracking_token"    => "string",
+//        "hide_unit_if_seen" => "string",
+//        "id"                => "string",
+//    ]
 }

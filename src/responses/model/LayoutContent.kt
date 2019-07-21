@@ -32,14 +32,20 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetRelatedStyle()
  * @method this unsetTabsInfo()
  */
-class LayoutContent : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "related_style"     => "string",
-        "related"           => "Tag[]",
-        "medias"            => "SectionMedia[]",
-        "feed_type"         => "string",
-        "explore_item_info" => "ExploreItemInfo",
-        "tabs_info"         => "TabsInfo",
-    ]
+data class LayoutContent (
+    val related_style     : String,
+    val related           : MutableList<Tag>,
+    val medias            : MutableList<SectionMedia>,
+    val feed_type         : String,
+    val explore_item_info : ExploreItemInfo,
+    val tabs_info         : TabsInfo
+){
+//    val JSON_PROPERTY_MAP = [
+//        "related_style"     => "string",
+//        "related"           => "Tag[]",
+//        "medias"            => "SectionMedia[]",
+//        "feed_type"         => "string",
+//        "explore_item_info" => "ExploreItemInfo",
+//        "tabs_info"         => "TabsInfo",
+//    ]
 }

@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetPosition()
  * @method this unsetUser()
  */
-class UserList : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "position" => "int",
-        "user"     => "User",
-    ]
+data class UserList (
+    val position : Int,
+    val user     : User
+){
+//    val JSON_PROPERTY_MAP = [
+//        "position" => "int",
+//        "user"     => "User",
+//    ]
 }

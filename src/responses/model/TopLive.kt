@@ -16,10 +16,12 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetBroadcastOwners()
  * @method this unsetRankedPosition()
  */
-class TopLive : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "broadcast_owners" => "User[]",
-        "ranked_position"  => "",
-    ]
+data class TopLive (
+    val broadcast_owners : MutableList<User>,
+    val ranked_position  : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "broadcast_owners" => "User[]",
+//        "ranked_position"  => "",
+//    ]
 }

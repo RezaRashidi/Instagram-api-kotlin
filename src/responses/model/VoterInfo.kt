@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetPollId()
  * @method this unsetVoters()
  */
-class VoterInfo : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "poll_id"           => "string",
-        "voters"            => "Voter[]",
-        "max_id"            => "string",
-        "more_available"    => "bool",
-    ]
+data class VoterInfo (
+    val poll_id           : String,
+    val voters            : MutableList<Voter>,
+    val max_id            : String,
+    val more_available    : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "poll_id"           => "string",
+//        "voters"            => "Voter[]",
+//        "max_id"            => "string",
+//        "more_available"    => "bool",
+//    ]
 }

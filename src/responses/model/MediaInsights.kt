@@ -36,15 +36,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetReachCount()
  * @method this unsetSaveCount()
  */
-class MediaInsights : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "reach_count"          => "int",
-        "impression_count"     => "int",
-        "engagement_count"     => "int",
-        "avg_engagement_count" => "int",
-        "comment_count"        => "int",
-        "save_count"           => "int",
-        "like_count"           => "int",
-    ]
+data class MediaInsights (
+    val reach_count          : Int,
+    val impression_count     : Int,
+    val engagement_count     : Int,
+    val avg_engagement_count : Int,
+    val comment_count        : Int,
+    val save_count           : Int,
+    val like_count           : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "reach_count"          => "int",
+//        "impression_count"     => "int",
+//        "engagement_count"     => "int",
+//        "avg_engagement_count" => "int",
+//        "comment_count"        => "int",
+//        "save_count"           => "int",
+//        "like_count"           => "int",
+//    ]
 }

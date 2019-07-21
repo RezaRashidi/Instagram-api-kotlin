@@ -60,25 +60,38 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetReviewStatus()
  * @method this unsetThumbnailImage()
  */
-class Product : AutoPropertyMapper
-{
+data class Product (
+    val name             : String,
+    val price            : String,
+    val current_price    : String,
+    val full_price       : String,
+    val product_id       : String,
+    val has_viewer_saved : Boolean,
+    val description      : String,
+    val main_image       : ProductImage,
+    val thumbnail_image  : ProductImage,
+    val product_images   : MutableList<ProductImage>,
+    val external_url     : String,
+    val checkout_style   : String,
+    val review_status    : String
+){
     val APPROVED = "approved"
     val PENDING = "pending"
     val REJECTED = "rejected"
 
-    val JSON_PROPERTY_MAP = [
-        "name"             => "string",
-        "price"            => "string",
-        "current_price"    => "string",
-        "full_price"       => "string",
-        "product_id"       => "string",
-        "has_viewer_saved" => "bool",
-        "description"      => "string",
-        "main_image"       => "ProductImage",
-        "thumbnail_image"  => "ProductImage",
-        "product_images"   => "ProductImage[]",
-        "external_url"     => "string",
-        "checkout_style"   => "string",
-        "review_status"    => "string",
-    ]
+//    val JSON_PROPERTY_MAP = [
+//        "name"             => "string",
+//        "price"            => "string",
+//        "current_price"    => "string",
+//        "full_price"       => "string",
+//        "product_id"       => "string",
+//        "has_viewer_saved" => "bool",
+//        "description"      => "string",
+//        "main_image"       => "ProductImage",
+//        "thumbnail_image"  => "ProductImage",
+//        "product_images"   => "ProductImage[]",
+//        "external_url"     => "string",
+//        "checkout_style"   => "string",
+//        "review_status"    => "string",
+//    ]
 }

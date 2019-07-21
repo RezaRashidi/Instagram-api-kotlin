@@ -44,17 +44,26 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetShortName()
  * @method this unsetType()
  */
-class Owner : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "type"                 => "",
-        "pk"                   => "string",
-        "name"                 => "string",
-        "profile_pic_url"      => "string",
-        "profile_pic_username" => "string",
-        "short_name"           => "string",
-        "lat"                  => "float",
-        "lng"                  => "float",
-        "location_dict"        => "Location",
-    ]
+data class Owner (
+    val type                 : String,
+    val pk                   : String,
+    val name                 : String,
+    val profile_pic_url      : String,
+    val profile_pic_username : String,
+    val short_name           : String,
+    val lat                  : Float,
+    val lng                  : Float,
+    val location_dict        : Location
+){
+//    val JSON_PROPERTY_MAP = [
+//        "type"                 => "",
+//        "pk"                   => "string",
+//        "name"                 => "string",
+//        "profile_pic_url"      => "string",
+//        "profile_pic_username" => "string",
+//        "short_name"           => "string",
+//        "lat"                  => "float",
+//        "lng"                  => "float",
+//        "location_dict"        => "Location",
+//    ]
 }

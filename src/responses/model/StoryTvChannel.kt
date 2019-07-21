@@ -40,16 +40,24 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetType()
  * @method this unsetUserDict()
  */
-class StoryTvChannel : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "id"             => "string",
-        "items"          => "Item[]",
-        "title"          => "string",
-        "type"           => "string",
-        "max_id"         => "string",
-        "more_available" => "bool",
-        "seen_state"     => "mixed",
-        "user_dict"      => "User",
-    ]
+data class StoryTvChannel (
+    val id             : String,
+    val items          : MutableList<Item>,
+    val title          : String,
+    val type           : String,
+    val max_id         : String,
+    val more_available : Boolean,
+    val seen_state     : mixed,
+    val user_dict      : User
+){
+//    val JSON_PROPERTY_MAP = [
+//        "id"             => "string",
+//        "items"          => "Item[]",
+//        "title"          => "string",
+//        "type"           => "string",
+//        "max_id"         => "string",
+//        "more_available" => "bool",
+//        "seen_state"     => "mixed",
+//        "user_dict"      => "User",
+//    ]
 }

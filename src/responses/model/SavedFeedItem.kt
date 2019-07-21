@@ -12,9 +12,10 @@ import instagramAPI.AutoPropertyMapper
  * @method this setMedia(Item $value)
  * @method this unsetMedia()
  */
-class SavedFeedItem : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "media" => "Item",
-    ]
+data class SavedFeedItem (
+    val media : Item
+){
+//    val JSON_PROPERTY_MAP = [
+//        "media" => "Item",
+//    ]
 }

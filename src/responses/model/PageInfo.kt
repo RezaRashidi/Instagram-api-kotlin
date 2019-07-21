@@ -20,11 +20,14 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetHasNextPage()
  * @method this unsetHasPreviousPage()
  */
-class PageInfo : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "end_cursor"        => "string",
-        "has_next_page"     => "bool",
-        "has_previous_page" => "bool",
-    ]
+data class PageInfo (
+    val end_cursor        : String,
+    val has_next_page     : Boolean,
+    val has_previous_page : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        "end_cursor"        => "string",
+//        "has_next_page"     => "bool",
+//        "has_previous_page" => "bool",
+//    ]
 }

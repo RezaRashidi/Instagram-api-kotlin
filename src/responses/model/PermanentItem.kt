@@ -64,22 +64,36 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTimestamp()
  * @method this unsetUserId()
  */
-class PermanentItem : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "item_id"          => "string",
-        "user_id"          => "string",
-        "timestamp"        => "string",
-        "item_type"        => "string",
-        "profile"          => "User",
-        "text"             => "string",
-        "location"         => "Location",
-        "like"             => "",
-        "media"            => "MediaData",
-        "link"             => "Link",
-        "media_share"      => "Item",
-        "reel_share"       => "ReelShare",
-        "client_context"   => "string",
-        "live_video_share" => "LiveVideoShare",
-    ]
+data class PermanentItem (
+    val item_id          : String,
+    val user_id          : String,
+    val timestamp        : String,
+    val item_type        : String,
+    val profile          : User,
+    val text             : String,
+    val location         : Location,
+    val like             : String,
+    val media            : MediaData,
+    val link             : Link,
+    val media_share      : Item,
+    val reel_share       : ReelShare,
+    val client_context   : String,
+    val live_video_share : LiveVideoShare
+){
+//    val JSON_PROPERTY_MAP = [
+//        "item_id"          => "string",
+//        "user_id"          => "string",
+//        "timestamp"        => "string",
+//        "item_type"        => "string",
+//        "profile"          => "User",
+//        "text"             => "string",
+//        "location"         => "Location",
+//        "like"             => "",
+//        "media"            => "MediaData",
+//        "link"             => "Link",
+//        "media_share"      => "Item",
+//        "reel_share"       => "ReelShare",
+//        "client_context"   => "string",
+//        "live_video_share" => "LiveVideoShare",
+//    ]
 }

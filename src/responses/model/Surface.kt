@@ -24,16 +24,20 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetScores()
  * @method this unsetTtlSecs()
  */
-class Surface : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        /*
-         * Scores is an array of int/float numbers keyed by user id.
-         * It determines how important each user is for sorting purposes.
-         */
-        "scores"         => "",
-        "rank_token"     => "string",
-        "ttl_secs"       => "int",
-        "name"           => "string",
-    ]
+data class Surface (
+    val scores         : String,
+    val rank_token     : String,
+    val ttl_secs       : Int,
+    val name           : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        /*
+//         * Scores is an array of int/float numbers keyed by user id.
+//         * It determines how important each user is for sorting purposes.
+//         */
+//        "scores"         => "",
+//        "rank_token"     => "string",
+//        "ttl_secs"       => "int",
+//        "name"           => "string",
+//    ]
 }

@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetLinkTitle()
  * @method this unsetLinkUrl()
  */
-class LinkContext : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "link_url"       => "string",
-        "link_title"     => "string",
-        "link_summary"   => "string",
-        "link_image_url" => "string",
-    ]
+data class LinkContext (
+    val link_url       : String,
+    val link_title     : String,
+    val link_summary   : String,
+    val link_image_url : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "link_url"       => "string",
+//        "link_title"     => "string",
+//        "link_summary"   => "string",
+//        "link_image_url" => "string",
+//    ]
 }

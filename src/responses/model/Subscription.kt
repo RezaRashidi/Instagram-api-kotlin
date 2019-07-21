@@ -24,12 +24,16 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetTopic()
  * @method this unsetUrl()
  */
-class Subscription : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "topic"    => "",
-        "url"      => "string",
-        "sequence" => "",
-        "auth"     => "",
-    ]
+data class Subscription (
+    val topic    : String,
+    val url      : String,
+    val sequence : String,
+    val auth     : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "topic"    => "",
+//        "url"      => "string",
+//        "sequence" => "",
+//        "auth"     => "",
+//    ]
 }

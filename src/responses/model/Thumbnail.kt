@@ -48,18 +48,28 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetThumbnailsPerRow()
  * @method this unsetVideoLength()
  */
-class Thumbnail : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "video_length"              => "float",
-        "thumbnail_width"           => "int",
-        "thumbnail_height"          => "int",
-        "thumbnail_duration"        => "float",
-        "sprite_urls"               => "string[]",
-        "thumbnails_per_row"        => "int",
-        "max_thumbnails_per_sprite" => "int",
-        "sprite_width"              => "int",
-        "sprite_height"             => "int",
-        "rendered_width"            => "int",
-    ]
+data class Thumbnail (
+    val video_length              : Float,
+    val thumbnail_width           : Int,
+    val thumbnail_height          : Int,
+    val thumbnail_duration        : Float,
+    val sprite_urls               : MutableList<String>,
+    val thumbnails_per_row        : Int,
+    val max_thumbnails_per_sprite : Int,
+    val sprite_width              : Int,
+    val sprite_height             : Int,
+    val rendered_width            : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        "video_length"              => "float",
+//        "thumbnail_width"           => "int",
+//        "thumbnail_height"          => "int",
+//        "thumbnail_duration"        => "float",
+//        "sprite_urls"               => "string[]",
+//        "thumbnails_per_row"        => "int",
+//        "max_thumbnails_per_sprite" => "int",
+//        "sprite_width"              => "int",
+//        "sprite_height"             => "int",
+//        "rendered_width"            => "int",
+//    ]
 }

@@ -44,17 +44,26 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetY()
  * @method this unsetZ()
  */
-class StoryQuestions : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        "x"                => "float",
-        "y"                => "float",
-        "z"                => "float",
-        "width"            => "float",
-        "height"           => "float",
-        "rotation"         => "float",
-        "is_pinned"        => "int",
-        "is_hidden"        => "int",
-        "question_sticker" => "QuestionSticker",
-    ]
+data class StoryQuestions (
+    val x                : Float,
+    val y                : Float,
+    val z                : Float,
+    val width            : Float,
+    val height           : Float,
+    val rotation         : Float,
+    val is_pinned        : Int,
+    val is_hidden        : Int,
+    val question_sticker : QuestionSticker
+){
+//    val JSON_PROPERTY_MAP = [
+//        "x"                => "float",
+//        "y"                => "float",
+//        "z"                => "float",
+//        "width"            => "float",
+//        "height"           => "float",
+//        "rotation"         => "float",
+//        "is_pinned"        => "int",
+//        "is_hidden"        => "int",
+//        "question_sticker" => "QuestionSticker",
+//    ]
 }
