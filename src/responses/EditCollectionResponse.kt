@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.Item
 
 /**
  * EditCollectionResponse.
@@ -32,9 +33,12 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class EditCollectionResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        Model.Collection::class, // Import property map.
-    ]
+data class EditCollectionResponse (
+    val collection_id   : String,
+    val collection_name : String,
+    val cover_media     : Item
+){
+//    val JSON_PROPERTY_MAP = [
+//        Model.Collection::class, // Import property map.
+//    ]
 }

@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.*
 
 /**
  * UserReelMediaFeedResponse.
@@ -88,9 +89,26 @@ import instagramAPI.Response
  * @method this unsetUser()
  * @method this unset_Messages()
  */
-class UserReelMediaFeedResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        Model.Reel::class, // Import property map.
-    ]
+data class UserReelMediaFeedResponse (
+    val id                   : String,
+    val latest_reel_media    : String,
+    val seen                 : String,
+    val can_reply            : Boolean,
+    val can_reshare          : Boolean,
+    val reel_type            : String,
+    val cover_media          : CoverMedia,
+    val user                 : User,
+    val items                : MutableList<Item>,
+    val ranked_position      : String,
+    val title                : String,
+    val seen_ranked_position : String,
+    val expiring_at          : String,
+    val has_besties_media    : Boolean, // Uses int(0) for false and 1 for true.
+    val location             : Location,
+    val prefetch_count       : Int,
+    val broadcast            : Broadcast
+){
+//    val JSON_PROPERTY_MAP = [
+//        Model.Reel::class, // Import property map.
+//    ]
 }

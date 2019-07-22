@@ -48,12 +48,22 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetY()
  * @method this unsetZ()
  */
-class StoryLocation : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        PropertyCollection.Sticker::class,
-        "location"    => "Location",
-        "attribution" => "string",
-        "is_hidden"   => "int",
-    ]
+data class StoryLocation (
+    val x         : Float,
+    val y         : Float,
+    val z         : Float, // Unused by IG for now. So far its always int(0).
+    val width     : Float,
+    val height    : Float,
+    val rotation  : Float,
+    val is_pinned : Int,
+    val location  : Location,
+    val attribution : String,
+    val is_hidden : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        PropertyCollection.Sticker::class,
+//        "location"    => "Location",
+//        "attribution" => "string",
+//        "is_hidden"   => "int",
+//    ]
 }

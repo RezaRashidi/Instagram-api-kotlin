@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * CloseFriendsResponse.
@@ -40,10 +41,15 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class CloseFriendsResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        Model.CloseFriends::class, // Import property map.
-        "next_max_id" => "string",
-    ]
+data class CloseFriendsResponse (
+    val sections    : String,
+    val users       : MutableList<User>,
+    val big_list    : String,
+    val page_size   : String,
+    val next_max_id : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        Model.CloseFriends::class, // Import property map.
+//        "next_max_id" => "string",
+//    ]
 }

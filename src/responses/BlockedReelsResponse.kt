@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * BlockedReelsResponse.
@@ -36,10 +37,14 @@ import instagramAPI.Response
  * @method this unsetUsers()
  * @method this unset_Messages()
  */
-class BlockedReelsResponse : Response
-{
+data class BlockedReelsResponse (
+    val val users     : MutableList<User>,
+    val page_size : String,
+    val big_list  : String,
+    val next_max_id : String
+){
     val JSON_PROPERTY_MAP = [
-        Model.BlockedReels::class, // Import property map.
+        instagramAPI.responses.model.BlockedReels::class, // Import property map.
         "next_max_id" => "string",
     ]
 }

@@ -3,6 +3,11 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.ActionBadge
+import instagramAPI.responses.model.DirectThreadItem
+import instagramAPI.responses.model.PermanentItem
+import instagramAPI.responses.model.User
+import instagramAPI.responses.model.unpredictableKeys.DirectThreadLastSeenAtUnpredictableContainer
 
 /**
  * DirectVisualThreadResponse.
@@ -152,9 +157,42 @@ import instagramAPI.Response
  * @method this unsetViewerId()
  * @method this unset_Messages()
  */
-class DirectVisualThreadResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        Model.DirectThread::class, // Import property map.
-    ]
+data class DirectVisualThreadResponse (
+    val thread_id                     : String,
+    val thread_v2_id                  : String,
+    val users                         : MutableList<User>,
+    val left_users                    : MutableList<User>,
+    val items                         : MutableList<DirectThreadItem>,
+    val last_activity_at              : String,
+    val muted                         : Boolean,
+    val is_pin                        : Boolean,
+    val named                         : Boolean,
+    val canonical                     : Boolean,
+    val pending                       : Boolean,
+    val valued_request                : Boolean,
+    val thread_type                   : String,
+    val viewer_id                     : String,
+    val thread_title                  : String,
+    val pending_score                 : String,
+    val vc_muted                      : Boolean,
+    val is_group                      : Boolean,
+    val reshare_send_count            : Int,
+    val reshare_receive_count         : Int,
+    val expiring_media_send_count     : Int,
+    val expiring_media_receive_count  : Int,
+    val inviter                       : User,
+    val has_older                     : Boolean,
+    val has_newer                     : Boolean,
+    val last_seen_at                  : DirectThreadLastSeenAtUnpredictableContainer,
+    val newest_cursor                 : String,
+    val oldest_cursor                 : String,
+    val is_spam                       : Boolean,
+    val last_permanent_item           : PermanentItem,
+    val unseen_count                  : String,
+    val action_badge                  : ActionBadge,
+    val last_activity_at_secs         : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        Model.DirectThread::class, // Import property map.
+//    ]
 }

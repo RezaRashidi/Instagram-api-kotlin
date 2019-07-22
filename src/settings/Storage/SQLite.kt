@@ -3,7 +3,7 @@
 package instagramAPI.settings.Storage
 
 import instagramAPI.Constants
-import instagramAPI.Settings.Storage.Components.PDOStorage
+import instagramAPI.settings.Storage.Components.PDOStorage
 import instagramAPI.Utils
 import PDO
 
@@ -14,17 +14,15 @@ import PDO
  *
  * @author SteveJobzniak (https://github.com/SteveJobzniak)
  */
-class SQLite : PDOStorage
-{
+class SQLite : PDOStorage(){
     /**
      * Constructor.
      *
      * {@inheritdoc}
      */
-    public fun __construct()
-    {
+    fun constructor(){
         // Configure the name of this backend.
-        parent::__construct("SQLite")
+        super constructor("SQLite")
     }
 
     /**
@@ -32,22 +30,15 @@ class SQLite : PDOStorage
      *
      * {@inheritdoc}
      */
-    protected fun _createPDO(
-        array $locationConfig)
-    {
+    protected fun _createPDO(array locationConfig){
         // Determine the filename for the SQLite database.
-        $sqliteFile = ((isset($locationConfig["dbfilename"])
-                        && !empty($locationConfig["dbfilename"]))
-                       ? $locationConfig["dbfilename"]
-                       : Constants::SRC_DIR."/../sessions/instagram.db")
+        val sqliteFile = if ( !locationConfig["dbfilename"].isBlank() && !locationConfig["dbfilename"].isEmpty() )
+                       locationConfig["dbfilename"] else Constants.SRC_DIR + "/../sessions/instagram.db"
 
         // Ensure that the whole directory path to the database exists.
-        $sqliteDir = dirname($sqliteFile) // Can be "." in case of CWD.
-        if (!Utils::createFolder($sqliteDir)) {
-            throw .RuntimeException(sprintf(
-                "The "%s" folder is not writable.",
-                $sqliteDir
-            ))
+        val sqliteDir = dirname(sqliteFile) // Can be "." in case of CWD.
+        if (!Utils.createFolder(sqliteDir)) {
+            throw RuntimeException("The \"$sqliteDir\" folder is not writable.")
         }
 
         return PDO("sqlite:{$sqliteFile}")
@@ -58,12 +49,11 @@ class SQLite : PDOStorage
      *
      * {@inheritdoc}
      */
-    protected fun _enableUTF8()
-    {
+    protected fun _enableUTF8(){
         // NOTE: SQLite can only set encoding when the database is 1st created,
         // so this only does something if we"re the ones creating the db file!
         // Afterwards, SQLite always keeps the encoding used at db creation.
-        this._pdo.query("PRAGMA encoding = "UTF-8"").closeCursor()
+        _pdo.query("PRAGMA encoding = \"UTF-8\"").closeCursor()
     }
 
     /**
@@ -71,14 +61,13 @@ class SQLite : PDOStorage
      *
      * {@inheritdoc}
      */
-    protected fun _autoCreateTable()
-    {
+    protected fun _autoCreateTable(){
         // Abort if we already have the necessary table.
-        $sth = this._pdo.prepare("SELECT count(*) FROM sqlite_master WHERE (type = "table") AND (name = :tableName)")
-        $sth.execute([":tableName" => this._dbTableName])
-        $result = $sth.fetchColumn()
-        $sth.closeCursor()
-        if ($result > 0) {
+        val sth = _pdo.prepare("SELECT count(*) FROM sqlite_master WHERE (type = \"table\") AND (name = :tableName)")
+        sth.execute( mapOf(":tableName" to _dbTableName) )
+        val result = sth.fetchColumn()
+        sth.closeCursor()
+        if (result > 0) {
             return
         }
 
@@ -86,7 +75,7 @@ class SQLite : PDOStorage
         // NOTE: We store all settings as a JSON blob so that we support all
         // current and future data without having to alter the table schema.
         // NOTE: SQLite automatically increments "integer primary key" cols.
-        this._pdo.exec("CREATE TABLE `".this._dbTableName."` (
+        _pdo.exec("CREATE TABLE `" + _dbTableName + "` (
             id INTEGER PRIMARY KEY NOT NULL,
             username TEXT NOT NULL UNIQUE,
             settings BLOB,
@@ -102,7 +91,7 @@ class SQLite : PDOStorage
         // that did NOT change last_modified. So our own UPDATEs of other fields
         // will trigger this automatic UPDATE, which does an UPDATE with a NEW
         // last_modified value, meaning that the trigger won"t execute again!
-        this._pdo.exec("CREATE TRIGGER IF NOT EXISTS `".this._dbTableName."_update_last_modified`
+        _pdo.exec("CREATE TRIGGER IF NOT EXISTS `" + _dbTableName + "_update_last_modified`
             AFTER UPDATE
             ON `".this._dbTableName."`
             FOR EACH ROW

@@ -23,7 +23,7 @@ import instagramAPI.AutoPropertyMapper
 data class DirectExpiringSummary (
     val type      : String,
     val timestamp : String,
-    val count     : int
+    val count     : Int
 ){
 //    val JSON_PROPERTY_MAP = [
 //        "type"      => "string",

@@ -60,9 +60,19 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class TagInfoResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        Model.Hashtag::class, // Import property map.
-    ]
+data class TagInfoResponse (
+    val id                 : String,
+    val name               : String,
+    val media_count        : Int,
+    val profile_pic_url    : String,
+    val follow_status      : Int,
+    val following          : Int,
+    val allow_following    : Int,
+    val allow_muting_story : Boolean,
+    val related_tags       : String,
+    val debug_info         : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        Model.Hashtag::class, // Import property map.
+//    ]
 }

@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.GraphData
 
 /**
  * GraphqlResponse.
@@ -24,19 +25,19 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class GraphqlResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "data"            => "model.GraphData",
-    ]
+data class GraphqlResponse (
+    val data : GraphData
+){
+//    val JSON_PROPERTY_MAP = [
+//        "data"            => "model.GraphData",
+//    ]
 
     /**
      * Checks if the response was successful.
      *
      * @return bool
      */
-    public fun isOk()
-    {
+    fun isOk(): Boolean {
         return true
     }
 }

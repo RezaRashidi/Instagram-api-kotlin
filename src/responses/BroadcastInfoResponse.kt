@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.User
 
 /**
  * BroadcastInfoResponse.
@@ -104,9 +105,30 @@ import instagramAPI.Response
  * @method this unsetViewerCount()
  * @method this unset_Messages()
  */
-class BroadcastInfoResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        Model.Broadcast::class, // Import property map.
-    ]
+data class BroadcastInfoResponse (
+    val broadcast_owner           : User,
+    val broadcast_status          : String,
+    val cover_frame_url           : String,
+    val published_time            : String,
+    val broadcast_message         : String,
+    val muted                     : String,
+    val media_id                  : String,
+    val id                        : String,
+    val rtmp_playback_url         : String,
+    val dash_abr_playback_url     : String,
+    val dash_playback_url         : String,
+    val ranked_position           : String,
+    val organic_tracking_token    : String,
+    val seen_ranked_position      : String,
+    val viewer_count              : Int,
+    val dash_manifest             : String,
+    val expire_at                 : String,
+    val encoding_tag              : String,
+    val total_unique_viewer_count : Int,
+    val internal_only             : Boolean,
+    val number_of_qualities       : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        Model.Broadcast::class, // Import property map.
+//    ]
 }

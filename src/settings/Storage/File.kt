@@ -4,7 +4,7 @@ package instagramAPI.settings.Storage
 
 import instagramAPI.Constants
 import instagramAPI.exception.SettingsException
-import instagramAPI.Settings.StorageInterface
+import instagramAPI.settings.StorageInterface
 import instagramAPI.Utils
 
 /**
@@ -24,35 +24,31 @@ class File : StorageInterface
     val COOKIESFILE_NAME = "%s-cookies.dat"
 
     /** @var string The base folder for all storage files. */
-    private $_baseFolder
+    private lateinit var _baseFolder: String
 
     /** @var string The folder for the current user"s storage. */
-    private $_userFolder
+    private lateinit var _userFolder: String
 
     /** @var string Path to the current user"s settings file. */
-    private $_settingsFile
+    private lateinit var _settingsFile: String
 
     /** @var string Path to the current user"s cookie jar file. */
-    private $_cookiesFile
+    private lateinit var _cookiesFile: String
 
     /** @var string Current Instagram username that all settings belong to. */
-    private $_username
+    private lateinit var _username: String
 
     /**
      * Connect to a storage location and perform necessary startup preparations.
      *
      * {@inheritdoc}
      */
-    public fun openLocation(
-        array $locationConfig)
-    {
+    fun openLocation(locationConfig){
         // Determine which base folder to store all per-user data in.
-        $baseFolder = ((isset($locationConfig["basefolder"])
-                        && !empty($locationConfig["basefolder"]))
-                       ? $locationConfig["basefolder"]
-                       : Constants::SRC_DIR."/../sessions")
+        val baseFolder = if ( !locationConfig["basefolder"].isBlank() && !locationConfig["basefolder"].isEmpty() )
+                                locationConfig["basefolder"] else Constants.SRC_DIR + "/../sessions"
         // Create the base folder and normalize its path to a clean value.
-        this._baseFolder = this._createFolder($baseFolder)
+        _baseFolder = _createFolder(baseFolder)
     }
 
     /**
@@ -60,13 +56,11 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun hasUser(
-        $username)
-    {
+    fun hasUser(username: String){
         // Check whether the user"s settings-file exists.
-        $hasUser = this._generateUserPaths($username)
+        val hasUser = _generateUserPaths(username)
 
-        return is_file($hasUser["settingsFile"]) ? true : false
+        return if( is_file(hasUser["settingsFile"]) ) true else false
     }
 
     /**
@@ -74,45 +68,28 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun moveUser(
-        $oldUsername,
-        $newUsername)
-    {
+    fun moveUser( oldUsername: String, newUsername: String){
         // Verify the old and username parameters.
-        $oldUser = this._generateUserPaths($oldUsername)
-        $newUser = this._generateUserPaths($newUsername)
-        if (!is_dir($oldUser["userFolder"])) {
-            throw SettingsException(sprintf(
-                "Cannot move non-existent user folder "%s".",
-                $oldUser["userFolder"]
-            ))
+        val oldUser = _generateUserPaths(oldUsername)
+        val newUser = _generateUserPaths(newUsername)
+        if (!is_dir(oldUser["userFolder"])) {
+            throw SettingsException("Cannot move non-existent user folder \"${oldUser["userFolder"]}\".")
         }
-        if (is_dir($newUser["userFolder"])) {
-            throw SettingsException(sprintf(
-                "Refusing to overwrite existing user folder "%s".",
-                $newUser["userFolder"]
-            ))
+        if (is_dir(newUser["userFolder"])) {
+            throw SettingsException("Refusing to overwrite existing user folder \"${newUser["userFolder"]}\".")
         }
 
         // Create the destination folder and migrate all data.
-        this._createFolder($newUser["userFolder"])
-        if (is_file($oldUser["settingsFile"])
-            && !@rename($oldUser["settingsFile"], $newUser["settingsFile"])) {
-            throw SettingsException(sprintf(
-                "Failed to move "%s" to "%s".",
-                $oldUser["settingsFile"], $newUser["settingsFile"]
-            ))
+        _createFolder(newUser["userFolder"])
+        if (is_file(oldUser["settingsFile"]) && !@rename(oldUser["settingsFile"], newUser["settingsFile"])) {
+            throw SettingsException("Failed to move \"${oldUser["settingsFile"]}\" to \"${newUser["settingsFile"]}\".")
         }
-        if (is_file($oldUser["cookiesFile"])
-            && !@rename($oldUser["cookiesFile"], $newUser["cookiesFile"])) {
-            throw SettingsException(sprintf(
-                "Failed to move "%s" to "%s".",
-                $oldUser["cookiesFile"], $newUser["cookiesFile"]
-            ))
+        if (is_file(oldUser["cookiesFile"]) && !@rename(oldUser["cookiesFile"], newUser["cookiesFile"])) {
+            throw SettingsException("Failed to move \"${oldUser["cookiesFile"]}\" to \"${newUser["cookiesFile"]}\".")
         }
 
         // Delete all files in the old folder, and the folder itself.
-        Utils::deleteTree($oldUser["userFolder"])
+        Utils.deleteTree(oldUser["userFolder"])
     }
 
     /**
@@ -120,12 +97,10 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun deleteUser(
-        $username)
-    {
+    fun deleteUser(username: String) {
         // Delete all files in the user folder, and the folder itself.
-        $delUser = this._generateUserPaths($username)
-        Utils::deleteTree($delUser["userFolder"])
+        val delUser = _generateUserPaths(username)
+        Utils.deleteTree(delUser["userFolder"])
     }
 
     /**
@@ -133,15 +108,13 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun openUser(
-        $username)
-    {
-        this._username = $username
-        $userPaths = this._generateUserPaths($username)
-        this._userFolder = $userPaths["userFolder"]
-        this._settingsFile = $userPaths["settingsFile"]
-        this._cookiesFile = $userPaths["cookiesFile"]
-        this._createFolder(this._userFolder)
+    fun openUser(username: String){
+        _username = username
+        val userPaths = _generateUserPaths(username)
+        _userFolder = userPaths["userFolder"]
+        _settingsFile = userPaths["settingsFile"]
+        _cookiesFile = userPaths["cookiesFile"]
+        _createFolder(_userFolder)
     }
 
     /**
@@ -149,34 +122,30 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun loadUserSettings()
-    {
-        $userSettings = []
+    fun loadUserSettings(): MutableMap<Any, Any> {
+        var userSettings = mutableMapOf<Any, Any>()
 
-        if (!is_file(this._settingsFile)) {
-            return $userSettings // Nothing to load.
+        if (!is_file(_settingsFile)) {
+            return userSettings // Nothing to load.
         }
 
         // Read from disk.
-        $rawData = @file_get_contents(this._settingsFile)
-        if ($rawData === false) {
-            throw SettingsException(sprintf(
-                "Unable to read from settings file "%s".",
-                this._settingsFile
-            ))
+        var rawData: String = file_get_contents(_settingsFile)
+        if (rawData === false) {
+            throw SettingsException("Unable to read from settings file \"$_settingsFile\".")
         }
 
         // Fetch the data version ("FILESTORAGEv#") header.
-        $dataVersion = 1 // Assume migration from v1 if no version.
-        if (preg_match("/^FILESTORAGEv(.d+)/", $rawData, $matches)) {
-            $dataVersion = intval($matches[1])
-            $rawData = substr($rawData, strpos($rawData, "") + 1)
+        var dataVersion = 1 // Assume migration from v1 if no version.
+        if (preg_match("/^FILESTORAGEv(.d+)/", rawData, matches)) {
+            dataVersion = intval(matches[1])
+            rawData = rawData.substring(rawData.indexOf("") + 1)
         }
 
         // Decode the key-value pairs regardless of data-storage version.
-        $userSettings = this._decodeStorage($dataVersion, $rawData)
+        userSettings = _decodeStorage(dataVersion, rawData)
 
-        return $userSettings
+        return userSettings
     }
 
     /**
@@ -184,7 +153,7 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun saveUserSettings(array userSettings, triggerKey){
+    fun saveUserSettings(array userSettings, triggerKey){
         // Generate the storage version header.
         val versionHeader = "FILESTORAGEv$STORAGE_VERSION"
 
@@ -196,7 +165,7 @@ class File : StorageInterface
         // NOTE: If we had just written directly to settingsPath, the file would
         // have become corrupted if the script was killed mid-write. The atomic
         // write process guarantees that the data is fully written to disk.
-        Utils.atomicWrite(this._settingsFile, encodedData)
+        Utils.atomicWrite(_settingsFile, encodedData)
     }
 
     /**
@@ -204,10 +173,8 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun hasUserCookies()
-    {
-        return is_file(this._cookiesFile)
-            && filesize(this._cookiesFile) > 0
+    fun hasUserCookies(): Boolean {
+        return is_file(_cookiesFile) && filesize(_cookiesFile) > 0
     }
 
     /**
@@ -215,10 +182,9 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun getUserCookiesFilePath()
-    {
+    fun getUserCookiesFilePath(): String {
         // Tell the caller to import a file-based cookie jar.
-        return this._cookiesFile
+        return _cookiesFile
     }
 
     /**
@@ -226,8 +192,7 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun loadUserCookies()
-    {
+    fun loadUserCookies(){
         // Never called for "cookiefile" format.
     }
 
@@ -236,9 +201,7 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun saveUserCookies(
-        $rawData)
-    {
+    fun saveUserCookies(rawData){
         // Never called for "cookiefile" format.
     }
 
@@ -247,12 +210,11 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun closeUser()
-    {
-        this._userFolder = null
-        this._settingsFile = null
-        this._cookiesFile = null
-        this._username = null
+    fun closeUser(){
+        _userFolder = null
+        _settingsFile = null
+        _cookiesFile = null
+        _username = null
     }
 
     /**
@@ -260,8 +222,7 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    public fun closeLocation()
-    {
+    fun closeLocation(){
         // We don"t need to disconnect from anything since we are file-based.
     }
 
@@ -275,54 +236,44 @@ class File : StorageInterface
      *
      * @return array An array with all current key-value pairs for the user.
      */
-    private fun _decodeStorage(
-        $dataVersion,
-        $rawData)
-    {
-        $loadedSettings = []
+    private fun _decodeStorage( dataVersion: Int, rawData: String): Map<Any, Any>{
+        var loadedSettings: Map<Any, Any> = mutableMapOf()
 
-        switch ($dataVersion) {
-        case 1:
-            /**
-             * This is the old format from v1.x of Instagram-API.
-             * Terrible format. Basic "key=value.r.n" and very fragile.
-             */
+        when (dataVersion) {
+            1 -> {
+                /**
+                 * This is the old format from v1.x of Instagram-API.
+                 * Terrible format. Basic "key=value.r.n" and very fragile.
+                 */
 
-            // Split by system-independent newlines. Tries .r.n (Win), then .r
-            // (pre-2000s Mac), then .n.r, then .n (Mac OS X, UNIX, Linux).
-            $lines = preg_split("/(.r.n?|.n.r?)/", $rawData, -1, PREG_SPLIT_NO_EMPTY)
-            if ($lines !== false) {
-                foreach ($lines as $line) {
-                    // Key must be at least one character. Allows empty values.
-                    if (preg_match("/^([^=]+)=(.*)$/", $line, $matches)) {
-                        $key = $matches[1]
-                        $value = rtrim($matches[2], ".r.n ")
-                        $loadedSettings[$key] = $value
+                // Split by system-independent newlines. Tries .r.n (Win), then .r
+                // (pre-2000s Mac), then .n.r, then .n (Mac OS X, UNIX, Linux).
+                val lines = preg_split("/(.r.n?|.n.r?)/", rawData, -1, PREG_SPLIT_NO_EMPTY)
+                if (lines !== false) {
+                    for(line in lines) {
+                        // Key must be at least one character. Allows empty values.
+                        if (preg_match("/^([^=]+)=(.*)$/", line, matches)) {
+                            val key = matches[1]
+                            val value = rtrim(matches[2], ".r.n ")
+                            loadedSettings[key] = value
+                        }
                     }
                 }
             }
-            break
-        case 2:
-            /**
-             * Version 2 uses JSON encoding and perfectly stores any value.
-             * And file corruption can"t happen, thanks to the atomic writer.
-             */
-            $loadedSettings = @json_decode($rawData, true, 512, JSON_BIGINT_AS_STRING)
-            if (!is_array($loadedSettings)) {
-                throw SettingsException(sprintf(
-                    "Failed to decode corrupt settings file for account "%s".",
-                    this._username
-                ))
+            2 -> {
+                /**
+                 * Version 2 uses JSON encoding and perfectly stores any value.
+                 * And file corruption can"t happen, thanks to the atomic writer.
+                 */
+                val loadedSettings = json_decode(rawData, true, 512, JSON_BIGINT_AS_STRING)
+                if (!is_array(loadedSettings)) {
+                    throw SettingsException("Failed to decode corrupt settings file for account \"$_username\".")
+                }
             }
-            break
-        default:
-            throw SettingsException(sprintf(
-                "Invalid file settings storage format version "%d".",
-                $dataVersion
-            ))
+            else -> throw SettingsException("Invalid file settings storage format version \"$dataVersion\".")
         }
 
-        return $loadedSettings
+        return loadedSettings
     }
 
     /**
@@ -332,18 +283,16 @@ class File : StorageInterface
      *
      * @return array An array with information about the user"s paths.
      */
-    private fun _generateUserPaths(
-        $username)
-    {
-        $userFolder = this._baseFolder."/".$username
-        $settingsFile = $userFolder."/".sprintf(self::SETTINGSFILE_NAME, $username)
-        $cookiesFile = $userFolder."/".sprintf(self::COOKIESFILE_NAME, $username)
+    private fun _generateUserPaths(username: String): Map<String, String> {
+        val userFolder = "$_baseFolder/$username"
+        val settingsFile = userFolder + "/" + SETTINGSFILE_NAME.format(username)
+        val cookiesFile = userFolder + "/" + COOKIESFILE_NAME.format(username)
 
-        return [
-            "userFolder"   => $userFolder,
-            "settingsFile" => $settingsFile,
-            "cookiesFile"  => $cookiesFile,
-        ]
+        return mapOf(
+            "userFolder"   to userFolder,
+            "settingsFile" to settingsFile,
+            "cookiesFile"  to cookiesFile
+        )
     }
 
     /**
@@ -356,27 +305,19 @@ class File : StorageInterface
      * @return string The canonicalized absolute pathname of the folder, without
      *                any trailing slash.
      */
-    private fun _createFolder(
-        $folder)
-    {
-        if (!Utils::createFolder($folder)) {
-            throw SettingsException(sprintf(
-                "The "%s" folder is not writable.",
-                $folder
-            ))
+    private fun _createFolder(folder: String): String{
+        if (!Utils.createFolder(folder)) {
+            throw SettingsException("The \"$folder\" folder is not writable.")
         }
 
         // Determine the real path of the folder we created/checked.
         // NOTE: This ensures that the path will work even on stingy systems
         // such as Windows Server which chokes on multiple slashes in a row.
-        $realPath = @realpath($folder)
-        if (!is_string($realPath)) {
-            throw SettingsException(sprintf(
-                "Unable to resolve real path to folder "%s".",
-                $folder
-            ))
+        val realPath: String = realpath(folder)
+        if (realPath !is String) {
+            throw SettingsException("Unable to resolve real path to folder \"$folder\".")
         }
 
-        return $realPath
+        return realPath
     }
 }

@@ -84,5 +84,5 @@ data class UsersLookupResponse (
 //        "email"           => "string",
 //        "phone_number"    => "string",
 //        "corrected_input" => "string",
-    ]
+//    ]
 }

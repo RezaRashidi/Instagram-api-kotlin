@@ -3,6 +3,7 @@
 package instagramAPI.responses
 
 import instagramAPI.Response
+import instagramAPI.responses.model.unpredictableKeys.CoreUnpredictableContainer
 
 /**
  * BadgeNotificationsResponse.
@@ -24,13 +25,15 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class BadgeNotificationsResponse : Response(){
-    override val JSON_PROPERTY_MAP = mapOf(
-        // Only exists if you have notifications contains data keyed by userId:
-        // TODO: Currently defined as a Core container, which means that all of
-        // the data sub-values will be arrays (no type-conversion of the values
-        // will happen). We should define this as a specific type (like
-        // UserUnpredictableContainer) when we know exactly what the data is.
-        "badge_payload" to "model.unpredictableKeys.CoreUnpredictableContainer"
-    )
+data class BadgeNotificationsResponse (
+    val badge_payload : CoreUnpredictableContainer
+){
+//    override val JSON_PROPERTY_MAP = mapOf(
+//        // Only exists if you have notifications contains data keyed by userId:
+//        // TODO: Currently defined as a Core container, which means that all of
+//        // the data sub-values will be arrays (no type-conversion of the values
+//        // will happen). We should define this as a specific type (like
+//        // UserUnpredictableContainer) when we know exactly what the data is.
+//        "badge_payload" to "model.unpredictableKeys.CoreUnpredictableContainer"
+//    )
 }

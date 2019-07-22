@@ -4,6 +4,7 @@ package instagramAPI.settings
 //import Fbns.Client.AuthInterface
 import instagramAPI.exception.SettingsException
 import instagramAPI.Utils
+import java.io.File
 import kotlin.random.Random
 
 /**
@@ -84,22 +85,22 @@ class StorageHandler {
 	 *   end or when switching to a different user). Can be used for bulk-saving
 	 *   data at the end of a user"s session, to avoid constant micro-updates.
 	 */
-	val SUPPORTED_CALLBACKS = ["onCloseUser", ]
+	val SUPPORTED_CALLBACKS = arrayOf("onCloseUser")
 
 	/** @var StorageInterface The active storage backend. */
-	private var _storage
+	private var _storage: StorageInterface
 
 	/** @var array Optional callback funs. */
 	private var _callbacks
 
 	/** @var string Current Instagram username that all settings belong to. */
-	private var _username
+	private lateinit var _username: String
 
 	/** @var array Cache for the current user"s key-value settings pairs. */
-	private var _userSettings = mapOf<String,String>()
+	private var _userSettings = mutableMapOf<String,String>()
 
 	/** @var string|null Location of the cookiefile if file-based jar wanted. */
-	private var _cookiesFilePath
+	private var _cookiesFilePath: String? = null
 
 	/**
 	 * Constructor.
@@ -111,20 +112,20 @@ class StorageHandler {
 	 *
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
-	constructor(storageInstance, array locationConfig = [], array callbacks = []) {
-		if (!storageInstance instanceof StorageInterface) {
-			throw SettingsException("You must provide an instance of a StorageInterface class.")
-		}
-		if (!is_array(locationConfig)) {
-			throw SettingsException("The storage location configuration must be an array.")
-		}
+	constructor(storageInstance: StorageInterface, locationConfig: MutableMap<String, String?> = mutableMapOf(), callbacks: MutableList<String> = mutableListOf()) {
+//		if (!storageInstance instanceof StorageInterface) {
+//			throw SettingsException("You must provide an instance of a StorageInterface class.")
+//		}
+//		if (!is_array(locationConfig)) {
+//			throw SettingsException("The storage location configuration must be an array.")
+//		}
 
 		// Store any user-provided callbacks.
-		this._callbacks = callbacks
+		_callbacks = callbacks
 
 		// Connect the storage instance to the user"s desired storage location.
-		this._storage = storageInstance
-		this._storage.openLocation(locationConfig)
+		_storage = storageInstance
+		_storage.openLocation(locationConfig)
 	}
 
 	/**
@@ -151,10 +152,10 @@ class StorageHandler {
 	 *
 	 * @return bool TRUE if user exists, otherwise FALSE.
 	 */
-	public fun hasUser(username) {
-		this._throwIfEmptyValue(username)
+	fun hasUser(username: String): Boolean {
+		_throwIfEmptyValue(username)
 
-		return this._storage.hasUser(username)
+		return _storage.hasUser(username)
 	}
 
 	/**
@@ -180,15 +181,15 @@ class StorageHandler {
 	 *
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
-	public fun moveUser(oldUsername, newUsername) {
-		this._throwIfEmptyValue(oldUsername)
-		this._throwIfEmptyValue(newUsername)
+	fun moveUser(oldUsername: String, newUsername: String) {
+		_throwIfEmptyValue(oldUsername)
+		_throwIfEmptyValue(newUsername)
 
-		if (oldUsername === this._username || newUsername === this._username) {
+		if (oldUsername === _username || newUsername === _username) {
 			throw SettingsException("Attempted to move settings to/from the currently active user.")
 		}
 
-		this._storage.moveUser(oldUsername, newUsername)
+		_storage.moveUser(oldUsername, newUsername)
 	}
 
 	/**
@@ -198,14 +199,14 @@ class StorageHandler {
 	 *
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
-	public fun deleteUser(username) {
-		this._throwIfEmptyValue(username)
+	public fun deleteUser(username: String) {
+		_throwIfEmptyValue(username)
 
-		if (username === this._username) {
+		if (username === _username) {
 			throw SettingsException("Attempted to delete the currently active user.")
 		}
 
-		this._storage.deleteUser(username)
+		_storage.deleteUser(username)
 	}
 
 	/**
@@ -219,24 +220,24 @@ class StorageHandler {
 		_throwIfEmptyValue(username)
 
 		// If that user is already loaded, there"s no need to do anything.
-		if (username === this._username) {
+		if (username === _username) {
 			return
 		}
 
 		// If we"re switching away from a user, tell the backend to close the
 		// current user"s storage (if it needs to do any special processing).
-		if (this._username !== null) {
-			this._triggerCallback("onCloseUser")
-			this._storage.closeUser()
+		if (_username !== null) {
+			_triggerCallback("onCloseUser")
+			_storage.closeUser()
 		}
 
 		// Set the user as the current user for this storage instance.
-		this._username = username
-		this._userSettings = []
-		this._storage.openUser(username)
+		_username = username
+		_userSettings = mutableMapOf()
+		_storage.openUser(username)
 
 		// Retrieve any existing settings for the user from the backend.
-		val loadedSettings = this._storage.loadUserSettings()
+		val loadedSettings = _storage.loadUserSettings()
 		for((key, value) in loadedSettings) {
 			// Map renamed old-school keys to key names.
 			if (key == "username_id") {
@@ -249,17 +250,17 @@ class StorageHandler {
 			if (PERSISTENT_KEYS.contains(key)) {
 				// Cast all values to strings to ensure we only import strings!
 				// NOTE: THIS CAST IS EXTREMELY IMPORTANT AND *MUST* BE DONE!
-				this._userSettings[key] = (string) value
+				_userSettings[key] = value as String
 			}
 		}
 
 		// Determine what type of cookie storage the backend wants for the user.
 		// NOTE: Do NOT validate file existence, since we"ll create if missing.
-		cookiesFilePath = this._storage.getUserCookiesFilePath()
-		if (cookiesFilePath !== null && (!is_string(cookiesFilePath) || !strlen(cookiesFilePath))) {
+		var cookiesFilePath: String? = _storage.getUserCookiesFilePath()
+		if ( cookiesFilePath !== null && cookiesFilePath.isNotEmpty() ) {
 			cookiesFilePath = null // Disable since it isn"t a non-empty string.
 		}
-		this._cookiesFilePath = cookiesFilePath
+		_cookiesFilePath = cookiesFilePath
 	}
 
 	/**
@@ -272,10 +273,10 @@ class StorageHandler {
 	 *
 	 * @return bool TRUE if possibly logged in, otherwise FALSE.
 	 */
-	public fun isMaybeLoggedIn():Boolean{
-		this._throwIfNoActiveUser()
+	fun isMaybeLoggedIn():Boolean{
+		_throwIfNoActiveUser()
 
-		return this._storage.hasUserCookies() && !empty(this.get("account_id"))
+		return _storage.hasUserCookies() && get("account_id")!!.isNotEmpty()
 	}
 
 	/**
@@ -292,11 +293,11 @@ class StorageHandler {
 	fun eraseDeviceSettings() {
 		for(key in PERSISTENT_KEYS) {
 			if (!KEEP_KEYS_WHEN_ERASING_DEVICE.contains(key)) {
-				this.set(key, "") // Erase the setting.
+				set(key, "") // Erase the setting.
 			}
 		}
 
-		this.setCookies("") // Erase all cookies.
+		setCookies("") // Erase all cookies.
 	}
 
 	/**
@@ -335,7 +336,7 @@ class StorageHandler {
 	 *
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
-	fun set(key: String, value) {
+	fun set(key: String, value: Any) {
 		_throwIfNoActiveUser()
 
 		// Reject anything that isn"t in our list of VALID persistent keys.
@@ -351,14 +352,14 @@ class StorageHandler {
 
 		// Cast the value to string to ensure we don"t try writing non-strings.
 		// NOTE: THIS CAST IS EXTREMELY IMPORTANT AND *MUST* ALWAYS BE DONE!
-		value = (string) value
+		val valueF = value as String
 
 				// Check if the value differs from our storage (cached representation).
 				// NOTE: This optimizes writes by only writing when values change!
-				if (!array_key_exists(key, this._userSettings) || this._userSettings[key] !== value) {
+				if ( !_userSettings.keys.contains(key) || _userSettings[key] !== valueF ) {
 					// The value differs, so save to memory cache and write to storage.
-					this._userSettings[key] = value
-					this._storage.saveUserSettings(this._userSettings, key)
+					_userSettings[key] = valueF
+					_storage.saveUserSettings(_userSettings, key)
 				}
 	}
 
@@ -371,10 +372,10 @@ class StorageHandler {
 	 *
 	 * @return bool TRUE if cookies exist, otherwise FALSE.
 	 */
-	public fun hasCookies() {
-		this._throwIfNoActiveUser()
+	fun hasCookies(): Boolean {
+		_throwIfNoActiveUser()
 
-		return this._storage.hasUserCookies()
+		return _storage.hasUserCookies()
 	}
 
 	/**
@@ -388,24 +389,24 @@ class StorageHandler {
 	 *                     (non-empty), or NULL if no cookies exist for
 	 *                     the active user.
 	 */
-	public fun getCookies():String? {
-		this._throwIfNoActiveUser()
+	fun getCookies():String? {
+		_throwIfNoActiveUser()
 
 		// Read the cookies via the appropriate backend method.
-		userCookies = null
-		if (this._cookiesFilePath === null) { // Backend storage.
-			userCookies = this._storage.loadUserCookies()
+		var userCookies: String? = null
+		if (_cookiesFilePath === null) { // Backend storage.
+			userCookies = _storage.loadUserCookies()
 		} else { // Cookiefile on disk.
-			if (empty(this._cookiesFilePath)) { // Just for extra safety.
+			if (_cookiesFilePath!!.isEmpty()) { // Just for extra safety.
 				throw SettingsException("Cookie file format requested, but no file path provided.")
 			}
 
 			// Ensure that the cookie file"s folder exists and is writable.
-			this._createCookiesFileDirectory()
+			_createCookiesFileDirectory()
 
 			// Read the existing cookie jar file if it already exists.
-			if (is_file(this._cookiesFilePath)) {
-				rawData = file_get_contents(this._cookiesFilePath)
+			if ( File(_cookiesFilePath).isFile ) {
+				val rawData = file_get_contents(_cookiesFilePath)
 				if (rawData !== false) {
 					userCookies = rawData
 				}
@@ -413,7 +414,7 @@ class StorageHandler {
 		}
 
 		// Ensure that we"ll always return NULL if no cookies exist.
-		if (userCookies !== null && !strlen(userCookies)) {
+		if (userCookies !== null && userCookies.isNotEmpty()) {
 			userCookies = null
 		}
 
@@ -448,7 +449,7 @@ class StorageHandler {
 				_createCookiesFileDirectory() // Ensures dir exists.
 				val timeout = 5
 				val init = System.currentTimeMillis()/1000
-				val written: Int = Utils.atomicWrite(_cookiesFilePath, rawData)
+				val written: Int = Utils.atomicWrite(_cookiesFilePath as String, rawData)
 				while (written > 0 ) {
 					usleep( Random.nextInt(400000, 600000) )  // 0.4-0.6 sec
 					if ( System.currentTimeMillis()/1000 - init > timeout) {
@@ -460,7 +461,7 @@ class StorageHandler {
 				}
 			} else { // Delete cookies (empty string).
 				// Delete any existing cookie jar since the data is empty.
-				if (is_file(this._cookiesFilePath) && !@unlink(this._cookiesFilePath)) {
+				if ( File(_cookiesFilePath).isFile && !File(_cookiesFilePath).delete() ) {
 					throw SettingsException("Unable to delete the \"$_cookiesFilePath\" cookie file.")
 				}
 			}
@@ -473,13 +474,13 @@ class StorageHandler {
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
 	protected fun _createCookiesFileDirectory() {
-		if (this._cookiesFilePath === null) {
+		if (_cookiesFilePath === null) {
 			return
 		}
 
-		cookieDir = dirname(this._cookiesFilePath) // Can be "." in case of CWD.
-		if (!Utils::createFolder(cookieDir)) {
-			throw SettingsException(sprintf("The " % s" cookie folder is not writable.", cookieDir))
+		val cookieDir = dirname(_cookiesFilePath) // Can be "." in case of CWD.
+		if (!Utils.createFolder(cookieDir)) {
+			throw SettingsException("The \"$cookieDir\" cookie folder is not writable.")
 		}
 	}
 
@@ -490,8 +491,8 @@ class StorageHandler {
 	 *
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
-	protected fun _throwIfNotString(value) {
-		if (!is_string(value)) {
+	protected fun _throwIfNotString(value: Any) {
+		if (value !is String) {
 			throw SettingsException("Parameter must be string.")
 		}
 	}
@@ -503,7 +504,7 @@ class StorageHandler {
 	 *
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
-	protected fun _throwIfEmptyValue(value) {
+	protected fun _throwIfEmptyValue(value: Any) {
 		if (value !is String || value === "") {
 			throw SettingsException("Parameter must be non-empty string.")
 		}
@@ -515,7 +516,7 @@ class StorageHandler {
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
 	protected fun _throwIfNoActiveUser() {
-		if (this._username === null) {
+		if (_username === null) {
 			throw SettingsException("Called user-related fun before setting the current storage user.")
 		}
 	}
@@ -537,13 +538,13 @@ class StorageHandler {
 		}
 
 		// Trigger the callback with a reference to our StorageHandler instance.
-		if (isset(this._callbacks[cbName])) {
+		if ( !_callbacks[cbName].isBlank() ) {
 			try {
-				this._callbacks[cbName](this)
-			} catch (.Exception e) {
+				_callbacks[cbName](this)
+			} catch (e: Exception) {
 				// Re-wrap anything that isn"t already a SettingsException.
-				if (!e instanceof SettingsException) {
-					e = SettingsException(e.getMessage())
+				if (e !is SettingsException) {
+					e = SettingsException(e.message)
 				}
 
 				throw e // Re-throw
@@ -560,15 +561,15 @@ class StorageHandler {
 	 *
 	 * @return array A list of "good" experiments.
 	 */
-	public fun setExperiments(array experiments) {
-		filtered = []
-		foreach(self::EXPERIMENT_KEYS as key) {
-			if (!isset(experiments[key])) {
+	fun setExperiments(experiments: MutableList<String>): MutableList<String> {
+		val filtered = mutableListOf<String>()
+		for(key in EXPERIMENT_KEYS) {
+			if ( !(experiments.contains(key)) ) {
 				continue
 			}
 			filtered[key] = experiments[key]
 		}
-		this.set("experiments", this._packJson(filtered))
+		set("experiments", _packJson(filtered))
 
 		return filtered
 	}
@@ -580,8 +581,8 @@ class StorageHandler {
 	 *
 	 * @return array
 	 */
-	public fun getExperiments() {
-		return this._unpackJson(this.get("experiments"), true)
+	fun getExperiments() {
+		return _unpackJson( get("experiments") as String, true)
 	}
 
 	/**
@@ -591,8 +592,8 @@ class StorageHandler {
 	 *
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
-	public fun setRewriteRules(array rules) {
-		this.set("zr_rules", this._packJson(rules))
+	fun setRewriteRules(array rules) {
+		set("zr_rules", _packJson(rules))
 	}
 
 	/**
@@ -602,8 +603,8 @@ class StorageHandler {
 	 *
 	 * @return array
 	 */
-	public fun getRewriteRules() {
-		return this._unpackJson((string) this.get("zr_rules"), true)
+	fun getRewriteRules() {
+		return _unpackJson( get("zr_rules") as String, true)
 	}
 
 	/**
@@ -611,8 +612,8 @@ class StorageHandler {
 	 *
 	 * @param AuthInterface auth
 	 */
-	public fun setFbnsAuth(AuthInterface auth) {
-		this.set("fbns_auth", auth)
+	fun setFbnsAuth(auth: AuthInterface) {
+		set("fbns_auth", auth)
 	}
 
 	/**
@@ -623,12 +624,12 @@ class StorageHandler {
 	 *
 	 * @return AuthInterface
 	 */
-	public fun getFbnsAuth() {
-		result = DeviceAuth()
+	fun getFbnsAuth(): AuthInterface{
+		val result = DeviceAuth()
 
 		try {
-			result.read(this.get("fbns_auth"))
-		} catch (.Exception e) {}
+			result.read(get("fbns_auth"))
+		} catch (e: Exception) {}
 
 		return result
 	}
@@ -660,28 +661,31 @@ class StorageHandler {
 	 *
 	 * @return array|object
 	 */
-	protected fun _unpackJson(packed: String, assoc: Boolean = true) {
-		if (packed === null || packed === "") {
-			return if (assoc) [] else .stdClass()
+	protected fun _unpackJson(packedRE: String, assoc: Boolean = true) {
+		if (packedRE === null || packedRE === "") {
+			return if (assoc) [] else stdClass()
 		}
-		val format = packed[0]
-		packed = packed.substring(1)
+		val format = packedRE[0]
+		var packed = packedRE.substring(1)
+		val json: String
+		var data
 
 		try {
 			when (format) {
 				'Z' -> {
 					packed = base64_decode(packed, true)
-					if (packed === false) {
+					if (packed == "") {
 						throw RuntimeException("Invalid Base64 encoded string.")
 					}
-					json = @zlib_decode(packed) if (json === false) {
+					json = zlib_decode(packed)
+					if (json == "") {
 						throw RuntimeException("Invalid zlib encoded string.")
 					}
 				}
 				'J'  -> json = packed
 				else -> throw RuntimeException("Invalid packed type.")
 			}
-			var data = json_decode(json, assoc)
+			data = json_decode(json, assoc)
 			if (assoc && !is_array(data)) {
 				throw RuntimeException("JSON is not an array.")
 			}
@@ -689,7 +693,7 @@ class StorageHandler {
 				throw RuntimeException("JSON is not an object.")
 			}
 		} catch (e: RuntimeException) {
-			data = if (assoc) [] else .stdClass()
+			data = if (assoc) [] else stdClass()
 		}
 
 		return data

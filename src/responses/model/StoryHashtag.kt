@@ -52,13 +52,24 @@ import instagramAPI.AutoPropertyMapper
  * @method this unsetY()
  * @method this unsetZ()
  */
-class StoryHashtag : AutoPropertyMapper
-{
-    val JSON_PROPERTY_MAP = [
-        PropertyCollection.Sticker::class,
-        "hashtag"       => "Hashtag",
-        "attribution"   => "string",
-        "custom_title"  => "string",
-        "is_hidden"     => "int",
-    ]
+data class StoryHashtag (
+    val x         : Float,
+    val y         : Float,
+    val z         : Float, // Unused by IG for now. So far its always int(0).
+    val width     : Float,
+    val height    : Float,
+    val rotation  : Float,
+    val is_pinned : Int,
+    val hashtag   : Hashtag,
+    val attribution : String,
+    val custom_title : String,
+    val is_hidden : Int
+){
+//    val JSON_PROPERTY_MAP = [
+//        PropertyCollection.Sticker::class,
+//        "hashtag"       => "Hashtag",
+//        "attribution"   => "string",
+//        "custom_title"  => "string",
+//        "is_hidden"     => "int",
+//    ]
 }

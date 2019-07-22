@@ -60,9 +60,19 @@ import instagramAPI.Response
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class FriendshipsShowResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        Model.FriendshipStatus::class, // Import property map.
-    ]
+data class FriendshipsShowResponse (
+    val following        : Boolean,
+    val followed_by      : Boolean,
+    val incoming_request : Boolean,
+    val outgoing_request : Boolean,
+    val is_private       : Boolean,
+    val is_blocking_reel : Boolean,
+    val is_muting_reel   : Boolean,
+    val blocking         : Boolean,
+    val muting           : Boolean,
+    val is_bestie        : Boolean
+){
+//    val JSON_PROPERTY_MAP = [
+//        Model.FriendshipStatus::class, // Import property map.
+//    ]
 }

@@ -49,7 +49,7 @@ import instagramAPI.responses.model.Item
  * @method this unsetStatus()
  * @method this unset_Messages()
  */
-class LikeFeedResponse (
+data class LikeFeedResponse (
     val auto_load_more_enabled : String,
     val items                  : MutableList<Item>,
     val more_available         : String,

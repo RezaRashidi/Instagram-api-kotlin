@@ -24,26 +24,26 @@ import instagramAPI.Response
  * @method this unsetStreamId()
  * @method this unset_Messages()
  */
-class SegmentedStartResponse : Response
-{
-    val JSON_PROPERTY_MAP = [
-        "stream_id" => "string",
-    ]
+data class SegmentedStartResponse (
+    val stream_id : String
+){
+//    val JSON_PROPERTY_MAP = [
+//        "stream_id" => "string",
+//    ]
 
     /**
      * Checks if the response was successful.
      *
      * @return bool
      */
-    public fun isOk()
-    {
-        $streamId = this._getProperty("stream_id")
-        if ($streamId !== null && $streamId !== "") {
+    fun isOk(): Boolean{
+        val streamId = _getProperty("stream_id")
+        if (streamId !== null && streamId !== "") {
             return true
         } else {
             // Set a nice message for exceptions.
-            if (this.getMessage() === null) {
-                this.setMessage("Stream ID for segmented uploader is missing or invalid.")
+            if (getMessage() === null) {
+                setMessage("Stream ID for segmented uploader is missing or invalid.")
             }
 
             return false
