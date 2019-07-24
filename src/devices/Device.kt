@@ -2,6 +2,8 @@
 
 package instagramAPI.devices
 
+import java.util.regex.Pattern
+
 /**
  * Android hardware device representation.
  *
@@ -40,21 +42,21 @@ class Device// import the provided device if a valid good device. Otherwise impo
      *
      * @var string
      */
-    protected lateinit var _appVersion: String = appVersion
+    protected var _appVersion: String = appVersion
 
     /**
      * Which Instagram client app version code this "device" is running.
      *
      * @var string
      */
-    protected lateinit var _versionCode: String = versionCode
+    protected var _versionCode: String = versionCode
 
     /**
      * The device user"s locale, such as "en_US".
      *
      * @var string
      */
-    protected lateinit var _userLocale: String = userLocale
+    protected var _userLocale: String = userLocale
 
     /**
      * Which device string we were built with internally.
@@ -75,7 +77,7 @@ class Device// import the provided device if a valid good device. Otherwise impo
      *
      * @var array
      */
-    protected lateinit var _fbUserAgents: Array
+    protected lateinit var _fbUserAgents: MutableMap<String, String>
 
     // Properties parsed from the device string...
 
@@ -110,7 +112,9 @@ class Device// import the provided device if a valid good device. Otherwise impo
         if (autoFallback && (deviceString !is String || !GoodDevices.isGoodDevice(deviceString))) {
             deviceString = GoodDevices.getRandomGoodDevice()
         }
-        _initFromDeviceString(deviceString)
+        if (deviceString != null) {
+            _initFromDeviceString(deviceString)
+        }
     }
 
     /**
@@ -128,26 +132,26 @@ class Device// import the provided device if a valid good device. Otherwise impo
         }
 
         // Split the device identifier into its components and verify it.
-        val parts = explode(" ", deviceString)
+        val parts = deviceString.split(" ")
         if (parts.count() !== 7) {
             throw RuntimeException("Device string \"$deviceString\" does not conform to the required device format.")
         }
 
         // Check the android version.
-        val androidOS = explode("/", parts[0], 2)
-        if (version_compare(androidOS[1], REQUIRED_ANDROID_VERSION, "<")) {
+        val androidOS = parts[0].split("/", limit = 2)
+        if (versionCompare(androidOS[1], REQUIRED_ANDROID_VERSION) == -1) {
             throw RuntimeException("Device string \"$deviceString\" does not meet the minimum required Android version \"$REQUIRED_ANDROID_VERSION\" for Instagram.")
         }
 
         // Check the screen resolution.
-        val resolution = explode("x", parts[2], 2)
+        val resolution = parts[2].split("x", limit = 2)
         val pixelCount = resolution[0].toInt() * resolution[1].toInt()
         if (pixelCount < 2073600) { // 1920x1080.
             throw RuntimeException("Device string \"$deviceString\" does not meet the minimum resolution requirement of 1920x1080.")
         }
 
         // Extract "Manufacturer/Brand" string into separate fields.
-        val manufacturerAndBrand = explode("/", parts[3], 2)
+        val manufacturerAndBrand = parts[3].split("/", limit = 2)
 
         // Store all field values.
         _deviceString   = deviceString
@@ -164,24 +168,24 @@ class Device// import the provided device if a valid good device. Otherwise impo
         // Build our user agent.
         _userAgent = UserAgent.buildUserAgent(_appVersion, _userLocale, this)
 
-        _fbUserAgents = []
+        _fbUserAgents = mutableMapOf()
     }
 
     // Getters for all properties...
 
     /** {@inheritdoc} */
-    fun getDeviceString(): String {
+    override fun getDeviceString(): String {
         return _deviceString
     }
 
     /** {@inheritdoc} */
-    fun getUserAgent(): String {
+    override fun getUserAgent(): String {
         return _userAgent
     }
 
     /** {@inheritdoc} */
-    fun getFbUserAgent(appName){
-        if ( _fbUserAgents[appName].isBlank() ) {
+    override fun getFbUserAgent(appName: String): String {
+        if ( _fbUserAgents[appName]!!.isBlank() ) {
             _fbUserAgents[appName] = UserAgent.buildFbUserAgent(
                 appName,
                 _appVersion,
@@ -191,51 +195,65 @@ class Device// import the provided device if a valid good device. Otherwise impo
             )
         }
 
-        return _fbUserAgents[appName]
+        return _fbUserAgents[appName].toString()
     }
 
     /** {@inheritdoc} */
-    fun getAndroidVersion(): String {
+    override fun getAndroidVersion(): String {
         return _androidVersion
     }
 
     /** {@inheritdoc} */
-    fun getAndroidRelease(): String {
+    override fun getAndroidRelease(): String {
         return _androidRelease
     }
 
     /** {@inheritdoc} */
-    fun getDPI(): String {
+    override fun getDPI(): String {
         return _dpi
     }
 
     /** {@inheritdoc} */
-    fun getResolution(): String {
+    override fun getResolution(): String {
         return _resolution
     }
 
     /** {@inheritdoc} */
-    fun getManufacturer(): String {
+    override fun getManufacturer(): String {
         return _manufacturer
     }
 
     /** {@inheritdoc} */
-    fun getBrand(): String? {
+    override fun getBrand(): String? {
         return _brand
     }
 
     /** {@inheritdoc} */
-    fun getModel(): String {
+    override fun getModel(): String {
         return _model
     }
 
     /** {@inheritdoc} */
-    fun getDevice(): String {
+    override fun getDevice(): String {
         return _device
     }
 
     /** {@inheritdoc} */
-    fun getCPU(): String {
+    override fun getCPU(): String {
         return _cpu
     }
+}
+
+fun versionCompare(version01: String, version02: String, sep: String = ".", maxWidth: Int = 4): Int {
+    val split01 = Pattern.compile(sep, Pattern.LITERAL).split(version01)
+    val split02 = Pattern.compile(sep, Pattern.LITERAL).split(version02)
+    val sb01 = StringBuilder()
+    val sb02 = StringBuilder()
+    for (s in split01) {
+        sb01.append(String.format("%" + maxWidth + 's'.toString(), s))
+    }
+    for (s in split02) {
+        sb02.append(String.format("%" + maxWidth + 's'.toString(), s))
+    }
+    return sb01.toString().compareTo(sb02.toString())
 }

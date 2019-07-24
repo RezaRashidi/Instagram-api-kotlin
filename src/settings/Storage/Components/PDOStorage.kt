@@ -22,7 +22,7 @@ abstract class PDOStorage : StorageInterface{
     protected lateinit var _pdo: PDO
 
     /** @var bool Whether we own the PDO connection or are borrowing it. */
-    protected var _isSharedPDO: Boolean
+    protected var _isSharedPDO: Boolean = false
 
     /** @var string Which table to store the settings in. */
     protected lateinit var _dbTableName: String
@@ -49,7 +49,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun openLocation(array locationConfig){
+    override fun openLocation(locationConfig: MutableMap<String, String>) {
         _dbTableName = if(!locationConfig["dbtablename"].isBlank()) locationConfig["dbtablename"] else "user_sessions"
 
         if (!locationConfig["pdo"].isBlank()) {
@@ -92,7 +92,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * @return .PDO The database connection.
      */
-    abstract protected fun _createPDO(array locationConfig): PDO
+    protected abstract fun _createPDO(array locationConfig): PDO
 
     /**
      * Configures the connection for our needs.
@@ -119,14 +119,14 @@ abstract class PDOStorage : StorageInterface{
      *
      * @throws .exception
      */
-    abstract protected fun _enableUTF8()
+    protected abstract fun _enableUTF8()
 
     /**
      * Automatically create the database table if necessary.
      *
      * @throws .exception
      */
-    abstract protected fun _autoCreateTable()
+    protected abstract fun _autoCreateTable()
 
     /**
      * Automatically writes to the correct user"s row and caches the value.
@@ -175,7 +175,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun hasUser(username: String): Boolean {
+    override fun hasUser(username: String): Boolean {
         // Check whether a row exists for that username.
         val sth = _pdo.prepare("SELECT EXISTS(SELECT 1 FROM `{this._dbTableName}` WHERE (username=:username))")
         sth.execute( mapOf(":username" to username))
@@ -190,7 +190,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun moveUser( oldUsername: String, newUsername: String){
+    override fun moveUser( oldUsername: String, newUsername: String){
         try {
             // Verify that the old username exists.
             if (!hasUser(oldUsername)) {
@@ -218,7 +218,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun deleteUser(username: String){
+    override fun deleteUser(username: String){
         try {
             // Just attempt to delete the row. Doesn"t error if already missing.
             val sth = _pdo.prepare("DELETE FROM `{this._dbTableName}` WHERE (username=:username)")
@@ -234,7 +234,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun openUser(username: String){
+    override fun openUser(username: String){
         _username = username
 
         // Retrieve and cache the existing user data row if available.
@@ -263,7 +263,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun loadUserSettings(){
+    override fun loadUserSettings(): MutableMap<String, String> {
         val userSettings = []
 
         if (_cache["settings"]!!.isNotEmpty()) {
@@ -281,7 +281,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun saveUserSettings(array userSettings, triggerKey){
+    override fun saveUserSettings(userSettings: Map<String, String>, triggerKey: String) {
         // Store the settings as a JSON blob.
         val encodedData = json_encode(userSettings)
         _setUserColumn("settings", encodedData)
@@ -292,7 +292,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun hasUserCookies(): Boolean {
+    override fun hasUserCookies(): Boolean {
         return !_cache["cookies"]!!.isBlank() && _cache["cookies"]!!.isNotEmpty()
     }
 
@@ -301,7 +301,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun getUserCookiesFilePath(){
+    override fun getUserCookiesFilePath(): String? {
         // NULL = We (the backend) will handle the cookie loading/saving.
         return null
     }
@@ -311,7 +311,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun loadUserCookies(): String? {
+    override fun loadUserCookies(): String? {
         return if(!_cache["cookies"]!!.isBlank()) _cache["cookies"] else null
     }
 
@@ -320,7 +320,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun saveUserCookies(rawData: String){
+    override fun saveUserCookies(rawData: String){
         // Store the raw cookie data as-provided.
         _setUserColumn("cookies", rawData)
     }
@@ -330,7 +330,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun closeUser(){
+    override fun closeUser(){
         _username = null
         _cache = null
     }
@@ -340,7 +340,7 @@ abstract class PDOStorage : StorageInterface{
      *
      * {@inheritdoc}
      */
-    fun closeLocation(){
+    override fun closeLocation(){
         // Delete our reference to the PDO object. If nobody else references
         // it, the PDO connection will now be terminated. In case of shared
         // objects, the original owner still has their reference (as intended).

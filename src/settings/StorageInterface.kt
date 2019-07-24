@@ -66,7 +66,7 @@ interface StorageInterface
      *
      * @throws .instagramAPI.exception.SettingsException
      */
-    fun openLocation(locationConfig: List<Any>)
+    fun openLocation(locationConfig: MutableMap<String, String>)
 
     /**
      * Whether the storage backend contains a specific user.
@@ -148,7 +148,7 @@ interface StorageInterface
      * @return array An array with all current key-value pairs for the user, or
      *               an empty array if no settings exist.
      */
-    fun loadUserSettings()
+    fun loadUserSettings(): MutableMap<String, String>
 
     /**
      * Save the settings for the currently active user.

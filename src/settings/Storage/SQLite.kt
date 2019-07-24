@@ -30,7 +30,7 @@ class SQLite : PDOStorage(){
      *
      * {@inheritdoc}
      */
-    protected fun _createPDO(array locationConfig){
+    override fun _createPDO(array locationConfig){
         // Determine the filename for the SQLite database.
         val sqliteFile = if ( !locationConfig["dbfilename"].isBlank() && !locationConfig["dbfilename"].isEmpty() )
                        locationConfig["dbfilename"] else Constants.SRC_DIR + "/../sessions/instagram.db"
@@ -49,7 +49,7 @@ class SQLite : PDOStorage(){
      *
      * {@inheritdoc}
      */
-    protected fun _enableUTF8(){
+    override fun _enableUTF8(){
         // NOTE: SQLite can only set encoding when the database is 1st created,
         // so this only does something if we"re the ones creating the db file!
         // Afterwards, SQLite always keeps the encoding used at db creation.
@@ -61,7 +61,7 @@ class SQLite : PDOStorage(){
      *
      * {@inheritdoc}
      */
-    protected fun _autoCreateTable(){
+    override fun _autoCreateTable(){
         // Abort if we already have the necessary table.
         val sth = _pdo.prepare("SELECT count(*) FROM sqlite_master WHERE (type = \"table\") AND (name = :tableName)")
         sth.execute( mapOf(":tableName" to _dbTableName) )

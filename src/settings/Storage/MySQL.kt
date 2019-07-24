@@ -28,7 +28,7 @@ class MySQL : PDOStorage() {
      *
      * {@inheritdoc}
      */
-    protected fun _createPDO(array locationConfig){
+    override fun _createPDO(array locationConfig){
         val username = if(locationConfig["dbusername"]) locationConfig["dbusername"] else "root"
         val password = if(locationConfig["dbpassword"]) locationConfig["dbpassword"] else ""
         val host     = if(locationConfig["dbhost"]) locationConfig["dbhost"] else "localhost"
@@ -42,7 +42,7 @@ class MySQL : PDOStorage() {
      *
      * {@inheritdoc}
      */
-    protected fun _enableUTF8(){
+    override fun _enableUTF8(){
         // IMPORTANT: MySQL databases have two names for UTF-8! If you use
         // "utf8", they only allow 1-3 byte encoding. But UTF-8 is actually a
         // 1-4 byte format (things like Emojis need that final byte). Therefore,
@@ -57,7 +57,7 @@ class MySQL : PDOStorage() {
      *
      * {@inheritdoc}
      */
-    protected fun _autoCreateTable(){
+    override fun _autoCreateTable(){
         // Detect the name of the MySQL database that PDO is connected to.
         val dbName = _pdo.query("SELECT database()").fetchColumn()
 

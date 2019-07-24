@@ -6,6 +6,7 @@ import instagramAPI.Constants
 import instagramAPI.exception.SettingsException
 import instagramAPI.settings.StorageInterface
 import instagramAPI.Utils
+import java.io.File
 
 /**
  * Persistent storage backend which keeps settings in a reliable binary file.
@@ -43,10 +44,10 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun openLocation(locationConfig){
+    override fun openLocation(locationConfig: MutableMap<String, String>) {
         // Determine which base folder to store all per-user data in.
-        val baseFolder = if ( !locationConfig["basefolder"].isBlank() && !locationConfig["basefolder"].isEmpty() )
-                                locationConfig["basefolder"] else Constants.SRC_DIR + "/../sessions"
+        val baseFolder = if (locationConfig.keys.contains("basefolder"))
+                    locationConfig["basefolder"] as String else Constants.SRC_DIR + "/../sessions"
         // Create the base folder and normalize its path to a clean value.
         _baseFolder = _createFolder(baseFolder)
     }
@@ -56,11 +57,11 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun hasUser(username: String){
+    override fun hasUser(username: String): Boolean {
         // Check whether the user"s settings-file exists.
         val hasUser = _generateUserPaths(username)
 
-        return if( is_file(hasUser["settingsFile"]) ) true else false
+        return File(hasUser["settingsFile"]).isFile
     }
 
     /**
@@ -68,28 +69,28 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun moveUser( oldUsername: String, newUsername: String){
+    override fun moveUser( oldUsername: String, newUsername: String){
         // Verify the old and username parameters.
         val oldUser = _generateUserPaths(oldUsername)
         val newUser = _generateUserPaths(newUsername)
-        if (!is_dir(oldUser["userFolder"])) {
+        if (!File(oldUser["userFolder"]).isDirectory) {
             throw SettingsException("Cannot move non-existent user folder \"${oldUser["userFolder"]}\".")
         }
-        if (is_dir(newUser["userFolder"])) {
+        if (File(newUser["userFolder"]).isDirectory) {
             throw SettingsException("Refusing to overwrite existing user folder \"${newUser["userFolder"]}\".")
         }
 
         // Create the destination folder and migrate all data.
-        _createFolder(newUser["userFolder"])
-        if (is_file(oldUser["settingsFile"]) && !@rename(oldUser["settingsFile"], newUser["settingsFile"])) {
+        _createFolder("${newUser["userFolder"]}")
+        if (File(oldUser["settingsFile"]).isFile && !File(oldUser["settingsFile"]).renameTo(File(newUser["settingsFile"])) ) {
             throw SettingsException("Failed to move \"${oldUser["settingsFile"]}\" to \"${newUser["settingsFile"]}\".")
         }
-        if (is_file(oldUser["cookiesFile"]) && !@rename(oldUser["cookiesFile"], newUser["cookiesFile"])) {
+        if (File(oldUser["cookiesFile"]).isFile && !File(oldUser["cookiesFile"]).renameTo(File(newUser["cookiesFile"])) ) {
             throw SettingsException("Failed to move \"${oldUser["cookiesFile"]}\" to \"${newUser["cookiesFile"]}\".")
         }
 
         // Delete all files in the old folder, and the folder itself.
-        Utils.deleteTree(oldUser["userFolder"])
+        Utils.deleteTree("${oldUser["userFolder"]}")
     }
 
     /**
@@ -97,10 +98,10 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun deleteUser(username: String) {
+    override fun deleteUser(username: String) {
         // Delete all files in the user folder, and the folder itself.
         val delUser = _generateUserPaths(username)
-        Utils.deleteTree(delUser["userFolder"])
+        Utils.deleteTree("${delUser["userFolder"]}")
     }
 
     /**
@@ -108,12 +109,12 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun openUser(username: String){
+    override fun openUser(username: String){
         _username = username
         val userPaths = _generateUserPaths(username)
-        _userFolder = userPaths["userFolder"]
-        _settingsFile = userPaths["settingsFile"]
-        _cookiesFile = userPaths["cookiesFile"]
+        _userFolder   = userPaths["userFolder"] as String
+        _settingsFile = userPaths["settingsFile"] as String
+        _cookiesFile  = userPaths["cookiesFile"] as String
         _createFolder(_userFolder)
     }
 
@@ -122,10 +123,10 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun loadUserSettings(): MutableMap<Any, Any> {
-        var userSettings = mutableMapOf<Any, Any>()
+    override fun loadUserSettings(): MutableMap<String, String> {
+        var userSettings = mutableMapOf<String, String>()
 
-        if (!is_file(_settingsFile)) {
+        if (!File(_settingsFile).isFile) {
             return userSettings // Nothing to load.
         }
 
@@ -153,7 +154,7 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun saveUserSettings(array userSettings, triggerKey){
+    override fun saveUserSettings(userSettings: Map<String, String>, triggerKey: String) {
         // Generate the storage version header.
         val versionHeader = "FILESTORAGEv$STORAGE_VERSION"
 
@@ -173,8 +174,8 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun hasUserCookies(): Boolean {
-        return is_file(_cookiesFile) && filesize(_cookiesFile) > 0
+    override fun hasUserCookies(): Boolean {
+        return File(_cookiesFile).isFile && filesize(_cookiesFile) > 0
     }
 
     /**
@@ -182,7 +183,7 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun getUserCookiesFilePath(): String {
+    override fun getUserCookiesFilePath(): String {
         // Tell the caller to import a file-based cookie jar.
         return _cookiesFile
     }
@@ -192,7 +193,7 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun loadUserCookies(){
+    override fun loadUserCookies(): String? {
         // Never called for "cookiefile" format.
     }
 
@@ -201,7 +202,7 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun saveUserCookies(rawData){
+    override fun saveUserCookies(rawData: String) {
         // Never called for "cookiefile" format.
     }
 
@@ -210,7 +211,7 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun closeUser(){
+    override fun closeUser(){
         _userFolder = null
         _settingsFile = null
         _cookiesFile = null
@@ -222,7 +223,7 @@ class File : StorageInterface
      *
      * {@inheritdoc}
      */
-    fun closeLocation(){
+    override fun closeLocation(){
         // We don"t need to disconnect from anything since we are file-based.
     }
 
@@ -313,11 +314,10 @@ class File : StorageInterface
         // Determine the real path of the folder we created/checked.
         // NOTE: This ensures that the path will work even on stingy systems
         // such as Windows Server which chokes on multiple slashes in a row.
-        val realPath: String = realpath(folder)
-        if (realPath !is String) {
-            throw SettingsException("Unable to resolve real path to folder \"$folder\".")
-        }
+        //        if (realPath !is String) {
+//            throw SettingsException("Unable to resolve real path to folder \"$folder\".")
+//        }
 
-        return realPath
+        return realpath(folder)
     }
 }

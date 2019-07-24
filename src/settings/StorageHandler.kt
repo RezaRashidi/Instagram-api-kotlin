@@ -91,7 +91,7 @@ class StorageHandler {
 	private var _storage: StorageInterface
 
 	/** @var array Optional callback funs. */
-	private var _callbacks
+	private var _callbacks: MutableMap<String, String>
 
 	/** @var string Current Instagram username that all settings belong to. */
 	private lateinit var _username: String
@@ -112,7 +112,7 @@ class StorageHandler {
 	 *
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
-	constructor(storageInstance: StorageInterface, locationConfig: MutableMap<String, String?> = mutableMapOf(), callbacks: MutableList<String> = mutableListOf()) {
+	constructor(storageInstance: StorageInterface, locationConfig: MutableMap<String, String> = mutableMapOf(), callbacks: MutableMap<String, String> = mutableMapOf()) {
 //		if (!storageInstance instanceof StorageInterface) {
 //			throw SettingsException("You must provide an instance of a StorageInterface class.")
 //		}
@@ -199,7 +199,7 @@ class StorageHandler {
 	 *
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
-	public fun deleteUser(username: String) {
+	fun deleteUser(username: String) {
 		_throwIfEmptyValue(username)
 
 		if (username === _username) {
@@ -240,17 +240,18 @@ class StorageHandler {
 		val loadedSettings = _storage.loadUserSettings()
 		for((key, value) in loadedSettings) {
 			// Map renamed old-school keys to key names.
-			if (key == "username_id") {
-				key = "account_id"
-			} else if (key == "adid") {
-				key = "advertising_id"
+			var keyF = key
+			if (keyF == "username_id") {
+				keyF = "account_id"
+			} else if (keyF == "adid") {
+				keyF = "advertising_id"
 			}
 
 			// Only keep values for keys that are still in use. Discard others.
-			if (PERSISTENT_KEYS.contains(key)) {
+			if (PERSISTENT_KEYS.contains(keyF)) {
 				// Cast all values to strings to ensure we only import strings!
 				// NOTE: THIS CAST IS EXTREMELY IMPORTANT AND *MUST* BE DONE!
-				_userSettings[key] = value as String
+				_userSettings[keyF] = value
 			}
 		}
 
