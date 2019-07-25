@@ -2,7 +2,7 @@
 
 package instagramAPI.realtimes
 
-import instagramAPI.Realtime.Handler.HandlerException
+import instagramAPI.realtimes.Handler.HandlerException
 
 interface HandlerInterface
 {
@@ -13,6 +13,5 @@ interface HandlerInterface
      *
      * @throws HandlerException
      */
-    public fun handleMessage(
-        Message $message)
+    fun handleMessage(message: Message)
 }

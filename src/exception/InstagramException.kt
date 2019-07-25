@@ -18,7 +18,7 @@ open class InstagramException( override  val message: String?):Throwable(message
      *
      * @var responses|null
      */
-    private lateinit var _response:Response
+    private var _response:Response? = null
 
     /**
      * Check whether the exception has a full server response.
@@ -37,8 +37,7 @@ open class InstagramException( override  val message: String?):Throwable(message
      *
      * @see InstagramException::hasResponse()
      */
-     fun getResponse():Response
-    {
+     fun getResponse():Response?{
         return _response
     }
 
@@ -47,9 +46,7 @@ open class InstagramException( override  val message: String?):Throwable(message
      *
      * @param Response|null $response The response value.
      */
-     fun setResponse(
-         response:Response? = null)
-    {
-        this._response = response
+     fun setResponse(response:Response? = null){
+        _response = response
     }
 }

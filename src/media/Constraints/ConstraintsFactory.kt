@@ -3,6 +3,7 @@
 package instagramAPI.media.Constraints
 
 import instagramAPI.Constants
+import instagramAPI.media.ConstraintsInterface
 
 class ConstraintsFactory
 {
@@ -16,7 +17,7 @@ class ConstraintsFactory
      * @see Constants
      */
     companion object{
-         fun createFor( targetFeed: Int): ConstraintsInterface{
+         fun createFor( targetFeed: Int): ConstraintsInterface {
 
             return when (targetFeed) {
                 Constants.FEED_STORY        -> StoryConstraints()

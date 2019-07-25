@@ -88,7 +88,7 @@ class PhotoDetails : MediaDetails
      *
      * @throws  IllegalArgumentException If the photo file is missing or invalid.
      */
-    fun __construct(filename: String){
+    fun constructor(filename: String){
         // Check if input file exists.
         if (filename.isEmpty() || !is_file(filename)) {
             throw IllegalArgumentException("The photo file \"$filename\" does not exist on disk.")
@@ -110,12 +110,12 @@ class PhotoDetails : MediaDetails
         // Detect JPEG EXIF orientation if it exists.
         _orientation = _getExifOrientation(filename, _type)
 
-        parent::__construct($filename, $filesize, $width, $height)
+        super constructor(filename, filesize, width, height)
     }
 
     /** {@inheritdoc} */
     fun validate(constraints: ConstraintsInterface){
-        parent::validate(constraints)
+        super validate(constraints)
 
         // WARNING TO CONTRIBUTORS: $mediaFilename is for ERROR DISPLAY to
         // users. Do NOT import it to read from the hard disk!

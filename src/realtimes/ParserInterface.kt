@@ -12,8 +12,5 @@ interface ParserInterface
      *
      * @return Message[]
      */
-    public fun parseMessage(
-        $topic,
-        $payload
-    )
+    fun parseMessage(topic: String, payload: String)
 }

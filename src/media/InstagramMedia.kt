@@ -6,6 +6,7 @@ import instagramAPI.Constants
 import instagramAPI.media.Constraints.ConstraintsFactory
 import instagramAPI.media.Geometry.Dimensions
 import instagramAPI.media.Geometry.Rectangle
+import java.io.File
 import kotlin.math.*
 
 /**
@@ -59,7 +60,7 @@ abstract class InstagramMedia
     protected var _debug: Boolean
 
     /** @var string Input file path. */
-    protected lateinit var _inputFile: String
+    protected var _inputFile: String
 
     /** @var float|null Minimum allowed aspect ratio. */
     protected var _minAspectRatio: Float?
@@ -213,7 +214,7 @@ abstract class InstagramMedia
         _debug = debug === true
 
         // Input file.
-        if (!is_file(inputFile)) {
+        if (!File(inputFile).isFile) {
             throw IllegalArgumentException("Input file \"$inputFile\" doesn't exist.")
         }
         _inputFile = inputFile
@@ -328,7 +329,7 @@ abstract class InstagramMedia
         if (tmpPath === null) {
             tmpPath = if(defaultTmpPath !== null) defaultTmpPath else sys_get_temp_dir()
         }
-        if (!is_dir(tmpPath) || !is_writable(tmpPath)) {
+        if (!File(tmpPath).isDirectory || !File(tmpPath).canWrite()) {
             throw IllegalArgumentException("Directory $tmpPath does not exist or is not writable.")
         }
         _tmpPath = realpath(tmpPath)
@@ -356,7 +357,7 @@ abstract class InstagramMedia
      */
     fun deleteFile(): Boolean{
         // Only delete if outputfile exists and isn"t the same as input file.
-        if (_outputFile !== null && _outputFile !== _inputFile && is_file(_outputFile)) {
+        if (_outputFile !== null && _outputFile !== _inputFile && File(_outputFile).isFile) {
             val result = @unlink(_outputFile)
             _outputFile = null // Reset so getFile() will work again.
             return result

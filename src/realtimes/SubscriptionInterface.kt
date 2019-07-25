@@ -9,19 +9,19 @@ interface SubscriptionInterface
      *
      * @return string
      */
-    public fun getTopic()
+    fun getTopic(): String
 
     /**
      * Get the unique subscription identifier.
      *
      * @return string
      */
-    public fun getId()
+    fun getId(): String
 
     /**
      * Get the string representation.
      *
      * @return string
      */
-    public fun __toString()
+    fun __toString(): String
 }

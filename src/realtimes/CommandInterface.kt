@@ -1,18 +1,18 @@
 package instagramAPI.realtimes
 
-interface CommandInterface : .JsonSerializable
+interface CommandInterface : JsonSerializable
 {
     /**
      * Get the target topic.
      *
      * @return string
      */
-    public fun getTopic()
+    fun getTopic(): String
 
     /**
      * Get the MQTT QoS level.
      *
      * @return int
      */
-    public fun getQosLevel()
+    fun getQosLevel(): Int
 }

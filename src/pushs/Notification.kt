@@ -3,7 +3,7 @@
 package instagramAPI.pushs
 
 import Fbns.Client.Json
-import instagramAPI.Push.Payload.BadgeCount
+import instagramAPI.pushs.Payload.BadgeCount
 
 class Notification
 {
@@ -151,21 +151,21 @@ class Notification
      *
      * @param string $json
      */
-    fun __construct(json: String): String{
+    fun constructor(json: String) {
         _parseJson(json)
     }
 
     /**
      * @return string
      */
-    public fun __toString(): String {
+    fun __toString(): String {
         return _json
     }
 
     /**
      * @return string
      */
-    public fun getTitle(): String {
+    fun getTitle(): String {
         return _title
     }
 

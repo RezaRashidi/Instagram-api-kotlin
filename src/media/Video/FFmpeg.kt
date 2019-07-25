@@ -132,7 +132,7 @@ class FFmpeg{
         try {
             exitCode = process.wait()
         } catch (e: Exception) {
-            throw RuntimeException("Failed to run the ffmpeg binary: ${e.getMessage()}")
+            throw RuntimeException("Failed to run the ffmpeg binary: ${e.message}")
         }
         if (exitCode) {
             val errors = preg_replace("#[.r.n]+#", ""], ["", trim(process.getErrorOutput()))

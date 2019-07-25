@@ -18,7 +18,7 @@ class Dimensions{
      * @param int $width
      * @param int $height
      */
-    fun __construct( width: Int, height: Int){
+    fun constructor( width: Int, height: Int){
         _width = width
         _height = height
         // NOTE: MUST `float`-cast to FORCE float even when dividing EQUAL ints.

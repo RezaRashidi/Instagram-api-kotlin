@@ -7,12 +7,12 @@ class Message
     /**
      * @var string
      */
-    private $_module
+    private lateinit var _module: String
 
     /**
      * @var mixed
      */
-    private $_data
+    private lateinit var _data: Any
 
     /**
      * Message constructor.
@@ -20,27 +20,22 @@ class Message
      * @param string $module
      * @param mixed  $payload
      */
-    public fun __construct(
-        $module,
-        $payload)
-    {
-        this._module = $module
-        this._data = $payload
+    fun constructor(module: String, payload: Any){
+        _module = module
+        _data = payload
     }
 
     /**
      * @return string
      */
-    public fun getModule()
-    {
-        return this._module
+    fun getModule(): String {
+        return _module
     }
 
     /**
      * @return mixed
      */
-    public fun getData()
-    {
-        return this._data
+    fun getData(): Any {
+        return _data
     }
 }

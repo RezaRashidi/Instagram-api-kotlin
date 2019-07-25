@@ -6,66 +6,66 @@ import instagramAPI.media.Constraints.ConstraintsFactory
 import instagramAPI.media.Photo.PhotoDetails
 import instagramAPI.media.Video.VideoDetails
 import instagramAPI.Utils
+import instagramAPI.responses.UploadJobVideoResponse
+import instagramAPI.responses.UploadPhotoResponse
+import instagramAPI.responses.UploadVideoResponse
+import instagramAPI.responses.model.VideoUploadUrl
 
 final class Internal
 {
     /** @var PhotoDetails */
-    private $_photoDetails
+    private lateinit var _photoDetails: PhotoDetails
 
     /** @var VideoDetails */
-    private $_videoDetails
+    private lateinit var _videoDetails: VideoDetails
 
     /** @var string */
-    private $_uploadId
+    private lateinit var _uploadId: String
 
     /** @var VideoUploadUrl[] */
-    private $_videoUploadUrls
+    private lateinit var _videoUploadUrls: MutableList<VideoUploadUrl>
 
     /** @var UploadVideoResponse */
-    private $_videoUploadResponse
+    private lateinit var _videoUploadResponse: UploadVideoResponse
 
     /** @var UploadPhotoResponse */
-    private $_photoUploadResponse
+    private lateinit var _photoUploadResponse: UploadPhotoResponse
 
     /** @var string */
-    private $_directThreads
+    private lateinit var _directThreads: String
 
     /** @var string */
-    private $_directUsers
+    private lateinit var _directUsers: String
 
     /** @var bool */
-    private $_bestieMedia
+    private var _bestieMedia: Boolean = false
 
     /**
      * Constructor.
      *
      * @param string|null $uploadId
      */
-    fun __construct(
-        $uploadId = null)
-    {
-        if ($uploadId !== null) {
-            this._uploadId = $uploadId
+    fun constructor(uploadId: String? = null){
+        _uploadId = if (uploadId !== null) {
+            uploadId
         } else {
-            this._uploadId = Utils::generateUploadId()
+            Utils.generateUploadId()
         }
-        this._bestieMedia = false
+        _bestieMedia = false
     }
 
     /**
      * @return PhotoDetails
      */
-    fun getPhotoDetails()
-    {
-        return this._photoDetails
+    fun getPhotoDetails(): PhotoDetails {
+        return _photoDetails
     }
 
     /**
      * @return VideoDetails
      */
-    fun getVideoDetails()
-    {
-        return this._videoDetails
+    fun getVideoDetails(): VideoDetails {
+        return _videoDetails
     }
 
     /**
@@ -79,19 +79,16 @@ final class Internal
      *
      * @return VideoDetails
      */
-    fun setVideoDetails(
-        $targetFeed,
-        $videoFilename)
-    {
+    fun setVideoDetails(targetFeed: Int, videoFilename: String): VideoDetails {
         // Figure out the video file details.
         // NOTE: We do this first, since it validates whether the video file is
         // valid and lets us avoid wasting time uploading totally invalid files!
-        this._videoDetails = VideoDetails($videoFilename)
+        _videoDetails = VideoDetails(videoFilename)
 
         // Validate the video details and throw if Instagram won"t allow it.
-        this._videoDetails.validate(ConstraintsFactory::createFor($targetFeed))
+        _videoDetails.validate(ConstraintsFactory.createFor(targetFeed))
 
-        return this._videoDetails
+        return _videoDetails
     }
 
     /**
@@ -105,27 +102,23 @@ final class Internal
      *
      * @return PhotoDetails
      */
-    fun setPhotoDetails(
-        $targetFeed,
-        $photoFilename)
-    {
+    fun setPhotoDetails(targetFeed: Int, photoFilename: String): PhotoDetails {
         // Figure out the photo file details.
         // NOTE: We do this first, since it validates whether the photo file is
         // valid and lets us avoid wasting time uploading totally invalid files!
-        this._photoDetails = PhotoDetails($photoFilename)
+        _photoDetails = PhotoDetails(photoFilename)
 
         // Validate the photo details and throw if Instagram won"t allow it.
-        this._photoDetails.validate(ConstraintsFactory::createFor($targetFeed))
+        _photoDetails.validate(ConstraintsFactory.createFor(targetFeed))
 
-        return this._photoDetails
+        return _photoDetails
     }
 
     /**
      * @return string
      */
-    fun getUploadId()
-    {
-        return this._uploadId
+    fun getUploadId(): String {
+        return _uploadId
     }
 
     /**
@@ -135,57 +128,48 @@ final class Internal
      *
      * @return VideoUploadUrl[]
      */
-    fun setVideoUploadUrls(
-        UploadJobVideoResponse $response)
-    {
-        this._videoUploadUrls = []
-        if ($response.getVideoUploadUrls() !== null) {
-            this._videoUploadUrls = $response.getVideoUploadUrls()
+    fun setVideoUploadUrls(response: UploadJobVideoResponse): MutableList<VideoUploadUrl> {
+        _videoUploadUrls = mutableListOf()
+        if (response.getVideoUploadUrls() !== null) {
+            _videoUploadUrls = response.getVideoUploadUrls()
         }
 
-        return this._videoUploadUrls
+        return _videoUploadUrls
     }
 
     /**
      * @return VideoUploadUrl[]
      */
-    fun getVideoUploadUrls()
-    {
-        return this._videoUploadUrls
+    fun getVideoUploadUrls(): MutableList<VideoUploadUrl> {
+        return _videoUploadUrls
     }
 
     /**
      * @return UploadVideoResponse
      */
-    fun getVideoUploadResponse()
-    {
-        return this._videoUploadResponse
+    fun getVideoUploadResponse(): UploadVideoResponse {
+        return _videoUploadResponse
     }
 
     /**
      * @param UploadVideoResponse $videoUploadResponse
      */
-    fun setVideoUploadResponse(
-        UploadVideoResponse $videoUploadResponse)
-    {
-        this._videoUploadResponse = $videoUploadResponse
+    fun setVideoUploadResponse(videoUploadResponse: UploadVideoResponse){
+        _videoUploadResponse = videoUploadResponse
     }
 
     /**
      * @return UploadPhotoResponse
      */
-    fun getPhotoUploadResponse()
-    {
-        return this._photoUploadResponse
+    fun getPhotoUploadResponse(): UploadPhotoResponse {
+        return _photoUploadResponse
     }
 
     /**
      * @param UploadPhotoResponse $photoUploadResponse
      */
-    fun setPhotoUploadResponse(
-        UploadPhotoResponse $photoUploadResponse)
-    {
-        this._photoUploadResponse = $photoUploadResponse
+    fun setPhotoUploadResponse(photoUploadResponse: UploadPhotoResponse){
+        _photoUploadResponse = photoUploadResponse
     }
 
     /**
@@ -197,17 +181,17 @@ final class Internal
      *
      * @return self
      */
-    fun setDirectRecipients(
-        array $recipients)
-    {
-        if (isset($recipients["users"])) {
-            this._directUsers = $recipients["users"]
-            this._directThreads = "[]"
-        } elseif (isset($recipients["thread"])) {
-            this._directUsers = "[]"
-            this._directThreads = $recipients["thread"]
-        } else {
-            throw  IllegalArgumentException("Please provide at least one recipient.")
+    fun setDirectRecipients(recipients: Map<String, String>): Internal {
+        when {
+            recipients.keys.contains("users") -> {
+                _directUsers = recipients["users"].toString()
+                _directThreads = "[]"
+            }
+            recipients.keys.contains("thread") -> {
+                _directUsers = "[]"
+                _directThreads = recipients["thread"].toString()
+            }
+            else -> throw  IllegalArgumentException("Please provide at least one recipient.")
         }
 
         return this
@@ -216,17 +200,15 @@ final class Internal
     /**
      * @return string
      */
-    fun getDirectThreads()
-    {
-        return this._directThreads
+    fun getDirectThreads(): String {
+        return _directThreads
     }
 
     /**
      * @return string
      */
-    fun getDirectUsers()
-    {
-        return this._directUsers
+    fun getDirectUsers(): String {
+        return _directUsers
     }
 
     /**
@@ -234,17 +216,14 @@ final class Internal
      *
      * @param bool $bestieMedia
      */
-    fun setBestieMedia(
-        $bestieMedia)
-    {
-        this._bestieMedia = $bestieMedia
+    fun setBestieMedia(bestieMedia: Boolean){
+        _bestieMedia = bestieMedia
     }
 
     /**
      * @return bool
      */
-    fun isBestieMedia()
-    {
-        return this._bestieMedia
+    fun isBestieMedia(): Boolean {
+        return _bestieMedia
     }
 }

@@ -6,6 +6,7 @@ import instagramAPI.media.ConstraintsInterface
 import instagramAPI.media.MediaDetails
 import instagramAPI.Utils
 import Winbox.Args
+import java.io.File
 import kotlin.math.roundToInt
 
 class VideoDetails : MediaDetails(){
@@ -115,9 +116,9 @@ class VideoDetails : MediaDetails(){
      * @throws  IllegalArgumentException If the video file is missing or invalid.
      * @throws .RuntimeException         If FFmpeg isn"t working properly.
      */
-    fun __construct( filename: String){
+    fun constructor( filename: String){
         // Check if input file exists.
-        if (filename.isEmpty() || !is_file(filename)) {
+        if (filename.isEmpty() || !File(filename).isFile) {
             throw  IllegalArgumentException("The video file \"$filename\" does not exist on disk.")
         }
 
@@ -208,7 +209,7 @@ class VideoDetails : MediaDetails(){
 
     /** {@inheritdoc} */
     fun validate( constraints: ConstraintsInterface){
-        parent::validate(constraints)
+        super validate(constraints)
 
         // WARNING TO CONTRIBUTORS: $mediaFilename is for ERROR DISPLAY to
         // users. Do NOT import it to read from the hard disk!

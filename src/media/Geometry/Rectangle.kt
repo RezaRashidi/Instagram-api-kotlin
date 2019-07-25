@@ -27,7 +27,7 @@ class Rectangle
      * @param int $width
      * @param int $height
      */
-    fun __construct( x: Int, y: Int, width: Int, height: Int){
+    fun constructor( x: Int, y: Int, width: Int, height: Int){
         _x = x
         _y = y
         _width = width

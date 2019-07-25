@@ -29,8 +29,8 @@ class InstagramVideo : InstagramMedia() {
      *
      * @see InstagramMedia::__construct() description for the list of parameters.
      */
-    fun __construct( inputFile: String, array options = [], ffmpeg: FFmpeg? = null){
-        parent::__construct(inputFile, options)
+    fun constructor( inputFile: String, array options = [], ffmpeg: FFmpeg? = null){
+        super constructor(inputFile, options)
         this._details = VideoDetails(this._inputFile)
 
         _ffmpeg = ffmpeg
