@@ -1006,7 +1006,7 @@ class Internal(instagram: Instagram) : RequestCollection(instagram) {
 			return
 		}
 
-		var rules = []
+		val rules = mutableMapOf<String, String>()
 		for(rule in token.getRewriteRules()) {
 			rules[rule.getMatcher()] = rule.getReplacer()
 		}

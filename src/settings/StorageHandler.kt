@@ -479,7 +479,7 @@ class StorageHandler {
 			return
 		}
 
-		val cookieDir = dirname(_cookiesFilePath) // Can be "." in case of CWD.
+		val cookieDir = File(_cookiesFilePath).parent // Can be "." in case of CWD.
 		if (!Utils.createFolder(cookieDir)) {
 			throw SettingsException("The \"$cookieDir\" cookie folder is not writable.")
 		}
@@ -562,13 +562,13 @@ class StorageHandler {
 	 *
 	 * @return array A list of "good" experiments.
 	 */
-	fun setExperiments(experiments: MutableList<String>): MutableList<String> {
-		val filtered = mutableListOf<String>()
+	fun setExperiments(experiments: MutableMap<String, String>): MutableMap<String, String> {
+		val filtered = mutableMapOf<String, String>()
 		for(key in EXPERIMENT_KEYS) {
 			if ( !(experiments.contains(key)) ) {
 				continue
 			}
-			filtered[key] = experiments[key]
+			filtered[key] = experiments[key] as String
 		}
 		set("experiments", _packJson(filtered))
 
@@ -593,7 +593,7 @@ class StorageHandler {
 	 *
 	 * @throws .instagramAPI.exception.SettingsException
 	 */
-	fun setRewriteRules(array rules) {
+	fun setRewriteRules(rules: MutableMap<String, String>) {
 		set("zr_rules", _packJson(rules))
 	}
 
@@ -642,7 +642,7 @@ class StorageHandler {
 	 *
 	 * @return string
 	 */
-	protected fun _packJson(data): String {
+	protected fun _packJson(data: Map<String,String>): String {
 		val json: String = json_encode(data)
 		val gzipped: String = zlib_encode(json, ZLIB_ENCODING_DEFLATE, 9).toString().base64_encode()
 		// We must compare gzipped with double encoded JSON.
@@ -674,7 +674,7 @@ class StorageHandler {
 		try {
 			when (format) {
 				'Z' -> {
-					packed = base64_decode(packed, true)
+					packed = packed.base64_decode()
 					if (packed == "") {
 						throw RuntimeException("Invalid Base64 encoded string.")
 					}

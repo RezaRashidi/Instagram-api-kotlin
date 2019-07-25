@@ -93,11 +93,11 @@ class SQLite : PDOStorage(){
         // last_modified value, meaning that the trigger won"t execute again!
         _pdo.exec("CREATE TRIGGER IF NOT EXISTS `" + _dbTableName + "_update_last_modified`
             AFTER UPDATE
-            ON `".this._dbTableName."`
+            ON `" + _dbTableName + "`
             FOR EACH ROW
             WHEN NEW.last_modified = OLD.last_modified -- Avoids infinite loop.
             BEGIN
-                UPDATE `".this._dbTableName."` SET last_modified=CURRENT_TIMESTAMP WHERE (id=OLD.id)
+                UPDATE `" + _dbTableName + "` SET last_modified=CURRENT_TIMESTAMP WHERE (id=OLD.id)
             END"
         )
     }

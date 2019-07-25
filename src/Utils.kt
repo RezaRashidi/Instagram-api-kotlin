@@ -1543,8 +1543,12 @@ object Utils{
 	fun ungzip(content: ByteArray): String =
 		GZIPInputStream(content.inputStream()).bufferedReader(StandardCharsets.UTF_8).use { it.readText() }
 
+    // these  function encode/decode the string to base64 but in php it can convert file too
     fun String.base64_encode(): String {
-        return Base64.getEncoder().encodeToString(toByteArray())
+        return Base64.getEncoder().encodeToString(this.toByteArray())
+    }
+    fun String.base64_decode(): String {
+        return String(Base64.getDecoder().decode(this))
     }
 
     fun filePutContents(file: String, str: String): Int{

@@ -264,7 +264,7 @@ abstract class PDOStorage : StorageInterface{
      * {@inheritdoc}
      */
     override fun loadUserSettings(): MutableMap<String, String> {
-        val userSettings = []
+        var userSettings = mutableMapOf<String, String>()
 
         if (_cache["settings"]!!.isNotEmpty()) {
             userSettings = json_decode(_cache["settings"], true, 512, JSON_BIGINT_AS_STRING)

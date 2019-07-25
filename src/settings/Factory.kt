@@ -4,7 +4,7 @@ package instagramAPI.settings
 
 import instagramAPI.exception.SettingsException
 import instagramAPI.settings.Storage.File
-import instagramAPI.settings.Storage.Memcached
+//import instagramAPI.settings.Storage.Memcached
 import instagramAPI.settings.Storage.MySQL
 import instagramAPI.settings.Storage.SQLite
 import java.lang.System.getenv
@@ -32,9 +32,13 @@ object Factory
      */
    fun createHandler(storageConfig:MutableMap<String,String>, callbacks:MutableMap<String,()->Unit> = mutableMapOf() ): StorageHandler{
 
+        val locationConfig: MutableMap<String, String?>
+        val storageInstance: StorageInterface
+        var cmdOptions: MutableMap<String, String>
+
         // Resolve the storage backend choice if none provided in array.
         if (storageConfig["storage"].isNullOrBlank()) {
-            val cmdOptions = getCmdOptions(mutableListOf("settings_storage::"))
+            cmdOptions = getCmdOptions(mutableListOf("settings_storage::"))
             var storage = getUserConfig("storage", storageConfig, cmdOptions)
             if (storage === null) {
                 storage = "file"
@@ -43,10 +47,6 @@ object Factory
         }
 
         // Determine the user"s final storage configuration.
-        val locationConfig: MutableMap<String, String?>
-        val storageInstance
-        val cmdOptions
-
         when (storageConfig["storage"]) {
             "file" ->{
                 // Look for allowed command-line values related to this backend.
@@ -127,37 +127,37 @@ object Factory
                 storageInstance = SQLite()
             }
 
-            "memcached" -> {
-                // The memcached storage can only be configured via the factory
-                // configuration array (not via command line or environment vars).
-
-                // These settings are required, but you only have to import one method:
-                if ( storageConfig.contains("memcached") ) {
-                    // Re-import the user"s own Memcached object.
-                    locationConfig = mutableMapOf("memcached" to storageConfig["memcached"])
-                } else {
-                    // Make a connection. Optional settings for it:
-                    locationConfig = mutableMapOf(
-                        // This ID will be passed to the .Memcached() constructor.
-                        // NOTE: Memcached"s "persistent ID" feature makes Memcached
-                        // keep the settings even after you disconnect.
-                        "persistent_id" to if (!storageConfig["persistent_id"]!!.isBlank()) storageConfig["persistent_id"] else null,
-                        // Array which will be passed to .Memcached::setOptions().
-                        "memcached_options" to  if(!storageConfig["memcached_options"]!!.isBlank()) storageConfig["memcached_options"] else null,
-                        // Array which will be passed to .Memcached::addServers().
-                        // NOTE: Can contain one or multiple servers.
-                        "servers" to if(!storageConfig["servers"]!!.isBlank()) storageConfig["servers"] else null,
-                        // SASL username and password to be used for SASL
-                        // authentication with all of the Memcached servers.
-                        // NOTE: PHP"s Memcached API doesn"t support individual
-                        // authentication credentials per-server, so these values
-                        // apply to all of your servers if you import this feature!
-                        "sasl_username" to if(!storageConfig["sasl_username"]!!.isBlank()) storageConfig["sasl_username"] else null,
-                        "sasl_password" to if(!storageConfig["sasl_password"]!!.isBlank()) storageConfig["sasl_password"] else null
-                    )
-                }
-                storageInstance = Memcached()
-            }
+//            "memcached" -> {
+//                // The memcached storage can only be configured via the factory
+//                // configuration array (not via command line or environment vars).
+//
+//                // These settings are required, but you only have to import one method:
+//                if ( storageConfig.contains("memcached") ) {
+//                    // Re-import the user"s own Memcached object.
+//                    locationConfig = mutableMapOf("memcached" to storageConfig["memcached"])
+//                } else {
+//                    // Make a connection. Optional settings for it:
+//                    locationConfig = mutableMapOf(
+//                        // This ID will be passed to the .Memcached() constructor.
+//                        // NOTE: Memcached"s "persistent ID" feature makes Memcached
+//                        // keep the settings even after you disconnect.
+//                        "persistent_id" to if (!storageConfig["persistent_id"]!!.isBlank()) storageConfig["persistent_id"] else null,
+//                        // Array which will be passed to .Memcached::setOptions().
+//                        "memcached_options" to  if(!storageConfig["memcached_options"]!!.isBlank()) storageConfig["memcached_options"] else null,
+//                        // Array which will be passed to .Memcached::addServers().
+//                        // NOTE: Can contain one or multiple servers.
+//                        "servers" to if(!storageConfig["servers"]!!.isBlank()) storageConfig["servers"] else null,
+//                        // SASL username and password to be used for SASL
+//                        // authentication with all of the Memcached servers.
+//                        // NOTE: PHP"s Memcached API doesn"t support individual
+//                        // authentication credentials per-server, so these values
+//                        // apply to all of your servers if you import this feature!
+//                        "sasl_username" to if(!storageConfig["sasl_username"]!!.isBlank()) storageConfig["sasl_username"] else null,
+//                        "sasl_password" to if(!storageConfig["sasl_password"]!!.isBlank()) storageConfig["sasl_password"] else null
+//                    )
+//                }
+//                storageInstance = Memcached()
+//            }
 
             "custom"-> {
                 // Custom storage classes can only be configured via the main array.
@@ -186,7 +186,7 @@ object Factory
     *
     * @return array
     */
-    fun getCmdOptions (longOpts:MutableList<String>){
+    fun getCmdOptions(longOpts:MutableList<String>): MutableMap<String, String>{
         var cmdOptions = getopt("", longOpts)
         if (!is_array(cmdOptions)) {
             cmdOptions = []
