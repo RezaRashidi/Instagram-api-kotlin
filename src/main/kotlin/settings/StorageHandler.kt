@@ -604,7 +604,7 @@ class StorageHandler {
 	 *
 	 * @return array
 	 */
-	fun getRewriteRules() {
+	fun getRewriteRules():MutableMap<String,String> {
 		return _unpackJson( get("zr_rules") as String, true)
 	}
 

@@ -42,7 +42,7 @@ open class Client(val parent:Instagram)
      *
      * @var int
      */
-    private val COOKIE_AUTOSAVE_INTERVAL = 45
+    private val CookieAutosaveInrernal:Int = 45
 
 
     /**
@@ -100,7 +100,7 @@ open class Client(val parent:Instagram)
     /**
      * @var .GuzzleHttp.Cookie.CookieJar
      */
-    private var _cookieJar: CookieJar =CookieJar()
+    private var _cookieJar: CookieJar? =CookieJar()
 
     /**
      * The timestamp of when we last saved our cookie jar to disk.
@@ -178,7 +178,7 @@ open class Client(val parent:Instagram)
      */
     fun updateFromCurrentSettings(resetCookieJar: Boolean = false){
         // Update our internal client state from the user"s settings.
-        var _userAgent = parent.device.getUserAgent()
+         _userAgent = parent.device.getUserAgent()
         loadCookieJar(resetCookieJar)
 
         // Verify that the jar contains a non-expired csrftoken for the API
@@ -203,7 +203,7 @@ open class Client(val parent:Instagram)
      */
     fun loadCookieJar(resetCookieJar: Boolean = false){
         // Mark any previous cookie jar for garbage collection.
-        var _cookieJar = null
+         _cookieJar = null
 
         // Delete all current cookies from the storage if this is a reset.
         if (resetCookieJar) {
@@ -659,7 +659,7 @@ open class Client(val parent:Instagram)
 
         // We"ll periodically auto-save our cookies at certain intervals. This
         // complements the "onCloseUser" and "login()/logout()" force-saving.
-        if ((time() - _cookieJarLastSaved) > COOKIE_AUTOSAVE_INTERVAL) {
+        if ((time() - _cookieJarLastSaved) > CookieAutosaveInrernal) {
             saveCookieJar()
         }
 
